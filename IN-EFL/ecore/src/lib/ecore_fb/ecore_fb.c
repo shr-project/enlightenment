@@ -46,6 +46,9 @@ ecore_fb_init(const char *name EINA_UNUSED)
    if (!ecore_fb_vt_init())
       return --_ecore_fb_init_count;
 
+   if (!ecore_fb_ts_init())
+      return --_ecore_fb_init_count;
+
    if (!oldhand)
      {
         oldhand = signal(SIGINT, nosigint);
@@ -77,6 +80,7 @@ ecore_fb_shutdown(void)
         oldhand = NULL;
      }
    
+   ecore_fb_ts_shutdown();
    ecore_fb_vt_shutdown();
 
    return _ecore_fb_init_count;
