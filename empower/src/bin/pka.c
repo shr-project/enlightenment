@@ -162,7 +162,7 @@ pka_exec(Empower_Auth_Info *info)
 
   // Run helper agent provided with polkit.
   // TODO: Somehow determine polkit-agent-helper-1 location at runtime.
-  snprintf(buf, sizeof(buf), "/usr/lib/polkit-1/polkit-agent-helper-1 %s %s", id->details.user.name, info->cookie);
+  snprintf(buf, sizeof(buf), PACKAGE_LIBEXEC_DIR"/polkit-1/polkit-agent-helper-1 %s %s", id->details.user.name, info->cookie);
   DBG("Executing: %s\n", buf);
   info->helper.exe = ecore_exe_pipe_run(buf,
                                         (ECORE_EXE_PIPE_READ |

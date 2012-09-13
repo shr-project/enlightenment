@@ -3,6 +3,7 @@
 AM_CPPFLAGS = -I$(top_srcdir) \
               -DPACKAGE_BIN_DIR=\"$(bindir)\" \
               -DPACKAGE_DATA_DIR=\"$(pkgdatadir)\" \
+              -DPACKAGE_LIBEXEC_DIR=\"$(libexecdir)\" \
               -Wall -Werror
 
 bin_PROGRAMS = empower
