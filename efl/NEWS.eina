@@ -1,0 +1,124 @@
+Eina 1.8.0
+
+Changes since Eina 1.7.0:
+-------------------------
+
+Additions:
+    * Add DOCTYPE children parsing in eina_simple_xml
+
+Improvements:
+    * Speedup Eina Rbtree Iterator by recycling memory instead of massively calling malloc/free.
+
+Eina 1.7.0
+
+Changes since Eina 1.2.0:
+-------------------------
+
+Additions:
+    * Add backtrace support to Eina_Log, use EINA_LOG_BACKTRACE to enable it.
+    * Add an helper to iterate over line in a mapped file.
+    * Add EINA_SENTINEL to protect variadic functions
+    * Add EINA_SAFETY checks for proper function arguments.
+    * Add check if given arguments (distance and coordinates) in eina_tiler
+    and eina_rectangle are not below zero
+
+Fixes:
+    * Add missing files in the tarball.
+    * Rounding issue with eina_f32p32_cos and eina_f32p32_sin when getting close to 1.0.
+    * Portability issue with Eina_Value when char are not signed by default (case on ARM
+    and PPC).
+    * Portability issue with Eina_Value test suite when unsigned where not promoted to
+    unsigned long (case on Itanium).
+    * Fix issue in the XML parser when a tag was in a comment or a CDATA.
+    * Implement eina_file_map_lines() on Windows.
+    * Handle NULL in all eina_*_free function.
+    * eina_log_console_color_set()
+    * Documentation for eina list specified and eina stringshare fixed.
+    * eina_convert_atofp wrong return value if fp is NULL.
+
+Removal:
+    * configure options: --disable-posix-threads, --disable-win32-threads,
+      --enable-coverage
+
+Eina 1.2.0
+
+Changes since Eina 1.1.0:
+-------------------------
+
+Additions:
+
+    * eina_mempool_calloc.
+    * Eina_Semaphore abstraction API.
+    * eina_xattr_fd_ls.
+    * Eina_Xattr iterator : eina_xattr_value_fd_ls and eina_xattr_value_ls.
+    * eina_file_map_faulted.
+    * Xattr iterator for Eina_File : eina_file_xattr_get/value_get.
+    * deprecated eina_array_count_get(), use eina_array_count() instead.
+    * eina_inarray data type.
+    * eina_value data type (generic value storage).
+    * eina_file_stat.
+    * eina_log*level_check.
+    * eina_*buf_manage_new_length.
+    * EINA_C_ARRAY_LENGTH macro.
+    * Eina_Stringshare typedef.
+    * add eina_file_map_faulted() for windows port (was missing).
+
+Fixes:
+
+    * compilation errors in Eina_RWLock when building on Windows newer than XP.
+    * stop leaking Eina_File.
+    * remove dead lock in Eina_File.
+    * bug on eina_shutdown when using eina_error.
+    * NONNULL argument for eina_hash_find.
+    * compilation of eina_semaphore_lock on Windows.
+    * forgotten initialization of eina list count during eina_list_split_list.
+    * leak in Eina_File.
+    * deadlock in Eina_File.
+    * make it possible to force the number of detected CPU on a system.
+
+Improvements:
+
+    * faster implementation of Eina_Rbtree.
+    * let eina_hash_free behave like free.
+
+Eina 1.1.0 (2011-12-02)
+
+Changes since Eina 1.0.0:
+-------------------------
+
+Additions:
+
+    * eina_unicode_strndup API
+    * EINA_INLIST_FOREACH_SAFE API
+    * eina unicode UTF8 convenience calls API
+    * eina_list_move functions to move list nodes from list to list directly
+    * simple SAX XML parser API added
+    * inlist sort and sorted insert API
+    * mempool repack API
+    * eina_file API for portable file memory-mapping with IO saffety traps
+    * thread locks, conditions etc. wrapper API for portability
+    * prefix API for apps or libs to find their runtime prefix location
+    * refcount macro API
+    * binbuf for binary extendable buffers API
+    * eina_hash_free_cb_set API
+    * eina_main_loop_is API
+    * eina_strbuf_manage_new and eina_ustrbuf_manage_new APIs
+    * eina_xattr API's
+    * eina_hash_murmur3 API
+
+Fixes:
+
+    * compilation problems with some configure options
+    * stat issue if file size is in bytes and serial number overran 32bits
+    * uninstall of mempool modules
+    * static build of buddy mempool
+    * stringshare multi-init bug
+    * windows port of eina_sched_prio_drop
+    * eina_hash_set to handle data being NULL like eina_hash_del
+    * static linking to eina (iconv can be avoided)
+    * eina_share_common_del and eina_share_common_ref unlock bug
+
+Improvements:
+
+    * scalability/speed improvements in Chained Mempool
+    * stringshare as storage for eina error strings now

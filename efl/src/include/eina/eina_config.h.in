@@ -1,0 +1,86 @@
+/* EINA - EFL data type library
+ * Copyright (C) 2008 Cedric Bail
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library;
+ * if not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef EINA_CONFIG_H_
+#define EINA_CONFIG_H_
+
+#ifdef EINA_HAVE_EXOTIC_H
+# undef EINA_HAVE_EXOTIC_H
+#endif
+@EINA_CONFIGURE_HAVE_EXOTIC@
+
+#ifdef EINA_HAVE_EXOTIC
+# include <Exotic.h>
+#endif
+
+#ifdef EINA_MAGIC_DEBUG
+# undef EINA_MAGIC_DEBUG
+#endif
+@EINA_CONFIGURE_MAGIC_DEBUG@
+
+#ifdef EINA_DEFAULT_MEMPOOL
+# undef EINA_DEFAULT_MEMPOOL
+#endif
+@EINA_CONFIGURE_DEFAULT_MEMPOOL@
+
+#ifdef EINA_SAFETY_CHECKS
+# undef EINA_SAFETY_CHECKS
+#endif
+@EINA_CONFIGURE_SAFETY_CHECKS@
+
+#ifdef EINA_HAVE_INTTYPES_H
+# undef EINA_HAVE_INTTYPES_H
+#endif
+@EINA_CONFIGURE_HAVE_INTTYPES_H@
+
+#ifdef EINA_HAVE_STDINT_H
+# undef EINA_HAVE_STDINT_H
+#endif
+@EINA_CONFIGURE_HAVE_STDINT_H@
+
+#ifdef EINA_HAVE_THREADS
+# undef EINA_HAVE_THREADS
+#endif
+@EINA_CONFIGURE_HAVE_THREADS@
+
+#ifdef EINA_HAVE_DEBUG_THREADS
+# undef EINA_HAVE_DEBUG_THREADS
+#endif
+@EINA_CONFIGURE_HAVE_DEBUG_THREADS@
+
+#ifdef EINA_SIZEOF_WCHAR_T
+# undef EINA_SIZEOF_WCHAR_T
+#endif
+#define EINA_SIZEOF_WCHAR_T @EINA_SIZEOF_WCHAR_T@
+
+#ifdef EINA_HAVE_ON_OFF_THREADS
+# undef EINA_HAVE_ON_OFF_THREADS
+#endif
+@EINA_CONFIGURE_HAVE_ON_OFF_THREADS@
+
+#ifdef EINA_CONFIGURE_HAVE_DIRENT_H
+# undef EINA_CONFIGURE_HAVE_DIRENT_H
+#endif
+@EINA_CONFIGURE_HAVE_DIRENT_H@
+
+#ifdef EINA_CONFIGURE_ENABLE_LOG
+# undef EINA_CONFIGURE_ENABLE_LOG
+#endif
+@EINA_CONFIGURE_ENABLE_LOG@
+
+#endif /* EINA_CONFIG_H_ */
