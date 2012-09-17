@@ -128,6 +128,9 @@ libraries is on the right.
   <td>
    <?php blinkurl("i/logo-s.png", "EIO", "http://docs.enlightenment.org/auto/eio"); ?>
   </td>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EPHYSICS", "http://docs.enlightenment.org/auto/ephysics"); ?>
+  </td>
  </tr>
  </tr>
 </table>
