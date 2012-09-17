@@ -172,7 +172,7 @@ _chat_window_send_cb(Chat_Window *cw)
      jid = c->cur->jid;
    else
      jid = c->base->jid;
-   shotgun_message_send(c->base->account, jid, s, SHOTGUN_MESSAGE_STATUS_ACTIVE);
+   shotgun_message_send(c->base->account, jid, s, SHOTGUN_MESSAGE_STATUS_ACTIVE, c->xhtml_im);
    chat_message_insert(c, "me", s, EINA_TRUE);
 #ifdef HAVE_DBUS
    ui_dbus_signal_message_self(c->list, jid, s);

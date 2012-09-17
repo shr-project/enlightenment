@@ -357,8 +357,17 @@ shotgun_new(const char *svr_name, const char *username, const char *domain)
    auth->resource = eina_stringshare_add("SHOTGUN!");
    if (username && domain)
      {
-        auth->jid = eina_stringshare_printf("%s@%s/%s", auth->user, auth->from, auth->resource);
-        auth->base_jid = eina_stringshare_printf("%s@%s", auth->user, auth->from);
+        /* chat client may store username as the full jid */
+        if (strrchr(username, '@'))
+          {
+             auth->jid = eina_stringshare_printf("%s/%s", auth->user, auth->resource);
+             auth->base_jid = eina_stringshare_add(username);
+          }
+        else
+          {
+             auth->jid = eina_stringshare_printf("%s@%s/%s", auth->user, auth->from, auth->resource);
+             auth->base_jid = eina_stringshare_printf("%s@%s", auth->user, auth->from);
+          }
      }
    if (svr_name) auth->svr_name = eina_stringshare_add(svr_name);
    auth->pending_ping = 0;
@@ -551,4 +560,55 @@ shotgun_ping_max_attempts_set(Shotgun_Auth *auth, unsigned int max)
 {
    EINA_SAFETY_ON_NULL_RETURN(auth);
    auth->ping_max_attempts = max;
+}
+
+Eina_Bool
+shotgun_emoticon_custom_add(Shotgun_Auth *auth, const char *file, const char *text, const char *type)
+{
+   Shotgun_Custom_Emoticon *emo;
+   char *data_base64,
+         tmp_cid[63];
+   size_t len,
+          len64;
+   const char *sha1;
+   Eina_File *fh;
+   const unsigned char *data;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(auth, EINA_FALSE);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(file, EINA_FALSE);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(text, EINA_FALSE);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(type, EINA_FALSE);
+
+
+   fh = eina_file_open(file, EINA_FALSE);
+   if (!fh)
+     {
+        ERR("Couldnt open file %s", file);
+        return EINA_FALSE;
+     }
+
+   len = eina_file_size_get(fh);
+
+   data = (const unsigned char *)eina_file_map_all(fh, EINA_FILE_SEQUENTIAL);
+
+   DBG("data[%p] len=%ld", data, len);
+   DBG("data[1] = %c", data[1]);
+   sha1 = sha1_buffer(data, len);
+
+   data_base64 = shotgun_base64_encode(data, len, &len64);
+   eina_file_map_free(fh, (void *)data);
+   eina_file_close(fh);
+
+   emo = calloc(1, sizeof(Shotgun_Custom_Emoticon));
+   if (!emo) return EINA_FALSE;
+
+   emo->file = eina_stringshare_add(file);
+   emo->text = strdup(text);
+   emo->type = strdup(type);
+   emo->data_base64 = data_base64;
+   sprintf(tmp_cid, "cid:sha1+%s@bob.xmpp.org", sha1);
+   emo->cid = strdup(tmp_cid);
+
+   auth->custom_emoticons = eina_inlist_append(auth->custom_emoticons, EINA_INLIST_GET(emo));
+   return EINA_TRUE;
 }

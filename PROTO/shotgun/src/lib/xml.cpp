@@ -28,6 +28,7 @@
 #define XML_NS_VCARD "vcard-temp"
 #define XML_NS_STANZAS "urn:ietf:params:xml:ns:xmpp-stanzas"
 #define XML_NS_PING "urn:xmpp:ping"
+#define XML_NS_BOB "urn:xmpp:bob"
 
 using namespace pugi;
 
@@ -941,7 +942,7 @@ xml_iq_disco_info_write(Shotgun_Auth *auth, xml_node &query)
    node.append_child("feature").append_attribute("var").set_value(XML_NS_BYTESTREAM);
    node.append_child("feature").append_attribute("var").set_value(XML_NS_IBB);
    node.append_child("feature").append_attribute("var").set_value(XML_NS_PING);
-
+   node.append_child("feature").append_attribute("var").set_value(XML_NS_BOB);
    xml = xmlnode_to_buf(doc, &len, EINA_FALSE);
    shotgun_write(auth->svr, xml, len);
    free(xml);
@@ -950,6 +951,21 @@ xml_iq_disco_info_write(Shotgun_Auth *auth, xml_node &query)
    ret->type = SHOTGUN_IQ_EVENT_TYPE_SERVER_QUERY;
    ret->account = auth;
    return ret;
+}
+
+char *
+xml_iq_disco_info_get(const char *from, const char *to, size_t *len)
+{
+   xml_document doc;
+   xml_node iq, node;
+
+   iq = doc.append_child("iq");
+   iq.append_attribute("id").set_value("disco");
+   iq.append_attribute("from").set_value(from);
+   iq.append_attribute("to").set_value(to);
+   iq.append_attribute("type").set_value("get");
+   iq.append_child("query").append_attribute("xmlns").set_value(XML_NS_DISCO_INFO);
+   return xmlnode_to_buf(doc, len, EINA_FALSE);
 }
 
 static Shotgun_Event_Iq *
@@ -1002,33 +1018,111 @@ xml_iq_ping_write(Shotgun_Auth *auth)
 }
 
 static Shotgun_Event_Iq *
+xml_iq_bob_write(Shotgun_Auth *auth, xml_node &query)
+{
+   Shotgun_Event_Iq *ret;
+   xml_document doc;
+   xml_node iq, data;
+   char *xml;
+   size_t len;
+   Shotgun_Custom_Emoticon *emo = NULL;
+   Eina_Bool found = EINA_FALSE;
+
+   EINA_INLIST_FOREACH(auth->custom_emoticons, emo)
+     {
+        if (strcmp(query.attribute("cid").value(), emo->cid+4))
+           continue;
+
+        found = EINA_TRUE;
+        break;
+     }
+
+   iq = doc.append_child("iq");
+   iq.append_attribute("type").set_value("result");
+   iq.append_attribute("to").set_value(query.parent().attribute("from").value());
+   iq.append_attribute("id").set_value(query.parent().attribute("id").value());
+   data = iq.append_child("data");
+   data.append_attribute("xmlns").set_value(XML_NS_BOB);
+
+   /*
+    * I have no idea what we should answer if we are
+    * requested for an unknown emoticon ...
+    * doc says nothing about that :
+    * http://xmpp.org/extensions/xep-0071.html
+    */
+   if (found)
+     {
+        data.append_attribute("type").set_value(emo->type);
+        data.append_attribute("cid").set_value(emo->cid+4);
+        data.append_attribute("max-age").set_value(86400);
+        data.append_child(node_pcdata).set_value(emo->data_base64);
+     }
+
+   xml = xmlnode_to_buf(doc, &len, EINA_FALSE);
+   shotgun_write(auth->svr, xml, len);
+   free(xml);
+
+   ret = static_cast<Shotgun_Event_Iq*>(calloc(1, sizeof(Shotgun_Event_Iq)));
+   ret->type = SHOTGUN_IQ_EVENT_TYPE_BOB;
+   ret->account = auth;
+
+   return ret;
+}
+
+static Shotgun_Event_Iq *
 xml_iq_disco_info_read(Shotgun_Auth *auth, xml_node &query)
 {
    Shotgun_Event_Iq *ret;
-   for (xml_node it = query.first_child(); it; it = it.next_sibling())
-     {
-        const char *s;
 
-        s = it.name();
-        if ((!s) || strcmp(s, "feature")) continue;
-        s = it.attribute("var").value();
-        if ((!s) || (!s[0])) continue;
-        INF("SERVER FEATURE: %s", s);
-        if (!strcmp(s, XML_NS_ARCHIVE_MANAGE))
-          auth->features.archive_management = EINA_TRUE;
-        else if (!strcmp(s, XML_NS_GOOGLE_SETTINGS))
-          auth->features.google_settings = EINA_TRUE;
-        else if (!strcmp(s, XML_NS_GOOGLE_NOSAVE))
-          auth->features.google_nosave = EINA_TRUE;
-        else if (!strcmp(s, XML_NS_PING))
+   if (!strcmp(auth->from, query.parent().attribute("from").value()))
+     {
+        for (xml_node it = query.first_child(); it; it = it.next_sibling())
           {
-             auth->features.ping = EINA_TRUE;
-             shotgun_ping_start(auth);
+             const char *s;
+
+             s = it.name();
+             if ((!s) || strcmp(s, "feature")) continue;
+             s = it.attribute("var").value();
+             if ((!s) || (!s[0])) continue;
+             INF("SERVER FEATURE: %s", s);
+             if (!strcmp(s, XML_NS_ARCHIVE_MANAGE))
+               auth->features.archive_management = EINA_TRUE;
+             else if (!strcmp(s, XML_NS_GOOGLE_SETTINGS))
+               auth->features.google_settings = EINA_TRUE;
+             else if (!strcmp(s, XML_NS_GOOGLE_NOSAVE))
+               auth->features.google_nosave = EINA_TRUE;
+             else if (!strcmp(s, XML_NS_PING))
+               {
+                  auth->features.ping = EINA_TRUE;
+                  shotgun_ping_start(auth);
+               }
           }
+        ret = static_cast<Shotgun_Event_Iq*>(calloc(1, sizeof(Shotgun_Event_Iq)));
+        ret->type = SHOTGUN_IQ_EVENT_TYPE_SERVER_QUERY;
+        ret->account = auth;
      }
-   ret = static_cast<Shotgun_Event_Iq*>(calloc(1, sizeof(Shotgun_Event_Iq)));
-   ret->type = SHOTGUN_IQ_EVENT_TYPE_SERVER_QUERY;
-   ret->account = auth;
+   else
+     {
+        Shotgun_Iq_Disco *disco;
+
+        disco = static_cast<Shotgun_Iq_Disco*>(calloc(1, sizeof(Shotgun_Iq_Disco)));
+        disco->jid = eina_stringshare_add(query.parent().attribute("from").value());
+        for (xml_node it = query.first_child(); it; it = it.next_sibling())
+          {
+             const char *s;
+
+             s = it.name();
+             if ((!s) || strcmp(s, "feature")) continue;
+             s = it.attribute("var").value();
+             if ((!s) || (!s[0])) continue;
+             disco->features = eina_list_append(disco->features, strdup(s));
+          }
+
+        ret = static_cast<Shotgun_Event_Iq*>(calloc(1, sizeof(Shotgun_Event_Iq)));
+        ret->type = SHOTGUN_IQ_EVENT_TYPE_DISCO_QUERY;
+        ret->account = auth;
+        ret->ev = disco;
+     }
    return ret;
 }
 
@@ -1208,7 +1302,7 @@ xml_iq_ibb_read(Shotgun_Auth *auth, xml_node &query)
 
    //xml_iq_bytestream_result(ret);
    xml = xml_iq_write_get_ibb(shotgun_jid_get(auth),
-                                file->from,
+                              file->from,
                               file->id,
                               &len);
    shotgun_write(auth->svr, xml, len);
@@ -1408,6 +1502,8 @@ xml_iq_read(Shotgun_Auth *auth, char *xml, size_t size)
           return xml_iq_disco_info_write(auth, node);
         if (!strcmp(str, XML_NS_PING))
           return xml_iq_pong_write(auth, node);
+        if (!strcmp(str, XML_NS_BOB))
+          return xml_iq_bob_write(auth, node);
         break;
       case SHOTGUN_IQ_TYPE_SET:
         if (!strcmp(str, XML_NS_ROSTER))
@@ -1433,7 +1529,7 @@ xml_iq_read(Shotgun_Auth *auth, char *xml, size_t size)
 }
 
 char *
-xml_message_write(Shotgun_Auth *auth __UNUSED__, const char *to, const char *msg, Shotgun_Message_Status status, size_t *len)
+xml_message_write(Shotgun_Auth *auth, const char *to, const char *msg, Shotgun_Message_Status status, size_t *len, Eina_Bool xhtml_im)
 {
 /*
 C: <message from='juliet@im.example.com/balcony'
@@ -1445,42 +1541,96 @@ C: <message from='juliet@im.example.com/balcony'
      <active xmlns='http://jabber.org/protocol/chatstates'/>
    </message>
 */
+   char *xml_text = NULL;
 
-   xml_document doc;
-   xml_node node, body;
-   node = doc.append_child("message");
-   node.append_attribute("to").set_value(to);
-   node.append_attribute("type").set_value("chat");
-   node.append_attribute("xml:lang").set_value("en");
-
-   if (msg)
+   if ((xhtml_im) && (auth->custom_emoticons) && (shotgun_hashtml(auth->custom_emoticons,msg)))
      {
-        body = node.append_child("body");
-        body.append_child(node_pcdata).set_value(msg);
-     }
-   switch (status)
-     {
-      case SHOTGUN_MESSAGE_STATUS_ACTIVE:
-        node = node.append_child("active");
-        break;
-      case SHOTGUN_MESSAGE_STATUS_COMPOSING:
-        node = node.append_child("composing");
-        break;
-      case SHOTGUN_MESSAGE_STATUS_PAUSED:
-        node = node.append_child("paused");
-        break;
-      case SHOTGUN_MESSAGE_STATUS_INACTIVE:
-        node = node.append_child("inactive");
-        break;
-      case SHOTGUN_MESSAGE_STATUS_GONE:
-        node = node.append_child("gone");
-        break;
-      default:
-        return xmlnode_to_buf(doc, len, EINA_FALSE);
-     }
-   node.append_attribute("xmlns").set_value(XML_NS_CHATSTATES);
+        Eina_Strbuf *buf;
+        const char *message;
+        char *message_html;
 
-   return xmlnode_to_buf(doc, len, EINA_FALSE);
+
+        buf = eina_strbuf_new();
+        switch (status)
+          {
+           case SHOTGUN_MESSAGE_STATUS_ACTIVE:
+             message = "active";
+             break;
+           case SHOTGUN_MESSAGE_STATUS_COMPOSING:
+             message = "composing";
+             break;
+           case SHOTGUN_MESSAGE_STATUS_PAUSED:
+             message = "paused";
+             break;
+           case SHOTGUN_MESSAGE_STATUS_INACTIVE:
+             message = "inactive";
+             break;
+           case SHOTGUN_MESSAGE_STATUS_GONE:
+           default:
+             message = "gone";
+             break;
+          }
+
+
+        message_html = shotgun_htmlize(auth->custom_emoticons, msg);
+        eina_strbuf_append_printf(buf,
+                                  "<message type='chat' "
+                                  "to='%s'><%s "
+                                  "xmlns='http://jabber.org/protocol/chatstates'/>"
+                                  "<body>%s</body><html "
+                                  "xmlns='http://jabber.org/protocol/xhtml-im'>"
+                                  "<body xmlns='http://www.w3.org/1999/xhtml'>"
+                                  "%s</body></html></message>",
+                                  to,
+                                  message,
+                                  msg,
+                                  message_html);
+        free(message_html);
+        xml_text = eina_strbuf_string_steal(buf);
+        *len = strlen(xml_text);
+        eina_strbuf_free(buf);
+     }
+   else
+     {
+        xml_document doc;
+        xml_node node, body;
+
+        node = doc.append_child("message");
+        node.append_attribute("to").set_value(to);
+        node.append_attribute("type").set_value("chat");
+        node.append_attribute("xml:lang").set_value("en");
+
+        if (msg)
+          {
+             body = node.append_child("body");
+             body.append_child(node_pcdata).set_value(msg);
+          }
+
+        switch (status)
+          {
+           case SHOTGUN_MESSAGE_STATUS_ACTIVE:
+             node = node.append_child("active");
+             break;
+           case SHOTGUN_MESSAGE_STATUS_COMPOSING:
+             node = node.append_child("composing");
+             break;
+           case SHOTGUN_MESSAGE_STATUS_PAUSED:
+             node = node.append_child("paused");
+             break;
+           case SHOTGUN_MESSAGE_STATUS_INACTIVE:
+             node = node.append_child("inactive");
+             break;
+           case SHOTGUN_MESSAGE_STATUS_GONE:
+             node = node.append_child("gone");
+             break;
+           default:
+             return xmlnode_to_buf(doc, len, EINA_FALSE);
+          }
+        node.append_attribute("xmlns").set_value(XML_NS_CHATSTATES);
+        xml_text = xmlnode_to_buf(doc, len, EINA_FALSE);
+     }
+
+   return xml_text;
 }
 
 Shotgun_Event_Message *
@@ -1616,7 +1766,7 @@ xml_presence_write(Shotgun_Auth *auth, size_t *len)
 </presence>
 */
    xml_document doc;
-   xml_node node, show;
+   xml_node node, show, cap;
    Shotgun_User_Info *info;
    char buf[64];
 
@@ -1646,6 +1796,12 @@ xml_presence_write(Shotgun_Auth *auth, size_t *len)
    if (auth->desc) node.append_child("status").append_child(node_pcdata).set_value(auth->desc);
    snprintf(buf, sizeof(buf), "%i", auth->priority);
    node.append_child("priority").append_child(node_pcdata).set_value(buf);
+   cap = node.append_child("c");
+   cap.append_attribute("xmlns").set_value("http://jabber.org/protocol/caps");
+   cap.append_attribute("hash").set_value("sha-1");
+   cap.append_attribute("node").set_value("http://code.google.com/p/exodus");
+   cap.append_attribute("ver").set_value("OcBqau+U+J4QGeH7X7KbBnjsxm8=");
+
    node = node.append_child("x");
    node.append_attribute("xmlns").set_value("vcard-temp:x:update");
    info = (Shotgun_User_Info *)auth->vcard;

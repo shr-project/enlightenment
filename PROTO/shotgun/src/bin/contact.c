@@ -93,7 +93,7 @@ _contact_chat_window_typing_cb(Contact *c)
         c->sms_timer = NULL;
      }
 
-   shotgun_message_send(c->list->account, c->base->jid, NULL, c->sms);
+   shotgun_message_send(c->list->account, c->base->jid, NULL, c->sms, c->xhtml_im);
    return EINA_TRUE;
 }
 
@@ -298,7 +298,7 @@ contact_chat_window_close(Contact *c)
      {
         ecore_timer_del(c->sms_timer);
         c->sms_timer = NULL;
-        shotgun_message_send(c->list->account, c->base->jid, NULL, SHOTGUN_MESSAGE_STATUS_INACTIVE);
+        shotgun_message_send(c->list->account, c->base->jid, NULL, SHOTGUN_MESSAGE_STATUS_INACTIVE, c->xhtml_im);
      }
 
    cw->contacts = eina_list_remove(cw->contacts, c);
@@ -521,7 +521,7 @@ contact_chat_window_typing(Contact *c, Evas_Object *obj __UNUSED__, void *event_
    if (sms == SHOTGUN_MESSAGE_STATUS_COMPOSING)
      /* previous sms was paused or inactive */
      c->sms_timer = ecore_timer_add(SMS_TIMER_INTERVAL_COMPOSING, (Ecore_Task_Cb)_contact_chat_window_typing_cb, c);
-   shotgun_message_send(c->list->account, c->base->jid, NULL, sms);
+   shotgun_message_send(c->list->account, c->base->jid, NULL, sms, c->xhtml_im);
 }
 
 Eina_Bool

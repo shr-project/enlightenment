@@ -277,6 +277,7 @@ struct Contact
    Eina_Bool logdir_exists : 1; /* true only if a contact has an existing log directory */
    Eina_Bool vcard_request : 1; /* if vcard request is in progress (to prevent multiple requests) */
    Eina_Bool otr_enabled : 1; /* chat is "off the record" */
+   Eina_Bool xhtml_im : 1; /* supports emoticons */
    Eina_Bool dead : 1; /* if deletion attempt during thread */
 };
 

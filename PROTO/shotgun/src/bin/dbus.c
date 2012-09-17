@@ -109,7 +109,7 @@ _dbus_contact_send_cb(E_DBus_Object *obj, DBusMessage *msg)
    if (p) name = strndupa(name, p - name);
    c = eina_hash_find(cl->users, name);
    if (!c) goto error;
-   ret = shotgun_message_send(c->base->account, c->cur ? c->cur->jid : c->base->jid, s, st);
+   ret = shotgun_message_send(c->base->account, c->cur ? c->cur->jid : c->base->jid, s, st, c->xhtml_im);
 error:
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_BOOLEAN, &ret);
    return reply;
@@ -141,7 +141,7 @@ _dbus_contact_send_echo_cb(E_DBus_Object *obj, DBusMessage *msg)
    c = eina_hash_find(cl->users, name);
    if (!c) goto error;
 
-   ret = shotgun_message_send(c->base->account, name, s, st);
+   ret = shotgun_message_send(c->base->account, name, s, st, c->xhtml_im);
    chat_message_insert(c, "me", s, EINA_TRUE);
 error:
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_BOOLEAN, &ret);

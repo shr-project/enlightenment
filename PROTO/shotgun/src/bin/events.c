@@ -6,6 +6,24 @@ event_iq_cb(Contact_List *cl, int type __UNUSED__, Shotgun_Event_Iq *ev)
    Contact *c;
    switch(ev->type)
      {
+      case SHOTGUN_IQ_EVENT_TYPE_DISCO_QUERY:
+        {
+           Shotgun_Iq_Disco *iq = ev->ev;
+           char *feature;
+           int test = 0;
+
+           c = eina_hash_find(cl->users, iq->jid);
+           if (!c) break;
+           EINA_LIST_FREE(iq->features, feature)
+             {
+                if (!strcmp(feature, "http://jabber.org/protocol/xhtml-im"))
+                  test++;
+                else if (!strcmp(feature, "urn:xmpp:bob"))
+                  test++;
+                free(feature);
+             }
+           if (test == 2) c->xhtml_im = EINA_TRUE;
+        }
       case SHOTGUN_IQ_EVENT_TYPE_ROSTER:
         {
            Shotgun_User *user;
@@ -39,6 +57,7 @@ event_iq_cb(Contact_List *cl, int type __UNUSED__, Shotgun_Event_Iq *ev)
                      if (cl->view || (user->subscription != SHOTGUN_USER_SUBSCRIPTION_BOTH) || user->subscription_pending)
                        contact_list_user_add(cl, c);
                   }
+                shotgun_iq_disco_info_get(cl->account, c->base->jid);
              }
            break;
         }

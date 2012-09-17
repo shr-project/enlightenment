@@ -30,8 +30,8 @@ char * xml_iq_write_vcard(Shotgun_Auth *auth, size_t *len);
 void xml_vcard_write(Shotgun_User_Info *info, void *vcard, Eina_Bool lcasetags);
 Eina_Bool xml_iq_ping_write(Shotgun_Auth *auth);
 char * xml_iq_activity_query(const char *from, const char *to, const char *id, size_t *len);
-
-char *xml_message_write(Shotgun_Auth *auth, const char *to, const char *msg, Shotgun_Message_Status status, size_t *len);
+char *xml_iq_disco_info_get(const char *from, const char *to, size_t *len);
+char *xml_message_write(Shotgun_Auth *auth, const char *to, const char *msg, Shotgun_Message_Status status, size_t *len, Eina_Bool xhtml_im);
 Shotgun_Event_Message *xml_message_read(Shotgun_Auth *auth, char *xml, size_t size);
 
 

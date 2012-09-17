@@ -72,6 +72,19 @@ shotgun_incoming_file_free(Shotgun_Incoming_File *file)
    free(file);
 }
 
+void
+shotgun_iq_disco_info_free(Shotgun_Iq_Disco *disco)
+{
+   char *feature;
+
+   if (!disco) return;
+   eina_stringshare_del(disco->jid);
+   EINA_LIST_FREE(disco->features, feature)
+     free(feature);
+
+   free(disco);
+}
+
 static void
 shotgun_iq_event_free(void *data __UNUSED__, Shotgun_Event_Iq *iq)
 {
@@ -93,6 +106,8 @@ shotgun_iq_event_free(void *data __UNUSED__, Shotgun_Event_Iq *iq)
       case SHOTGUN_IQ_EVENT_TYPE_IDLE:
         shotgun_iq_last_free(iq->ev);
         break;
+      case SHOTGUN_IQ_EVENT_TYPE_DISCO_QUERY:
+        shotgun_iq_disco_info_free(iq->ev);
       default:
         break;
      }
@@ -277,7 +292,6 @@ shotgun_iq_ibb_error(Shotgun_Event_Iq *ev)
    return EINA_TRUE;
 }
 
-
 Eina_Bool
 shotgun_iq_vcard_send(Shotgun_Auth *auth)
 {
@@ -322,6 +336,20 @@ shotgun_iq_archive_get(Shotgun_Auth *auth, const char *user, unsigned int max)
    if (!auth->features.archive_management) return EINA_FALSE;
 
    xml = xml_iq_write_archive_get(user, max, &len);
+   shotgun_write(auth->svr, xml, len);
+   free(xml);
+   return EINA_TRUE;
+}
+
+Eina_Bool
+shotgun_iq_disco_info_get(Shotgun_Auth *auth, const char *user)
+{
+   size_t len;
+   char *xml;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(auth, EINA_FALSE);
+
+   xml = xml_iq_disco_info_get(auth->base_jid, user, &len);
    shotgun_write(auth->svr, xml, len);
    free(xml);
    return EINA_TRUE;
@@ -453,3 +481,4 @@ shotgun_iq_contact_otr_set(Shotgun_Auth *auth, const char *jid, Eina_Bool enable
    free(xml);
    return EINA_TRUE;
 }
+

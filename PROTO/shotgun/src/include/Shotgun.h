@@ -117,6 +117,7 @@ typedef enum
    SHOTGUN_IQ_EVENT_TYPE_ROSTER, /* Eina_List *Shotgun_User */
    SHOTGUN_IQ_EVENT_TYPE_INFO, /* Shotgun_User_Info */
    SHOTGUN_IQ_EVENT_TYPE_SERVER_QUERY, /* NULL */
+   SHOTGUN_IQ_EVENT_TYPE_DISCO_QUERY, /* Shotgun_Iq_Disco */
    SHOTGUN_IQ_EVENT_TYPE_SETTINGS, /* NULL */
    SHOTGUN_IQ_EVENT_TYPE_MAILNOTIFY, /* NULL */
    SHOTGUN_IQ_EVENT_TYPE_OTR_QUERY, /* Eina_List *Shotgun_User_Setting */
@@ -125,7 +126,8 @@ typedef enum
    SHOTGUN_IQ_EVENT_TYPE_BYTESTREAM,   /* Shotgun_Incoming_File, type BYTESTREAM */ 
    SHOTGUN_IQ_EVENT_TYPE_IBB, /* Shotgun_Incoming_File, type IBB */
    SHOTGUN_IQ_EVENT_TYPE_IDLE,   /* Shotgun_Iq_Last */
-   SHOTGUN_IQ_EVENT_TYPE_PING /* NULL */
+   SHOTGUN_IQ_EVENT_TYPE_PING, /* NULL */
+   SHOTGUN_IQ_EVENT_TYPE_BOB
 } Shotgun_Iq_Event_Type;
 
 typedef enum
@@ -257,6 +259,12 @@ typedef struct
 typedef struct
 {
    const char *jid;
+   Eina_List *features;
+} Shotgun_Iq_Disco;
+
+typedef struct
+{
+   const char *jid;
    const char *photo;
    const char *description;
    int priority;
@@ -322,7 +330,7 @@ EAPI Eina_Bool shotgun_iq_gsettings_mailnotify_get(Shotgun_Auth *auth);
 EAPI void shotgun_iq_gsettings_mailnotify_ping(Shotgun_Auth *auth);
 EAPI Eina_Bool shotgun_iq_ibb_error(Shotgun_Event_Iq *ev);
 EAPI Eina_Bool shotgun_iq_vcard_send(Shotgun_Auth *auth);
-EAPI Eina_Bool shotgun_message_send(Shotgun_Auth *auth, const char *to, const char *msg, Shotgun_Message_Status status);
+EAPI Eina_Bool shotgun_message_send(Shotgun_Auth *auth, const char *to, const char *msg, Shotgun_Message_Status status, Eina_Bool xhtml_im);
 EAPI Shotgun_User_Status shotgun_presence_status_get(Shotgun_Auth *auth);
 EAPI void shotgun_presence_status_set(Shotgun_Auth *auth, Shotgun_User_Status status);
 EAPI int shotgun_presence_priority_get(Shotgun_Auth *auth);
@@ -342,6 +350,10 @@ EAPI void shotgun_user_free(Shotgun_User *user);
 EAPI void shotgun_user_setting_free(Shotgun_User_Setting *sus);
 EAPI void shotgun_incoming_file_free(Shotgun_Incoming_File *file);
 EAPI void shotgun_iq_last_free(Shotgun_Iq_Last *last);
+EAPI Eina_Bool shotgun_iq_disco_info_get(Shotgun_Auth *auth, const char *user);
+EAPI void shotgun_iq_disco_info_free(Shotgun_Iq_Disco *disco);
+EAPI Eina_Bool shotgun_emoticon_custom_add(Shotgun_Auth *auth, const char *file, const char *text, const char *type);
+
 EAPI const char *shotgun_sha1_buffer(const unsigned char *data, size_t len);
 #ifdef __cplusplus
 }
