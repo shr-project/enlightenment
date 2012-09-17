@@ -1,0 +1,67 @@
+Eet 1.7.0
+
+Changes since Eet 1.6.0:
+--------------------------
+
+Additions:
+    * Add code to detect overrun and underrun during Eet Data Descriptor setup.
+    * Add eet_connection_empty.
+
+Fixes:
+    * Force destruction of all pending file when shuting down eet.
+    * Make eet_dictionary thread safe.
+    * Check that gnutls and openssl don't return below zero size during decipher.
+    * Fix crash when cyphering huge amount of data.
+    * Possible wrong size decoding of simple type.
+    * Don't strdup string around for nothing.
+    * Always initialize dictionary correctly.
+    * Fixed memory leak of eet_data_chunk_put().
+
+Eet 1.6.0
+
+Changes since Eet 1.5.0:
+--------------------------
+
+Additions:
+    * eet_file_get to return filenames of Eet_Files.
+    * added support for GNUTLS 3.x.
+    * eet_dictionary_count.
+    * EET_DATA_DESCRIPTOR_ADD_BASIC_VAR_ARRAY API
+
+Improvements:
+
+    * most allocations moved to mempools.
+    * support GNUTLS 3.x.
+    * add "eet -t FILE.EET" to get some stat out of an eet file.
+    * eet filenames are now stringshare'd.
+    * increased eet_connection packet size to 1Mb.
+    * make eet tool write to stdout if no output file is given.
+
+Eet 1.5.0
+
+Changes since Eet 1.4.0:
+--------------------------
+
+Additions:
+
+    * EET_DATA_DESCRIPTOR_ADD_LIST_STRING API for string lists
+    * eet_node API's to manipulate nodes
+    * eet_alias_get API
+    * eet_data_xattr_cipher_get and eet_data_xattr_cipher_set APIs
+    * EET_DATA_DESCRIPTOR_ADD_BASIC_ARRAY API
+
+Fixes:
+
+    * eet shutdown on windows
+    * test case to init eet
+    * compilation against libjpeg 8 on windows
+    * binary open on windows
+    * unopenable empty eet file for read/write
+
+Improvements:
+
+    * better speed and memory footprint of EET_G_UNION and EET_G_ARRAY
+    * use stringshare for mmaped file names
+    * use eina locking wrappers
+    * use eina_file for file IO
+    * jpeg encode and decode quality improved at expense of speed

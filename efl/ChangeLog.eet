@@ -1,0 +1,629 @@
+2008-04-20  Carsten Haitzler (The Rasterman)
+
+	1.0.0 release
+
+2008-04-28  Carsten Haitzler (The Rasterman)
+
+	* Fixed allocation of a list (EET_G_LIST) of simple types
+	(IS_SIMPLE_TYPE) to alloc the correct amount (using the correct type 
+	offset). Also fixed a hash (EET_G_HASH) of simple types too.
+
+2008-05-14  Cedric BAIL
+
+	* Fix conversion from a text to a hash (EET_G_HASH).
+
+	* Fix inlined string (EET_T_INLINED_STRING) dump/undump by introducing
+	the new word for the parser 'inlined'.
+
+2008-05-15  Cedric BAIL
+
+	* Fix a typo preventing the parsing of unsigned int (EET_T_UINT).
+
+	* Fix group of simple type by implicitly creating a structure with
+	the simple type in it.
+
+	* Remove dead code handling group of simple type and put assert
+	instead.
+
+2008-05-16  Cedric BAIL
+
+	* Fix eet_data_descriptor3_new as it purpose was to introduce
+	str_direct_alloc/str_direct_free usage. Application should now receive
+	direct pointer to read only (mmaped) string.
+
+	* Fix EET_FILE_MODE_READ_WRITE when file doesn't exist.
+
+	* Fix some miss use of efn->offset.
+
+	* Introduce unit test in EFL. The current set provide an overall
+	coverage rate of 2111 of 2607 lines (81.0%) for eet. It helped
+	finding and fixing the bugs of the last three days.
+	  The test suite is based on library check. At this time we need
+	cvs version, look at http://check.sourceforge.net/ to find it.
+	  The covering is done by gcov
+	  The html report is done by lcov version 1.6 or above.
+	You can found it at http://ltp.sourceforge.net/coverage/lcov.php.
+
+2008-05-19  Cedric BAIL
+
+	* Old Eet file format is now marked as deprecated and accessing old
+	file will display a warning. You can already remove completely all
+	code related to it, but it's still enabled by default. We will later
+	disable it by default and at some point drop the support completely.
+
+	* Remove use of strcpy and sprintf definitively.
+
+2008-06-02  Cedric BAIL
+
+	* Introduce tile support and the possibility to decompress eet
+	image inside an existing surface.
+
+2008-06-26  Cedric BAIL
+
+	* Massiv code cleanup.
+	* Add EET_G_ARRAY and EET_G_VAR_ARRAY support.
+	* Plan for version 2.0 API break of eet_data_descriptor_element_add.
+
+2008-07-17  Cedric BAIL
+
+	Implement various speed improvement :
+
+	* Use the precomputed hash value for Eet_Data_Chunk.
+	* Use a hash table instead of a list for pointer that need to be freed.
+	* Use directly the pointer from the dictionary to do a pointer
+	comparison instead of a strcmp.
+
+2008-07-24  Cedric BAIL
+
+	* Fix wrongly stored image when compressed size is bigger than
+	uncompressed. Fix bug #523.
+
+2008-07-24  Vincent Torri
+
+	* Add Visual Studio solution and vc projects to compile Eet
+	with Microsoft tools.
+
+	Written by Dmitriy Mazovka.
+
+2008-08-20  Cedric BAIL
+
+	* Fix the dictionnary check during eet_open.
+
+2008-08-22  Cedric BAIL
+
+	* Fix memory leaks in eet_data strings
+
+2008-09-03  Cedric BAIL
+
+	* Fix inline-jpeg decode to use mem buf, not tmp-file on platforms that
+	don't support mem_open() etc.
+	* Add eet_memopen_read() to be able to open an eet file already
+	mapped in memory (eg compiled-in or mmaped some other way).
+
+2008-09-11  Cedric BAIL
+
+	* Improve hash generation speed for big files.
+	* Inline more functions explicitly for speed.
+
+2008-09-25  Carsten Haitzler (The Rasterman)
+
+	1.1.0 release
+
+2008-10-20  Cedric BAIL
+
+	* Make use of eina.
+
+2008-10-23  Cedric BAIL
+
+	* Fix string in list and hash.
+
+2008-10-24  Cedric BAIL
+
+	* Fix array in eet_data.
+
+2008-11-13  Cedric BAIL
+
+	* Add crypto support to eet with OpenSSL.
+
+2008-11-13  Arnaud de Turckheim
+
+	* Add GNUtls support to eet.
+
+2008-11-14  Cedric BAIL
+
+	* Make password callback work with GNUtls.
+
+2008-11-26  Cedric BAIL
+
+	* Add a function to retrieve raw signature.
+
+2009-01-30  Cedric BAIL
+
+	* Fix a corrupted pointer use in eet_cipher.c
+
+2009-02-09  Chidambar Zinnoury
+
+	* Add some missing __UNUSED__ flags.
+
+2009-02-26  Luis Felipe Strano Moraes
+
+	* Fix problem reported by llvm
+
+2009-03-09  Cedric BAIL
+
+	* Add sha1 retrieval for an Eet_File.
+
+2009-03-17  Gustavo Sverzut Barbieri
+
+	* Force fsync() after data is written to file, solve ext4 issues.
+
+2009-03-18  Carsten Haitzler (The Rasterman)
+
+	* Disable fsync. Edit the code if you need it.
+
+2009-03-19  Cedric BAIL
+
+	* Make eet_data thread safe.
+
+2009-03-25  Cedric BAIL
+
+	* Fix eet pkg-config dependencies.
+	* Fix double init of gcry.
+
+2009-04-22  Carsten Haitzler (The Rasterman)
+
+	* Release eet 1.2.0
+
+2009-05-18  Cedric BAIL
+
+	* Cleanup Eet_Data code.
+
+2009-06-02  Cedric BAIL
+
+	* Make eet_node API usable.
+
+2009-06-14  Carsten Haitzler (The Rasterman)
+
+	* Release eet 1.2.1
+
+2009-07-08  Cedric BAIL
+
+	* Reorder gcry init to be used during gnutls init.
+
+2009-07-11  Hanspeter Portner
+
+	* Improve docs/examples in Eet.h
+
+2009-07-23  Cedric BAIL
+
+	* Fix init on system without SECMEM.
+
+2009-07-29  Carsten Haitzler (The Rasterman)
+
+        * Release eet 1.2.2
+
+2009-08-13  Cedric BAIL
+
+	* Deprecating eet_data_descriptor*_new.
+	* Add eet_data_descriptor_stream_new and eet_data_descriptor_file_new.
+	* Add eina helper.
+	* Cleanup Eet_Data_Descriptor code.
+
+2009-08-16  Carsten Haitzler (The Rasterman)
+
+	* Fix eet data encode to encode empty structs etc. so save saves
+          something as opposed to nothing
+
+2009-08-16  Carsten Haitzler (The Rasterman)
+
+	* Fix documentation of eet_data_write() and eet_write() for return
+          value to return # of bytes written, not 1 or 0
+
+2009-08-16  Vincent Torri
+
+	* Fix build with suncc (missing alloca() declaration in eet_cipher.c)
+
+2009-09-15  Mathieu Taillefumier
+
+	* Use new Eina_Log infrastructure to report error.
+
+2009-09-15  Cedric BAIL
+
+	* Remove apparently useless eet_freeleak_* from eet_data.
+
+2009-09-29  Cedric BAIL
+
+	* Add Fixed Point support and make it possible to switch from float
+	and double to any fixed point variant supported by eina.
+
+	Note: File saved with fixed point could be read by older version of
+	eet library with EET_T_DOUBLE type.
+
+2009-10-01  Mathieu Taillefumier
+
+	* remove useless Eina_Log macros.
+
+2009-10-01  Vincent Torri
+
+	* Check the returned value of eet_init() in the binary.
+	* Use binary mode of fopen() in eet_main() for Windows compatibility.
+
+2009-10-09  Vincent Torri
+
+	* initialize eina first in eet_init().
+
+2009-11-02  Vincent Torri
+
+	* allow generation of one single file with all source code in it.
+	See configure help to enable it (--enable-amalgamation).
+
+2009-11-11  Vincent Torri
+
+	* Add check on libgcrypt library in configure. Needed when GNUtls
+	support is enabled.
+
+2009-12-02  Carsten Haitzler (The Rasterman)
+
+        * Release eet 1.2.3
+
+2009-12-03  Cedric BAIL
+
+	* Make all operation on Eet_File thread safe.
+
+2009-12-07  Cedric BAIL
+
+	* Fix error when retrieving a different float type than the stored one.
+	* Reduce conversion with a little memory overhead.
+
+2009-12-07  Vincent Torri
+
+	* Include winsock2.h in eet_image.c for htonl definition on Windows.
+	* Fix Visual Studio project files
+
+2009-12-11  Cedric BAIL
+
+	* Make eet_data_descriptor_free safe to call on NULL pointer.
+
+2009-12-21  Cedric BAIL
+
+	* More work on eet_node dump code.
+
+2009-12-28  Cedric BAIL
+
+	* Add fully functionnal eet_node dump code.
+
+2009-12-29  Cedric BAIL
+
+	* Don't mess up when memory realloc failed during data descriptor creation.
+
+2010-01-04  Carsten Haitzler (The Rasterman)
+
+        * Fix another thread deadlock in mutex handling even in a single-threaded app.
+
+2010-01-12  Cedric BAIL
+
+	* Rewrite Eet_Data. Now you can do list/hash/array of strings and all
+	the test suite is passing.
+	* Add eet_data_node_decode_cipher and eet_data_node_read_cipher.
+
+2010-01-15  Cedric BAIL
+
+	* Fix amalgamation.
+
+2010-01-16  Vincent Torri
+
+	* eet_cipher.c: Fix arithmetic pointer on void *
+
+2010-01-17  Cedric BAIL
+
+	* Add a mempool for Eet_Node.
+
+2010-01-21  Cedric BAIL
+
+	* Add experimental API to walk Eet_Node tree.
+
+2010-01-22  Cedric BAIL
+
+	* Add VAR_ARRAY tests.
+
+2010-01-27  Cedric BAIL
+
+	* Improve security by zeroying cipher material as soon as possible.
+
+2010-01-27  Cedric BAIL
+
+	* Improve security by zeroying cipher material as soon as possible.
+
+2010-03-01  Albin Tonnerre
+
+	* Fix override of global symbols.
+
+2010-03-15  Adam Simpkins / Cedric BAIL
+
+	* Fix clearcache race condition.
+
+2010-04-02  Cedric BAIL
+
+	* Fix eet_data_node_read_cipher return type.
+	* Add Eet_Connection.
+
+2010-04-07  Cedric BAIL
+
+	* Improve eet_eina_file_data_descriptor_class_set by using
+	eina_hash_direct_add to avoid duplication hash key string.
+
+2010-04-08  Cedric BAIL
+
+	* Fix file corruption reported by Tiago Falcao <tiago@profusion.mobi>
+
+2010-04-09  Cedric BAIL
+
+	* Add eet_sync.
+	* Only delete the file at the last possible time.
+	* Reduce open file descriptor.
+
+2010-04-16  Cedric BAIL
+
+	* Handle fixed point in data stream.
+
+2010-04-21  Cedric BAIL
+
+	* Add EET_G_UNION and EET_G_VARIANT.
+
+2010-05-29  Carsten Haitzler (The Rasterman)
+
+	* Add EET_VERSION_MAJOR, EET_VERSION_MINOR.
+        * Add Eet_Version, eet_version.
+        * Make configure.ac use m4 defines for version
+        * Support SVN revision in version check
+
+2010-06-07  Carsten Haitzler (The Rasterman)
+
+        * Release eet 1.3.0
+
+2010-06-27  Carsten Haitzler (The Rasterman)
+
+        * Release eet 1.3.2
+
+2010-06-29  Vincent Torri
+
+        * On Windows 64, long is of size 32 bits and not 64 bits. Also
+	LONG_BIT is not defined on Windows.
+
+2010-06-29  Cedric BAIL
+
+	* Add eet_alias support.
+	* Fix possible dead lock in eet_write_cipher.
+
+2010-07-08  Carsten Haitzler (The Rasterman)
+
+        * Moved Eet.h into $includedir/eet-MAJOR_VERSION/
+
+2010-07-15  Vincent Torri
+
+        * Add native Windows thread support instead of using pthread
+	(less overhead). On other OS, pthread is still used by default.
+	Pass --enable-win32-threads to activate thread support on
+	Windows.
+
+2010-07-20  Cedric BAIL
+
+	* Improve file change detection in eet_open by checking size also.
+
+2010-08-02  Cedric BAIL
+
+	* Fix bug in eet_connection code when running on 32bits machine.
+
+2010-08-06  Cedric BAIL
+
+	* Add EET_DATA_DESCRIPTOR_ADD_HASH_STRING.
+
+2010-08-06  Cedric BAIL
+
+	* Break eet_eina_* function helper to provide a clean API/ABI to
+	prevent futur break. This should prevent the ABI break that was
+	introduced with release 1.3.0.
+
+	* Add a specific allocator for array. This should fix wrong allocation
+	case discovered with recent edje file format change.
+
+2010-08-23  Carsten Haitzler (The Rasterman)
+
+        * Fix some cppcheck complaints - all of them bogus though.
+        Nothing actually fixed.
+
+2010-08-27  Cedric BAIL
+
+	* Prevent the build of eet data structure that doesn't match what
+	the application is expecting.
+
+2010-09-02  Cedric BAIL
+
+	* Fix bug of ever growing dictionnary and improve strcmp comparison.
+
+2010-11-12  Cedric BAIL
+
+	* Don't try to read broken file when open in READ_WRITE mode.
+
+2010-11-14  Cedric BAIL
+
+	* Fix bug with cypher and compression used together.
+
+2010-11-21  Carsten Haitzler (The Rasterman)
+
+	* Fix another bug related to cipher and compression (leak and
+        bad free)
+
+2010-11-25  Cedric BAIL
+
+	* Add EET_DATA_DESCRIPTOR_ADD_VAR_ARRAY_STRING.
+
+2010-11-26  Cedric BAIL
+
+	* Reduce memory used by Eet dictionary.
+
+2010-11-29  Cedric BAIL
+
+	* Improve speed of Eet_String users. It does impact all string
+	encoding/decoding, but even faster for stringshare encoding.
+
+	* Improve speed when decoding mostly array with eet_data_read.
+
+2010-12-03  Cedric BAIL
+
+	* Improve portability.
+
+2010-12-07  Carsten Haitzler (The Rasterman)
+
+	* Move raw function pointer defs to typedefs in public API for
+        readability improvements.
+
+2011-01-29  Carsten Haitzler (The Rasterman)
+
+	 * 1.4.0 release
+
+2011-01-29  Vincent Torri
+
+	* Use eina_stringshare_add() instead of strdup() on mmaped file names
+	on Windows. This fix eet shut down on Windows.
+
+2011-02-14  Cedric BAIL
+
+	* Improve Eet_Data to make decoding of EET_G_UNION and EET_G_*ARRAY
+	faster and less memory heavy.
+
+2011-05-14  Cedric BAIL
+
+	* Use Eina_Lock.
+	* Sync GNUTLS initialisation with Eina.
+
+2011-05-17  Cedric BAIL
+
+	* Use Eina_File.
+	* Fix test forgetting to initialize eet.
+
+2011-05-23  Vincent Torri
+
+	* Fix compilation with libjpeg 8 on Windows.
+
+2011-06-10  Cedric BAIL
+
+	* Add EET_DATA_DESCRIPTOR_ADD_LIST_STRING helper to define List of char *.
+
+2011-07-04  Mike Blumenkrantz
+
+        * Add functions to manipulate nodes:
+            eet_node_children_get, eet_node_next_get, eet_node_parent_get,
+            eet_node_type_get, eet_node_value_get, eet_node_name_get
+        * Fix segmentation faults in several eet_node functions
+
+2011-07-16  Vincent Torri
+
+	* On Windows, open() in text mode followed by fdopen() in
+	binary mode does not create a stream in binary mode.
+	So add O_BINARY to open().
+
+2011-07-29  Mike Blumenkrantz
+
+        * Add eet_alias_get to return the destination name of an alias
+
+2011-09-15  Cedric Bail
+
+	* Add eet_data_xattr_cipher_get and eet_data_xattr_cipher_set.
+
+2011-10-04  Carsten Haitzler (The Rasterman)
+
+	* Fix issue where an empty eet file (no keys) is not openable
+        for read/write anymore. Allow it.
+
+2011-10-28  David Seikel (onefang)
+
+	* Added a new macro for adding arrays of basic types.
+	   EET_DATA_DESCRIPTOR_ADD_BASIC_ARRAY
+
+2011-11-16  Carsten Haitzler (The Rasterman)
+
+	* JPEG encode and decode in eet now uses ISLOW (not IFAST) due to
+        noticable quality losses in the chase for speed. It will use
+        IFAST for quality less than 60 when encoding
+
+2011-12-02  Carsten Haitzler (The Rasterman)
+
+        1.5.0 release
+
+2011-12-02  Mike Blumenkrantz
+
+        * added eet_file_get to return the filename of an Eet_File
+        * Eet_File filenames are now stringshared
+        * added mempool allocators
+
+2011-12-29  Carsten Haitzler (The Rasterman)
+
+        * increase eet_connection packet size to 1Mb - more reasonable.
+
+2012-01-07  Boris Faure (billiob)
+
+        * make eet tool write to standard output if no output file given.
+
+2012-02-09  Cedric Bail
+
+	* add support for GNUTLS 3.x.
+
+2012-02-10  Cedric Bail
+
+	* add eet_dictionary_count.
+	* add "eet -t FILE.EET".
+
+2012-03-29  David Seikel (onefang)
+
+	* Added a new macro for adding variable arrays of basic types.
+	   EET_DATA_DESCRIPTOR_ADD_BASIC_VAR_ARRAY
+
+2012-04-26 Carsten Haitzler (The Rasterman)
+
+        1.6.0 release
+
+2012-05-11  Cedric Bail
+
+	* Force destruction of all pending file when shuting down eet.
+
+2012-05-14  Carsten Haitzler (The Rasterman)
+
+        * Add LZ4/LZ4HC compression & decompression capabilities
+
+2012-05-15  Cedric Bail
+
+	* Make eet_dictionary thread safe.
+
+2012-05-30  Cedric Bail
+
+	* Check that gnutls and openssl don't return below zero size during decipher.
+
+2012-06-27  Leandro Santiago
+
+	* Fix crash when cyphering huge amount of data.
+
+2012-07-16  Cedric Bail
+
+	* Add code to detect overrun and underrun in eet_data_descriptor_element_add.
+	* Fix possible wrong size decoding for simple type.
+
+2012-08-09  Cedric Bail
+
+	* Don't copy string around for nothing.
+
+2012-08-22 Igor Murzov (GArik_)
+
+	* Fixed memory leak of eet_data_chunk_put().
+
+2012-08-24  Cedric Bail
+
+	* Add eet_connection_empty.
+
+2012-08-26  Cedric Bail
+
+	* Correctly initialize dictionary correctly.
+
+2012-08-30  Carsten Haitzler (The Rasterman)
+
+        1.7.0 release

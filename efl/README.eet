@@ -1,0 +1,68 @@
+Eet 1.7.99
+
+******************************************************************************
+
+ FOR ANY ISSUES PLEASE EMAIL:
+ enlightenment-devel@lists.sourceforge.net
+
+******************************************************************************
+
+Requirements:
+-------------
+Must have:
+  libc
+  zlib
+  libjpeg
+  eina (1.1.0 or better) 
+  (For windows you also need: evil)
+
+Optional requirements:
+  gnutls (1.7.6 or better)
+  openssl
+
+Eet is a tiny library designed to write an arbitrary set of chunks of
+data to a file and optionally compress each chunk (very much like a
+zip file) and allow fast random-access reading of the file later
+on. It does not do zip as a zip itself has more complexity than is
+needed, and it was much simpler to implement this once here.
+
+It also can encode and decode data structures in memory, as well as
+image data for saving to eet files or sending across the network to
+other machines, or just writing to arbitrary files on the system. All
+data is encoded in a platform independent way and can be written and
+read by any architecture. This data once encoded can be sent to
+another process or machine and decoded on the other end without
+needing to go into an eet file. Eet can also optionally encrypt files
+and use digital signatures (with gnutls or openssl support).
+
+------------------------------------------------------------------------------
+COMPILING AND INSTALLING:
+
+  ./configure
+  make
+(do this as root unless you are installing in your users directories):
+  make install
+
+To get the coverage report:
+    make coverage
+The report is created in the coverage/ subdir
+If you want to be able to run coverage test over eet, you will need gcov 
+(usually any distro provides it) and lcov from:
+  http://ltp.sourceforge.net/coverage/lcov.php.
+For coverage support you also need "make check" support with the check
+library (see below).
+ 
+For compilation with MinGW, fnmatch.h is probably missing. That file can be
+found here:
+  http://www.koders.com/c/fid2B518462CB1EED3D4E31E271DB83CD1582F6EEBE.aspx
+It should be installed in the mingw include directory.
+
+For compilation with mingw32ce, run configure with the option
+  --host=arm-wince-mingw32ce
+
+For compilation with cegcc, follow the wiki:
+  http://wiki.enlightenment.org/index.php/Category:EFL_Windows_CE
+
+If you want to be able to run "make check", you need library check
+  from http://check.sourceforge.net/
+
