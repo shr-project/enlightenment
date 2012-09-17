@@ -654,7 +654,6 @@ collections {
 #include "widgets/frame.edc"
 #include "widgets/tooltip.edc"
 #include "widgets/hover.edc"
-#include "widgets/ctxpopup.edc"
 #include "widgets/entry.edc"
 #include "widgets/bubble.edc"
 #include "widgets/photo.edc"
