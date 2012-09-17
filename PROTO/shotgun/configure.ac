@@ -76,6 +76,7 @@ AC_SUBST([pkgconfig_requires_private])
 
 
 PKG_CHECK_MODULES([SHOTGUN], [eina >= 1.0.999 ecore >= 1.0.999 ecore-con >= 1.0.999])
+requirements_pc_shotgun="eina >= 1.0.999 ecore >= 1.0.999 ecore-con >= 1.0.999"
 
 have_gui="no"
 want_gui="yes"
@@ -86,7 +87,10 @@ AC_ARG_ENABLE([gui],
 if test "x$want_gui" != "xno"; then
    PKG_CHECK_MODULES([GUI],
       [eet >= 1.4.0 evas >= 1.0.999 ecore-file >= 1.0.999 ecore-imf >= 1.0.999 edje >= 1.0.999 elementary efx],
-      [have_gui="yes"],
+      [
+       have_gui="yes"
+       requirements_pc_shotgun+="eet >= 1.4.0 evas >= 1.0.999 ecore-file >= 1.0.999 ecore-imf >= 1.0.999 edje >= 1.0.999 elementary efx"
+      ],
       [have_gui="no"]
    )
 else
@@ -115,6 +119,7 @@ if test "x$want_azy" != "xno"; then
       [
        AC_DEFINE(HAVE_AZY, 1, [Azy support])
        have_azy="yes"
+       requirements_pc_shotgun+=" azy >= 1.0.0"
       ],
       [have_azy="no"]
    )
@@ -137,6 +142,7 @@ if test "x$want_edbus" != "xno"; then
       [
        AC_DEFINE(HAVE_DBUS, 1, [DBUS support])
        have_edbus="yes"
+       requirements_pc_shotgun+=" edbus >= 1.0.0"
       ],
       [have_edbus="no"]
    )
@@ -159,6 +165,7 @@ if test "x$want_enotify" != "xno"; then
       [
        AC_DEFINE(HAVE_NOTIFY, 1, [DBUS Notification support])
        have_enotify="yes"
+       requirements_pc_shotgun+=" enotify >= 1.0.0"
       ],
       [have_enotify="no"]
    )
@@ -168,6 +175,8 @@ fi
 if test "x$want_enotify" = "xyes" -a "x$have_enotify" = "xno"; then
     AC_MSG_ERROR([enotify support requested, but not found by pkg-config.])
 fi
+
+AC_SUBST([requirements_pc_shotgun])
 
 #EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
 # write output
