@@ -1037,7 +1037,7 @@ xml_iq_filetransfer_read(Shotgun_Auth *auth, xml_node &si)
 {
 /*
 <iq type='set' id='offer1' to='receiver@jabber.org/resource'>
-  <si xmlns='http://jabber.org/protocol/si' 
+  <si xmlns='http://jabber.org/protocol/si'
       id='a0'
       mime-type='text/plain'
       profile='http://jabber.org/protocol/si/profile/file-transfer'>
@@ -1149,10 +1149,10 @@ xml_iq_bytestream_read(Shotgun_Auth *auth, xml_node &query)
    ret->ev = file;
    ret->account = auth;
 
-   xml = xml_iq_write_get_bytestream(shotgun_jid_get(auth), 
-                                      file->from, 
+   xml = xml_iq_write_get_bytestream(shotgun_jid_get(auth),
+                                     file->from,
                                      file->id,
-                                     file->sid, 
+                                     file->sid,
                                      &len);
    shotgun_write(auth->svr, xml, len);
    free(xml);
@@ -1207,8 +1207,8 @@ xml_iq_ibb_read(Shotgun_Auth *auth, xml_node &query)
    ret->account = auth;
 
    //xml_iq_bytestream_result(ret);
-   xml = xml_iq_write_get_ibb(shotgun_jid_get(auth), 
-                                file->from, 
+   xml = xml_iq_write_get_ibb(shotgun_jid_get(auth),
+                                file->from,
                               file->id,
                               &len);
    shotgun_write(auth->svr, xml, len);
@@ -1301,7 +1301,6 @@ xml_iq_vcard_read(Shotgun_Auth *auth, xml_node iq, xml_node node)
           }
      }
    return ret;
-   
 }
 
 static Shotgun_Event_Iq *
@@ -1397,18 +1396,18 @@ xml_iq_read(Shotgun_Auth *auth, char *xml, size_t size)
 
         /**
          * Some IQ tags don't have a xmlns property (ie XEP-0199 ping answer)
-         * We'll have to compare the ID to previously sent IQ's ID in order to 
+         * We'll have to compare the ID to previously sent IQ's ID in order to
          * identify it.
          */
         id = doc.first_child().attribute("id").value();
-        if ( !strncmp(id, "ping", 4))
-            shotgun_ping_received(auth);
+        if (!strncmp(id, "ping", 4))
+          shotgun_ping_received(auth);
         break;
       case SHOTGUN_IQ_TYPE_GET:
         if (!strcmp(str, XML_NS_DISCO_INFO))
           return xml_iq_disco_info_write(auth, node);
         if (!strcmp(str, XML_NS_PING))
-            return xml_iq_pong_write(auth, node);
+          return xml_iq_pong_write(auth, node);
         break;
       case SHOTGUN_IQ_TYPE_SET:
         if (!strcmp(str, XML_NS_ROSTER))
@@ -1662,13 +1661,13 @@ xml_vcard_write(Shotgun_User_Info *info, void *vcard, Eina_Bool lcasetags)
     * Stupid patch here. When sending vCard within <presence>, the following
     * tags HAVE to be in lower case (even if sending only an empty <photo/>).
     * BUT ! when <iq>, they HAVE to be upper case.
-    * If this syntax is wrong, other clients wont receive auto vCard updates, 
+    * If this syntax is wrong, other clients wont receive auto vCard updates,
     * they'll have to ask for it.
     * So... : lcasetags :(
-    */ 
+    */
    xml_node *node, fn_node, ph_node, t_node, d_node;
    node = (xml_node *)vcard;
-   
+
    if (!info)
      {
         if (lcasetags) (*node).append_child("photo");
@@ -1745,12 +1744,12 @@ xml_presence_read(Shotgun_Auth *auth, char *xml, size_t size)
              ret->status = SHOTGUN_USER_STATUS_NONE;
              if (t[0] == 's')   /* Starts with a 's' -> subscribe */
                ret->type = SHOTGUN_PRESENCE_TYPE_SUBSCRIBE;
-             else if (t[2] == 's') /** Third char is a 's' -> unsubscribe 
-                                     *  Can't check if first char is a 'u' cause
-                                     *  it could be "unavailable"
+             else if (t[2] == 's') /** Third char is a 's' -> unsubscribe
+                                     * Can't check if first char is a 'u' cause
+                                     * it could be "unavailable"
                                      */
-                ret->type = SHOTGUN_PRESENCE_TYPE_UNSUBSCRIBE;
-             else 
+               ret->type = SHOTGUN_PRESENCE_TYPE_UNSUBSCRIBE;
+             else
                ret->type = SHOTGUN_PRESENCE_TYPE_UNAVAILABLE;
           }
      }

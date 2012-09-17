@@ -228,7 +228,7 @@ shotgun_iq_si_result(Shotgun_Event_Iq *ev)
 {
    size_t len;
    char *xml;
-   Shotgun_Incoming_File *file; 
+   Shotgun_Incoming_File *file;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(ev->account, EINA_FALSE);
 
@@ -245,15 +245,15 @@ shotgun_iq_bytestream_result(Shotgun_Event_Iq *ev)
 {
    size_t len;
    char *xml;
-   Shotgun_Incoming_File *file; 
+   Shotgun_Incoming_File *file;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(ev->account, EINA_FALSE);
 
    file = (Shotgun_Incoming_File *)ev->ev;
-   xml = xml_iq_write_get_bytestream(shotgun_jid_get(ev->account), 
-                                     file->from, 
+   xml = xml_iq_write_get_bytestream(shotgun_jid_get(ev->account),
+                                     file->from,
                                      file->id,
-                                     file->sid, 
+                                     file->sid,
                                      &len);
    shotgun_write(ev->account->svr, xml, len);
    free(xml);
@@ -266,7 +266,7 @@ shotgun_iq_ibb_error(Shotgun_Event_Iq *ev)
 {
    size_t len;
    char *xml;
-   Shotgun_Incoming_File *file; 
+   Shotgun_Incoming_File *file;
 
    EINA_SAFETY_ON_NULL_RETURN_VAL(ev->account, EINA_FALSE);
 
@@ -279,16 +279,17 @@ shotgun_iq_ibb_error(Shotgun_Event_Iq *ev)
 
 
 Eina_Bool
-shotgun_iq_vcard_send(Shotgun_Auth *auth){
+shotgun_iq_vcard_send(Shotgun_Auth *auth)
+{
    size_t len;
    char *xml;
-   
+
    EINA_SAFETY_ON_NULL_RETURN_VAL(auth, EINA_FALSE);
-   
+
    xml = xml_iq_write_vcard(auth, &len);
    shotgun_write(auth->svr, xml, len);
    free(xml);
-   
+
    return EINA_TRUE;
 }
 

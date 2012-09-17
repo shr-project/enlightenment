@@ -57,7 +57,7 @@ ping(Shotgun_Auth *auth)
    return EINA_TRUE;
 }
 
-Eina_Bool 
+Eina_Bool
 shotgun_ping_received(Shotgun_Auth *auth)
 {
    auth->pending_ping = 0;
@@ -356,7 +356,7 @@ shotgun_new(const char *svr_name, const char *username, const char *domain)
    if (domain) auth->from = eina_stringshare_add(domain);
    auth->resource = eina_stringshare_add("SHOTGUN!");
    if (username && domain)
-     { 
+     {
         auth->jid = eina_stringshare_printf("%s@%s/%s", auth->user, auth->from, auth->resource);
         auth->base_jid = eina_stringshare_printf("%s@%s", auth->user, auth->from);
      }
@@ -533,7 +533,7 @@ shotgun_ping_delay_set(Shotgun_Auth *auth, double delay)
 {
    EINA_SAFETY_ON_NULL_RETURN(auth);
    auth->ping_delay = delay;
-   if (auth->et_ping) 
+   if (auth->et_ping)
       ecore_timer_interval_set(auth->et_ping, auth->ping_delay);
 }
 
@@ -542,7 +542,7 @@ shotgun_ping_timeout_set(Shotgun_Auth *auth, double timeout)
 {
    EINA_SAFETY_ON_NULL_RETURN(auth);
    auth->ping_timeout = timeout;
-   if (auth->et_ping_timeout) 
+   if (auth->et_ping_timeout)
       ecore_timer_interval_set(auth->et_ping_timeout, auth->ping_timeout);
 }
 
