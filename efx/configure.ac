@@ -84,8 +84,8 @@ fi
 AC_SUBST([pkgconfig_requires_private])
 
 # doxygen program for documentation building
-#EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
 
+EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
 
 ### Checks for libraries
 
@@ -157,6 +157,8 @@ AC_FUNC_ALLOCA
 AC_CONFIG_FILES([
   Makefile
   data/Makefile
+  doc/Makefile
+  doc/Doxyfile
   src/Makefile
   src/lib/Makefile
   src/bin/Makefile
@@ -178,6 +180,7 @@ echo
 echo
 echo "Configuration Options Summary:"
 echo
+echo "  Documentation........: ${build_doc}"
 echo "  Tests................: ${want_tests} (Elementary: ${want_test_elm})"
 echo
 echo "Compilation............: make (or gmake)"

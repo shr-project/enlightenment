@@ -3,7 +3,7 @@ ACLOCAL_AMFLAGS = -I m4
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = efx.pc
 
-SUBDIRS = src data
+SUBDIRS = src data doc
 
 MAINTAINERCLEANFILES = \
 Makefile.in \
@@ -39,3 +39,9 @@ CLEANFILES = efx-*.tar.bz2 efx-*.tar.gz
 
 maintainer-clean-local:
 	rm -rf autom4te.cache
+
+.PHONY: doc
+
+doc:
+	@echo "entering doc/"
+	make -C doc doc
