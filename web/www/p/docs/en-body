@@ -98,12 +98,20 @@ libraries is on the right.
    <?php blinkurl("i/logo-s.png", "EINA", "http://docs.enlightenment.org/auto/eina"); ?>
   </td>
   <td>
-   <?php blinkurl("i/logo-s.png", "ELEMENTARY", "http://docs.enlightenment.org/auto/elementary"); ?>
+   <?php blinkurl("i/logo-s.png", "EIO", "http://docs.enlightenment.org/auto/eio"); ?>
   </td>
  </tr>
  <tr>
   <td>
+   <?php blinkurl("i/logo-s.png", "ELEMENTARY", "http://docs.enlightenment.org/auto/elementary"); ?>
+  </td>
+  <td>
    <?php blinkurl("i/logo-s.png", "EMBRYO", "http://docs.enlightenment.org/auto/embryo"); ?>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EMOTION", "http://docs.enlightenment.org/auto/emotion"); ?>
   </td>
   <td>
    <?php blinkurl("i/logo-s.png", "EPDF", "http://docs.enlightenment.org/auto/epdf"); ?>
@@ -111,27 +119,19 @@ libraries is on the right.
  </tr>
  <tr>
   <td>
+   <?php blinkurl("i/logo-s.png", "EPHYSICS", "http://docs.enlightenment.org/auto/ephysics"); ?>
+  </td>
+  <td>
    <?php blinkurl("i/logo-s.png", "ETHUMB", "http://docs.enlightenment.org/auto/ethumb"); ?>
   </td>
+ </tr>
+ <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EVAS", "http://docs.enlightenment.org/auto/evas"); ?>
   </td>
- </tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EVIL", "http://docs.enlightenment.org/auto/evil"); ?>
   </td>
-  <td>
-   <?php blinkurl("i/logo-s.png", "EMOTION", "http://docs.enlightenment.org/auto/emotion"); ?>
-  </td>
- <tr>
- <tr>
-  <td>
-   <?php blinkurl("i/logo-s.png", "EIO", "http://docs.enlightenment.org/auto/eio"); ?>
-  </td>
-  <td>
-   <?php blinkurl("i/logo-s.png", "EPHYSICS", "http://docs.enlightenment.org/auto/ephysics"); ?>
-  </td>
- </tr>
  </tr>
 </table>
 </center>
