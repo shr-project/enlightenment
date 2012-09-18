@@ -152,6 +152,7 @@ data.item: "gtk-theme" "Tenebrific";
 
 collections {
 #include "e/background.edc"
+#include "e/connman.edc"
 #include "e/desklock.edc"
 #include "e/evry.edc"
 #include "e/gadman.edc"
