@@ -165,8 +165,6 @@ void shotgun_iq_feed(Shotgun_Auth *auth, char *data, size_t size);
 Shotgun_Event_Presence *shotgun_presence_new(Shotgun_Auth *auth);
 void shotgun_presence_feed(Shotgun_Auth *auth, char *data, size_t size);
 
-char *shotgun_base64_encode(const unsigned char *string, size_t len, size_t *size);
-unsigned char *shotgun_base64_decode(const char *string, size_t len, size_t *size);
 void shotgun_strtohex(unsigned char *digest, size_t len, char *ret);
 void shotgun_md5_hmac_encode(unsigned char *digest, const char *string, size_t size, const void *key, size_t ksize);
 

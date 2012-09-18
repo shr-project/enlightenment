@@ -329,6 +329,7 @@ EAPI void shotgun_iq_gsettings_mailnotify_set(Shotgun_Auth *auth, Eina_Bool enab
 EAPI Eina_Bool shotgun_iq_gsettings_mailnotify_get(Shotgun_Auth *auth);
 EAPI void shotgun_iq_gsettings_mailnotify_ping(Shotgun_Auth *auth);
 EAPI Eina_Bool shotgun_iq_ibb_error(Shotgun_Event_Iq *ev);
+EAPI Eina_Bool shotgun_iq_si_result(Shotgun_Event_Iq *ev);
 EAPI Eina_Bool shotgun_iq_vcard_send(Shotgun_Auth *auth);
 EAPI Eina_Bool shotgun_message_send(Shotgun_Auth *auth, const char *to, const char *msg, Shotgun_Message_Status status, Eina_Bool xhtml_im);
 EAPI Shotgun_User_Status shotgun_presence_status_get(Shotgun_Auth *auth);
@@ -355,6 +356,10 @@ EAPI void shotgun_iq_disco_info_free(Shotgun_Iq_Disco *disco);
 EAPI Eina_Bool shotgun_emoticon_custom_add(Shotgun_Auth *auth, const char *file, const char *text, const char *type);
 
 EAPI const char *shotgun_sha1_buffer(const unsigned char *data, size_t len);
+
+EAPI char *shotgun_base64_encode(const unsigned char *string, size_t len, size_t *size);
+EAPI unsigned char *shotgun_base64_decode(const char *string, size_t len, size_t *size);
+
 #ifdef __cplusplus
 }
 #endif
