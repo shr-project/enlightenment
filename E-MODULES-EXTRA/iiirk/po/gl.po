@@ -1,0 +1,155 @@
+# Galician translation of iiirk
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: iiirk\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_int_config_iiirk.c:49
+#: src/e_int_config_iiirk.c:64
+#: src/e_mod_main.c:1517
+msgid "IIirk Applications"
+msgstr "Aplicativos de IIirk"
+
+#: src/e_int_config_iiirk.c:152
+msgid "All Applications"
+msgstr "Todas os aplicativos"
+
+#: src/e_int_config_iiirk.c:159
+#: src/e_mod_config.c:115
+msgid "Add"
+msgstr "Engadir"
+
+#: src/e_int_config_iiirk.c:166
+msgid "Selected Applications"
+msgstr "Aplicativos seleccionados"
+
+#: src/e_int_config_iiirk.c:174
+msgid "Up"
+msgstr "Arriba"
+
+#: src/e_int_config_iiirk.c:179
+msgid "Down"
+msgstr "Abaixo"
+
+#: src/e_int_config_iiirk.c:185
+#: src/e_mod_config.c:117
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/e_mod_main.c:232
+msgid "IIirk"
+msgstr "IIirk"
+
+#: src/e_mod_main.c:361
+#: src/e_mod_main.c:773
+msgid "Settings"
+msgstr "Preferencias"
+
+#: src/e_mod_main.c:1515
+msgid "Applications"
+msgstr "Aplicativos"
+
+#: src/e_mod_main.c:1519
+msgid "Internal"
+msgstr "Interna"
+
+#: src/e_mod_main.c:1520
+msgid "IIirk Other"
+msgstr "IIirk Outros"
+
+#: src/e_mod_config.c:55
+msgid "Iiirk Settings"
+msgstr "Preferencias de Iiirk"
+
+#: src/e_mod_config.c:107
+msgid "Selected Iiirk Source"
+msgstr "Fonte seleccionada de Iiirk"
+
+#: src/e_mod_config.c:119
+msgid "Configure"
+msgstr "Configurar"
+
+#: src/e_mod_config.c:128
+msgid "General Settings"
+msgstr "Preferencias xerais"
+
+#: src/e_mod_config.c:129
+msgid "Hide window from any list when iconified"
+msgstr "Ocultar xanela de calquera lista cando estea minimizada"
+
+#: src/e_mod_config.c:131
+msgid "Show Icon Label"
+msgstr "Amosa-la etiqueta da icona"
+
+#: src/e_mod_config.c:134
+msgid "Display Name"
+msgstr "Mostrar nome"
+
+#: src/e_mod_config.c:136
+msgid "Display Title"
+msgstr "Mostrar título"
+
+#: src/e_mod_config.c:138
+msgid "Display Class"
+msgstr "Mostrar clase"
+
+#: src/e_mod_config.c:140
+msgid "Display Icon Name"
+msgstr "Mostrar nome da icona"
+
+#: src/e_mod_config.c:142
+msgid "Display Border Caption"
+msgstr "Amosar contornos"
+
+#: src/e_mod_config.c:147
+msgid "Screen"
+msgstr "Pantalla"
+
+#: src/e_mod_config.c:167
+msgid "Show windows from all screens"
+msgstr "Amosar xanelas de tódalas pantallas"
+
+#: src/e_mod_config.c:172
+msgid "Show windows from current screen"
+msgstr "Amosar xanelas da pantalla actual"
+
+#: src/e_mod_config.c:178
+msgid "Desktop"
+msgstr "Escritorio"
+
+#: src/e_mod_config.c:181
+msgid "Show windows from all desktops"
+msgstr "Amosar xanelas de todos os escritorios"
+
+#: src/e_mod_config.c:186
+msgid "Show windows from active desktop"
+msgstr "Amosar xanelas do escritorio activo"
+
+#: src/e_mod_config.c:225
+msgid "Create new IIirk source"
+msgstr "Crear nova fonte  IIirk"
+
+#: src/e_mod_config.c:226
+msgid "Enter a name for this new source:"
+msgstr "Escriba un nome da nova fonte:"
+
+#: src/e_mod_config.c:241
+#, c-format
+msgid "You requested to delete \"%s\".<br><br>Are you sure you want to delete this iiirk source?"
+msgstr "Solicitou eliminar \"%s\".<br><br>Está seguro de que quere eliminar esta fonte de  iiirk?"
+
+#: src/e_mod_config.c:245
+msgid "Are you sure you want to delete this iiirk source?"
+msgstr "Está seguro de que quere eliminar esta fonte de  iiirk?"
+

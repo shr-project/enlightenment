@@ -1,0 +1,56 @@
+# Italian translation for Everything-aspell.
+# This file is put in the public domain.
+# Massimo Maiurana <maiurana@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Everything-aspell\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-09-17 15:09+0200\n"
+"PO-Revision-Date: 2012-09-17 15:14+0200\n"
+"Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:449 src/e_mod_main.c:606
+msgid "Everything Aspell"
+msgstr "Everything Aspell"
+
+#: src/e_mod_main.c:463
+msgid "General"
+msgstr "Generale"
+
+#: src/e_mod_main.c:468
+msgid "Spell checker"
+msgstr "Controllo ortografico"
+
+#: src/e_mod_main.c:471 src/e_mod_main.c:587
+msgid "Aspell"
+msgstr "Aspell"
+
+#: src/e_mod_main.c:474
+msgid "Hunspell"
+msgstr "Hunspell"
+
+#: src/e_mod_main.c:477
+msgid "Custom"
+msgstr "Personalizzato"
+
+#: src/e_mod_main.c:481
+msgid "Custom Command"
+msgstr "Comando personalizzato"
+
+#: src/e_mod_main.c:487
+msgid "Language"
+msgstr "Lingua"
+
+#: src/e_mod_main.c:585
+msgid "Launcher"
+msgstr "Lanciatore"
+
+#: src/e_mod_main.c:587
+msgid "Everything Plugin"
+msgstr "Plugin di Everything"

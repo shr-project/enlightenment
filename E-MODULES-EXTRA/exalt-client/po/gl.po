@@ -1,0 +1,400 @@
+# Galician translation of exalt-client
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: exalt-client\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/wireless_dialog.c:21
+msgid "Wireless Interface Settings"
+msgstr "Preferencias da interface sen fíos"
+
+#: src/wireless_dialog.c:27
+msgid "wireless interface"
+msgstr "interface sen fíos"
+
+#: src/wireless_dialog.c:36
+#: src/network_dialog.c:54
+#: src/wired_dialog.c:51
+msgid "Activate"
+msgstr "Activar"
+
+#: src/wireless_dialog.c:39
+#: src/network_dialog.c:57
+#: src/wired_dialog.c:54
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: src/wireless_dialog.c:42
+#: src/network_dialog_new.c:22
+msgid "Create a new network"
+msgstr "Crear unha nova rede"
+
+#: src/wireless_dialog.c:52
+#: src/network_dialog_basic.c:347
+#: src/network_dialog_basic.c:393
+#: src/network_dialog_basic.c:441
+#: src/network_dialog.c:98
+#: src/network_dialog.c:677
+#: src/network_dialog.c:723
+#: src/network_dialog.c:771
+#: src/network_dialog_new.c:110
+#: src/wired_dialog.c:96
+msgid "OK"
+msgstr "Aceptar"
+
+#: src/network_dialog_basic.c:25
+#: src/network_dialog.c:17
+msgid "Wireless Configuration Settings"
+msgstr "Configuración das preferencias sen fíos"
+
+#: src/network_dialog_basic.c:32
+#: src/popup.c:239
+msgid "Wireless interface"
+msgstr "Interface sen fíos"
+
+#: src/network_dialog_basic.c:42
+#: src/network_dialog_basic.c:319
+msgid "Disconnect the interface"
+msgstr "Desconectar a interface"
+
+#: src/network_dialog_basic.c:53
+#: src/wired_dialog_basic.c:49
+#: src/dns_dialog.c:59
+#: src/network_conf_dialog.c:67
+msgid "Close"
+msgstr "Pechar"
+
+#: src/network_dialog_basic.c:71
+#: src/network_dialog.c:203
+msgid "WEP information"
+msgstr "Información WEP"
+
+#: src/network_dialog_basic.c:80
+#: src/network_dialog.c:225
+msgid "Hexadecimal Key"
+msgstr "Chave hexadecimal"
+
+#: src/network_dialog_basic.c:83
+#: src/network_dialog.c:229
+msgid "ASCII Key"
+msgstr "Chave ASCII"
+
+#: src/network_dialog_basic.c:89
+#: src/network_dialog_basic.c:133
+#: src/network_dialog.c:235
+#: src/network_dialog.c:313
+#: src/network_dialog_new.c:65
+msgid "Password: "
+msgstr "Contrasinal:"
+
+#: src/network_dialog_basic.c:112
+#: src/network_dialog.c:258
+msgid "WPA information"
+msgstr "Información WPA"
+
+#: src/network_dialog_basic.c:144
+#: src/network_dialog.c:324
+msgid "CA certificate: "
+msgstr "certificado CA:"
+
+#: src/network_dialog_basic.c:156
+#: src/network_dialog.c:336
+msgid "Client certificate: "
+msgstr "Certificado do cliente:"
+
+#: src/network_dialog_basic.c:169
+#: src/network_dialog.c:349
+msgid "Private key: "
+msgstr "Chave privada:"
+
+#: src/network_dialog_basic.c:181
+msgid "                       "
+msgstr "                       "
+
+#: src/network_dialog_basic.c:322
+#, c-format
+msgid "Network: %s"
+msgstr "Rede: %s"
+
+#: src/network_dialog_basic.c:324
+msgid "Connect to the network"
+msgstr "Conectarse á rede"
+
+#: src/network_dialog_basic.c:336
+#: src/network_dialog.c:666
+msgid "Select the company certificate"
+msgstr "Seleccione o certificado da compañía"
+
+#: src/network_dialog_basic.c:348
+#: src/network_dialog_basic.c:394
+#: src/network_dialog_basic.c:442
+#: src/network_dialog.c:100
+#: src/network_dialog.c:678
+#: src/network_dialog.c:724
+#: src/network_dialog.c:772
+#: src/network_dialog_new.c:112
+#: src/wired_dialog.c:98
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/network_dialog_basic.c:382
+#: src/network_dialog_basic.c:430
+#: src/network_dialog.c:712
+#: src/network_dialog.c:760
+msgid "Select the client certificate"
+msgstr "Seleccione o certificado de cliente"
+
+#: src/network_dialog.c:25
+msgid "Network information"
+msgstr "Información da rede"
+
+#: src/network_dialog.c:27
+msgid "Essid: "
+msgstr "Essid: "
+
+#: src/network_dialog.c:32
+msgid "Address: "
+msgstr "Enderezo:"
+
+#: src/network_dialog.c:37
+msgid "Quality: "
+msgstr "Calidade:"
+
+#: src/network_dialog.c:45
+msgid "Wireless interface configuration"
+msgstr "Configuración da interface sen fíos"
+
+#: src/network_dialog.c:61
+#: src/wired_dialog.c:58
+msgid "DHCP (Dynamic host configuration protocol)"
+msgstr "DHCP (Protocolo de Configuración Dinámica do Servidor)"
+
+#: src/network_dialog.c:66
+#: src/wired_dialog.c:63
+msgid "Static"
+msgstr "Estático"
+
+#: src/network_dialog.c:71
+#: src/network_dialog_new.c:81
+#: src/wired_dialog.c:68
+msgid "IP address: "
+msgstr "Enderezo IP:"
+
+#: src/network_dialog.c:76
+#: src/wired_dialog.c:73
+msgid "Netmask address: "
+msgstr "Enderezo da máscara de rede:"
+
+#: src/network_dialog.c:81
+#: src/wired_dialog.c:78
+msgid "Gateway address: "
+msgstr "Enderezo da pasarela:"
+
+#: src/network_dialog.c:86
+#: src/network_dialog_new.c:96
+#: src/wired_dialog.c:83
+msgid "Command: "
+msgstr "Comando:"
+
+#: src/network_dialog.c:91
+msgid "Add to favorites: "
+msgstr "Engadir a favoritos:"
+
+#: src/network_dialog.c:99
+#: src/network_dialog_new.c:111
+#: src/wired_dialog.c:97
+msgid "Apply"
+msgstr "Aplicar"
+
+#: src/network_dialog.c:205
+msgid "Description: "
+msgstr "Descrición:"
+
+#: src/network_dialog.c:207
+msgid "WEP"
+msgstr "WEP"
+
+#: src/wired_dialog_basic.c:23
+#: src/wired_dialog.c:36
+msgid "Wired Configuration Settings"
+msgstr "Configuración das preferencias con fíos"
+
+#: src/wired_dialog_basic.c:29
+#: src/popup.c:236
+#: src/wired_dialog.c:42
+msgid "Wired interface"
+msgstr "Interface con fíos"
+
+#: src/wired_dialog_basic.c:38
+#: src/wired_dialog_basic.c:111
+msgid "Deactivate the interface"
+msgstr "Desactivar a interface"
+
+#: src/wired_dialog_basic.c:113
+msgid "Activate the interface"
+msgstr "Activar a interface"
+
+#: src/network_dialog_new.c:28
+msgid "Network"
+msgstr "Rede"
+
+#: src/network_dialog_new.c:33
+msgid "No encryption (danger)"
+msgstr "Sen cifraxe (perigoso)"
+
+#: src/network_dialog_new.c:38
+msgid "WEP plain text"
+msgstr "WEP en texto plano"
+
+#: src/network_dialog_new.c:43
+msgid "WEP hexadecimal"
+msgstr "WEP en hexadecimal"
+
+#: src/network_dialog_new.c:60
+msgid "Name: "
+msgstr "Nome:"
+
+#: src/network_dialog_new.c:74
+msgid "Interface"
+msgstr "Interface"
+
+#: src/network_dialog_new.c:86
+msgid "Netmask: "
+msgstr "Máscara de rede:"
+
+#: src/network_dialog_new.c:91
+msgid "Gateway: "
+msgstr "Pasarela:"
+
+#: src/popup.c:43
+msgid "DNS configuration"
+msgstr "Configuración do DNS"
+
+#: src/popup.c:47
+msgid "Network configuration"
+msgstr "Configuración da rede"
+
+#: src/popup.c:53
+msgid "Modem dialer"
+msgstr "Marcador do módem"
+
+#: src/popup.c:57
+msgid "Mobile Phone (3G)"
+msgstr "Teléfono móbil (3G)"
+
+#: src/popup.c:231
+msgid "No IP Address"
+msgstr "Sen enderezo IP"
+
+#: src/dns_dialog.c:20
+msgid "DNS (Domain Name Server) Settings"
+msgstr "Preferencias de DNS (Nome do Servidor de Dominio)"
+
+#: src/dns_dialog.c:25
+msgid "DNS (Domain Name Server) configuration"
+msgstr "Configuración de DNS (Nome do Servidor de Dominio)"
+
+#: src/dns_dialog.c:45
+msgid "Add"
+msgstr "Engadir"
+
+#: src/dns_dialog.c:47
+msgid "Replace"
+msgstr "Substituír"
+
+#: src/dns_dialog.c:49
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/e_mod_main.c:231
+msgid "Exalt Warning"
+msgstr "Aviso de Exalt"
+
+#: src/e_mod_main.c:234
+msgid "Warning"
+msgstr "Aviso"
+
+#: src/e_mod_main.c:235
+msgid "NetworkManager has been detected on your computer."
+msgstr "Detectouse NetworkManager no seu computador."
+
+#: src/e_mod_main.c:237
+msgid "Exalt can't work properly if networkManager is running, please stop NetworkManager or Exalt."
+msgstr "Exalt non pode traballar correctamente se NetworkManager se está executando, por favor deteña NetworkManager ou Exalt."
+
+#: src/e_mod_main.c:240
+msgid "Ok"
+msgstr "Aceptar"
+
+#: src/e_mod_main.c:367
+msgid "exalt"
+msgstr "exalt"
+
+#: src/e_mod_main.c:452
+msgid "exalt Configuration Updated"
+msgstr "Configuración de exalt actualizada"
+
+#: src/e_mod_main.c:505
+msgid "Settings"
+msgstr "Preferencias"
+
+#: src/network_conf_dialog.c:20
+#: src/network_conf_dialog.c:25
+msgid "Wireless network configuration"
+msgstr "Configuración da rede sen fíos"
+
+#: src/network_conf_dialog.c:52
+msgid "Add to favorite"
+msgstr "Engadir a favorito"
+
+#: src/network_conf_dialog.c:55
+msgid "Remove from favorite"
+msgstr "Eliminar de favoritos"
+
+#: src/network_conf_dialog.c:58
+msgid "Delete the network"
+msgstr "Eliminar a rede"
+
+#: src/e_mod_config.c:41
+msgid "Exalt Configuration"
+msgstr "Configuración de Exalt"
+
+#: src/e_mod_config.c:84
+msgid "General"
+msgstr "Xeral"
+
+#: src/e_mod_config.c:89
+msgid "Basic mode"
+msgstr "Modo básico"
+
+#: src/e_mod_config.c:91
+msgid "Advanced mode"
+msgstr "Modo avanzado"
+
+#: src/e_mod_config.c:97
+msgid "Wireless network"
+msgstr "Rede sen fíos"
+
+#: src/e_mod_config.c:99
+msgid "Save the configuration of each wireless network"
+msgstr "Gardar a configuración de cada rede sen fíos"
+
+#: src/e_mod_config.c:104
+msgid "Notifications"
+msgstr "Notificacións"
+
+#: src/e_mod_config.c:106
+msgid "Enable the notifications"
+msgstr "Habilitar as notificacións"
+

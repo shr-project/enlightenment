@@ -1,0 +1,43 @@
+# Galician translation of e_pattern_lock
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: e_pattern_lock\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-16 11:08+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_pattern_lock.c:59
+#, c-format
+msgid "Mouse down on %dx%d\n"
+msgstr "Baixar o rato en %dx%d\n"
+
+#: src/e_pattern_lock.c:60
+#: src/e_pattern_lock.c:74
+#, c-format
+msgid "Password is '%s'\n"
+msgstr "O contrasinal é '%s'\n"
+
+#: src/e_pattern_lock.c:76
+#, c-format
+msgid "Mouse in on %dx%d\n"
+msgstr "Entrar co rato en %dx%d\n"
+
+#: src/e_pattern_lock.c:88
+#, c-format
+msgid "Mouse up on %dx%d\n"
+msgstr "Subir o rato en %dx%d\n"
+
+#: src/e_pattern_lock.c:89
+#, c-format
+msgid "Final password is '%s'\n"
+msgstr "O contrasinal final é '%s'\n"
+

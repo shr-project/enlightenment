@@ -1,0 +1,90 @@
+# Galician translation of enna-explorer
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enna-explorer\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-16 11:07+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/bin/shortcut.c:183
+msgid "Music"
+msgstr "Música"
+
+#: src/bin/shortcut.c:185
+msgid "Videos"
+msgstr "Vídeos"
+
+#: src/bin/shortcut.c:187
+msgid "Images"
+msgstr "Imaxes"
+
+#: src/bin/shortcut.c:189
+msgid "Downloads"
+msgstr "Descargas"
+
+#: src/bin/shortcut.c:191
+msgid "Documents"
+msgstr "Documentos"
+
+#: src/bin/localfiles.c:508
+#: src/bin/localfiles.c:554
+msgid "Rename"
+msgstr "Renomear"
+
+#: src/bin/localfiles.c:531
+msgid "Enter new name"
+msgstr "Introduza o novo nome"
+
+#: src/bin/localfiles.c:563
+#: src/bin/localfiles.c:647
+#: src/bin/localfiles.c:729
+#: src/bin/exec.c:188
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/bin/localfiles.c:592
+msgid "Create New Folder"
+msgstr "Crear un novo cartafol"
+
+#: src/bin/localfiles.c:615
+msgid "Enter folder name"
+msgstr "Introduza o nome do cartafol"
+
+#: src/bin/localfiles.c:638
+msgid "Create"
+msgstr "Crear"
+
+#: src/bin/localfiles.c:679
+msgid "Delete files"
+msgstr "Eliminar ficheiros"
+
+#: src/bin/localfiles.c:704
+#, c-format
+msgid "Are you sure to delete <b>%s</b> ?"
+msgstr "Está seguro de querer eliminar <b>%s</b> ?"
+
+#: src/bin/localfiles.c:720
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/bin/exec.c:97
+msgid "Open File"
+msgstr "Abrir ficheiro"
+
+#: src/bin/module.c:93
+msgid "Modules"
+msgstr "Módulos"
+
+#: src/bin/module.c:261
+msgid "No information provided"
+msgstr "Non se forneceu información"
+

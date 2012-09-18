@@ -1,0 +1,53 @@
+# Galician translation of rain
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: rain\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:33
+msgid "Look"
+msgstr "Aspecto"
+
+#: src/e_mod_main.c:35
+msgid "Rain"
+msgstr "Chuvia"
+
+#: src/e_mod_config.c:42
+msgid "Rain Module"
+msgstr "Módulo Rain"
+
+#: src/e_mod_config.c:100
+msgid "General Settings"
+msgstr "Configuración Xeral"
+
+#: src/e_mod_config.c:101
+msgid "Show Clouds"
+msgstr "Amosar Nubes"
+
+#: src/e_mod_config.c:105
+msgid "Rain Density"
+msgstr "Densidade da Chuvia"
+
+#: src/e_mod_config.c:107
+msgid "Sprinkle"
+msgstr "Orballo"
+
+#: src/e_mod_config.c:109
+msgid "Drizzle"
+msgstr "Chuvia Feble"
+
+#: src/e_mod_config.c:111
+msgid "Downpour"
+msgstr "Ballón"
+

@@ -1,0 +1,75 @@
+# Galician translation of weather
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: weather\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:171
+msgid "Weather"
+msgstr "Tempo"
+
+#: src/e_mod_main.c:212
+msgid "Settings"
+msgstr "Configuracións"
+
+#: src/e_mod_config.c:36
+msgid "Weather Settings"
+msgstr "Configuración do Tempo"
+
+#: src/e_mod_config.c:78
+msgid "Display Settings"
+msgstr "Preferencias de Visualización"
+
+#: src/e_mod_config.c:80
+msgid "Simple"
+msgstr "Simple"
+
+#: src/e_mod_config.c:82
+msgid "Detailed"
+msgstr "Detallado"
+
+#: src/e_mod_config.c:84
+msgid "Poll Time"
+msgstr "Tempo de actualización"
+
+#: src/e_mod_config.c:86
+#, c-format
+msgid "%2.0f minutes"
+msgstr "%2.0f minutos"
+
+#: src/e_mod_config.c:91
+msgid "Degree Settings"
+msgstr "Preferencias de Graos"
+
+#: src/e_mod_config.c:93
+msgid "Celsius"
+msgstr "Celsius"
+
+#: src/e_mod_config.c:95
+msgid "Farenheit"
+msgstr "Farenheit"
+
+#: src/e_mod_config.c:99
+#: src/e_mod_config.c:100
+msgid "ICAO Code"
+msgstr "Código ICAO"
+
+#: src/e_mod_config.c:105
+msgid "Get your ICAO code at:"
+msgstr "Obteña o seu código ICAO en:"
+
+#: src/e_mod_config.c:107
+msgid "http://www.weather.gov/tg/siteloc.shtml"
+msgstr "http://www.weather.gov/tg/siteloc.shtml"
+

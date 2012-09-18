@@ -1,0 +1,49 @@
+# Galician translation of cpu_gl
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: cpu\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:132
+msgid "Cpu"
+msgstr "Cpu"
+
+#: src/e_mod_main.c:374
+msgid "Fast (0.5 sec)"
+msgstr "Rápido (0.5 s)"
+
+#: src/e_mod_main.c:381
+msgid "Medium (1 sec)"
+msgstr "Medio (1 s)"
+
+#: src/e_mod_main.c:388
+msgid "Normal (2 sec)"
+msgstr "Normal (2 s)"
+
+#: src/e_mod_main.c:395
+msgid "Slow (5 sec)"
+msgstr "Lento (5 s)"
+
+#: src/e_mod_main.c:402
+msgid "Very Slow (30 sec)"
+msgstr "Moilento (30 s)"
+
+#: src/e_mod_main.c:409
+msgid "Time Between Updates"
+msgstr "Tempo entre actualizacións"
+
+#: src/e_mod_main.c:415
+msgid "Merge CPU's into single Statistic"
+msgstr "Combinar CPUs nunha sóa estatística"
+

@@ -1,0 +1,30 @@
+# Galician translation of everything-mpris
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: everything-mpris\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:271
+msgid "No Title"
+msgstr "Sen Título"
+
+#: src/e_mod_main.c:467
+#: src/e_mod_main.c:623
+msgid "Loading Playlist"
+msgstr "Cargar a Lista de Reprodución"
+
+#: src/e_mod_main.c:480
+msgid "Empty Playlist"
+msgstr "Baleirar a Lista de Reprodución"
+

@@ -1,0 +1,136 @@
+# Galician translation of forecasts
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: forecasts\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:257
+msgid "Forecasts"
+msgstr "Predicións metereolóxicas"
+
+#: src/e_mod_main.c:299
+msgid "Settings"
+msgstr "Preferencias"
+
+#: src/e_mod_main.c:998
+#, c-format
+msgid "%s: Current Conditions"
+msgstr "%s: Condicións actuais"
+
+#: src/e_mod_main.c:1014
+msgid "Wind Chill"
+msgstr "Vento frío"
+
+#: src/e_mod_main.c:1020
+msgid "Wind Speed"
+msgstr "Velocidade do vento"
+
+#: src/e_mod_main.c:1026
+msgid "Humidity"
+msgstr "Humidade"
+
+#: src/e_mod_main.c:1032
+msgid "Visibility"
+msgstr "Visibilidade"
+
+#: src/e_mod_main.c:1038
+msgid "Pressure"
+msgstr "Presión"
+
+#: src/e_mod_main.c:1045
+msgid "Rising"
+msgstr "En ascenso"
+
+#: src/e_mod_main.c:1047
+msgid "Falling"
+msgstr "En descenso"
+
+#: src/e_mod_main.c:1049
+msgid "Steady"
+msgstr "Estábel"
+
+#: src/e_mod_main.c:1053
+msgid "Sunrise / Sunset"
+msgstr "Saída do sol / Posta do sol"
+
+#: src/e_mod_main.c:1071
+msgid "Today"
+msgstr "Hoxe"
+
+#: src/e_mod_main.c:1073
+msgid "Tomorrow"
+msgstr "Mañá"
+
+#: src/e_mod_main.c:1081
+msgid "High"
+msgstr "Alto"
+
+#: src/e_mod_main.c:1092
+msgid "Low"
+msgstr "Baixo"
+
+#: src/e_mod_config.c:42
+msgid "Forecasts Settings"
+msgstr "Configuración de Predicións meteorolóxicas"
+
+#: src/e_mod_config.c:90
+msgid "Display Settings"
+msgstr "Mostrar preferencias"
+
+#: src/e_mod_config.c:91
+msgid "Poll Time"
+msgstr "Tasa de actualización"
+
+#: src/e_mod_config.c:94
+#, c-format
+msgid "%2.0f minutes"
+msgstr "%2.0f minutos"
+
+#: src/e_mod_config.c:97
+msgid "Show Description"
+msgstr "Amosar descrición"
+
+#: src/e_mod_config.c:99
+msgid "Popup on mouse over"
+msgstr "Xanela emerxente ó pasar o rato por riba"
+
+#: src/e_mod_config.c:103
+msgid "Unit Settings"
+msgstr "Preferencias de unidade"
+
+#: src/e_mod_config.c:105
+msgid "Metric"
+msgstr "Métrica"
+
+#: src/e_mod_config.c:107
+msgid "English"
+msgstr "Inglesa"
+
+#: src/e_mod_config.c:111
+msgid "Weather.com Forecasts Code"
+msgstr "Código de predicións meteorolóxicas en Weather.com"
+
+#: src/e_mod_config.c:112
+msgid "Forecasts Code/US Zip Code"
+msgstr "Código predicións meteorolóxicas/Código ZIP EE.UU."
+
+#: src/e_mod_config.c:117
+msgid "To find the code for your area, go to:"
+msgstr "Para atopar o código para a súa área, vaia a:"
+
+#: src/e_mod_config.c:119
+#, c-format
+msgid "%s, find your area, and look at the URL"
+msgstr "%s, busque a súa área, e mírea na URL"
+

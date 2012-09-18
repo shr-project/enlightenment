@@ -1,0 +1,102 @@
+# Galician translation of e_pattern_lock
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: shellementary\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-16 11:06+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/bin/shelm_dlg_entry.c:12
+msgid "Enter something here"
+msgstr "Introduza algo aquí"
+
+#: src/bin/shelm_dlg_entry.c:47
+#: src/bin/shelm_dlg_list.c:56
+#: src/bin/shelm_dlg_textinfo.c:80
+#: src/bin/shelm_dlg_clock.c:43
+#: src/bin/shelm_dlg_scale.c:43
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/bin/shelm_dlg_entry.c:53
+#: src/bin/shelm_dlg_list.c:62
+#: src/bin/shelm_dlg_textinfo.c:86
+#: src/bin/shelm_dlg_clock.c:49
+#: src/bin/shelm_dlg_scale.c:49
+#: src/bin/shelm_dlg_simpleicon.c:44
+msgid "OK"
+msgstr "Aceptar"
+
+#: src/bin/shelm_dlg_list.c:12
+msgid "Select an item"
+msgstr "Seleccione un elemento"
+
+#: src/bin/shelm_dlg_question.c:12
+msgid "Question"
+msgstr "Pregunta"
+
+#: src/bin/shelm_dlg_question.c:48
+msgid "No"
+msgstr "Non"
+
+#: src/bin/shelm_dlg_question.c:54
+msgid "Yes"
+msgstr "Si"
+
+#: src/bin/shelm_dlg_textinfo.c:12
+msgid "Text Information"
+msgstr "Información do texto"
+
+#: src/bin/shelm.c:197
+msgid "Error!"
+msgstr "Erro!"
+
+#: src/bin/shelm.c:202
+msgid "Warning!"
+msgstr "Aviso!"
+
+#: src/bin/shelm.c:207
+msgid "Information"
+msgstr "Información"
+
+#: src/bin/shelm_dlg_clock.c:12
+msgid "Set the time"
+msgstr "Establecer o tempo"
+
+#: src/bin/shelm_about.c:9
+msgid "About Shellementary"
+msgstr "Sobre Shellementary"
+
+#: src/bin/shelm_about.c:34
+msgid "<b>Display dialogs from shell scripts</><br>Written as a zenity replacement, supports the same arguments<br><b>http://svn.enlightenment.org/svn/e/trunk/PROTO/shellementary</><br>Based on great Elementary toolkit by <b>raster</> and C programming language.<br><b>License:</> MIT"
+msgstr "<b>Amosa os diálogos dos scripts de consola</><br>Desenvolvido como unha alternativa a zenity, xa que admite os mesmos argumentos<br><b>http://svn.enlightenment.org/svn/e/trunk/PROTO/shellementary</><br>Baseado nas grandes ferramentas de Elementary desenvolvido por <b>raster</> e programado en C.<br><b>Licenza:</> MIT"
+
+#: src/bin/shelm_about.c:43
+msgid "<b>Author:</> quaker (quaker66@gmail.com)<br><br><b>Credits:</><br><b>Carsten Haitzler (raster)</> for Enlightenment DR17, great Elementary toolkit and help with developenment<br><b>Christopher Michael (devilhorns)</> for help with developenment<br>"
+msgstr "<b>Autor:</> quaker (quaker66@gmail.com)<br><br><b>Créditos:</><br><b>Carsten Haitzler (raster)</> polo Enlightenment DR17, as boas  ferramentas de Elementary e a axuda co desenvolvemento<br><b>Christopher Michael (devilhorns)</> pola axuda co desenvolvemento<br>"
+
+#: src/bin/shelm_about.c:58
+msgid "Close"
+msgstr "Pechar"
+
+#: src/bin/shelm_dlg_scale.c:12
+msgid "Adjust the value"
+msgstr "Axustar o valor"
+
+#: src/bin/shelm_callbacks.c:76
+msgid "fd error, exit."
+msgstr "erro fd, saír."
+
+#: src/bin/shelm_callbacks.c:81
+msgid "nothing to read?"
+msgstr "nada para ler?"
+

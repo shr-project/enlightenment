@@ -1,0 +1,127 @@
+# Galician translation of ecrire
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ecrire\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/bin/main.c:96
+#, c-format
+msgid "%s%s - %s"
+msgstr "%s%s - %s"
+
+#: src/bin/main.c:99
+#, c-format
+msgid "%sUntitled %d - %s"
+msgstr "%sSen título %d - %s"
+
+#: src/bin/main.c:123
+#, c-format
+msgid "Ln %d, Col %d"
+msgstr "Lin %d, Col %d"
+
+#: src/bin/main.c:684
+msgid "New"
+msgstr "Novo"
+
+#: src/bin/main.c:685
+msgid "Open"
+msgstr "Abrir"
+
+#: src/bin/main.c:687
+#: src/bin/ui/alerts.c:71
+msgid "Save"
+msgstr "Gardar"
+
+#: src/bin/main.c:688
+msgid "Save As"
+msgstr "Gardar Como"
+
+#: src/bin/main.c:693
+msgid "Undo"
+msgstr "Desfacer"
+
+#: src/bin/main.c:695
+msgid "Redo"
+msgstr "Refacer"
+
+#: src/bin/main.c:698
+msgid "Cut"
+msgstr "Cortar"
+
+#: src/bin/main.c:700
+msgid "Copy"
+msgstr "Copiar"
+
+#: src/bin/main.c:702
+msgid "Paste"
+msgstr "Pegar"
+
+#: src/bin/main.c:705
+#: src/bin/ui/search_dialog.c:144
+msgid "Find & Replace"
+msgstr "Atopar e Substituír"
+
+#: src/bin/main.c:709
+msgid "Settings"
+msgstr "Preferencias"
+
+#: src/bin/ui/alerts.c:56
+msgid "<align=center>Would you like to save changes to document?<br>Any unsaved changes will be lost."
+msgstr "<align=center>Quere gardar os cambios do documento?<br>Os cambios sen gardar perderanse."
+
+#: src/bin/ui/alerts.c:82
+msgid "Discard"
+msgstr "Rexeitar"
+
+#: src/bin/ui/alerts.c:88
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/bin/ui/font_dialog.c:89
+msgid "Select Font"
+msgstr "Escolla un tipo de letra"
+
+#: src/bin/ui/font_dialog.c:114
+msgid "Font size:"
+msgstr "Tamaño do tipo de letra:"
+
+#: src/bin/ui/font_dialog.c:119
+#, c-format
+msgid "%.0f pts"
+msgstr "%.0f pts"
+
+#: src/bin/ui/font_dialog.c:157
+msgid "Use Default Font:"
+msgstr "Empregar o tipo de letra predefinido:"
+
+#: src/bin/ui/font_dialog.c:168
+msgid "Set"
+msgstr "Establecer"
+
+#: src/bin/ui/search_dialog.c:166
+msgid "Search for:"
+msgstr "Buscar por:"
+
+#: src/bin/ui/search_dialog.c:190
+msgid "Replace with:"
+msgstr "Substituír por:"
+
+#: src/bin/ui/search_dialog.c:214
+msgid "Find"
+msgstr "Atopar"
+
+#: src/bin/ui/search_dialog.c:222
+msgid "Replace"
+msgstr "Substituír"
+

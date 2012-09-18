@@ -1,0 +1,583 @@
+# Galician translation of elmdentica
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: elmdentica\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-08-30 19:32+0200\n"
+"PO-Revision-Date: 2012-09-16 11:07+0200\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/elmdentica.c:279
+msgid "Last messages..."
+msgstr "Últimas mensaxes..."
+
+#: src/elmdentica.c:280
+msgid "Everyone..."
+msgstr "Todos..."
+
+#: src/elmdentica.c:281
+msgid "My favorites..."
+msgstr "Os meus favoritos..."
+
+#: src/elmdentica.c:282
+msgid "Replies / mentions..."
+msgstr "Respostas / mencións..."
+
+#: src/elmdentica.c:284
+msgid "My friends..."
+msgstr "Os meus amigos..."
+
+#: src/elmdentica.c:475
+#: src/elmdentica.c:622
+msgid "Follow"
+msgstr "Seguir"
+
+#: src/elmdentica.c:477
+#: src/elmdentica.c:624
+msgid "Stop following"
+msgstr "Deixar de seguir"
+
+#: src/elmdentica.c:611
+msgid "Couldn't parse user info message..."
+msgstr "Non se puido  analizar a información de usuario na mensaxe..."
+
+#: src/elmdentica.c:673
+#: src/elmdentica.c:752
+#, c-format
+msgid "You are a member of group %s along with %d other people.<br>«%s»"
+msgstr "Vostede é membro do grupo %s xunto con outras %d  persoas.<br>«%s»"
+
+#: src/elmdentica.c:674
+#: src/elmdentica.c:785
+msgid "Leave"
+msgstr "Saír"
+
+#: src/elmdentica.c:676
+#: src/elmdentica.c:754
+#, c-format
+msgid "You are not a member of group %s but %d people are.<br>«%s»"
+msgstr "Non é membro do grupo %s pero pertencen %d persoas.<br>«%s»"
+
+#: src/elmdentica.c:677
+#: src/elmdentica.c:787
+msgid "Join"
+msgstr "Unirse"
+
+#: src/elmdentica.c:841
+msgid "Check it out!"
+msgstr "Probeo!"
+
+#: src/elmdentica.c:1004
+#, c-format
+msgid "a few seconds ago"
+msgstr "fai poucos segundos"
+
+#: src/elmdentica.c:1006
+#, c-format
+msgid "a few minutes ago"
+msgstr "fai poucos minutos"
+
+#: src/elmdentica.c:1008
+#, c-format
+msgid "~ %d minutes ago"
+msgstr "fai ~ %d minutos"
+
+#: src/elmdentica.c:1011
+#, c-format
+msgid "~ %d hours ago"
+msgstr "fai ~ %d horas"
+
+#: src/elmdentica.c:1013
+#, c-format
+msgid "~ 1 hour ago"
+msgstr "fai ~ 1 hora"
+
+#: src/elmdentica.c:1015
+#, c-format
+msgid "on %x"
+msgstr "en %x"
+
+#: src/elmdentica.c:1018
+#, c-format
+msgid "%x %X"
+msgstr "%x %X"
+
+#: src/elmdentica.c:1019
+#: src/elmdentica.c:1020
+#, c-format
+msgid "some-when"
+msgstr "algún tempo"
+
+#: src/elmdentica.c:1098
+#, c-format
+msgid "Finished %s"
+msgstr "Rematado %s"
+
+#: src/elmdentica.c:1106
+msgid "Ok"
+msgstr "Aceptar"
+
+#: src/elmdentica.c:1113
+msgid "Open"
+msgstr "Abrir"
+
+#: src/elmdentica.c:1159
+#, c-format
+msgid "downloading %s"
+msgstr "descargando %s"
+
+#: src/elmdentica.c:1175
+#: src/elmdentica.c:1887
+#: src/settings.c:544
+#: src/settings.c:1277
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/elmdentica.c:1275
+msgid "Users"
+msgstr "Usuarios"
+
+#: src/elmdentica.c:1304
+msgid "Links"
+msgstr "Ligazóns"
+
+#: src/elmdentica.c:1323
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: src/elmdentica.c:1341
+msgid "Groups"
+msgstr "Grupos"
+
+#: src/elmdentica.c:1359
+msgid "Attachments"
+msgstr "Anexos"
+
+#: src/elmdentica.c:1394
+#: src/elmdentica.c:1617
+#: src/curl.c:92
+msgid "Close"
+msgstr "Pechar"
+
+#: src/elmdentica.c:1430
+msgid "Reply"
+msgstr "Responder"
+
+#: src/elmdentica.c:1439
+msgid "Repeat"
+msgstr "Repetir"
+
+#: src/elmdentica.c:1448
+#: src/elmdentica.c:2155
+msgid "DM"
+msgstr "MD"
+
+#: src/elmdentica.c:1458
+msgid "Unmark favorite"
+msgstr "Desmarcar favorito"
+
+#: src/elmdentica.c:1460
+msgid "Mark favorite"
+msgstr "Marcar favorito"
+
+#: src/elmdentica.c:1470
+msgid "View related"
+msgstr "Ver relacionado"
+
+#: src/elmdentica.c:1479
+msgid "Status details"
+msgstr "Detalles do estado"
+
+#: src/elmdentica.c:1487
+msgid "Recycle status"
+msgstr "Reciclar estado"
+
+#: src/elmdentica.c:1587
+msgid "Error"
+msgstr "Erro"
+
+#: src/elmdentica.c:1588
+msgid "µ-blog Error"
+msgstr "Erro do µ-blog"
+
+#: src/elmdentica.c:1869
+msgid "Send a DM to..."
+msgstr "Enviar unha MD a..."
+
+#: src/elmdentica.c:1881
+#: src/settings.c:536
+#: src/settings.c:1268
+msgid "OK"
+msgstr "Aceptar"
+
+#: src/elmdentica.c:1956
+#: src/elmdentica.c:2114
+msgid "Type your status here..."
+msgstr "Escriba o seu estado aquí..."
+
+#: src/elmdentica.c:2142
+msgid "Send"
+msgstr "Enviar"
+
+#: src/elmdentica.c:2168
+msgid "Hide"
+msgstr "Agochar"
+
+#: src/elmdentica.c:2189
+msgid "Timelines"
+msgstr "Liñas de tempo"
+
+#: src/elmdentica.c:2195
+msgid "Direct Messages"
+msgstr "Mensaxes directas"
+
+#: src/elmdentica.c:2196
+msgid "Everyone"
+msgstr "Tpdps"
+
+#: src/elmdentica.c:2197
+msgid "Just me"
+msgstr "Só eu"
+
+#: src/elmdentica.c:2198
+msgid "Favorites"
+msgstr "Favoritos"
+
+#: src/elmdentica.c:2199
+msgid "Replies/Mentions"
+msgstr "Respostas/Mencións"
+
+#: src/elmdentica.c:2200
+msgid "Friends & I"
+msgstr "Os amigos e eu"
+
+#: src/elmdentica.c:2202
+#: src/settings.c:1433
+msgid "Settings"
+msgstr "Preferencias"
+
+#: src/settings.c:146
+msgid "never"
+msgstr "nunca"
+
+#: src/settings.c:146
+msgid "0 s"
+msgstr "0 s"
+
+#: src/settings.c:147
+msgid "1 minute"
+msgstr "1 minuto"
+
+#: src/settings.c:147
+msgid "1 min"
+msgstr "1 min"
+
+#: src/settings.c:148
+msgid "2 minutes"
+msgstr "2 minutos"
+
+#: src/settings.c:148
+msgid "2 min"
+msgstr "2 min"
+
+#: src/settings.c:149
+msgid "5 minutes"
+msgstr "5 minutos"
+
+#: src/settings.c:149
+msgid "5 min"
+msgstr "5 min"
+
+#: src/settings.c:150
+msgid "10 minutes"
+msgstr "10 minutos"
+
+#: src/settings.c:150
+msgid "10 min"
+msgstr "10 min"
+
+#: src/settings.c:151
+msgid "15 minutes"
+msgstr "15 minutos"
+
+#: src/settings.c:151
+msgid "15 min"
+msgstr "15 min"
+
+#: src/settings.c:152
+msgid "30 minutes"
+msgstr "30 minutos"
+
+#: src/settings.c:152
+msgid "30 min"
+msgstr "30 min"
+
+#: src/settings.c:153
+msgid "1 hour"
+msgstr "1 hora"
+
+#: src/settings.c:153
+msgid "1 h"
+msgstr "1 h"
+
+#: src/settings.c:174
+#: src/settings.c:1087
+msgid "Every: "
+msgstr "Cada:"
+
+#: src/settings.c:396
+msgid "Screen name"
+msgstr "Nome de pantalla"
+
+#: src/settings.c:411
+msgid "Password"
+msgstr "Contrasinal"
+
+#: src/settings.c:435
+msgid "Type"
+msgstr "Tipo"
+
+#: src/settings.c:452
+msgid "Secure"
+msgstr "Seguro"
+
+#: src/settings.c:453
+msgid "Faster"
+msgstr "Rápido"
+
+#: src/settings.c:468
+msgid "Domain"
+msgstr "Dominio"
+
+#: src/settings.c:483
+msgid "Base URL"
+msgstr "URL base"
+
+#: src/settings.c:498
+msgid "Receive?"
+msgstr "Recibir?"
+
+#: src/settings.c:510
+msgid "Send?"
+msgstr "Enviar?"
+
+#: src/settings.c:713
+msgid "Accounts..."
+msgstr "Contas..."
+
+#: src/settings.c:748
+#: src/settings.c:1384
+msgid "Add"
+msgstr "Engadir"
+
+#: src/settings.c:761
+#: src/settings.c:1397
+msgid "Edit"
+msgstr "Editar"
+
+#: src/settings.c:775
+#: src/settings.c:1410
+msgid "Delete"
+msgstr "Eliminar"
+
+#: src/settings.c:802
+#: src/settings.c:825
+msgid "No posts<br>in cache."
+msgstr "Non hai publicacións<br>memorizadas."
+
+#: src/settings.c:804
+#, c-format
+msgid "Currently remembering<br>%d posts."
+msgstr "Actualmente memorizando<br>%d publicacións."
+
+#: src/settings.c:840
+#: src/settings.c:863
+msgid "No messages<br>in cache."
+msgstr "Non hai mensaxes<br>memorizadas."
+
+#: src/settings.c:842
+#, c-format
+msgid "Currently remembering<br>%d messages."
+msgstr "Actualmente memorizando<br>%d mensaxes."
+
+#: src/settings.c:941
+msgid "Displayed messages"
+msgstr "Mensaxes amosadas"
+
+#: src/settings.c:1008
+msgid "Please choose a browser"
+msgstr "Por favor escolla un navegador"
+
+#: src/settings.c:1010
+msgid "No supported browser available"
+msgstr "Sen navegadores admitidos dispoñíbeis"
+
+#: src/settings.c:1047
+msgid "Preferred browser..."
+msgstr "Navegador preferido..."
+
+#: src/settings.c:1055
+msgid "Online mode..."
+msgstr "Modo de conexión..."
+
+#: src/settings.c:1058
+msgid "Online"
+msgstr "Conectado"
+
+#: src/settings.c:1059
+msgid "Offline"
+msgstr "Desconectado"
+
+#: src/settings.c:1067
+msgid "Timestamps..."
+msgstr "Marcas de tempo..."
+
+#: src/settings.c:1070
+msgid "Relative"
+msgstr "Relativas"
+
+#: src/settings.c:1071
+msgid "Absolute"
+msgstr "Absolutas"
+
+#: src/settings.c:1079
+msgid "Auto updates"
+msgstr "Actualizacións automáticas"
+
+#: src/settings.c:1248
+msgid "Pattern..."
+msgstr "Patrón..."
+
+#: src/settings.c:1350
+msgid "Gag patterns..."
+msgstr "Patróns a ignorar..."
+
+#: src/settings.c:1434
+msgid "ElmDentica settings..."
+msgstr "Preferencias deElmDentica..."
+
+#: src/settings.c:1459
+msgid "Accounts"
+msgstr "Contas"
+
+#: src/settings.c:1461
+msgid "Cache"
+msgstr "Caché"
+
+#: src/settings.c:1463
+msgid "Options"
+msgstr "Opcións"
+
+#: src/settings.c:1465
+msgid "Gag"
+msgstr "Ignorar"
+
+#: src/settings.c:1476
+#, c-format
+msgid ""
+"\n"
+"Usage:\n"
+"   -d   Debug mode (for extra yummy output, use multiple times)\n"
+"   -h   Help (what you're reading right now)\n"
+"   -m N Show N messages at a time\n"
+"\n"
+msgstr ""
+"\n"
+"Uso:\n"
+"   -d   Modo depuración (para saídas máis precisas, empregar múltiples veces)\n"
+"   -h   Axuda (o que está lendo neste momento)\n"
+"   -m N Amosar N mensaxes de unha vez\n"
+"\n"
+
+#: src/settings.c:1499
+#, c-format
+msgid "Can't run ecore_file_init()\n"
+msgstr "Non se pode executar ecore_file_init()\n"
+
+#: src/settings.c:1505
+#, c-format
+msgid "Can't create preferences directories since asprintf failed\n"
+msgstr "Non se poden crear os directorios de preferencias dende que asprintf fallou\n"
+
+#: src/settings.c:1505
+#, c-format
+msgid "Can't create preferences directories since ecore_file_mkpath failed\n"
+msgstr "Non se poden crear os directorios de preferencias dende que ecore_file_mkpath fallou\n"
+
+#: src/settings.c:1513
+#, c-format
+msgid "Not enough memory to define conf.eet path"
+msgstr "Memoria insuficiente para definir conf.eet path"
+
+#: src/settings.c:1519
+#, c-format
+msgid "Couldn't run eet_init()"
+msgstr "Non se puido executar eet_init()"
+
+#: src/settings.c:1526
+#, c-format
+msgid "Can't create %s"
+msgstr "Non se pode crear %s"
+
+#: src/settings.c:1534
+#, c-format
+msgid "Can't setup settings_edd."
+msgstr "Non se pode definir settings_edd."
+
+#: src/settings.c:1552
+#, c-format
+msgid "Not enough memory for settings, no doubt for anything else either, surely..."
+msgstr "Memoria insuficiente para as preferencias, e seguramente tamén para outras cousas..."
+
+#: src/statusnet.c:366
+#, c-format
+msgid "Not enough memory to create a status\n"
+msgstr "Memoria insuficiente para crear un estado\n"
+
+#: src/statusnet.c:418
+#, c-format
+msgid "Not enough memory to create an user\n"
+msgstr "Memoria insuficiente para crear un usuario\n"
+
+#: src/statusnet.c:555
+#, c-format
+msgid "Error encountered: %s\n"
+msgstr "Erro atopado: %s\n"
+
+#: src/statusnet.c:967
+#, c-format
+msgid "Unknown timeline %d\n"
+msgstr "Liña de tempo descoñecida %d\n"
+
+#: src/statusnet.c:974
+#, c-format
+msgid "Not enough memory to construct timeline URI\n"
+msgstr "Memoria insuficiente para construír o URI da liña de tempo\n"
+
+#: src/statusnet.c:981
+#, c-format
+msgid "Not enough memory to prepare host url\n"
+msgstr "Memoria insuficiente para preparar a url do servidor\n"
+
+#: src/curl.c:319
+#, c-format
+msgid ""
+"Can't dump %s into %s:\n"
+"(%d) %s\n"
+msgstr ""
+"Non se pode envorcar %s en %s:\n"
+"(%d) %s\n"
+
+#: src/curl.c:326
+#, c-format
+msgid "Can't open %s for writing: %s\n"
+msgstr "Non se pode abrir %s para escribir: %s\n"
+
