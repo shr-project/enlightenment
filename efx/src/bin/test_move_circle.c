@@ -12,18 +12,37 @@ static Evas_Object *
 rect_create(void)
 {
    Evas_Object *r;
+   static int x;
+
    r = evas_object_rectangle_add(e);
-   evas_object_color_set(r, 255, 0, 0, 255);
+   if (x)
+     evas_object_color_set(r, 0, 0, 0, 255);
+   else
+     evas_object_color_set(r, 255, 0, 0, 255);
    evas_object_resize(r, 36, 36);
    evas_object_move(r, 25, (450 / 2) - (36 / 2));
    evas_object_show(r);
+   x++;
    return r;
+}
+
+static void
+_move2(void *data __UNUSED__, Efx_Map_Data *emd __UNUSED__, Evas_Object *r)
+{
+   efx_rotate(r, EFX_EFFECT_SPEED_ACCELERATE, 360, &(Evas_Point){ 225, 225 }, 2.0, _move2, NULL);
 }
 
 static void
 _move1(void *data __UNUSED__, Efx_Map_Data *emd __UNUSED__, Evas_Object *r)
 {
-   efx_move_circle(r, EFX_EFFECT_SPEED_ACCELERATE, &(Evas_Point){ 225, 225 }, 360, 2.0, NULL, NULL);
+   efx_move_circle(r, EFX_EFFECT_SPEED_ACCELERATE, &(Evas_Point){ 225, 225 }, 360, 2.0, _move1, NULL);
+}
+
+static Eina_Bool
+_start2(Evas_Object *r)
+{
+   _move2(NULL, NULL, r);
+   return EINA_FALSE;
 }
 
 static Eina_Bool
@@ -69,8 +88,10 @@ main(void)
    evas_object_show(r);
 
    r = rect_create();
-
    ecore_timer_add(1.0, (Ecore_Task_Cb)_start, r);
+
+   r = rect_create();
+   ecore_timer_add(1.0, (Ecore_Task_Cb)_start2, r);
    ecore_main_loop_begin();
    return 0;
 }
