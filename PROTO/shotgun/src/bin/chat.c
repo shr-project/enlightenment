@@ -430,6 +430,7 @@ _chat_window_key(Chat_Window *cw, Evas *e __UNUSED__, Evas_Object *obj __UNUSED_
 static void
 _chat_window_switch(Contact *c, Evas_Object *obj __UNUSED__, Elm_Object_Item *it __UNUSED__)
 {
+   if (!c->chat_window) return;
    if (elm_object_content_get(c->chat_window->pager) == c->chat_panes) return;
    contact_chat_window_animator_del(c);
    elm_naviframe_item_simple_promote(c->chat_window->pager, c->chat_panes);
