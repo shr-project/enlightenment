@@ -1,0 +1,29 @@
+New E17 Snapshot (76819)
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p> I'm sure there are people out there saying "There's no way
+two E17 snapshots will ever come out on the same day."<br>
+My response is as follows:<br>
+<img src="http://i.imgur.com/cHbW9.gif" width=250 height=172><br>
+This time, in addition to featuring the usual improvements of 
+<b>LESS CRASHING</b> and <b>IMPROVEMENTS TO NOT CRASHING</b>, 
+I'm pleased to announce some other changes, though this is not in any way
+a comprehensive list, and not all the changes were made by me: 
+</p>
+<p>
+<li>DND no longer causes random hangs in some situations</li>
+<li>Crashes now occur much less often when running executables from E17 as seen since last night</li>
+<li>Filemanager will no longer sometimes crash when changing directories as seen since yesterday</li>
+<li>Filemanager tooltips now properly hide when leaving the source icon of the tooltip</li>
+</p>
+
+<p><ul>
+
+<li>E17 76819 - 
+[<a href="http://download.enlightenment.org/snapshots/2012-09-18/enlightenment-0.16.999.76819.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/snapshots/2012-09-18/enlightenment-0.16.999.76819.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
