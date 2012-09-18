@@ -9,6 +9,7 @@ typedef struct _Community_ID Community_ID;
 typedef struct _Community_Day Community_Day;
 typedef struct _Community_Access Community_Access;
 typedef struct _Community_Country Community_Country;
+typedef struct _Community_IP Community_IP;
 
 struct _Community_ID
 {
@@ -26,17 +27,21 @@ struct _Community_Day
    Eina_Hash *hours;
 };
 
+struct _Community_IP
+{
+   const char *ip;
+   const char *country;
+};
+
 struct _Community_Access
 {
    Community_ID *id;
    Community_Day *day;
+   Community_IP *ip;
 
    unsigned char hour;
    unsigned char minute;   
    unsigned char seconde;
-
-   const char *ip;
-   const char *country;
 };
 
 struct _Community_Country
@@ -52,6 +57,7 @@ struct _Community_Country
 static Eina_Hash *community = NULL;
 static Eina_Hash *days = NULL;
 static Eina_Hash *countries = NULL;
+static Eina_Hash *ips = NULL;
 
 static long long int months[12];
 static const char *MONTH_STRING[12] = {
@@ -182,6 +188,7 @@ main(int argc, char **argv)
    eina_init();
 
    community = eina_hash_stringshared_new(NULL);
+   ips = eina_hash_stringshared_new(NULL);
    days = eina_hash_new(_community_day_key_length,
                              _community_day_key_cmp,
                              _community_day_key_hash,
@@ -261,6 +268,7 @@ main(int argc, char **argv)
    it = eina_file_map_lines(f);
    EINA_ITERATOR_FOREACH(it, l)
      {
+        Community_IP *cip;
         Community_ID *cid;
         Community_Day *cday;
         Community_Day tday;
@@ -299,11 +307,11 @@ main(int argc, char **argv)
         offset++;
 
         ip = _eina_file_ip_get(l, &offset);
-        if (offset == l->length || l->start[offset] != ' ') continue ;
+        if (offset == l->length || l->start[offset] != ' ' || eina_stringshare_strlen(ip) == 0) continue ;
         offset++;
 
         id = _eina_file_hexa_get(l, &offset);
-        if (offset != l->length) continue ;
+        if (offset != l->length || eina_stringshare_strlen(ip) == 0) continue ;
 
         if (year < 2012 || year > 2012 ||
             month < 0 || month > 12 ||
@@ -335,22 +343,36 @@ main(int argc, char **argv)
              eina_hash_add(days, &tday, cday);
           }
 
+        cip = eina_hash_find(ips, ip);
+        if (!cip)
+          {
+             cip = calloc(1, sizeof (Community_IP));
+             cip->ip = eina_stringshare_ref(ip);
+             cip->country = GeoIP_country_code_by_addr(geo, ip);
+
+             if (!cip->country)
+               {
+                  fprintf(stderr, "unknown ip address location: '%s'\n", ip);
+                  cip->country = "??";
+               }
+
+             eina_hash_direct_add(ips, cip->ip, cip);
+          }
+
         caccess = calloc(1, sizeof (Community_Access));
         caccess->id = cid;
         caccess->day = cday;
         caccess->hour = hour;
         caccess->minute = min;
         caccess->seconde = sec;
-        caccess->ip = eina_stringshare_ref(ip);
-        caccess->country = GeoIP_country_code_by_addr(geo, ip);
-        if (!caccess->country) caccess->country = "??";
+        caccess->ip = cip;
 
-        country = eina_hash_find(countries, caccess->country);
+        country = eina_hash_find(countries, cip->country);
         if (!country)
           {
-             fprintf(stderr, "TLD: '%s' not found\n", caccess->country);
+             fprintf(stderr, "TLD: '%s' not found\n", cip->country);
              country = calloc(1, sizeof (Community_Country));
-             country->tld = caccess->country;
+             country->tld = cip->country;
              country->access = eina_hash_stringshared_new(NULL);
 
              eina_hash_direct_add(countries, country->tld, country);
@@ -418,15 +440,15 @@ main(int argc, char **argv)
       fprintf(fp, "\t\t\tgoogle.setOnLoadCallback(drawRegionsMap);\n\n");
       fprintf(fp, "\t\t\tfunction drawRegionsMap() {\n");
       fprintf(fp, "\t\t\t\tvar data = google.visualization.arrayToDataTable([\n");
-      fprintf(fp, "\t\t\t\t\t['Country', 'Popularity']");
+      fprintf(fp, "\t\t\t\t\t['Country', 'Popularity', 'Population']");
 
       EINA_LIST_FREE(sorted, country)
         if (strcmp("GL", country->tld))
           {
              if (country->population && country->count)
                {
-                  fprintf(fp, ",\n\t\t\t\t\t['%s', %lli * 1000000 / %lli]",
-                          country->tld, country->count, country->population);
+                  fprintf(fp, ",\n\t\t\t\t\t['%s', %lli * 1000000 / %lli, %lli]",
+                          country->tld, country->count, country->population, country->count);
                }
              else if (country->count)
                {
