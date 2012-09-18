@@ -387,7 +387,7 @@ void CElmEntry::end_visible_set(Handle<Value> value)
 Handle<Value> CElmEntry::h_bounce_get() const
 {
    Eina_Bool horizontal;
-   elm_entry_bounce_get(eo, &horizontal, NULL);
+   elm_scroller_bounce_get(eo, &horizontal, NULL);
    return Boolean::New(horizontal);
 }
 
@@ -397,14 +397,14 @@ void CElmEntry::h_bounce_set(Handle<Value> value)
      return;
 
    Eina_Bool vertical;
-   elm_entry_bounce_get(eo, NULL, &vertical);
-   elm_entry_bounce_set(eo, value->BooleanValue(), vertical);
+   elm_scroller_bounce_get(eo, NULL, &vertical);
+   elm_scroller_bounce_set(eo, value->BooleanValue(), vertical);
 }
 
 Handle<Value> CElmEntry::v_bounce_get() const
 {
    Eina_Bool vertical;
-   elm_entry_bounce_get(eo, NULL, &vertical);
+   elm_scroller_bounce_get(eo, NULL, &vertical);
    return Boolean::New(vertical);
 }
 
@@ -414,8 +414,8 @@ void CElmEntry::v_bounce_set(Handle<Value> value)
      return;
 
    Eina_Bool horizontal;
-   elm_entry_bounce_get(eo, &horizontal, NULL);
-   elm_entry_bounce_set(eo, horizontal, value->BooleanValue());
+   elm_scroller_bounce_get(eo, &horizontal, NULL);
+   elm_scroller_bounce_set(eo, horizontal, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::input_panel_enabled_get() const
@@ -679,7 +679,7 @@ void CElmEntry::scrollbar_policy_set(Handle<Value> val)
      return;
 
    Local<Object> policy = val->ToObject();
-   elm_entry_scrollbar_policy_set(eo,
+   elm_scroller_policy_set(eo,
         (Elm_Scroller_Policy) policy->Get(0)->ToNumber()->Value(),
         (Elm_Scroller_Policy) policy->Get(1)->ToNumber()->Value());
 
