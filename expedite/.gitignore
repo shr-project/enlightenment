@@ -17,6 +17,7 @@ configure
 data/Makefile
 data/Makefile.in
 depcomp
+expedite.spec
 install-sh
 ltmain.sh
 m4/libtool.m4
