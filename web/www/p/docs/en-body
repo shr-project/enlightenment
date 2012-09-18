@@ -95,40 +95,45 @@ libraries is on the right.
  </tr>
  <tr>
   <td>
+   <?php blinkurl("i/logo-s.png", "EFX", "http://docs.enlightenment.org/auto/efx"); ?>
+  </td>
+  <td>
    <?php blinkurl("i/logo-s.png", "EINA", "http://docs.enlightenment.org/auto/eina"); ?>
   </td>
+ </tr>
+ <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EIO", "http://docs.enlightenment.org/auto/eio"); ?>
   </td>
- </tr>
- <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "ELEMENTARY", "http://docs.enlightenment.org/auto/elementary"); ?>
   </td>
+ </tr>
+ <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EMBRYO", "http://docs.enlightenment.org/auto/embryo"); ?>
   </td>
- </tr>
- <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EMOTION", "http://docs.enlightenment.org/auto/emotion"); ?>
   </td>
+ </tr>
+ <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EPDF", "http://docs.enlightenment.org/auto/epdf"); ?>
   </td>
- </tr>
- <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EPHYSICS", "http://docs.enlightenment.org/auto/ephysics"); ?>
   </td>
-  <td>
-   <?php blinkurl("i/logo-s.png", "ETHUMB", "http://docs.enlightenment.org/auto/ethumb"); ?>
-  </td>
  </tr>
  <tr>
   <td>
+   <?php blinkurl("i/logo-s.png", "ETHUMB", "http://docs.enlightenment.org/auto/ethumb"); ?>
+  </td>
+  <td>
    <?php blinkurl("i/logo-s.png", "EVAS", "http://docs.enlightenment.org/auto/evas"); ?>
   </td>
+ </tr>
+ <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EVIL", "http://docs.enlightenment.org/auto/evil"); ?>
   </td>
