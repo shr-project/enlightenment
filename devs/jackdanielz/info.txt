@@ -1,0 +1,8 @@
+Login:        jackdanielz
+IRC Nick:     JackDanielZ
+Name:         Daniel Zaoui
+Location:     Tel-Aviv, Israel
+E-Mail:       daniel.zaoui@yahoo.com
+Contributing: eobj, evas, edje, ecore, elementary
+Group:        Libraries
+Platform:     Debian
