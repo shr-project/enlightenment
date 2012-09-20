@@ -183,8 +183,8 @@ cdef void cb_canvas_render_post(void *data, Evas *e, void *e_inf) with gil:
 
 
 cdef int evas_canvas_event_callbacks_len
-cdef Evas_Event_Cb evas_canvas_event_callbacks[33]
-evas_canvas_event_callbacks_len = 33
+cdef Evas_Event_Cb evas_canvas_event_callbacks[34]
+evas_canvas_event_callbacks_len = 34
 evas_canvas_event_callbacks[EVAS_CALLBACK_MOUSE_IN] = cb_canvas_mouse_in
 evas_canvas_event_callbacks[EVAS_CALLBACK_MOUSE_OUT] = cb_canvas_mouse_out
 evas_canvas_event_callbacks[EVAS_CALLBACK_MOUSE_DOWN] = cb_canvas_mouse_down

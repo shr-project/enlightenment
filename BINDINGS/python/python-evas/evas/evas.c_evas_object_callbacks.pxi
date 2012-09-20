@@ -251,8 +251,8 @@ cdef void cb_object_canvas_render_post(void *data, Evas *e,
 
 
 cdef int evas_object_event_callbacks_len
-cdef Evas_Object_Event_Cb evas_object_event_callbacks[33]
-evas_object_event_callbacks_len = 33
+cdef Evas_Object_Event_Cb evas_object_event_callbacks[34]
+evas_object_event_callbacks_len = 34
 evas_object_event_callbacks[EVAS_CALLBACK_MOUSE_IN] = cb_object_mouse_in
 evas_object_event_callbacks[EVAS_CALLBACK_MOUSE_OUT] = cb_object_mouse_out
 evas_object_event_callbacks[EVAS_CALLBACK_MOUSE_DOWN] = cb_object_mouse_down
