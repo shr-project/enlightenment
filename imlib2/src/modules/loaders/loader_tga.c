@@ -457,7 +457,8 @@ load(ImlibImage * im, ImlibProgressFunction progress,
                     {
                        int                 i;
 
-                       for (i = 0; (i < count) && (dataptr < final_pixel); i++)
+                       for (i = 0; (i < count) && (dataptr < final_pixel) &&
+                            ((bufptr + (bpp / 8)) <= bufend); i++)
                          {
                             switch (bpp)
                               {
