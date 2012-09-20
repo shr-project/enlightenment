@@ -206,6 +206,10 @@ cdef void cb_object_image_resize(void *data, Evas *e,
                                     Evas_Object *obj, void *e_inf) with gil:
     cb_object_dispatcher2(<Object>data, EVAS_CALLBACK_IMAGE_RESIZE)
 
+cdef void cb_object_device_changed(void *data, Evas *e,
+                                   Evas_Object *obj, void *e_inf) with gil:
+    cb_object_dispatcher2(<Object>data, EVAS_CALLBACK_DEVICE_CHANGED)
+
 cdef void cb_object_canvas_focus_in(void *data, Evas *e,
                                     Evas_Object *obj, void *e_inf) with gil:
     print "EVAS_CALLBACK_FOCUS_IN is not supported by object."
@@ -282,3 +286,4 @@ evas_object_event_callbacks[EVAS_CALLBACK_IMAGE_UNLOADED] = cb_object_image_unlo
 evas_object_event_callbacks[EVAS_CALLBACK_RENDER_PRE] = cb_object_canvas_render_pre
 evas_object_event_callbacks[EVAS_CALLBACK_RENDER_POST] = cb_object_canvas_render_post
 evas_object_event_callbacks[EVAS_CALLBACK_IMAGE_RESIZE] = cb_object_image_resize
+evas_object_event_callbacks[EVAS_CALLBACK_DEVICE_CHANGED] = cb_object_device_changed
