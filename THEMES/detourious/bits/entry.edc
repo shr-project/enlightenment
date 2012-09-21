@@ -17,6 +17,12 @@ group {
 				}
 				color_class: "dialog_base";
 			}
+			description {
+				state: "disabled" 0.0;
+				inherit: "default" 0.0;
+				color: 255 255 255 0;
+				visible: 0;
+			}
 		}
 
 		part {
@@ -89,8 +95,26 @@ group {
 		}
 		FOCUS("focus_in", "e,state,focused", "focused")
 		FOCUS("focus_out", "e,state,unfocused", "default")
+	}
+
+	programs {
+		program {
+			name: "disable";
+			signal: "e,state,disabled";
+			source: "e";
+			action: STATE_SET "disabled" 0.0;
+			target: "entry";
+		}
+		program {
+			name: "enable";
+			signal: "e,state,enabled";
+			source: "e";
+			action: STATE_SET "default" 0.0;
+			target: "entry";
 		}
 	}
+}
+
 group {
 	name: "e/widgets/entry/text";
 	parts {
