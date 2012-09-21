@@ -39,7 +39,7 @@
 //color3:  40 60 100 60;
 
 #define TEXT_COLOR_DISABLED						\
-	color: 128 128 128 255;						\
+	color: 64 64 64 255;						\
     color3: 170 168 169 0;						\
     color_class: "label_text_disabled";
 

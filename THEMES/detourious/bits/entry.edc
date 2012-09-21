@@ -105,6 +105,27 @@ group {
 				TEXT_COLOR;
 				TEXT_NORMAL("entry", 0.0 0.0, 1 1);
 			}
+			description {
+				state: "disabled" 0.0;
+				inherit: "default" 0.0;
+				TEXT_COLOR_DISABLED;
+			}
+		}
+		programs {
+			program {
+				name: "disable";
+				signal: "e,state,disabled";
+				source: "e";
+				action: STATE_SET "disabled" 0.0;
+				target: "e.text.text";
+			}
+			program {
+				name: "enable";
+				signal: "e,state,enabled";
+				source: "e";
+				action: STATE_SET "default" 0.0;
+				target: "e.text.text";
+			}
 		}
 	}
 }
