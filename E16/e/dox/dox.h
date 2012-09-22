@@ -22,8 +22,8 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <stdio.h>
-#include <Imlib2.h>
 #include <X11/Xlib.h>
+#include <Imlib2.h>
 
 #define EAllocColor(pxc) \
 	XAllocColor(disp, VRoot.cmap, pxc)
