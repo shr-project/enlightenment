@@ -35,6 +35,12 @@
 #include "util.h"
 #if USE_COMPOSITE
 #include <X11/extensions/Xcomposite.h>
+/* Composite Overlay Window (client) availability */
+#if (1000 * COMPOSITE_MAJOR + COMPOSITE_MINOR) >= 3
+#define USE_COMPOSITE_OVERLAY_WINDOW 1
+#else
+#define USE_COMPOSITE_OVERLAY_WINDOW 0
+#endif
 #endif
 
 #define ExTextExtents XmbTextExtents
@@ -254,7 +260,7 @@ ShowAlert(const char *title,
    mask = CWBackPixel | CWBorderPixel | CWOverrideRedirect | CWSaveUnder |
       CWBackingStore;
 
-#if USE_COMPOSITE
+#if USE_COMPOSITE_OVERLAY_WINDOW
    /*
     * Intended workings:
     * Composite extension not enabled (or COW not available?)
