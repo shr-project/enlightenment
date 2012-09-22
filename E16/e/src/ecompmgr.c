@@ -1486,7 +1486,7 @@ ECompMgrWinDel(EObj * eo)
 }
 
 static void
-ECompMgrWinDamage(EObj * eo, XEvent * ev __UNUSED__)
+ECompMgrWinDamage(EObj * eo, XEvent * ev)
 {
    ECmWinInfo         *cw = eo->cmhook;
    Display            *dpy = disp;
