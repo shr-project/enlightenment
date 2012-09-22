@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e16\n"
 "Report-Msgid-Bugs-To: enlightenment-intl@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-08 08:49+0200\n"
+"POT-Creation-Date: 2012-09-22 07:40+0000\n"
 "PO-Revision-Date: 2010-01-25 00:46+0000\n"
 "Last-Translator: Sergiy Gavrylov <sergiovana@bigmir.net>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -152,31 +152,31 @@ msgstr ""
 "Виникла помилка під час виконання програми:\n"
 "%s"
 
-#: src/alert.c:208
+#: src/alert.c:214
 msgid "Enlightenment Error"
 msgstr "Помилка Enlightenment"
 
-#: src/alert.c:561
+#: src/alert.c:567
 msgid "Enlightenment Message Dialog"
 msgstr "Діалог сповіщення Enlightenment"
 
-#: src/alert.c:561
+#: src/alert.c:567
 msgid "Ignore this"
 msgstr "Ігнорувати"
 
-#: src/alert.c:562
+#: src/alert.c:568
 msgid "Restart Enlightenment"
 msgstr "Перезапустити Enlightenment"
 
-#: src/alert.c:562 src/setup.c:180
+#: src/alert.c:568 src/setup.c:180
 msgid "Quit Enlightenment"
 msgstr "Вийти з Enlightenment"
 
-#: src/alert.c:572
+#: src/alert.c:578
 msgid "Attention !!!"
 msgstr "Увага !!!"
 
-#: src/alert.c:572 src/dialog.c:692 src/dialog.c:1900 src/events.c:94
+#: src/alert.c:578 src/dialog.c:692 src/dialog.c:1900 src/events.c:94
 #: src/setup.c:159 src/setup.c:172 src/sound.c:310
 msgid "OK"
 msgstr "Гаразд"
@@ -511,7 +511,7 @@ msgstr "Показувати назви піктограм"
 msgid "Animation mode:"
 msgstr ""
 
-#: src/container.c:1679 src/desktops.c:2617
+#: src/container.c:1679 src/desktops.c:2620
 msgid "Off"
 msgstr "Вимкнено"
 
@@ -608,55 +608,55 @@ msgstr ""
 "Натисніть тут, щоб опустити цю\n"
 "стільницю вниз."
 
-#: src/desktops.c:2375
+#: src/desktops.c:2378
 msgid "Number of virtual desktops:"
 msgstr "Кількість віртуальних стільниць:"
 
-#: src/desktops.c:2401
+#: src/desktops.c:2404
 msgid "Slide desktops around when changing"
 msgstr "Ковзання під час зміни стільниць"
 
-#: src/desktops.c:2407
+#: src/desktops.c:2410
 msgid "Desktop Slide speed:"
 msgstr "Швидкість ковзання стільниці:"
 
-#: src/desktops.c:2421
+#: src/desktops.c:2424
 msgid "Wrap desktops around"
 msgstr "Переміщення стільниць по колу"
 
-#: src/desktops.c:2429
+#: src/desktops.c:2432
 msgid "Display desktop dragbar"
 msgstr "Показати панель перетягування"
 
-#: src/desktops.c:2435
+#: src/desktops.c:2438
 msgid "Drag bar position:"
 msgstr "Розташування панелі перетягування:"
 
-#: src/desktops.c:2439
+#: src/desktops.c:2442
 msgid "Top"
 msgstr "Вверху"
 
-#: src/desktops.c:2445
+#: src/desktops.c:2448
 msgid "Bottom"
 msgstr "Внизу"
 
-#: src/desktops.c:2451 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
+#: src/desktops.c:2454 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
 msgid "Left"
 msgstr "Ліворуч"
 
-#: src/desktops.c:2457 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
+#: src/desktops.c:2460 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
 msgid "Right"
 msgstr "Праворуч"
 
-#: src/desktops.c:2465 src/menus-misc.c:586
+#: src/desktops.c:2468 src/menus-misc.c:586
 msgid "Desks"
 msgstr "Столи"
 
-#: src/desktops.c:2466
+#: src/desktops.c:2469
 msgid "Multiple Desktop Settings"
 msgstr "Параметри складених стільниць"
 
-#: src/desktops.c:2469
+#: src/desktops.c:2472
 msgid ""
 "Enlightenment Multiple Desktop\n"
 "Settings Dialog"
@@ -664,39 +664,39 @@ msgstr ""
 "Діалог параметрів складених\n"
 "стільниць Enlightenment"
 
-#: src/desktops.c:2571
+#: src/desktops.c:2574
 msgid "Virtual Desktop size:"
 msgstr "Розмір віртуальної стільниці:"
 
-#: src/desktops.c:2607
+#: src/desktops.c:2610
 msgid "Wrap virtual desktops around"
 msgstr "Переміщення віртуальних стільниць по колу"
 
-#: src/desktops.c:2614
+#: src/desktops.c:2617
 msgid "Edge Flip Mode:"
 msgstr "Режим перегортання з вказівником біля краю:"
 
-#: src/desktops.c:2622
+#: src/desktops.c:2625
 msgid "On"
 msgstr "Увімкнено"
 
-#: src/desktops.c:2627
+#: src/desktops.c:2630
 msgid "Only when moving window"
 msgstr "Лише під час переміщення вікна"
 
-#: src/desktops.c:2633
+#: src/desktops.c:2636
 msgid "Resistance at edge of screen:"
 msgstr "Протидія біля краю екрана:"
 
-#: src/desktops.c:2645
+#: src/desktops.c:2648
 msgid "Areas"
 msgstr "Області"
 
-#: src/desktops.c:2646
+#: src/desktops.c:2649
 msgid "Virtual Desktop Settings"
 msgstr "Параметри віртуальних стільниць"
 
-#: src/desktops.c:2649
+#: src/desktops.c:2652
 msgid ""
 "Enlightenment Virtual Desktop\n"
 "Settings Dialog"
@@ -708,7 +708,7 @@ msgstr ""
 msgid "Apply"
 msgstr "Застосувати"
 
-#: src/ecompmgr.c:2303
+#: src/ecompmgr.c:2299
 msgid ""
 "Cannot enable Composite Manager.\n"
 "Use xdpyinfo to check that\n"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e16\n"
 "Report-Msgid-Bugs-To: enlightenment-intl@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-08 08:49+0200\n"
+"POT-Creation-Date: 2012-09-22 07:40+0000\n"
 "PO-Revision-Date: 2011-10-11 18:12+0900\n"
 "Last-Translator: Yasufumi Haga <yasufumi.haga@nifty.com>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -153,31 +153,31 @@ msgstr ""
 "以下のプログラムの実行中にエラーが生じました。\n"
 "%s"
 
-#: src/alert.c:208
+#: src/alert.c:214
 msgid "Enlightenment Error"
 msgstr "Enlightenment エラー"
 
-#: src/alert.c:561
+#: src/alert.c:567
 msgid "Enlightenment Message Dialog"
 msgstr "Enlightenment メッセージダイアログ"
 
-#: src/alert.c:561
+#: src/alert.c:567
 msgid "Ignore this"
 msgstr "無視する"
 
-#: src/alert.c:562
+#: src/alert.c:568
 msgid "Restart Enlightenment"
 msgstr "Enlightenment 再起動"
 
-#: src/alert.c:562 src/setup.c:180
+#: src/alert.c:568 src/setup.c:180
 msgid "Quit Enlightenment"
 msgstr "Enlightenment 終了"
 
-#: src/alert.c:572
+#: src/alert.c:578
 msgid "Attention !!!"
 msgstr "注意 !!!"
 
-#: src/alert.c:572 src/dialog.c:692 src/dialog.c:1900 src/events.c:94
+#: src/alert.c:578 src/dialog.c:692 src/dialog.c:1900 src/events.c:94
 #: src/setup.c:159 src/setup.c:172 src/sound.c:310
 msgid "OK"
 msgstr "了解"
@@ -512,7 +512,7 @@ msgstr "アイコンの名前を表示する"
 msgid "Animation mode:"
 msgstr "アニメーションモード"
 
-#: src/container.c:1679 src/desktops.c:2617
+#: src/container.c:1679 src/desktops.c:2620
 msgid "Off"
 msgstr "無効"
 
@@ -611,58 +611,58 @@ msgstr ""
 "ここをクリックするとこのデスクトップが\n"
 "下に移ります。"
 
-#: src/desktops.c:2375
+#: src/desktops.c:2378
 msgid "Number of virtual desktops:"
 msgstr "仮想デスクトップの枚数:"
 
-#: src/desktops.c:2401
+#: src/desktops.c:2404
 msgid "Slide desktops around when changing"
 msgstr "デスクトップ間を移動する時にスライドする"
 
 #
-#: src/desktops.c:2407
+#: src/desktops.c:2410
 msgid "Desktop Slide speed:"
 msgstr "デスクトップのスライド速度"
 
 #
-#: src/desktops.c:2421
+#: src/desktops.c:2424
 msgid "Wrap desktops around"
 msgstr "仮想デスクトップの上下左右をつなげる"
 
-#: src/desktops.c:2429
+#: src/desktops.c:2432
 msgid "Display desktop dragbar"
 msgstr "デスクトップにドラッグバーを表示する"
 
-#: src/desktops.c:2435
+#: src/desktops.c:2438
 msgid "Drag bar position:"
 msgstr "ドラッグバーの位置"
 
-#: src/desktops.c:2439
+#: src/desktops.c:2442
 msgid "Top"
 msgstr "上"
 
-#: src/desktops.c:2445
+#: src/desktops.c:2448
 msgid "Bottom"
 msgstr "下"
 
-#: src/desktops.c:2451 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
+#: src/desktops.c:2454 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
 msgid "Left"
 msgstr "左"
 
-#: src/desktops.c:2457 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
+#: src/desktops.c:2460 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
 msgid "Right"
 msgstr "右"
 
 #
-#: src/desktops.c:2465 src/menus-misc.c:586
+#: src/desktops.c:2468 src/menus-misc.c:586
 msgid "Desks"
 msgstr "マルチデスクトップ"
 
-#: src/desktops.c:2466
+#: src/desktops.c:2469
 msgid "Multiple Desktop Settings"
 msgstr "マルチデスクトップの設定"
 
-#: src/desktops.c:2469
+#: src/desktops.c:2472
 msgid ""
 "Enlightenment Multiple Desktop\n"
 "Settings Dialog"
@@ -670,39 +670,39 @@ msgstr ""
 "Enlightenment マルチデスクトップ\n"
 "設定ダイアログ"
 
-#: src/desktops.c:2571
+#: src/desktops.c:2574
 msgid "Virtual Desktop size:"
 msgstr "仮想デスクトップの大きさ"
 
-#: src/desktops.c:2607
+#: src/desktops.c:2610
 msgid "Wrap virtual desktops around"
 msgstr "仮想デスクトップの上下左右をつなげる"
 
-#: src/desktops.c:2614
+#: src/desktops.c:2617
 msgid "Edge Flip Mode:"
 msgstr "マウスカーソルによるデスクトップの切り替え"
 
-#: src/desktops.c:2622
+#: src/desktops.c:2625
 msgid "On"
 msgstr "有効"
 
-#: src/desktops.c:2627
+#: src/desktops.c:2630
 msgid "Only when moving window"
 msgstr "ウィンドウ移動時のみ切り替える"
 
-#: src/desktops.c:2633
+#: src/desktops.c:2636
 msgid "Resistance at edge of screen:"
 msgstr "画面の端に達した時の移動抵抗値"
 
-#: src/desktops.c:2645
+#: src/desktops.c:2648
 msgid "Areas"
 msgstr "デスクトップサイズ"
 
-#: src/desktops.c:2646
+#: src/desktops.c:2649
 msgid "Virtual Desktop Settings"
 msgstr "仮想デスクトップ設定"
 
-#: src/desktops.c:2649
+#: src/desktops.c:2652
 msgid ""
 "Enlightenment Virtual Desktop\n"
 "Settings Dialog"
@@ -714,7 +714,7 @@ msgstr ""
 msgid "Apply"
 msgstr "適用"
 
-#: src/ecompmgr.c:2303
+#: src/ecompmgr.c:2299
 msgid ""
 "Cannot enable Composite Manager.\n"
 "Use xdpyinfo to check that\n"

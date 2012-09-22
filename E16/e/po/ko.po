@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e16\n"
 "Report-Msgid-Bugs-To: enlightenment-intl@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-08 08:49+0200\n"
+"POT-Creation-Date: 2012-09-22 07:40+0000\n"
 "PO-Revision-Date: 2009-12-02 09:48+0000\n"
 "Last-Translator: Michael Kim <Unknown>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -139,31 +139,31 @@ msgid ""
 "%s"
 msgstr ""
 
-#: src/alert.c:208
+#: src/alert.c:214
 msgid "Enlightenment Error"
 msgstr "인라이튼먼트 오류"
 
-#: src/alert.c:561
+#: src/alert.c:567
 msgid "Enlightenment Message Dialog"
 msgstr "인라이튼먼트 메시지 대화상자"
 
-#: src/alert.c:561
+#: src/alert.c:567
 msgid "Ignore this"
 msgstr "무시"
 
-#: src/alert.c:562
+#: src/alert.c:568
 msgid "Restart Enlightenment"
 msgstr "인라이튼먼트 재시작"
 
-#: src/alert.c:562 src/setup.c:180
+#: src/alert.c:568 src/setup.c:180
 msgid "Quit Enlightenment"
 msgstr "인라이튼먼트 종료"
 
-#: src/alert.c:572
+#: src/alert.c:578
 msgid "Attention !!!"
 msgstr "주목 !!!"
 
-#: src/alert.c:572 src/dialog.c:692 src/dialog.c:1900 src/events.c:94
+#: src/alert.c:578 src/dialog.c:692 src/dialog.c:1900 src/events.c:94
 #: src/setup.c:159 src/setup.c:172 src/sound.c:310
 msgid "OK"
 msgstr "확인"
@@ -476,7 +476,7 @@ msgstr "아이콘 이름 보여주기"
 msgid "Animation mode:"
 msgstr ""
 
-#: src/container.c:1679 src/desktops.c:2617
+#: src/container.c:1679 src/desktops.c:2620
 msgid "Off"
 msgstr ""
 
@@ -572,55 +572,55 @@ msgstr ""
 "데스크탑을 제일 밑으로 내리기 위해서는\n"
 "여기를 클릭하세요."
 
-#: src/desktops.c:2375
+#: src/desktops.c:2378
 msgid "Number of virtual desktops:"
 msgstr "가상 데스크탑 수:"
 
-#: src/desktops.c:2401
+#: src/desktops.c:2404
 msgid "Slide desktops around when changing"
 msgstr "데스크탑 바꿀 때 미끄러짐"
 
-#: src/desktops.c:2407
+#: src/desktops.c:2410
 msgid "Desktop Slide speed:"
 msgstr ""
 
-#: src/desktops.c:2421
+#: src/desktops.c:2424
 msgid "Wrap desktops around"
 msgstr "가상 데스크탑 이동을 반복"
 
-#: src/desktops.c:2429
+#: src/desktops.c:2432
 msgid "Display desktop dragbar"
 msgstr "데스크탑 끌기막대 표시"
 
-#: src/desktops.c:2435
+#: src/desktops.c:2438
 msgid "Drag bar position:"
 msgstr "끌기막대 위치:"
 
-#: src/desktops.c:2439
+#: src/desktops.c:2442
 msgid "Top"
 msgstr "위"
 
-#: src/desktops.c:2445
+#: src/desktops.c:2448
 msgid "Bottom"
 msgstr "아래"
 
-#: src/desktops.c:2451 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
+#: src/desktops.c:2454 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
 msgid "Left"
 msgstr "왼쪽"
 
-#: src/desktops.c:2457 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
+#: src/desktops.c:2460 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
 msgid "Right"
 msgstr "오른쪽"
 
-#: src/desktops.c:2465 src/menus-misc.c:586
+#: src/desktops.c:2468 src/menus-misc.c:586
 msgid "Desks"
 msgstr ""
 
-#: src/desktops.c:2466
+#: src/desktops.c:2469
 msgid "Multiple Desktop Settings"
 msgstr "여러 데스크탑 설정"
 
-#: src/desktops.c:2469
+#: src/desktops.c:2472
 msgid ""
 "Enlightenment Multiple Desktop\n"
 "Settings Dialog"
@@ -628,39 +628,39 @@ msgstr ""
 "인라이튼먼트 여러 데스크탑\n"
 "설정 대화상자"
 
-#: src/desktops.c:2571
+#: src/desktops.c:2574
 msgid "Virtual Desktop size:"
 msgstr "가상 데스크탑 크기:"
 
-#: src/desktops.c:2607
+#: src/desktops.c:2610
 msgid "Wrap virtual desktops around"
 msgstr "가상 데스크탑 주변을 겹치기"
 
-#: src/desktops.c:2614
+#: src/desktops.c:2617
 msgid "Edge Flip Mode:"
 msgstr ""
 
-#: src/desktops.c:2622
+#: src/desktops.c:2625
 msgid "On"
 msgstr ""
 
-#: src/desktops.c:2627
+#: src/desktops.c:2630
 msgid "Only when moving window"
 msgstr ""
 
-#: src/desktops.c:2633
+#: src/desktops.c:2636
 msgid "Resistance at edge of screen:"
 msgstr "스크린 변두리에서의 저항감:"
 
-#: src/desktops.c:2645
+#: src/desktops.c:2648
 msgid "Areas"
 msgstr ""
 
-#: src/desktops.c:2646
+#: src/desktops.c:2649
 msgid "Virtual Desktop Settings"
 msgstr "가상 데스크탑 설정"
 
-#: src/desktops.c:2649
+#: src/desktops.c:2652
 msgid ""
 "Enlightenment Virtual Desktop\n"
 "Settings Dialog"
@@ -672,7 +672,7 @@ msgstr ""
 msgid "Apply"
 msgstr "적용"
 
-#: src/ecompmgr.c:2303
+#: src/ecompmgr.c:2299
 msgid ""
 "Cannot enable Composite Manager.\n"
 "Use xdpyinfo to check that\n"
