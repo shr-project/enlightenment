@@ -1666,7 +1666,7 @@ DeskCurrentGotoArea(int ax, int ay)
       return;
 
    if (EDebug(EDBUG_TYPE_DESKS))
-      Eprintf("DeskCurrentGotoArea %d,%d\n", ax, ay);
+      Eprintf("%s %d,%d\n", __func__, ax, ay);
 
    ModulesSignal(ESIGNAL_AREA_SWITCH_START, NULL);
 
@@ -1747,6 +1747,9 @@ DeskCurrentGotoArea(int ax, int ay)
 
    /* re-focus on a new ewin on that new desktop area */
    DeskAreaSwitchDone();
+
+   if (EDebug(EDBUG_TYPE_DESKS))
+      Eprintf("%s done\n", __func__);
 
    ModulesSignal(ESIGNAL_AREA_SWITCH_DONE, DesksGetCurrent());
 

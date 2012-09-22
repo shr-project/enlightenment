@@ -887,7 +887,7 @@ EventsProcess(XEvent ** evq_p, int *evq_n, int *evq_f)
    n = EventsFetch(evq_p, evq_n);
    evq = *evq_p;
 
-   if (EDebug(EDBUG_TYPE_EVENTS))
+   if (EDebug(EDBUG_TYPE_EVENTS) > 1)
       Eprintf("EventsProcess-B %d\n", n);
 
    for (i = count = 0; i < n; i++)
@@ -895,7 +895,7 @@ EventsProcess(XEvent ** evq_p, int *evq_n, int *evq_f)
 	if (evq[i].type == 0)
 	   continue;
 
-	if (EDebug(EDBUG_TYPE_EVENTS) > 1)
+	if (EDebug(EDBUG_TYPE_EVENTS) > 2)
 	   EventShow(evq + i);
 
 	count++;
@@ -903,7 +903,7 @@ EventsProcess(XEvent ** evq_p, int *evq_n, int *evq_f)
 	evq[i].type = 0;
      }
 
-   if (EDebug(EDBUG_TYPE_EVENTS))
+   if (EDebug(EDBUG_TYPE_EVENTS) > 1)
       Eprintf("EventsProcess-E %d/%d\n", count, n);
 
    if (n > *evq_f)
@@ -941,7 +941,7 @@ EventsMain(void)
 	  {
 	     evq_fetch =
 		(pfetch > evq_fetch) ? pfetch : (3 * evq_fetch + pfetch) / 4;
-	     if (EDebug(EDBUG_TYPE_EVENTS))
+	     if (EDebug(EDBUG_TYPE_EVENTS) > 1)
 		Eprintf("EventsMain - Alloc/fetch/pfetch/peak=%d/%d/%d/%d)\n",
 			evq_alloc, evq_fetch, pfetch, count);
 	     if ((evq_ptr) && ((evq_alloc - evq_fetch) > 64))
@@ -1011,7 +1011,7 @@ EventsMain(void)
 	     fd = pfds[i].fd;
 	     if ((fd >= 0) && (FD_ISSET(fd, &fdset)))
 	       {
-		  if (EDebug(EDBUG_TYPE_EVENTS))
+		  if (EDebug(EDBUG_TYPE_EVENTS) > 1)
 		     Eprintf("Event fd %d\n", i);
 		  pfds[i].handler();
 	       }

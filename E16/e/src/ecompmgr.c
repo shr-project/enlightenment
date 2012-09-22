@@ -68,10 +68,12 @@
 
 #define ENABLE_DEBUG   1
 #if ENABLE_DEBUG
-#define D1printf(fmt...) if(EDebug(EDBUG_TYPE_COMPMGR))Eprintf(fmt)
-#define D2printf(fmt...) if(EDebug(EDBUG_TYPE_COMPMGR2))Eprintf(fmt)
-#define D3printf(fmt...) if(EDebug(EDBUG_TYPE_COMPMGR3))Eprintf(fmt)
+#define Dprintf(fmt...)  if(EDebug(EDBUG_TYPE_COMPMGR))Eprintf(fmt)
+#define D1printf(fmt...) if(EDebug(EDBUG_TYPE_COMPMGR2))Eprintf(fmt)
+#define D2printf(fmt...) if(EDebug(EDBUG_TYPE_COMPMGR3))Eprintf(fmt)
+#define D3printf(fmt...) if(EDebug(EDBUG_TYPE_COMPMGR3)>1)Eprintf(fmt)
 #else
+#define Dprintf(fmt...)
 #define D1printf(fmt...)
 #define D2printf(fmt...)
 #define D3printf(fmt...)
@@ -1922,8 +1924,8 @@ ECompMgrRepaint(void)
 
    ERegionIntersect(Mode_compmgr.damage, Mode_compmgr.rgn_screen);
 
-   D2printf("ECompMgrRepaint rootBuffer=%#lx rootPicture=%#lx\n",
-	    rootBuffer, rootPicture);
+   Dprintf("ECompMgrRepaint rootBuffer=%#lx rootPicture=%#lx\n",
+	   rootBuffer, rootPicture);
    if (EDebug(EDBUG_TYPE_COMPMGR2))
       ERegionShow("damage", Mode_compmgr.damage, NULL);
 
@@ -2014,7 +2016,7 @@ ECompMgrGetRootBuffer(void)
 static void
 ECompMgrRootConfigure(void *prm __UNUSED__, XEvent * ev)
 {
-   D1printf("ECompMgrRootConfigure root\n");
+   Dprintf("ECompMgrRootConfigure root\n");
 
    ECompMgrRootBufferDestroy();
    ECompMgrRootBufferCreate(ev->xconfigure.width, ev->xconfigure.height);
@@ -2144,8 +2146,8 @@ ECompMgrStart(void)
 	     /* Pass all input events through */
 	     XShapeCombineRectangles(disp, Mode_compmgr.cow, ShapeInput, 0, 0,
 				     NULL, 0, ShapeSet, Unsorted);
-	     D1printf("COW/CMroot=%#lx/%#lx\n",
-		      Mode_compmgr.cow, Mode_compmgr.root);
+	     Dprintf("COW/CMroot=%#lx/%#lx\n",
+		     Mode_compmgr.cow, Mode_compmgr.root);
 	  }
      }
    else
@@ -2518,8 +2520,8 @@ ECompMgrInit(void)
  done:
    if (Conf_compmgr.mode == ECM_MODE_OFF)
       Conf_compmgr.enable = 0;
-   D1printf("ECompMgrInit: enable=%d mode=%d\n", Conf_compmgr.enable,
-	    Conf_compmgr.mode);
+   Dprintf("ECompMgrInit: enable=%d mode=%d\n", Conf_compmgr.enable,
+	   Conf_compmgr.mode);
 }
 
 static void

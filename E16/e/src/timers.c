@@ -259,6 +259,8 @@ _IdlerRun(void *_id, void *prm __UNUSED__)
 {
    Idler              *id = (Idler *) _id;
 
+   if (EDebug(EDBUG_TYPE_IDLERS) > 1)
+      Eprintf("%s: func=%p\n", __func__, id->func);
    id->func(id->data);
 }
 
@@ -266,9 +268,10 @@ void
 IdlersRun(void)
 {
    if (EDebug(EDBUG_TYPE_IDLERS))
-      Eprintf("%s\n", __func__);
-
+      Eprintf("%s B\n", __func__);
    ecore_list_for_each(idler_list, _IdlerRun, NULL);
+   if (EDebug(EDBUG_TYPE_IDLERS))
+      Eprintf("%s E\n", __func__);
 }
 
 /*
