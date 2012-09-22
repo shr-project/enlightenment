@@ -535,7 +535,6 @@ sum_gaussian(conv * map, double opacity, int x, int y, int width, int height)
 static XImage      *
 make_shadow(double opacity, int width, int height)
 {
-   Display            *dpy = disp;
    XImage             *ximage;
    unsigned char      *data;
    int                 gsize = gaussianMap->size;
@@ -552,7 +551,7 @@ make_shadow(double opacity, int width, int height)
    if (!data)
       return NULL;
 
-   ximage = XCreateImage(dpy, DefaultVisual(dpy, DefaultScreen(dpy)),
+   ximage = XCreateImage(disp, DefaultVisual(disp, DefaultScreen(disp)),
 			 8, ZPixmap, 0,
 			 (char *)data,
 			 swidth, sheight, 8, swidth * sizeof(unsigned char));
@@ -631,7 +630,6 @@ make_shadow(double opacity, int width, int height)
 static              Picture
 shadow_picture(double opacity, int width, int height, int *wp, int *hp)
 {
-   Display            *dpy = disp;
    XImage             *shadowImage;
    Pixmap              shadowPixmap;
    Picture             shadowPicture;
@@ -641,21 +639,21 @@ shadow_picture(double opacity, int width, int height, int *wp, int *hp)
    if (!shadowImage)
       return None;
 
-   shadowPixmap = XCreatePixmap(dpy, Mode_compmgr.root,
+   shadowPixmap = XCreatePixmap(disp, Mode_compmgr.root,
 				shadowImage->width, shadowImage->height, 8);
-   shadowPicture = XRenderCreatePicture(dpy, shadowPixmap,
-					XRenderFindStandardFormat(dpy,
+   shadowPicture = XRenderCreatePicture(disp, shadowPixmap,
+					XRenderFindStandardFormat(disp,
 								  PictStandardA8),
 					0, 0);
-   gc = XCreateGC(dpy, shadowPixmap, 0, 0);
+   gc = XCreateGC(disp, shadowPixmap, 0, 0);
 
-   XPutImage(dpy, shadowPixmap, gc, shadowImage, 0, 0, 0, 0,
+   XPutImage(disp, shadowPixmap, gc, shadowImage, 0, 0, 0, 0,
 	     shadowImage->width, shadowImage->height);
    *wp = shadowImage->width;
    *hp = shadowImage->height;
-   XFreeGC(dpy, gc);
+   XFreeGC(disp, gc);
    XDestroyImage(shadowImage);
-   XFreePixmap(dpy, shadowPixmap);
+   XFreePixmap(disp, shadowPixmap);
 
    return shadowPicture;
 }
@@ -860,7 +858,6 @@ static void
 ECompMgrWinInvalidate(EObj * eo, int what)
 {
    ECmWinInfo         *cw = eo->cmhook;
-   Display            *dpy = disp;
 
    if (!cw)
       return;
@@ -869,7 +866,7 @@ ECompMgrWinInvalidate(EObj * eo, int what)
 
    if ((what & (INV_SIZE | INV_PIXMAP)) && cw->pixmap != None)
      {
-	XFreePixmap(dpy, cw->pixmap);
+	XFreePixmap(disp, cw->pixmap);
 	cw->pixmap = None;
 	if (Mode_compmgr.use_pixmap)
 	   what |= INV_PICTURE;
@@ -1489,7 +1486,6 @@ static void
 ECompMgrWinDamage(EObj * eo, XEvent * ev)
 {
    ECmWinInfo         *cw = eo->cmhook;
-   Display            *dpy = disp;
    XDamageNotifyEvent *de = (XDamageNotifyEvent *) ev;
    XserverRegion       parts;
 
@@ -1500,13 +1496,13 @@ ECompMgrWinDamage(EObj * eo, XEvent * ev)
    if (!cw->damaged)
      {
 	parts = cw->extents;
-	XDamageSubtract(dpy, cw->damage, None, None);
+	XDamageSubtract(disp, cw->damage, None, None);
 	cw->damaged = 1;
      }
    else
      {
 	parts = rgn_tmp;
-	XDamageSubtract(dpy, cw->damage, None, parts);
+	XDamageSubtract(disp, cw->damage, None, parts);
 	ERegionTranslate(parts, EobjGetX(eo) + EobjGetBW(eo),
 			 EobjGetY(eo) + EobjGetBW(eo));
      }
@@ -1760,7 +1756,6 @@ static void
 ECompMgrRepaintObj(Picture pbuf, XserverRegion region, EObj * eo, int mode)
 {
    static XserverRegion rgn_clip = None;
-   Display            *dpy = disp;
    ECmWinInfo         *cw;
    Desk               *dsk = eo->desk;
    int                 x, y;
@@ -1795,7 +1790,7 @@ ECompMgrRepaintObj(Picture pbuf, XserverRegion region, EObj * eo, int mode)
 	     if (EDebug(EDBUG_TYPE_COMPMGR2))
 		ECompMgrWinDumpInfo("ECompMgrRepaintObj solid", eo, clip, 0);
 	     EPictureSetClip(pbuf, clip2);
-	     XRenderComposite(dpy, PictOpSrc, cw->picture, None, pbuf,
+	     XRenderComposite(disp, PictOpSrc, cw->picture, None, pbuf,
 			      0, 0, 0, 0, x + cw->rcx, y + cw->rcy, cw->rcw,
 			      cw->rch);
 	     break;
@@ -1823,7 +1818,7 @@ ECompMgrRepaintObj(Picture pbuf, XserverRegion region, EObj * eo, int mode)
 		   EPictureCreateSolid(Mode_compmgr.root, True,
 				       OP32To8(cw->opacity),
 				       Conf_compmgr.shadows.color);
-	     XRenderComposite(dpy, PictOpOver, cw->picture, cw->pict_alpha,
+	     XRenderComposite(disp, PictOpOver, cw->picture, cw->pict_alpha,
 			      pbuf, 0, 0, 0, 0, x + cw->rcx, y + cw->rcy,
 			      cw->rcw, cw->rch);
 	     break;
@@ -1850,13 +1845,13 @@ ECompMgrRepaintObj(Picture pbuf, XserverRegion region, EObj * eo, int mode)
 				       Conf_compmgr.shadows.color);
 	     alpha = cw->shadow_alpha ? cw->shadow_alpha : transBlackPicture;
 	     if (Mode_compmgr.shadow_mode == ECM_SHADOWS_SHARP)
-		XRenderComposite(dpy, PictOpOver, alpha, cw->picture, pbuf,
+		XRenderComposite(disp, PictOpOver, alpha, cw->picture, pbuf,
 				 0, 0, 0, 0,
 				 x + cw->rcx + cw->shadow_dx,
 				 y + cw->rcy + cw->shadow_dy,
 				 cw->shadow_width, cw->shadow_height);
 	     else
-		XRenderComposite(dpy, PictOpOver, cw->picture, alpha, pbuf,
+		XRenderComposite(disp, PictOpOver, cw->picture, alpha, pbuf,
 				 0, 0, 0, 0,
 				 x + cw->rcx + cw->shadow_dx,
 				 y + cw->rcy + cw->shadow_dy,
@@ -1873,7 +1868,7 @@ ECompMgrRepaintObj(Picture pbuf, XserverRegion region, EObj * eo, int mode)
 				       OP32To8(cw->opacity),
 				       Conf_compmgr.shadows.color);
 	     alpha = (cw->pict_alpha) ? cw->pict_alpha : transBlackPicture;
-	     XRenderComposite(dpy, PictOpOver, alpha, cw->shadow_pict, pbuf,
+	     XRenderComposite(disp, PictOpOver, alpha, cw->shadow_pict, pbuf,
 			      0, 0, 0, 0,
 			      x + cw->rcx + cw->shadow_dx,
 			      y + cw->rcy + cw->shadow_dy,
@@ -1918,7 +1913,6 @@ ECompMgrPaintGhosts(Picture pict, XserverRegion damage)
 void
 ECompMgrRepaint(void)
 {
-   Display            *dpy = disp;
    EObj               *eo;
    Picture             pbuf;
    Desk               *dsk = DeskGet(0);
@@ -1957,7 +1951,7 @@ ECompMgrRepaint(void)
    pict = dsk->o.cmhook->picture;
    D1printf("ECompMgrRepaint desk picture=%#lx\n", pict);
    EPictureSetClip(pbuf, region);
-   XRenderComposite(dpy, PictOpSrc, pict, None, pbuf,
+   XRenderComposite(disp, PictOpSrc, pict, None, pbuf,
 		    0, 0, 0, 0, 0, 0, WinGetW(VROOT), WinGetH(VROOT));
 #endif
 
@@ -1972,7 +1966,7 @@ ECompMgrRepaint(void)
    if (pbuf != rootPicture)
      {
 	EPictureSetClip(pbuf, Mode_compmgr.damage);
-	XRenderComposite(dpy, PictOpSrc, pbuf, None, rootPicture,
+	XRenderComposite(disp, PictOpSrc, pbuf, None, rootPicture,
 			 0, 0, 0, 0, 0, 0, WinGetW(VROOT), WinGetH(VROOT));
      }
 
