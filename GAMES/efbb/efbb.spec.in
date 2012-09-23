@@ -12,7 +12,6 @@ Packager: %{?_packager:%{_packager}}%{!?_packager:Rui Seabra <rms@1407.org>}
 Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project (http://www.enlightenment.org.au/)}
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 Requires: libcanberra ephysics elementary pyparsing
-#BuildRequires: libcanberra etrophy ephysics elementary
 BuildRequires: libcanberra-devel ephysics-devel elementary-devel geneet pyparsing
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
