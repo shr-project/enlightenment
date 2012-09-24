@@ -360,3 +360,12 @@ font_droid.h: fontdump$(EXEEXT) generated $(font_droid_files)
 font_cjk.h: fontdump$(EXEEXT) generated $(font_cjk_files)
 	@echo "  GEN    $@"
 	@./fontdump$(EXEEXT) generated/$@ $(font_cjk_files) > /dev/null 2>&1
+
+EXTRA_DIST = \
+	$(cmap_cns_files) \
+	$(cmap_gb_files) \
+	$(cmap_japan_files) \
+	$(cmap_korea_files) \
+	$(font_base_files) \
+	$(font_droid_files) \
+	$(font_cjk_files)
