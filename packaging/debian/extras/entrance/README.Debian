@@ -1,7 +1,7 @@
-elsa for Debian
+Entrance for Debian
 ---------------
 
-Debian package based on SVN trunk of elsa.
+Debian package based on SVN trunk of entrance.
 
 The modifications made to the configuration file is not preserved during configure.
 

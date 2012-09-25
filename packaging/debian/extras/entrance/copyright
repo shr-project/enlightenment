@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: elsa
-Source: http://svn.enlightenment.org/svn/e/trunk/PROTO/elsa
+Upstream-Name: entrance
+Source: http://svn.enlightenment.org/svn/e/trunk/PROTO/entrance
 
 Files: *
 Copyright: 2011 Michael Bouchaud alias yoz <michael.bouchaud@gmail.com>

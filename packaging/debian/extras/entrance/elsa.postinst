@@ -1,5 +1,5 @@
 #!/bin/sh
-# Debian elsa package postinst script
+# Debian entrance package postinst script
 # Copyright 2011 Daniel Dehennin <daniel.dehennin@baby-gnu.org>
 #
 # Licensed under the GNU General Public License, version 3 or any
@@ -29,9 +29,9 @@ set -e
 # source debconf library
 . /usr/share/debconf/confmodule
 
-DAEMON=/usr/sbin/elsa
-CONFFILE=/etc/elsa.conf
-PAMFILE=/etc/pam.d/elsa
+DAEMON=/usr/sbin/entrance
+CONFFILE=/etc/entrance.conf
+PAMFILE=/etc/pam.d/entrance
 DEFAULT_DISPLAY_MANAGER_FILE=/etc/X11/default-display-manager
 
 configure_default_dm () {
@@ -101,10 +101,10 @@ create_config() {
     then
         cat > "$CONFFILE" << EOM
 /* $CONFFILE */
-/* configuration file. See elsa.conf(5) */
+/* configuration file. See entrance.conf(5) */
 /* for details. */
 
-group "Elsa_Config" struct {
+group "Entrance_Config" struct {
     value "session_path" string: "/bin:/usr/bin:/usr/local/bin";
 
     /* X server path */
@@ -115,7 +115,7 @@ group "Elsa_Config" struct {
     /* xauth path binary */
     value "xauth_path" string: "/usr/bin/xauth";
     /* xauth file for server */
-    value "xauth_file" string: "/var/run/elsa.auth";
+    value "xauth_file" string: "/var/run/entrance.auth";
 
 
     /* Commands executed when starting a session */
@@ -141,12 +141,12 @@ group "Elsa_Config" struct {
     /* Enable numlock */
     value "numlock" uchar: 1;
 
-    /** Bool to determine if elsa must login user with the session_login command
+    /** Bool to determine if entrance must login user with the session_login command
      *  or use xdg desktop and determine the command to use
      *  1 = desktop_file_cmd, 0 = session_login */
     value "xsessions" uchar: 1;
 
-    /** Bool to determine if elsa must autologin user when X start
+    /** Bool to determine if entrance must autologin user when X start
      *  1 = autologin enabled, 0 = autologin disabled */
     value "autologin" uchar: 0;
 
@@ -155,10 +155,10 @@ group "Elsa_Config" struct {
 
 
     /* Lock file */
-    value "lockfile" string: "/var/run/elsa.pid";
+    value "lockfile" string: "/var/run/entrance.pid";
 
     /* Log file */
-    value "logfile" string: "/var/log/elsa.log";
+    value "logfile" string: "/var/log/entrance.log";
 
     /* Theme to use */
     value "theme" string: "default";
@@ -214,10 +214,10 @@ update_config()
 }
 
 # Do not enable autologin for user with id less than 1000
-db_get elsa/autologin
+db_get entrance/autologin
 autologin="$RET"
 
-db_get elsa/autologin-user
+db_get entrance/autologin-user
 autologinuser="$RET"
 
 useruid=`getent passwd "$autologinuser" | awk -F':' '{print $3}'`
@@ -233,8 +233,8 @@ then
     [ -z "$autologin" ] && [ "$useruid" -lt 1000 ] \
         && echo "Disabling autologin: user id less than 1000."
 
-    db_set elsa/autologin "false"
-    db_set elsa/autologin-user ""
+    db_set entrance/autologin "false"
+    db_set entrance/autologin-user ""
 fi
 
 case "$1" in
@@ -242,12 +242,12 @@ case "$1" in
         configure_default_dm
         create_pam
         create_config
-        update_config elsa/autologin autologin
-        update_config elsa/autologin-user userlogin
-        update_config elsa/numlock numlock
-        update_config elsa/session-path session_path
-        update_config elsa/use-session-login xsessions
-        update_config elsa/xorg-args xinit_args
+        update_config entrance/autologin autologin
+        update_config entrance/autologin-user userlogin
+        update_config entrance/numlock numlock
+        update_config entrance/session-path session_path
+        update_config entrance/use-session-login xsessions
+        update_config entrance/xorg-args xinit_args
         # Registering the init scripts or starting the daemon may cause output to
         # stdout, which can confuse debconf.
 	db_stop

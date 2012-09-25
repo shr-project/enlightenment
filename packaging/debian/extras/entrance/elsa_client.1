@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH ELSA 1 "Jun 19, 2011"
+.TH ENTRANCE 1 "Jun 19, 2011"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -16,20 +16,21 @@
 .\" .sp <n>    insert n+1 empty lines
 .\" for manpage-specific macros, see man(7)
 .SH NAME
-\fBelsa \fP- EFL login manager
+\fBentrance_client \fP- Client for entrance login manager
 .SH SYNOPSIS
-.B elsa
+.B entrance_client
 .RI [ options ]
 .br
 .SH DESCRIPTION
 This manual page documents briefly the
-.B elsa
+.B entrance_client
 command.
 .PP
 .\" TeX users may be more comfortable with the \fB<whatever>\fP and
 .\" \fI<whatever>\fP escape sequences to invode bold face and italics,
 .\" respectively.
-\fBelsa\fP is a login manager based on the Enlightenment Foundation Libraries.
+\fBentrance_client\fP is the configuration client of entrance, the login
+manager based on the Enlightenment Foundation Libraries.
 .SH OPTIONS
 These programs follow the usual GNU command line syntax, with long
 options starting with two dashes (`-').
@@ -38,11 +39,14 @@ A summary of options is included below.
 .B \-h, \-\-help
 Show summary of options.
 .TP
+.B \-d, \-\-display
+Specify the display to use.
+.TP
+.B \-t, \-\-theme
+Specify the theme to use
+.TP
 .B \-V, \-\-version
 Show version of program.
-.TP
-.B \-n, \-\-nodaemon
-Don't daemonize.
 .TP
 .B \-R, \-\-copyright
 Show the copyright information.
@@ -50,9 +54,9 @@ Show the copyright information.
 .B \-L, \-\-license
 Show the license information.
 .SH SEE ALSO
-Nothing yet?
+.BR entrance (1).
 .SH AUTHOR
-elsa was written by Michael Bouchaud <michael.bouchaud@gmail.com>.
+entrance_client was written by Michael Bouchaud <michael.bouchaud@gmail.com>.
 .PP
 This manual page was written by Daniel Dehennin <daniel.dehennin@baby-gnu.org>,
 for the Debian project (and may be used by others).

@@ -1,0 +1,10 @@
+# Defaults for entrance initscript
+# sourced by /etc/init.d/entrance
+# installed at /etc/default/entrance by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS=""

@@ -1,5 +1,5 @@
 #!/bin/sh
-# postrm script for elsa
+# postrm script for entrance
 #
 # see: dh_installdeb(1)
 
@@ -18,8 +18,8 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-CONFFILE=/etc/elsa.conf
-PAMFILE=/etc/pam.d/elsa
+CONFFILE=/etc/entrance.conf
+PAMFILE=/etc/pam.d/entrance
 
 case "$1" in
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)

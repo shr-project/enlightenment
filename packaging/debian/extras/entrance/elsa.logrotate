@@ -1,0 +1,13 @@
+/var/log/entrance.log {
+    weekly
+    rotate 52
+    compress
+    delaycompress
+    notifempty
+    missingok
+    postrotate
+        if [ -r /var/run/entrance.pid ]; then \
+            kill -s USR2 $(cat /var/run/entrance.pid); \
+        fi
+    endscript
+}

@@ -14,18 +14,18 @@ _Description: Default display manager:
  the display managers accordingly, edit each of their init scripts in
  /etc/init.d, and disable the check for a default display manager.
 
-Template: elsa/autologin
+Template: entrance/autologin
 Type: boolean
 Default: false
 _Description: Enable autologin a user at X startup?
  When true, a user is automatically logged in when X starts.
 
-Template: elsa/autologin-user
+Template: entrance/autologin-user
 Type: string
 _Description: Name of the auto logged user:
  A simple test is done to avoid login of user with uid less than 1000.
 
-Template: elsa/numlock
+Template: entrance/numlock
 Type: boolean
 Default: true
 _Description: Enable numlock?
@@ -34,23 +34,23 @@ _Description: Enable numlock?
  .
  You can choose to disable it completely. 
 
-Template: elsa/session-path
+Template: entrance/session-path
 Type: string
 Default: /bin:/usr/bin:/usr/local/bin
 _Description: Path to export for the session:
  You can configure the default paths exported in the user session at
  login time.
 
-Template: elsa/use-session-login
+Template: entrance/use-session-login
 Type: boolean
 Default: false
 _Description: Use session_login command instead of xdg desktop?
  If false, use the xdg desktop and determine the command to use.
  .
- If true, use the session_login command configured in elsa.conf to
+ If true, use the session_login command configured in entrance.conf to
  exec xinitrc by default.
 
-Template: elsa/xorg-args
+Template: entrance/xorg-args
 Type: string
 Default: -nolisten tcp -br vt7
 _Description: X server arguments:
