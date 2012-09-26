@@ -19,6 +19,20 @@
 
 static E_DBus_Signal_Handler *cb_position_changed = NULL;
 
+static Eina_Bool
+geoclue_start(void *data, int ev_type, void *event)
+{
+   printf("GeoClue start event\n");
+   return ECORE_CALLBACK_DONE;
+}
+
+static Eina_Bool
+geoclue_stop(void *data, int ev_type, void *event)
+{
+   printf("GeoClue stop event\n");
+   return ECORE_CALLBACK_DONE;
+}
+
 void
 create_cb(void *data , DBusMessage *reply, DBusError *error)
 {
@@ -136,7 +150,6 @@ main()
    struct gc_accuracy *accur;
 
    e_dbus_init();
-   elocation_init(conn);
 
    conn = e_dbus_bus_get(DBUS_BUS_SESSION);
    if (!conn)
@@ -144,6 +157,11 @@ main()
       printf("Error: could not connect to session bus.\n");
       ret = 1;
      }
+
+   elocation_init(conn);
+
+   ecore_event_handler_add(E_LOCATION_EVENT_IN, geoclue_start, NULL);
+   ecore_event_handler_add(E_LOCATION_EVENT_OUT, geoclue_stop, NULL);
 
    msg3 = dbus_message_new_method_call(GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH, GEOCLUE_DBUS_NAME, "Create");
    e_dbus_message_send(conn, msg3, create_cb, -1, NULL);
