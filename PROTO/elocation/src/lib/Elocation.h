@@ -39,6 +39,9 @@
 
 int E_LOCATION_EVENT_IN;
 int E_LOCATION_EVENT_OUT;
+int E_LOCATION_EVENT_STATUS;
+int E_LOCATION_EVENT_POSITION;
+int E_LOCATION_EVENT_ADDRESS;
 
 typedef struct _gc_accuracy
 {
@@ -56,7 +59,7 @@ typedef struct _gc_address
    char *postalcode;
    char *region;
    char *timezone;
-   gc_accuracy accur;
+   gc_accuracy *accur;
 } gc_address;
 
 typedef struct _gc_postion
@@ -66,8 +69,8 @@ typedef struct _gc_postion
    double latitude;
    double longitude;
    double altitude;
-   gc_accuracy accur;
-} gc_postion;
+   gc_accuracy *accur;
+} gc_position;
 
 typedef struct _gc_provider
 {
@@ -88,4 +91,10 @@ typedef struct _gc_requirements
 
 EAPI int elocation_init(E_DBus_Connection *conn);
 EAPI int elocation_shutdown(E_DBus_Connection *conn);
+EAPI int elocation_address_get();
+EAPI int elocation_position_get();
+EAPI int elocation_status_get();
+EAPI int elocation_provider_info_get();
+EAPI int elocation_options_set();
+EAPI int elocation_requirements_set();
 #endif

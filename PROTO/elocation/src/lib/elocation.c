@@ -14,6 +14,8 @@ static char *unique_name = NULL;
 static E_DBus_Signal_Handler *cb_name_owner_changed = NULL;
 static DBusPendingCall *pending_get_name_owner = NULL;
 
+static gc_provider master_provider;
+
 static Eina_Bool
 geoclue_start(void *data, int ev_type, void *event)
 {
@@ -108,6 +110,37 @@ _get_name_owner(void *data , DBusMessage *msg, DBusError *err)
    return;
 }
 
+static void
+status_cb(void *data , DBusMessage *reply, DBusError *error)
+{
+   dbus_int32_t status;
+   DBusMessageIter iter;
+
+   if (!dbus_message_has_signature(reply, "i")) return;
+
+   dbus_message_iter_init(reply, &iter);
+   dbus_message_iter_get_basic(&iter, &status);
+
+   master_provider.status = status;
+
+   printf("Status: %i\n", master_provider.status);
+}
+
+static void
+status_signal_cb(void *data , DBusMessage *reply)
+{
+   dbus_int32_t status;
+   DBusMessageIter iter;
+
+   if (!dbus_message_has_signature(reply, "i")) return;
+
+   dbus_message_iter_init(reply, &iter);
+   dbus_message_iter_get_basic(&iter, &status);
+
+   ecore_event_add(E_LOCATION_EVENT_STATUS, &status, NULL, NULL);
+   master_provider.status = status;
+}
+
 EAPI int
 elocation_init(E_DBus_Connection *conn)
 {
@@ -118,6 +151,15 @@ elocation_init(E_DBus_Connection *conn)
 
    if (E_LOCATION_EVENT_OUT == 0)
       E_LOCATION_EVENT_OUT = ecore_event_type_new();
+
+   if (E_LOCATION_EVENT_STATUS == 0)
+      E_LOCATION_EVENT_STATUS = ecore_event_type_new();
+
+   if (E_LOCATION_EVENT_STATUS == 0)
+      E_LOCATION_EVENT_STATUS = ecore_event_type_new();
+
+   if (E_LOCATION_EVENT_ADDRESS == 0)
+      E_LOCATION_EVENT_ADDRESS = ecore_event_type_new();
 
    cb_name_owner_changed = e_dbus_signal_handler_add
          (conn, E_DBUS_FDO_BUS, E_DBUS_FDO_PATH, E_DBUS_FDO_INTERFACE, "NameOwnerChanged", _system_name_owner_changed, NULL);
@@ -135,6 +177,13 @@ elocation_init(E_DBus_Connection *conn)
    dbus_message_unref(msg);
    msg = NULL;
 
+   msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_IFACE, "GetStatus");
+   e_dbus_message_send(conn, msg, status_cb, -1, NULL);
+   dbus_message_unref(msg);
+   msg = NULL;
+
+   e_dbus_signal_handler_add(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_POSITION_IFACE, "GetStatus",
+         status_signal_cb, NULL);
 }
 
 EAPI int

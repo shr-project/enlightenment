@@ -22,7 +22,15 @@
 
 static E_DBus_Signal_Handler *cb_position_changed = NULL;
 
-void
+static Eina_Bool
+status_changed(void *data, int ev_type, void *event)
+{
+   unsigned int status = (unsigned int)&event;
+   printf("Status changed to: %i\n", status);
+   return ECORE_CALLBACK_DONE;
+}
+
+static void
 unmarshal_address(DBusMessageIter *iter)
 {
    DBusMessageIter arr;
@@ -86,27 +94,7 @@ unmarshal_address(DBusMessageIter *iter)
    while (dbus_message_iter_next(&arr));
 }
 
-void
-status_cb(void *data , DBusMessage *reply, DBusError *error)
-{
-   dbus_int32_t status;
-   DBusMessageIter iter;
-
-   if (!dbus_message_has_signature(reply, "i")) return;
-
-   dbus_message_iter_init(reply, &iter);
-   dbus_message_iter_get_basic(&iter, &status);
-
-   printf("Status: %i\n", status);
-}
-
-void
-status_signal_cb(void *data , DBusMessage *reply)
-{
-   status_cb(data, reply, NULL);
-}
-
-void
+static void
 provider_info_cb(void *data , DBusMessage *reply, DBusError *error)
 {
    dbus_int32_t status;
@@ -123,7 +111,7 @@ provider_info_cb(void *data , DBusMessage *reply, DBusError *error)
    printf("Provider name: %s\n description: %s\n", name, desc);
 }
 
-void
+static void
 address_cb(void *data , DBusMessage *reply, DBusError *error)
 {
    dbus_int32_t level, timestamp;
@@ -162,14 +150,14 @@ address_cb(void *data , DBusMessage *reply, DBusError *error)
    dbus_message_iter_next(&sub);
 }
 
-void
+static void
 address_signal_cb(void *data , DBusMessage *reply)
 {
    address_cb(data, reply, NULL);
 }
 
-void
-position_cb(void *data , DBusMessage *reply, DBusError *error)
+static void
+unmarshall_position(gc_position *position, DBusMessage *reply)
 {
    GeocluePositionFields fields;
    dbus_int32_t level, timestamp;
@@ -179,7 +167,52 @@ position_cb(void *data , DBusMessage *reply, DBusError *error)
    double longitude = 0.0;
    double altitude = 0.0;
    DBusMessageIter iter, sub;
-   gc_accuracy accur;
+
+   if (!dbus_message_has_signature(reply, "iiddd(idd)")) return;
+
+   dbus_message_iter_init(reply, &iter);
+
+   dbus_message_iter_get_basic(&iter, &fields);
+   position->fields = fields;
+   dbus_message_iter_next(&iter);
+
+   dbus_message_iter_get_basic(&iter, &timestamp);
+   position->timestamp = timestamp;
+   dbus_message_iter_next(&iter);
+
+   dbus_message_iter_get_basic(&iter, &latitude);
+   position->latitude = latitude;
+   dbus_message_iter_next(&iter);
+
+   dbus_message_iter_get_basic(&iter, &longitude);
+   position->longitude = longitude;
+   dbus_message_iter_next(&iter);
+
+   dbus_message_iter_get_basic(&iter, &altitude);
+   position->altitude = altitude;
+   dbus_message_iter_next(&iter);
+
+   dbus_message_iter_recurse(&iter, &sub);
+   dbus_message_iter_get_basic(&sub, &level);
+   position->accur->level = level;
+   dbus_message_iter_next(&sub);
+
+   dbus_message_iter_get_basic(&sub, &horizontal);
+   position->accur->horizontal = horizontal;
+   dbus_message_iter_next(&sub);
+
+   dbus_message_iter_get_basic(&sub, &vertical);
+   position->accur->vertical = vertical;
+   dbus_message_iter_next(&sub);
+}
+
+static void
+position_cb(void *data , DBusMessage *reply, DBusError *error)
+{
+   gc_position *position;
+
+   position = malloc(sizeof(gc_position));
+   position->accur = malloc(sizeof(gc_accuracy));
 
    if (dbus_error_is_set(error))
      {
@@ -187,70 +220,41 @@ position_cb(void *data , DBusMessage *reply, DBusError *error)
       return;
      }
 
-   if (!dbus_message_has_signature(reply, "iiddd(idd)")) return;
+   unmarshall_position(position, reply);
 
-   dbus_message_iter_init(reply, &iter);
+   printf("DBus GeoClue reply with data from timestamp %i\n", position->timestamp);
 
-   dbus_message_iter_get_basic(&iter, &fields);
-   dbus_message_iter_next(&iter);
-
-   dbus_message_iter_get_basic(&iter, &timestamp);
-   dbus_message_iter_next(&iter);
-
-   dbus_message_iter_get_basic(&iter, &latitude);
-   dbus_message_iter_next(&iter);
-
-   dbus_message_iter_get_basic(&iter, &longitude);
-   dbus_message_iter_next(&iter);
-
-   dbus_message_iter_get_basic(&iter, &altitude);
-   dbus_message_iter_next(&iter);
-
-   dbus_message_iter_recurse(&iter, &sub);
-   dbus_message_iter_get_basic(&sub, &level);
-   accur.level = level;
-   dbus_message_iter_next(&sub);
-
-   dbus_message_iter_get_basic(&sub, &horizontal);
-   accur.horizontal = horizontal;
-   dbus_message_iter_next(&sub);
-
-   dbus_message_iter_get_basic(&sub, &vertical);
-   accur.vertical = vertical;
-   dbus_message_iter_next(&sub);
-
-   printf("DBus GeoClue reply with data from timestamp %i\n", timestamp);
-
-   if (fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
-      printf("Latitude:\t %f (valid)\n", latitude);
+   if (position->fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
+      printf("Latitude:\t %f (valid)\n", position->latitude);
    else
       printf("Latitude:\tinvalid.\n");
 
-   if (fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
-      printf("Longitude:\t %f (valid)\n", longitude);
+   if (position->fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
+      printf("Longitude:\t %f (valid)\n", position->longitude);
    else
       printf("Longitude:\tinvalid.\n");
 
-   if (fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
-      printf("Altitude:\t %f (valid)\n", altitude);
+   if (position->fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
+      printf("Altitude:\t %f (valid)\n", position->altitude);
    else
       printf("Altitude:\tinvalid.\n");
 
-   printf("Accuracy: level %i, horizontal %f and vertical %f\n", level, horizontal, vertical);
+   printf("Accuracy: level %i, horizontal %f and vertical %f\n", position->accur->level, position->accur->horizontal, position->accur->vertical);
+
+   free(position->accur);
+   free(position);
 }
 
-void
+static void
 position_signal_cb(void *data , DBusMessage *reply)
 {
-   position_cb(data, reply, NULL);
-}
+   gc_position *position;
 
-// elocation_address_get()
-// elocation_position_get()
-// elocation_status_get()
-// elocation_provider_info_get()
-// elocation_options_set()
-// elocation_requirements_set()
+   position = malloc(sizeof(position));
+
+   unmarshall_position(position, reply);
+   ecore_event_add(E_LOCATION_EVENT_POSITION, position, NULL, NULL);
+}
 
 int
 main()
@@ -273,13 +277,7 @@ main()
    // FIXME conn should no longer be needed here when all dbus calls are moved into the lib
    elocation_init(conn);
 
-   msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_IFACE, "GetStatus");
-   e_dbus_message_send(conn, msg, status_cb, -1, NULL);
-   dbus_message_unref(msg);
-   msg = NULL;
-
-   cb_position_changed = e_dbus_signal_handler_add(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_POSITION_IFACE, "GetStatus",
-         status_signal_cb, NULL);
+   ecore_event_handler_add(E_LOCATION_EVENT_STATUS, status_changed, NULL);
 
    msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_IFACE, "GetProviderInfo");
    e_dbus_message_send(conn, msg, provider_info_cb, -1, NULL);
