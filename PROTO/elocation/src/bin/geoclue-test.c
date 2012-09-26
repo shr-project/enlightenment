@@ -136,7 +136,7 @@ main()
    struct gc_accuracy *accur;
 
    e_dbus_init();
-   elocation_init();
+   elocation_init(conn);
 
    conn = e_dbus_bus_get(DBUS_BUS_SESSION);
    if (!conn)
@@ -179,6 +179,7 @@ main()
 
    ecore_main_loop_begin();
 
+   elocation_shutdown(conn);
    e_dbus_shutdown();
    return ret;
 }

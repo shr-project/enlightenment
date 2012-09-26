@@ -101,4 +101,5 @@ typedef enum {
    GEOCLUE_VELOCITY_FIELDS_CLIMB = 1 << 2
 } GeoclueVelocityFields;
 
-EAPI int elocation_init(void);
+EAPI int elocation_init(E_DBus_Connection *conn);
+EAPI int elocation_shutdown(E_DBus_Connection *conn);
