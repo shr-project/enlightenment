@@ -1,3 +1,6 @@
+#ifndef _ELOCATION_PRIVATE_H
+#define _ELOCATION_PRIVATE_H
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -82,4 +85,5 @@ typedef enum {
    GEOCLUE_VELOCITY_FIELDS_DIRECTION = 1 << 1,
    GEOCLUE_VELOCITY_FIELDS_CLIMB = 1 << 2
 } GeoclueVelocityFields;
+#endif
 

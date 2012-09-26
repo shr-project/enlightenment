@@ -28,7 +28,7 @@ geoclue_stop(void *data, int ev_type, void *event)
    return ECORE_CALLBACK_DONE;
 }
 
-void
+static void
 create_cb(void *data , DBusMessage *reply, DBusError *error)
 {
    const char *object_path;
