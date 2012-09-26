@@ -36,7 +36,7 @@ unmarshal_address(DBusMessageIter *iter)
    DBusMessageIter arr;
    const char *key;
    dbus_message_iter_recurse(iter, &arr);
-   gc_address address;
+   Elocation_Address address;
 
    if (dbus_message_iter_get_arg_type(&arr) == DBUS_TYPE_INVALID)
      return;
@@ -118,7 +118,7 @@ address_cb(void *data , DBusMessage *reply, DBusError *error)
    DBusMessageIter iter, sub;
    double horizontal;
    double vertical;
-   gc_accuracy accur;
+   Elocation_Accuracy accur;
 
    if (dbus_error_is_set(error))
      {
@@ -157,7 +157,7 @@ address_signal_cb(void *data , DBusMessage *reply)
 }
 
 static void
-unmarshall_position(gc_position *position, DBusMessage *reply)
+unmarshall_position(Elocation_Position *position, DBusMessage *reply)
 {
    GeocluePositionFields fields;
    dbus_int32_t level, timestamp;
@@ -209,10 +209,10 @@ unmarshall_position(gc_position *position, DBusMessage *reply)
 static void
 position_cb(void *data , DBusMessage *reply, DBusError *error)
 {
-   gc_position *position;
+   Elocation_Position *position;
 
-   position = malloc(sizeof(gc_position));
-   position->accur = malloc(sizeof(gc_accuracy));
+   position = malloc(sizeof(Elocation_Position));
+   position->accur = malloc(sizeof(Elocation_Accuracy));
 
    if (dbus_error_is_set(error))
      {
@@ -248,12 +248,12 @@ position_cb(void *data , DBusMessage *reply, DBusError *error)
 static void
 position_signal_cb(void *data , DBusMessage *reply)
 {
-   gc_position *position;
+   Elocation_Position *position;
 
    position = malloc(sizeof(position));
 
    unmarshall_position(position, reply);
-   ecore_event_add(E_LOCATION_EVENT_POSITION, position, NULL, NULL);
+   ecore_event_add(ELOCATION_EVENT_POSITION, position, NULL, NULL);
 }
 
 int
@@ -263,7 +263,7 @@ main()
    DBusMessage *msg;
    DBusMessageIter iter, sub;
    int ret = 0;
-   struct gc_accuracy *accur;
+   Elocation_Accuracy *accur;
 
    e_dbus_init();
 
@@ -277,7 +277,7 @@ main()
    // FIXME conn should no longer be needed here when all dbus calls are moved into the lib
    elocation_init(conn);
 
-   ecore_event_handler_add(E_LOCATION_EVENT_STATUS, status_changed, NULL);
+   ecore_event_handler_add(ELOCATION_EVENT_STATUS, status_changed, NULL);
 
    msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_IFACE, "GetProviderInfo");
    e_dbus_message_send(conn, msg, provider_info_cb, -1, NULL);

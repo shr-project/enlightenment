@@ -37,20 +37,39 @@
 #include <E_DBus.h>
 #include <elocation_private.h>
 
-int E_LOCATION_EVENT_IN;
-int E_LOCATION_EVENT_OUT;
-int E_LOCATION_EVENT_STATUS;
-int E_LOCATION_EVENT_POSITION;
-int E_LOCATION_EVENT_ADDRESS;
+/**
+ * @defgroup Location_Events Available location events
+ * @brief Location events that are emitted from the library
+ * @{
+ */
+EAPI int ELOCATION_EVENT_IN;
+EAPI int ELOCATION_EVENT_OUT;
+EAPI int ELOCATION_EVENT_STATUS;
+EAPI int ELOCATION_EVENT_POSITION;
+EAPI int ELOCATION_EVENT_ADDRESS;
+/**@}*/
 
-typedef struct _gc_accuracy
+/**
+ * @typedef Elocation_Accuracy
+ * @since 1.8
+ *
+ * Information about the accurancy of the reported location.
+ */
+typedef struct _Elocation_Accuracy
 {
    int level;
    double horizontal;
    double vertical;
-} gc_accuracy;
+} Elocation_Accuracy;
 
-typedef struct _gc_address
+/**
+ * @typedef Elocation_Address
+ * @since 1.8
+ *
+ * Location information in textual form. Depending on the used provider this
+ * can cover only the country or a detailed address based on GPS information.
+ */
+typedef struct _Elocation_Address
 {
    unsigned int timestamp;
    char *country;
@@ -59,42 +78,76 @@ typedef struct _gc_address
    char *postalcode;
    char *region;
    char *timezone;
-   gc_accuracy *accur;
-} gc_address;
+   Elocation_Accuracy *accur;
+} Elocation_Address;
 
-typedef struct _gc_postion
+/**
+ * @typedef Elocation_Position
+ * @since 1.8
+ *
+ * Location information based on the GPS grid. Latitude, longitude and altitude.
+ */
+typedef struct _Elocation_Postion
 {
    GeocluePositionFields fields;
    unsigned int timestamp;
    double latitude;
    double longitude;
    double altitude;
-   gc_accuracy *accur;
-} gc_position;
+   Elocation_Accuracy *accur;
+} Elocation_Position;
 
-typedef struct _gc_provider
-{
-   char *name;
-   char *description;
-   char *service;
-   char *path;
-   GeoclueStatus status;
-} gc_provider;
-
-typedef struct _gc_requirements
+/**
+ * @typedef Elocation_Requirements
+ * @since 1.8
+ *
+ * Requirement settings for the location provider. Requirements can be an level
+ * of accurancy or allowed resources like network access or GPS.
+ */
+typedef struct _Elocation_Requirements
 {
    GeoclueAccuracyLevel accurancy_level;
    int time;
    Eina_Bool require_update;
    GeoclueResourceFlags allowed_resources;
-} gc_requirements;
+} Elocation_Requirements;
 
-EAPI int elocation_init(E_DBus_Connection *conn);
-EAPI int elocation_shutdown(E_DBus_Connection *conn);
-EAPI int elocation_address_get();
-EAPI int elocation_position_get();
-EAPI int elocation_status_get();
-EAPI int elocation_provider_info_get();
-EAPI int elocation_options_set();
-EAPI int elocation_requirements_set();
+/**
+ * @brief Get the current address information.
+ * @param address Address struct to be filled with information.
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_address_get(Elocation_Address *address);
+
+/**
+ * @brief Get the current position information.
+ * @param position Position struct to be filled with information.
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_position_get(Elocation_Position *position);
+
+/**
+ * @brief Get the current status.
+ * @param status Status
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_status_get(int status);
+
+/**
+ * @brief Set the requirements.
+ * @param requirements Requirements
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_requirements_set(Elocation_Requirements *requirements);
+
+Eina_Bool elocation_init(E_DBus_Connection *conn);
+void elocation_shutdown(E_DBus_Connection *conn);
 #endif

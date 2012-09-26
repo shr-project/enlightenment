@@ -14,7 +14,7 @@ static char *unique_name = NULL;
 static E_DBus_Signal_Handler *cb_name_owner_changed = NULL;
 static DBusPendingCall *pending_get_name_owner = NULL;
 
-static gc_provider master_provider;
+static Elocation_Provider master_provider;
 
 static Eina_Bool
 geoclue_start(void *data, int ev_type, void *event)
@@ -66,7 +66,7 @@ _system_name_owner_changed(void *data , DBusMessage *msg)
 
    if (from[0] == '\0' && to[0] != '\0')
      {
-        ecore_event_add(E_LOCATION_EVENT_IN, NULL, NULL, NULL);
+        ecore_event_add(ELOCATION_EVENT_IN, NULL, NULL, NULL);
         unique_name = strdup(to);
      }
    else if (from[0] != '\0' && to[0] == '\0')
@@ -74,7 +74,7 @@ _system_name_owner_changed(void *data , DBusMessage *msg)
         if (strcmp(unique_name, from) != 0)
            printf("%s was not the known name %s, ignored.\n", from, unique_name);
         else
-           ecore_event_add(E_LOCATION_EVENT_OUT, NULL, NULL, NULL);
+           ecore_event_add(ELOCATION_EVENT_OUT, NULL, NULL, NULL);
      }
    else
      {
@@ -104,7 +104,7 @@ _get_name_owner(void *data , DBusMessage *msg, DBusError *err)
      }
 
    if (unique_name)
-      ecore_event_add(E_LOCATION_EVENT_IN, NULL, NULL, NULL);
+      ecore_event_add(ELOCATION_EVENT_IN, NULL, NULL, NULL);
 
    unique_name = strdup(uid);
    return;
@@ -137,29 +137,29 @@ status_signal_cb(void *data , DBusMessage *reply)
    dbus_message_iter_init(reply, &iter);
    dbus_message_iter_get_basic(&iter, &status);
 
-   ecore_event_add(E_LOCATION_EVENT_STATUS, &status, NULL, NULL);
+   ecore_event_add(ELOCATION_EVENT_STATUS, &status, NULL, NULL);
    master_provider.status = status;
 }
 
-EAPI int
+Eina_Bool
 elocation_init(E_DBus_Connection *conn)
 {
    DBusMessage *msg;
 
-   if (E_LOCATION_EVENT_IN == 0)
-      E_LOCATION_EVENT_IN = ecore_event_type_new();
+   if (ELOCATION_EVENT_IN == 0)
+      ELOCATION_EVENT_IN = ecore_event_type_new();
 
-   if (E_LOCATION_EVENT_OUT == 0)
-      E_LOCATION_EVENT_OUT = ecore_event_type_new();
+   if (ELOCATION_EVENT_OUT == 0)
+      ELOCATION_EVENT_OUT = ecore_event_type_new();
 
-   if (E_LOCATION_EVENT_STATUS == 0)
-      E_LOCATION_EVENT_STATUS = ecore_event_type_new();
+   if (ELOCATION_EVENT_STATUS == 0)
+      ELOCATION_EVENT_STATUS = ecore_event_type_new();
 
-   if (E_LOCATION_EVENT_STATUS == 0)
-      E_LOCATION_EVENT_STATUS = ecore_event_type_new();
+   if (ELOCATION_EVENT_STATUS == 0)
+      ELOCATION_EVENT_STATUS = ecore_event_type_new();
 
-   if (E_LOCATION_EVENT_ADDRESS == 0)
-      E_LOCATION_EVENT_ADDRESS = ecore_event_type_new();
+   if (ELOCATION_EVENT_ADDRESS == 0)
+      ELOCATION_EVENT_ADDRESS = ecore_event_type_new();
 
    cb_name_owner_changed = e_dbus_signal_handler_add
          (conn, E_DBUS_FDO_BUS, E_DBUS_FDO_PATH, E_DBUS_FDO_INTERFACE, "NameOwnerChanged", _system_name_owner_changed, NULL);
@@ -169,8 +169,8 @@ elocation_init(E_DBus_Connection *conn)
 
    pending_get_name_owner = e_dbus_get_name_owner(conn, GEOCLUE_DBUS_NAME, _get_name_owner, NULL);
 
-   ecore_event_handler_add(E_LOCATION_EVENT_IN, geoclue_start, NULL);
-   ecore_event_handler_add(E_LOCATION_EVENT_OUT, geoclue_stop, NULL);
+   ecore_event_handler_add(ELOCATION_EVENT_IN, geoclue_start, NULL);
+   ecore_event_handler_add(ELOCATION_EVENT_OUT, geoclue_stop, NULL);
 
    msg = dbus_message_new_method_call(GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH, GEOCLUE_DBUS_NAME, "Create");
    e_dbus_message_send(conn, msg, create_cb, -1, NULL);
@@ -186,7 +186,7 @@ elocation_init(E_DBus_Connection *conn)
          status_signal_cb, NULL);
 }
 
-EAPI int
+void
 elocation_shutdown(E_DBus_Connection *conn)
 {
    if (pending_get_name_owner)

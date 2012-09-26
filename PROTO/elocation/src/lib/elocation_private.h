@@ -85,5 +85,15 @@ typedef enum {
    GEOCLUE_VELOCITY_FIELDS_DIRECTION = 1 << 1,
    GEOCLUE_VELOCITY_FIELDS_CLIMB = 1 << 2
 } GeoclueVelocityFields;
+
+typedef struct _Elocation_Provider
+{
+   char *name;
+   char *description;
+   char *service;
+   char *path;
+   GeoclueStatus status;
+} Elocation_Provider;
+
 #endif
 
