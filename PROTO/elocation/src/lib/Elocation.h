@@ -33,6 +33,9 @@
 #define GEOCLUE_ADDRESS_KEY_REGION "region"
 #define GEOCLUE_ADDRESS_KEY_STREET "street"
 
+int E_LOCATION_EVENT_IN;
+int E_LOCATION_EVENT_OUT;
+
 typedef struct _gc_accuracy
 {
    int level;
@@ -98,3 +101,4 @@ typedef enum {
    GEOCLUE_VELOCITY_FIELDS_CLIMB = 1 << 2
 } GeoclueVelocityFields;
 
+EAPI int elocation_init(void);

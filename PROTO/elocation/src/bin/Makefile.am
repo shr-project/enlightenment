@@ -14,6 +14,6 @@ bin_PROGRAMS = geoclue-test
 geoclue_test_SOURCES = geoclue-test.c
 
 geoclue_test_CFLAGS = @ELOCATION_CFLAGS@
-#geoclue_test_LDADD = $(top_builddir)/src/lib/libelocation.la @ELOCATION_LIBS@
-geoclue_test_LDADD = @ELOCATION_LIBS@
+geoclue_test_LDADD = $(top_builddir)/src/lib/libelocation.la @ELOCATION_LIBS@
+
 geoclue_test_LDFLAGS = -export-dynamic

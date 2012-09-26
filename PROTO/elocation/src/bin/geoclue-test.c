@@ -136,6 +136,7 @@ main()
    struct gc_accuracy *accur;
 
    e_dbus_init();
+   elocation_init();
 
    conn = e_dbus_bus_get(DBUS_BUS_SESSION);
    if (!conn)
