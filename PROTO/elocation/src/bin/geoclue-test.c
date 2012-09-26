@@ -7,6 +7,7 @@
 #include <Ecore.h>
 #include <E_DBus.h>
 #include <Elocation.h>
+#include <elocation_private.h>
 
 /* TODO:
    o Create a client object to operate on
@@ -16,17 +17,8 @@
    o Start (how to stop?) service to get position updates
    o How to deal with AddReference and RemoveReference?
    o Implement MasterClient interface
+   o Reply on address is inconsistent. Either all NULL or all empty
 */
-
-typedef struct _gc_address
-{
-   char *country;
-   char *countrycode;
-   char *locality;
-   char *postalcode;
-   char *region;
-   char *timezone;
-} gc_address;
 
 static E_DBus_Signal_Handler *cb_position_changed = NULL;
 
@@ -280,6 +272,13 @@ position_signal_cb(void *data , DBusMessage *reply)
 {
    position_cb(data, reply, NULL);
 }
+
+// elocation_address_get()
+// elocation_position_get()
+// elocation_status_get()
+// elocation_provider_info_get()
+// elocation_options_set()
+// elocation_requirements_set()
 
 int
 main()

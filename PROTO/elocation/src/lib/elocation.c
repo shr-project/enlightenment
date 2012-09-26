@@ -7,8 +7,8 @@
 #include <Ecore.h>
 #include <E_DBus.h>
 #include <Elocation.h>
+#include <elocation_private.h>
 
-static const char bus_name[] = "org.freedesktop.Geoclue.Master";
 static char *unique_name = NULL;
 
 static E_DBus_Signal_Handler *cb_name_owner_changed = NULL;
@@ -31,7 +31,7 @@ _system_name_owner_changed(void *data , DBusMessage *msg)
         return;
      }
 
-   if (strcmp(name, bus_name) != 0)
+   if (strcmp(name, GEOCLUE_DBUS_NAME) != 0)
       return;
 
    if (from[0] == '\0' && to[0] != '\0')
@@ -95,7 +95,7 @@ elocation_init(E_DBus_Connection *conn)
    if (pending_get_name_owner)
       dbus_pending_call_cancel(pending_get_name_owner);
 
-   pending_get_name_owner = e_dbus_get_name_owner(conn, bus_name, _get_name_owner, NULL);
+   pending_get_name_owner = e_dbus_get_name_owner(conn, GEOCLUE_DBUS_NAME, _get_name_owner, NULL);
 }
 
 EAPI int

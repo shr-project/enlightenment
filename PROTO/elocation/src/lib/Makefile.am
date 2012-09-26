@@ -5,7 +5,7 @@ AM_CPPFLAGS = @ELOCATION_CFLAGS@ \
 
 lib_LTLIBRARIES = libelocation.la
 
-includes_HEADERS = Elocation.h
+includes_HEADERS = Elocation.h elocation_private.h
 includesdir = $(includedir)/elocation-@VMAJ@
 
 libelocation_la_SOURCES = elocation.c
