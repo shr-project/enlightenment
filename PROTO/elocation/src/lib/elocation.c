@@ -28,6 +28,20 @@ geoclue_stop(void *data, int ev_type, void *event)
    return ECORE_CALLBACK_DONE;
 }
 
+void
+create_cb(void *data , DBusMessage *reply, DBusError *error)
+{
+   const char *object_path;
+   DBusMessageIter iter;
+
+   if (!dbus_message_has_signature(reply, "o")) return;
+
+   dbus_message_iter_init(reply, &iter);
+   dbus_message_iter_get_basic(&iter, &object_path);
+
+   printf("Object path for client: %s\n", object_path);
+}
+
 static void
 _system_name_owner_changed(void *data , DBusMessage *msg)
 {
@@ -97,6 +111,8 @@ _get_name_owner(void *data , DBusMessage *msg, DBusError *err)
 EAPI int
 elocation_init(E_DBus_Connection *conn)
 {
+   DBusMessage *msg;
+
    if (E_LOCATION_EVENT_IN == 0)
       E_LOCATION_EVENT_IN = ecore_event_type_new();
 
@@ -113,6 +129,12 @@ elocation_init(E_DBus_Connection *conn)
 
    ecore_event_handler_add(E_LOCATION_EVENT_IN, geoclue_start, NULL);
    ecore_event_handler_add(E_LOCATION_EVENT_OUT, geoclue_stop, NULL);
+
+   msg = dbus_message_new_method_call(GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH, GEOCLUE_DBUS_NAME, "Create");
+   e_dbus_message_send(conn, msg, create_cb, -1, NULL);
+   dbus_message_unref(msg);
+   msg = NULL;
+
 }
 
 EAPI int

@@ -87,20 +87,6 @@ unmarshal_address(DBusMessageIter *iter)
 }
 
 void
-create_cb(void *data , DBusMessage *reply, DBusError *error)
-{
-   const char *object_path;
-   DBusMessageIter iter;
-
-   if (!dbus_message_has_signature(reply, "o")) return;
-
-   dbus_message_iter_init(reply, &iter);
-   dbus_message_iter_get_basic(&iter, &object_path);
-
-   printf("Object path for client: %s\n", object_path);
-}
-
-void
 status_cb(void *data , DBusMessage *reply, DBusError *error)
 {
    dbus_int32_t status;
@@ -286,11 +272,6 @@ main()
 
    // FIXME conn should no longer be needed here when all dbus calls are moved into the lib
    elocation_init(conn);
-
-   msg = dbus_message_new_method_call(GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH, GEOCLUE_DBUS_NAME, "Create");
-   e_dbus_message_send(conn, msg, create_cb, -1, NULL);
-   dbus_message_unref(msg);
-   msg = NULL;
 
    msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_IFACE, "GetStatus");
    e_dbus_message_send(conn, msg, status_cb, -1, NULL);
