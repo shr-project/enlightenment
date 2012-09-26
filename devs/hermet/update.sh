@@ -12,10 +12,10 @@ do
 	then 
 		echo Start $e 
 		cd $e
-		sudo make clean
-		sudo make distclean
+		make clean
+		make distclean
 		./autogen.sh
-		CFLAGS=${CFLAGS} sudo make install && sudo ldconfig
+		CFLAGS=${CFLAGS} make -j 4 && sudo make install && sudo ldconfig
 		cd ..
 		echo End Done
 	fi 
