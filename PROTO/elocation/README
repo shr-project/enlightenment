@@ -1,0 +1,4 @@
+Elocation is a small library that allows application to get some basic location awareness if this is
+supported on the platform.
+
+Right now Elocation is using geoclue to get information about position and address information.
