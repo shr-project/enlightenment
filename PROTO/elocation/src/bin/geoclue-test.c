@@ -12,7 +12,7 @@
    o Create a client object to operate on
    o Ask master for providers
    o Set requirements
-   o Attach to signals and give out ecore events
+   o Give out ecore events on signals
    o Start (how to stop?) service to get position updates
    o How to deal with AddReference and RemoveReference?
    o Implement MasterClient interface
@@ -273,8 +273,6 @@ position_cb(void *data , DBusMessage *reply, DBusError *error)
       printf("Altitude:\tinvalid.\n");
 
    printf("Accuracy: level %i, horizontal %f and vertical %f\n", level, horizontal, vertical);
-
-//   ecore_main_loop_quit();
 }
 
 void
@@ -348,21 +346,3 @@ main()
    e_dbus_shutdown();
    return ret;
 }
-
-#if 0
-   dbus_message_append_args(msg, DBUS_TYPE_INT32, &field, DBUS_TYPE_INT32, &timestamp,
-                                DBUS_TYPE_DOUBLE, &latitude, DBUS_TYPE_DOUBLE, &longitude,
-                                DBUS_TYPE_DOUBLE, &altitude, DBUS_TYPE_INVALID);
-
-   dbus_message_iter_init_append(msg, &iter);
-   if (dbus_message_iter_open_container(&iter, DBUS_TYPE_STRUCT, NULL, &sub))
-     {
-      dbus_message_iter_append_basic(&sub, DBUS_TYPE_INT32, &level);
-      dbus_message_iter_append_basic(&sub, DBUS_TYPE_DOUBLE, &horizontal);
-      dbus_message_iter_append_basic(&sub, DBUS_TYPE_DOUBLE, &vertical);
-     }
-   else
-      printf("dbus_message_iter_open_container() failed\n");
-
-   dbus_message_iter_close_container(&iter, &sub);
-#endif
