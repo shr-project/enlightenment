@@ -14,6 +14,20 @@ static char *unique_name = NULL;
 static E_DBus_Signal_Handler *cb_name_owner_changed = NULL;
 static DBusPendingCall *pending_get_name_owner = NULL;
 
+static Eina_Bool
+geoclue_start(void *data, int ev_type, void *event)
+{
+   printf("GeoClue start event\n");
+   return ECORE_CALLBACK_DONE;
+}
+
+static Eina_Bool
+geoclue_stop(void *data, int ev_type, void *event)
+{
+   printf("GeoClue stop event\n");
+   return ECORE_CALLBACK_DONE;
+}
+
 static void
 _system_name_owner_changed(void *data , DBusMessage *msg)
 {
@@ -96,6 +110,9 @@ elocation_init(E_DBus_Connection *conn)
       dbus_pending_call_cancel(pending_get_name_owner);
 
    pending_get_name_owner = e_dbus_get_name_owner(conn, GEOCLUE_DBUS_NAME, _get_name_owner, NULL);
+
+   ecore_event_handler_add(E_LOCATION_EVENT_IN, geoclue_start, NULL);
+   ecore_event_handler_add(E_LOCATION_EVENT_OUT, geoclue_stop, NULL);
 }
 
 EAPI int
