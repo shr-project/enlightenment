@@ -49,6 +49,18 @@ clone(const Arguments &args)
   return deep_clone(object);
 }
 
+static Handle<Value>
+isObjectEmpty(const Arguments& args)
+{
+   HandleScope scope;
+   Local<Object> object = args[0]->ToObject();
+
+   if (object->IsUndefined())
+     return Undefined();
+
+   return Boolean::New(object->GetOwnPropertyNames()->Length() == 0);
+}
+
 void RegisterModule(Handle<ObjectTemplate> global)
 {
    log = eina_log_domain_register("elev8-utils", EINA_COLOR_ORANGE);
@@ -62,6 +74,7 @@ void RegisterModule(Handle<ObjectTemplate> global)
 
    Handle<ObjectTemplate> tmpl = ObjectTemplate::New();
    tmpl->Set("clone", FunctionTemplate::New(clone));
+   tmpl->Set("isEmpty", FunctionTemplate::New(isObjectEmpty));
 
    global->Set("utils", tmpl);
 }
