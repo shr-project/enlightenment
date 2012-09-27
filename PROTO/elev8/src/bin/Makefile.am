@@ -24,7 +24,8 @@ elev8_SOURCES = \
 	storage.cc \
 	timer.cc \
 	environment.cc \
-	utils.cc
+	utils.cc \
+	utils_js.cc
 
 elev8_LDADD = @EINA_LIBS@ @ECORE_LIBS@ @V8_LIBS@ @EET_LIBS@
 
