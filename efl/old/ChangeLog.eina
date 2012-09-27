@@ -1,0 +1,354 @@
+2011-01-29  Carsten Haitzler (The Rasterman)
+
+        1.0.0 release
+
+2011-02-01  Cedric Bail
+
+	* Improve scalability and raw speed of Chained Mempool.
+
+2011-02-08  Tom Hacohen
+
+	* Added eina_unicode_strndup
+
+2011-02-16  Mike Blumenkrantz
+
+        * Added EINA_INLIST_FOREACH_SAFE
+
+2011-02-16  Tom Hacohen
+
+	* Added eina_unicode_utf8* functions for utf8 string handling
+	and conversions to and from Eina_Unicode
+
+2011-02-17  Mike Blumenkrantz
+
+        * Added eina_list_move* functions for moving list node data to other lists
+
+2011-02-24  Vincent Torri
+
+        * Fix a compilation failure when --disable-posix-threads
+	--disable-valgrind are passed to configure
+
+2011-03-09  Cedric Bail
+
+	* Fix stat failure when file size in bytes or the number of blocks
+	allocated to the file or the file serial number didn't fit in 32bits.
+
+2011-03-18  Mike Blumenkrantz
+
+        * Use stringshare for eina_error messages
+        * add eina_error_find to match an error message with its Eina_Error
+
+2011-04-06  Gustavo Sverzut Barbieri
+
+	* Add Simple XML parser API.
+
+2011-04-11  Cedric Bail
+
+	* Add eina_inlist_sort.
+	* Add eina_mempool_repack.
+
+2011-04-13  Cedric Bail & Vincent Torri
+
+	* Add Eina_File API, a portable mmap helper with some cache and tracking feature.
+
+2011-04-22  Vincent Torri
+
+        * Add Eina_Lock API, a portable solution across various system for locking/unlocking mutex.
+
+2011-04-24  Carsten Haitzler (The Rasterman)
+
+        * Add a prefix location finder api to eina. Beta status. needs
+        more use from higher up libs/apps first.
+
+2011-04-24  Vincent Torri
+
+        * Fix uninstallation of the mempools modules
+
+2011-04-27  Vincent Torri
+
+        * Fix static build of the buddy mempool
+
+2011-04-29  Cedric Bail
+
+	* Add Eina_Refcount macro helper. You should really use them when running with thread !
+
+2011-05-14  Vincent Torri
+
+	* Add Eina_Condition API on Windows.
+
+2011-05-17  Tom Hacohen (TAsn)
+
+	* Added eina_binbuf: This is just like strbuf but for binary blobs.
+	  Requested by discomfitor and honestly it looks needed.
+
+2011-05-18  Cedric Bail
+
+	* Fix eina_share_common_init to be called only once.
+
+2011-05-24  Vincent Torri
+
+	* Implement eina_sched_prio_drop() on Windows
+
+2011-05-24  Cedric Bail
+
+	* Add eina_inlist_sorted_insert.
+
+2011-05-30  Cedric Bail
+
+	* Add eina_condition_timedwait.
+
+2011-05-31  Cedric Bail
+
+	* Fix eina_hash_set to handle data == NULL like eina_hash_del.
+
+2011-06-03  Vincent Torri
+
+        * Fix static linking with eina (iconv could potentially not be
+	passed to the linker)
+
+2011-06-15  Cedric Bail
+
+ 	* Add eina_hash_free_cb_set to change the free callback during the
+	life of an Eina_Hash.
+
+2011-06-23  Cedric Bail
+
+	* Add Eina_LockRW.
+
+2011-07-04  Carsten Haitzler (The Rasterman)
+
+	* Add eina_mmap safety handling.
+
+2011-07-29  Cedric Bail
+
+	* Add eina_main_loop_is.
+
+2011-08-03  Myungjae Lee
+
+	* Fix eina_share_common_del and eina_share_common_ref to release lock on failure.
+
+2011-09-05  Cedric Bail
+
+	* Add eina_inlist_sorted_state_insert and helper.
+
+2011-09-06  Tom Hacohen
+
+	* Strbuf + Ustrbuf: Added eina_(u)strbuf_manage_new. This lets us
+	take a string and use it as the string buffer instead of copying
+	and allocating.
+
+2011-09-15  Cedric Bail
+
+	* Add eina_xattr_ls, eina_xattr_get, eina_xattr_set, eina_xattr_string_set,
+	eina_xattr_string_get, eina_xattr_double_set, eina_xattr_double_get,
+	eina_xattr_int_set, eina_xattr_int_get.
+
+2011-11-10  Boris Faure (billiob)
+
+	* Add new hash function eina_hash_murmur3 that should be better at
+	hashing strings.
+
+2011-12-02 Carsten Haitzler (The Rasterman)
+
+        1.1.0 release
+
+2011-12-02  Mike Blumenkrantz (discomfitor/zmike)
+
+        * Add eina_mempool_calloc for returning zeroed memory
+
+2011-12-07  Mike Blumenkrantz (discomfitor/zmike)
+
+        * eina_log*level_check() functions now return the correct value
+
+2011-12-08  Tom Hacohen
+
+	* Binbuf + Strbuf + Ustrbuf: Added eina_*buf_manage_new_length.
+	Same as eina_(u)strbuf_manage_new except that it accepts a length
+	parameter.
+
+2011-12-20  Cedric Bail
+
+	* Fix bug on eina_shutdown when using eina_error.
+
+2011-12-28  Cedric Bail
+
+	* Fix NONNULL argument for eina_hash_find.
+
+2011-12-30  Vincent Torri
+
+	* Add Eina_Semaphore abstraction API.
+
+2011-12-30  Cedric Bail
+
+	* Let eina_hash_free behave like free.
+
+2012-01-03  Cedric Bail
+
+	* Add eina_xattr_fd_ls, eina_xattr_value_fd_ls and eina_xattr_value_ls.
+	* Detect fault during access to Eina_File mmap memory, use
+        eina_file_map_faulted to learn if it happens.
+	* Add eina_file_xattr_get and eina_file_xattr_value_get.
+
+2012-01-09  Gustavo Barbieri
+
+	* Deprecated eina_array_count_get(), use eina_array_count() instead.
+	* Add eina_inarray data type.
+	* Add eina_value data type (generic value storage).
+
+2012-01-19  Shinwoo Kim
+
+	* Fix compilation of eina_semaphore_lock() (Windows port)
+
+2012-01-20  Gustavo Barbieri
+
+	* Add eina_model data type (generic hierarchy data access).
+
+2011-12-30  Vincent Torri
+
+	* Fix Eina_RWLock code on Windows > XP.
+
+2012-01-29  Tom Hacohen
+
+	* Added EINA_C_ARRAY_LENGTH, a macro that returns  the length of a
+	standard C array.
+
+2012-01-31  Tom Hacohen
+
+	* Added an Eina_Stringshare type. It's just a typedef of "const char"
+	this is a same kind of visual hint for the purpose of the pointer,
+	but again, the two types are interchangeable.
+
+2012-02-17  Cedric Bail
+
+	* Fix forgotten initialization of eina list count during eina_list_split_list.
+
+2012-02-22  Cedric Bail
+
+	* Add eina_file_stat.
+
+2012-02-27  Alexandre Becoulet
+
+	* Add faster implementation of Eina_Rbtree.
+
+2012-03-07  Cedric Bail
+
+	* Fix leak of Eina_File.
+
+2012-03-14  Cedric Bail
+
+	* Fix a dead lock in Eina_File.
+
+2012-03-16  Raphael Kubo da Costa
+
+	* Adjust Valgrind's CFLAGS to fix the build when it is in a non-default location.
+
+2012-03-29 Iván Briano
+
+	* Avoid freeing old data before returning it on eina_hash_set().
+
+2012-03-31  Vincent Torri
+
+	* Add missing API eina_file_map_faulted() on Windows. Does nothing
+	for now.
+
+2012-04-19  Cedric Bail
+
+	* Make it possible to force the number of detected CPU on a system.
+
+2012-04-26 Carsten Haitzler (The Rasterman)
+
+        1.2.0 release
+
+2012-04-26  Cedric Bail
+
+	* Add backtrace support Eina_Log.
+
+2012-04-30  Jérôme Pinot
+
+	* Add missing files in the tarballs.
+
+2012-05-06  Cedric Bail
+
+	* Fix a rounding issue near 1.0 for eina_f32p32_cos and eina_f32p32_sin.
+
+2012-05-08  Cedric Bail
+
+	* Add eina_file_map_lines to iterate on lines of a mapped file.
+
+2012-05-17  Albin Tonnerre
+
+	* Fix portability issue of Eina_Value on ARM and PPC.
+	* Fix portability issue of Eina_Value test on Itanium.
+
+2012-05-23  Carsten Haitzler (The Rasterman)
+
+        * Fix global_faulty faulty flag in eina_file to be set to 0
+        initially rather than be random memory garbage.
+
+2012-05-29  Vincent Torri
+
+        * remove --disable-posix-threads and --disable-win32-threads
+	from configure options, and detect automatically the threading
+	support.
+	Fix bug in the XML parser when a tag was in a comment or a
+	cdata
+
+2012-06-08  Mike Blumenkrantz
+
+        * Fixed eina_str_split_full() to behave properly and be much faster
+
+2012-06-17  Carsten Haitzler (The Rasterman)
+
+        * Add env var EINA_MEMPOOL_PASS to force mempool to try use
+        passthrough to malloc for debgging purposes and memory footrpint
+        comparisons at runtime.
+
+2012-07-01  Vincent Torri
+
+        * Remove --enable-coverage from configure options.
+
+2012-07-04  Vincent Torri
+
+        * Implement eina_file_map_lines() on Windows.
+
+2012-07-05  Raphael Kubo da Costa
+
+	* Handle NULL in all eina_*_free function.
+
+2012-08-01 Carsten Haitzler (The Rasterman)
+
+        * Modify eina_prefix to deal with debian's fun new
+        multiarch... if you are a shared library.
+
+2012-08-01 Gustavo Sverzut Barbieri (k-s)
+
+	* added eina_log_console_color_set() for cross platform console
+	color set.
+
+2012-08-14  Lucas De Marchi
+
+        * Add EINA_SENTINEL macro to protect variadic functions
+
+2012-08-30  Carsten Haitzler (The Rasterman)
+
+        1.7.0 release
+
+2012-09-04  Roberto de Souza <zehortigoza@profusion.mobi>
+
+        * Fix EINA_INLIST_FOREACH_SAFE macro to work when inlist is not the
+        first item in the struct.
+
+2012-09-11  Cedric Bail
+
+	* Speedup Eina Rbtree Iterator by recycling memory instead of massively calling malloc/free.
+
+2012-09-12 Patryk Kaczmarek <patryk.k@samsung.com>
+
+        * Add EINA_SAFETY checks for proper function arguments.
+        * Add check if given arguments (distance and coordinates) in eina_tiler
+        and eina_rectangle are not below zero
+        * Documentation for eina list specified and eina stringshare fixed
+
+2012-09-15  Vincent Torri
+
+        * Add DOCTYPE children to be parse in eina_simple_xml.
