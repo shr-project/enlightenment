@@ -1,0 +1,10 @@
+collections {
+#include "dict/theme/button.edc"
+#include "dict/theme/check.edc"
+#include "dict/theme/entry.edc"
+#include "dict/theme/genlist.edc"
+#include "dict/theme/icon.edc"
+#include "dict/theme/naviframe.edc"
+#include "dict/theme/scroller.edc"
+#include "dict/theme/toolbar.edc"
+}

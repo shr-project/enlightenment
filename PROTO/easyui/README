@@ -1,0 +1,34 @@
+This is, for the lack of a better name, EasyUI.
+
+It is a work in progress to bring a MVC framework to build applications
+using EFL and JavaScript.
+
+Before trying to execute any file contained in this directory, make sure
+``eui.edj'' is built:
+
+	$ edje_cc eui.edc
+
+Most example applications are simpler versions of what you would find on a
+mobile device, like a Photo Browsing application, a Twitter client, a Note
+taking application, among others.
+
+The dictionary application requires a dictionary file, which will be
+provided in the coming weeks (it is based on Webster's Unabridged Dictionary
+as found on Project Gutemberg) and the old book theme compiled as well
+(found in the ``themes'' directory).  Proper building tools will come with
+time.
+
+It is currently under heavy development, and although stable featurewise,
+the API will most certainly change.  It is therefore not recommended to
+write applications with this library unless you could live with the risk of
+eventually having to rewrite part of your applications.  If living on the
+bleeding edge is your thing, though, feedback is encouraged.  Better yet:
+patches are welcome.
+
+In any case, executing an EasyUI application is just the matter of elevating
+it:
+
+	$ elev8 photo.js
+
+If your setup of Elev8 is working, you should see a list of your pictures
+from ~/Photos.

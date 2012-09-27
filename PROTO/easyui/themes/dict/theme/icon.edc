@@ -1,0 +1,10 @@
+#define GROUP_ALIAS_ICON(Name, Alias, File, Min, Max)                   \
+   group { name: "elm/icon/"##Name##"/default"; min: Min Min; max: Max Max; \
+      alias: "elm/icon/"##Alias##"/default";                            \
+      images.image: File COMP; parts { part { name: "base";             \
+            description { aspect: 1.0 1.0; aspect_preference: BOTH;     \
+               image.normal: File; fill.smooth: 1; } } } }
+
+GROUP_ALIAS_ICON("bookmarks", "toolbar/bookmarks", "dict/images/icon-bookmarks-small.png", 32, 0);
+GROUP_ALIAS_ICON("search", "toolbar/search", "dict/images/icon-search-small.png", 32, 0);
+GROUP_ALIAS_ICON("history", "toolbar/history", "dict/images/icon-history-small.png", 32, 0);
