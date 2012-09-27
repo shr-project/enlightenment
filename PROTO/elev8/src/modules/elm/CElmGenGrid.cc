@@ -312,8 +312,24 @@ Handle<Value> CElmGenGrid::bring_in_item(const Arguments& args)
    return Undefined();
 }
 
-Handle<Value> CElmGenGrid::clear(const Arguments &)
+Handle<Value> CElmGenGrid::clear(const Arguments &args)
 {
+   if (args[0]->IsArray())
+     {
+        Handle<Object> elements = args[0]->ToObject();
+
+        for (unsigned i = 0; ; ++i) {
+           Handle<Value> element = elements->Get(i);
+           if (element.IsEmpty())
+             break;
+
+           Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(element->ToObject());
+           elm_object_item_del(item->object_item);
+        }
+
+        return Undefined();
+     }
+
    elm_gengrid_clear(eo);
    return Undefined();
 }

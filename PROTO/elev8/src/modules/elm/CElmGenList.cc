@@ -546,8 +546,24 @@ void CElmGenList::on_scrolled_over_left_edge_set(Handle<Value> val)
    evas_object_smart_callback_add(eo, "edge,left", &OnScrolledOverLeftEdgeWrapper, this);
 }
 
-Handle<Value> CElmGenList::clear(const Arguments &)
+Handle<Value> CElmGenList::clear(const Arguments &args)
 {
+   if (args[0]->IsArray())
+     {
+        Handle<Object> elements = args[0]->ToObject();
+
+        for (unsigned i = 0; ; ++i) {
+           Handle<Value> element = elements->Get(i);
+           if (element.IsEmpty())
+             break;
+
+           Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(element->ToObject());
+           elm_object_item_del(item->object_item);
+        }
+
+        return Undefined();
+     }
+
    elm_genlist_clear(eo);
    return Undefined();
 }
