@@ -390,6 +390,35 @@ flush_garbage_collector(void *, int , void *)
    return ECORE_CALLBACK_DONE;
 }
 
+static Handle<Value>
+deep_clone(Local<Value> value) {
+  HandleScope scope;
+  if (!value->IsObject())
+    return Undefined();
+
+  Local<Object> obj = value->ToObject();
+  Local<Object> clone =obj->Clone();
+  Local<Array> props = clone->GetOwnPropertyNames();
+
+  for (unsigned int i = 0; i < props->Length(); i++)
+    {
+      Local<Value> key = props->Get(i);
+      if (clone->Get(key)->IsObject())
+        clone->Set(key, deep_clone(obj->Get(key)));
+    }
+
+  return scope.Close(clone);
+}
+
+static Handle<Value>
+clone(const Arguments &args)
+{
+  if (args[0]->IsUndefined() || (args[0]->IsBoolean() && !args[0]->BooleanValue()))
+    return args.This()->Clone();
+
+  return deep_clone(args.This());
+}
+
 int
 main(int argc, char *argv[])
 {
@@ -440,6 +469,10 @@ main(int argc, char *argv[])
 
    Persistent<Context> context = Context::New(NULL, global);
    Context::Scope context_scope(context);
+
+   Handle<Value> object = context->Global()->Get(String::NewSymbol("Object"));
+   Handle<Object> object_prototype = object->ToObject()->Get(String::NewSymbol("prototype"))->ToObject();
+   object_prototype->Set(String::NewSymbol("clone"), FunctionTemplate::New(clone)->GetFunction());
 
    module_cache = Persistent<Object>::New(Object::New());
 
