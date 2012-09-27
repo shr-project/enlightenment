@@ -12,11 +12,6 @@ private:
 
    class Item {
    public:
-      static struct Strings {
-         Persistent<String> parent;
-         Persistent<String> items;
-         Persistent<String> item;
-      } str;
       Persistent<Object> jsObject;
       Elm_Object_Item *object_item;
 
@@ -31,11 +26,21 @@ private:
                 klass->SetClassName(String::NewSymbol("NaviframeItem"));
 
                 tmpl = Persistent<ObjectTemplate>::New(klass->InstanceTemplate());
-                tmpl->SetNamedPropertyHandler(ElementGet, ElementSet, NULL, ElementDel);
 
-                str.parent = Persistent<String>::New(String::NewSymbol("naviframe::parent"));
-                str.items = Persistent<String>::New(String::NewSymbol("naviframe::items"));
-                str.item = Persistent<String>::New(String::NewSymbol("naviframe::item"));
+                tmpl->SetAccessor(String::NewSymbol("title"), GetTitle, SetTitle);
+                tmpl->SetAccessor(String::NewSymbol("subtitle"), GetTitle, SetTitle);
+
+                tmpl->SetAccessor(String::NewSymbol("icon"), GetContent, SetContent);
+                tmpl->SetAccessor(String::NewSymbol("content"), GetContent, SetContent);
+                tmpl->SetAccessor(String::NewSymbol("prev_btn"), GetContent, SetContent);
+                tmpl->SetAccessor(String::NewSymbol("next_btn"), GetContent, SetContent);
+
+                tmpl->SetAccessor(String::NewSymbol("style"), GetStyle, SetStyle);
+
+                tmpl->SetAccessor(String::NewSymbol("title_visible"),
+                                                    GetTitleVisible, SetTitleVisible);
+
+                tmpl->Set(String::NewSymbol("promote"), FunctionTemplate::New(Promote));
              }
 
            object_item = _object_item;
@@ -43,9 +48,8 @@ private:
            elm_object_item_del_cb_set(object_item, Delete);
 
            jsObject = Persistent<Object>::New(tmpl->NewInstance());
-           jsObject->SetHiddenValue(str.parent, parent);
-           jsObject->SetHiddenValue(str.item, External::Wrap(this));
-           jsObject->SetHiddenValue(str.items, obj);
+           jsObject->SetHiddenValue(String::NewSymbol("parent"), parent);
+           jsObject->SetHiddenValue(String::NewSymbol("item"), External::Wrap(this));
 
            Local<Array> props = obj->GetOwnPropertyNames();
            for (unsigned int i = 0; i < props->Length(); i++)
@@ -63,8 +67,91 @@ private:
            if (callback->IsFunction())
              callback->Call(jsObject, 0, NULL);
 
-           jsObject->DeleteHiddenValue(str.item);
+           jsObject->DeleteHiddenValue(String::NewSymbol("item"));
            jsObject.Dispose();
+        }
+
+      static Handle<Value> GetTitle(Local<String> name, const AccessorInfo &info)
+        {
+           String::Utf8Value part(name);
+
+           return String::New
+              (elm_object_item_part_text_get(Unwrap(info)->object_item,
+                                             strcmp(*part, "title") ? *part : NULL));
+        }
+
+      static void SetTitle(Local<String> name, Local<Value> value, const AccessorInfo &info)
+        {
+           String::Utf8Value part(name);
+
+           if (value->IsString())
+             elm_object_item_part_text_set(Unwrap(info)->object_item,
+                                           strcmp(*part, "title") ? *part : NULL,
+                                           *String::Utf8Value(value));
+        }
+
+      static Handle<Value> GetContent(Local<String> name, const AccessorInfo &info)
+        {
+           String::Utf8Value part(name);
+
+           Evas_Object *content = elm_object_item_part_content_get
+              (Unwrap(info)->object_item, strcmp(*part, "content") ? *part : NULL);
+
+           if (!content)
+             return Undefined();
+
+           CElmObject *obj = static_cast<CElmObject *>(evas_object_data_get(content, "this"));
+
+           if (!obj)
+             return Undefined();
+
+           return obj->GetJSObject();
+        }
+
+      static void SetContent(Local<String> name, Local<Value> val, const AccessorInfo &info)
+        {
+           Item *item = Unwrap(info);
+           String::Utf8Value part(name);
+           Handle<Value> value = val;
+
+           value = Realise(val, item->ToObject()->GetHiddenValue(String::NewSymbol("parent")));
+
+           if (value->IsUndefined())
+             elm_object_item_part_content_unset
+                (item->object_item, strcmp(*part, "content") ? *part : NULL);
+           else
+             elm_object_item_part_content_set
+                (item->object_item, strcmp(*part, "content") ? *part : NULL,
+                 GetEvasObjectFromJavascript(value));
+        }
+
+      static Handle<Value> GetStyle(Local<String>, const AccessorInfo &info)
+        {
+           return String::New(elm_naviframe_item_style_get(Unwrap(info)->object_item));
+        }
+
+      static void SetStyle(Local<String>, Local<Value> value, const AccessorInfo &info)
+        {
+           if (value->IsString())
+             elm_naviframe_item_style_set(Unwrap(info)->object_item, *String::Utf8Value(value));
+        }
+
+      static Handle<Value> GetTitleVisible(Local<String>, const AccessorInfo &info)
+        {
+           return Boolean::New
+              (elm_naviframe_item_title_visible_get(Unwrap(info)->object_item));
+        }
+
+      static void SetTitleVisible(Local<String>, Local<Value> value, const AccessorInfo &info)
+        {
+           elm_naviframe_item_title_visible_set(Unwrap(info)->object_item,
+                                                value->BooleanValue());
+        }
+
+      static Handle<Value> Promote(const Arguments& args)
+        {
+           elm_naviframe_item_promote(Unwrap(args.This())->object_item);
+           return Undefined();
         }
 
       Handle<Object> ToObject()
@@ -77,89 +164,16 @@ private:
            delete static_cast<Item *>(data);
         }
 
-      static Handle<Value> ElementSet(Local<String> attr, Local<Value> val,
-                                      const AccessorInfo& info)
+      static Item *Unwrap(const AccessorInfo& info)
         {
-           HandleScope scope;
-
-           Item *item = Unwrap(info.This());
-           Handle<Object> obj = item->ToObject();
-           Handle<Value> value = val;
-
-           String::Utf8Value part(attr);
-           Handle<Value> parent = obj->GetHiddenValue(str.parent);
-
-           if (!strcmp(*part, "title"))
-             {
-                elm_object_item_part_text_set(item->object_item, "default",
-                                              *String::Utf8Value(val));
-             }
-           else if (!strcmp(*part, "subtitle"))
-             {
-                elm_object_item_part_text_set(item->object_item, *part,
-                                              *String::Utf8Value(val));
-             }
-           else if (!strcmp(*part, "content"))
-             {
-                value = Realise(value, parent);
-                if (value->IsUndefined())
-                  elm_object_item_part_content_unset(item->object_item, *part);
-                else
-                  elm_object_item_part_content_set(item->object_item, "default",
-                                                   GetEvasObjectFromJavascript(value));
-             }
-           else if (!strcmp(*part, "prev_btn") ||
-                    !strcmp(*part, "next_btn") ||
-                    !strcmp(*part, "icon"))
-             {
-                value = Realise(value, parent);
-                if (value->IsUndefined())
-                  elm_object_item_part_content_unset(item->object_item, *part);
-                else
-                  elm_object_item_part_content_set(item->object_item, *part,
-                                                   GetEvasObjectFromJavascript(value));
-             }
-           else if (!strcmp(*part, "style"))
-             {
-                elm_naviframe_item_style_set(item->object_item,
-                                             *String::Utf8Value(value));
-             }
-
-           Local<Value> items = obj->GetHiddenValue(str.items);
-           info.This()->Delete(attr);
-           items->ToObject()->Set(attr, value);
-           return val;
-        }
-
-      static Handle<Value> ElementGet(Local<String> attr, const AccessorInfo& info)
-        {
-           HandleScope scope;
-           Item *item = Unwrap(info.This());
-           Handle<Object> obj = item->ToObject();
-           Local<Value> items = obj->GetHiddenValue(str.items);
-           return scope.Close(items->ToObject()->Get(attr));
-        }
-
-      static Handle<Boolean> ElementDel(Local<String> attr, const AccessorInfo& info)
-        {
-           HandleScope scope;
-           Item *item = Unwrap(info.This());
-           Handle<Object> obj = item->ToObject();
-           Local<Object> items = obj->GetHiddenValue(str.items)->ToObject();
-
-           Local<Value> jsItem = items->Get(attr);
-           if (CElmObject::HasInstance(jsItem))
-             delete GetObjectFromJavascript(jsItem);
-
-           items->Delete(attr);
-           return scope.Close(Boolean::New(true));
+           return Unwrap(info.This());
         }
 
       static Item *Unwrap(Handle<Value> value)
         {
            if (!value->IsObject())
              return NULL;
-           value = value->ToObject()->GetHiddenValue(str.item);
+           value = value->ToObject()->GetHiddenValue(String::NewSymbol("item"));
            if (value.IsEmpty())
              return NULL;
            return static_cast<Item *>(External::Unwrap(value));
@@ -168,11 +182,9 @@ private:
 
    bool title_visible;
    static Persistent<FunctionTemplate> tmpl;
-   Persistent<Array> stack;
 
 protected:
    CElmNaviframe(Local<Object> _jsObject, CElmObject *parent);
-   virtual ~CElmNaviframe();
 
    static Handle<FunctionTemplate> GetTemplate();
 
