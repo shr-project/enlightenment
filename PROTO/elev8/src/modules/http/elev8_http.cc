@@ -123,7 +123,7 @@ class XMLHttpRequest
         const char *value = (const char *)eina_binbuf_string_get(self->data);
         int length = eina_binbuf_length_get(self->data);
 
-        const char *content_type = self->getResponseHeader("Content-Type");
+        char *content_type = self->getResponseHeader("Content-Type");
         if (!content_type)
           self->jsObject->Set(String::NewSymbol("responseText"), String::New(""));
         else if (strstr(content_type, "image/"))
@@ -149,6 +149,7 @@ class XMLHttpRequest
 
         self->setReadyState(4);
         self->reset();
+        free(content_type);
 
         return ECORE_CALLBACK_DONE;
      }
@@ -167,15 +168,22 @@ class XMLHttpRequest
         return self->onreadystatechange;
      }
 
-   const char *getResponseHeader(const char *header)
+   char *getResponseHeader(const char *header)
      {
         void *p;
         const Eina_List *l;
 
-        EINA_LIST_FOREACH(ecore_con_url_response_headers_get(url), l, p)
-           if (strstr((char *)p, header) == p)
-             return &(strchr((char*)p, ' '))[1];
+        EINA_LIST_FOREACH(ecore_con_url_response_headers_get(url), l, p) {
+           if (strstr((char *)p, header) == p) {
+              const char *value = strchr(static_cast<const char *>(p), ' ') + 1;
+              const char *header_cr = strchr(value, '\r');
 
+              if (!header_cr)
+                return NULL;
+
+              return strndup(value, header_cr - value);
+           }
+        }
         return NULL;
      }
 
