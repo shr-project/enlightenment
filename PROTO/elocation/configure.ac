@@ -88,7 +88,7 @@ AC_SUBST([pkgconfig_requires_private])
 
 AC_SUBST([EFL_ELOCATION_BUILD])
 
-PKG_CHECK_MODULES([ELOCATION], [edbus ecore])
+PKG_CHECK_MODULES([ELOCATION], [edbus2 ecore])
 
 EFL_CHECK_PATH_MAX
 

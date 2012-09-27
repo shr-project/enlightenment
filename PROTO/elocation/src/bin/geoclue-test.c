@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include <Ecore.h>
-#include <E_DBus.h>
+#include <EDBus.h>
 #include <Elocation.h>
 #include <elocation_private.h>
 
@@ -20,7 +20,8 @@
    o Reply on address is inconsistent. Either all NULL or all empty
 */
 
-static E_DBus_Signal_Handler *cb_position_changed = NULL;
+static EDBus_Signal_Handler *cb_position_changed = NULL;
+static EDBus_Signal_Handler *cb_address_changed = NULL;
 
 static Eina_Bool
 status_changed(void *data, int ev_type, void *event)
@@ -31,194 +32,148 @@ status_changed(void *data, int ev_type, void *event)
 }
 
 static void
-unmarshal_address(DBusMessageIter *iter)
+provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
-   DBusMessageIter arr;
-   const char *key;
-   dbus_message_iter_recurse(iter, &arr);
-   Elocation_Address address;
-
-   if (dbus_message_iter_get_arg_type(&arr) == DBUS_TYPE_INVALID)
-     return;
-
-   do
-     {
-        DBusMessageIter dict;
-        dbus_message_iter_recurse(&arr, &dict);
-        do
-          {
-             char *value;
-
-             dbus_message_iter_get_basic(&dict, &key);
-             dbus_message_iter_next(&dict);
-
-             if (!strcmp(key, "country"))
-              {
-                  dbus_message_iter_get_basic(&dict, &value);
-                  address.country = value;
-                  printf("Key: %s, value: %s\n", key, value);
-               }
-             else if (!strcmp(key, "countrycode"))
-               {
-                  dbus_message_iter_get_basic(&dict, &value);
-                  address.countrycode = value;
-                  printf("Key: %s, value: %s\n", key, value);
-               }
-             else if (!strcmp(key, "locality"))
-               {
-                  dbus_message_iter_get_basic(&dict, &value);
-                  address.locality = value;
-                  printf("Key: %s, value: %s\n", key, value);
-               }
-             else if (!strcmp(key, "postalcode"))
-               {
-                  dbus_message_iter_get_basic(&dict, &value);
-                  address.postalcode = value;
-                  printf("Key: %s, value: %s\n", key, value);
-               }
-             else if (!strcmp(key, "region"))
-               {
-                  dbus_message_iter_get_basic(&dict, &value);
-                  address.region = value;
-                  printf("Key: %s, value: %s\n", key, value);
-               }
-             else if (!strcmp(key, "timezone"))
-               {
-                  dbus_message_iter_get_basic(&dict, &value);
-                  address.timezone = value;
-                  printf("Key: %s, value: %s\n", key, value);
-               }
-          }
-        while (dbus_message_iter_next(&dict));
-     }
-   while (dbus_message_iter_next(&arr));
-}
-
-static void
-provider_info_cb(void *data , DBusMessage *reply, DBusError *error)
-{
-   dbus_int32_t status;
-   DBusMessageIter iter;
    char *name = NULL, *desc = NULL;
+   const char *signature;
 
-   if (!dbus_message_has_signature(reply, "ss")) return;
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "ss")) return;
 
-   dbus_message_get_args(reply, error,
-                        DBUS_TYPE_STRING, &name,
-                        DBUS_TYPE_STRING, &desc,
-                        DBUS_TYPE_INVALID);
+   if (!edbus_message_arguments_get(reply, "ss", &name, &desc)) return;
 
    printf("Provider name: %s\n description: %s\n", name, desc);
 }
 
 static void
-address_cb(void *data , DBusMessage *reply, DBusError *error)
+address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
-   dbus_int32_t level, timestamp;
-   DBusMessageIter iter, sub;
+   Elocation_Address address;
+   int32_t level, timestamp;
+   EDBus_Message_Iter *iter, *sub, *dict, *entry;
    double horizontal;
    double vertical;
    Elocation_Accuracy accur;
+   const char *key, *signature;
+   char *value;
 
-   if (dbus_error_is_set(error))
-     {
-      printf("Error: %s - %s\n", error->name, error->message);
-      return;
-     }
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature,"ia{ss}(idd)")) return;
 
-   if (!dbus_message_has_signature(reply, "ia{ss}(idd)")) return;
+   iter = edbus_message_iter_get(reply);
 
-   dbus_message_iter_init(reply, &iter);
+   edbus_message_iter_get_and_next(iter, 'i', &timestamp);
 
-   dbus_message_iter_get_basic(&iter, &timestamp);
-   dbus_message_iter_next(&iter);
+   edbus_message_iter_arguments_get(iter, "a{ss}", &dict);
 
-   unmarshal_address(&iter);
-   dbus_message_iter_next(&iter);
+   while (edbus_message_iter_get_and_next(dict, 'e', &entry))
+    {
+       edbus_message_iter_arguments_get(entry, "ss", &key, &value);
 
-   dbus_message_iter_recurse(&iter, &sub);
-   dbus_message_iter_get_basic(&sub, &level);
+       if (!strcmp(key, "country"))
+        {
+            address.country = value;
+            printf("Key: %s, value: %s\n", key, value);
+         }
+       else if (!strcmp(key, "countrycode"))
+         {
+            address.countrycode = value;
+            printf("Key: %s, value: %s\n", key, value);
+         }
+       else if (!strcmp(key, "locality"))
+         {
+            address.locality = value;
+            printf("Key: %s, value: %s\n", key, value);
+         }
+       else if (!strcmp(key, "postalcode"))
+         {
+            address.postalcode = value;
+            printf("Key: %s, value: %s\n", key, value);
+         }
+       else if (!strcmp(key, "region"))
+         {
+            address.region = value;
+            printf("Key: %s, value: %s\n", key, value);
+         }
+       else if (!strcmp(key, "timezone"))
+         {
+            address.timezone = value;
+            printf("Key: %s, value: %s\n", key, value);
+         }
+    }
+
+   edbus_message_iter_get_and_next(iter, 'r', &sub );
+   edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
    accur.level = level;
-   dbus_message_iter_next(&sub);
-
-   dbus_message_iter_get_basic(&sub, &horizontal);
    accur.horizontal = horizontal;
-   dbus_message_iter_next(&sub);
-
-   dbus_message_iter_get_basic(&sub, &vertical);
    accur.vertical = vertical;
-   dbus_message_iter_next(&sub);
 }
-
 static void
-address_signal_cb(void *data , DBusMessage *reply)
+address_signal_cb(void *data , const EDBus_Message *reply)
 {
    address_cb(data, reply, NULL);
 }
 
 static void
-unmarshall_position(Elocation_Position *position, DBusMessage *reply)
+unmarshall_position(Elocation_Position *position, const EDBus_Message *reply)
 {
    GeocluePositionFields fields;
-   dbus_int32_t level, timestamp;
+   int32_t level, timestamp;
    double horizontal = 0.0;
    double vertical = 0.0;
    double latitude = 0.0;
    double longitude = 0.0;
    double altitude = 0.0;
-   DBusMessageIter iter, sub;
+   EDBus_Message_Iter *iter, *sub;
+   const char *err, *errmsg;
+   const char *signature;
 
-   if (!dbus_message_has_signature(reply, "iiddd(idd)")) return;
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        fprintf(stderr, "Error: %s %s\n", err, errmsg);
+        return;
+     }
 
-   dbus_message_iter_init(reply, &iter);
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "iiddd(idd)"))
+     {
+        fprintf(stderr, "Error: position callback message did not match signature\n");
+        return;
+     }
 
-   dbus_message_iter_get_basic(&iter, &fields);
+   iter = edbus_message_iter_get(reply);
+
+   // Possible to use a single edbus_message_iter_arguments_get(sub, "iiddd(idd)" ... here?
+
+   edbus_message_iter_get_and_next(iter, 'i', &fields);
    position->fields = fields;
-   dbus_message_iter_next(&iter);
 
-   dbus_message_iter_get_basic(&iter, &timestamp);
+   edbus_message_iter_get_and_next(iter, 'i', &timestamp);
    position->timestamp = timestamp;
-   dbus_message_iter_next(&iter);
 
-   dbus_message_iter_get_basic(&iter, &latitude);
+   edbus_message_iter_get_and_next(iter, 'd', &latitude);
    position->latitude = latitude;
-   dbus_message_iter_next(&iter);
 
-   dbus_message_iter_get_basic(&iter, &longitude);
+   edbus_message_iter_get_and_next(iter, 'd', &longitude);
    position->longitude = longitude;
-   dbus_message_iter_next(&iter);
 
-   dbus_message_iter_get_basic(&iter, &altitude);
+   edbus_message_iter_get_and_next(iter, 'd', &altitude);
    position->altitude = altitude;
-   dbus_message_iter_next(&iter);
 
-   dbus_message_iter_recurse(&iter, &sub);
-   dbus_message_iter_get_basic(&sub, &level);
+   edbus_message_iter_get_and_next(iter, 'r', &sub );
+   edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
    position->accur->level = level;
-   dbus_message_iter_next(&sub);
-
-   dbus_message_iter_get_basic(&sub, &horizontal);
    position->accur->horizontal = horizontal;
-   dbus_message_iter_next(&sub);
-
-   dbus_message_iter_get_basic(&sub, &vertical);
    position->accur->vertical = vertical;
-   dbus_message_iter_next(&sub);
 }
 
 static void
-position_cb(void *data , DBusMessage *reply, DBusError *error)
+position_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
    Elocation_Position *position;
 
    position = malloc(sizeof(Elocation_Position));
    position->accur = malloc(sizeof(Elocation_Accuracy));
-
-   if (dbus_error_is_set(error))
-     {
-      printf("Error: %s - %s\n", error->name, error->message);
-      return;
-     }
 
    unmarshall_position(position, reply);
 
@@ -246,7 +201,7 @@ position_cb(void *data , DBusMessage *reply, DBusError *error)
 }
 
 static void
-position_signal_cb(void *data , DBusMessage *reply)
+position_signal_cb(void *data , const EDBus_Message *reply)
 {
    Elocation_Position *position;
 
@@ -259,19 +214,21 @@ position_signal_cb(void *data , DBusMessage *reply)
 int
 main()
 {
-   E_DBus_Connection *conn;
-   DBusMessage *msg;
-   DBusMessageIter iter, sub;
-   int ret = 0;
+   EDBus_Connection *conn;
+   EDBus_Message *msg;
+   EDBus_Object *obj;
+   EDBus_Proxy *manager, *manager_address, *manager_position;
+   EDBus_Pending *pending, *pending2, *pending3;
    Elocation_Accuracy *accur;
 
-   e_dbus_init();
+   ecore_init();
+   edbus_init();
 
-   conn = e_dbus_bus_get(DBUS_BUS_SESSION);
+   conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (!conn)
      {
       printf("Error: could not connect to session bus.\n");
-      ret = 1;
+      return EXIT_FAILURE;
      }
 
    // FIXME conn should no longer be needed here when all dbus calls are moved into the lib
@@ -279,32 +236,69 @@ main()
 
    ecore_event_handler_add(ELOCATION_EVENT_STATUS, status_changed, NULL);
 
-   msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_IFACE, "GetProviderInfo");
-   e_dbus_message_send(conn, msg, provider_info_cb, -1, NULL);
-   dbus_message_unref(msg);
-   msg = NULL;
+   obj = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
+   if (!obj)
+     {
+        fprintf(stderr, "Error: could not get object\n");
+        return EXIT_FAILURE;
+     }
+
+   manager = edbus_proxy_get(obj, GEOCLUE_IFACE);
+   if (!manager)
+     {
+        fprintf(stderr, "Error: could not get proxy\n");
+        return EXIT_FAILURE;
+     }
+
+   manager_address = edbus_proxy_get(obj, GEOCLUE_ADDRESS_IFACE);
+   if (!manager_address)
+     {
+        fprintf(stderr, "Error: could not get proxy\n");
+        return EXIT_FAILURE;
+     }
+
+   manager_position = edbus_proxy_get(obj, GEOCLUE_POSITION_IFACE);
+   if (!manager_position)
+     {
+        fprintf(stderr, "Error: could not get proxy\n");
+        return EXIT_FAILURE;
+     }
+
+   pending = edbus_proxy_call(manager, "GetProviderInfo", provider_info_cb, NULL, -1, "");
+   if (!pending)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
 
    // SetOptions
 
-   msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_ADDRESS_IFACE, "GetAddress");
-   e_dbus_message_send(conn, msg, address_cb, -1, NULL);
-   dbus_message_unref(msg);
-   msg = NULL;
+   pending2 = edbus_proxy_call(manager_address, "GetAddress", address_cb, NULL, -1, "");
+   if (!pending2)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
 
-   cb_position_changed = e_dbus_signal_handler_add(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_ADDRESS_IFACE, "GetAddress",
-         address_signal_cb, NULL);
+   cb_address_changed = edbus_proxy_signal_handler_add(manager_address, "GetAddress", address_signal_cb, NULL);
 
-   msg = dbus_message_new_method_call(UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_POSITION_IFACE, "GetPosition");
-   e_dbus_message_send(conn, msg, position_cb, -1, NULL);
-   dbus_message_unref(msg);
-   msg = NULL;
+   pending3 = edbus_proxy_call(manager_position, "GetPosition", position_cb, NULL, -1, "");
+   if (!pending3)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
 
-   cb_position_changed = e_dbus_signal_handler_add(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_POSITION_IFACE, "GetPosition",
-         position_signal_cb, NULL);
+   cb_position_changed = edbus_proxy_signal_handler_add(manager_position, "GetPosition", position_signal_cb, NULL);
 
    ecore_main_loop_begin();
 
+   edbus_signal_handler_unref(cb_address_changed);
+   edbus_signal_handler_unref(cb_position_changed);
+   edbus_connection_unref(conn);
+
    elocation_shutdown(conn);
-   e_dbus_shutdown();
-   return ret;
+   edbus_shutdown();
+   ecore_shutdown();
+   return 0;
 }

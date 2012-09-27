@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 #include <Ecore.h>
-#include <E_DBus.h>
+#include <EDBus.h>
 
 #define GEOCLUE_OBJECT_PATH "/org/freedesktop/Geoclue/Master"
 
