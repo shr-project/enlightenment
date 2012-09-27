@@ -42,6 +42,9 @@ private:
       static Handle<Value> GetPriority(Local<String>, const AccessorInfo &info);
       static void SetPriority(Local<String>, Local<Value>, const AccessorInfo &info);
 
+      static Handle<Value> GetSelected(Local<String> , const AccessorInfo &info);
+      static void SetSelected(Local<String> , Local<Value> value, const AccessorInfo &info);
+
       static Handle<Value> GetSeparator(Local<String>, const AccessorInfo &info);
       static void SetSeparator(Local<String>, Local<Value>, const AccessorInfo &info);
 

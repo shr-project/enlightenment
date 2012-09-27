@@ -80,6 +80,8 @@ CElmToolbar::Item::Item(Handle<Value> value, Handle<Object> parent)
                           Item::GetLabel, Item::SetLabel);
         tmpl->SetAccessor(String::NewSymbol("priority"),
                           Item::GetPriority, Item::SetPriority);
+        tmpl->SetAccessor(String::NewSymbol("selected"),
+                          Item::GetSelected, Item::SetSelected);
         tmpl->SetAccessor(String::NewSymbol("separator"),
                           Item::GetSeparator, Item::SetSeparator);
         tmpl->SetAccessor(String::NewSymbol("enable"),
@@ -177,6 +179,17 @@ void CElmToolbar::Item::SetPriority(Local<String>, Local<Value> value, const Acc
 Handle<Value> CElmToolbar::Item::GetPriority(Local<String>, const AccessorInfo &info)
 {
    return Number::New(elm_toolbar_item_priority_get(Unwrap(info)->object_item));
+}
+
+Handle<Value> CElmToolbar::Item::GetSelected(Local<String> , const AccessorInfo &info)
+{
+   return Boolean::New(elm_toolbar_item_selected_get(Unwrap(info)->object_item));
+}
+
+void CElmToolbar::Item::SetSelected(Local<String> , Local<Value> value, const AccessorInfo &info)
+{
+   if (value->IsBoolean())
+     elm_toolbar_item_selected_set(Unwrap(info)->object_item, value->BooleanValue());
 }
 
 void CElmToolbar::Item::SetSeparator(Local<String>, Local<Value> value, const AccessorInfo &info)
