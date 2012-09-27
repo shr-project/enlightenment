@@ -9,7 +9,6 @@ GENERATE_PROPERTY_CALLBACKS(CElmNaviframe, title_visible);
 GENERATE_PROPERTY_CALLBACKS(CElmNaviframe, event_enabled);
 GENERATE_PROPERTY_CALLBACKS(CElmNaviframe, prev_btn_auto_pushed);
 GENERATE_PROPERTY_CALLBACKS(CElmNaviframe, content_preserve_on_pop);
-GENERATE_RO_PROPERTY_CALLBACKS(CElmNaviframe, items);
 GENERATE_RO_PROPERTY_CALLBACKS(CElmNaviframe, top_item);
 GENERATE_RO_PROPERTY_CALLBACKS(CElmNaviframe, bottom_item);
 GENERATE_METHOD_CALLBACKS(CElmNaviframe, pop);
@@ -20,7 +19,6 @@ GENERATE_TEMPLATE_FULL(CElmLayout, CElmNaviframe,
                   PROPERTY(event_enabled),
                   PROPERTY(prev_btn_auto_pushed),
                   PROPERTY(content_preserve_on_pop),
-                  PROPERTY_RO(items),
                   PROPERTY_RO(top_item),
                   PROPERTY_RO(bottom_item),
                   METHOD(pop),
@@ -40,10 +38,15 @@ void CElmNaviframe::Initialize(Handle<Object> target)
 
 Handle<Value> CElmNaviframe::pop(const Arguments&)
 {
-   Local<Object> elements = GetJSObject()->Get(String::NewSymbol("elements"))->ToObject();
-   Local<Array> props = elements->GetOwnPropertyNames();
-   elements->Delete(props->Get(props->Length() - 1)->ToString());
-   return Undefined();
+   Evas_Object *content = elm_naviframe_item_pop(eo);
+   if (!content)
+     return Undefined();
+
+   CElmObject *obj = static_cast<CElmObject *>(evas_object_data_get(content, "this"));
+   if (!obj)
+     return Undefined();
+
+   return obj->GetJSObject();
 }
 
 Handle<Value> CElmNaviframe::Pack(Handle<Value> value, Handle<Value> replace)
@@ -86,8 +89,8 @@ Handle<Value> CElmNaviframe::Unpack(Handle<Value> value)
 
 Handle<Value> CElmNaviframe::pop_to(const Arguments& args)
 {
-   Elm_Object_Item *it = static_cast<Elm_Object_Item *>(External::Unwrap(args[0]->ToObject()));
-   elm_naviframe_item_pop_to(it);
+   Item *item = Item::Unwrap(args[0]);
+   elm_naviframe_item_pop_to(item->object_item);
    return Undefined();
 }
 
@@ -141,29 +144,18 @@ Handle<Value> CElmNaviframe::content_preserve_on_pop_get() const
    return Boolean::New(elm_naviframe_content_preserve_on_pop_get(eo));
 }
 
-Handle<Value> CElmNaviframe::items_get() const
-{
-   Eina_List *l = elm_naviframe_items_get(eo);
-   Handle<Array> arr = Array::New(eina_list_count(l));
-
-   void *d;
-   int i = 0;
-   EINA_LIST_FREE(l, d)
-     {
-        arr->Set(i, External::Wrap(d)); ++i;
-     }
-
-   return arr;
-}
-
 Handle<Value> CElmNaviframe::top_item_get() const
 {
-   return External::Wrap(elm_naviframe_top_item_get(eo));
+   Item *item = static_cast<Item *>
+      (elm_object_item_data_get(elm_naviframe_top_item_get(eo)));
+   return item->ToObject();
 }
 
 Handle<Value> CElmNaviframe::bottom_item_get() const
 {
-   return External::Wrap(elm_naviframe_bottom_item_get(eo));
+   Item *item = static_cast<Item *>
+      (elm_object_item_data_get(elm_naviframe_bottom_item_get(eo)));
+   return item->ToObject();
 }
 
 }
