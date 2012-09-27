@@ -20,6 +20,7 @@ GENERATE_RO_PROPERTY_CALLBACKS(CElmGenGrid, items_count);
 GENERATE_RO_PROPERTY_CALLBACKS(CElmGenGrid, realized_items);
 GENERATE_METHOD_CALLBACKS(CElmGenGrid, realized_items_update);
 GENERATE_METHOD_CALLBACKS(CElmGenGrid, bring_in_item);
+GENERATE_METHOD_CALLBACKS(CElmGenGrid, clear);
 
 GENERATE_TEMPLATE_FULL(CElmObject, CElmGenGrid,
                   PROPERTY(item_size_horizontal),
@@ -35,7 +36,8 @@ GENERATE_TEMPLATE_FULL(CElmObject, CElmGenGrid,
                   PROPERTY_RO(items_count),
                   PROPERTY_RO(realized_items),
                   METHOD(realized_items_update),
-                  METHOD(bring_in_item));
+                  METHOD(bring_in_item),
+                  METHOD(clear));
 
 CElmGenGrid::CElmGenGrid(Local<Object> _jsObject, CElmObject *p)
    : CElmObject(_jsObject, elm_gengrid_add(elm_object_top_widget_get(p->GetEvasObject())))
@@ -307,6 +309,12 @@ Handle<Value> CElmGenGrid::bring_in_item(const Arguments& args)
 
    elm_gengrid_item_bring_in(item->object_item, scroll_type);
 
+   return Undefined();
+}
+
+Handle<Value> CElmGenGrid::clear(const Arguments &)
+{
+   elm_gengrid_clear(eo);
    return Undefined();
 }
 

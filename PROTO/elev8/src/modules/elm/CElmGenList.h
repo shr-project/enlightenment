@@ -36,6 +36,7 @@ public:
    Handle<Value> promote_item(const Arguments& args);
    Handle<Value> demote_item(const Arguments& args);
    Handle<Value> bring_in_item(const Arguments& args);
+   Handle<Value> clear(const Arguments& args);
 
    virtual Handle<Value> Pack(Handle<Value>, Handle<Value>);
    virtual Handle<Value> Unpack(Handle<Value>);

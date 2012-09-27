@@ -30,6 +30,7 @@ GENERATE_METHOD_CALLBACKS(CElmGenList, tooltip_unset);
 GENERATE_METHOD_CALLBACKS(CElmGenList, promote_item);
 GENERATE_METHOD_CALLBACKS(CElmGenList, demote_item);
 GENERATE_METHOD_CALLBACKS(CElmGenList, bring_in_item);
+GENERATE_METHOD_CALLBACKS(CElmGenList, clear);
 
 GENERATE_TEMPLATE(CElmGenList,
                   PROPERTY(homogeneous),
@@ -55,7 +56,8 @@ GENERATE_TEMPLATE(CElmGenList,
                   METHOD(tooltip_unset),
                   METHOD(promote_item),
                   METHOD(demote_item),
-                  METHOD(bring_in_item));
+                  METHOD(bring_in_item),
+                  METHOD(clear));
 
 CElmGenList::CElmGenList(Local<Object> _jsObject, CElmObject *parent)
    : CElmObject(_jsObject, elm_genlist_add(elm_object_top_widget_get(parent->GetEvasObject())))
@@ -542,6 +544,12 @@ void CElmGenList::on_scrolled_over_left_edge_set(Handle<Value> val)
 
    cb.scrolled_over_left_edge = Persistent<Value>::New(val);
    evas_object_smart_callback_add(eo, "edge,left", &OnScrolledOverLeftEdgeWrapper, this);
+}
+
+Handle<Value> CElmGenList::clear(const Arguments &)
+{
+   elm_genlist_clear(eo);
+   return Undefined();
 }
 
 }

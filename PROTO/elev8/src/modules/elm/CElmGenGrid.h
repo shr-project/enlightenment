@@ -30,6 +30,7 @@ public:
 
    Handle<Value> realized_items_update(const Arguments& args);
    Handle<Value> bring_in_item(const Arguments& args);
+   Handle<Value> clear(const Arguments& args);
 
    virtual Handle<Value> Pack(Handle<Value>, Handle<Value>);
    virtual Handle<Value> Unpack(Handle<Value>);
