@@ -52,33 +52,20 @@ Handle<Value> CElmNaviframe::pop(const Arguments&)
 Handle<Value> CElmNaviframe::Pack(Handle<Value> value, Handle<Value> replace)
 {
    HandleScope scope;
-   Elm_Object_Item *object_item = NULL;
    Local<Object> obj = value->ToObject();
-   Local<Value> before = obj->Get(String::NewSymbol("before"));
+   Local<String> str = String::NewSymbol("before");
+   Local<Value> before = obj->Get(str);
 
    if (before->IsUndefined() && !replace->IsUndefined())
-     before = replace->ToObject()->Get(String::NewSymbol("before"));
+     before = replace->ToObject()->Get(str);
    else if (before->IsString() || before->IsNumber())
      before = GetJSObject()->Get(String::NewSymbol("elements"))->ToObject()->Get(before);
 
-   bool has_style = obj->Get(String::NewSymbol("style"))->IsString();
-   String::Utf8Value style(obj->Get(String::NewSymbol("style"))->ToString());
+   obj->Set(str, before);
 
-   if (before->IsUndefined())
-     {
-        object_item = elm_naviframe_item_push(eo, NULL, NULL, NULL, NULL,
-                                              has_style ? *style : NULL);
-     }
-   else
-     {
-        Item *item = Item::Unwrap(before);
-        object_item = elm_naviframe_item_insert_before(eo, item->object_item,
-                                                       NULL, NULL, NULL, NULL,
-                                                       has_style ? *style : NULL);
-     }
-
+   Item *item = new Item(obj->ToObject(), GetJSObject());
    title_visible_eval();
-   return scope.Close((new Item(object_item, obj->ToObject(), GetJSObject()))->ToObject());
+   return scope.Close(item->ToObject());
 }
 
 Handle<Value> CElmNaviframe::Unpack(Handle<Value> value)

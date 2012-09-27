@@ -15,7 +15,7 @@ private:
       Persistent<Object> jsObject;
       Elm_Object_Item *object_item;
 
-      Item(Elm_Object_Item *_object_item, Local<Object> obj, Handle<Value> parent)
+      Item(Local<Object> obj, Handle<Value> parent)
         {
            HandleScope scope;
            static Persistent<ObjectTemplate> tmpl;
@@ -43,7 +43,21 @@ private:
                 tmpl->Set(String::NewSymbol("promote"), FunctionTemplate::New(Promote));
              }
 
-           object_item = _object_item;
+           Handle<Value> before = obj->Get(String::NewSymbol("before"));
+
+           if (before->IsUndefined())
+             {
+                object_item = elm_naviframe_item_push
+                   (GetEvasObjectFromJavascript(parent), NULL, NULL, NULL, NULL, NULL);
+             }
+           else
+             {
+                Item *item = Item::Unwrap(before);
+                object_item = elm_naviframe_item_insert_before(GetEvasObjectFromJavascript(parent),
+                                                               item->object_item,
+                                                               NULL, NULL, NULL, NULL, NULL);
+             }
+
            elm_object_item_data_set(object_item, this);
            elm_object_item_del_cb_set(object_item, Delete);
 
