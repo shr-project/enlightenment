@@ -109,6 +109,9 @@ Handle<Value> CElmGenList::Pack(Handle<Value> value, Handle<Value> replace)
                                                         before_item->object_item,
                                                         type,
                                                         Item<CElmGenList>::OnSelect, item);
+   if (type == ELM_GENLIST_ITEM_GROUP)
+     elm_genlist_item_select_mode_set(item->object_item,
+                                         ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
 
    elm_object_item_data_set(item->object_item, item);
    return item->jsObject;
