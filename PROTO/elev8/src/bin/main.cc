@@ -102,6 +102,13 @@ end:
    return handle_scope.Close(Undefined());
 }
 
+static Handle<Value>
+isEmpty(const Arguments& args)
+{
+   HandleScope scope;
+   return Boolean::New(!args.This()->GetOwnPropertyNames()->Length());
+}
+
 static bool
 run_script(const char *filename)
 {
@@ -473,6 +480,7 @@ main(int argc, char *argv[])
    Handle<Value> object = context->Global()->Get(String::NewSymbol("Object"));
    Handle<Object> object_prototype = object->ToObject()->Get(String::NewSymbol("prototype"))->ToObject();
    object_prototype->Set(String::NewSymbol("clone"), FunctionTemplate::New(clone)->GetFunction());
+   object_prototype->Set(String::NewSymbol("isEmpty"), FunctionTemplate::New(isEmpty)->GetFunction());
 
    module_cache = Persistent<Object>::New(Object::New());
 
