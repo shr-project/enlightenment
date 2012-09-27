@@ -81,22 +81,33 @@ Handle<Value> CElmGenList::Pack(Handle<Value> value, Handle<Value> replace)
    Local<Value> before = item->jsObject->Get(Item<CElmGenList>::str_before);
 
    if (before->IsUndefined() && replace->IsObject())
-     before  = replace->ToObject()->Get(Item<CElmGenList>::str_before);
+     before = replace->ToObject()->Get(Item<CElmGenList>::str_before);
 
    if (before->IsString() || before->IsNumber())
      before = GetJSObject()->Get(String::NewSymbol("elements"))->ToObject()->Get(before);
 
    Item<CElmGenList> *before_item = Item<CElmGenList>::Unwrap(before);
 
+   Elm_Genlist_Item_Type type;
+   if (item->jsObject->Get(String::NewSymbol("group"))->BooleanValue())
+     type = ELM_GENLIST_ITEM_GROUP;
+   else
+     type = ELM_GENLIST_ITEM_NONE;
+
+   Elm_Object_Item *parent = NULL;
+   Handle<Value> parent_obj = item->jsObject->Get(String::NewSymbol("parent"));
+   if (parent_obj->IsObject())
+     parent = Item<CElmGenList>::Unwrap(parent_obj->ToObject())->object_item;
+
    if (!before_item)
      item->object_item = elm_genlist_item_append(eo, item->GetElmClass(),
-                                                 item, NULL,ELM_GENLIST_ITEM_NONE,
+                                                 item, parent, type,
                                                  Item<CElmGenList>::OnSelect, item);
    else
      item->object_item = elm_genlist_item_insert_before(eo, item->GetElmClass(),
-                                                        item, NULL,
+                                                        item, parent,
                                                         before_item->object_item,
-                                                        ELM_GENLIST_ITEM_NONE,
+                                                        type,
                                                         Item<CElmGenList>::OnSelect, item);
 
    elm_object_item_data_set(item->object_item, item);
