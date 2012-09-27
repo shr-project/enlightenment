@@ -9,6 +9,10 @@ Additions:
 Improvements:
     * Speedup Eina Rbtree Iterator by recycling memory instead of massively calling malloc/free.
 
+Fixes:
+    * Fix return value of eina_mmap_safety_enabled_set() and future 
+    eina_mmap_safety_enabled_get() returns after success
+
 Eina 1.7.0
 
 Changes since Eina 1.2.0:

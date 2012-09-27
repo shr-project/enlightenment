@@ -1,4 +1,4 @@
-2011-01-29  Carsten Haitzler (The Rasterman)
+]2011-01-29  Carsten Haitzler (The Rasterman)
 
         1.0.0 release
 
@@ -352,3 +352,10 @@
 2012-09-15  Vincent Torri
 
         * Add DOCTYPE children to be parse in eina_simple_xml.
+
+2012-09-27  Carsten Haitzler (The Rasterman)
+
+        * Fix return value of eina_mmap_safety_enabled_set() and
+        ensure future eina_mmap_safety_enabled_get() return right value
+        on success.
+
