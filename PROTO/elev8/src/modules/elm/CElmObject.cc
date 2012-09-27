@@ -166,6 +166,20 @@ static void Callback_elements_set(Local<String>, Local<Value> value, const Acces
      }
 }
 
+void CElmObject::ElementDeleteByValue(Handle<Value> value)
+{
+   HandleScope scope;
+   Handle<Object> elements = GetJSObject()->Get(String::NewSymbol("elements"))->ToObject();
+   elements = elements->GetHiddenValue(String::NewSymbol("elm::items"))->ToObject();
+   Local<Array> props = elements->GetOwnPropertyNames();
+   for (unsigned int i = 0; i < props->Length(); i++)
+     {
+        Local<String> key = props->Get(i)->ToString();
+        if (elements->Get(key)->StrictEquals(value))
+          elements->Delete(key);
+     }
+}
+
 void CElmObject::EvasFreeEvent(void *data, Evas *, void *)
 {
    CElmObject *self = static_cast<CElmObject *>(data);

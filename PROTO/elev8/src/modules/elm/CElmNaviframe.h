@@ -75,13 +75,20 @@ private:
 
       ~Item()
         {
+           HandleScope scope;
+
            Local<Function> callback
               (Function::Cast(*jsObject->Get(String::NewSymbol("on_delete"))));
 
            if (callback->IsFunction())
              callback->Call(jsObject, 0, NULL);
 
+           Handle<Value> parent = jsObject->GetHiddenValue(String::NewSymbol("parent"));
+           jsObject->DeleteHiddenValue(String::NewSymbol("parent"));
            jsObject->DeleteHiddenValue(String::NewSymbol("item"));
+
+           GetObjectFromJavascript(parent)->ElementDeleteByValue(jsObject);
+
            jsObject.Dispose();
         }
 
