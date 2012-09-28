@@ -25,4 +25,5 @@ efx_private.h
 libefx_la_LIBADD = @EFX_LIBS@ -lm
 libefx_la_LDFLAGS = -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
 
-include_HEADERS = Efx.h
+includes_HEADERS = Efx.h
+includesdir = $(includedir)/efx-@VMAJ@
