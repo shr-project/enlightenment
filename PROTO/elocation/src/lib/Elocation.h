@@ -40,6 +40,7 @@
 /**
  * @defgroup Location_Events Available location events
  * @brief Location events that are emitted from the library
+ * @since 1.8
  * @{
  */
 EAPI int ELOCATION_EVENT_IN;
@@ -137,7 +138,7 @@ EAPI Eina_Bool elocation_position_get(Elocation_Position *position);
  *
  * @since 1.8
  */
-EAPI Eina_Bool elocation_status_get(int status);
+EAPI Eina_Bool elocation_status_get(int *status);
 
 /**
  * @brief Set the requirements.
