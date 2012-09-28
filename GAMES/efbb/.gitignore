@@ -4,6 +4,7 @@
 *.la
 .libs
 .deps
+*.spec
 Makefile
 Makefile.in
 *.so
