@@ -56,7 +56,7 @@ AC_C___ATTRIBUTE__
 ALL_LINGUAS=`cat po/LINGUAS | grep -v '^[ ]*#'`
 AC_SUBST(ALL_LINGUAS)
 
-AM_GNU_GETTEXT_VERSION([0.12.1])
+AM_GNU_GETTEXT_VERSION([0.17])
 AM_GNU_GETTEXT([external])
 
 sounddir="${datadir}/e_cho/data/sound"
