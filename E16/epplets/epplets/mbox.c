@@ -39,21 +39,21 @@
 #define SKIPWS(c) while (*(c) && isspace((unsigned char) *(c))) c++;
 #define strfcpy(A,B,C) strncpy(A,B,C), *(A+(C)-1)=0
 #ifndef TRUE
-#  define TRUE (1)
+#define TRUE (1)
 #endif
 #ifndef FALSE
-#  define FALSE (0)
+#define FALSE (0)
 #endif
 #define BUFFSIZE 256
 #ifndef _POSIX_PATH_MAX
-#  define _POSIX_PATH_MAX 255
+#define _POSIX_PATH_MAX 255
 #endif
 #define NONULL(x)  ((x) ? (x) : "")
 
 #if 0
-#  define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
+#define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
 #else
-#  define D(x) ((void) 0)
+#define D(x) ((void) 0)
 #endif
 
 int                 ebiff_utimes(const char *file, struct timeval tvp[2]);

@@ -58,7 +58,7 @@ out_cb(void *data, Window w)
    data = NULL;
 }
 
-static Epplet_gadget
+static              Epplet_gadget
 epp_create_std_button(int x, int y, char *std,
 		      void (*func) (void *data), void *data)
 {

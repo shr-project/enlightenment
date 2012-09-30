@@ -44,6 +44,7 @@ Epplet_bind_single_GL(Epplet_gadget da, int red, int green, int blue,
    XVisualInfo        *vi;
    GLXContext          cx;
    Window              win;
+
    int                 attributeListSgl[] = { GLX_RGBA,
       GLX_RED_SIZE, red, GLX_GREEN_SIZE, green, GLX_BLUE_SIZE, blue,
       GLX_ALPHA_SIZE, alpha, GLX_AUX_BUFFERS, aux_buffers,

@@ -22,6 +22,7 @@ int                *vspread, *hspread, *residual;
 unsigned char       rm[255], gm[255], bm[255];
 char               *netdev;
 double              stream_max = 2000;
+
 double              bandwidths[] = {
    1000000000, 100000000, 10000000, 2000000,
    1540000, 1000000, 512000, 256000,

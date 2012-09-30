@@ -200,7 +200,7 @@ GadGeneral;
 
 #define GADGET_GET_TYPE(gad) (((GadGeneral *) (gad))->type)
 #ifdef __GNUC__
-# define GADGET_CONFIRM_TYPE(gad, type) \
+#define GADGET_CONFIRM_TYPE(gad, type) \
    do { \
      if (GADGET_GET_TYPE(gad) != (type)) { \
        fprintf(stderr, "ALERT:  %s() called with invalid gadget " \
@@ -209,7 +209,7 @@ GadGeneral;
        return; \
      } \
    } while (0)
-# define GADGET_CONFIRM_TYPE_RVAL(gad, type, rval) \
+#define GADGET_CONFIRM_TYPE_RVAL(gad, type, rval) \
    do { \
      if (GADGET_GET_TYPE(gad) != (type)) { \
        fprintf(stderr, "ALERT:  %s() called with invalid gadget " \
@@ -219,9 +219,9 @@ GadGeneral;
      } \
    } while (0)
 #else
-# define GADGET_CONFIRM_TYPE(gad, type) do { \
+#define GADGET_CONFIRM_TYPE(gad, type) do { \
     if (GADGET_GET_TYPE(gad) != (type)) return;} while (0)
-# define GADGET_CONFIRM_TYPE_RVAL(gad, type, rval) do { \
+#define GADGET_CONFIRM_TYPE_RVAL(gad, type, rval) do { \
     if (GADGET_GET_TYPE(gad) != (type)) return (rval);} while (0)
 #endif
 
@@ -912,7 +912,9 @@ Epplet_window_push_context(Window newwin)
    if (!win)
       return;
 
-   if ((!(window_stack = realloc(window_stack, sizeof(Epplet_window) * (window_stack_pos + 1)))))
+   window_stack = realloc(window_stack,
+			  sizeof(Epplet_window) * (window_stack_pos + 1));
+   if (!window_stack)
       exit(1);
    window_stack[window_stack_pos] = win;
    window_stack_pos++;
@@ -926,7 +928,9 @@ Epplet_window_pop_context(void)
 
    window_stack_pos--;
    ret = window_stack[window_stack_pos];
-   if ((!(window_stack = realloc(window_stack, sizeof(Epplet_window) * (window_stack_pos)))))
+   window_stack = realloc(window_stack,
+			  sizeof(Epplet_window) * (window_stack_pos));
+   if (!window_stack)
       exit(1);
    /* Window stack pos == 0 corresponds to the main epplet window */
    if (window_stack_pos < 1)
@@ -2330,7 +2334,7 @@ Epplet_draw_textbox(Epplet_gadget eg)
    GC                  gc;
 
    GADGET_CONFIRM_TYPE(eg, E_TEXTBOX);
-   if (!(g = (GadTextBox *)eg))
+   if (!(g = (GadTextBox *) eg))
       return;
 
    if (g->hilited)

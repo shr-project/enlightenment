@@ -564,12 +564,14 @@ int
 main(int argc, char **argv)
 {
    int                 i, prio;
+
    char               *button_stds[] = {
       "CLOSE", "PLAY", "STOP", "PREVIOUS", "NEXT", "ARROW_UP",
       "HELP", "REWIND", "FAST_FORWARD", "REPEAT", "CONFIGURE",
       "EJECT"
    };
    typedef void        (*callback_func) (void *data);
+
    callback_func       button_funcs[] = {
       cb_close, play_cd, stop_cd, prev_track, next_track,
       popup_tracks, do_help, rew_cd, ff_cd, NULL, cddb_update,

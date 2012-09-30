@@ -31,20 +31,20 @@
 #include <dirent.h>
 #include <unistd.h>
 #ifdef __sun__
-# include <unistd.h>
-# include <kstat.h>
-# include <sys/sysinfo.h>
+#include <unistd.h>
+#include <kstat.h>
+#include <sys/sysinfo.h>
 #endif
 #ifdef linux
-# include <linux/version.h>
+#include <linux/version.h>
 #endif
 #include "epplet.h"
 #include "net.h"
 
 #if 0
-#  define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
+#define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
 #else
-#  define D(x) ((void) 0)
+#define D(x) ((void) 0)
 #endif
 
 char              **
@@ -151,12 +151,12 @@ net_get_bytes_inout(const char *device, double *in_bytes, double *out_bytes)
 	  {
 	     *colon = ' ';
 	  }
-# if LINUX_VERSION_CODE < KERNEL_VERSION(2,1,0)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,1,0)
 	sscanf(buff, "%s %s %*s %*s %*s %*s %s", dev, in_str, out_str);
-# else
+#else
 	sscanf(buff, "%s %s %*s %*s %*s %*s %*s %*s %*s %s", dev, in_str,
 	       out_str);
-# endif
+#endif
 	if (!strcmp(dev, device))
 	  {
 	     match = 1;

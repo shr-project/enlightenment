@@ -32,9 +32,9 @@
 #include "epplet.h"
 
 #if 0
-#  define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
+#define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
 #else
-#  define D(x) ((void) 0)
+#define D(x) ((void) 0)
 #endif
 #define BEGMATCH(a, b)  (!strncasecmp((a), (b), (sizeof(b) - 1)))
 #define NONULL(x)       ((x) ? (x) : (""))
@@ -277,9 +277,7 @@ change_image(void *data)
       return;
 
    /* Test-load each image to make sure it's a valid image file. */
-   for (;
-	((!filenames[idx])
-	 || (!(im = imlib_load_image(filenames[idx]))));)
+   for (; ((!filenames[idx]) || (!(im = imlib_load_image(filenames[idx]))));)
      {
 	/* It isn't, so NULL out its name. */
 	filenames[idx] = NULL;

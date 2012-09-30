@@ -21,7 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #ifdef HAVE_CONFIG_H
-# include <config.h>
+#include <config.h>
 #endif
 
 #include <stdio.h>
@@ -35,9 +35,9 @@
 #include <unistd.h>
 
 #if 0
-#  define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
+#define D(x) do {printf("%10s | %7d:  [debug] ", __FILE__, __LINE__); printf x; fflush(stdout);} while (0)
 #else
-#  define D(x) ((void) 0)
+#define D(x) ((void) 0)
 #endif
 #define BEGMATCH(a, b)  (!strncasecmp((a), (b), (sizeof(b) - 1)))
 #define NONULL(x)       ((x) ? (x) : (""))
@@ -46,9 +46,9 @@
 #define SET_AND_RETURN(o, f, t)   do {SET_PTR(one, o); SET_PTR(five, f); SET_PTR(fifteen, t); return;} while (0)
 
 #ifdef __sun__
-# ifndef FSCALE
-#  define FSCALE 100.0
-# endif
+#ifndef FSCALE
+#define FSCALE 100.0
+#endif
 void
 get_load_average(double *one, double *five, double *fifteen)
 {

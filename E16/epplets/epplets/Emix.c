@@ -22,7 +22,7 @@ void                initialize_channels(void);
 
 #define MIXER_DEV	"/dev/mixer"
 #if 0
-# define debug
+#define debug
 #endif
 
 typedef struct _MIX_CHANNEL
