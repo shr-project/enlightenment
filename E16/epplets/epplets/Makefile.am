@@ -33,13 +33,13 @@ EppletTest_epplet_SOURCES = TestEpplet.c
 EppletConfigTest_epplet_SOURCES = ConfigTestEpplet.c
 
 E_OpenGL_Demo_epplet_SOURCES = E-OpenGL-Demo.c
-E_OpenGL_Demo_epplet_LDADD = $(top_builddir)/api/libepplet_glx.la $(LDADD)
+E_OpenGL_Demo_epplet_LDADD = $(top_builddir)/api/libepplet_glx.la $(LDADD) -lGL
 ####################################################
 
 E_Exec_epplet_SOURCES = E-Exec.c
 
 E_SD_epplet_SOURCES = E-SD.c esdcloak.c utils.c utils.h esdcloak.h
-E_SD_epplet_LDADD = $(LDADD) -lesd -lm
+E_SD_epplet_LDADD = $(LDADD) -lesd -lImlib2 -lm
 
 E_Load_epplet_SOURCES = E-Load.c
 E_Load_epplet_LDADD = $(LDADD) $(GTLIBS)
@@ -58,6 +58,7 @@ E_Time_epplet_SOURCES = E-Time.c
 E_Magic_epplet_SOURCES = E-Magic.c
 
 E_Toolbox_epplet_SOURCES = E-Toolbox.c
+E_Toolbox_epplet_LDADD = $(LDADD) -lX11
 
 E_Areas_epplet_SOURCES = E-Areas.c 
 
@@ -75,6 +76,7 @@ E_Cpu_epplet_LDADD = $(LDADD) $(GTLIBS)
 E_Power_epplet_SOURCES = E-Power.c
 
 E_Biff_epplet_SOURCES = E-Biff.c mbox.c
+E_Biff_epplet_LDADD = $(LDADD) -lX11
 
 E_MemWatch_epplet_SOURCES = E-MemWatch.c
 E_MemWatch_epplet_LDADD = $(LDADD) $(GTLIBS)
@@ -85,25 +87,27 @@ E_Sys_epplet_SOURCES = E-Sys.c
 E_Sys_epplet_LDADD = $(LDADD) $(GTLIBS)
 
 E_Slides_epplet_SOURCES = E-Slides.c
+E_Slides_epplet_LDADD = $(LDADD) -lImlib2
 
 E_Xss_epplet_SOURCES = E-Xss.c
 
 E_ScreenShoot_epplet_SOURCES = \
 E-ScreenShoot.c cloak.c utils.c utils.h cloak.h \
 E-ScreenShoot_ftp.c E-ScreenShoot_ftp.h
-E_ScreenShoot_epplet_LDADD = $(LDADD) -lm
+E_ScreenShoot_epplet_LDADD = $(LDADD) -lImlib2 -lm
 
 E_NetGraph_epplet_SOURCES = E-NetGraph.c net.c net.h
 E_NetGraph_epplet_LDADD = $(LDADD) -lm
 
 E_ScreenSave_epplet_SOURCES = \
 E-ScreenSave.c cloak.c utils.c utils.h cloak.h
-E_ScreenSave_epplet_LDADD = $(LDADD) -lm
+E_ScreenSave_epplet_LDADD = $(LDADD) -lImlib2 -lm
 
 E_UrlWatch_epplet_SOURCES = E-UrlWatch.c E-UrlWatch.h utils.c utils.h
+E_UrlWatch_epplet_LDADD = $(LDADD) -lX11
 
 E_Mountbox_epplet_SOURCES = E-Mountbox.c
-E_Mountbox_epplet_LDADD = $(LDADD) -lm
+E_Mountbox_epplet_LDADD = $(LDADD) -lImlib2 -lm
 
 E_Pinger_epplet_SOURCES = E-Pinger.c
 
