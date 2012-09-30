@@ -148,18 +148,17 @@ ConfigDict;
 
 static ConfigDict  *config_dict = NULL;
 
+static void         CommsSetup(void);
 static void         CommsFindCommsWindow(void);
-static void         ECommsSetup(Display * d);
 static void         CommsHandleDestroy(Window win);
 static int          CommsHandlePropertyNotify(XEvent * ev);
-static void         CommsFindCommsWindow(void);
 static void         ECommsSend(char *s);
 static char        *ECommsGet(XEvent * ev);
 static char        *ECommsWaitForMessage(void);
+
 static void         Epplet_handle_timer(void);
 static ETimer      *Epplet_get_first(void);
 static void         Epplet_handle_event(XEvent * ev);
-static void         ECommsSend(char *s);
 static Bool         ev_check(Display * d, XEvent * ev, XPointer p);
 static char        *win_name = NULL;
 static char        *win_version = NULL;
@@ -467,11 +466,13 @@ Epplet_Init(char *name,
 #endif
 #endif
 
+   dd = disp;
+   root = DefaultRootWindow(dd);
+
    imlib_context_set_display(disp);
    imlib_context_set_visual(DefaultVisual(disp, DefaultScreen(disp)));
    imlib_context_set_colormap(DefaultColormap(disp, DefaultScreen(disp)));
 
-   ECommsSetup(disp);
    XSelectInput(disp, DefaultRootWindow(disp), PropertyChangeMask);
 
    /* Find the instance number for this instance and compose the name from it */
@@ -576,11 +577,7 @@ Epplet_Init(char *name,
    win_version = version;
    win_info = info;
    xid_context = XUniqueContext();
-   while (!comms_win)
-     {
-	ECommsSetup(disp);
-	sleep(1);
-     }
+   CommsSetup();
    Esnprintf(s, sizeof(s), "set clientname %s", win_name);
    ECommsSend(s);
    Esnprintf(s, sizeof(s), "set version %s", win_version);
@@ -1773,16 +1770,21 @@ Epplet_Loop(void)
 }
 
 static void
-ECommsSetup(Display * d)
+CommsSetup(void)
 {
-   dd = d;
-   root = DefaultRootWindow(dd);
+   for (;;)
+     {
+	CommsFindCommsWindow();
+	if (comms_win != None)
+	   break;
+	sleep(1);
+     }
+
    if (!my_win)
      {
 	my_win = XCreateSimpleWindow(dd, root, -100, -100, 5, 5, 0, 0, 0);
 	XSelectInput(dd, my_win, StructureNotifyMask | SubstructureNotifyMask);
      }
-   CommsFindCommsWindow();
 }
 
 static void
@@ -1802,7 +1804,7 @@ CommsHandlePropertyNotify(XEvent * ev)
    if (!a)
       a = XInternAtom(dd, "ENLIGHTENMENT_COMMS", True);
    if (a == ev->xproperty.atom)
-      CommsFindCommsWindow();
+      CommsSetup();
    if (comms_win)
       return 1;
    return 0;
@@ -1831,7 +1833,8 @@ CommsFindCommsWindow(void)
 	     XFree(s);
 	  }
 	else
-	   (comms_win = 0);
+	   comms_win = 0;
+
 	if (comms_win)
 	  {
 	     if (!XGetGeometry(dd, comms_win, &rt, &dint, &dint,
