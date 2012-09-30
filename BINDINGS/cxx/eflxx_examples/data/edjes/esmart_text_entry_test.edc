@@ -107,7 +107,6 @@ collections {
                 name,   "cursor";
                 type,   IMAGE;
                 mouse_events, 1;
-		clip_to: "back_clip";
 
                 description {
                         state, "default" 0.0;

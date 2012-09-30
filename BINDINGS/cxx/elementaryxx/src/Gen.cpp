@@ -24,22 +24,22 @@ void Gen::clear ()
 
 void Gen::setAlwaysSelectMode (bool alwaysSelect)
 {
-  elm_genlist_always_select_mode_set (o, alwaysSelect);
+  //elm_genlist_always_select_mode_set (o, alwaysSelect);
 }
 
 bool Gen::getAlwaysSelectMode ()
 {
-  return elm_genlist_always_select_mode_get (o);
+  return false;//elm_genlist_always_select_mode_get (o);
 }
 
 void Gen::setNoSelectMode (bool noSelect)
 {
-  elm_genlist_no_select_mode_set (o, noSelect);
+  //elm_genlist_no_select_mode_set (o, noSelect);
 }
 
 bool Gen::getNoSelectMode ()
 {
-  return elm_genlist_no_select_mode_get (o);
+  return false;//elm_genlist_no_select_mode_get (o);
 }
 
 void Gen::setBounce (bool hBounce, bool vBounce)
