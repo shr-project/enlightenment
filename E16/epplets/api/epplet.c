@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 #include <X11/Xatom.h>
+#include <X11/XKBlib.h>
 #include <X11/keysym.h>
 #include <X11/extensions/shape.h>
 
@@ -1355,11 +1356,10 @@ Epplet_handle_event(XEvent * ev)
 	   else
 	     {
 		char               *key;
+		KeySym              keysym;
 
-		key =
-		   XKeysymToString(XKeycodeToKeysym(disp,
-						    (KeyCode) ev->xkey.keycode,
-						    0));
+		keysym = XkbKeycodeToKeysym(disp, ev->xkey.keycode, 0, 0);
+		key = XKeysymToString(keysym);
 		if (keypress_func)
 		   (*keypress_func) (keypress_data, ev->xkey.window, key);
 		else
@@ -1377,10 +1377,10 @@ Epplet_handle_event(XEvent * ev)
      case KeyRelease:
 	{
 	   char               *key;
+	   KeySym              keysym;
 
-	   key =
-	      XKeysymToString(XKeycodeToKeysym(disp,
-					       (KeyCode) ev->xkey.keycode, 0));
+	   keysym = XkbKeycodeToKeysym(disp, ev->xkey.keycode, 0, 0);
+	   key = XKeysymToString(keysym);
 	   if (keyrelease_func)
 	      (*keyrelease_func) (keyrelease_data, ev->xkey.window, key);
 	}
