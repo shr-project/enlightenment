@@ -4,6 +4,8 @@ Eina_Bool
 event_iq_cb(Contact_List *cl, int type __UNUSED__, Shotgun_Event_Iq *ev)
 {
    Contact *c;
+   Eina_List *l;
+
    switch(ev->type)
      {
       case SHOTGUN_IQ_EVENT_TYPE_DISCO_QUERY:
@@ -57,7 +59,6 @@ event_iq_cb(Contact_List *cl, int type __UNUSED__, Shotgun_Event_Iq *ev)
                      if (cl->view || (user->subscription != SHOTGUN_USER_SUBSCRIPTION_BOTH) || user->subscription_pending)
                        contact_list_user_add(cl, c);
                   }
-                shotgun_iq_disco_info_get(cl->account, c->base->jid);
              }
            break;
         }
@@ -101,6 +102,11 @@ event_iq_cb(Contact_List *cl, int type __UNUSED__, Shotgun_Event_Iq *ev)
         cl->settings->enable_mail_notifications = shotgun_iq_gsettings_mailnotify_get(cl->account);
         if (cl->settings->enable_mail_notifications)
           shotgun_iq_gsettings_mailnotify_ping(cl->account);
+        else if (!shotgun_iq_gsettings_available(cl->account))
+          {
+             EINA_LIST_FOREACH(cl->users_list, l, c)
+               shotgun_iq_disco_info_get(cl->account, c->base->jid);
+          }
         break;
       case SHOTGUN_IQ_EVENT_TYPE_MAILNOTIFY:
         if (cl->settings->enable_mail_notifications)
