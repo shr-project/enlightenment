@@ -144,6 +144,7 @@ AC_SEARCH_LIBS([dlopen], [dl dld], [], [
 ])
 
 EFL_WITH_BIN([edje], [edje-cc], [edje_cc])
+EFL_WITH_BIN([eet], [eet], [eet])
 
 AC_OUTPUT([
 Makefile
@@ -204,7 +205,7 @@ echo "------------------------------------------------------------------------"
 echo
 echo "Configuration Options Summary:"
 echo
-echo "  eet......................: ${eet_eet}"
+echo "  eet......................: ${eet}"
 echo "  edje_cc..................: ${edje_cc}"
 echo
 echo "Compilation................: make (or gmake)"
