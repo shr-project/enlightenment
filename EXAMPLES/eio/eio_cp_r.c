@@ -43,7 +43,7 @@ main(int argc, char **argv)
    ecore_init();
    eio_init();
 
-   cp = eio_dir_copy(argv[1], argv[2],
+   cp = eio_dir_copy(argv[1], argv[2], NULL,
                      _test_notify_cb,
                      _test_done_cb,
                      _test_error_cb,
