@@ -1,3 +1,11 @@
+--- 0.14 ---
+Lots of cosmetics (indent, typos, coccinelle fixes).
+Eliminate use of -rpath.
+E-Power: Support for using /sys/class/power_supply (Melvin Meadlin).
+Use XkbKeycodeToKeysym() in stead of XKeycodeToKeysym().
+Fix linking on Fedora with ld.gold.
+Fix linking on Debian (The Wanderer).
+
 --- 0.13 ---
 Fix linking with --no-add-needed.
 Fix some warnings on 64 bit platforms.
