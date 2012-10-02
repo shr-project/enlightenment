@@ -113,6 +113,10 @@ _target_dec(void *data, EPhysics_Body *body __UNUSED__,
             void *event_info __UNUSED__)
 {
    Game *game = data;
+
+   if (!game->cur_world)
+       return;
+
    game->targets--;
 
    if (!game->targets)
