@@ -70,11 +70,10 @@ def eet_desc_write(levels):
 
 
 def eet_create(eet_desc_filename, eet_filename):
-    subprocess.check_output(
+    subprocess.Popen(
         "eet -e %s world %s 0; exit 0" %
         (eet_filename, eet_desc_filename),
-        stderr = subprocess.STDOUT,
-        shell = True)
+        stdout=subprocess.PIPE, shell = True).communicate()[0]
 
 
 def eval_value(value, consts):
