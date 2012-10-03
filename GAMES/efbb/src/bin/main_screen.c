@@ -18,7 +18,7 @@ _exit_cb(void *data, Evas_Object *obj __UNUSED__,
 {
    Evas_Object *win = data;
    evas_object_del(win);
-   elm_shutdown();
+   elm_exit();
 }
 
 Evas_Object *
