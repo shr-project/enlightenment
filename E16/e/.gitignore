@@ -56,7 +56,6 @@ Makefile.in
 /misc/e16-gnome2-session.desktop
 /misc/e16-kde-session.desktop
 /misc/e16-session.desktop
-/misc/e16.desktop-app
 /misc/starte16
 
 /dox/edox

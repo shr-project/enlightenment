@@ -43,7 +43,6 @@ starte16: $(srcdir)/starte16.in Makefile
 starte16:
 	sed -e "s=%bindir%=${bindir}=" $(srcdir)/$@.in > $@
 
-e16.desktop-app: $(srcdir)/e16.desktop-app.in Makefile
 e16.desktop: $(srcdir)/e16.desktop.in Makefile
 e16-gnome.desktop: $(srcdir)/e16-gnome.desktop.in Makefile
 e16-kde.desktop: $(srcdir)/e16-kde.desktop.in Makefile
