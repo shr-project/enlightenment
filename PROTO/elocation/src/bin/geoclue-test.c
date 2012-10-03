@@ -205,7 +205,7 @@ position_signal_cb(void *data , const EDBus_Message *reply)
 {
    Elocation_Position *position;
 
-   position = malloc(sizeof(position));
+   position = malloc(sizeof(Elocation_Position));
 
    unmarshall_position(position, reply);
    ecore_event_add(ELOCATION_EVENT_POSITION, position, NULL, NULL);
