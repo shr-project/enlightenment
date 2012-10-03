@@ -5635,3 +5635,12 @@ Alert if root window button events cannot be selected.
 Use EobjsSlideBy() to slide desks as well as areas.
 EobjSlideTo() is no longer used.
 Fix potential deadlock with multiple simultaneous alerts.
+
+-------------------------------------------------------------------------------
+
+Wed Oct  3 21:12:02 CEST 2012
+
+--- 1.0.11 ---
+Debug tweaks.
+Fix build error with ancient imlib2.
+Fix build error with ancient composite.
