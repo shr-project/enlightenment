@@ -149,6 +149,6 @@ EAPI Eina_Bool elocation_status_get(int *status);
  */
 EAPI Eina_Bool elocation_requirements_set(Elocation_Requirements *requirements);
 
-Eina_Bool elocation_init(EDBus_Connection *conn);
-void elocation_shutdown(EDBus_Connection *conn);
+Eina_Bool elocation_init();
+void elocation_shutdown();
 #endif
