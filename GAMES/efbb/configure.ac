@@ -68,7 +68,7 @@ AC_SUBST(sound_dir)
     AC_DEFINE_UNQUOTED(SOUND_DIR, ["$SOUND_DIR"], [Where sound files are installed.])
 
 AC_CHECK_PROG(HAVE_GENEET, geneet.py, true, false)
-PKG_CHECK_MODULES([EFBB], [libcanberra etrophy ephysics elementary edje ecore evas])
+PKG_CHECK_MODULES([EFBB], [libcanberra >= 0.16 etrophy ephysics elementary edje ecore evas])
 
 if test "x$HAVE_GENEET" = "xfalse"; then
    AC_MSG_ERROR([*** Geneet not found, make sure geneet.py is in your PATH])
