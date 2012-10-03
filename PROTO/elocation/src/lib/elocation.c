@@ -10,15 +10,12 @@
 #include <elocation_private.h>
 
 static char *unique_name = NULL;
-
-static EDBus_Signal_Handler *cb_name_owner_changed = NULL;
-
 static Elocation_Provider master_provider;
 
 static Eina_Bool
 geoclue_start(void *data, int ev_type, void *event)
 {
-   printf("GeoClue start event\n");
+   printf("GeoClue start event at %s\n", unique_name);
    return ECORE_CALLBACK_DONE;
 }
 
@@ -41,56 +38,27 @@ create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 }
 
 static void
-_system_name_owner_changed(void *data , const EDBus_Message *msg)
+_name_owner_changed(void *data , const char *bus, const char *old, const char *new)
 {
-   const char *name, *from, *to;
-
-   if (!edbus_message_arguments_get(msg, "sss", &name, &from, &to))
-     {
-        return;
-     }
-
-   if (strcmp(name, GEOCLUE_DBUS_NAME) != 0)
+   if (strcmp(bus, GEOCLUE_DBUS_NAME) != 0)
       return;
 
-   if (from[0] == '\0' && to[0] != '\0')
+   if (old[0] == '\0' && new[0] != '\0')
      {
         ecore_event_add(ELOCATION_EVENT_IN, NULL, NULL, NULL);
-        unique_name = strdup(to);
+        unique_name = strdup(new);
      }
-   else if (from[0] != '\0' && to[0] == '\0')
+   else if (old[0] != '\0' && new[0] == '\0')
      {
-        if (strcmp(unique_name, from) != 0)
-           printf("%s was not the known name %s, ignored.\n", from, unique_name);
+        if (strcmp(unique_name, old) != 0)
+           printf("%s was not the known name %s, ignored.\n", old, unique_name);
         else
            ecore_event_add(ELOCATION_EVENT_OUT, NULL, NULL, NULL);
      }
    else
      {
-        printf("unknow change from %s to %s\n", from, to);
+        printf("unknow change from %s to %s\n", old, new);
      }
-}
-
-static void
-_get_name_owner(void *data , const EDBus_Message *msg, EDBus_Pending *pending)
-{
-   const char *uid;
-
-   if (!edbus_message_arguments_get(msg, "s", &uid)) return;
-   if (!uid)
-        return;
-
-   printf("enter GeoClue at %s (old was %s)\n", uid, unique_name);
-   if (unique_name && strcmp(unique_name, uid) == 0)
-     {
-        return;
-     }
-
-   if (unique_name)
-      ecore_event_add(ELOCATION_EVENT_IN, NULL, NULL, NULL);
-
-   unique_name = strdup(uid);
-   return;
 }
 
 static void
@@ -185,10 +153,8 @@ elocation_init(EDBus_Connection *conn)
         return EXIT_FAILURE;
      }
 
-   cb_name_owner_changed = edbus_signal_handler_add
-         (conn, EDBUS_FDO_BUS, EDBUS_FDO_PATH, EDBUS_FDO_INTERFACE, "NameOwnerChanged", _system_name_owner_changed, NULL);
-
-   edbus_name_owner_get(conn, GEOCLUE_DBUS_NAME, _get_name_owner, NULL);
+   edbus_name_owner_changed_callback_add(conn, GEOCLUE_DBUS_NAME, _name_owner_changed,
+                                         NULL, EINA_TRUE);
 
    ecore_event_handler_add(ELOCATION_EVENT_IN, geoclue_start, NULL);
    ecore_event_handler_add(ELOCATION_EVENT_OUT, geoclue_stop, NULL);
@@ -200,9 +166,5 @@ elocation_init(EDBus_Connection *conn)
 void
 elocation_shutdown(EDBus_Connection *conn)
 {
-   if (cb_name_owner_changed)
-     {
-        //edbus_signal_handler_del(cb_name_owner_changed);
-        cb_name_owner_changed = NULL;
-     }
+   edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
 }
