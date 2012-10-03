@@ -60,7 +60,7 @@ function call_spatch {
 	local includes=$*
 	pushd $proj || die
 	[[ $AUTOGEN -eq 1 && -x autogen.sh ]] && ./autogen.sh > /dev/null
-	spatch -sp $SCRIPT -macro_file_builtins ${TOPDIR}/SCRIPTS/coccinelle/ecocci.h \
+	spatch -sp-file $SCRIPT -macro_file_builtins ${TOPDIR}/SCRIPTS/coccinelle/ecocci.h \
 	       -I /usr/include/ -I /usr/local/include/ \
 	       $includes \
 	       -all_includes -include_headers -relax_include_path -in_place $ARGS -dir ./
