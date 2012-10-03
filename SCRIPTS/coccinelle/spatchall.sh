@@ -3,6 +3,7 @@
 ARGS=
 AUTOGEN=0
 TARGET=
+QUIET=
 SCRIPTDIR="$0"
 
 function usage {
@@ -16,12 +17,14 @@ OPTIONS:
 	            spatchall.sh -t eina myscript.cocci
 	            spatchall.sh -t "ecore TMP/st/elementary" myscript.cocci
 
+	-q       Use very quiet spatch output
+
         -h       Show this help
 EOF
 }
 
 
-while getopts "at:h" flag
+while getopts "at:qh" flag
 do
 	case "$flag" in
 	a)
@@ -29,6 +32,9 @@ do
 		;;
 	t)
 		TARGET="$OPTARG"
+		;;
+	q)
+		QUIET="-very_quiet"
 		;;
 	h)
 		usage
@@ -63,7 +69,7 @@ function call_spatch {
 	spatch -sp-file $SCRIPT -macro_file_builtins ${TOPDIR}/SCRIPTS/coccinelle/ecocci.h \
 	       -I /usr/include/ -I /usr/local/include/ \
 	       $includes \
-	       -all_includes -include_headers -relax_include_path -in_place $ARGS -dir ./
+	       $QUIET -all_includes -include_headers -relax_include_path -in_place $ARGS -dir ./
 	popd
 }
 
