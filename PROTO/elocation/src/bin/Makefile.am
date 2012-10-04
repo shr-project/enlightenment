@@ -10,10 +10,10 @@ AM_CPPFLAGS = \
 -DPACKAGE_DATA_DIR=\"$(datadir)/$(PACKAGE)\" \
 @ELOCATION_CFLAGS@
 
-bin_PROGRAMS = geoclue-test
-geoclue_test_SOURCES = geoclue-test.c
+bin_PROGRAMS = elocation-test
+elocation_test_SOURCES = elocation-test.c
 
-geoclue_test_CFLAGS = @ELOCATION_CFLAGS@
-geoclue_test_LDADD = $(top_builddir)/src/lib/libelocation.la @ELOCATION_LIBS@
+elocation_test_CFLAGS = @ELOCATION_CFLAGS@
+elocation_test_LDADD = $(top_builddir)/src/lib/libelocation.la @ELOCATION_LIBS@
 
-geoclue_test_LDFLAGS = -export-dynamic
+elocation_test_LDFLAGS = -export-dynamic
