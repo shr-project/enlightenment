@@ -15,6 +15,21 @@ static Elocation_Provider master_provider;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 
+EAPI Eina_Bool
+elocation_address_get(Elocation_Address *address)
+{
+}
+
+EAPI Eina_Bool
+elocation_position_get(Elocation_Position *position)
+{
+}
+
+EAPI Eina_Bool
+elocation_status_get(int *status)
+{
+}
+
 static void
 provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {

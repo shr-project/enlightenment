@@ -27,14 +27,38 @@ status_changed(void *data, int ev_type, void *event)
    return ECORE_CALLBACK_DONE;
 }
 
+static Eina_Bool
+position_changed(void *data, int ev_type, void *event)
+{
+   return ECORE_CALLBACK_DONE;
+}
+
+static Eina_Bool
+address_changed(void *data, int ev_type, void *event)
+{
+   return ECORE_CALLBACK_DONE;
+}
+
 int
 main()
 {
+   Elocation_Accuracy *accuracy;
+   Elocation_Address *address;
+   Elocation_Position *position;
+   int status;
+
    ecore_init();
    edbus_init();
    elocation_init();
 
+   /* Register callback so we get updates later on */
    ecore_event_handler_add(ELOCATION_EVENT_STATUS, status_changed, NULL);
+   ecore_event_handler_add(ELOCATION_EVENT_POSITION, position_changed, NULL);
+   ecore_event_handler_add(ELOCATION_EVENT_ADDRESS, address_changed, NULL);
+
+   elocation_status_get(&status);
+   elocation_position_get(position);
+   elocation_address_get(address);
 
    ecore_main_loop_begin();
 
