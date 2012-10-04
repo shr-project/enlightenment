@@ -23,6 +23,7 @@
 #define INFINITE_HP (9000) //ITS OVER NINE THOUSAND!!
 
 int _efbb_log_dom = -1;
+static Eina_Bool _quit = EINA_FALSE;
 
 struct _Game {
    Evas_Object *main_screen;
@@ -87,6 +88,9 @@ _body_del(void *data, EPhysics_Body *body, void *event_info)
                                          _relto_del_cb);
         free(body_data);
      }
+
+   if (_quit) return;
+
    if (event_info) evas_object_del(event_info);
    if (data) evas_object_del(data);
 }
@@ -1136,27 +1140,14 @@ _levels_unload(Game *game)
    game_world_shutdown();
 }
 
-static void
-_win_del(void *data, Evas_Object *obj, void *event_info __UNUSED__)
-{
-   Game *game = data;
-
-   DBG("Request to close window");
-
-   if (game->cur_world)
-     ephysics_world_del(game->cur_world);
-
-   evas_object_del(obj);
-}
-
 static Evas_Object *
-_win_add(Game *game)
+_win_add(void)
 {
    Evas_Object *win;
 
    win = elm_win_add(NULL, PACKAGE_NAME, ELM_WIN_BASIC);
    elm_win_title_set(win, "Escape From Booty Bay");
-   evas_object_smart_callback_add(win, "delete,request", _win_del, game);
+   elm_win_autodel_set(win, EINA_TRUE);
    elm_win_screen_constrain_set(win, EINA_TRUE);
    evas_object_show(win);
 
@@ -1267,7 +1258,7 @@ elm_main(int argc __UNUSED__, char **argv __UNUSED__)
    elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
    elm_theme_extension_add(NULL, PACKAGE_DATA_DIR "/" GAME_THEME ".edj");
 
-   game->win = _win_add(game);
+   game->win = _win_add();
    game->main_screen = main_screen_add(game->win, game);
    game->evas = evas_object_evas_get(game->win);
    game->level_select_screen = level_select_screen_add(
@@ -1296,6 +1287,7 @@ etrophy_shutdown:
 end:
    eina_log_domain_unregister(_efbb_log_dom);
    _efbb_log_dom = -1;
+   _quit = EINA_TRUE;
 
    elm_shutdown();
    return r;
