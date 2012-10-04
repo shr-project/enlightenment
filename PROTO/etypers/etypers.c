@@ -21,11 +21,12 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <Elementary.h>
+#include <Ecore_Input.h>
 #include <Ecore.h>
 #include <Eina.h>
 
 #define DEFAULT_WIN_W 600
-#define DEFAULT_WIN_H 600
+#define DEFAULT_WIN_H 800
 #define NEW_ENEMY_DURATION_SEC 5
 #define LEVEL_INC_WEIGHT 0.01
 #define DROP_DIST_WEIGHT 10
@@ -36,6 +37,7 @@ typedef struct _AppData AppData;
 struct _AppData
 {
    Eina_Inlist *enemies;
+   Eina_Array *words_array;
    double level;
    double last_frame_time;
    double interval_time;
@@ -46,7 +48,9 @@ struct _AppData
    Evas_Object *ly;
    Evas_Object *bx;
    Evas_Object *entry;
+   Evas_Object *popup;
    Ecore_Animator *animator;
+   Eina_Bool paused: 1;
 };
 
 struct _Enemy
@@ -55,19 +59,6 @@ struct _Enemy
    Evas_Object *entry;
    float x;
    float y;
-};
-
-const char *LABELS[10] = {
-   "apple",
-   "grape",
-   "orange",
-   "pineapple",
-   "banana",
-   "mango",
-   "watermelon",
-   "strawberry",
-   "kiwi",
-   "peach"
 };
 
 static double
@@ -125,7 +116,9 @@ _enemy_new(Evas_Object *parent, const char *str, Evas_Coord x, Evas_Coord y,
 static void
 _enemy_add(AppData *appdata)
 {
-   Enemy *enemy = _enemy_new(appdata->bx, LABELS[rand() % 10],
+   unsigned int words_cnt = eina_array_count(appdata->words_array);
+   char *word = eina_array_data_get(appdata->words_array,(rand() % words_cnt));
+   Enemy *enemy = _enemy_new(appdata->bx, word,
                              (rand() % appdata->bound_w), 0, appdata->bound_w,
                              appdata->bound_h);
    appdata->enemies = eina_inlist_append(appdata->enemies,
@@ -147,6 +140,8 @@ _enemy_kill(AppData *appdata, Enemy *enemy)
    Evas_Object *entry = enemy->entry;
    appdata->enemies = eina_inlist_remove(appdata->enemies,
                                          EINA_INLIST_GET(enemy));
+
+   //Kill Effect
    Elm_Transit *transit = elm_transit_add();
    if (!transit) return;
 
@@ -154,7 +149,7 @@ _enemy_kill(AppData *appdata, Enemy *enemy)
    elm_transit_object_add(transit, entry);
    elm_transit_duration_set(transit, 0.25);
    elm_transit_effect_translation_add(transit, 0, 0, 15, -20);
-   elm_transit_effect_color_add(transit, 200, 0, 0, 200, 0, 0, 0, 0);
+   elm_transit_effect_color_add(transit, 255, 255, 255, 255, 0, 0, 0, 0);
    elm_transit_del_cb_set(transit, _transit_del_cb, entry);
    elm_transit_go(transit);
 }
@@ -238,6 +233,10 @@ _win_del(void *data, Evas_Object *obj, void *event_info)
    while (appdata->enemies)
      appdata->enemies = eina_inlist_remove(appdata->enemies,
                                            appdata->enemies);
+   //Remove all words allocated
+   while (appdata->words_array)
+     free(eina_array_pop(appdata->words_array));
+   eina_array_free(appdata->words_array);
 
    free(appdata);
 
@@ -252,18 +251,6 @@ _win_resize(void *data, Evas *e, Evas_Object *obj, void *event_info)
    evas_object_geometry_get(obj, NULL, NULL, &w, &h);
    appdata->bound_w = w;
    appdata->bound_h = h;
-}
-
-static Evas_Object *
-_win_create(int w, int h)
-{
-   Evas_Object *win = elm_win_util_standard_add("eTypers", "eTypers v1.0");
-   elm_win_autodel_set(win, EINA_TRUE);
-   evas_object_smart_callback_add(win, "delete,request", _win_del, NULL);
-   evas_object_resize(win, w, h);
-   evas_object_show(win);
-
-   return win;
 }
 
 static Evas_Object *
@@ -311,6 +298,7 @@ _combo(AppData *appdata, Enemy *enemy, int combo)
    evas_object_color_set(text, 255, 255, 0, 255);
    evas_object_show(text);
 
+   //Combo Text Effect
    Elm_Transit *transit = elm_transit_add();
    if (!transit)
      {
@@ -327,15 +315,10 @@ _combo(AppData *appdata, Enemy *enemy, int combo)
 }
 
 static void
-_changed_user_cb(void *data, Evas_Object *obj, void *event_info)
+_enemies_kill(AppData *appdata, Evas_Object *obj, const char *input_text,
+              Eina_Bool space)
 {
-   const char *input_text = elm_object_text_get(obj);
-   if (!input_text) return;
-
-   if (input_text[strlen(input_text) -1] != ' ') return;
-
    //Compare the enemies and clear them.
-   AppData *appdata = data;
    Eina_Inlist *l;
    Enemy *enemy;
    const char *enemy_text;
@@ -345,7 +328,15 @@ _changed_user_cb(void *data, Evas_Object *obj, void *event_info)
      {
         enemy_text = elm_object_text_get(enemy->entry);
         if (!enemy_text) continue;
-        if (strlen(enemy_text) != (strlen(input_text) - 1)) continue;
+        if (space)
+          {
+             if (strlen(enemy_text) != (strlen(input_text) - 1)) continue;
+          }
+        else
+          {
+             if (strlen(enemy_text) != strlen(input_text)) continue;
+          }
+
         if (!strncmp(input_text, enemy_text, (strlen(input_text) - 1)))
           {
              ++combo;
@@ -355,6 +346,113 @@ _changed_user_cb(void *data, Evas_Object *obj, void *event_info)
           }
      }
    elm_object_text_set(obj, NULL);
+
+}
+
+static void
+_changed_user_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   const char *input_text = elm_object_text_get(obj);
+   if (!input_text) return;
+
+   //try to kill the enemies when user press the "space" key
+   if (input_text[strlen(input_text) -1] != ' ') return;
+
+   _enemies_kill(data, obj, input_text, EINA_TRUE);
+}
+
+static void
+_pause_or_resume(AppData *appdata)
+{
+   appdata->paused = !appdata->paused;
+
+   if (appdata->paused)
+     {
+        elm_object_disabled_set(appdata->entry, EINA_TRUE);
+        ecore_animator_freeze(appdata->animator);
+     }
+   else
+     {
+        elm_object_disabled_set(appdata->entry, EINA_FALSE);
+        elm_object_focus_set(appdata->entry, EINA_TRUE);
+        appdata->last_frame_time = ecore_time_get();
+        ecore_animator_thaw(appdata->animator);
+     }
+}
+
+static void
+_game_start_cb(void *data, Evas_Object *obj, void *event_info)
+{
+
+}
+
+static void
+_top_ranking_cb(void *data, Evas_Object *obj, void *event_info)
+{
+
+}
+
+static void
+_game_exit_cb(void *data, Evas_Object *obj, void *event_info)
+{
+
+}
+
+static Evas_Object *
+_popup_create(Evas_Object *parent)
+{
+   //FIXME: Item width is wierd.
+   Evas_Object *popup = elm_popup_add(parent);
+   //evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   //evas_object_size_hint_align_set(popup, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   elm_object_part_text_set(popup, "title,text", "Game Menu");
+   Elm_Object_Item *it;
+   it = elm_popup_item_append(popup, "Game Start", NULL, _game_start_cb, NULL);
+   elm_object_item_disabled_set(it, EINA_TRUE);
+   it = elm_popup_item_append(popup, "Top Ranking", NULL, _top_ranking_cb, NULL);
+   elm_object_item_disabled_set(it, EINA_TRUE);
+   it = elm_popup_item_append(popup, "Game Exit", NULL, _game_exit_cb, NULL);
+   elm_object_item_disabled_set(it, EINA_TRUE);
+
+   evas_object_show(popup);
+   return popup;
+}
+
+static void
+_popup(AppData *appdata)
+{
+   if (appdata->paused)
+     {
+        Evas_Object *popup = _popup_create(appdata->win);
+        appdata->popup = popup;
+     }
+   else
+     {
+        evas_object_del(appdata->popup);
+        appdata->popup = NULL;
+     }
+}
+
+static Eina_Bool
+_key_down_cb(void *data, int type, void *event_info)
+{
+   Ecore_Event_Key *event = event_info;
+   AppData *appdata = data;
+   //When input is "return" as well as "space" then it tries to kill the enemies
+   //also.
+   if (!strcmp(event->keyname, "Return"))
+     {
+        const char *input_text = elm_object_text_get(appdata->entry);
+        if (input_text)
+          _enemies_kill(appdata, appdata->entry, input_text, EINA_FALSE);
+     }
+   //Pause/Resume
+   else if (!strcmp(event->keyname, "Escape"))
+     {
+        _pause_or_resume(appdata);
+        _popup(appdata);
+     }
+   return ECORE_CALLBACK_PASS_ON;
 }
 
 static Evas_Object *
@@ -369,25 +467,59 @@ _entry_create(Evas_Object *ly, const char *part, AppData *appdata)
    elm_object_focus_set(entry, EINA_TRUE);
    evas_object_smart_callback_add(entry, "changed,user",  _changed_user_cb,
                                   appdata);
-
    return entry;
+}
+
+static Evas_Object *
+_win_create(int w, int h, AppData *appdata)
+{
+   Evas_Object *win = elm_win_util_standard_add("eTypers", "eTypers v1.0");
+   elm_win_autodel_set(win, EINA_TRUE);
+   evas_object_smart_callback_add(win, "delete,request", _win_del, NULL);
+   evas_object_resize(win, w, h);
+   evas_object_show(win);
+   evas_object_event_callback_add(appdata->win, EVAS_CALLBACK_RESIZE,
+                                  _win_resize, appdata);
+   return win;
+}
+
+static Eina_Array *
+_words_create()
+{
+   Eina_Array *array = eina_array_new(100);
+   if (!array) return NULL;
+
+   char buf[128];
+   FILE *fp = fopen("./words.txt", "r");
+   if (!fp)
+     {
+        eina_array_free(array);
+        return NULL;
+     }
+
+   while(0 < fscanf(fp, "%s", buf))
+     eina_array_push(array, strdup(buf));
+
+   return array;
 }
 
 static void
 _app_init(AppData *appdata)
 {
-   appdata->win = _win_create(DEFAULT_WIN_W, DEFAULT_WIN_H);
+   appdata->words_array = _words_create();
+   appdata->win = _win_create(DEFAULT_WIN_W, DEFAULT_WIN_H, appdata);
    appdata->ly = _layout_create(appdata->win, "./etypers.edj", "gui");
    appdata->bx = _box_create(appdata->ly, "enemies");
    appdata->entry = _entry_create(appdata->ly, "entry", appdata);
-   evas_object_event_callback_add(appdata->win, EVAS_CALLBACK_RESIZE,
-                                  _win_resize, appdata);
-   appdata->level = 3;
+   appdata->level = 10;
    appdata->bound_w = DEFAULT_WIN_W;
    appdata->bound_h = DEFAULT_WIN_H;
    appdata->animator = ecore_animator_add(_animator_cb, appdata);
    appdata->last_frame_time = ecore_time_get();
    appdata->interval_time = appdata->last_frame_time;
+
+   ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _key_down_cb, appdata);
+
 }
 
 int

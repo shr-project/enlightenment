@@ -1,6 +1,6 @@
-CFLAGS += $(shell pkg-config --cflags elementary evas ecore)
-LIBS += $(shell pkg-config --libs elementary evas ecore)
-CFLAGS += -Wall -O2
+CFLAGS += $(shell pkg-config --cflags elementary evas ecore ecore-input)
+LIBS += $(shell pkg-config --libs elementary evas ecore ecore-input)
+CFLAGS += -Wall -O2 -g
 
 BINARY=etypers
 
