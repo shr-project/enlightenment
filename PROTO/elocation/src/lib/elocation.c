@@ -51,7 +51,6 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
    EDBus_Message_Iter *iter, *sub, *dict, *entry;
    double horizontal;
    double vertical;
-   Elocation_Accuracy accur;
    const char *key, *signature;
    char *value;
 
@@ -102,9 +101,9 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
 
    edbus_message_iter_get_and_next(iter, 'r', &sub );
    edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
-   accur.level = level;
-   accur.horizontal = horizontal;
-   accur.vertical = vertical;
+   address->accur->level = level;
+   address->accur->horizontal = horizontal;
+   address->accur->vertical = vertical;
 }
 
 static void
@@ -113,6 +112,7 @@ address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
    Elocation_Address *address;
 
    address = malloc(sizeof(Elocation_Address));
+   address->accur = malloc(sizeof(Elocation_Accuracy));
    unmarshall_address(address, reply);
 }
 static void
@@ -121,6 +121,8 @@ address_signal_cb(void *data , const EDBus_Message *reply)
    Elocation_Address *address;
 
    address = malloc(sizeof(Elocation_Address));
+   address->accur = malloc(sizeof(Elocation_Accuracy));
+
    unmarshall_address(address, reply);
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, NULL, NULL);
 }
@@ -217,6 +219,7 @@ position_signal_cb(void *data , const EDBus_Message *reply)
    Elocation_Position *position;
 
    position = malloc(sizeof(Elocation_Position));
+   position->accur = malloc(sizeof(Elocation_Accuracy));
 
    unmarshall_position(position, reply);
    ecore_event_add(ELOCATION_EVENT_POSITION, position, NULL, NULL);

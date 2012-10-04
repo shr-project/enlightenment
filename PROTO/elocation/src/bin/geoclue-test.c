@@ -42,7 +42,6 @@ address_changed(void *data, int ev_type, void *event)
 int
 main()
 {
-   Elocation_Accuracy *accuracy;
    Elocation_Address *address;
    Elocation_Position *position;
    int status;
