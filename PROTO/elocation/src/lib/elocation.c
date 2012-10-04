@@ -282,7 +282,7 @@ status_signal_cb(void *data , const EDBus_Message *reply)
    master_provider.status = status;
 }
 
-Eina_Bool
+EAPI Eina_Bool
 elocation_init()
 {
    EDBus_Message *msg;
@@ -409,7 +409,7 @@ elocation_init()
          status_signal_cb, NULL);
 }
 
-void
+EAPI void
 elocation_shutdown()
 {
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
