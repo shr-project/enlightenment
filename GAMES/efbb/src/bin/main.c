@@ -44,13 +44,13 @@ struct _Game {
    Ecore_Timer *end_timer;
    Eina_List *levels;
    Eina_List *extra_obj;
+   Eina_List *targets;
 
    Etrophy_Gamescore *gamescore;
    Score *score;
    Level *cur_level;
    World *world;
 
-   int targets;
    int old_cx;
    int strength;
    int angle;
@@ -113,17 +113,11 @@ _win_cb(void *data)
 }
 
 static void
-_target_dec(void *data, EPhysics_Body *body __UNUSED__,
-            void *event_info __UNUSED__)
+_target_dec(void *data, EPhysics_Body *body, void *event_info __UNUSED__)
 {
    Game *game = data;
-
-   if (!game->cur_world)
-       return;
-
-   game->targets--;
-
-   if (!game->targets)
+   game->targets = eina_list_remove(game->targets, body);
+   if (!eina_list_count(game->targets))
      game->end_timer = ecore_timer_add(3, _win_cb, game);
 }
 
@@ -660,7 +654,7 @@ _create_target(Game *game, const char *type, int w, int h, int x, int y)
                                     _target_dec, game);
    ephysics_body_event_callback_add(body, EPHYSICS_CALLBACK_BODY_DEL,
                                     _body_del, NULL);
-   game->targets++;
+   game->targets = eina_list_append(game->targets, body);
 
    DBG("Target created at (%i, %i)", x, y);
 }
@@ -694,6 +688,11 @@ static void
 level_unload(Game *game)
 {
    Evas_Object *extra_object;
+   EPhysics_Body *target;
+
+   EINA_LIST_FREE(game->targets, target)
+      ephysics_body_event_callback_del(target, EPHYSICS_CALLBACK_BODY_DEL,
+                                       _target_dec);
 
    if (game->cur_world)
      {
@@ -945,12 +944,13 @@ _wstopped(void *data, EPhysics_World *world __UNUSED__,
 
    if (((cannon_ammo_get(game->cannon) > 0) ||
         (cannon_loaded_get(game->cannon))) &&
-       ((game->targets > 0) && (!level_time_attack_get(game->cur_level))))
+       ((eina_list_count(game->targets)) &&
+        (!level_time_attack_get(game->cur_level))))
       return;
 
    game->camera_moving = EINA_FALSE;
 
-   if (game->targets <= 0)
+   if (!eina_list_count(game->targets))
      {
         _level_win(game);
         return;
@@ -1000,7 +1000,6 @@ _level_load(Game *game)
    Eina_List *l;
    int hiscore;
 
-   game->targets = 0;
    game->old_cx = 0;
 
    game->bg = bg_add(game->win, level_bg_get(game->cur_level));
