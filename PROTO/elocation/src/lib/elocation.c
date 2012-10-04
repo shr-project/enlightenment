@@ -222,9 +222,6 @@ create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 static void
 _name_owner_changed(void *data , const char *bus, const char *old, const char *new)
 {
-   if (strcmp(bus, GEOCLUE_DBUS_NAME) != 0)
-      return;
-
    if (old[0] == '\0' && new[0] != '\0')
      {
         ecore_event_add(ELOCATION_EVENT_IN, NULL, NULL, NULL);
