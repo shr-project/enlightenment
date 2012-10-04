@@ -45,9 +45,8 @@ provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending
 }
 
 static void
-address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
 {
-   Elocation_Address address;
    int32_t level, timestamp;
    EDBus_Message_Iter *iter, *sub, *dict, *entry;
    double horizontal;
@@ -71,32 +70,32 @@ address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 
        if (!strcmp(key, "country"))
         {
-            address.country = value;
+            address->country = value;
             printf("Key: %s, value: %s\n", key, value);
          }
        else if (!strcmp(key, "countrycode"))
          {
-            address.countrycode = value;
+            address->countrycode = value;
             printf("Key: %s, value: %s\n", key, value);
          }
        else if (!strcmp(key, "locality"))
          {
-            address.locality = value;
+            address->locality = value;
             printf("Key: %s, value: %s\n", key, value);
          }
        else if (!strcmp(key, "postalcode"))
          {
-            address.postalcode = value;
+            address->postalcode = value;
             printf("Key: %s, value: %s\n", key, value);
          }
        else if (!strcmp(key, "region"))
          {
-            address.region = value;
+            address->region = value;
             printf("Key: %s, value: %s\n", key, value);
          }
        else if (!strcmp(key, "timezone"))
          {
-            address.timezone = value;
+            address->timezone = value;
             printf("Key: %s, value: %s\n", key, value);
          }
     }
@@ -107,10 +106,23 @@ address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
    accur.horizontal = horizontal;
    accur.vertical = vertical;
 }
+
+static void
+address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   Elocation_Address *address;
+
+   address = malloc(sizeof(Elocation_Address));
+   unmarshall_address(address, reply);
+}
 static void
 address_signal_cb(void *data , const EDBus_Message *reply)
 {
-   address_cb(data, reply, NULL);
+   Elocation_Address *address;
+
+   address = malloc(sizeof(Elocation_Address));
+   unmarshall_address(address, reply);
+   ecore_event_add(ELOCATION_EVENT_ADDRESS, address, NULL, NULL);
 }
 
 static void
