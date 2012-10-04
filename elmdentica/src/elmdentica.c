@@ -653,7 +653,7 @@ static void on_handle_user(void *data, Evas_Object *obj, void *event_info) {
 
 	if(network_busy || !settings->online) return;
 
-	ud = calloc(1,sizeof(userData*));
+	ud = calloc(1,sizeof(userData));
 	ud->screen_name=elm_object_item_text_get(li);
 	ud->as = (aStatus*)data;
 
