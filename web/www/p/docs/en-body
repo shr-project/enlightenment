@@ -150,6 +150,17 @@ libraries is on the right.
 <?php frame1("width=100%");?>
 <div class="main">
 
+<h2>E17 Documentation</h2>
+<div>
+<center><p>
+Click <a href="http://trac.enlightenment.org/e/wiki/User_Guide">HERE</a>
+</p></center>
+</div>
+<?php frame2();?>
+
+<?php frame1("width=100%");?>
+<div class="main">
+
 <h2>Application Documentation</h2>
 
 <table border=0 cellpadding=0 cellspacing=8><tr>
