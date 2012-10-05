@@ -374,8 +374,8 @@ elocation_init()
    if (ELOCATION_EVENT_STATUS == 0)
       ELOCATION_EVENT_STATUS = ecore_event_type_new();
 
-   if (ELOCATION_EVENT_STATUS == 0)
-      ELOCATION_EVENT_STATUS = ecore_event_type_new();
+   if (ELOCATION_EVENT_POSITION == 0)
+      ELOCATION_EVENT_POSITION = ecore_event_type_new();
 
    if (ELOCATION_EVENT_ADDRESS == 0)
       ELOCATION_EVENT_ADDRESS = ecore_event_type_new();
