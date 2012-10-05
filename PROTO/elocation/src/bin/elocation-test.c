@@ -28,14 +28,51 @@ status_changed(void *data, int ev_type, void *event)
 }
 
 static Eina_Bool
-position_changed(void *data, int ev_type, void *event)
+address_changed(void *data, int ev_type, void *event)
 {
+   Elocation_Address *address;
+
+   address = event;
+   printf("Address update with data from timestamp: %i\n", address->timestamp);
+   printf("Country: %s\n", address->country);
+   printf("Countrycode: %s\n", address->countrycode);
+   printf("Locality: %s\n", address->locality);
+   printf("Postalcode: %s\n", address->postalcode);
+   printf("Region: %s\n", address->region);
+   printf("Timezone: %s\n", address->timezone);
+   printf("Accuracy level: %i\n", address->accur->level);
+   printf("Accuracy horizemtal: %f\n", address->accur->horizontal);
+   printf("Accuracy vertical: %f\n", address->accur->vertical);
+
    return ECORE_CALLBACK_DONE;
 }
 
 static Eina_Bool
-address_changed(void *data, int ev_type, void *event)
+position_changed(void *data, int ev_type, void *event)
 {
+   Elocation_Position *position;
+
+   position = event;
+   printf("GeoClue position reply with data from timestamp %i\n", position->timestamp);
+   if (position->fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
+      printf("Latitude:\t %f (valid)\n", position->latitude);
+   else
+      printf("Latitude:\tinvalid.\n");
+
+   if (position->fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
+      printf("Longitude:\t %f (valid)\n", position->longitude);
+   else
+      printf("Longitude:\tinvalid.\n");
+
+   if (position->fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
+      printf("Altitude:\t %f (valid)\n", position->altitude);
+   else
+      printf("Altitude:\tinvalid.\n");
+
+   printf("Accuracy: level %i, horizontal %f and vertical %f\n", position->accur->level, position->accur->horizontal, position->accur->vertical);
+   printf("Accuracy level: %i\n", position->accur->level);
+   printf("Accuracy horizemtal: %f\n", position->accur->horizontal);
+   printf("Accuracy vertical: %f\n", position->accur->vertical);
    return ECORE_CALLBACK_DONE;
 }
 

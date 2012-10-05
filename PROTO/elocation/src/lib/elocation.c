@@ -10,25 +10,10 @@
 #include <elocation_private.h>
 
 static char *unique_name = NULL;
-static EDBus_Connection *conn;
-static Elocation_Provider master_provider;
+static EDBus_Connection *conn = NULL;;
+static Elocation_Provider *master_provider;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
-
-EAPI Eina_Bool
-elocation_address_get(Elocation_Address *address)
-{
-}
-
-EAPI Eina_Bool
-elocation_position_get(Elocation_Position *position)
-{
-}
-
-EAPI Eina_Bool
-elocation_status_get(int *status)
-{
-}
 
 static void
 provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
@@ -60,6 +45,7 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
    iter = edbus_message_iter_get(reply);
 
    edbus_message_iter_get_and_next(iter, 'i', &timestamp);
+   address->timestamp = timestamp;
 
    edbus_message_iter_arguments_get(iter, "a{ss}", &dict);
 
@@ -69,33 +55,27 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
 
        if (!strcmp(key, "country"))
         {
-            address->country = value;
-            printf("Key: %s, value: %s\n", key, value);
+            address->country = strdup(value);
          }
        else if (!strcmp(key, "countrycode"))
          {
-            address->countrycode = value;
-            printf("Key: %s, value: %s\n", key, value);
+            address->countrycode = strdup(value);
          }
        else if (!strcmp(key, "locality"))
          {
-            address->locality = value;
-            printf("Key: %s, value: %s\n", key, value);
+            address->locality = strdup(value);
          }
        else if (!strcmp(key, "postalcode"))
          {
-            address->postalcode = value;
-            printf("Key: %s, value: %s\n", key, value);
+            address->postalcode = strdup(value);
          }
        else if (!strcmp(key, "region"))
          {
-            address->region = value;
-            printf("Key: %s, value: %s\n", key, value);
+            address->region = strdup(value);
          }
        else if (!strcmp(key, "timezone"))
          {
-            address->timezone = value;
-            printf("Key: %s, value: %s\n", key, value);
+            address->timezone = strdup(value);
          }
     }
 
@@ -113,7 +93,9 @@ address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 
    address = malloc(sizeof(Elocation_Address));
    address->accur = malloc(sizeof(Elocation_Accuracy));
+
    unmarshall_address(address, reply);
+   ecore_event_add(ELOCATION_EVENT_ADDRESS, address, NULL, NULL);
 }
 static void
 address_signal_cb(void *data , const EDBus_Message *reply)
@@ -189,28 +171,7 @@ position_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
    position->accur = malloc(sizeof(Elocation_Accuracy));
 
    unmarshall_position(position, reply);
-
-   printf("DBus GeoClue reply with data from timestamp %i\n", position->timestamp);
-
-   if (position->fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
-      printf("Latitude:\t %f (valid)\n", position->latitude);
-   else
-      printf("Latitude:\tinvalid.\n");
-
-   if (position->fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
-      printf("Longitude:\t %f (valid)\n", position->longitude);
-   else
-      printf("Longitude:\tinvalid.\n");
-
-   if (position->fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
-      printf("Altitude:\t %f (valid)\n", position->altitude);
-   else
-      printf("Altitude:\tinvalid.\n");
-
-   printf("Accuracy: level %i, horizontal %f and vertical %f\n", position->accur->level, position->accur->horizontal, position->accur->vertical);
-
-   free(position->accur);
-   free(position);
+   ecore_event_add(ELOCATION_EVENT_POSITION, position, NULL, NULL);
 }
 
 static void
@@ -279,9 +240,8 @@ status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 
    if (!edbus_message_arguments_get(reply,"i",  &status)) return;
 
-   master_provider.status = status;
-
-   printf("Status: %i\n", master_provider.status);
+   master_provider->status = status;
+   ecore_event_add(ELOCATION_EVENT_STATUS, &status, NULL, NULL);
 }
 
 static void
@@ -293,8 +253,95 @@ status_signal_cb(void *data , const EDBus_Message *reply)
 
    if (!edbus_message_arguments_get(reply,"i",  &status)) return;
 
+   master_provider->status = status;
    ecore_event_add(ELOCATION_EVENT_STATUS, &status, NULL, NULL);
-   master_provider.status = status;
+}
+
+EAPI Eina_Bool
+elocation_address_get(Elocation_Address *address)
+{
+   EDBus_Pending *pending;
+   EDBus_Object *obj_ubuntu;
+   EDBus_Proxy *manager_address;
+
+   obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
+   if (!obj_ubuntu)
+     {
+        fprintf(stderr, "Error: could not get object\n");
+        return EXIT_FAILURE;
+     }
+
+   manager_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
+   if (!manager_address)
+     {
+        fprintf(stderr, "Error: could not get proxy\n");
+        return EXIT_FAILURE;
+     }
+
+   pending = edbus_proxy_call(manager_address, "GetAddress", address_cb, NULL, -1, "");
+   if (!pending)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
+}
+
+EAPI Eina_Bool
+elocation_position_get(Elocation_Position *position)
+{
+   EDBus_Pending *pending;
+   EDBus_Object *obj_ubuntu;
+   EDBus_Proxy *manager_position;
+
+   obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
+   if (!obj_ubuntu)
+     {
+        fprintf(stderr, "Error: could not get object\n");
+        return EXIT_FAILURE;
+     }
+
+   manager_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
+   if (!manager_position)
+     {
+        fprintf(stderr, "Error: could not get proxy\n");
+        return EXIT_FAILURE;
+     }
+
+   pending = edbus_proxy_call(manager_position, "GetPosition", position_cb, NULL, -1, "");
+   if (!pending)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
+}
+
+EAPI Eina_Bool
+elocation_status_get(int *status)
+{
+   EDBus_Pending *pending;
+   EDBus_Object *obj_geoclue;
+   EDBus_Proxy *manager_geoclue;
+
+   obj_geoclue = edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
+   if (!obj_geoclue)
+     {
+        fprintf(stderr, "Error: could not get object\n");
+        return EXIT_FAILURE;
+     }
+
+   manager_geoclue = edbus_proxy_get(obj_geoclue, GEOCLUE_IFACE);
+   if (!manager_geoclue)
+     {
+        fprintf(stderr, "Error: could not get proxy\n");
+        return EXIT_FAILURE;
+     }
+
+   pending = edbus_proxy_call(manager_geoclue, "GetStatus", status_cb, NULL, -1, "");
+   if (!pending)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
 }
 
 EAPI Eina_Bool
@@ -303,7 +350,7 @@ elocation_init()
    EDBus_Message *msg;
    EDBus_Object *obj_ubuntu, *obj_geoclue;
    EDBus_Proxy *manager_geoclue, *manager_ubuntu, *manager_client, *manager_address, *manager_position;
-   EDBus_Pending *pending, *pending2, *pending3;
+   EDBus_Pending *pending, *pending2;
 
    conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (!conn)
@@ -338,13 +385,6 @@ elocation_init()
    if (!obj_geoclue)
      {
         fprintf(stderr, "Error: could not get object\n");
-        return EXIT_FAILURE;
-     }
-
-   manager_geoclue = edbus_proxy_get(obj_geoclue, GEOCLUE_IFACE);
-   if (!manager_geoclue)
-     {
-        fprintf(stderr, "Error: could not get proxy\n");
         return EXIT_FAILURE;
      }
 
@@ -383,21 +423,7 @@ elocation_init()
         return EXIT_FAILURE;
      }
 
-   pending2 = edbus_proxy_call(manager_geoclue, "GetStatus", status_cb, NULL, -1, "");
-   if (!pending2)
-     {
-        fprintf(stderr, "Error: could not call\n");
-        return EXIT_FAILURE;
-     }
-
-   pending = edbus_proxy_call(manager_ubuntu, "GetProviderInfo", provider_info_cb, NULL, -1, "");
-   if (!pending)
-     {
-        fprintf(stderr, "Error: could not call\n");
-        return EXIT_FAILURE;
-     }
-
-   pending2 = edbus_proxy_call(manager_address, "GetAddress", address_cb, NULL, -1, "");
+   pending2 = edbus_proxy_call(manager_ubuntu, "GetProviderInfo", provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
         fprintf(stderr, "Error: could not call\n");
@@ -405,15 +431,8 @@ elocation_init()
      }
 
    cb_address_changed = edbus_proxy_signal_handler_add(manager_address, "GetAddress", address_signal_cb, NULL);
-
-   pending3 = edbus_proxy_call(manager_position, "GetPosition", position_cb, NULL, -1, "");
-   if (!pending3)
-     {
-        fprintf(stderr, "Error: could not call\n");
-        return EXIT_FAILURE;
-     }
-
    cb_position_changed = edbus_proxy_signal_handler_add(manager_position, "GetPosition", position_signal_cb, NULL);
+
    edbus_name_owner_changed_callback_add(conn, GEOCLUE_DBUS_NAME, _name_owner_changed,
                                          NULL, EINA_TRUE);
 
