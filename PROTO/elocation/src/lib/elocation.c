@@ -15,6 +15,12 @@ static Elocation_Provider *master_provider;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 
+EAPI int ELOCATION_EVENT_IN;
+EAPI int ELOCATION_EVENT_OUT;
+EAPI int ELOCATION_EVENT_STATUS;
+EAPI int ELOCATION_EVENT_POSITION;
+EAPI int ELOCATION_EVENT_ADDRESS;
+
 static void
 provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
