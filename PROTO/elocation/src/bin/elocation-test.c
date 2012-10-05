@@ -22,8 +22,9 @@
 static Eina_Bool
 status_changed(void *data, int ev_type, void *event)
 {
-   unsigned int status = (unsigned int)&event;
-   printf("Status changed to: %i\n", status);
+   int *status = event;
+
+   printf("Status changed to: %i\n", *status);
    return ECORE_CALLBACK_DONE;
 }
 
@@ -69,7 +70,6 @@ position_changed(void *data, int ev_type, void *event)
    else
       printf("Altitude:\tinvalid.\n");
 
-   printf("Accuracy: level %i, horizontal %f and vertical %f\n", position->accur->level, position->accur->horizontal, position->accur->vertical);
    printf("Accuracy level: %i\n", position->accur->level);
    printf("Accuracy horizemtal: %f\n", position->accur->horizontal);
    printf("Accuracy vertical: %f\n", position->accur->vertical);

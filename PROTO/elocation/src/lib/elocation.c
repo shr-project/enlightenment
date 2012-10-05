@@ -10,8 +10,8 @@
 #include <elocation_private.h>
 
 static char *unique_name = NULL;
-static EDBus_Connection *conn = NULL;;
-static Elocation_Provider *master_provider;
+static EDBus_Connection *conn = NULL;
+static Elocation_Provider *master_provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 
@@ -209,8 +209,15 @@ static void
 create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
    const char *object_path;
+   const char *signature;
 
-   if (edbus_message_signature_get(reply) != "o") return;
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "o"))
+     {
+        fprintf(stderr, "Error: create callback message did not match signature\n");
+        return;
+     }
+
    if (!edbus_message_arguments_get(reply, "o", &object_path)) return;
 
    printf("Object path for client: %s\n", object_path);
@@ -240,27 +247,47 @@ _name_owner_changed(void *data , const char *bus, const char *old, const char *n
 static void
 status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 {
-   int32_t status;
+   int *status;
+   const char *signature;
 
-   if (edbus_message_signature_get(reply) != "i") return;
+   /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
+   status = malloc(sizeof(*status));
 
-   if (!edbus_message_arguments_get(reply,"i",  &status)) return;
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "i"))
+     {
+        fprintf(stderr, "Error: status callback message did not match signature\n");
+        return;
+     }
 
-   master_provider->status = status;
-   ecore_event_add(ELOCATION_EVENT_STATUS, &status, NULL, NULL);
+   if (!edbus_message_arguments_get(reply,"i",  status)) return;
+
+   //printf("Signature %s, status %i\n", signature, *status);
+
+   //master_provider->status = status;
+   ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
 static void
 status_signal_cb(void *data , const EDBus_Message *reply)
 {
-   int32_t status;
+   int *status;
+   const char *signature;
 
-   if (edbus_message_signature_get(reply) != "i") return;
+   /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
+   status = malloc(sizeof(*status));
 
-   if (!edbus_message_arguments_get(reply,"i",  &status)) return;
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "i"))
+     {
+        fprintf(stderr, "Error: status signal callback message did not match signature\n");
+        return;
+     }
 
-   master_provider->status = status;
-   ecore_event_add(ELOCATION_EVENT_STATUS, &status, NULL, NULL);
+   if (!edbus_message_arguments_get(reply,"i",  status)) return;
+
+   //master_provider->status = status;
+   ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
 EAPI Eina_Bool
@@ -325,17 +352,17 @@ EAPI Eina_Bool
 elocation_status_get(int *status)
 {
    EDBus_Pending *pending;
-   EDBus_Object *obj_geoclue;
+   EDBus_Object *obj_ubuntu;
    EDBus_Proxy *manager_geoclue;
 
-   obj_geoclue = edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
-   if (!obj_geoclue)
+   obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
+   if (!obj_ubuntu)
      {
         fprintf(stderr, "Error: could not get object\n");
         return EXIT_FAILURE;
      }
 
-   manager_geoclue = edbus_proxy_get(obj_geoclue, GEOCLUE_IFACE);
+   manager_geoclue = edbus_proxy_get(obj_ubuntu, GEOCLUE_IFACE);
    if (!manager_geoclue)
      {
         fprintf(stderr, "Error: could not get proxy\n");
@@ -400,14 +427,14 @@ elocation_init()
         fprintf(stderr, "Error: could not get proxy\n");
         return EXIT_FAILURE;
      }
-
+#if 0
    manager_client = edbus_proxy_get(obj_geoclue, GEOCLUE_DBUS_NAME);
    if (!manager_client)
      {
         fprintf(stderr, "Error: could not get proxy\n");
         return EXIT_FAILURE;
      }
-
+#endif
    manager_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
    if (!manager_address)
      {
@@ -421,14 +448,14 @@ elocation_init()
         fprintf(stderr, "Error: could not get proxy\n");
         return EXIT_FAILURE;
      }
-
+#if 0
    pending = edbus_proxy_call(manager_client, "Create", create_cb, NULL, -1, "");
    if (!pending)
      {
         fprintf(stderr, "Error: could not call\n");
         return EXIT_FAILURE;
      }
-
+#endif
    pending2 = edbus_proxy_call(manager_ubuntu, "GetProviderInfo", provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
