@@ -68,6 +68,7 @@ _azy_events_valid_response(Azy_Net *net,
       default:
         return 0;
      }
+   start++, len--;
 
    while ((len > 1) && (start[0] == ' '))
      start++; len--;
