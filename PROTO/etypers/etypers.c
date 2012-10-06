@@ -34,6 +34,10 @@
 typedef struct _Enemy Enemy;
 typedef struct _AppData AppData;
 
+static void _pause(AppData *appdata);
+static void _resume(AppData *appdata);
+static void _popup(AppData *appdata);
+
 struct _AppData
 {
    Eina_Inlist *enemies;
@@ -71,6 +75,19 @@ static unsigned long
 _enemy_score_get(Enemy* enemy)
 {
    return strlen(elm_object_text_get(enemy->entry)) * 10;
+}
+
+static void
+_remove_all_enemies(AppData *appdata)
+{
+   while (appdata->enemies)
+     {
+        Enemy *enemy = EINA_INLIST_CONTAINER_GET(appdata->enemies,
+                                                 Enemy);
+        evas_object_del(enemy->entry);
+        appdata->enemies = eina_inlist_remove(appdata->enemies,
+                                              appdata->enemies);
+     }
 }
 
 static Enemy *
@@ -174,14 +191,15 @@ _update_gui(AppData *appdata)
    elm_object_part_text_set(appdata->ly, "level_value", buf);
 
    //Score
-   snprintf(buf, sizeof(buf), "%ld", ((unsigned long) (appdata->level * 1000)) +
-            appdata->score);
+   snprintf(buf, sizeof(buf), "%ld",
+            ((unsigned long) ((appdata->level - 1) * 1000)) + appdata->score);
    elm_object_part_text_set(appdata->ly, "score_value", buf);
 }
 
 static Eina_Bool
 _animator_cb(void *data)
 {
+//FIXME: Sometimes this func is called abnormally. Need to check.
    AppData *appdata = data;
    double current_time = ecore_time_get();
    double elapsed_time = current_time - appdata->interval_time;
@@ -221,26 +239,27 @@ _animator_cb(void *data)
    return ECORE_CALLBACK_RENEW;
 }
 
-//Release here all the allocated resources
 static void
-_win_del(void *data, Evas_Object *obj, void *event_info)
+_app_release(AppData *appdata)
 {
-   AppData *appdata = data;
-
    ecore_animator_del(appdata->animator);
 
-   //Remove all the enemies 
-   while (appdata->enemies)
-     appdata->enemies = eina_inlist_remove(appdata->enemies,
-                                           appdata->enemies);
+   _remove_all_enemies(appdata);
+
    //Remove all words allocated
-   while (appdata->words_array)
+   while (eina_array_count(appdata->words_array))
      free(eina_array_pop(appdata->words_array));
    eina_array_free(appdata->words_array);
 
    free(appdata);
 
    elm_exit();
+}
+
+static void
+_win_del(void *data, Evas_Object *obj, void *event_info)
+{
+   _app_release(data);
 }
 
 static void
@@ -362,28 +381,51 @@ _changed_user_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_pause_or_resume(AppData *appdata)
+_game_level_cb(void *data, Evas_Object *obj, void *event_info)
 {
-   appdata->paused = !appdata->paused;
+   AppData *appdata = evas_object_data_get(obj, "appdata");
+   evas_object_del(obj);
+   appdata->level = (int) data;
+   appdata->paused = EINA_FALSE;
+   appdata->score = 0;
+   elm_object_text_set(appdata->entry, "");
+   _remove_all_enemies(appdata);
+   _resume(appdata);
+}
 
-   if (appdata->paused)
-     {
-        elm_object_disabled_set(appdata->entry, EINA_TRUE);
-        ecore_animator_freeze(appdata->animator);
-     }
-   else
-     {
-        elm_object_disabled_set(appdata->entry, EINA_FALSE);
-        elm_object_focus_set(appdata->entry, EINA_TRUE);
-        appdata->last_frame_time = ecore_time_get();
-        ecore_animator_thaw(appdata->animator);
-     }
+static void
+_back_to_menu_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   AppData *appdata = evas_object_data_get(obj, "appdata");
+   evas_object_del(obj);
+   _pause(appdata);
+   _popup(appdata);
 }
 
 static void
 _game_start_cb(void *data, Evas_Object *obj, void *event_info)
 {
-
+   AppData *appdata = data;
+   evas_object_del(appdata->popup);
+   appdata->popup = NULL;
+   Evas_Object *popup = elm_popup_add(appdata->win);
+   elm_object_style_set(popup, "etypers");
+   evas_object_data_set(popup, "appdata", data);
+   elm_object_part_text_set(popup, "title,text", "Start Level");
+   elm_popup_item_append(popup, "Level 1", NULL, _game_level_cb, (void *) 1);
+   elm_popup_item_append(popup, "Level 2", NULL, _game_level_cb, (void *) 2);
+   elm_popup_item_append(popup, "Level 3", NULL, _game_level_cb, (void *) 3);
+   elm_popup_item_append(popup, "Level 4", NULL, _game_level_cb, (void *) 4);
+   elm_popup_item_append(popup, "Level 5", NULL, _game_level_cb, (void *) 5);
+   elm_popup_item_append(popup, "Level 6", NULL, _game_level_cb, (void *) 6);
+   elm_popup_item_append(popup, "Level 7", NULL, _game_level_cb, (void *) 7);
+   elm_popup_item_append(popup, "Level 8", NULL, _game_level_cb, (void *) 8);
+   elm_popup_item_append(popup, "Level 9", NULL, _game_level_cb, (void *) 9);
+   elm_popup_item_append(popup, "Back", NULL, _back_to_menu_cb,
+                         (void *) appdata);
+   //FIXME: It doesn't work
+   elm_object_scroll_hold_push(popup);
+   evas_object_show(popup);
 }
 
 static void
@@ -395,25 +437,31 @@ _top_ranking_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 _game_exit_cb(void *data, Evas_Object *obj, void *event_info)
 {
+   _app_release(data);
+}
 
+static void
+_credit_cb(void *data, Evas_Object *obj, void *event_info)
+{
 }
 
 static Evas_Object *
-_popup_create(Evas_Object *parent)
+_popup_create(Evas_Object *parent, AppData *appdata)
 {
-   //FIXME: Item width is wierd.
    Evas_Object *popup = elm_popup_add(parent);
-   //evas_object_size_hint_weight_set(popup, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-   //evas_object_size_hint_align_set(popup, EVAS_HINT_FILL, EVAS_HINT_FILL);
-   elm_object_part_text_set(popup, "title,text", "Game Menu");
+   elm_object_style_set(popup, "etypers");
+   elm_object_part_text_set(popup, "title,text", "E-Typers Menu");
+   elm_popup_item_append(popup, "Start", NULL, _game_start_cb,
+                              appdata);
    Elm_Object_Item *it;
-   it = elm_popup_item_append(popup, "Game Start", NULL, _game_start_cb, NULL);
+   it = elm_popup_item_append(popup, "Ranking", NULL, _top_ranking_cb, NULL);
    elm_object_item_disabled_set(it, EINA_TRUE);
-   it = elm_popup_item_append(popup, "Top Ranking", NULL, _top_ranking_cb, NULL);
-   elm_object_item_disabled_set(it, EINA_TRUE);
-   it = elm_popup_item_append(popup, "Game Exit", NULL, _game_exit_cb, NULL);
+   it = elm_popup_item_append(popup, "Credit", NULL, _credit_cb, NULL);
    elm_object_item_disabled_set(it, EINA_TRUE);
 
+   elm_popup_item_append(popup, "Exit", NULL, _game_exit_cb, appdata);
+   //FIXME: It doesn't work
+   elm_object_scroll_hold_push(popup);
    evas_object_show(popup);
    return popup;
 }
@@ -423,7 +471,7 @@ _popup(AppData *appdata)
 {
    if (appdata->paused)
      {
-        Evas_Object *popup = _popup_create(appdata->win);
+        Evas_Object *popup = _popup_create(appdata->win, appdata);
         appdata->popup = popup;
      }
    else
@@ -431,6 +479,35 @@ _popup(AppData *appdata)
         evas_object_del(appdata->popup);
         appdata->popup = NULL;
      }
+}
+
+static void
+_pause(AppData *appdata)
+{
+   elm_object_disabled_set(appdata->entry, EINA_TRUE);
+   ecore_animator_freeze(appdata->animator);
+}
+
+static void
+_resume(AppData *appdata)
+{
+   elm_object_disabled_set(appdata->entry, EINA_FALSE);
+   elm_object_focus_set(appdata->entry, EINA_TRUE);
+   appdata->last_frame_time = ecore_time_get();
+   ecore_animator_thaw(appdata->animator);
+}
+
+static void
+_pause_or_resume(AppData *appdata)
+{
+   appdata->paused = !appdata->paused;
+
+   if (appdata->paused)
+     _pause(appdata);
+   else
+     _resume(appdata);
+
+   _popup(appdata);
 }
 
 static Eina_Bool
@@ -448,10 +525,8 @@ _key_down_cb(void *data, int type, void *event_info)
      }
    //Pause/Resume
    else if (!strcmp(event->keyname, "Escape"))
-     {
-        _pause_or_resume(appdata);
-        _popup(appdata);
-     }
+     _pause_or_resume(appdata);
+
    return ECORE_CALLBACK_PASS_ON;
 }
 
@@ -464,7 +539,6 @@ _entry_create(Evas_Object *ly, const char *part, AppData *appdata)
    elm_entry_input_panel_enabled_set(entry, EINA_FALSE);
    evas_object_show(entry);
    elm_object_part_content_set(ly, part, entry);
-   elm_object_focus_set(entry, EINA_TRUE);
    evas_object_smart_callback_add(entry, "changed,user",  _changed_user_cb,
                                   appdata);
    return entry;
@@ -473,7 +547,8 @@ _entry_create(Evas_Object *ly, const char *part, AppData *appdata)
 static Evas_Object *
 _win_create(int w, int h, AppData *appdata)
 {
-   Evas_Object *win = elm_win_util_standard_add("eTypers", "eTypers v1.0");
+   Evas_Object *win = elm_win_util_standard_add("Enlightenment Typers",
+                                                "Enlightenment Typers v1.0");
    elm_win_autodel_set(win, EINA_TRUE);
    evas_object_smart_callback_add(win, "delete,request", _win_del, NULL);
    evas_object_resize(win, w, h);
@@ -511,15 +586,13 @@ _app_init(AppData *appdata)
    appdata->ly = _layout_create(appdata->win, "./etypers.edj", "gui");
    appdata->bx = _box_create(appdata->ly, "enemies");
    appdata->entry = _entry_create(appdata->ly, "entry", appdata);
-   appdata->level = 10;
+   appdata->level = 1;
+   appdata->paused = EINA_TRUE;
    appdata->bound_w = DEFAULT_WIN_W;
    appdata->bound_h = DEFAULT_WIN_H;
    appdata->animator = ecore_animator_add(_animator_cb, appdata);
    appdata->last_frame_time = ecore_time_get();
    appdata->interval_time = appdata->last_frame_time;
-
-   ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _key_down_cb, appdata);
-
 }
 
 int
@@ -531,8 +604,11 @@ elm_main(int argc, char **argv)
    elm_policy_set(ELM_POLICY_QUIT, ELM_POLICY_QUIT_LAST_WINDOW_CLOSED);
    elm_theme_extension_add(NULL, "./etypers.edj");
    srand((unsigned int) time(NULL));
+   ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _key_down_cb, appdata);
 
    _app_init(appdata);
+   _pause(appdata);
+   _popup(appdata);
 
    elm_run();
    elm_shutdown();
