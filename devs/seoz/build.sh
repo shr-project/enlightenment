@@ -4,12 +4,15 @@
 # trunk$ ./devs/seoz/build.sh
 ##########################################
 
-# Ubuntu 12.04 Pre-requisites.
-# build-essential automake libtool ccache zlib1g-dev libjpeg-dev libfreetype6-dev libdbus-1-dev liblua5.1-0-dev g++ libxext-dev libxrender-dev libpng12-dev libxrandr-dev libfontconfig1-dev autopoint libxcomposite-dev libxcursor-dev libxdamage-dev libxdmcp-dev libxfixes-dev libxfont-dev  libxi-dev libxinerama-dev libxss-dev libxv-dev libtiff4-dev librsvg2-dev libfribidi-dev libcurl4-openssl-dev libexif-dev libiptcdata0-dev libxml2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libudev-dev libxcb-shape0-dev libsigc++-2.0-dev byacc libsqlite3-dev python-dev imagemagick libpam0g-dev python-pyparsing
+###### Ubuntu 12.04 Pre-requisites #######
+# sudo apt-get install build-essential automake libtool ccache zlib1g-dev libjpeg-dev libfreetype6-dev libdbus-1-dev liblua5.1-0-dev g++ libxext-dev libxrender-dev libpng12-dev libxrandr-dev libfontconfig1-dev autopoint libxcomposite-dev libxcursor-dev libxdamage-dev libxdmcp-dev libxfixes-dev libxfont-dev  libxi-dev libxinerama-dev libxss-dev libxv-dev libtiff4-dev librsvg2-dev libfribidi-dev libcurl4-openssl-dev libexif-dev libiptcdata0-dev libxml2-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libudev-dev libxcb-shape0-dev libsigc++-2.0-dev byacc libsqlite3-dev python-dev imagemagick libpam0g-dev python-pyparsing
+##########################################
 
+############## Manual Build ##############
 # for enjoy : lightmediascanner http://lms.garage.maemo.org/
 # for ephysics : Bullet Physics Engine http://bulletphysics.org/wordpress/
 # for e17 connman module & econnman : http://www.kernel.org/pub/linux/network/connman/connman-1.6.tar.gz
+##########################################
 
 set -e
 #set -x
@@ -36,8 +39,11 @@ export BUILD_WITH_CMAKE="ecrire"
 PWD=`pwd`
 LOG_WARN_FILE=$PWD"/warnings.txt"
 
-rm $LOG_WARN_FILE -f
-touch $LOG_WARN_FILE
+function create_log()
+{
+	rm $LOG_WARN_FILE -f
+	touch $LOG_WARN_FILE
+}
 
 function build()
 {
@@ -158,6 +164,24 @@ function build_game_prerequisites()
 	popd
 }
 
+function efl_ctags()
+{
+	# efl ctags
+	echo ""
+	echo "=========== TAGS ============"
+	rm tags -f
+	ctags -h ".h.x.cpp.c" --exclude="*.js" --exclude="*.pxi" -R
+}
+
+function e17_restart()
+{
+	echo ""
+	echo "=========== ENLIGHTENMENT RESTART ============"
+	enlightenment_remote -restart
+}
+
+create_log
+
 build "$BUILD_BASIC1" --disable-doc
 build evas --disable-cpu-sse3 --disable-doc
 build "$BUILD_BASIC2" --disable-doc
@@ -165,19 +189,11 @@ build "$BUILD_PYTHON_BINDINGS" "--prefix=/usr/local"
 #build "$BUILD_CPP_BINDINGS"
 build "$BUILD_E_MODULES $BUILD_ETC $BUILD_EXAMPLE "
 #build "$BUILD_ETC2"
-
 build_game_prerequisites
 build "$BUILD_GAMES"
-
 build_cmake "$BUILD_WITH_CMAKE"
 build_etc
 build_themes
 
-echo ""
-echo "=========== TAGS ============"
-rm tags -f
-ctags -h ".h.x.cpp.c" --exclude="*.js" --exclude="*.pxi" -R
-
-echo ""
-echo "=========== ENLIGHTENMENT RESTART ============"
-enlightenment_remote -restart
+efl_ctags
+e17_restart
