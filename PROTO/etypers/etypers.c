@@ -30,6 +30,7 @@
 #define NEW_ENEMY_DURATION_SEC 5
 #define LEVEL_INC_WEIGHT 0.01
 #define DROP_DIST_WEIGHT 10
+#define LIFE_WALL_CNT 15
 
 typedef struct _Enemy Enemy;
 typedef struct _AppData AppData;
@@ -52,6 +53,7 @@ struct _AppData
    Evas_Object *ly;
    Evas_Object *bx;
    Evas_Object *entry;
+   Evas_Object *table;
    Evas_Object *popup;
    Ecore_Animator *animator;
    Eina_Bool paused: 1;
@@ -196,6 +198,12 @@ _update_gui(AppData *appdata)
    elm_object_part_text_set(appdata->ly, "score_value", buf);
 }
 
+static void
+_game_over(AppData *appdata)
+{
+   elm_object_signal_emit(appdata->ly, "elm,state,gameover", "etypers");
+}
+
 static Eina_Bool
 _animator_cb(void *data)
 {
@@ -219,6 +227,7 @@ _animator_cb(void *data)
           {
              _enemy_explose(appdata, enemy);
              continue;
+ //            _game_over(appdata);
           }
 
         evas_object_move(enemy->entry, (Evas_Coord) enemy->x,
@@ -394,10 +403,11 @@ _game_level_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
-_back_to_menu_cb(void *data, Evas_Object *obj, void *event_info)
+_level_back_btn_cb(void *data, Evas_Object *obj, void *event_info)
 {
-   AppData *appdata = evas_object_data_get(obj, "appdata");
-   evas_object_del(obj);
+   Evas_Object *popup = data;
+   AppData *appdata = evas_object_data_get(popup, "appdata");
+   evas_object_del(popup);
    _pause(appdata);
    _popup(appdata);
 }
@@ -412,6 +422,7 @@ _game_start_cb(void *data, Evas_Object *obj, void *event_info)
    elm_object_style_set(popup, "etypers");
    evas_object_data_set(popup, "appdata", data);
    elm_object_part_text_set(popup, "title,text", "Start Level");
+   //FIXME: Content height is not fit to the actual total item height
    elm_popup_item_append(popup, "Level 1", NULL, _game_level_cb, (void *) 1);
    elm_popup_item_append(popup, "Level 2", NULL, _game_level_cb, (void *) 2);
    elm_popup_item_append(popup, "Level 3", NULL, _game_level_cb, (void *) 3);
@@ -421,11 +432,16 @@ _game_start_cb(void *data, Evas_Object *obj, void *event_info)
    elm_popup_item_append(popup, "Level 7", NULL, _game_level_cb, (void *) 7);
    elm_popup_item_append(popup, "Level 8", NULL, _game_level_cb, (void *) 8);
    elm_popup_item_append(popup, "Level 9", NULL, _game_level_cb, (void *) 9);
-   elm_popup_item_append(popup, "Back", NULL, _back_to_menu_cb,
-                         (void *) appdata);
+
    //FIXME: It doesn't work
    elm_object_scroll_hold_push(popup);
    evas_object_show(popup);
+
+   Evas_Object *btn = elm_button_add(popup);
+   if (!btn) return;
+   elm_object_text_set(btn, "Back");
+   elm_object_part_content_set(popup, "button1", btn);
+   evas_object_smart_callback_add(btn, "clicked", _level_back_btn_cb, popup);
 }
 
 static void
@@ -441,7 +457,45 @@ _game_exit_cb(void *data, Evas_Object *obj, void *event_info)
 }
 
 static void
+_credit_back_btn_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   Evas_Object *popup = data;
+   AppData *appdata = evas_object_data_get(popup, "appdata");
+   evas_object_show(appdata->popup);
+
+   evas_object_del(popup);
+}
+
+static void
 _credit_cb(void *data, Evas_Object *obj, void *event_info)
+{
+   AppData *appdata = data;
+
+   Evas_Object *popup = elm_popup_add(appdata->win);
+   if (!popup) return;
+   elm_object_style_set(popup, "etypers");
+   elm_object_part_text_set(popup, "title,text", "Game Credits");
+   elm_object_text_set(popup,
+                       "Enlightenment Typers v1.0<br>Designed by Hermet");
+   evas_object_data_set(popup, "appdata", appdata);
+
+   Evas_Object *btn = elm_button_add(popup);
+   if (!btn)
+     {
+        evas_object_del(popup);
+        return;
+     }
+
+   elm_object_text_set(btn, "Back");
+   elm_object_part_content_set(popup, "button1", btn);
+   evas_object_smart_callback_add(btn, "clicked", _credit_back_btn_cb, popup);
+   evas_object_show(popup);
+
+   evas_object_hide(appdata->popup);
+}
+
+static void
+_option_cb(void *data, Evas_Object *obj, void *event_info)
 {
 }
 
@@ -454,10 +508,11 @@ _popup_create(Evas_Object *parent, AppData *appdata)
    elm_popup_item_append(popup, "Start", NULL, _game_start_cb,
                               appdata);
    Elm_Object_Item *it;
+   it = elm_popup_item_append(popup, "Option", NULL, _option_cb, NULL);
+   elm_object_item_disabled_set(it, EINA_TRUE);
    it = elm_popup_item_append(popup, "Ranking", NULL, _top_ranking_cb, NULL);
    elm_object_item_disabled_set(it, EINA_TRUE);
-   it = elm_popup_item_append(popup, "Credit", NULL, _credit_cb, NULL);
-   elm_object_item_disabled_set(it, EINA_TRUE);
+   it = elm_popup_item_append(popup, "Credits", NULL, _credit_cb, appdata);
 
    elm_popup_item_append(popup, "Exit", NULL, _game_exit_cb, appdata);
    //FIXME: It doesn't work
@@ -578,6 +633,43 @@ _words_create()
    return array;
 }
 
+static Evas_Object *
+_table_create(Evas_Object *ly, const char *part, AppData *appdata)
+{
+   Evas_Object *table = elm_table_add(ly);
+   if (!table) return NULL;
+   elm_table_homogeneous_set(table, EINA_TRUE);
+   elm_table_padding_set(table, 1, 1);
+   elm_object_part_content_set(ly, "life_wall", table);
+   evas_object_show(table);
+
+   return table;
+}
+
+static void
+_life_wall_set(Evas_Object *table)
+{
+   int i, j;
+   Evas *evas = evas_object_evas_get(table);
+
+   for (i = 0; i < LIFE_WALL_CNT; i++)
+     {
+        for (j = 0; j < 2; j++)
+          {
+             Evas_Object *obj = evas_object_rectangle_add(evas);
+             if (!obj) continue;
+             evas_object_color_set(obj, 100, 100, 100, 170);
+             evas_object_size_hint_align_set(obj, EVAS_HINT_FILL,
+                                             EVAS_HINT_FILL);
+             evas_object_size_hint_weight_set(obj, EVAS_HINT_EXPAND,
+                                              EVAS_HINT_EXPAND);
+             evas_object_show(obj);
+             elm_table_pack(table, obj, i, j, 1, 1);
+          }
+     }
+
+}
+
 static void
 _app_init(AppData *appdata)
 {
@@ -586,6 +678,7 @@ _app_init(AppData *appdata)
    appdata->ly = _layout_create(appdata->win, "./etypers.edj", "gui");
    appdata->bx = _box_create(appdata->ly, "enemies");
    appdata->entry = _entry_create(appdata->ly, "entry", appdata);
+   appdata->table = _table_create(appdata->ly, "table", appdata);
    appdata->level = 1;
    appdata->paused = EINA_TRUE;
    appdata->bound_w = DEFAULT_WIN_W;
@@ -607,6 +700,7 @@ elm_main(int argc, char **argv)
    ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _key_down_cb, appdata);
 
    _app_init(appdata);
+   _life_wall_set(appdata->table);
    _pause(appdata);
    _popup(appdata);
 

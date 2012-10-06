@@ -9,10 +9,10 @@ BINDIR=$(PREFIX)/bin
 
 $(BINARY): etypers.o
 	$(CC) -o $@ $< $(LIBS)
-	edje_cc -id images/bg.jpg -id ./images etypers.edc
+	edje_cc -id ./images etypers.edc
 
 edc: etypers.edc
-	edje_cc -id images/bg.jpg -id ./images etypers.edc
+	edje_cc -id ./images etypers.edc
 
 
 install: $(BINARY)

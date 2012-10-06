@@ -92,7 +92,7 @@ summer
 autumn
 mouth
 noise
-eyebrown
+eyebrow
 anatomy
 skeletone
 sword
@@ -273,7 +273,7 @@ halfling
 wrestling
 jump
 headless
-consideration
+meditation
 critics
 whisper
 werewolf
