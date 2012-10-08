@@ -56,6 +56,13 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
 
    edbus_message_iter_arguments_get(iter, "a{ss}", &dict);
 
+   address->country = NULL;
+   address->countrycode = NULL;
+   address->locality = NULL;
+   address->postalcode = NULL;
+   address->region = NULL;
+   address->timezone = NULL;
+
    while (edbus_message_iter_get_and_next(dict, 'e', &entry))
     {
        edbus_message_iter_arguments_get(entry, "ss", &key, &value);
