@@ -14,6 +14,7 @@ static EDBus_Connection *conn = NULL;
 static Elocation_Provider *master_provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
+static EDBus_Proxy *manager_ubuntu = NULL;
 
 EAPI int ELOCATION_EVENT_IN;
 EAPI int ELOCATION_EVENT_OUT;
@@ -255,6 +256,18 @@ _name_owner_changed(void *data , const char *bus, const char *old, const char *n
 }
 
 static void
+_reference_add_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
+{
+   printf("ReferenceAdd called\n");
+}
+
+static void
+_reference_del_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
+{
+   printf("ReferenceRemove called\n");
+}
+
+static void
 status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 {
    int *status;
@@ -392,8 +405,8 @@ elocation_init()
 {
    EDBus_Message *msg;
    EDBus_Object *obj_ubuntu, *obj_geoclue;
-   EDBus_Proxy *manager_geoclue, *manager_ubuntu, *manager_client, *manager_address, *manager_position;
-   EDBus_Pending *pending, *pending2;
+   EDBus_Proxy *manager_geoclue, *manager_client, *manager_address, *manager_position;
+   EDBus_Pending *pending, *pending2, *pending3;
 
    conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (!conn)
@@ -473,6 +486,15 @@ elocation_init()
         return EXIT_FAILURE;
      }
 
+   /* Geoclue might automatically shutdown a provider if it is not in use. As we use signals on this
+    * one we need to increase the reference count to keep it alive. */
+   pending3 = edbus_proxy_call(manager_ubuntu, "AddReference", _reference_add_cb, NULL, -1, "");
+   if (!pending3)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
+
    cb_address_changed = edbus_proxy_signal_handler_add(manager_address, "GetAddress", address_signal_cb, NULL);
    cb_position_changed = edbus_proxy_signal_handler_add(manager_position, "GetPosition", position_signal_cb, NULL);
 
@@ -489,6 +511,16 @@ elocation_init()
 EAPI void
 elocation_shutdown()
 {
+   EDBus_Pending *pending3;
+
+   /* To allow geoclue freeing unused providers we free our reference on it here */
+   pending3 = edbus_proxy_call(manager_ubuntu, "RemoveReference", _reference_del_cb, NULL, -1, "");
+   if (!pending3)
+     {
+        fprintf(stderr, "Error: could not call\n");
+        return EXIT_FAILURE;
+     }
+
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_signal_handler_unref(cb_address_changed);
    edbus_signal_handler_unref(cb_position_changed);
