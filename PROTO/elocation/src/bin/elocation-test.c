@@ -6,17 +6,14 @@
 
 #include <Ecore.h>
 #include <Elocation.h>
-#include <elocation_private.h>
 
 /* TODO:
    o Create a client object to operate on
    o Ask master for providers
    o Set requirements
-   o Give out ecore events on signals
    o Start (how to stop?) service to get position updates
    o How to deal with AddReference and RemoveReference?
    o Implement MasterClient interface
-   o Reply on address is inconsistent. Either all NULL or all empty
 */
 
 static Eina_Bool
@@ -55,21 +52,9 @@ position_changed(void *data, int ev_type, void *event)
 
    position = event;
    printf("GeoClue position reply with data from timestamp %i\n", position->timestamp);
-   if (position->fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
-      printf("Latitude:\t %f (valid)\n", position->latitude);
-   else
-      printf("Latitude:\tinvalid.\n");
-
-   if (position->fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
-      printf("Longitude:\t %f (valid)\n", position->longitude);
-   else
-      printf("Longitude:\tinvalid.\n");
-
-   if (position->fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
-      printf("Altitude:\t %f (valid)\n", position->altitude);
-   else
-      printf("Altitude:\tinvalid.\n");
-
+   printf("Latitude:\t %f\n", position->latitude);
+   printf("Longitude:\t %f\n", position->longitude);
+   printf("Altitude:\t %f\n", position->altitude);
    printf("Accuracy level: %i\n", position->accur->level);
    printf("Accuracy horizemtal: %f\n", position->accur->horizontal);
    printf("Accuracy vertical: %f\n", position->accur->vertical);

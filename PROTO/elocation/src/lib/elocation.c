@@ -147,22 +147,32 @@ unmarshall_position(Elocation_Position *position, const EDBus_Message *reply)
    // Possible to use a single edbus_message_iter_arguments_get(sub, "iiddd(idd)" ... here?
 
    edbus_message_iter_get_and_next(iter, 'i', &fields);
-   position->fields = fields;
-
    edbus_message_iter_get_and_next(iter, 'i', &timestamp);
-   position->timestamp = timestamp;
-
    edbus_message_iter_get_and_next(iter, 'd', &latitude);
-   position->latitude = latitude;
-
    edbus_message_iter_get_and_next(iter, 'd', &longitude);
-   position->longitude = longitude;
-
    edbus_message_iter_get_and_next(iter, 'd', &altitude);
-   position->altitude = altitude;
-
    edbus_message_iter_get_and_next(iter, 'r', &sub );
    edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
+
+   position->timestamp = timestamp;
+
+   /* GeoClue uses soem flags to mark position fields as valid. We set invalid
+    * fields to 0.0 */
+   if (fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
+      position->latitude = latitude;
+   else
+      position->latitude = 0.0;
+
+   if (fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
+      position->longitude = longitude;
+   else
+      position->longitude = 0.0;
+
+   if (fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
+      position->altitude = altitude;
+   else
+      position->altitude = 0.0;
+
    position->accur->level = level;
    position->accur->horizontal = horizontal;
    position->accur->vertical = vertical;

@@ -35,7 +35,6 @@
 
 #include <Ecore.h>
 #include <EDBus.h>
-#include <elocation_private.h>
 
 /**
  * @defgroup Location_Events Available location events
@@ -43,12 +42,42 @@
  * @since 1.8
  * @{
  */
-EAPI extern int ELOCATION_EVENT_IN;
-EAPI extern int ELOCATION_EVENT_OUT;
 EAPI extern int ELOCATION_EVENT_STATUS;
 EAPI extern int ELOCATION_EVENT_POSITION;
 EAPI extern int ELOCATION_EVENT_ADDRESS;
 /**@}*/
+
+/**
+ * @typedef Elocation_Accuracy_Level
+ * @since 1.8
+ *
+ * Different location accuraccy levels from country up to detailed,
+ * e.g. GPS, information.
+ */
+typedef enum {
+   ELOCATION_ACCURACY_LEVEL_NONE = 0,
+   ELOCATION_ACCURACY_LEVEL_COUNTRY,
+   ELOCATION_ACCURACY_LEVEL_REGION,
+   ELOCATION_ACCURACY_LEVEL_LOCALITY,
+   ELOCATION_ACCURACY_LEVEL_POSTALCODE,
+   ELOCATION_ACCURACY_LEVEL_STREET,
+   ELOCATION_ACCURACY_LEVEL_DETAILED,
+} Elocation_Accuracy_Level;
+
+/**
+ * @typedef Elocation_Resource_Flags
+ * @since 1.8
+ *
+ * Flags for available system resources to be used for locating.
+ */
+typedef enum {
+   ELOCATION_RESOURCE_NONE = 0,
+   ELOCATION_RESOURCE_NETWORK = 1 << 0,
+   ELOCATION_RESOURCE_CELL = 1 << 1,
+   ELOCATION_RESOURCE_GPS = 1 << 2,
+
+   ELOCATION_RESOURCE_ALL = (1 << 10) - 1
+} Elocation_Resource_Flags;
 
 /**
  * @typedef Elocation_Accuracy
@@ -90,7 +119,6 @@ typedef struct _Elocation_Address
  */
 typedef struct _Elocation_Postion
 {
-   GeocluePositionFields fields;
    unsigned int timestamp;
    double latitude;
    double longitude;
@@ -107,10 +135,10 @@ typedef struct _Elocation_Postion
  */
 typedef struct _Elocation_Requirements
 {
-   GeoclueAccuracyLevel accurancy_level;
+   Elocation_Accuracy_Level accurancy_level;
    int time;
    Eina_Bool require_update;
-   GeoclueResourceFlags allowed_resources;
+   Elocation_Resource_Flags allowed_resources;
 } Elocation_Requirements;
 
 /**
