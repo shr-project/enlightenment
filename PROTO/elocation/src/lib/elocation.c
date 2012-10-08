@@ -14,6 +14,7 @@ static EDBus_Connection *conn = NULL;
 static Elocation_Provider *master_provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
+static EDBus_Signal_Handler *cb_status_changed = NULL;
 static EDBus_Proxy *manager_ubuntu = NULL;
 
 EAPI int ELOCATION_EVENT_IN;
@@ -511,8 +512,7 @@ elocation_init()
    ecore_event_handler_add(ELOCATION_EVENT_IN, geoclue_start, NULL);
    ecore_event_handler_add(ELOCATION_EVENT_OUT, geoclue_stop, NULL);
 
-   edbus_signal_handler_add(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH, GEOCLUE_POSITION_IFACE, "GetStatus",
-         status_signal_cb, NULL);
+   cb_status_changed = edbus_proxy_signal_handler_add(manager_ubuntu, "GetStatus", status_signal_cb, NULL);
 }
 
 EAPI void
@@ -531,5 +531,6 @@ elocation_shutdown()
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_signal_handler_unref(cb_address_changed);
    edbus_signal_handler_unref(cb_position_changed);
+   edbus_signal_handler_unref(cb_status_changed);
    edbus_connection_unref(conn);
 }
