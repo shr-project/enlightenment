@@ -33,7 +33,7 @@ provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending
 
    if (!edbus_message_arguments_get(reply, "ss", &name, &desc)) return;
 
-   printf("Provider name: %s\n description: %s\n", name, desc);
+   printf("Provider name: %s, %s\n", name, desc);
 }
 
 static void
@@ -68,7 +68,7 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
        edbus_message_iter_arguments_get(entry, "ss", &key, &value);
 
        if (!strcmp(key, "country"))
-        {
+         {
             address->country = strdup(value);
          }
        else if (!strcmp(key, "countrycode"))
@@ -93,7 +93,7 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
          }
     }
 
-   edbus_message_iter_get_and_next(iter, 'r', &sub );
+   edbus_message_iter_get_and_next(iter, 'r', &sub);
    edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
    address->accur->level = level;
    address->accur->horizontal = horizontal;

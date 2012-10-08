@@ -39,7 +39,7 @@ address_changed(void *data, int ev_type, void *event)
    printf("Region: %s\n", address->region);
    printf("Timezone: %s\n", address->timezone);
    printf("Accuracy level: %i\n", address->accur->level);
-   printf("Accuracy horizemtal: %f\n", address->accur->horizontal);
+   printf("Accuracy horizontal: %f\n", address->accur->horizontal);
    printf("Accuracy vertical: %f\n", address->accur->vertical);
 
    return ECORE_CALLBACK_DONE;
@@ -56,7 +56,7 @@ position_changed(void *data, int ev_type, void *event)
    printf("Longitude:\t %f\n", position->longitude);
    printf("Altitude:\t %f\n", position->altitude);
    printf("Accuracy level: %i\n", position->accur->level);
-   printf("Accuracy horizemtal: %f\n", position->accur->horizontal);
+   printf("Accuracy horizontal: %f\n", position->accur->horizontal);
    printf("Accuracy vertical: %f\n", position->accur->vertical);
    return ECORE_CALLBACK_DONE;
 }
