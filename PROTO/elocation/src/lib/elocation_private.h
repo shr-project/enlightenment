@@ -7,8 +7,36 @@
 
 #include <stdio.h>
 
+#include <Eina.h>
 #include <Ecore.h>
 #include <EDBus.h>
+
+#ifndef ELOCATION_COLOR_DEFAULT
+#define ELOCATION_COLOR_DEFAULT EINA_COLOR_BLUE
+#endif
+extern int _elocation_log_dom;
+#ifdef CRI
+#undef CRI
+#endif
+
+#ifdef ERR
+#undef ERR
+#endif
+#ifdef INF
+#undef INF
+#endif
+#ifdef WARN
+#undef WARN
+#endif
+#ifdef DBG
+#undef DBG
+#endif
+
+#define CRI(...)  EINA_LOG_DOM_CRIT(_elocation_log_dom, __VA_ARGS__)
+#define DBG(...)  EINA_LOG_DOM_DBG(_elocation_log_dom, __VA_ARGS__)
+#define INF(...)  EINA_LOG_DOM_INFO(_elocation_log_dom, __VA_ARGS__)
+#define WARN(...) EINA_LOG_DOM_WARN(_elocation_log_dom, __VA_ARGS__)
+#define ERR(...)  EINA_LOG_DOM_ERR(_elocation_log_dom, __VA_ARGS__)
 
 #define GEOCLUE_OBJECT_PATH "/org/freedesktop/Geoclue/Master"
 

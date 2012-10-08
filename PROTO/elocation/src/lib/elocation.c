@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 
+#include <Eina.h>
 #include <Ecore.h>
 #include <EDBus.h>
 #include <Elocation.h>
@@ -16,6 +17,8 @@ static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
 static EDBus_Proxy *manager_ubuntu = NULL;
+
+int _elocation_log_dom = -1;
 
 EAPI int ELOCATION_EVENT_IN;
 EAPI int ELOCATION_EVENT_OUT;
@@ -34,7 +37,7 @@ provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending
 
    if (!edbus_message_arguments_get(reply, "ss", &name, &desc)) return;
 
-   printf("Provider name: %s, %s\n", name, desc);
+   DBG("Provider name: %s, %s", name, desc);
 }
 
 static void
@@ -140,14 +143,14 @@ unmarshall_position(Elocation_Position *position, const EDBus_Message *reply)
 
    if (edbus_message_error_get(reply, &err, &errmsg))
      {
-        fprintf(stderr, "Error: %s %s\n", err, errmsg);
+        ERR("Error: %s %s", err, errmsg);
         return;
      }
 
    signature = edbus_message_signature_get(reply);
    if (strcmp(signature, "iiddd(idd)"))
      {
-        fprintf(stderr, "Error: position callback message did not match signature\n");
+        ERR("Error: position callback message did not match signature");
         return;
      }
 
@@ -213,14 +216,14 @@ position_signal_cb(void *data , const EDBus_Message *reply)
 static Eina_Bool
 geoclue_start(void *data, int ev_type, void *event)
 {
-   printf("GeoClue start event at %s\n", unique_name);
+   DBG("GeoClue start event at %s", unique_name);
    return ECORE_CALLBACK_DONE;
 }
 
 static Eina_Bool
 geoclue_stop(void *data, int ev_type, void *event)
 {
-   printf("GeoClue stop event\n");
+   DBG("GeoClue stop event");
    return ECORE_CALLBACK_DONE;
 }
 
@@ -233,13 +236,13 @@ create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
    signature = edbus_message_signature_get(reply);
    if (strcmp(signature, "o"))
      {
-        fprintf(stderr, "Error: create callback message did not match signature\n");
+        ERR("Error: create callback message did not match signature");
         return;
      }
 
    if (!edbus_message_arguments_get(reply, "o", &object_path)) return;
 
-   printf("Object path for client: %s\n", object_path);
+   DBG("Object path for client: %s", object_path);
 }
 
 static void
@@ -253,26 +256,26 @@ _name_owner_changed(void *data , const char *bus, const char *old, const char *n
    else if (old[0] != '\0' && new[0] == '\0')
      {
         if (strcmp(unique_name, old) != 0)
-           printf("%s was not the known name %s, ignored.\n", old, unique_name);
+           WARN("%s was not the known name %s, ignored.", old, unique_name);
         else
            ecore_event_add(ELOCATION_EVENT_OUT, NULL, NULL, NULL);
      }
    else
      {
-        printf("unknow change from %s to %s\n", old, new);
+        DBG("unknow change from %s to %s", old, new);
      }
 }
 
 static void
 _reference_add_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 {
-   printf("ReferenceAdd called\n");
+   DBG("ReferenceAdd called");
 }
 
 static void
 _reference_del_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 {
-   printf("ReferenceRemove called\n");
+   DBG("ReferenceRemove called");
 }
 
 static void
@@ -287,7 +290,7 @@ status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
    signature = edbus_message_signature_get(reply);
    if (strcmp(signature, "i"))
      {
-        fprintf(stderr, "Error: status callback message did not match signature\n");
+        ERR("Error: status callback message did not match signature");
         return;
      }
 
@@ -311,7 +314,7 @@ status_signal_cb(void *data , const EDBus_Message *reply)
    signature = edbus_message_signature_get(reply);
    if (strcmp(signature, "i"))
      {
-        fprintf(stderr, "Error: status signal callback message did not match signature\n");
+        ERR("Error: status signal callback message did not match signature");
         return;
      }
 
@@ -331,21 +334,21 @@ elocation_address_get(Elocation_Address *address)
    obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
    if (!obj_ubuntu)
      {
-        fprintf(stderr, "Error: could not get object\n");
+        ERR("Error: could not get object");
         return EXIT_FAILURE;
      }
 
    manager_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
    if (!manager_address)
      {
-        fprintf(stderr, "Error: could not get proxy\n");
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
    pending = edbus_proxy_call(manager_address, "GetAddress", address_cb, NULL, -1, "");
    if (!pending)
      {
-        fprintf(stderr, "Error: could not call\n");
+        ERR("Error: could not call");
         return EXIT_FAILURE;
      }
 }
@@ -360,21 +363,21 @@ elocation_position_get(Elocation_Position *position)
    obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
    if (!obj_ubuntu)
      {
-        fprintf(stderr, "Error: could not get object\n");
+        ERR("Error: could not get object");
         return EXIT_FAILURE;
      }
 
    manager_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
    if (!manager_position)
      {
-        fprintf(stderr, "Error: could not get proxy\n");
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
    pending = edbus_proxy_call(manager_position, "GetPosition", position_cb, NULL, -1, "");
    if (!pending)
      {
-        fprintf(stderr, "Error: could not call\n");
+        ERR("Error: could not call");
         return EXIT_FAILURE;
      }
 }
@@ -389,21 +392,21 @@ elocation_status_get(int *status)
    obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
    if (!obj_ubuntu)
      {
-        fprintf(stderr, "Error: could not get object\n");
+        ERR("Error: could not get object");
         return EXIT_FAILURE;
      }
 
    manager_geoclue = edbus_proxy_get(obj_ubuntu, GEOCLUE_IFACE);
    if (!manager_geoclue)
      {
-        fprintf(stderr, "Error: could not get proxy\n");
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
    pending = edbus_proxy_call(manager_geoclue, "GetStatus", status_cb, NULL, -1, "");
    if (!pending)
      {
-        fprintf(stderr, "Error: could not call\n");
+        ERR("Error: could not call");
         return EXIT_FAILURE;
      }
 }
@@ -416,10 +419,20 @@ elocation_init()
    EDBus_Proxy *manager_geoclue, *manager_client, *manager_address, *manager_position;
    EDBus_Pending *pending, *pending2, *pending3;
 
+   if (!eina_init()) return EINA_FALSE;
+   if (!ecore_init()) return EINA_FALSE;
+   if (!edbus_init()) return EINA_FALSE;
+
+   _elocation_log_dom = eina_log_domain_register("elocation", EINA_COLOR_BLUE);
+   if (_elocation_log_dom < 0)
+     {
+        EINA_LOG_ERR("Could not register 'elocation' log domain.");
+     }
+
    conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (!conn)
      {
-      printf("Error: could not connect to session bus.\n");
+      ERR("Error: could not connect to session bus.");
       return EXIT_FAILURE;
      }
 
@@ -441,21 +454,21 @@ elocation_init()
    obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
    if (!obj_ubuntu)
      {
-        fprintf(stderr, "Error: could not get object\n");
+        ERR("Error: could not get object");
         return EXIT_FAILURE;
      }
 
    obj_geoclue = edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
    if (!obj_geoclue)
      {
-        fprintf(stderr, "Error: could not get object\n");
+        ERR("Error: could not get object");
         return EXIT_FAILURE;
      }
 
    manager_ubuntu = edbus_proxy_get(obj_ubuntu, GEOCLUE_IFACE);
    if (!manager_ubuntu)
      {
-        fprintf(stderr, "Error: could not get proxy\n");
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 #if 0
@@ -469,14 +482,14 @@ elocation_init()
    manager_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
    if (!manager_address)
      {
-        fprintf(stderr, "Error: could not get proxy\n");
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
    manager_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
    if (!manager_position)
      {
-        fprintf(stderr, "Error: could not get proxy\n");
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 #if 0
@@ -490,7 +503,7 @@ elocation_init()
    pending2 = edbus_proxy_call(manager_ubuntu, "GetProviderInfo", provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
-        fprintf(stderr, "Error: could not call\n");
+        ERR("Error: could not call");
         return EXIT_FAILURE;
      }
 
@@ -499,7 +512,7 @@ elocation_init()
    pending3 = edbus_proxy_call(manager_ubuntu, "AddReference", _reference_add_cb, NULL, -1, "");
    if (!pending3)
      {
-        fprintf(stderr, "Error: could not call\n");
+        ERR("Error: could not call");
         return EXIT_FAILURE;
      }
 
@@ -524,8 +537,7 @@ elocation_shutdown()
    pending3 = edbus_proxy_call(manager_ubuntu, "RemoveReference", _reference_del_cb, NULL, -1, "");
    if (!pending3)
      {
-        fprintf(stderr, "Error: could not call\n");
-        return EXIT_FAILURE;
+        ERR("Error: could not call");
      }
 
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
@@ -533,4 +545,8 @@ elocation_shutdown()
    edbus_signal_handler_unref(cb_position_changed);
    edbus_signal_handler_unref(cb_status_changed);
    edbus_connection_unref(conn);
+   edbus_shutdown();
+   ecore_shutdown();
+   eina_log_domain_unregister(_elocation_log_dom);
+   eina_shutdown();
 }
