@@ -269,13 +269,13 @@ _name_owner_changed(void *data , const char *bus, const char *old, const char *n
 static void
 _reference_add_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 {
-   DBG("ReferenceAdd called");
+   DBG("Reference added");
 }
 
 static void
 _reference_del_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 {
-   DBG("ReferenceRemove called");
+   DBG("Reference removed");
 }
 
 static void

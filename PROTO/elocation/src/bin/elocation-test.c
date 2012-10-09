@@ -12,7 +12,6 @@
    o Ask master for providers
    o Set requirements
    o Start (how to stop?) service to get position updates
-   o How to deal with AddReference and RemoveReference?
    o Implement MasterClient interface
 */
 
