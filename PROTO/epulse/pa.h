@@ -19,6 +19,19 @@
 # define __UNUSED__ __attribute__((unused))
 #endif
 
+# ifdef EINTERN
+#  undef EINTERN
+# endif
+# ifdef __GNUC__
+#  if __GNUC__ >= 4
+#   define EINTERN __attribute__ ((visibility("hidden")))
+#  else
+#   define EINTERN
+#  endif
+# else
+#  define EINTERN
+# endif
+
 #define PA_PROTOCOL_VERSION 16
 #define PA_NATIVE_COOKIE_LENGTH 256
 #ifndef PA_MACHINE_ID
@@ -28,6 +41,12 @@
 #ifndef _
 # define _(X) (X)
 #endif
+
+#undef DBG
+#undef INF
+#undef WRN
+#undef ERR
+#undef CRI
 
 #define DBG(...)            EINA_LOG_DOM_DBG(pa_log_dom, __VA_ARGS__)
 #define INF(...)            EINA_LOG_DOM_INFO(pa_log_dom, __VA_ARGS__)
