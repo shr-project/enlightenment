@@ -34,10 +34,20 @@
 
 typedef struct _Enemy Enemy;
 typedef struct _AppData AppData;
+typedef enum _GameState GameState;
 
 static void _pause(AppData *appdata);
 static void _resume(AppData *appdata);
 static void _popup(AppData *appdata);
+
+enum _GameState
+{
+   Ready,
+   Playing,
+   Paused,
+   SubPopup,
+   GameOver
+};
 
 struct _AppData
 {
@@ -55,8 +65,9 @@ struct _AppData
    Evas_Object *entry;
    Evas_Object *table;
    Evas_Object *popup;
+   GameState state;
+   GameState prev_state;
    Ecore_Animator *animator;
-   Eina_Bool paused: 1;
 };
 
 struct _Enemy
@@ -199,9 +210,23 @@ _update_gui(AppData *appdata)
 }
 
 static void
+_game_reset(AppData *appdata)
+{
+   //Reset Life Wall
+   elm_object_text_set(appdata->entry, "");
+   elm_object_part_text_set(appdata->ly, "level_value", "1");
+   elm_object_part_text_set(appdata->ly, "score_value", "0");
+
+   _remove_all_enemies(appdata);
+   elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
+}
+
+static void
 _game_over(AppData *appdata)
 {
+   ecore_animator_freeze(appdata->animator);
    elm_object_signal_emit(appdata->ly, "elm,state,gameover", "etypers");
+   appdata->state = GameOver;
 }
 
 static Eina_Bool
@@ -225,9 +250,10 @@ _animator_cb(void *data)
         //Reached to the bottom... Boom!
         if (enemy->y > appdata->bound_h)
           {
-             _enemy_explose(appdata, enemy);
-             continue;
- //            _game_over(appdata);
+             _game_over(appdata);
+             return ECORE_CALLBACK_RENEW;
+ //          _enemy_explose(appdata, enemy);
+ //          continue;
           }
 
         evas_object_move(enemy->entry, (Evas_Coord) enemy->x,
@@ -395,10 +421,11 @@ _game_level_cb(void *data, Evas_Object *obj, void *event_info)
    AppData *appdata = evas_object_data_get(obj, "appdata");
    evas_object_del(obj);
    appdata->level = (int) data;
-   appdata->paused = EINA_FALSE;
+   appdata->state = Playing;
    appdata->score = 0;
    elm_object_text_set(appdata->entry, "");
    _remove_all_enemies(appdata);
+   elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
    _resume(appdata);
 }
 
@@ -407,6 +434,7 @@ _level_back_btn_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Object *popup = data;
    AppData *appdata = evas_object_data_get(popup, "appdata");
+   appdata->state = appdata->prev_state;
    evas_object_del(popup);
    _pause(appdata);
    _popup(appdata);
@@ -418,6 +446,8 @@ _game_start_cb(void *data, Evas_Object *obj, void *event_info)
    AppData *appdata = data;
    evas_object_del(appdata->popup);
    appdata->popup = NULL;
+   appdata->prev_state = appdata->state;
+   appdata->state = SubPopup;
    Evas_Object *popup = elm_popup_add(appdata->win);
    elm_object_style_set(popup, "etypers");
    evas_object_data_set(popup, "appdata", data);
@@ -461,8 +491,8 @@ _credit_back_btn_cb(void *data, Evas_Object *obj, void *event_info)
 {
    Evas_Object *popup = data;
    AppData *appdata = evas_object_data_get(popup, "appdata");
+   appdata->state = appdata->prev_state;
    evas_object_show(appdata->popup);
-
    evas_object_del(popup);
 }
 
@@ -473,6 +503,7 @@ _credit_cb(void *data, Evas_Object *obj, void *event_info)
 
    Evas_Object *popup = elm_popup_add(appdata->win);
    if (!popup) return;
+   appdata->state = SubPopup;
    elm_object_style_set(popup, "etypers");
    elm_object_part_text_set(popup, "title,text", "Game Credits");
    elm_object_text_set(popup,
@@ -524,7 +555,7 @@ _popup_create(Evas_Object *parent, AppData *appdata)
 static void
 _popup(AppData *appdata)
 {
-   if (appdata->paused)
+   if (appdata->state != Playing)
      {
         Evas_Object *popup = _popup_create(appdata->win, appdata);
         appdata->popup = popup;
@@ -555,11 +586,14 @@ _resume(AppData *appdata)
 static void
 _pause_or_resume(AppData *appdata)
 {
-   appdata->paused = !appdata->paused;
+   if (appdata->state == Paused)
+     appdata->state = Playing;
+   else if (appdata->state == Playing)
+     appdata->state = Paused;
 
-   if (appdata->paused)
+   if (appdata->state == Paused)
      _pause(appdata);
-   else
+   else if (appdata->state == Playing)
      _resume(appdata);
 
    _popup(appdata);
@@ -570,17 +604,31 @@ _key_down_cb(void *data, int type, void *event_info)
 {
    Ecore_Event_Key *event = event_info;
    AppData *appdata = data;
+
+   if ((appdata->state == Ready) || (appdata->state == SubPopup))
+     return ECORE_CALLBACK_PASS_ON;
+
    //When input is "return" as well as "space" then it tries to kill the enemies
    //also.
    if (!strcmp(event->keyname, "Return"))
      {
-        const char *input_text = elm_object_text_get(appdata->entry);
-        if (input_text)
-          _enemies_kill(appdata, appdata->entry, input_text, EINA_FALSE);
+        if (appdata->state != GameOver)
+          {
+             const char *input_text = elm_object_text_get(appdata->entry);
+             if (input_text)
+               _enemies_kill(appdata, appdata->entry, input_text, EINA_FALSE);
+          }
      }
    //Pause/Resume
    else if (!strcmp(event->keyname, "Escape"))
-     _pause_or_resume(appdata);
+     {
+        if (appdata->state == GameOver)
+          {
+             _game_reset(appdata);
+             appdata->state = Ready;
+          }
+        _pause_or_resume(appdata);
+     }
 
    return ECORE_CALLBACK_PASS_ON;
 }
@@ -679,13 +727,11 @@ _app_init(AppData *appdata)
    appdata->bx = _box_create(appdata->ly, "enemies");
    appdata->entry = _entry_create(appdata->ly, "entry", appdata);
    appdata->table = _table_create(appdata->ly, "table", appdata);
+   appdata->state = Ready;
    appdata->level = 1;
-   appdata->paused = EINA_TRUE;
    appdata->bound_w = DEFAULT_WIN_W;
    appdata->bound_h = DEFAULT_WIN_H;
    appdata->animator = ecore_animator_add(_animator_cb, appdata);
-   appdata->last_frame_time = ecore_time_get();
-   appdata->interval_time = appdata->last_frame_time;
 }
 
 int
