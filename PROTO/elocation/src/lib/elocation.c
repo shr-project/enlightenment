@@ -12,7 +12,7 @@
 
 static char *unique_name = NULL;
 static EDBus_Connection *conn = NULL;
-static Elocation_Provider *master_provider = NULL;
+static Elocation_Provider *provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
@@ -36,8 +36,10 @@ provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending
    if (strcmp(signature, "ss")) return;
 
    if (!edbus_message_arguments_get(reply, "ss", &name, &desc)) return;
+   provider->name = strdup(name);
+   provider->description = strdup(desc);
 
-   DBG("Provider name: %s, %s", name, desc);
+   DBG("Provider name: %s, %s", provider->name, provider->description);
 }
 
 static void
@@ -296,9 +298,7 @@ status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
 
    if (!edbus_message_arguments_get(reply,"i",  status)) return;
 
-   //printf("Signature %s, status %i\n", signature, *status);
-
-   //master_provider->status = status;
+   provider->status = *status;
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
@@ -320,7 +320,7 @@ status_signal_cb(void *data , const EDBus_Message *reply)
 
    if (!edbus_message_arguments_get(reply,"i",  status)) return;
 
-   //master_provider->status = status;
+   provider->status = *status;
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
@@ -500,6 +500,8 @@ elocation_init()
         return EXIT_FAILURE;
      }
 #endif
+
+   provider = calloc(1, sizeof(Elocation_Provider));
    pending2 = edbus_proxy_call(manager_ubuntu, "GetProviderInfo", provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
@@ -540,6 +542,7 @@ elocation_shutdown()
         ERR("Error: could not call");
      }
 
+   free(provider);
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_signal_handler_unref(cb_address_changed);
    edbus_signal_handler_unref(cb_position_changed);
