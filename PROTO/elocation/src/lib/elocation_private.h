@@ -38,18 +38,11 @@ extern int _elocation_log_dom;
 #define WARN(...) EINA_LOG_DOM_WARN(_elocation_log_dom, __VA_ARGS__)
 #define ERR(...)  EINA_LOG_DOM_ERR(_elocation_log_dom, __VA_ARGS__)
 
-#define GEOCLUE_OBJECT_PATH "/org/freedesktop/Geoclue/Master"
-
+/* Provider bus names and object paths. Master is the generic one which should
+ * pick up the best one internally based on given requirements. It is also still
+ * possible to use providers directly */
 #define GEOCLUE_DBUS_NAME "org.freedesktop.Geoclue.Master"
-#define GEOCLE_MASTER_IFACE DEOCLUE_DBUS_NAME
-#define GEOCLUE_MASTERCLIENT_IFACE "org.freedesktop.Geoclue.MasterClient"
-#define GEOCLUE_IFACE "org.freedesktop.Geoclue"
-#define GEOCLUE_POSITION_IFACE "org.freedesktop.Geoclue.Position"
-#define GEOCLUE_ADDRESS_IFACE "org.freedesktop.Geoclue.Address"
-#define GEOCLUE_VELOCITY_IFACE "org.freedesktop.Geoclue.Velocity"
-#define GEOCLUE_GEOCODE_IFACE "org.freedesktop.Geoclue.Geocode"
-#define GEOCLUE_REVERSEGEOCODE_IFACE "org.freedesktop.Geoclue.ReverseGeocode"
-
+#define GEOCLUE_OBJECT_PATH "/org/freedesktop/Geoclue/Master"
 #define GSMLOC_DBUS_NAME "org.freedesktop.Geoclue.Providers.Gsmloc"
 #define GSMLOC_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/Gsmloc"
 #define HOSTIP_DBUS_NAME "org.freedesktop.Geoclue.Providers.Hostip"
@@ -58,6 +51,18 @@ extern int _elocation_log_dom;
 #define SKYHOOK_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/Skyhook"
 #define UBUNTU_DBUS_NAME "org.freedesktop.Geoclue.Providers.UbuntuGeoIP"
 #define UBUNTU_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/UbuntuGeoIP"
+
+/* Master interfaces to control geoclue */
+#define GEOCLUE_MASTER_IFACE "org.freedesktop.Geoclue.Master"
+#define GEOCLUE_MASTERCLIENT_IFACE "org.freedesktop.Geoclue.MasterClient"
+
+/* Provider interfaces to access location data*/
+#define GEOCLUE_GEOCLUE_IFACE "org.freedesktop.Geoclue"
+#define GEOCLUE_POSITION_IFACE "org.freedesktop.Geoclue.Position"
+#define GEOCLUE_ADDRESS_IFACE "org.freedesktop.Geoclue.Address"
+#define GEOCLUE_VELOCITY_IFACE "org.freedesktop.Geoclue.Velocity"
+#define GEOCLUE_GEOCODE_IFACE "org.freedesktop.Geoclue.Geocode"
+#define GEOCLUE_REVERSEGEOCODE_IFACE "org.freedesktop.Geoclue.ReverseGeocode"
 
 #define GEOCLUE_ADDRESS_KEY_AREA "area"
 #define GEOCLUE_ADDRESS_KEY_COUNTRY "country"

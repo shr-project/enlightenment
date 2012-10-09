@@ -16,7 +16,7 @@ static Elocation_Provider *provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
-static EDBus_Proxy *manager_ubuntu = NULL;
+static EDBus_Proxy *ubuntu_geoclue = NULL;
 
 int _elocation_log_dom = -1;
 
@@ -329,7 +329,7 @@ elocation_address_get(Elocation_Address *address)
 {
    EDBus_Pending *pending;
    EDBus_Object *obj_ubuntu;
-   EDBus_Proxy *manager_address;
+   EDBus_Proxy *ubuntu_address;
 
    obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
    if (!obj_ubuntu)
@@ -338,14 +338,14 @@ elocation_address_get(Elocation_Address *address)
         return EXIT_FAILURE;
      }
 
-   manager_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
-   if (!manager_address)
+   ubuntu_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
+   if (!ubuntu_address)
      {
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
-   pending = edbus_proxy_call(manager_address, "GetAddress", address_cb, NULL, -1, "");
+   pending = edbus_proxy_call(ubuntu_address, "GetAddress", address_cb, NULL, -1, "");
    if (!pending)
      {
         ERR("Error: could not call");
@@ -358,7 +358,7 @@ elocation_position_get(Elocation_Position *position)
 {
    EDBus_Pending *pending;
    EDBus_Object *obj_ubuntu;
-   EDBus_Proxy *manager_position;
+   EDBus_Proxy *ubuntu_position;
 
    obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
    if (!obj_ubuntu)
@@ -367,14 +367,14 @@ elocation_position_get(Elocation_Position *position)
         return EXIT_FAILURE;
      }
 
-   manager_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
-   if (!manager_position)
+   ubuntu_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
+   if (!ubuntu_position)
      {
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
-   pending = edbus_proxy_call(manager_position, "GetPosition", position_cb, NULL, -1, "");
+   pending = edbus_proxy_call(ubuntu_position, "GetPosition", position_cb, NULL, -1, "");
    if (!pending)
      {
         ERR("Error: could not call");
@@ -387,7 +387,7 @@ elocation_status_get(int *status)
 {
    EDBus_Pending *pending;
    EDBus_Object *obj_ubuntu;
-   EDBus_Proxy *manager_geoclue;
+   EDBus_Proxy *ubuntu_geoclue;
 
    obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
    if (!obj_ubuntu)
@@ -396,14 +396,14 @@ elocation_status_get(int *status)
         return EXIT_FAILURE;
      }
 
-   manager_geoclue = edbus_proxy_get(obj_ubuntu, GEOCLUE_IFACE);
-   if (!manager_geoclue)
+   ubuntu_geoclue = edbus_proxy_get(obj_ubuntu, GEOCLUE_GEOCLUE_IFACE);
+   if (!ubuntu_geoclue)
      {
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
-   pending = edbus_proxy_call(manager_geoclue, "GetStatus", status_cb, NULL, -1, "");
+   pending = edbus_proxy_call(ubuntu_geoclue, "GetStatus", status_cb, NULL, -1, "");
    if (!pending)
      {
         ERR("Error: could not call");
@@ -415,8 +415,8 @@ EAPI Eina_Bool
 elocation_init()
 {
    EDBus_Message *msg;
-   EDBus_Object *obj_ubuntu, *obj_geoclue;
-   EDBus_Proxy *manager_geoclue, *manager_client, *manager_address, *manager_position;
+   EDBus_Object *obj_ubuntu, *obj_master;
+   EDBus_Proxy *manager_master, *ubuntu_address, *ubuntu_position;
    EDBus_Pending *pending, *pending2, *pending3;
 
    if (!eina_init()) return EINA_FALSE;
@@ -458,42 +458,42 @@ elocation_init()
         return EXIT_FAILURE;
      }
 
-   obj_geoclue = edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
-   if (!obj_geoclue)
+   obj_master= edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
+   if (!obj_master)
      {
         ERR("Error: could not get object");
         return EXIT_FAILURE;
      }
 
-   manager_ubuntu = edbus_proxy_get(obj_ubuntu, GEOCLUE_IFACE);
-   if (!manager_ubuntu)
+   ubuntu_geoclue = edbus_proxy_get(obj_ubuntu, GEOCLUE_GEOCLUE_IFACE);
+   if (!ubuntu_geoclue)
      {
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 #if 0
-   manager_client = edbus_proxy_get(obj_geoclue, GEOCLUE_DBUS_NAME);
-   if (!manager_client)
+   manager_master = edbus_proxy_get(obj_master, GEOCLUE_MASTER_IFACE);
+   if (!manager_master)
      {
         fprintf(stderr, "Error: could not get proxy\n");
         return EXIT_FAILURE;
      }
 #endif
-   manager_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
-   if (!manager_address)
+   ubuntu_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
+   if (!ubuntu_address)
      {
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 
-   manager_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
-   if (!manager_position)
+   ubuntu_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
+   if (!ubuntu_position)
      {
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 #if 0
-   pending = edbus_proxy_call(manager_client, "Create", create_cb, NULL, -1, "");
+   pending = edbus_proxy_call(manager_master, "Create", create_cb, NULL, -1, "");
    if (!pending)
      {
         fprintf(stderr, "Error: could not call\n");
@@ -502,7 +502,7 @@ elocation_init()
 #endif
 
    provider = calloc(1, sizeof(Elocation_Provider));
-   pending2 = edbus_proxy_call(manager_ubuntu, "GetProviderInfo", provider_info_cb, NULL, -1, "");
+   pending2 = edbus_proxy_call(ubuntu_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
         ERR("Error: could not call");
@@ -511,15 +511,15 @@ elocation_init()
 
    /* Geoclue might automatically shutdown a provider if it is not in use. As we use signals on this
     * one we need to increase the reference count to keep it alive. */
-   pending3 = edbus_proxy_call(manager_ubuntu, "AddReference", _reference_add_cb, NULL, -1, "");
+   pending3 = edbus_proxy_call(ubuntu_geoclue, "AddReference", _reference_add_cb, NULL, -1, "");
    if (!pending3)
      {
         ERR("Error: could not call");
         return EXIT_FAILURE;
      }
 
-   cb_address_changed = edbus_proxy_signal_handler_add(manager_address, "GetAddress", address_signal_cb, NULL);
-   cb_position_changed = edbus_proxy_signal_handler_add(manager_position, "GetPosition", position_signal_cb, NULL);
+   cb_address_changed = edbus_proxy_signal_handler_add(ubuntu_address, "GetAddress", address_signal_cb, NULL);
+   cb_position_changed = edbus_proxy_signal_handler_add(ubuntu_position, "GetPosition", position_signal_cb, NULL);
 
    edbus_name_owner_changed_callback_add(conn, GEOCLUE_DBUS_NAME, _name_owner_changed,
                                          NULL, EINA_TRUE);
@@ -527,7 +527,7 @@ elocation_init()
    ecore_event_handler_add(ELOCATION_EVENT_IN, geoclue_start, NULL);
    ecore_event_handler_add(ELOCATION_EVENT_OUT, geoclue_stop, NULL);
 
-   cb_status_changed = edbus_proxy_signal_handler_add(manager_ubuntu, "GetStatus", status_signal_cb, NULL);
+   cb_status_changed = edbus_proxy_signal_handler_add(ubuntu_geoclue, "GetStatus", status_signal_cb, NULL);
 }
 
 EAPI void
@@ -536,7 +536,7 @@ elocation_shutdown()
    EDBus_Pending *pending3;
 
    /* To allow geoclue freeing unused providers we free our reference on it here */
-   pending3 = edbus_proxy_call(manager_ubuntu, "RemoveReference", _reference_del_cb, NULL, -1, "");
+   pending3 = edbus_proxy_call(ubuntu_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, "");
    if (!pending3)
      {
         ERR("Error: could not call");
