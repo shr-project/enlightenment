@@ -2,18 +2,21 @@
 
 set -e
 
-PACKAGE_LIBS="eina eet evas ecore embryo edje efreet e_dbus evas_generic_loaders"
-PACKAGE_AUXLIBS="eio eeze emotion PROTO/epdf ethumb PROTO/libeweather elementary"
-PACKAGE_SOFTS="e PROTO/elsa espionnage PROTO/ekbd"
-PACKAGE_E_MODULES="E-MODULE-EXTRA/e-tilling"
+PACKAGE_LIBS="eina eet PROTO/eobj evas ecore embryo edje efreet e_dbus evas_generic_loaders"
+PACKAGE_AUXLIBS="eio eeze emotion PROTO/epdf ethumb PROTO/libeweather elementary PROTO/elev8"
+PACKAGE_SOFTS="e PROTO/entrance espionnage PROTO/ekbd terminology PROTO/eyesight"
+PACKAGE_E_MODULES=""
 PACKAGE_TESTS="expedite"
 PACKAGE_TO_COMPIL="$PACKAGE_LIBS $PACKAGE_AUXLIBS $PACKAGE_SOFTS $PACKAGE_TESTS $PACKAGE_E_MODULES"
 MAKE_OPTS="-j3"
+EXTRA_CONFIG_OPTS="--disable-doc --disable-install-examples --disable-cpu-sse3"
 MAKECMD="make"
 SVNUP="svn up"
 MY_USER="yoz"
 CFLAGS="-W -Wall -Wmissing-declarations -Wshadow -Wmissing-declarations"
 LOG_FILE="> /dev/null"
+MY_PREFIX="/usr"
+MY_CONFDIR="/etc"
 #LOG_FILE=""
 
 #les couleurs utiliser dans le script
@@ -42,6 +45,7 @@ package_maintainerclean() {
    for i in $@
    do
       echo -n " $i"
+      #su $MY_USER -c "$MAKECMD clean $MAKE_OPTS -C $i $LOG_FILE"
       $MAKECMD maintainer-clean -C $i > /dev/null || echo "Nothing to done !"
    done
    echo
@@ -52,6 +56,7 @@ package_clean() {
    for i in $@
    do
       echo -n " $i"
+      #su $MY_USER -c "$MAKECMD clean $MAKE_OPTS -C $i $LOG_FILE"
       $MAKECMD clean -C $i > /dev/null || echo "Already cleaned !"
    done
    echo
@@ -83,7 +88,7 @@ package_configure() {
    do
       echo " $i"
       cd $i
-      su $MY_USER -c "./autogen.sh --prefix=/usr --sysconfdir=/etc --disable-doc --disable-install-examples --disable-cpu-sse3" > /dev/null
+      su $MY_USER -c "./autogen.sh --prefix=$MY_PREFIX --sysconfdir=$MY_CONFDIR $EXTRA_CONFIG_OPTS" > /dev/null
       cd - > /dev/null 2>&1
    done
    echo
@@ -179,7 +184,7 @@ fi
                  package_maintainerclean $PACKAGE_TO_COMPIL
                  ;;
          tarball)
-                 package_update $PACKAGE_TO_COMPIL
+#                 package_update $PACKAGE_TO_COMPIL
                  package_maintainerclean $PACKAGE_TO_COMPIL
                  tar -cjf efl.tar.bz2 $PACKAGE_TO_COMPIL
                  ;;
