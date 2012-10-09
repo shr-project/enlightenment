@@ -40,18 +40,21 @@
  * @defgroup Location_Events Available location events
  * @brief Location events that are emitted from the library
  * @since 1.8
+ *
+ * Ecore events emitted by the library. Applications can register ecore event
+ * handlers to react on such events.
  * @{
  */
-EAPI extern int ELOCATION_EVENT_STATUS;
-EAPI extern int ELOCATION_EVENT_POSITION;
-EAPI extern int ELOCATION_EVENT_ADDRESS;
+EAPI extern int ELOCATION_EVENT_STATUS; /**< Status changed */
+EAPI extern int ELOCATION_EVENT_POSITION; /**< Position changed */
+EAPI extern int ELOCATION_EVENT_ADDRESS; /**<Address changed */
 /**@}*/
 
 /**
  * @typedef Elocation_Accuracy_Level
  * @since 1.8
  *
- * Different location accuraccy levels from country up to detailed,
+ * Different location accuraccy levels from country level up to detailed,
  * e.g. GPS, information.
  */
 typedef enum {
@@ -72,11 +75,11 @@ typedef enum {
  */
 typedef enum {
    ELOCATION_RESOURCE_NONE = 0,
-   ELOCATION_RESOURCE_NETWORK = 1 << 0,
-   ELOCATION_RESOURCE_CELL = 1 << 1,
-   ELOCATION_RESOURCE_GPS = 1 << 2,
+   ELOCATION_RESOURCE_NETWORK = 1 << 0, /**< Internet connection is avaibale */
+   ELOCATION_RESOURCE_CELL = 1 << 1, /**< Cell network information, e.g. GSM, is available */
+   ELOCATION_RESOURCE_GPS = 1 << 2, /**< GPS information is available */
 
-   ELOCATION_RESOURCE_ALL = (1 << 10) - 1
+   ELOCATION_RESOURCE_ALL = (1 << 10) - 1 /**< All resources are available */
 } Elocation_Resource_Flags;
 
 /**
@@ -101,7 +104,7 @@ typedef struct _Elocation_Accuracy
  */
 typedef struct _Elocation_Address
 {
-   unsigned int timestamp;
+   unsigned int timestamp; /**< Timestamp of data read out in seconds since epoch */
    char *country;
    char *countrycode;
    char *locality;
@@ -119,7 +122,7 @@ typedef struct _Elocation_Address
  */
 typedef struct _Elocation_Postion
 {
-   unsigned int timestamp;
+   unsigned int timestamp; /**< Timestamp of data read out in seconds since epoch */
    double latitude;
    double longitude;
    double altitude;
@@ -131,7 +134,8 @@ typedef struct _Elocation_Postion
  * @since 1.8
  *
  * Requirement settings for the location provider. Requirements can be an level
- * of accurancy or allowed resources like network access or GPS.
+ * of accurancy or allowed resources like network access or GPS. See
+ * #Elocation_Resource_Flags for all available resource flags.
  */
 typedef struct _Elocation_Requirements
 {
