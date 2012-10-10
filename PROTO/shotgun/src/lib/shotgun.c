@@ -321,6 +321,8 @@ shotgun_disconnect(Shotgun_Auth *auth)
    auth->ev_write = NULL;
    auth->svr = NULL;
    auth->state = 0;
+   auth->et_ping = NULL;
+   auth->et_ping_timeout = NULL;
    memset(&auth->features, 0, sizeof(auth->features));
    auth->pending_ping = 0;
 }
