@@ -237,6 +237,7 @@ _smart_show(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_show(sd->layout_obj);
+   evas_object_show(sd->event_obj);
 }
 
 static void
@@ -247,5 +248,6 @@ _smart_hide(Evas_Object *obj)
    sd = evas_object_smart_data_get(obj);
    if (!sd) return;
    evas_object_hide(sd->layout_obj);
+   evas_object_hide(sd->event_obj);
 }
 
