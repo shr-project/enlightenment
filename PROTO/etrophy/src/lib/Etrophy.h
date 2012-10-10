@@ -55,33 +55,31 @@ typedef struct _Etrophy_Level Etrophy_Level;
 typedef struct _Etrophy_Gamescore Etrophy_Gamescore;
 
 /* Etrophy_Trophy */
-EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_State state, int date);
+EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_State state);
 EAPI void etrophy_trophy_free(Etrophy_Trophy *trophy);
 
 EAPI const char *etrophy_trophy_name_get(const Etrophy_Trophy *trophy);
 EAPI const char *etrophy_trophy_description_get(const Etrophy_Trophy *trophy);
 EAPI void etrophy_trophy_state_set(Etrophy_Trophy *trophy, Etrophy_Trophy_State state);
 EAPI Etrophy_Trophy_State etrophy_trophy_state_get(const Etrophy_Trophy *trophy);
-EAPI void etrophy_trophy_date_set(Etrophy_Trophy *trophy, int date);
-EAPI int etrophy_trophy_date_get(const Etrophy_Trophy *trophy);
+EAPI unsigned int etrophy_trophy_date_get(const Etrophy_Trophy *trophy);
 
 /* Etrophy_Lock */
-EAPI Etrophy_Lock *etrophy_lock_new(const char *name, Etrophy_Lock_State state, int date);
+EAPI Etrophy_Lock *etrophy_lock_new(const char *name, Etrophy_Lock_State state);
 EAPI void etrophy_lock_free(Etrophy_Lock *lock);
 
 EAPI const char *etrophy_lock_name_get(const Etrophy_Lock *lock);
 EAPI void etrophy_lock_state_set(Etrophy_Lock *lock, Etrophy_Lock_State state);
 EAPI Etrophy_Lock_State etrophy_lock_state_get(const Etrophy_Lock *lock);
-EAPI void etrophy_lock_date_set(Etrophy_Lock *lock, int date);
-EAPI int etrophy_lock_date_get(const Etrophy_Lock *lock);
+EAPI unsigned int etrophy_lock_date_get(const Etrophy_Lock *lock);
 
 /* Etrophy_Score */
-EAPI Etrophy_Score *etrophy_score_new(const char *player_name, int score, int date);
+EAPI Etrophy_Score *etrophy_score_new(const char *player_name, int score);
 EAPI void etrophy_score_free(Etrophy_Score *escore);
 
 EAPI const char *etrophy_score_player_name_get(const Etrophy_Score *escore);
 EAPI int etrophy_score_score_get(const Etrophy_Score *escore);
-EAPI int etrophy_score_date_get(const Etrophy_Score *escore);
+EAPI unsigned int etrophy_score_date_get(const Etrophy_Score *escore);
 
 /* Etrophy_Level */
 EAPI Etrophy_Level *etrophy_level_new(const char *name);
@@ -122,7 +120,7 @@ EAPI void etrophy_gamescore_clear(Etrophy_Gamescore *gamescore);
 
 EAPI int etrophy_gamescore_level_hi_score_get(const Etrophy_Gamescore *gamescore, const char *level_name);
 EAPI int etrophy_gamescore_level_low_score_get(const Etrophy_Gamescore *gamescore, const char *level_name);
-EAPI Etrophy_Score *etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *level_name, const char *player_name, int score, int date);
+EAPI Etrophy_Score *etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *level_name, const char *player_name, int score);
 
 /* Layouts */
 EAPI Evas_Object *etrophy_score_layout_add(Evas_Object *parent, Etrophy_Gamescore *gamescore);

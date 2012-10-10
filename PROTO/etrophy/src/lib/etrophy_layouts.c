@@ -63,8 +63,9 @@ EAPI Evas_Object *
 etrophy_score_layout_add(Evas_Object *parent, Etrophy_Gamescore *gamescore)
 {
    Evas_Object *layout, *spinner, *genlist;
-   Eina_List *levels, *l;
+   const Eina_List *levels;
    Etrophy_Level *level;
+   Eina_List *l;
    int i = 0;
 
    layout = elm_layout_add(parent);

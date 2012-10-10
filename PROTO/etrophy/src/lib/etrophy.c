@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#include <Ecore.h>
 #include <Ecore_File.h>
 #include <Eet.h>
 #include <Eina.h>
@@ -51,21 +52,21 @@ struct _Etrophy_Trophy
    const char *name;
    const char *description;
    Etrophy_Trophy_State state;
-   int date;
+   unsigned int date;
 };
 
 struct _Etrophy_Lock
 {
    const char *name;
    Etrophy_Lock_State state;
-   int date;
+   unsigned int date;
 };
 
 struct _Etrophy_Score
 {
    const char *player_name;
    int score;
-   int date;
+   unsigned int date;
 };
 
 struct _Etrophy_Level
@@ -107,7 +108,7 @@ _trophy_init(void)
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
                                  "state", state, EET_T_UINT);
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
-                                 "date", date, EET_T_INT);
+                                 "date", date, EET_T_UINT);
 }
 
 static inline void
@@ -119,7 +120,7 @@ _trophy_shutdown(void)
 }
 
 EAPI Etrophy_Trophy *
-etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_State state, int date)
+etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_State state)
 {
    Etrophy_Trophy *trophy = calloc(1, sizeof(Etrophy_Trophy));
 
@@ -132,7 +133,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Sta
    trophy->name = eina_stringshare_add(name);
    trophy->description = eina_stringshare_add(description);
    trophy->state = state;
-   trophy->date = date;
+   trophy->date = (unsigned int) ecore_time_get();
 
    return trophy;
 }
@@ -169,19 +170,13 @@ etrophy_trophy_state_set(Etrophy_Trophy *trophy, Etrophy_Trophy_State state)
    EINA_SAFETY_ON_NULL_RETURN(trophy);
    if (state >= ETROPHY_TROPHY_STATE_LAST_VALUE) return;
    trophy->state = state;
+   trophy->date = (unsigned int) ecore_time_get();
 }
 
-EAPI inline int
+EAPI inline unsigned int
 etrophy_trophy_date_get(const Etrophy_Trophy *trophy)
 {
    return trophy->date;
-}
-
-EAPI inline void
-etrophy_trophy_date_set(Etrophy_Trophy *trophy, int date)
-{
-   EINA_SAFETY_ON_NULL_RETURN(trophy);
-   trophy->date = date;
 }
 
 static inline void
@@ -199,7 +194,7 @@ _lock_init(void)
    EET_DATA_DESCRIPTOR_ADD_BASIC(_lock_descriptor, Etrophy_Lock, "state",
                                  state, EET_T_UINT);
    EET_DATA_DESCRIPTOR_ADD_BASIC(_lock_descriptor, Etrophy_Lock, "date",
-                                 date, EET_T_INT);
+                                 date, EET_T_UINT);
 }
 
 static inline void
@@ -211,7 +206,7 @@ _lock_shutdown(void)
 }
 
 EAPI Etrophy_Lock *
-etrophy_lock_new(const char *name, Etrophy_Lock_State state, int date)
+etrophy_lock_new(const char *name, Etrophy_Lock_State state)
 {
    Etrophy_Lock *lock = calloc(1, sizeof(Etrophy_Lock));
 
@@ -223,7 +218,7 @@ etrophy_lock_new(const char *name, Etrophy_Lock_State state, int date)
 
    lock->name = eina_stringshare_add(name);
    lock->state = state;
-   lock->date = date;
+   lock->date = (unsigned int) ecore_time_get();
 
    return lock;
 }
@@ -253,19 +248,13 @@ etrophy_lock_state_set(Etrophy_Lock *lock, Etrophy_Lock_State state)
    EINA_SAFETY_ON_NULL_RETURN(lock);
    if (state >= ETROPHY_LOCK_STATE_LAST_VALUE) return;
    lock->state = state;
+   lock->date = (unsigned int) ecore_time_get();
 }
 
-EAPI inline int
+EAPI inline unsigned int
 etrophy_lock_date_get(const Etrophy_Lock *lock)
 {
    return lock->date;
-}
-
-EAPI inline void
-etrophy_lock_date_set(Etrophy_Lock *lock, int date)
-{
-   EINA_SAFETY_ON_NULL_RETURN(lock);
-   lock->date = date;
 }
 
 static inline void
@@ -283,7 +272,7 @@ _score_init(void)
    EET_DATA_DESCRIPTOR_ADD_BASIC(_score_descriptor, Etrophy_Score,
                                  "score", score, EET_T_INT);
    EET_DATA_DESCRIPTOR_ADD_BASIC(_score_descriptor, Etrophy_Score,
-                                 "date", date, EET_T_INT);
+                                 "date", date, EET_T_UINT);
 }
 
 static inline void
@@ -295,7 +284,7 @@ _score_shutdown(void)
 }
 
 EAPI Etrophy_Score *
-etrophy_score_new(const char *player_name, int score, int date)
+etrophy_score_new(const char *player_name, int score)
 {
    Etrophy_Score *escore = calloc(1, sizeof(Etrophy_Score));
 
@@ -307,7 +296,7 @@ etrophy_score_new(const char *player_name, int score, int date)
 
    escore->player_name = eina_stringshare_add(player_name);
    escore->score = score;
-   escore->date = date;
+   escore->date = (unsigned int) ecore_time_get();
 
    DBG("Score created. Player: %s, score: %i", player_name, score);
 
@@ -333,7 +322,7 @@ etrophy_score_score_get(const Etrophy_Score *escore)
    return escore->score;
 }
 
-EAPI inline int
+EAPI inline unsigned int
 etrophy_score_date_get(const Etrophy_Score *escore)
 {
    return escore->date;
@@ -731,13 +720,13 @@ etrophy_gamescore_level_low_score_get(const Etrophy_Gamescore *gamescore, const 
 }
 
 EAPI Etrophy_Score *
-etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *level_name, const char *player_name, int score, int date)
+etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *level_name, const char *player_name, int score)
 {
    Etrophy_Score *escore;
    Etrophy_Level *level;
    Eina_List *l;
 
-   escore = etrophy_score_new(player_name, score, date);
+   escore = etrophy_score_new(player_name, score);
    if (!escore) return NULL;
 
    EINA_LIST_FOREACH(gamescore->levels, l, level)

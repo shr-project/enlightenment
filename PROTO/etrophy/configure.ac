@@ -124,6 +124,7 @@ PKG_CHECK_MODULES([ELEMENTARY],
     elementary >= 1.7.0
     evas >= 1.7.0
     ecore-file >= 1.7.0
+    ecore >= 1.7.0
     eet >= 1.7.0
     eina >= 1.7.0
    ])
@@ -140,7 +141,7 @@ AC_ARG_WITH([edje-cc],
         ],[edje_cc=$(pkg-config --variable=prefix edje)/bin/edje_cc])
 AC_SUBST(edje_cc)
 
-requirement_etrophy="elementary >= 1.7.0 evas >= 1.7.0 ecore-file >= 1.7.0 eet >= 1.7.0 eina >= 1.7.0 ${requirement_etrophy}"
+requirement_etrophy="elementary >= 1.7.0 evas >= 1.7.0 ecore-file >= 1.7.0 ecore >= 1.7.0 eet >= 1.7.0 eina >= 1.7.0 ${requirement_etrophy}"
 
 ### Checks for header files
 AC_CHECK_HEADERS([locale.h sys/resource.h])
