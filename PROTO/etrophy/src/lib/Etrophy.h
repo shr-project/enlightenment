@@ -54,12 +54,15 @@ typedef struct _Etrophy_Level Etrophy_Level;
 typedef struct _Etrophy_Gamescore Etrophy_Gamescore;
 
 /* Etrophy_Trophy */
-EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility);
+EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal);
 EAPI void etrophy_trophy_free(Etrophy_Trophy *trophy);
 
 EAPI const char *etrophy_trophy_name_get(const Etrophy_Trophy *trophy);
 EAPI const char *etrophy_trophy_description_get(const Etrophy_Trophy *trophy);
 EAPI Etrophy_Trophy_Visibility etrophy_trophy_visibility_get(const Etrophy_Trophy *trophy);
+EAPI void etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *goal, unsigned int *counter);
+EAPI void etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value);
+EAPI Eina_Bool etrophy_trophy_earned_get(const Etrophy_Trophy *trophy);
 EAPI unsigned int etrophy_trophy_date_get(const Etrophy_Trophy *trophy);
 
 /* Etrophy_Lock */

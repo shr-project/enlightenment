@@ -52,6 +52,8 @@ struct _Etrophy_Trophy
    const char *name;
    const char *description;
    Etrophy_Trophy_Visibility visibility;
+   unsigned int counter;
+   unsigned int goal;
    unsigned int date;
 };
 
@@ -108,6 +110,10 @@ _trophy_init(void)
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
                                  "visibility", visibility, EET_T_UINT);
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
+                                 "counter", counter, EET_T_UINT);
+   EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
+                                 "goal", goal, EET_T_UINT);
+   EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
                                  "date", date, EET_T_UINT);
 }
 
@@ -120,7 +126,7 @@ _trophy_shutdown(void)
 }
 
 EAPI Etrophy_Trophy *
-etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility)
+etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal)
 {
    Etrophy_Trophy *trophy = calloc(1, sizeof(Etrophy_Trophy));
 
@@ -134,6 +140,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Vis
    trophy->description = eina_stringshare_add(description);
    trophy->visibility = visibility;
    trophy->date = (unsigned int) ecore_time_get();
+   trophy->goal = goal;
 
    return trophy;
 }
@@ -162,6 +169,32 @@ EAPI inline Etrophy_Trophy_Visibility
 etrophy_trophy_visibility_get(const Etrophy_Trophy *trophy)
 {
    return trophy->visibility;
+}
+
+EAPI inline void
+etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *goal,
+                        unsigned int *counter)
+{
+   if (goal) *goal = trophy->goal;
+   if (counter) *counter = trophy->counter;
+}
+
+EAPI inline void
+etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value)
+{
+   if (trophy->counter == trophy->goal) return;
+
+   trophy->counter += value;
+   if (trophy->counter > trophy->goal)
+     trophy->counter = trophy->goal;
+
+   trophy->date = (unsigned int) ecore_time_get();
+}
+
+EAPI inline Eina_Bool
+etrophy_trophy_earned_get(const Etrophy_Trophy *trophy)
+{
+   return (trophy->goal == trophy->counter);
 }
 
 EAPI inline unsigned int
