@@ -907,7 +907,7 @@ _level_win(void * data)
 
    etrophy_gamescore_level_score_add(game->gamescore,
                                      level_level_id_get(game->cur_level),
-                                     NULL, total, 0);
+                                     NULL, total);
    _next_level(game, retry_layout);
    evas_object_show(retry_layout);
 }
@@ -1158,7 +1158,8 @@ static Etrophy_Gamescore *
 _gamescore_load(Game *game)
 {
    Etrophy_Gamescore *gamescore;
-   Eina_List *locks, *l;
+   const Eina_List *locks;
+   Eina_List *l;
    Level *level;
 
    gamescore = etrophy_gamescore_load("efbb");
@@ -1169,7 +1170,7 @@ _gamescore_load(Game *game)
           {
              Etrophy_Lock *etrophy_lock;
              etrophy_lock = etrophy_lock_new(level_level_id_get(level),
-                                             ETROPHY_LOCK_STATE_LOCKED, 0);
+                                             ETROPHY_LOCK_STATE_LOCKED);
              etrophy_gamescore_lock_add(gamescore, etrophy_lock);
           }
         /* first level should be unlocked */
