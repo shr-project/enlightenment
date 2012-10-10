@@ -84,7 +84,7 @@ _player_fail(Game *game)
         name = getenv("USER");
 
     etrophy_gamescore_level_score_add(game->gamescore, "E_CHO", name,
-            game->score, 0);
+            game->score);
     _hi_score_set(game);
     elm_object_signal_emit(game->layout, "fail", "");
 
