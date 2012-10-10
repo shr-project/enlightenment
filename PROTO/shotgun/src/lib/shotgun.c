@@ -312,6 +312,7 @@ shotgun_disconnect(Shotgun_Auth *auth)
    if (auth->keepalive) ecore_timer_del(auth->keepalive);
    if (auth->et_ping) ecore_timer_del(auth->et_ping);
    if (auth->et_ping_timeout) ecore_timer_del(auth->et_ping_timeout);
+   if (auth->buf) eina_strbuf_free(auth->buf);
    auth->keepalive = NULL;
    auth->ev_add = NULL;
    auth->ev_del = NULL;
@@ -323,6 +324,7 @@ shotgun_disconnect(Shotgun_Auth *auth)
    auth->state = 0;
    auth->et_ping = NULL;
    auth->et_ping_timeout = NULL;
+   auth->buf = NULL;
    memset(&auth->features, 0, sizeof(auth->features));
    auth->pending_ping = 0;
 }
