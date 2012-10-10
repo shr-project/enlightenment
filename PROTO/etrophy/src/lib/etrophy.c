@@ -51,7 +51,7 @@ struct _Etrophy_Trophy
 {
    const char *name;
    const char *description;
-   Etrophy_Trophy_State state;
+   Etrophy_Trophy_Visibility visibility;
    unsigned int date;
 };
 
@@ -106,7 +106,7 @@ _trophy_init(void)
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
                                  "description", description, EET_T_STRING);
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
-                                 "state", state, EET_T_UINT);
+                                 "visibility", visibility, EET_T_UINT);
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
                                  "date", date, EET_T_UINT);
 }
@@ -120,7 +120,7 @@ _trophy_shutdown(void)
 }
 
 EAPI Etrophy_Trophy *
-etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_State state)
+etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility)
 {
    Etrophy_Trophy *trophy = calloc(1, sizeof(Etrophy_Trophy));
 
@@ -132,7 +132,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Sta
 
    trophy->name = eina_stringshare_add(name);
    trophy->description = eina_stringshare_add(description);
-   trophy->state = state;
+   trophy->visibility = visibility;
    trophy->date = (unsigned int) ecore_time_get();
 
    return trophy;
@@ -158,19 +158,10 @@ etrophy_trophy_description_get(const Etrophy_Trophy *trophy)
    return trophy->description;
 }
 
-EAPI inline Etrophy_Trophy_State
-etrophy_trophy_state_get(const Etrophy_Trophy *trophy)
+EAPI inline Etrophy_Trophy_Visibility
+etrophy_trophy_visibility_get(const Etrophy_Trophy *trophy)
 {
-   return trophy->state;
-}
-
-EAPI inline void
-etrophy_trophy_state_set(Etrophy_Trophy *trophy, Etrophy_Trophy_State state)
-{
-   EINA_SAFETY_ON_NULL_RETURN(trophy);
-   if (state >= ETROPHY_TROPHY_STATE_LAST_VALUE) return;
-   trophy->state = state;
-   trophy->date = (unsigned int) ecore_time_get();
+   return trophy->visibility;
 }
 
 EAPI inline unsigned int

@@ -39,9 +39,8 @@ typedef struct _Etrophy_Trophy Etrophy_Trophy;
 typedef enum {
    ETROPHY_TROPHY_STATE_HIDDEN = 0,
    ETROPHY_TROPHY_STATE_VISIBLE,
-   ETROPHY_TROPHY_STATE_EARNED,
    ETROPHY_TROPHY_STATE_LAST_VALUE
-} Etrophy_Trophy_State;
+} Etrophy_Trophy_Visibility;
 
 typedef struct _Etrophy_Lock Etrophy_Lock;
 typedef enum {
@@ -55,13 +54,12 @@ typedef struct _Etrophy_Level Etrophy_Level;
 typedef struct _Etrophy_Gamescore Etrophy_Gamescore;
 
 /* Etrophy_Trophy */
-EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_State state);
+EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility);
 EAPI void etrophy_trophy_free(Etrophy_Trophy *trophy);
 
 EAPI const char *etrophy_trophy_name_get(const Etrophy_Trophy *trophy);
 EAPI const char *etrophy_trophy_description_get(const Etrophy_Trophy *trophy);
-EAPI void etrophy_trophy_state_set(Etrophy_Trophy *trophy, Etrophy_Trophy_State state);
-EAPI Etrophy_Trophy_State etrophy_trophy_state_get(const Etrophy_Trophy *trophy);
+EAPI Etrophy_Trophy_Visibility etrophy_trophy_visibility_get(const Etrophy_Trophy *trophy);
 EAPI unsigned int etrophy_trophy_date_get(const Etrophy_Trophy *trophy);
 
 /* Etrophy_Lock */
