@@ -143,7 +143,7 @@ _player_win(Game *game)
 
          etrophy_gamescore_level_score_add(game->gamescore,
                                            BOARD_SIZE[game->board_index - 1],
-                                           name, score, 0);
+                                           name, score);
          snprintf(buf, sizeof(buf), "%i points",
                   etrophy_gamescore_level_hi_score_get(
                      game->gamescore,
