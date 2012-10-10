@@ -430,7 +430,7 @@ etrophy_level_scores_list_clear(Etrophy_Level *level)
      etrophy_score_free(data);
 }
 
-EAPI inline Eina_List *
+EAPI inline const Eina_List *
 etrophy_level_scores_list_get(const Etrophy_Level *level)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(level, NULL);
@@ -572,7 +572,7 @@ etrophy_gamescore_levels_list_clear(Etrophy_Gamescore *gamescore)
      etrophy_level_free(data);
 }
 
-EAPI inline Eina_List *
+EAPI inline const Eina_List *
 etrophy_gamescore_levels_list_get(const Etrophy_Gamescore *gamescore)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(gamescore, NULL);
@@ -618,7 +618,7 @@ etrophy_gamescore_trophies_list_clear(Etrophy_Gamescore *gamescore)
      etrophy_trophy_free(data);
 }
 
-EAPI inline Eina_List *
+EAPI inline const Eina_List *
 etrophy_gamescore_trophies_list_get(const Etrophy_Gamescore *gamescore)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(gamescore, NULL);
@@ -673,7 +673,7 @@ etrophy_gamescore_clear(Etrophy_Gamescore *gamescore)
    etrophy_gamescore_trophies_list_clear(gamescore);
 }
 
-EAPI inline Eina_List *
+EAPI inline const Eina_List *
 etrophy_gamescore_locks_list_get(const Etrophy_Gamescore *gamescore)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(gamescore, NULL);

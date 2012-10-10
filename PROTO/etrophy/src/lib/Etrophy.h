@@ -90,7 +90,7 @@ EAPI void etrophy_level_free(Etrophy_Level *level);
 EAPI const char *etrophy_level_name_get(const Etrophy_Level *level);
 EAPI void etrophy_level_score_add(Etrophy_Level *level, Etrophy_Score *escore);
 EAPI void etrophy_level_score_del(Etrophy_Level *level, Etrophy_Score *escore);
-EAPI Eina_List *etrophy_level_scores_list_get(const Etrophy_Level *level);
+EAPI const Eina_List *etrophy_level_scores_list_get(const Etrophy_Level *level);
 EAPI void etrophy_level_scores_list_clear(Etrophy_Level *level);
 
 /* Etrophy_Gamescore */
@@ -103,19 +103,19 @@ EAPI Eina_Bool etrophy_gamescore_save(Etrophy_Gamescore *gamescore, const char *
 EAPI void etrophy_gamescore_level_add(Etrophy_Gamescore *gamescore, Etrophy_Level *level);
 EAPI void etrophy_gamescore_level_del(Etrophy_Gamescore *gamescore, Etrophy_Level *level);
 EAPI Etrophy_Level *etrophy_gamescore_level_get(Etrophy_Gamescore *gamescore, const char *name);
-EAPI Eina_List *etrophy_gamescore_levels_list_get(const Etrophy_Gamescore *gamescore);
+EAPI const Eina_List *etrophy_gamescore_levels_list_get(const Etrophy_Gamescore *gamescore);
 EAPI void etrophy_gamescore_levels_list_clear(Etrophy_Gamescore *gamescore);
 
 EAPI void etrophy_gamescore_trophy_add(Etrophy_Gamescore *gamescore, Etrophy_Trophy *trophy);
 EAPI void etrophy_gamescore_trophy_del(Etrophy_Gamescore *gamescore, Etrophy_Trophy *trophy);
 EAPI Etrophy_Trophy *etrophy_gamescore_trophy_get(Etrophy_Gamescore *gamescore, const char *name);
-EAPI Eina_List *etrophy_gamescore_trophies_list_get(const Etrophy_Gamescore *gamescore);
+EAPI const Eina_List *etrophy_gamescore_trophies_list_get(const Etrophy_Gamescore *gamescore);
 EAPI void etrophy_gamescore_trophies_list_clear(Etrophy_Gamescore *gamescore);
 
 EAPI void etrophy_gamescore_lock_add(Etrophy_Gamescore *gamescore, Etrophy_Lock *lock);
 EAPI void etrophy_gamescore_lock_del(Etrophy_Gamescore *gamescore, Etrophy_Lock *lock);
 EAPI Etrophy_Lock *etrophy_gamescore_lock_get(Etrophy_Gamescore *gamescore, const char *name);
-EAPI Eina_List *etrophy_gamescore_locks_list_get(const Etrophy_Gamescore *gamescore);
+EAPI const Eina_List *etrophy_gamescore_locks_list_get(const Etrophy_Gamescore *gamescore);
 EAPI void etrophy_gamescore_locks_list_clear(Etrophy_Gamescore *gamescore);
 
 EAPI void etrophy_gamescore_clear(Etrophy_Gamescore *gamescore);
