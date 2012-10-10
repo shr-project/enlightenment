@@ -128,7 +128,7 @@ _sea_of_death(void *data, EPhysics_Body *body, void *event_info __UNUSED__)
    double body_mass;
    int y;
 
-   ephysics_body_geometry_get(body, NULL, &y, NULL, NULL);
+   ephysics_body_geometry_get(body, NULL, &y, NULL, NULL, NULL, NULL);
    if (y <= FLOOR_Y + 100) return;
 
    body_mass = ephysics_body_mass_get(body);
@@ -215,8 +215,8 @@ _body_col(void *data, EPhysics_Body *body, void *event_info)
    int pts;
 
    body2 = ephysics_body_collision_contact_body_get(collision);
-   ephysics_body_linear_velocity_get(body, &vel_x1, &vel_y1);
-   ephysics_body_linear_velocity_get(body2, &vel_x2, &vel_y2);
+   ephysics_body_linear_velocity_get(body, &vel_x1, &vel_y1, NULL);
+   ephysics_body_linear_velocity_get(body2, &vel_x2, &vel_y2, NULL);
 
    body_data = ephysics_body_data_get(body);
 
@@ -235,7 +235,7 @@ _body_col(void *data, EPhysics_Body *body, void *event_info)
    pts = _body_points_get(body);
    score_inc(game->score, pts);
 
-   ephysics_body_collision_position_get(collision, &x, &y);
+   ephysics_body_collision_position_get(collision, &x, &y, NULL);
    ephysics_camera_position_get(ephysics_world_camera_get(
          ephysics_body_world_get(body)), &cx, NULL);
 
@@ -307,7 +307,7 @@ _body_camera_limit(void *data, EPhysics_Body *body, void *event_info __UNUSED__)
         return;
      }
 
-   ephysics_body_geometry_get(body, &x, NULL, &w, NULL);
+   ephysics_body_geometry_get(body, &x, NULL, NULL, &w, NULL, NULL);
 
    if (!tracked_body)
      {
@@ -424,7 +424,7 @@ _mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    ephysics_body_sleeping_threshold_set(body, 30, 240);
    ephysics_body_restitution_set(body, 0.05);
    ephysics_body_evas_object_set(body, body_image, EINA_TRUE);
-   ephysics_body_central_impulse_apply(body, impulse_x, - impulse_y);
+   ephysics_body_central_impulse_apply(body, impulse_x, - impulse_y, 0);
    ephysics_body_data_set(body, body_data);
 
    sound_play("cannon.wav");
@@ -576,7 +576,7 @@ _create_cube(Game *game, const char *type, int w, int h, int x, int y,
 
    if (level_time_attack_get(game->cur_level))
        {
-         ephysics_body_linear_velocity_set(body, 30, 0);
+         ephysics_body_linear_velocity_set(body, 30, 0, 0);
 
          ephysics_body_event_callback_add(body, EPHYSICS_CALLBACK_BODY_DEL,
                                           _sea_of_death, game);
@@ -640,7 +640,7 @@ _create_target(Game *game, const char *type, int w, int h, int x, int y)
 
    if (level_time_attack_get(game->cur_level))
      {
-        ephysics_body_linear_velocity_set(body, 30, 0);
+        ephysics_body_linear_velocity_set(body, 30, 0, 0);
         ephysics_body_damping_set(body, 0, 0.4);
         ephysics_body_event_callback_add(body, EPHYSICS_CALLBACK_BODY_DEL,
                                           _sea_of_death, game);
@@ -965,10 +965,10 @@ _ship_time_attack_cb(void *data)
 {
    Evas_Object *object;
    Game *game = data;
-   int x, y, w, h;
+   int x, y, z, w, h, d;
    Eina_List *l;
 
-   ephysics_body_geometry_get(game->ship, &x, &y, &w, &h);
+   ephysics_body_geometry_get(game->ship, &x, &y, &z, &w, &h, &d);
 
    if (x >= 2260)
      {
@@ -979,7 +979,7 @@ _ship_time_attack_cb(void *data)
         return EINA_FALSE;
      }
 
-   ephysics_body_geometry_set(game->ship, ++x, y, w, h);
+   ephysics_body_geometry_set(game->ship, ++x, y, z, w, h, d);
 
    EINA_LIST_FOREACH(game->extra_obj, l, object)
      {
@@ -1032,7 +1032,7 @@ _level_load(Game *game)
 
         ground_body = ephysics_body_box_add(game->cur_world);
         ephysics_body_mass_set(ground_body, 0);
-        ephysics_body_geometry_set(ground_body, 0, FLOOR_Y, 2560, 10);
+        ephysics_body_geometry_set(ground_body, 0, FLOOR_Y, -15, 2560, 10, 30);
         ephysics_body_restitution_set(ground_body, 0.65);
         ephysics_body_friction_set(ground_body, 12);
         ephysics_body_data_set(ground_body, body_data);
@@ -1054,7 +1054,8 @@ _level_load(Game *game)
    ephysics_body_geometry_set(cannon_wall,
                               level_cannon_pos_x_get(game->cur_level) + 5,
                               level_cannon_pos_y_get(game->cur_level) + 18,
-                              123, 50);
+                              -15,
+                              123, 50, 30);
    ephysics_body_mass_set(cannon_wall, 0);
 
    game->cannon_area = evas_object_rectangle_add(game->evas);
