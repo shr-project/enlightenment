@@ -67,6 +67,7 @@ twitterAjax = {
       //the 'oauth_callback' parameter must NOT be sent in the http body, but in
       //the Authorization field in the header
       data: parameters && parameters.oauth_callback ? null : parameters,
+      blockUI: true,
       onSuccess: success,
       type: method,
       beforeSend: function (request, options) {
