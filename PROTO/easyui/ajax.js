@@ -5,10 +5,191 @@ var kDone = 4;
 
 var default_options = {
   serialize_requests: true,
-  number_of_queues: 10
+  number_of_queues: 10,
+  max_cache_size: 2 * 1024 * 1024, //2M
 }
 
 var ajax_options = utils.clone(default_options, true);
+
+var cache = (function() {
+  var cache = [];
+  var eager_cache = [];
+  var blacklist = [];
+  var cache_size = 0;
+
+  canCache = function(request, url) {
+    if (cache[url])
+      return false;
+
+    //won't cache if there's no content-length or if it's too big
+    var content_length = request.getResponseHeader('Content-Length');
+    if (!content_length || (Number(content_length) > (ajax_options.max_cache_size * 0.5)))
+      return false;
+
+    //won't cache if cache-control says to not cache
+    var cache_control = request.getResponseHeader('Cache-Control');
+    if (cache_control && ((cache_control.indexOf('no-cache') != -1) ||
+                           cache_control.indexOf('must-revalidate') != -1))
+      return false;
+
+    return true;
+  }
+
+  createMockRequest = function(request) {
+    return {
+      _responseHeaders: request.getAllResponseHeaders(),
+      fromCache: true,
+      status: request.status,
+      responseText: request.responseText,
+      readyState: kDone,
+      getResponseHeader: function(status) {
+        var pattern = new RegExp(status + ": .*");
+        var result = pattern.exec(this._responseHeaders);
+        if (result) {
+          var header = result[0];
+          return header.substring(header.indexOf(":") + 2); //2 due to space after colon
+        }
+      },
+      getAllResponseHeaders: function() {
+        return this._responseHeaders;
+      },
+      send: function() {
+        if ((!this.aborted) && typeof(this.onreadystatechange) === 'function')
+          setTimeout(this.onreadystatechange, 100);
+      },
+      open: function() {/*mock*/ }
+    }
+  }
+
+  ejectLeastPointedEntries = function(size_to_free) {
+    points = [];
+    for (var i in cache)
+      points.push({points: cache[i].points, url: i});
+
+    points.sort(function(a, b) {return a.points - b.points});
+
+    for (var i = 0; ((cache_size + size_to_free) > ajax_options.max_cache_size) && i < points.length; i++) {
+      var entry_url = points[i].url;
+      cache_size -= cache[entry_url].size;
+      delete cache[points[i].url];
+    }
+  }
+
+  cacheRequest = function(url, request) {
+    if (!canCache(request, url)) {
+      if (eager_cache[url])
+        handleInvalidEagerCaching(url, request);
+
+      return;
+    }
+
+    var content_length = Number(request.getResponseHeader('Content-Length'));
+
+    if ((cache_size + content_length) > ajax_options.max_cache_size)
+      ejectLeastPointedEntries(content_length);
+
+    cache[url] = {points: 1, request: createMockRequest(request), size: content_length};
+    cache_size = cache_size + content_length;
+
+    if (eager_cache[url]) {
+      notifyPendingRequests(url, cache[url].request);
+      delete eager_cache[url];
+    }
+  }
+
+  handleCacheMiss = function() {
+    for (var i in cache)
+      cache[i].points *= 0.9;
+  }
+
+  fetchCachedRequest = function(url) {
+    if (cache[url]) {
+      cache[url].points *= 1.1;
+      return utils.clone(cache[url].request);
+    }
+
+    if (eager_cache[url]) {
+      if (!eager_cache[url].pending)
+        eager_cache[url].pending = [];
+
+      var eager_mock_request = createEagerMockRequest();
+      eager_cache[url].pending.push(eager_mock_request);
+      return eager_mock_request;
+    }
+
+    handleCacheMiss();
+  }
+
+  eagerCacheRequest = function(url) {
+    if (!blacklist[url])
+      eager_cache[url] = {};
+  }
+
+  createEagerMockRequest = function(){
+    return {
+      fromCache: true,
+      eagerlyCached: true,
+      aborted: false,
+      abort: function() {
+        this.aborted = true;
+      },
+      setRequestHeader: function() {
+        print('WARNING: You are trying to setRequestHeader for an eagerly cached request.\n' +
+              'As you probably don\'t want it, disable cache for this request \n' +
+              'defining, in the object options of this request, \'disableCache: true\'');
+      },
+      open: function() {/*mock*/},
+      send: function() {/*mock*/},
+      getResponseHeader: function() {/*mock*/},
+      getAllResponseHeaders: function() {/*mock*/},
+    }
+  }
+
+  updateEagerMockRequest = function(updated_mock, mock) {
+    mock._responseHeaders = updated_mock._responseHeaders;
+    mock.size = updated_mock.size;
+    mock.status = updated_mock.status;
+    mock.responseText = updated_mock.responseText;
+    mock.readyState = updated_mock.readyState;
+    mock.getResponseHeader = updated_mock.getResponseHeader;
+    mock.getAllResponseHeaders = updated_mock.getAllResponseHeaders;
+    mock.send = updated_mock.send;
+    mock.invalidCache = updated_mock.invalidCache;
+  }
+
+  notifyPendingRequests = function(url, mock_request) {
+    if (eager_cache[url].pending) {
+      var pending = eager_cache[url].pending;
+
+      for (var i in pending) {
+        updateEagerMockRequest(mock_request, pending[i]);
+        pending[i].send();
+      }
+
+      delete eager_cache[url].pending;
+    }
+  }
+
+  handleInvalidEagerCaching = function(url, request) {
+    blacklist[url] = true; //just to put something. What matters is the existence of blacklist[url]
+
+    if (eager_cache[url].pending) {
+      var mock_request = createMockRequest(request);
+      mock_request.invalidCache = true;
+
+      notifyPendingRequests(url, mock_request);
+    }
+
+    delete eager_cache[url];
+  }
+
+  return {
+    fetchCachedRequest: fetchCachedRequest,
+    eagerCacheRequest: eagerCacheRequest,
+    cacheRequest: cacheRequest
+  }
+})();
+
 
 var module_hooks = (function() {
   var all_modules = modules();
@@ -44,6 +225,13 @@ timeout_callback = function(request) {
     request.onreadystatechange('timeout');
 }
 
+send_request = function(request, data) {
+  if (request.timeout)
+    setTimeout(timeout_callback.bind(this, request), request.timeout);
+
+  request.send(data);
+}
+
 internal_queue = function() {
   var requests = [];
   var timer = undefined;
@@ -65,10 +253,7 @@ internal_queue = function() {
     var xhr = request[0];
     var params = request[1];
 
-    if (xhr.timeout)
-      setTimeout(timeout_callback.bind(this, xhr), xhr.timeout);
-
-    xhr.send(params);
+    send_request(xhr, params);
   };
 
   var queue = function(request, data) {
@@ -223,9 +408,19 @@ ajax = function(url, options) {
   if (url === undefined)
     return null;
 
-  var request = new xhr.XMLHttpRequest();
   var method = options.type || 'GET';
   var data = options.data || undefined;
+  var request;
+
+  if (method == 'GET')
+    request = cache.fetchCachedRequest(url);
+
+  if (!request) {
+    request = new xhr.XMLHttpRequest();
+
+    if (method == 'GET' && !options.disableCache)
+      cache.eagerCacheRequest(url);
+  }
 
   request.open(method, url);
 
@@ -244,6 +439,9 @@ ajax = function(url, options) {
 
       if (this.queue_index !== undefined)
         queues.thaw(this.queue_index);
+
+      if (method == 'GET' && !(request.fromCache || options.disableCache))
+        cache.cacheRequest(url, request);
     }.bind(request, options);
   }
 
@@ -264,6 +462,12 @@ ajax = function(url, options) {
   if (typeof(options.timeout) === 'number')
     request.timeout = options.timeout;
 
+  //a cached request doesn't need to queue
+  if (request.fromCache) {
+    send_request(request);
+    return request;
+  }
+
   var serialize_request;
   if (options.serialize_request !== undefined)
     serialize_request = options.serialize_request
@@ -273,9 +477,7 @@ ajax = function(url, options) {
   if (serialize_request) {
     request.queue_index = queues.queue(request, data);
   } else {
-    if (request.timeout)
-      setTimeout(timeout_callback.bind(this, request), request.timeout);
-    request.send(data);
+    send_request(request, data);
   }
 
 
