@@ -209,7 +209,7 @@ Controller = Class.extend({
         delete btn.label;
 
       if (btn.icon)
-        btn.icon = elm.Icon({ file: btn.icon });
+        btn.icon = elm.Icon({ image: btn.icon });
       else
         delete btn.icon;
 
@@ -225,7 +225,7 @@ Controller = Class.extend({
         btn.label = title;
 
       if (item.icon)
-        btn.icon = elm.Icon({ file: item.icon });
+        btn.icon = elm.Icon({ image: item.icon });
 
       if (item === this.parent)
         btn.on_click = this.popController.bind(this);
@@ -623,7 +623,7 @@ GenController = Controller.extend({
               content: function(part, data) {
                 var item = this._itemFromData(data.data);
                 var image = item && item[part.replace('elm.swallow.', '')];
-                return image && elm.Icon({ file: image });
+                return image && elm.Icon({ image: image });
               }.bind(this),
               state: function(part, data) {
                 var item = this._itemFromData(data.data);
@@ -641,7 +641,7 @@ GenController = Controller.extend({
                   return elm.Button({ label: "Delete"});
                 var item = this._itemFromData(data.data);
                 var image = item && item[part.replace('elm.swallow.', '')];
-                return image &&  elm.Icon({ file: image });
+                return image &&  elm.Icon({ image: image });
               }.bind(this),
               state: function(part, data) {
                 var item = this._itemFromData(data.data);
@@ -847,7 +847,7 @@ ListController = GenController.extend({
             ctxMenu.elements[i][keys[key_index]] = menuItems[i][keys[key_index]];
 
           ctxMenu.elements[i].text = menuItems[i].label;
-          ctxMenu.elements[i].icon = EUI.widgets.Icon({file: menuItems[i].icon,
+          ctxMenu.elements[i].icon = EUI.widgets.Icon({image: menuItems[i].icon,
               resizable_up: false, resizable_down: false})
         }
         else

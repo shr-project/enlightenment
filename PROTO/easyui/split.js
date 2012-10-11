@@ -21,7 +21,7 @@ Controller = EUI.TableController({
   init: function(title, image) {
     this.icon = image;
     this.title = title
-    this.fields = [[EUI.widgets.Icon({file: image})]];
+    this.fields = [[EUI.widgets.Icon({image: image})]];
   },
   navigationBarItems: { left: 'sidePanel' }
 });

@@ -5,27 +5,27 @@ MyController = EUI.TableController({
   init: function() {
     this.fields = [[
       EUI.widgets.Button({
-        icon: EUI.widgets.Icon({file: 'arrow_up'}),
+        icon: EUI.widgets.Icon({image: 'arrow_up'}),
         on_click: function() {
           this.viewContent.signal_emit("top,toolbar", "");
         }.bind(this)
       }), '>'
     ],[
       EUI.widgets.Button({
-        icon: EUI.widgets.Icon({file: 'refresh'}),
+        icon: EUI.widgets.Icon({image: 'refresh'}),
         on_click: function() {
           this.viewContent.signal_emit("show,toolbar", "");
         }.bind(this)
       }),
       EUI.widgets.Button({
-        icon: EUI.widgets.Icon({file: 'close'}),
+        icon: EUI.widgets.Icon({image: 'close'}),
         on_click: function() {
           this.viewContent.signal_emit('hide,toolbar', "");
         }.bind(this)
       })
     ],[
       EUI.widgets.Button({
-        icon: EUI.widgets.Icon({file: 'arrow_down'}),
+        icon: EUI.widgets.Icon({image: 'arrow_down'}),
         on_click: function() {
           this.viewContent.signal_emit("bottom,toolbar", "");
         }.bind(this)

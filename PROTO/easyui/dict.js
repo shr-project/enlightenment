@@ -109,10 +109,10 @@ Search = ListItems.extend({
   hasNavigationBar: false,
   searchBarItems: {
     left: EUI.widgets.Button({
-      icon: EUI.widgets.Icon({ file: imagedir + 'search.png'})
+      icon: EUI.widgets.Icon({ image: imagedir + 'search.png'})
     }),
     right: EUI.widgets.Button({
-      icon: EUI.widgets.Icon({ file: imagedir + 'del.png'})
+      icon: EUI.widgets.Icon({ image: imagedir + 'del.png'})
     })
   },
   search: function(text) {
@@ -150,7 +150,7 @@ Definition = EUI.TableController({
         on_change: function() { this.ctrl.bookmark = this.state }
       }),
       left: EUI.widgets.Button({
-        icon: EUI.widgets.Icon({ file: imagedir + 'back.png' }),
+        icon: EUI.widgets.Icon({ image: imagedir + 'back.png' }),
         on_click: function() { this.popController() }.bind(this)
       })
     };
