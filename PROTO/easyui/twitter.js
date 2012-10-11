@@ -209,7 +209,7 @@ TimelineModel = EUI.Model({
   }
 });
 
-TweetController = EUI.FormController({
+TweetController = EUI.TableController({
   init: function(model, replying_tweet){
     this.title = 'What\'s happening?';
     this.replying_tweet = replying_tweet;
@@ -299,7 +299,7 @@ SearchTimelineModel = TimelineModel.extend({
   }
 });
 
-SearchController = EUI.FormController({
+SearchController = EUI.TableController({
   init: function() {
     this.fields = [
       [EUI.widgets.Entry({scrollable: true, field: 'search', single_line: true})]
@@ -347,7 +347,7 @@ SavedSearchController = EUI.ListController({
   }
 });
 
-AuthController = EUI.FormController({
+AuthController = EUI.TableController({
   init: function(token, tokenSecret){
     this.title = 'Sign In';
     this.token = token;
@@ -394,7 +394,7 @@ AuthController = EUI.FormController({
 
 BrowserController = EUI.WebController({});
 
-SettingsController = EUI.FormController({
+SettingsController = EUI.TableController({
   title: 'Settings',
   icon: 'preferences-desktop',
   fields: [

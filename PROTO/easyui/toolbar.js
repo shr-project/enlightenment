@@ -1,6 +1,6 @@
 var EUI = require('eui');
 
-MyController = EUI.FormController({
+MyController = EUI.TableController({
   titleVisible: false,
   init: function() {
     this.fields = [[

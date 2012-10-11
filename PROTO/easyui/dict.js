@@ -121,7 +121,7 @@ Search = ListItems.extend({
   }
 });
 
-Definition = EUI.FormController({
+Definition = EUI.TableController({
   init: function (item) {
 
     var buffer = '';

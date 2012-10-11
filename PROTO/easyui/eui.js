@@ -1301,122 +1301,98 @@ VideoController = Controller.extend({
   },
 });
 
-FormController = Controller.extend({
+TableController = Controller.extend({
   viewDescriptor: elm.Table({
     expand: 'both',
     fill: 'both',
-    elements: {},
+    elements: {}
   }),
-  updateView: function() {
+  updateView: function(index, hint) {
 
-    var record = this.index != undefined ? this.model.itemAtIndex(this.index) : {};
-    var form = this._getView().elements;
-    var row_offset = 0;
+    var elements = this._getView().elements;
+    var record = this.model && this.model.itemAtIndex(this.index) || {};
 
     for (var row in this.fields) {
-      if (!this.fields.hasOwnProperty(row))
-        continue;
-
-      row = Number(row);
       for (var col in this.fields[row]) {
-        if ((!this.fields[row].hasOwnProperty(col)) ||
-            ("V>".indexOf(this.fields[row][col].toString()) >= 0))
+        var item = this.fields[row][col];
+        if ('V>'.indexOf(item.toString()) >= 0)
           continue;
 
+        row = Number(row);
         col = Number(col);
-        var item = this.fields[row][col];
-        var id = item.field ? item.field : '[' + col + ',' + row +']';
 
-        if (!form[id]) {
-          var colspan = 1;
-          var rowspan = 1;
-          for (var i = Number(col) + 1; this.fields[row][i] == '>'; i++)
-            colspan++;
-          for (var i = Number(row) + 1; this.fields[i] && this.fields[i][col] == 'V'; i++)
-            rowspan++;
+        var id = item.field || [col,row].join();
+        var real = elements[id] && elements[id].element;
 
-          //FIXME Find a better way to check if 'item' is an Entry.
-          if ((item.event_map.on_change == 'didChangeEntry') && item.label) {
-          //Only adds a row in the first column
-            if (col > 0)
-                row_offset--;
+        if (!real) {
 
-            form[id+'label'] = {
-              col: col,
-              row: row + row_offset,
-              colspan: colspan,
-              rowspan: rowspan,
-              element: elm.Label({label: item.label, fill: 'vertical',
-                expand: 'horizontal'})
-            };
-            row_offset++;
-          }
-          form[id] = {
+          for (var i = col + 1; this.fields[row][i] == '>'; i++);
+          var colspan = i - col;
+
+          for (var i = row + 1; this.fields[i] && this.fields[i][col] == 'V'; i++);
+          var rowspan = i - row;
+
+          elements[id] = {
             col: col,
-            row: row + row_offset,
+            row: row,
             colspan: colspan,
             rowspan: rowspan,
-            element: item,
+            element: item
           };
 
-          var evmap = form[id].element.event_map;
+          real = elements[id].element;
 
-          for (var ev in evmap)
-            if (this[evmap[ev]] && typeof(this[evmap[ev]]) == 'function') {
-              form[id].element[ev] = this[evmap[ev]].bind(this, form[id].element);
-            }
+          for (var i in real.event_map)
+            if (typeof(this[real.event_map[i]]) === 'function')
+              real[i] = this[real.event_map[i]].bind(this, real);
         }
 
-        //If the propery 'editable' was not defined on the entry, or was defined
-        //as 'true', it will follow form's editability. If it is defined as
-        //'false', it will never be editable.
-        form[id].element.editable =
-          item.editable == undefined ? this.editable : this.editable && item.editable;
-
-        if (form[id].element.field && record[id] !== undefined)
-          form[id].element.setValue(record[id]);
+        if (item.field) {
+          real.setValue(record[item.field]);
+          real.editable = this.editable && item.editable;
+        } else {
+          real.editable = false;
+        }
       }
-    }
-
-    if (Object.keys(this._getNavigationBarItems()).length)
-      return;
-
-    if (this.editable) {
-      this.navigationBarItems = {
-        left: 'Cancel',
-        right: this.index == undefined ? 'Add' : 'Save'
-      };
     }
   },
   getValues: function() {
     var values = {};
-    var form = this._getView().elements;
-    for (var item in form) {
-      if (!form.hasOwnProperty(item) || !form[item].element.field)
-        continue;
-      values[item] = form[item].element.getValue();
+    var elements = this._getView().elements;
+    for (var key in elements) {
+      var real = elements[key].element;
+      if (real && real.field)
+        values[key] = real.getValue();
     }
     return values;
+  }
+});
+
+TableController.prototype.__defineGetter__("index", function() { return this._index });
+TableController.prototype.__defineSetter__("index", function(value) {
+  if (!this.model) throw "Model must be defined before index";
+  if (value >= 0 && value < this.model.length())
+    this._index = value;
+});
+
+FormController = TableController.extend({
+  navigationBarItems: function() {
+    return this.editable && {
+      left: 'Cancel',
+      right: (this.index === undefined) ? 'Add' : 'Save'
+    };
   },
   selectedNavigationBarItem: function(item) {
-    var values = this.getValues();
     switch (item) {
       case 'Add':
-        this.model.insert(values);
+        this.model.insert(this.getValues());
         break;
       case 'Save':
-        this.model.updateItemAtIndex(this.index, values);
+        this.model.updateItemAtIndex(this.index, this.getValues());
         break;
     }
     this.popController();
   },
-});
-
-FormController.prototype.__defineGetter__("index", function() { return this._index });
-FormController.prototype.__defineSetter__("index", function(value) {
-  if (!this.model) throw "Model must be defined before index";
-  if (value >= 0 && value < this.model.length())
-    this._index = value;
 });
 
 RoutingSingleton = Class.extend({
@@ -1726,7 +1702,11 @@ exports.widgets.Entry = wrapElm(elm.Entry, {
     on_activate: 'didActivate',
     on_change: 'didChangeEntry'
   },
-  setValue: function (value) { if (this.text != value) this.text = value },
+  setValue: function (value) {
+    value = (value !== undefined) ? value : '';
+    if (this.text != value)
+      this.text = value;
+  },
   getValue: function() { return this.markup_to_utf8(this.text) }
 });
 

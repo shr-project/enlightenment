@@ -118,7 +118,7 @@ BrainModel = EUI.Model({
   },
 });
 
-CalculatorController = EUI.FormController({
+CalculatorController = EUI.TableController({
   model: new BrainModel(),
   index: 0,
   fields: [

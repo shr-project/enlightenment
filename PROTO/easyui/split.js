@@ -17,7 +17,7 @@ var icons = [
   "File",
 ];
 
-Controller = EUI.FormController({
+Controller = EUI.TableController({
   init: function(title, image) {
     this.icon = image;
     this.title = title

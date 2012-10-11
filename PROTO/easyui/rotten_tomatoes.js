@@ -64,7 +64,7 @@ RottenTomatoesModel = EUI.Model({
   }
 });
 
-MovieController = EUI.FormController({
+MovieController = EUI.TableController({
   init: function(model, index) {
     this.model = model;
     this.index = index;

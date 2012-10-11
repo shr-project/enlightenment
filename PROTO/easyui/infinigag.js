@@ -66,8 +66,8 @@ InfinigagModel = EUI.Model({
   length: function() { return this.items.length; },
 });
 
-/* Extend the FormController */
-Infinigag = EUI.FormController({
+/* Extend the TableController */
+Infinigag = EUI.TableController({
 
   /* Create a model and connect it to the controller */
   init: function(model, index) {
@@ -75,7 +75,7 @@ Infinigag = EUI.FormController({
     this.index = index;
   },
 
-  /* FormController uses a bidimensional array to posit its widgets */
+  /* TableController uses a bidimensional array to posit its widgets */
   fields: [[EUI.widgets.Photocam({zoom_mode: 'auto-fit', field: 'file'})]],
 
   /* The content of toolbar */
