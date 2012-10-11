@@ -103,10 +103,10 @@ var window = elm.realise(elm.Window({
               },
               on_load_progress: function(load) {
                 if (load == 1) {
-                  window.elements.vbox.elements.toolbar.item_state_set(window.elements.vbox.elements.toolbar.elements[2], 'page-finished-loading');
+                  window.elements.vbox.elements.toolbar.elements[2].state = 'page-finished-loading';
                   window.elements.progress.visible = false;
                 } else {
-                  window.elements.vbox.elements.toolbar.item_state_set(window.elements.vbox.elements.toolbar.elements[2], 'page-is-loading');
+                  window.elements.vbox.elements.toolbar.elements[2].state = 'page-is-loading';
                   window.elements.progress.visible = true;
                   window.elements.progress.content.value = load;
                 }
