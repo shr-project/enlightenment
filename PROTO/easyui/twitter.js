@@ -121,7 +121,7 @@ TimelineModel = EUI.Model({
   itemAtIndex: function(index){
     var item = this.items[index];
 
-    if (!item.file && !item.alreadyFetchingImage){
+    if (item && !item.file && !item.alreadyFetchingImage){
       item.alreadyFetchingImage = true;
       var url_image;
       if (item.retweeted_status)
