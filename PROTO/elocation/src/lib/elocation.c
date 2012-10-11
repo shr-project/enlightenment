@@ -518,8 +518,8 @@ elocation_init()
         return EXIT_FAILURE;
      }
 
-   cb_address_changed = edbus_proxy_signal_handler_add(ubuntu_address, "GetAddress", address_signal_cb, NULL);
-   cb_position_changed = edbus_proxy_signal_handler_add(ubuntu_position, "GetPosition", position_signal_cb, NULL);
+   cb_address_changed = edbus_proxy_signal_handler_add(ubuntu_address, "AddressChanged", address_signal_cb, NULL);
+   cb_position_changed = edbus_proxy_signal_handler_add(ubuntu_position, "PositionChanged", position_signal_cb, NULL);
 
    edbus_name_owner_changed_callback_add(conn, GEOCLUE_DBUS_NAME, _name_owner_changed,
                                          NULL, EINA_TRUE);
@@ -527,7 +527,7 @@ elocation_init()
    ecore_event_handler_add(ELOCATION_EVENT_IN, geoclue_start, NULL);
    ecore_event_handler_add(ELOCATION_EVENT_OUT, geoclue_stop, NULL);
 
-   cb_status_changed = edbus_proxy_signal_handler_add(ubuntu_geoclue, "GetStatus", status_signal_cb, NULL);
+   cb_status_changed = edbus_proxy_signal_handler_add(ubuntu_geoclue, "StatusChanged", status_signal_cb, NULL);
 }
 
 EAPI void
