@@ -22,6 +22,9 @@ static EDBus_Proxy *ubuntu_geoclue = NULL;
 static EDBus_Proxy *ubuntu_address = NULL;
 static EDBus_Proxy *ubuntu_position = NULL;
 static EDBus_Proxy *meta_geoclue = NULL;
+static EDBus_Proxy *meta_masterclient = NULL;
+static Elocation_Address *address = NULL;
+static Elocation_Position *position = NULL;
 
 int _elocation_log_dom = -1;
 
@@ -30,6 +33,13 @@ EAPI int ELOCATION_EVENT_OUT;
 EAPI int ELOCATION_EVENT_STATUS;
 EAPI int ELOCATION_EVENT_POSITION;
 EAPI int ELOCATION_EVENT_ADDRESS;
+
+void *
+_dummy_free(void *user_data, void *func_data)
+{
+   /* Don't free the event data after dispatching the event. We keep track of
+    * it on our own */
+}
 
 static void
 provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
@@ -48,7 +58,7 @@ provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending
 }
 
 static void
-unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
+unmarshall_address(const EDBus_Message *reply)
 {
    int32_t level, timestamp;
    EDBus_Message_Iter *iter, *sub, *dict, *entry;
@@ -114,28 +124,18 @@ unmarshall_address(Elocation_Address *address, const EDBus_Message *reply)
 static void
 address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
-   Elocation_Address *address;
-
-   address = malloc(sizeof(Elocation_Address));
-   address->accur = malloc(sizeof(Elocation_Accuracy));
-
-   unmarshall_address(address, reply);
-   ecore_event_add(ELOCATION_EVENT_ADDRESS, address, NULL, NULL);
+   unmarshall_address(reply);
+   ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
 static void
 address_signal_cb(void *data , const EDBus_Message *reply)
 {
-   Elocation_Address *address;
-
-   address = malloc(sizeof(Elocation_Address));
-   address->accur = malloc(sizeof(Elocation_Accuracy));
-
-   unmarshall_address(address, reply);
-   ecore_event_add(ELOCATION_EVENT_ADDRESS, address, NULL, NULL);
+   unmarshall_address(reply);
+   ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
 
 static void
-unmarshall_position(Elocation_Position *position, const EDBus_Message *reply)
+unmarshall_position(const EDBus_Message *reply)
 {
    GeocluePositionFields fields;
    int32_t level, timestamp;
@@ -200,25 +200,15 @@ unmarshall_position(Elocation_Position *position, const EDBus_Message *reply)
 static void
 position_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
-   Elocation_Position *position;
-
-   position = malloc(sizeof(Elocation_Position));
-   position->accur = malloc(sizeof(Elocation_Accuracy));
-
-   unmarshall_position(position, reply);
-   ecore_event_add(ELOCATION_EVENT_POSITION, position, NULL, NULL);
+   unmarshall_position(reply);
+   ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
 
 static void
 position_signal_cb(void *data , const EDBus_Message *reply)
 {
-   Elocation_Position *position;
-
-   position = malloc(sizeof(Elocation_Position));
-   position->accur = malloc(sizeof(Elocation_Accuracy));
-
-   unmarshall_position(position, reply);
-   ecore_event_add(ELOCATION_EVENT_POSITION, position, NULL, NULL);
+   unmarshall_position(reply);
+   ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
 static Eina_Bool
 geoclue_start(void *data, int ev_type, void *event)
@@ -276,6 +266,13 @@ create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 
    meta_geoclue = edbus_proxy_get(obj_meta, GEOCLUE_GEOCLUE_IFACE);
    if (!meta_geoclue)
+     {
+        ERR("Error: could not get proxy");
+        return;
+     }
+
+   meta_masterclient = edbus_proxy_get(obj_meta, GEOCLUE_MASTERCLIENT_IFACE);
+   if (!meta_masterclient)
      {
         ERR("Error: could not get proxy");
         return;
@@ -362,29 +359,21 @@ status_signal_cb(void *data , const EDBus_Message *reply)
 }
 
 EAPI Eina_Bool
-elocation_address_get(Elocation_Address *address)
+elocation_address_get(Elocation_Address *address_shadow)
 {
-   EDBus_Pending *pending;
+   if (!address) return EINA_FALSE;
 
-   pending = edbus_proxy_call(ubuntu_address, "GetAddress", address_cb, NULL, -1, "");
-   if (!pending)
-     {
-        ERR("Error: could not call");
-        return EXIT_FAILURE;
-     }
+   address_shadow = address;
+   return EINA_TRUE;
 }
 
 EAPI Eina_Bool
-elocation_position_get(Elocation_Position *position)
+elocation_position_get(Elocation_Position *position_shadow)
 {
-   EDBus_Pending *pending;
+   if (!position) return EINA_FALSE;
 
-   pending = edbus_proxy_call(ubuntu_position, "GetPosition", position_cb, NULL, -1, "");
-   if (!pending)
-     {
-        ERR("Error: could not call");
-        return EXIT_FAILURE;
-     }
+   position_shadow = position;
+   return EINA_TRUE;
 }
 
 EAPI Eina_Bool
@@ -398,6 +387,60 @@ elocation_status_get(int *status)
         ERR("Error: could not call");
         return EXIT_FAILURE;
      }
+}
+
+EAPI Elocation_Position *
+elocation_position_new()
+{
+   /* Malloc the global struct we operate on here in this lib. This shadows the
+    * updated data we are giving to the application */
+   position = calloc(1, sizeof(Elocation_Position));
+   if (!position) return NULL;
+
+   position->accur = calloc(1, sizeof(Elocation_Accuracy));
+   if (!position->accur) return NULL;
+
+   return position;
+}
+
+EAPI Elocation_Address *
+elocation_address_new()
+{
+   /* Malloc the global struct we operate on here in this lib. This shadows the
+    * updated data we are giving to the application */
+   address = calloc(1, sizeof(Elocation_Address));
+   if (!address) return NULL;
+
+   address->accur = calloc(1, sizeof(Elocation_Accuracy));
+   if (!address->accur) return NULL;
+
+   return address;
+}
+
+EAPI void
+elocation_position_free(Elocation_Position *position_shadow)
+{
+   if (position != position_shadow)
+     {
+        ERR("Corrupted position object");
+        return;
+     }
+
+   free(position->accur);
+   free(position);
+}
+
+EAPI void
+elocation_address_free(Elocation_Address *address_shadow)
+{
+   if (address != address_shadow)
+     {
+        ERR("Corrupted address object");
+        return;
+     }
+
+   free(address->accur);
+   free(address);
 }
 
 EAPI Eina_Bool
@@ -489,6 +532,19 @@ elocation_init()
         return EXIT_FAILURE;
      }
 
+   pending = edbus_proxy_call(ubuntu_address, "GetAddress", address_cb, NULL, -1, "");
+   if (!pending)
+     {
+        ERR("Error: could not call");
+        return EXIT_FAILURE;
+     }
+
+   pending = edbus_proxy_call(ubuntu_position, "GetPosition", position_cb, NULL, -1, "");
+   if (!pending)
+     {
+        ERR("Error: could not call");
+        return EXIT_FAILURE;
+     }
    provider = calloc(1, sizeof(Elocation_Provider));
    pending2 = edbus_proxy_call(ubuntu_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
    if (!pending2)

@@ -71,6 +71,9 @@ main()
    edbus_init();
    elocation_init();
 
+   address = elocation_address_new();
+   position = elocation_position_new();
+
    /* Register callback so we get updates later on */
    ecore_event_handler_add(ELOCATION_EVENT_STATUS, status_changed, NULL);
    ecore_event_handler_add(ELOCATION_EVENT_POSITION, position_changed, NULL);
@@ -82,6 +85,8 @@ main()
 
    ecore_main_loop_begin();
 
+   elocation_address_free(address);
+   elocation_position_free(position);
    elocation_shutdown();
    edbus_shutdown();
    ecore_shutdown();

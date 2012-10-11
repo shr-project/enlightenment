@@ -146,6 +146,38 @@ typedef struct _Elocation_Requirements
 } Elocation_Requirements;
 
 /**
+ * @brief Create a new address object to operate on.
+ * @return Address object.
+ *
+ * @since 1.8
+ */
+EAPI Elocation_Address *elocation_address_new();
+
+/**
+ * @brief Free an address object
+ * @param address Address object to be freed.
+ *
+ * @since 1.8
+ */
+EAPI void elocation_address_free(Elocation_Address *address);
+
+/**
+ * @brief Create a new position object to operate on.
+ * @return Position object.
+ *
+ * @since 1.8
+ */
+EAPI Elocation_Position *elocation_position_new();
+
+/**
+ * @brief Free an position object
+ * @param position Position object to be freed.
+ *
+ * @since 1.8
+ */
+EAPI void elocation_position_free(Elocation_Position *position);
+
+/**
  * @brief Get the current address information.
  * @param address Address struct to be filled with information.
  * @return EINA_TRUE for success and EINA_FALSE for failure.
