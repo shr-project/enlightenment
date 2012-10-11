@@ -1366,7 +1366,7 @@ TableController = Controller.extend({
 
         if (item.field) {
           real.setValue(record[item.field]);
-          real.editable = this.editable && item.editable;
+          real.editable = this.editable && (item.editable !== false);
         } else {
           real.editable = false;
         }
