@@ -1,5 +1,4 @@
 EUI = require("eui");
-dump = require("dump").dump;
 
 var button = function(label, field) {
   var res = {label: label}

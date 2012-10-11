@@ -1,5 +1,4 @@
 /* Load the Elev8 modules to be used */
-var dump = require('dump').dump;
 var EUI = require('eui');
 var XMLHttpRequest = require('http').XMLHttpRequest;
 

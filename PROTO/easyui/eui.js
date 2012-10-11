@@ -1,8 +1,7 @@
-Class = require('class.js').Class;
+Class = require('class').Class;
 elm = require('elm.so');
 fs = require('fs');
-dump = require('dump.js').dump;
-taffy = require('taffy.js').taffy;
+taffy = require('taffy').taffy;
 
 Controller = Class.extend({
   init: function(kwargs) {

@@ -1,5 +1,4 @@
 EUI = require('eui');
-dump = require('dump').dump;
 
 localStorage.database = "dict.eet";
 elm.addThemeOverlay("./themes/dict.edj");
