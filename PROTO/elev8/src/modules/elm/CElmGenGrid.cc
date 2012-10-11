@@ -341,6 +341,39 @@ Handle<Value> CElmGenGrid::GetSelected(Local<String>, const AccessorInfo &info)
    return Boolean::New(elm_genlist_item_selected_get(item->object_item));
 }
 
+void CElmGenGrid::SetTooltip(Local<String>, Local<Value> value, const AccessorInfo &info)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(info);
+   item->tooltip.Dispose();
+
+   if (value->IsUndefined() || !value->ToObject()->IsObject())
+     {
+        item->tooltip.Clear();
+        elm_gengrid_item_tooltip_unset(item->object_item);
+        return;
+     }
+   item->tooltip = Persistent<Object>::New(value->ToObject()->Clone());
+
+   Local<Object> obj = value->ToObject();
+   Handle<Value> style = obj->Get(String::NewSymbol("style"));
+   Handle<Value> text = obj->Get(String::NewSymbol("text"));
+   Handle<Value> window_mode = obj->Get(String::NewSymbol("window_mode"));
+
+   elm_gengrid_item_tooltip_text_set(item->object_item, *String::Utf8Value(text));
+
+   if (style->IsString())
+     elm_gengrid_item_tooltip_style_set(item->object_item, *String::Utf8Value(style));
+
+   elm_gengrid_item_tooltip_window_mode_set(item->object_item, window_mode->BooleanValue());
+
+}
+
+Handle<Value> CElmGenGrid::GetTooltip(Local<String>, const AccessorInfo &info)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(info);
+   return item->tooltip;
+}
+
 Handle<Value> CElmGenGrid::BringIn(const Arguments &args)
 {
    Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(args.This());

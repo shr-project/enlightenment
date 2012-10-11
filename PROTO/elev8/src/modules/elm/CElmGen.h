@@ -15,6 +15,7 @@ template <class T> class ItemClass;
 template <class T>
 struct Item {
    Persistent<Object> jsObject;
+   Persistent<Object> tooltip;
    Elm_Object_Item *object_item;
 
    static Persistent<String> str_item;
@@ -37,11 +38,11 @@ struct Item {
            prototype->Set(String::NewSymbol("show"), FunctionTemplate::New(T::Show));
            prototype->Set(String::NewSymbol("update"), FunctionTemplate::New(T::Update));
            prototype->SetAccessor(String::NewSymbol("selected"), T::GetSelected, T::SetSelected);
+           prototype->SetAccessor(String::NewSymbol("tooltip"), T::GetTooltip, T::SetTooltip);
 
            tmpl = Persistent<ObjectTemplate>::New(klass->InstanceTemplate());
            tmpl->SetNamedPropertyHandler(ElementGet, ElementSet);
         }
-
       jsObject = Persistent<Object>::New(tmpl->NewInstance());
       jsObject->SetHiddenValue(str_item, External::Wrap(this));
       jsObject->SetHiddenValue(str_attrs, value);
@@ -50,6 +51,7 @@ struct Item {
 
    ~Item()
    {
+      tooltip.Dispose();
       jsObject->DeleteHiddenValue(str_item);
       jsObject.Dispose();
    }
