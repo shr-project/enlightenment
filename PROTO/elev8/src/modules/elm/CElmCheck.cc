@@ -78,8 +78,7 @@ Handle<Value> CElmCheck::state_get() const
 
 void CElmCheck::state_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_check_state_set(eo, value->BooleanValue());
+   elm_check_state_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmCheck::icon_get() const
