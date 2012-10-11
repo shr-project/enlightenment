@@ -897,6 +897,12 @@ ListController = GenController.extend({
 
     this._super(indexes, hint);
   },
+  _ignoreScrollEvents: function() {
+    this.listening_scroll = false;
+    setTimeout(function() {
+      this.listening_scroll = true
+    }.bind(this), 600);
+  },
   _showLoadingItem: function(edge){
     var view = this._getView().content.list;
     var loading_element = {
@@ -906,19 +912,17 @@ ListController = GenController.extend({
     if (edge == 'top')
       loading_element.before = 0;
 
+    this._ignoreScrollEvents();
     view.elements[edge] = loading_element;
     view.bring_in_item(view.elements[edge], "in");
-  },
+ },
   _hideLoadingItem: function(edge) {
     var view = this._getView().content.list;
     if (view.elements[edge])
       delete view.elements[edge];
 
     //to prevent 'edge,*' signals from messing up around here
-    this.listening_scroll = false;
-    setTimeout(function() {
-      this.listening_scroll = true
-    }.bind(this), 300);
+    this._ignoreScrollEvents();
   }
 });
 
