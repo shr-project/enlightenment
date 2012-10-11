@@ -23,8 +23,8 @@ protected:
 public:
    static void Initialize(Handle<Object> target);
 
-   virtual void file_set(Handle<Value> val);
-   virtual Handle<Value> file_get(void) const;
+   virtual void image_set(Handle<Value> val);
+   virtual Handle<Value> image_get(void) const;
 
    Handle<Value> lookup_order_get() const;
    void lookup_order_set(Handle<Value> val);

@@ -4,12 +4,12 @@ namespace elm {
 
 using namespace v8;
 
-GENERATE_PROPERTY_CALLBACKS(CElmIcon, file);
+GENERATE_PROPERTY_CALLBACKS(CElmIcon, image);
 GENERATE_PROPERTY_CALLBACKS(CElmIcon, lookup_order);
 GENERATE_PROPERTY_CALLBACKS(CElmIcon, thumb);
 
 GENERATE_TEMPLATE_FULL(CElmImage, CElmIcon,
-   PROPERTY(file),
+   PROPERTY(image),
    PROPERTY(lookup_order),
    PROPERTY(thumb));
 
@@ -29,7 +29,7 @@ void CElmIcon::Initialize(Handle<Object> target)
                GetTemplate()->GetFunction());
 }
 
-void CElmIcon::file_set(Handle<Value> val)
+void CElmIcon::image_set(Handle<Value> val)
 {
    if (!val->IsString())
      return;
@@ -48,7 +48,7 @@ void CElmIcon::file_set(Handle<Value> val)
    ELM_ERR("warning: can't read standard or file icon %s", *str);
 }
 
-Handle<Value> CElmIcon::file_get(void) const
+Handle<Value> CElmIcon::image_get(void) const
 {
    const char *file = NULL, *group = NULL;
 
