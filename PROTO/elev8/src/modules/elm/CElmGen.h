@@ -73,6 +73,10 @@ struct Item {
    static Handle<Value> ElementSet(Local<String> attr, Local<Value> val, const AccessorInfo& info)
    {
       Local<Object> attrs = info.This()->GetHiddenValue(str_attrs)->ToObject();
+
+      if (info.This()->HasOwnProperty(attr))
+        return Handle<Value>();
+
       attrs->Set(attr, val);
       T::UpdateItem(info.This());
       return val;
