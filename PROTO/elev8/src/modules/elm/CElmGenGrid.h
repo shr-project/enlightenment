@@ -75,6 +75,9 @@ public:
 
    Handle<Value> realized_items_get() const;
 
+   static Handle<Value> GetSelected(Local<String>, const AccessorInfo &info);
+   static void SetSelected(Local<String>, Local<Value> value, const AccessorInfo &info);
+
    friend Handle<Value> CElmObject::New<CElmGenGrid>(const Arguments&);
 };
 

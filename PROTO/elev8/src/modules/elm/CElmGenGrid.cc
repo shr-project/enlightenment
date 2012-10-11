@@ -329,4 +329,16 @@ Handle<Value> CElmGenGrid::clear(const Arguments &args)
    return Undefined();
 }
 
+void CElmGenGrid::SetSelected(Local<String>, Local<Value> value, const AccessorInfo &info)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(info);
+   elm_genlist_item_selected_set(item->object_item, value->BooleanValue());
+}
+
+Handle<Value> CElmGenGrid::GetSelected(Local<String>, const AccessorInfo &info)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(info);
+   return Boolean::New(elm_genlist_item_selected_get(item->object_item));
+}
+
 }

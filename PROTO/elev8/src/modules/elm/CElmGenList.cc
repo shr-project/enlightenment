@@ -563,4 +563,16 @@ Handle<Value> CElmGenList::clear(const Arguments &args)
    return Undefined();
 }
 
+void CElmGenList::SetSelected(Local<String>, Local<Value> value, const AccessorInfo &info)
+{
+   Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(info);
+   elm_genlist_item_selected_set(item->object_item, value->BooleanValue());
+}
+
+Handle<Value> CElmGenList::GetSelected(Local<String>, const AccessorInfo &info)
+{
+   Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(info);
+   return Boolean::New(elm_genlist_item_selected_get(item->object_item));
+}
+
 }

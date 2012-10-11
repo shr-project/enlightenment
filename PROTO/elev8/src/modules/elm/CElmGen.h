@@ -31,6 +31,7 @@ struct Item {
         {
            tmpl = Persistent<ObjectTemplate>::New(ObjectTemplate::New());
            tmpl->SetNamedPropertyHandler(ElementGet, ElementSet);
+           tmpl->SetAccessor(String::NewSymbol("selected"), T::GetSelected, T::SetSelected);
         }
 
       jsObject = Persistent<Object>::New(tmpl->NewInstance());
@@ -81,6 +82,11 @@ struct Item {
    {
       Local<Value> attrs = info.This()->GetHiddenValue(str_attrs);
       return attrs->ToObject()->Get(attr);
+   }
+
+   static Item<T> *Unwrap(const AccessorInfo& info)
+   {
+      return Unwrap(info.This());
    }
 
    static Item<T> *Unwrap(Handle<Value> value)
