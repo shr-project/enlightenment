@@ -662,15 +662,23 @@ GenController = Controller.extend({
       }
     });
   },
-  _itemFromData: function(data) {
-    if (data.model_index !== undefined) {
-      if (this._cachedItem && this._cachedItem.model_index === data.model_index)
-        return this._cachedItem;
+  _fetchItemUsingCache: function(index) {
+    if (this._cachedItem && this._cachedItem.model_index === index)
+      return this._cachedItem;
 
-      this._cachedItem = this.itemAtIndex(data.model_index);
-      this._cachedItem['model_index'] = data.model_index;
-      return this.itemAtIndex(data.model_index);
+    var cachedItem = this.itemAtIndex(index);
+    if (cachedItem) {
+      cachedItem.model_index = index;
+
+      this._cachedItem = cachedItem;
+      return cachedItem;
     }
+
+    return {};
+  },
+  _itemFromData: function(data) {
+    if (data.model_index !== undefined)
+      return this._fetchItemUsingCache(data.model_index);
 
     if (data.group !== undefined)
       return { text: data.group };
@@ -691,7 +699,7 @@ GenController = Controller.extend({
     this._super();
   },
   updateItemAtIndex: function(index) {
-    var item = this.itemAtIndex(index);
+    var item = this._fetchItemUsingCache(index);
     if (!item)
       return;
 
