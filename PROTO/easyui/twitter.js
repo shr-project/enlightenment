@@ -426,6 +426,118 @@ SettingsController = EUI.TableController({
   }
 });
 
+ProfileController = EUI.ListController({
+  style: 'double_label',
+  getProfileImage: function() {
+    //gets profile image
+    ajax.get(this.profile.profile_image_url, null, function(req) {
+      if (req.status != '200') return;
+      var item = this.fields[0];
+
+      item.icon = req.responseText;
+      this.updateView(0);
+    }.bind(this));
+  },
+  init: function(profile) {
+    this.title = profile.name;
+    this.profile = profile;
+
+    this.fields = [
+      {
+        text: profile.name,
+        text_sub: '@' + profile.screen_name
+      },
+      {
+        style: 'full',
+        content: EUI.widgets.Table({
+          hint_min: {width: 100, height: 100},
+          elements: {
+            description: {row: 0, col: 0,
+              element: this.createLabel(profile.description.replace(/\r/g, '<br/>'))},
+            location: {row: 1, col: 0,
+              element: this.createLabel(profile.location)},
+            url: {row: 2, col: 0,
+              element: this.createLabel(profile.url)}
+          }
+        })
+      },
+      {
+        style: 'full',
+        content: EUI.widgets.Table({
+          hint_min: {width: 50, height: 50},
+          elements: {
+            tweets: {row: 3, col: 0,
+              element: this.createLabel('Tweets: <b>' + profile.statuses_count + '</b>')},
+            following: {row: 5, col: 0,
+              element: this.createLabel('Following: <b>' + profile.friends_count + '</b>')},
+            followers: {row: 6, col: 0,
+              element: this.createLabel('Followers: <b>' + profile.followers_count + '</b>')}
+          }
+        })
+      },
+    ];
+
+    this.model = new EUI.ArrayModel(this.fields);
+    this.getProfileImage();
+  },
+  createLabel: function(text) {
+    return EUI.widgets.Label({
+      label: text,
+      single_line: true
+    });
+  },
+  itemAtIndex: function(index) {
+    return this.fields[index];
+  },
+  toolbarItems: function() {
+    var toolbarItems = [{label: 'Tweets', tag: 'tweets'}];
+
+    if (this.profile.id_str != gUserID) {
+      if (this.profile.following)
+        toolbarItems.push({label: 'Unfollow', tag: 'unfollow'});
+      else
+        toolbarItems.push({label: 'Follow', tag: 'follow'});
+    } else {
+      toolbarItems.push({label: 'Sign out', tag: 'sign-out'});
+    }
+
+    return toolbarItems;
+  },
+  callbackFollowUnfollow: function(req) {
+    if (req.status != 200) return;
+
+    //update profile
+    this.profile = JSON.parse(req.responseText);
+    this.evaluateViewChanges();
+  },
+  selectedToolbarItem: function(item) {
+    switch (item.tag) {
+      case 'tweets':
+        this.pushController(new TimelineController(
+           new TimelineModel(this.profile.id_str),
+           'tweets', this.profile.screen_name));
+        break;
+      case 'follow':
+        twitterAjax.post('1/friendships/create.json', {user_id: this.profile.id_str},
+                         this.callbackFollowUnfollow.bind(this));
+        break;
+      case 'unfollow':
+        twitterAjax.post('1/friendships/destroy.json', {user_id: this.profile.id_str},
+                         this.callbackFollowUnfollow.bind(this));
+        break;
+      case 'sign-out':
+        gToken = gTokenSecret = null;
+
+        localStorage.removeItem('gToken');
+        localStorage.removeItem('gTokenSecret');
+        localStorage.removeItem('gScreenName');
+        localStorage.removeItem('gUserID');
+
+        this.popController();
+      }
+  }
+});
+
 TimelineController = EUI.ListController({
   icon: 'go-home',
   style: 'double_label',
@@ -540,7 +652,12 @@ TimelineController = EUI.ListController({
         if (menuItem.url)
           this.pushController(new BrowserController(menuItem.url));
         else
-          this.pushController(new TimelineController(new TimelineModel(menuItem.id_str), 'tweets', menuItem.screen_name));
+//          this.pushController(new TimelineController(new TimelineModel(menuItem.id_str), 'tweets', menuItem.screen_name));
+        twitterAjax.get('1/users/show.json', {user_id: menuItem.id_str}, function(req) {
+          if (req.status != '200') return;
+
+          this.pushController(new ProfileController(JSON.parse(req.responseText)));
+        }.bind(this));
     }
   },
   didScrollOverEdge: function(edge) {

@@ -663,6 +663,13 @@ GenController = Controller.extend({
               content: function() {
                 return elm.Icon({ image: 'refresh' });
               }
+            },
+            'full': {
+              style: 'full',
+              content: function(part, data) {
+                var item = this._itemFromData(data.data);
+                return item && item.content;
+              }.bind(this)
             }
           },
           elements: {}
@@ -732,7 +739,7 @@ GenController = Controller.extend({
     }
 
     var element = {
-      class: view.classes.default,
+      class: view.classes[item.style || 'default'],
       data: data,
       on_select: function(item) {
         if (typeof(this.selectedItemAtIndex) === 'function')
@@ -1799,6 +1806,8 @@ exports.widgets.Check = wrapElm(elm.Check, {
   setValue: function(value) { this.state = !!value },
   getValue: function() { return this.state }
 });
+
+exports.widgets.Table = wrapElm(elm.Table, {});
 
 exports.module_hooks = {
   'ajax': {
