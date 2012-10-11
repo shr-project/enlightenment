@@ -654,6 +654,15 @@ GenController = Controller.extend({
                 var item = this._itemFromData(data.data);
                 return item && item[part.replace('elm.', '').replace('.', '_')];
               }.bind(this)
+            },
+            'loading': {
+              style: 'default',
+              text: function() {
+                return 'Loading';
+              },
+              content: function() {
+                return elm.Icon({ image: 'refresh' });
+              }
             }
           },
           elements: {}
@@ -805,6 +814,7 @@ ListController = GenController.extend({
   willInitialize: function() {
     this._super(elm.Genlist);
     this.contextMenuDirection = 'horizontal';
+    this.listening_scroll = true;
   },
   didInitialize: function() {
     this._super();
@@ -862,8 +872,46 @@ ListController = GenController.extend({
     }
   },
   on_scrolled_over_edge: function(edge) {
-    if (typeof(this.didScrollOverEdge) === 'function')
+    if (this.listening_scroll && typeof(this.didScrollOverEdge) === 'function')
       this.didScrollOverEdge(edge);
+  },
+  updateView: function(indexes, hint) {
+    if (hint == 'beginSlowLoad') {
+      var edge = indexes == -1 ? 'top' : 'bottom';
+      this._showLoadingItem(edge);
+      return;
+    }
+
+    if (hint == 'finishSlowLoad') {
+      var edge = indexes == -1 ? 'top' : 'bottom';
+      this._hideLoadingItem(edge);
+      return;
+    }
+
+    this._super(indexes, hint);
+  },
+  _showLoadingItem: function(edge){
+    var view = this._getView().content.list;
+    var loading_element = {
+      class: view.classes.loading
+    };
+
+    if (edge == 'top')
+      loading_element.before = 0;
+
+    view.elements[edge] = loading_element;
+    view.bring_in_item(view.elements[edge], "in");
+  },
+  _hideLoadingItem: function(edge) {
+    var view = this._getView().content.list;
+    if (view.elements[edge])
+      delete view.elements[edge];
+
+    //to prevent 'edge,*' signals from messing up around here
+    this.listening_scroll = false;
+    setTimeout(function() {
+      this.listening_scroll = true
+    }.bind(this), 300);
   }
 });
 

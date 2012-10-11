@@ -174,6 +174,7 @@ TimelineModel = EUI.Model({
     var params = this.buildUrlParameters({max_id: this.items[this.items.length - 1].id_str});
 
     twitterAjax.get(this.url, params, function(req) {
+      this.notifyControllers(this.length() + 1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       //exclude from results the first item, which is repetead
@@ -184,12 +185,15 @@ TimelineModel = EUI.Model({
       this.notifyControllers(
         arrayBetweenBoundaries(old_length, this.items.length -1));
     }.bind(this));
+
+    this.notifyControllers(this.length() + 1, 'beginSlowLoad');
   },
   fetchNewerTweets: function(){
     //to get twitters newer than the first one that we have
     var params = this.buildUrlParameters({since_id: this.items[0].id_str});
 
     twitterAjax.get(this.url, params, function(req) {
+      this.notifyControllers(-1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       var new_tweets =  JSON.parse(req.responseText);
@@ -197,6 +201,7 @@ TimelineModel = EUI.Model({
       this.notifyControllers(
         arrayBetweenBoundaries(0, new_tweets.length -1));
     }.bind(this));
+    this.notifyControllers(-1, 'beginSlowLoad');
   },
   untweet: function(index) {
     var id_tweet = this.items[index].id_str;
@@ -274,6 +279,7 @@ SearchTimelineModel = TimelineModel.extend({
       max_id: this.items[this.items.length -1].id_str}
 
     twitterAjax.get(this.url, params, function(req) {
+      this.notifyControllers(this.length() + 1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       //exclude from results the first item, which is repetead
@@ -283,12 +289,14 @@ SearchTimelineModel = TimelineModel.extend({
       this.items = this.items.concat(results);
       this.notifyControllers(arrayBetweenBoundaries(old_length, this.items.length -1));
     }.bind(this));
+      this.notifyControllers(this.length() + 1, 'beginSlowLoad');
   },
   fetchNewerTweets: function() {
     var params = {q: this.query, include_entities: true,
       since_id: this.items[0].id_str}
 
     twitterAjax.get(this.url, params, function(req) {
+      this.notifyControllers(-1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       var new_tweets =  JSON.parse(req.responseText).results;
@@ -296,6 +304,7 @@ SearchTimelineModel = TimelineModel.extend({
       this.notifyControllers(
         arrayBetweenBoundaries(0, new_tweets.length -1));
     }.bind(this));
+    this.notifyControllers(-1, 'beginSlowLoad');
   }
 });
 
