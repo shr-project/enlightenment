@@ -59,7 +59,7 @@ collections {
                }
             }
          }
-         part { name: "life_wall";
+         part { name: "defense_wall";
             type: SWALLOW;
             description { state: "default" 0.0;
                rel1.relative: 0.0 0.95;

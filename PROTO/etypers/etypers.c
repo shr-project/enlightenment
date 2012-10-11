@@ -30,8 +30,8 @@
 #define NEW_ENEMY_DURATION_SEC 5
 #define LEVEL_INC_WEIGHT 0.01
 #define DROP_DIST_WEIGHT 10
-#define LIFE_WALL_CNT 15
-
+#define DEFENSE_WALL_CNT 15
+#define WALL_COLOR 100, 100, 100, 170
 typedef struct _Enemy Enemy;
 typedef struct _AppData AppData;
 typedef enum _GameState GameState;
@@ -39,6 +39,7 @@ typedef enum _GameState GameState;
 static void _pause(AppData *appdata);
 static void _resume(AppData *appdata);
 static void _popup(AppData *appdata);
+static void _reset_defense_wall(AppData *appdata);
 
 enum _GameState
 {
@@ -53,12 +54,14 @@ struct _AppData
 {
    Eina_Inlist *enemies;
    Eina_Array *words_array;
+   Eina_List *defense_wall;
    double level;
    double last_frame_time;
    double interval_time;
    unsigned long score;
    Evas_Coord bound_w;
    Evas_Coord bound_h;
+   Evas_Coord_Rectangle defense_rect;
    Evas_Object *win;
    Evas_Object *ly;
    Evas_Object *bx;
@@ -76,6 +79,8 @@ struct _Enemy
    Evas_Object *entry;
    float x;
    float y;
+   float w;
+   float h;
 };
 
 static double
@@ -139,6 +144,8 @@ _enemy_new(Evas_Object *parent, const char *str, Evas_Coord x, Evas_Coord y,
    enemy->entry = entry;
    enemy->x = x;
    enemy->y = y;
+   enemy->w = tb_w;
+   enemy->h = tb_h;
 
    return enemy;
 }
@@ -157,7 +164,7 @@ _enemy_add(AppData *appdata)
 }
 
 static void
-_transit_del_cb(void *data, Elm_Transit *transit)
+_obj_del(void *data, Elm_Transit *transit)
 {
    evas_object_del(data);
 }
@@ -180,7 +187,7 @@ _enemy_kill(AppData *appdata, Enemy *enemy)
    elm_transit_duration_set(transit, 0.25);
    elm_transit_effect_translation_add(transit, 0, 0, 15, -20);
    elm_transit_effect_color_add(transit, 255, 255, 255, 255, 0, 0, 0, 0);
-   elm_transit_del_cb_set(transit, _transit_del_cb, entry);
+   elm_transit_del_cb_set(transit, _obj_del, entry);
    elm_transit_go(transit);
 }
 
@@ -218,6 +225,7 @@ _game_reset(AppData *appdata)
    elm_object_part_text_set(appdata->ly, "score_value", "0");
 
    _remove_all_enemies(appdata);
+   _reset_defense_wall(appdata);
    elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
 }
 
@@ -227,6 +235,55 @@ _game_over(AppData *appdata)
    ecore_animator_freeze(appdata->animator);
    elm_object_signal_emit(appdata->ly, "elm,state,gameover", "etypers");
    appdata->state = GameOver;
+}
+
+void _wall_hide(void *data, Elm_Transit *transit)
+{
+   evas_object_hide(data);
+}
+
+void _remove_wall(Evas_Object *wall)
+{
+   Elm_Transit *transit = elm_transit_add();
+   if (!transit)
+     {
+        evas_object_hide(wall);
+        return;
+     }
+
+   elm_transit_object_add(transit, wall);
+   elm_transit_effect_color_add(transit, WALL_COLOR, 0, 0, 0, 0);
+   elm_transit_del_cb_set(transit, _wall_hide, wall);
+   elm_transit_duration_set(transit, 0.5);
+   elm_transit_go(transit);
+}
+
+Eina_Bool _collision(AppData *appdata, Enemy *enemy)
+{
+   if (appdata->defense_rect.y > (Evas_Coord) (enemy->y + enemy->h))
+     return EINA_FALSE;
+
+   Eina_Bool collide = EINA_FALSE;
+
+   Eina_List *l, *l_next;
+   Evas_Object *wall;
+   EINA_LIST_FOREACH_SAFE(appdata->defense_wall, l, l_next, wall)
+     {
+        Evas_Coord x, y, w, h;
+        evas_object_geometry_get(wall, &x, &y, &w, &h);
+
+        //Destroy walls collided with the enemy
+        if (((enemy->x + enemy->w) >= x) && (enemy->x <= (x + w)) &&
+            ((enemy->y + enemy->h) >= y) && (enemy->y <= (y + h)))
+          {
+             appdata->defense_wall =
+                eina_list_remove_list(appdata->defense_wall, l);
+             _remove_wall(wall);
+             collide = EINA_TRUE;
+          }
+     }
+
+   return collide;
 }
 
 static Eina_Bool
@@ -252,8 +309,13 @@ _animator_cb(void *data)
           {
              _game_over(appdata);
              return ECORE_CALLBACK_RENEW;
- //          _enemy_explose(appdata, enemy);
- //          continue;
+          }
+
+        //Collide with defense wall
+        if (_collision(appdata, enemy))
+          {
+             _enemy_explose(appdata, enemy);
+             continue;
           }
 
         evas_object_move(enemy->entry, (Evas_Coord) enemy->x,
@@ -285,6 +347,8 @@ _app_release(AppData *appdata)
    while (eina_array_count(appdata->words_array))
      free(eina_array_pop(appdata->words_array));
    eina_array_free(appdata->words_array);
+
+   eina_list_free(appdata->defense_wall);
 
    free(appdata);
 
@@ -363,7 +427,7 @@ _combo(AppData *appdata, Enemy *enemy, int combo)
    elm_transit_object_add(transit, text);
    elm_transit_effect_zoom_add(transit, 1, 1.25);
    elm_transit_effect_color_add(transit, 255, 255, 0, 255, 0, 0, 0, 0);
-   elm_transit_del_cb_set(transit, _transit_del_cb, text);
+   elm_transit_del_cb_set(transit, _obj_del, text);
    elm_transit_duration_set(transit, 1);
    elm_transit_go(transit);
 }
@@ -377,6 +441,8 @@ _enemies_kill(AppData *appdata, Evas_Object *obj, const char *input_text,
    Enemy *enemy;
    const char *enemy_text;
 
+//TODO: Minus score when it doesn't any hits
+//TODO: Update Correctness Percentage
    int combo = 0;
    EINA_INLIST_FOREACH_SAFE(appdata->enemies, l, enemy)
      {
@@ -425,6 +491,7 @@ _game_level_cb(void *data, Evas_Object *obj, void *event_info)
    appdata->score = 0;
    elm_object_text_set(appdata->entry, "");
    _remove_all_enemies(appdata);
+   _reset_defense_wall(appdata);
    elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
    _resume(appdata);
 }
@@ -477,7 +544,7 @@ _game_start_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 _top_ranking_cb(void *data, Evas_Object *obj, void *event_info)
 {
-
+  //TODO: 
 }
 
 static void
@@ -528,6 +595,7 @@ _credit_cb(void *data, Evas_Object *obj, void *event_info)
 static void
 _option_cb(void *data, Evas_Object *obj, void *event_info)
 {
+   //TODO:
 }
 
 static Evas_Object *
@@ -539,11 +607,11 @@ _popup_create(Evas_Object *parent, AppData *appdata)
    elm_popup_item_append(popup, "Start", NULL, _game_start_cb,
                               appdata);
    Elm_Object_Item *it;
-   it = elm_popup_item_append(popup, "Option", NULL, _option_cb, NULL);
-   elm_object_item_disabled_set(it, EINA_TRUE);
-   it = elm_popup_item_append(popup, "Ranking", NULL, _top_ranking_cb, NULL);
-   elm_object_item_disabled_set(it, EINA_TRUE);
-   it = elm_popup_item_append(popup, "Credits", NULL, _credit_cb, appdata);
+//   it = elm_popup_item_append(popup, "Option", NULL, _option_cb, NULL);
+//   elm_object_item_disabled_set(it, EINA_TRUE);
+//   it = elm_popup_item_append(popup, "Ranking", NULL, _top_ranking_cb, NULL);
+//   elm_object_item_disabled_set(it, EINA_TRUE);
+   elm_popup_item_append(popup, "Credits", NULL, _credit_cb, appdata);
 
    elm_popup_item_append(popup, "Exit", NULL, _game_exit_cb, appdata);
    //FIXME: It doesn't work
@@ -555,7 +623,7 @@ _popup_create(Evas_Object *parent, AppData *appdata)
 static void
 _popup(AppData *appdata)
 {
-   if (appdata->state != Playing)
+   if (!appdata->popup)
      {
         Evas_Object *popup = _popup_create(appdata->win, appdata);
         appdata->popup = popup;
@@ -587,15 +655,15 @@ static void
 _pause_or_resume(AppData *appdata)
 {
    if (appdata->state == Paused)
-     appdata->state = Playing;
+     {
+        appdata->state = Playing;
+        _resume(appdata);
+     }
    else if (appdata->state == Playing)
-     appdata->state = Paused;
-
-   if (appdata->state == Paused)
-     _pause(appdata);
-   else if (appdata->state == Playing)
-     _resume(appdata);
-
+     {
+        appdata->state = Paused;
+        _pause(appdata);
+     }
    _popup(appdata);
 }
 
@@ -655,6 +723,8 @@ _win_create(int w, int h, AppData *appdata)
    elm_win_autodel_set(win, EINA_TRUE);
    evas_object_smart_callback_add(win, "delete,request", _win_del, NULL);
    evas_object_resize(win, w, h);
+   evas_object_size_hint_min_set(win, w, h);
+   evas_object_size_hint_max_set(win, w, h);
    evas_object_show(win);
    evas_object_event_callback_add(appdata->win, EVAS_CALLBACK_RESIZE,
                                   _win_resize, appdata);
@@ -664,7 +734,7 @@ _win_create(int w, int h, AppData *appdata)
 static Eina_Array *
 _words_create()
 {
-   Eina_Array *array = eina_array_new(100);
+   Eina_Array *array = eina_array_new(400);
    if (!array) return NULL;
 
    char buf[128];
@@ -681,6 +751,19 @@ _words_create()
    return array;
 }
 
+static void
+_table_resize_cb(void *data, Evas *e, Evas_Object *obj, void *event_info)
+{
+   Evas_Coord x, y, w, h;
+   evas_object_geometry_get(obj, &x, &y, &w, &h);
+
+   AppData *appdata = data;
+   appdata->defense_rect.x = x;
+   appdata->defense_rect.y = y;
+   appdata->defense_rect.w = w;
+   appdata->defense_rect.h = h;
+}
+
 static Evas_Object *
 _table_create(Evas_Object *ly, const char *part, AppData *appdata)
 {
@@ -688,34 +771,47 @@ _table_create(Evas_Object *ly, const char *part, AppData *appdata)
    if (!table) return NULL;
    elm_table_homogeneous_set(table, EINA_TRUE);
    elm_table_padding_set(table, 1, 1);
-   elm_object_part_content_set(ly, "life_wall", table);
+   elm_object_part_content_set(ly, "defense_wall", table);
    evas_object_show(table);
-
+   evas_object_event_callback_add(table, EVAS_CALLBACK_RESIZE, _table_resize_cb,
+                                  appdata);
    return table;
 }
 
-static void
-_life_wall_set(Evas_Object *table)
+static Eina_List *
+_defense_wall_set(Evas_Object *table)
 {
-   int i, j;
    Evas *evas = evas_object_evas_get(table);
+   Eina_List *list = NULL;
+   int i, j;
 
-   for (i = 0; i < LIFE_WALL_CNT; i++)
+   for (i = 0; i < DEFENSE_WALL_CNT; i++)
      {
         for (j = 0; j < 2; j++)
           {
              Evas_Object *obj = evas_object_rectangle_add(evas);
              if (!obj) continue;
-             evas_object_color_set(obj, 100, 100, 100, 170);
+             evas_object_color_set(obj, WALL_COLOR);
              evas_object_size_hint_align_set(obj, EVAS_HINT_FILL,
                                              EVAS_HINT_FILL);
              evas_object_size_hint_weight_set(obj, EVAS_HINT_EXPAND,
                                               EVAS_HINT_EXPAND);
              evas_object_show(obj);
              elm_table_pack(table, obj, i, j, 1, 1);
+
+             list = eina_list_append(list, obj);
           }
      }
+   return list;
+}
 
+static void
+_reset_defense_wall(AppData *appdata)
+{
+   eina_list_free(appdata->defense_wall);
+   evas_object_del(appdata->table);
+   appdata->table = _table_create(appdata->ly, "table", appdata);
+   appdata->defense_wall = _defense_wall_set(appdata->table);
 }
 
 static void
@@ -727,6 +823,7 @@ _app_init(AppData *appdata)
    appdata->bx = _box_create(appdata->ly, "enemies");
    appdata->entry = _entry_create(appdata->ly, "entry", appdata);
    appdata->table = _table_create(appdata->ly, "table", appdata);
+   appdata->defense_wall = _defense_wall_set(appdata->table);
    appdata->state = Ready;
    appdata->level = 1;
    appdata->bound_w = DEFAULT_WIN_W;
@@ -746,7 +843,6 @@ elm_main(int argc, char **argv)
    ecore_event_handler_add(ECORE_EVENT_KEY_DOWN, _key_down_cb, appdata);
 
    _app_init(appdata);
-   _life_wall_set(appdata->table);
    _pause(appdata);
    _popup(appdata);
 
