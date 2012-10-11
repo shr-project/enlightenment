@@ -46,8 +46,7 @@ AppsListController = EUI.ListController({
     };
   },
   selectedItemAtIndex: function(index) {
-    this.split.right.promoteController(index);
-    this.split.leftPanelVisible = false;
+    this.model.selectedIndex = index;
   }
 });
 

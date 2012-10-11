@@ -4,14 +4,15 @@ WebPageController = EUI.WebController({
   url: 'http://www.enlightenment.org',
   titleVisible: false,
   didChangeTitle: function(title) {
-    this.title = title;
-    if (title)
-      this.parent.updateView();
+    var index = webPagesModel.indexOf(this);
+    webPagesModel.updateItemAtIndex(index, {title: title});
   }
 });
 
+webPagesModel = new EUI.ArrayModel([new WebPageController()]);
+
 BrowserController = EUI.TabController({
-  model: new EUI.ArrayModel([new WebPageController()]),
+  model: webPagesModel,
   toolbarItems: [{tag: 'new', label: '+'}],
   selectedToolbarItem: function(item) {
     switch (item.tag) {

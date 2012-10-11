@@ -137,12 +137,11 @@ Controller = Class.extend({
 
   willInitialize: function () {},
 
-  didInitialize: function () {
-    if (this.model)
-      this.model.addController(this);
-  },
+  didInitialize: function () {},
 
   didRealizeView: function () {
+    if (this.model)
+      this.model.addController(this);
     this.updateView();
     this.evaluateViewChanges();
   },
@@ -363,6 +362,16 @@ Model = Class.extend({
   updateItemAtIndex: function(index, data) {},
 });
 
+Model.prototype.__defineGetter__('selectedIndex', function() {
+  return this._selectedIndex;
+});
+Model.prototype.__defineSetter__('selectedIndex', function(value) {
+  if (typeof(value) !== 'number' || this._selectedIndex === value)
+    return;
+  this._selectedIndex = value;
+  this.notifyControllers(value, 'select');
+});
+
 ArrayModel = Model.extend({
   init: function(array) {
     this.array = [].concat(array);
@@ -378,8 +387,18 @@ ArrayModel = Model.extend({
     this.notifyControllers(index, 'delete');
   },
   updateItemAtIndex: function(index, data) {
-    this.array[index] = data;
-    this.notifyControllers(index);
+    var item = this.array[index];
+    if (typeof(data) === 'object' && typeof(item) === 'object') {
+      for (var i in data)
+        if (data.hasOwnProperty(i))
+          item[i] = data[i];
+    } else {
+      this.array[index] = data;
+    }
+    this.notifyControllers(index, 'update');
+  },
+  indexOf: function(data) {
+    return this.array.indexOf(data);
   },
   pushItem: function(data) {
     this.notifyControllers(this.array.push(data) - 1, 'insert');
@@ -756,6 +775,9 @@ GenController = Controller.extend({
   updateView: function(indexes, hint) {
     this.searchBarVisible = !!this.search;
 
+    if (hint === 'select')
+      return;
+
     var view = this._getView().content.list;
 
     if (hint === 'delete') {
@@ -1036,114 +1058,6 @@ var WebController = Controller.extend({
   }
 });
 
-TabController = Controller.extend({
-  willInitialize: function() {
-    this.viewDescriptor = elm.Layout({
-      file: {
-        name: 'eui.edj',
-        group: 'app'
-      },
-      content: {
-        'toolbar': elm.Toolbar({
-          select_mode: 'always',
-          elements: {}
-        }),
-        'view': elm.Naviframe({
-          title_visible: false,
-          elements: {}
-        })
-      }
-    });
-  },
-  didRealizeView: function() {
-    if (!this.view) {
-      this.view = this.viewContent.content.view;
-      this._tabview = this.view.content.view;
-    }
-
-    this.view.signal_emit(this.tabPosition + ',toolbar', '');
-    this.view.signal_emit((this.hasTabBar == false ? 'hide' : 'show') + ',toolbar', '');
-    this.updateView();
-
-    if (this.model.length()) {
-      this._tabview.elements[0].promote();
-      this.view.content.toolbar.shrink_mode = 'expand';
-    }
-
-    this._super();
-  },
-  updateView: function(ctrl) {
-    for (var i = 0; i < this.model.length(); ++i) {
-      var ctrl = this.model.itemAtIndex(i);
-
-      if (ctrl._tabIndex == undefined) {
-        ctrl._tabIndex = i;
-        this.pushController(ctrl);
-      }
-
-      this._updateTabView(ctrl);
-    }
-  },
-  promoteController: function(ctrl) {
-    this.currentTab = ctrl;
-    this._tabview.elements[ctrl._tabIndex].promote();
-  },
-  pushController: function(ctrl) {
-    if (this === ctrl) {
-      /* FIXME: This test exists ONLY to workaround _createSidePanelItems. */
-      this._super(ctrl);
-      return;
-    }
-
-    if (ctrl instanceof ActionSheet)
-      return;
-
-    if (ctrl.naviframe === undefined) {
-      ctrl.parent = this;
-      this._tabview.elements[ctrl._tabIndex] = {
-        content: this._createNaviframeDescriptor()
-      };
-      ctrl.naviframe = this._tabview.elements[ctrl._tabIndex].content;
-    }
-
-    var cnt = Object.keys(ctrl.naviframe.elements).length;
-    ctrl.naviframe.elements[cnt] = {
-      content: ctrl._getViewDescriptor(),
-      style: ctrl._feature(ctrl.navigationBarStyle, null)
-    };
-    ctrl._setViewContent(ctrl.naviframe.elements[cnt]);
-    ctrl.didRealizeView();
-  },
-  _updateTabView: function(ctrl) {
-    var tabbar = this._getView().content.toolbar;
-    var tab = tabbar.elements[ctrl._tabIndex];
-
-    if (tab) {
-      tab.label = ctrl.title;
-      tab.icon = ctrl.icon;
-    } else {
-      tabbar.elements[ctrl._tabIndex] = {
-        label: ctrl.title,
-        icon: ctrl.icon,
-        selected: true,
-        on_select: function(ctrl) {
-          this.promoteController(ctrl);
-          if(this.selectTabItem)
-            this.selectTabItem(ctrl._tabIndex);
-        }.bind(this, ctrl)
-      };
-    }
-  },
-  _createNaviframeDescriptor: function() {
-    return elm.Naviframe({
-      expand: 'both',
-      resize: true,
-      title_visible: false,
-      elements: {}
-    });
-  }
-});
-
 Container = Controller.extend({
   evaluateViewChanges: function() {},
   _getViewDescriptor: function() {
@@ -1163,6 +1077,8 @@ Container = Controller.extend({
     return this.view;
   },
   didRealizeView: function () {
+    if (this.model)
+      this.model.addController(this);
     this.updateView();
   },
   promoteController: function(index) {
@@ -1233,6 +1149,98 @@ SplitController = Container.extend({
 
 SplitController.prototype.__defineSetter__("leftPanelVisible", function(setting) {
   this._getView().signal_emit(setting ? "show,left" : "hide,left", "");
+});
+
+ToolController = Container.extend({
+  viewDescriptor: elm.Toolbar({
+    shrink_mode: 'expand',
+    select_mode: 'always',
+    elements: {}
+  }),
+
+  selectedItemAtIndex: function(index) {},
+
+  updateView: function(index, hint) {
+
+    var elements = this._getView().elements;
+    var selected = this.model.selectedIndex;
+
+    var update = function(index) {
+
+      var real = elements[index];
+
+      if (!real)
+        real =elements[index] = {};
+
+      var ctrl = this.model.itemAtIndex(index);
+
+      real.on_select = this.selectedItemAtIndex.bind(this, index);
+      real.selected = (index === selected);
+      real.label = ctrl._getTitle();
+      real.icon = ctrl.icon;
+
+    }.bind(this);
+
+    /* Update controllers items */
+    if (index !== undefined)
+      update(index);
+    else
+      for (var len = this.model.length(), index = 0; index < len; index++)
+        update(index);
+
+    /* Update toolbar items */
+    var items = this._feature(this.toolbarItems, []);
+    if (items.length) {
+      var len = this.model.length();
+      elements[len] = { separator: true };
+      for (var i = 0; i < items.length; i++) {
+        elements[len + i] = items[i];
+        elements[len + i].on_select = this.selectedToolbarItem.bind(this, elements[len + i]);
+      }
+    }
+  }
+});
+
+TabController = Container.extend({
+  viewDescriptor: elm.Layout({
+    expand: 'both',
+    fill: 'both',
+    resize: true,
+    file: { name: 'eui.edj', group: 'app' },
+    content: {}
+  }),
+
+  didRealizeView: function() {
+
+    this.toolbar = new ToolController();
+    this.toolbar.model = this.model;
+    this.toolbar.toolbarItems = this.toolbarItems;
+    this.toolbar.selectedToolbarItem = this.selectedToolbarItem;
+    this.toolbar.selectedItemAtIndex = function(index) {
+      this.model.selectedIndex = index;
+    };
+
+    var view = this._getView();
+    view.content.toolbar = this.toolbar._realizeApp();
+    this.toolbar._setRealizedApp(view.content.toolbar);
+
+    this.frame = new FrameController();
+    this.frame.parent = this;
+    this.frame.model = this.model;
+
+    view.content.view = this.frame._realizeApp();
+    this.frame._setRealizedApp(view.content.view);
+
+    if (this.model.length())
+      this.model.selectedIndex = 0;
+  },
+
+  updateView: function(index, hint) {
+
+    var view = this._getView();
+    view.signal_emit(this.tabPosition + ',toolbar', '');
+    view.signal_emit((this.hasTabBar == false ? 'hide' : 'show') + ',toolbar', '');
+  },
 });
 
 ImageController = Controller.extend({
