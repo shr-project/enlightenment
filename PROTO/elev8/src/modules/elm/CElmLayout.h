@@ -52,6 +52,8 @@ public:
 
    Handle<Value> signal_emit(const Arguments& args);
 
+   Handle<Value> data_get(const Arguments& args);
+
    Handle<Value> table_clear(const Arguments& args);
 
    friend Handle<Value> CElmObject::New<CElmLayout>(const Arguments& args);

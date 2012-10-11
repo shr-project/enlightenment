@@ -14,6 +14,7 @@ GENERATE_METHOD_CALLBACKS(CElmLayout, part_cursor_unset);
 GENERATE_METHOD_CALLBACKS(CElmLayout, sizing_eval);
 GENERATE_METHOD_CALLBACKS(CElmLayout, box_remove_all);
 GENERATE_METHOD_CALLBACKS(CElmLayout, signal_emit);
+GENERATE_METHOD_CALLBACKS(CElmLayout, data_get);
 GENERATE_METHOD_CALLBACKS(CElmLayout, table_clear);
 
 GENERATE_TEMPLATE_FULL(CElmContainer, CElmLayout,
@@ -26,6 +27,7 @@ GENERATE_TEMPLATE_FULL(CElmContainer, CElmLayout,
                   METHOD(sizing_eval),
                   METHOD(box_remove_all),
                   METHOD(signal_emit),
+                  METHOD(data_get),
                   METHOD(table_clear));
 
 CElmLayout::CElmLayout(Local<Object> _jsObject, CElmObject *_parent)
@@ -205,6 +207,15 @@ Handle<Value> CElmLayout::signal_emit(const Arguments& args)
      elm_layout_signal_emit(eo, *String::Utf8Value(args[0]), *String::Utf8Value(args[1]));
 
    return Undefined();
+}
+
+Handle<Value> CElmLayout::data_get(const Arguments& args)
+{
+   if(!args[0]->IsString())
+      return Undefined();
+
+   const char *data =  elm_layout_data_get(eo, *String::Utf8Value(args[0]));
+   return data ? String::New(data) : Undefined();
 }
 
 Handle<Value> CElmLayout::table_clear(const Arguments& args)
