@@ -122,12 +122,13 @@ Handle<Value> CElmGenList::Pack(Handle<Value> value, Handle<Value> replace)
 Handle<Value> CElmGenList::Unpack(Handle<Value> value)
 {
    Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(value);
+
    if (!item)
      return Undefined();
-   Handle<Value> attrs = value->ToObject()->GetHiddenValue(Item<CElmGenList>::str_attrs);
-   if (!attrs.IsEmpty())
+
+   if (value->IsObject())
      {
-        Local<Object> obj = attrs->ToObject();
+        Local<Object> obj = value->ToObject();
         if (obj->Get(Item<CElmGenList>::str_before)->IsUndefined())
           {
              Elm_Object_Item *before = elm_genlist_item_next_get(item->object_item);
@@ -135,12 +136,12 @@ Handle<Value> CElmGenList::Unpack(Handle<Value> value)
                {
                   Item<CElmGenList> *before_item = static_cast< Item<CElmGenList> *>
                      (elm_object_item_data_get(before));
-                  obj->Set(Item<CElmGenList>::str_before, before_item->jsObject);
+                  obj->ForceSet(Item<CElmGenList>::str_before, before_item->jsObject);
                }
           }
      }
    elm_object_item_del(item->object_item);
-   return attrs;
+   return value;
 }
 
 void CElmGenList::UpdateItem(Handle<Value> value)

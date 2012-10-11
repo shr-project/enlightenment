@@ -20,7 +20,6 @@ struct Item {
 
    static Persistent<String> str_item;
    static Persistent<String> str_before;
-   static Persistent<String> str_attrs;
    static Persistent<String> str_class;
    static Persistent<String> str_parent;
 
@@ -43,10 +42,19 @@ struct Item {
            tmpl = Persistent<ObjectTemplate>::New(klass->InstanceTemplate());
            tmpl->SetNamedPropertyHandler(ElementGet, ElementSet);
         }
+
       jsObject = Persistent<Object>::New(tmpl->NewInstance());
       jsObject->SetHiddenValue(str_item, External::Wrap(this));
-      jsObject->SetHiddenValue(str_attrs, value);
       jsObject->SetHiddenValue(str_parent, parent);
+
+      Local<Object> obj = value->ToObject();
+      Local<Array> properties = obj->GetOwnPropertyNames();
+
+      for (unsigned int i = 0; i < properties->Length(); ++i)
+        {
+           Local<Value> key = properties->Get(i);
+           jsObject->ForceSet(key, obj->Get(key));
+        }
    }
 
    ~Item()
@@ -67,6 +75,7 @@ struct Item {
         item_class = new ItemClass<T>(value);
       else
         item_class = static_cast<ItemClass<T> *>(External::Unwrap(klass));
+
       return item_class->GetElmClass();
    }
 
@@ -85,19 +94,14 @@ struct Item {
       if (!info.This()->GetRealNamedPropertyInPrototypeChain(attr).IsEmpty())
         return Handle<Value>();
 
-      Local<Object> attrs = info.This()->GetHiddenValue(str_attrs)->ToObject();
-      attrs->Set(attr, val);
+      info.This()->ForceSet(attr, val);
       T::UpdateItem(info.This());
       return val;
    }
 
-   static Handle<Value> ElementGet(Local<String> attr, const AccessorInfo& info)
+   static Handle<Value> ElementGet(Local<String> , const AccessorInfo &)
    {
-      if (!info.This()->GetRealNamedPropertyInPrototypeChain(attr).IsEmpty())
-        return Handle<Value>();
-
-      Local<Value> attrs = info.This()->GetHiddenValue(str_attrs);
-      return attrs->ToObject()->Get(attr);
+     return Handle<Value>();
    }
 
    static Item<T> *Unwrap(const AccessorInfo& info)
@@ -118,8 +122,6 @@ struct Item {
 
 template <class T>
 Persistent<String> Item<T>::str_parent = Persistent<String>::New(String::NewSymbol("elm::gen::parent"));
-template <class T>
-Persistent<String> Item<T>::str_attrs = Persistent<String>::New(String::NewSymbol("elm::gen::attrs"));
 template <class T>
 Persistent<String> Item<T>::str_item = Persistent<String>::New(String::NewSymbol("elm::gen::item"));
 template <class T>

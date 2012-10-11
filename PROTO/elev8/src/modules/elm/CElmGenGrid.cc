@@ -90,10 +90,9 @@ Handle<Value> CElmGenGrid::Unpack(Handle<Value> value)
    if (!item)
      return Undefined();
 
-   Handle<Value> attrs = value->ToObject()->GetHiddenValue(Item<CElmGenGrid>::str_attrs);
-   if (!attrs.IsEmpty())
+   if (value->IsObject())
      {
-        Local<Object> obj = attrs->ToObject();
+        Local<Object> obj = value->ToObject();
         if (obj->Get(Item<CElmGenGrid>::str_before)->IsUndefined())
           {
              Elm_Object_Item *before = elm_gengrid_item_next_get(item->object_item);
@@ -101,12 +100,12 @@ Handle<Value> CElmGenGrid::Unpack(Handle<Value> value)
                {
                   Item<CElmGenGrid> *before_item = static_cast< Item<CElmGenGrid> *>
                      (elm_object_item_data_get(before));
-                  obj->Set(Item<CElmGenGrid>::str_before, before_item->jsObject);
+                  obj->ForceSet(Item<CElmGenGrid>::str_before, before_item->jsObject);
                }
           }
      }
    elm_object_item_del(item->object_item);
-   return attrs;
+   return value;
 }
 
 void CElmGenGrid::UpdateItem(Handle<Value> value)
