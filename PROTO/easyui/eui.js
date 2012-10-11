@@ -1177,13 +1177,15 @@ ToolController = Container.extend({
 
       var real = elements[index];
 
-      if (!real)
-        real =elements[index] = {};
-
-      var ctrl = this.model.itemAtIndex(index);
+      if (!real) {
+        elements[index] = {};
+        real = elements[index];
+      }
 
       real.on_select = this.selectedItemAtIndex.bind(this, index);
       real.selected = (index === selected);
+
+      var ctrl = this.model.itemAtIndex(index);
       real.label = ctrl._getTitle();
       real.icon = ctrl.icon;
 
