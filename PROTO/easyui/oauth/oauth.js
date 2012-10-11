@@ -540,7 +540,6 @@ OAuth.SignatureMethod.registerMethodClass(["PLAINTEXT", "PLAINTEXT-Accessor"],
 OAuth.SignatureMethod.registerMethodClass(["HMAC-SHA1", "HMAC-SHA1-Accessor"],
     OAuth.SignatureMethod.makeSubclass(
         function getSignature(baseString) {
-            print(baseString);
             var sha1 = require('sha1.js');
             sha1.b64pad = '=';
             var signature = sha1.b64_hmac_sha1(this.key, baseString);
