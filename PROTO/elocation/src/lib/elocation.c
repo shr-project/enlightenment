@@ -16,7 +16,10 @@ static Elocation_Provider *provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
+static EDBus_Object *obj_ubuntu = NULL;
 static EDBus_Proxy *ubuntu_geoclue = NULL;
+static EDBus_Proxy *ubuntu_address = NULL;
+static EDBus_Proxy *ubuntu_position = NULL;
 
 int _elocation_log_dom = -1;
 
@@ -328,22 +331,6 @@ EAPI Eina_Bool
 elocation_address_get(Elocation_Address *address)
 {
    EDBus_Pending *pending;
-   EDBus_Object *obj_ubuntu;
-   EDBus_Proxy *ubuntu_address;
-
-   obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
-   if (!obj_ubuntu)
-     {
-        ERR("Error: could not get object");
-        return EXIT_FAILURE;
-     }
-
-   ubuntu_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
-   if (!ubuntu_address)
-     {
-        ERR("Error: could not get proxy");
-        return EXIT_FAILURE;
-     }
 
    pending = edbus_proxy_call(ubuntu_address, "GetAddress", address_cb, NULL, -1, "");
    if (!pending)
@@ -357,22 +344,6 @@ EAPI Eina_Bool
 elocation_position_get(Elocation_Position *position)
 {
    EDBus_Pending *pending;
-   EDBus_Object *obj_ubuntu;
-   EDBus_Proxy *ubuntu_position;
-
-   obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
-   if (!obj_ubuntu)
-     {
-        ERR("Error: could not get object");
-        return EXIT_FAILURE;
-     }
-
-   ubuntu_position = edbus_proxy_get(obj_ubuntu, GEOCLUE_POSITION_IFACE);
-   if (!ubuntu_position)
-     {
-        ERR("Error: could not get proxy");
-        return EXIT_FAILURE;
-     }
 
    pending = edbus_proxy_call(ubuntu_position, "GetPosition", position_cb, NULL, -1, "");
    if (!pending)
@@ -386,22 +357,6 @@ EAPI Eina_Bool
 elocation_status_get(int *status)
 {
    EDBus_Pending *pending;
-   EDBus_Object *obj_ubuntu;
-   EDBus_Proxy *ubuntu_geoclue;
-
-   obj_ubuntu = edbus_object_get(conn, UBUNTU_DBUS_NAME, UBUNTU_OBJECT_PATH);
-   if (!obj_ubuntu)
-     {
-        ERR("Error: could not get object");
-        return EXIT_FAILURE;
-     }
-
-   ubuntu_geoclue = edbus_proxy_get(obj_ubuntu, GEOCLUE_GEOCLUE_IFACE);
-   if (!ubuntu_geoclue)
-     {
-        ERR("Error: could not get proxy");
-        return EXIT_FAILURE;
-     }
 
    pending = edbus_proxy_call(ubuntu_geoclue, "GetStatus", status_cb, NULL, -1, "");
    if (!pending)
@@ -415,8 +370,8 @@ EAPI Eina_Bool
 elocation_init()
 {
    EDBus_Message *msg;
-   EDBus_Object *obj_ubuntu, *obj_master;
-   EDBus_Proxy *manager_master, *ubuntu_address, *ubuntu_position;
+   EDBus_Object *obj_master = NULL;
+   EDBus_Proxy *manager_master = NULL;
    EDBus_Pending *pending, *pending2, *pending3;
 
    if (!eina_init()) return EINA_FALSE;
