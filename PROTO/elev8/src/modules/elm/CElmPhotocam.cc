@@ -108,8 +108,7 @@ void CElmPhotocam::zoom_mode_set(Handle<Value> value)
 
 void CElmPhotocam::paused_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_photocam_paused_set(eo, val->BooleanValue());
+   elm_photocam_paused_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmPhotocam::paused_get() const
@@ -119,8 +118,7 @@ Handle<Value> CElmPhotocam::paused_get() const
 
 void CElmPhotocam::gesture_enabled_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_photocam_gesture_enabled_set(eo, val->BooleanValue());
+   elm_photocam_gesture_enabled_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmPhotocam::gesture_enabled_get() const

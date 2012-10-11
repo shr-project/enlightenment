@@ -25,8 +25,7 @@ GENERATE_TEMPLATE_FULL(CElmLayout, CElmProgressBar,
 
 Handle<Value> CElmProgressBar::pulse(const Arguments& args)
 {
-   if (args[0]->IsBoolean())
-     elm_progressbar_pulse(eo, args[0]->BooleanValue());
+   elm_progressbar_pulse(eo, args[0]->BooleanValue());
    return Undefined();
 }
 
@@ -64,8 +63,7 @@ Handle<Value> CElmProgressBar::inverted_get() const
 
 void CElmProgressBar::inverted_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_progressbar_inverted_set(eo, value->BooleanValue());
+   elm_progressbar_inverted_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmProgressBar::horizontal_get() const
@@ -75,8 +73,7 @@ Handle<Value> CElmProgressBar::horizontal_get() const
 
 void CElmProgressBar::horizontal_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_progressbar_horizontal_set(eo, value->BooleanValue());
+   elm_progressbar_horizontal_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmProgressBar::units_get() const
@@ -110,8 +107,7 @@ Handle<Value> CElmProgressBar::pulser_get() const
 
 void CElmProgressBar::pulser_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_progressbar_pulse_set(eo, value->BooleanValue());
+   elm_progressbar_pulse_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmProgressBar::value_get() const

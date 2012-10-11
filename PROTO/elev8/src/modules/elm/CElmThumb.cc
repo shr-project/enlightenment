@@ -114,8 +114,7 @@ Handle<Value> CElmThumb::editable_get() const
 
 void CElmThumb::editable_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_thumb_editable_set(eo, val->BooleanValue());
+   elm_thumb_editable_set(eo, val->BooleanValue());
 }
 
 void CElmThumb::OnGenerateStart(void *)

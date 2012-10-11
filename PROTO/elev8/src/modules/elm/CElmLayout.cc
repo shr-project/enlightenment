@@ -194,7 +194,7 @@ Handle<Value> CElmLayout::sizing_eval(const Arguments&)
 
 Handle<Value> CElmLayout::box_remove_all(const Arguments& args)
 {
-   if((args[0]->IsUndefined()) && (args[1]->IsBoolean()))
+   if((args[0]->IsUndefined()) && (!args[1]->IsUndefined()))
      return Boolean::New(elm_layout_box_remove_all(eo,
                               *String::Utf8Value(args[0]),
                               args[1]->BooleanValue()));
@@ -220,7 +220,7 @@ Handle<Value> CElmLayout::data_get(const Arguments& args)
 
 Handle<Value> CElmLayout::table_clear(const Arguments& args)
 {
-   if((args[0]->IsUndefined()) && (args[1]->IsBoolean()))
+   if((args[0]->IsUndefined()) && (!args[1]->IsUndefined()))
      return Boolean::New(elm_layout_table_clear(eo,
                               *String::Utf8Value(args[0]),
                               args[1]->BooleanValue()));

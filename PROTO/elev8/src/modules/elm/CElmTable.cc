@@ -96,8 +96,7 @@ Handle<Value> CElmTable::Unpack(Handle<Value> item)
 
 void CElmTable::homogeneous_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_table_homogeneous_set(eo, val->BooleanValue());
+   elm_table_homogeneous_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmTable::homogeneous_get() const

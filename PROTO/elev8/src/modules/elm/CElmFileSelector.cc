@@ -81,8 +81,7 @@ Handle<Value> CElmFileSelector::expandable_get() const
 
 void CElmFileSelector::expandable_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_fileselector_expandable_set(eo, val->BooleanValue());
+   elm_fileselector_expandable_set(eo, val->BooleanValue());
 }
 Handle<Value> CElmFileSelector::folder_only_get() const
 {
@@ -91,8 +90,7 @@ Handle<Value> CElmFileSelector::folder_only_get() const
 
 void CElmFileSelector::folder_only_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_fileselector_folder_only_set(eo, val->BooleanValue());
+   elm_fileselector_folder_only_set(eo, val->BooleanValue());
 }
 Handle<Value> CElmFileSelector::is_save_get() const
 {
@@ -101,8 +99,7 @@ Handle<Value> CElmFileSelector::is_save_get() const
 
 void CElmFileSelector::is_save_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_fileselector_is_save_set(eo, val->BooleanValue());
+   elm_fileselector_is_save_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmFileSelector::mode_get() const
@@ -158,8 +155,7 @@ Handle<Value> CElmFileSelector::buttons_get() const
 
 void CElmFileSelector::buttons_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-       elm_fileselector_buttons_ok_cancel_set(eo, val->BooleanValue());
+   elm_fileselector_buttons_ok_cancel_set(eo, val->BooleanValue());
 }
 
 }

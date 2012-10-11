@@ -100,8 +100,7 @@ Handle<Value> CElmNaviframe::title_visible_get() const
 
 void CElmNaviframe::event_enabled_set(Handle<Value> val)
 {
-   if(val->IsBoolean())
-     elm_naviframe_event_enabled_set(eo, val->BooleanValue());
+   elm_naviframe_event_enabled_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmNaviframe::event_enabled_get() const
@@ -111,8 +110,7 @@ Handle<Value> CElmNaviframe::event_enabled_get() const
 
 void CElmNaviframe::prev_btn_auto_pushed_set(Handle<Value> val)
 {
-   if(val->IsBoolean())
-     elm_naviframe_prev_btn_auto_pushed_set(eo, val->BooleanValue());
+   elm_naviframe_prev_btn_auto_pushed_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmNaviframe::prev_btn_auto_pushed_get() const
@@ -122,8 +120,7 @@ Handle<Value> CElmNaviframe::prev_btn_auto_pushed_get() const
 
 void CElmNaviframe::content_preserve_on_pop_set(Handle<Value> val)
 {
-   if(val->IsBoolean())
-     elm_naviframe_content_preserve_on_pop_set(eo, val->BooleanValue());
+   elm_naviframe_content_preserve_on_pop_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmNaviframe::content_preserve_on_pop_get() const

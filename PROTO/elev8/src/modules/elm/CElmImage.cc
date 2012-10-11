@@ -87,8 +87,7 @@ Handle<Value> CElmImage::smooth_get() const
 
 void CElmImage::smooth_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_image_smooth_set(eo, val->BooleanValue());
+   elm_image_smooth_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::no_scale_get() const
@@ -98,8 +97,7 @@ Handle<Value> CElmImage::no_scale_get() const
 
 void CElmImage::no_scale_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_image_no_scale_set(eo, val->BooleanValue());
+   elm_image_no_scale_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::fill_outside_get() const
@@ -109,8 +107,7 @@ Handle<Value> CElmImage::fill_outside_get() const
 
 void CElmImage::fill_outside_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_image_fill_outside_set(eo, val->BooleanValue());
+   elm_image_fill_outside_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::editable_get() const
@@ -120,8 +117,7 @@ Handle<Value> CElmImage::editable_get() const
 
 void CElmImage::CElmImage::editable_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_image_editable_set(eo, val->BooleanValue());
+   elm_image_editable_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::aspect_fixed_get() const
@@ -131,8 +127,7 @@ Handle<Value> CElmImage::aspect_fixed_get() const
 
 void CElmImage::aspect_fixed_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_image_aspect_fixed_set(eo, val->BooleanValue());
+   elm_image_aspect_fixed_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::prescale_get() const
@@ -175,12 +170,9 @@ Handle<Value> CElmImage::object_size_get() const
 
 void CElmImage::resizable_up_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     {
-        Eina_Bool down;
-        elm_image_resizable_get(eo, NULL, &down);
-        elm_image_resizable_set(eo, val->BooleanValue(), down);
-     }
+   Eina_Bool down;
+   elm_image_resizable_get(eo, NULL, &down);
+   elm_image_resizable_set(eo, val->BooleanValue(), down);
 }
 
 Handle<Value> CElmImage::resizable_up_get() const
@@ -192,12 +184,9 @@ Handle<Value> CElmImage::resizable_up_get() const
 
 void CElmImage::resizable_down_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     {
-        Eina_Bool up;
-        elm_image_resizable_get(eo, &up, NULL);
-        elm_image_resizable_set(eo, up, val->BooleanValue());
-     }
+   Eina_Bool up;
+   elm_image_resizable_get(eo, &up, NULL);
+   elm_image_resizable_set(eo, up, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::resizable_down_get() const
@@ -219,8 +208,7 @@ Handle<Value> CElmImage::animated_get() const
 
 void CElmImage::animated_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_image_animated_set(eo, val->BooleanValue());
+   elm_image_animated_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::animated_play_get() const
@@ -230,8 +218,7 @@ Handle<Value> CElmImage::animated_play_get() const
 
 void CElmImage::animated_play_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_image_animated_play_set(eo, val->BooleanValue());
+   elm_image_animated_play_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmImage::preload_disabled_get() const
@@ -241,9 +228,6 @@ Handle<Value> CElmImage::preload_disabled_get() const
 
 void CElmImage::preload_disabled_set(Handle<Value> val)
 {
-  if (!val->IsBoolean())
-    return;
-
   elm_image_preload_disabled_set(eo, val->BooleanValue());
 
   preload_disabled.Dispose();

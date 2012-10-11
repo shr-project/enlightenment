@@ -188,8 +188,7 @@ Handle<Value> CElmToolbar::Item::GetSelected(Local<String> , const AccessorInfo 
 
 void CElmToolbar::Item::SetSelected(Local<String> , Local<Value> value, const AccessorInfo &info)
 {
-   if (value->IsBoolean())
-     elm_toolbar_item_selected_set(Unwrap(info)->object_item, value->BooleanValue());
+   elm_toolbar_item_selected_set(Unwrap(info)->object_item, value->BooleanValue());
 }
 
 void CElmToolbar::Item::SetSeparator(Local<String>, Local<Value> value, const AccessorInfo &info)
@@ -453,8 +452,7 @@ Handle<Value> CElmToolbar::homogeneous_get() const
 
 void CElmToolbar::homogeneous_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_toolbar_homogeneous_set(eo, value->BooleanValue());
+   elm_toolbar_homogeneous_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmToolbar::item_align_get() const
@@ -508,8 +506,7 @@ void CElmToolbar::shrink_mode_set(Handle<Value> value)
 
 void CElmToolbar::horizontal_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-      elm_toolbar_horizontal_set(eo, value->BooleanValue());
+   elm_toolbar_horizontal_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmToolbar::horizontal_get() const

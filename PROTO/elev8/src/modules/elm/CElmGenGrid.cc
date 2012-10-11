@@ -163,8 +163,7 @@ Handle<Value> CElmGenGrid::multi_select_get() const
 
 void CElmGenGrid::multi_select_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_gengrid_multi_select_set(eo, value->BooleanValue());
+   elm_gengrid_multi_select_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenGrid::reorder_mode_get() const
@@ -174,8 +173,7 @@ Handle<Value> CElmGenGrid::reorder_mode_get() const
 
 void CElmGenGrid::reorder_mode_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_gengrid_reorder_mode_set(eo, value->BooleanValue());
+   elm_gengrid_reorder_mode_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenGrid::select_mode_get() const
@@ -196,8 +194,7 @@ Handle<Value> CElmGenGrid::highlight_mode_get() const
 
 void CElmGenGrid::highlight_mode_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_gengrid_highlight_mode_set(eo, value->BooleanValue());
+   elm_gengrid_highlight_mode_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenGrid::horizontal_get() const
@@ -207,8 +204,7 @@ Handle<Value> CElmGenGrid::horizontal_get() const
 
 void CElmGenGrid::horizontal_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_gengrid_horizontal_set(eo, value->BooleanValue());
+   elm_gengrid_horizontal_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenGrid::filled_get() const
@@ -218,8 +214,7 @@ Handle<Value> CElmGenGrid::filled_get() const
 
 void CElmGenGrid::filled_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_gengrid_filled_set(eo, value->BooleanValue());
+   elm_gengrid_filled_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenGrid::item_align_get() const

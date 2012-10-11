@@ -43,8 +43,7 @@ Handle<Value> CElmPane::horizontal_get() const
 
 void CElmPane::horizontal_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_panes_horizontal_set(eo, val->BooleanValue());
+   elm_panes_horizontal_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmPane::left_get() const
@@ -80,8 +79,7 @@ Handle<Value> CElmPane::fixed_get() const
 
 void CElmPane::fixed_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_panes_fixed_set(eo, val->BooleanValue());
+   elm_panes_fixed_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmPane::size_left_content_get() const

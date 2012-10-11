@@ -83,8 +83,7 @@ Handle<Value> CElmVideo::audio_mute_get() const
 
 void CElmVideo::audio_mute_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_video_audio_mute_set(eo, val->BooleanValue());
+   elm_video_audio_mute_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmVideo::play_position_get() const
@@ -105,8 +104,7 @@ Handle<Value> CElmVideo::remember_position_get() const
 
 void CElmVideo::remember_position_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_video_remember_position_set(eo, val->BooleanValue());
+   elm_video_remember_position_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmVideo::playing_get() const

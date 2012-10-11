@@ -93,8 +93,7 @@ Handle<Value> CElmFileSelectorButton::expandable_get() const
 
 void CElmFileSelectorButton::expandable_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_fileselector_button_expandable_set(eo, val->BooleanValue());
+   elm_fileselector_button_expandable_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmFileSelectorButton::folder_only_get() const
@@ -104,8 +103,7 @@ Handle<Value> CElmFileSelectorButton::folder_only_get() const
 
 void CElmFileSelectorButton::folder_only_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_fileselector_button_folder_only_set(eo, val->BooleanValue());
+   elm_fileselector_button_folder_only_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmFileSelectorButton::is_save_get() const
@@ -115,8 +113,7 @@ Handle<Value> CElmFileSelectorButton::is_save_get() const
 
 void CElmFileSelectorButton::is_save_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_fileselector_button_is_save_set(eo, val->BooleanValue());
+   elm_fileselector_button_is_save_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmFileSelectorButton::inwin_mode_get() const
@@ -126,8 +123,7 @@ Handle<Value> CElmFileSelectorButton::inwin_mode_get() const
 
 void CElmFileSelectorButton::inwin_mode_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_fileselector_button_inwin_mode_set(eo, val->BooleanValue());
+   elm_fileselector_button_inwin_mode_set(eo, val->BooleanValue());
 }
 
 void CElmFileSelectorButton::OnFileChoose(void *event_info)

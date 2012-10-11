@@ -74,8 +74,7 @@ Handle <Value> CElmPhoto::fill_get() const
 
 void CElmPhoto::fill_set(Handle <Value> val)
 {
-   if (val->IsBoolean())
-     elm_photo_fill_inside_set(eo, val->BooleanValue());
+   elm_photo_fill_inside_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmPhoto::fixed_aspect_get() const
@@ -85,8 +84,7 @@ Handle<Value> CElmPhoto::fixed_aspect_get() const
 
 void CElmPhoto::fixed_aspect_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_photo_aspect_fixed_set(eo, val->BooleanValue());
+   elm_photo_aspect_fixed_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmPhoto::editable_get() const
@@ -95,13 +93,11 @@ Handle<Value> CElmPhoto::editable_get() const
 }
 
 void CElmPhoto::editable_set(Handle<Value> val){
-   if (!val->IsBoolean())
-     return;
 
    elm_photo_editable_set(eo, val->BooleanValue());
 
    editable.Dispose();
-   editable = Persistent<Value>::New(val); 
+   editable = Persistent<Value>::New(val);
 }
 
 Handle<Value> CElmPhoto::thumb_get() const

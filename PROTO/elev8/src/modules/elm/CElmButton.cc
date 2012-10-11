@@ -58,8 +58,7 @@ Handle<Value> CElmButton::autorepeat_get() const
 
 void CElmButton::autorepeat_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-      elm_button_autorepeat_set(eo, value->BooleanValue());
+   elm_button_autorepeat_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmButton::autorepeat_initial_timeout_get() const

@@ -47,7 +47,7 @@ public:
 
            tmp = kwargs->Get(String::NewSymbol("recursive"));
            if (!tmp.IsEmpty())
-             recursive = tmp->IsBoolean() && tmp->BooleanValue();
+             recursive = tmp->BooleanValue();
 
            tmp = kwargs->Get(String::NewSymbol("period"));
            if (!tmp.IsEmpty() && tmp->IsNumber())
@@ -65,11 +65,11 @@ public:
 
            tmp = kwargs->Get(String::NewSymbol("allow_hidden"));
            if (!tmp.IsEmpty())
-             allowHidden = tmp->IsBoolean() && tmp->BooleanValue();
+             allowHidden = tmp->BooleanValue();
 
            tmp = kwargs->Get(String::NewSymbol("only_directories"));
            if (!tmp.IsEmpty())
-             onlyDirectories = tmp->IsBoolean() && tmp->BooleanValue();
+             onlyDirectories = tmp->BooleanValue();
 
            tmp = kwargs->Get(String::NewSymbol("filters"));
            if (!tmp.IsEmpty() && tmp->IsArray())

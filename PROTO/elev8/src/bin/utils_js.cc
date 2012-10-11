@@ -43,7 +43,7 @@ clone(const Arguments &args)
   if (object->IsUndefined())
     return Undefined();
 
-  if (deep->IsUndefined() || (deep->IsBoolean() && !deep->BooleanValue()))
+  if (!deep->BooleanValue())
     return object->ToObject()->Clone();
 
   return deep_clone(object);

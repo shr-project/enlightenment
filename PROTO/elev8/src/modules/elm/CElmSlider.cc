@@ -172,8 +172,7 @@ Handle<Value> CElmSlider::inverted_get() const
 
 void CElmSlider::inverted_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_slider_inverted_set(eo, value->BooleanValue());
+   elm_slider_inverted_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmSlider::horizontal_get() const
@@ -183,8 +182,7 @@ Handle<Value> CElmSlider::horizontal_get() const
 
 void CElmSlider::horizontal_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_slider_horizontal_set(eo, value->BooleanValue());
+   elm_slider_horizontal_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmSlider::indicator_show_get() const
@@ -194,8 +192,7 @@ Handle<Value> CElmSlider::indicator_show_get() const
 
 void CElmSlider::indicator_show_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_slider_indicator_show_set(eo, value->BooleanValue());
+   elm_slider_indicator_show_set(eo, value->BooleanValue());
 }
 
 void CElmSlider::OnChange(void *)

@@ -114,8 +114,7 @@ Handle<Value> CElmNotify::allow_events_get() const
 
 void CElmNotify::allow_events_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_notify_allow_events_set(eo, val->BooleanValue());
+   elm_notify_allow_events_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmNotify::parent_get() const

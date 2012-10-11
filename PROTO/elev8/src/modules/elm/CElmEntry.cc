@@ -220,8 +220,7 @@ Handle<Value> CElmEntry::password_get() const
 
 void CElmEntry::password_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_password_set(eo, value->BooleanValue());
+   elm_entry_password_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::editable_get() const
@@ -231,8 +230,7 @@ Handle<Value> CElmEntry::editable_get() const
 
 void CElmEntry::editable_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_editable_set(eo, value->BooleanValue());
+   elm_entry_editable_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::line_wrap_get() const
@@ -253,8 +251,7 @@ Handle<Value> CElmEntry::scrollable_get() const
 
 void CElmEntry::scrollable_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_scrollable_set(eo, value->BooleanValue());
+   elm_entry_scrollable_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::single_line_get() const
@@ -264,8 +261,7 @@ Handle<Value> CElmEntry::single_line_get() const
 
 void CElmEntry::single_line_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_single_line_set(eo, value->BooleanValue());
+   elm_entry_single_line_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::entry_get() const
@@ -337,9 +333,6 @@ Handle<Value> CElmEntry::icon_visible_get() const
 
 void CElmEntry::icon_visible_set(Handle<Value> value)
 {
-   if (!value->IsBoolean())
-     return;
-
    elm_entry_icon_visible_set(eo, value->BooleanValue());
 
    icon_visible.Dispose();
@@ -353,8 +346,7 @@ Handle<Value> CElmEntry::context_menu_disabled_get() const
 
 void CElmEntry::context_menu_disabled_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_context_menu_disabled_set(eo, value->BooleanValue());
+   elm_entry_context_menu_disabled_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::autosave_get() const
@@ -364,8 +356,7 @@ Handle<Value> CElmEntry::autosave_get() const
 
 void CElmEntry::autosave_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_autosave_set(eo, value->BooleanValue());
+   elm_entry_autosave_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::end_visible_get() const
@@ -375,9 +366,6 @@ Handle<Value> CElmEntry::end_visible_get() const
 
 void CElmEntry::end_visible_set(Handle<Value> value)
 {
-   if (!value->IsBoolean())
-     return;
-
    elm_entry_end_visible_set(eo, value->BooleanValue());
 
    end_visible.Dispose();
@@ -393,9 +381,6 @@ Handle<Value> CElmEntry::h_bounce_get() const
 
 void CElmEntry::h_bounce_set(Handle<Value> value)
 {
-   if (!value->IsBoolean())
-     return;
-
    Eina_Bool vertical;
    elm_scroller_bounce_get(eo, NULL, &vertical);
    elm_scroller_bounce_set(eo, value->BooleanValue(), vertical);
@@ -410,9 +395,6 @@ Handle<Value> CElmEntry::v_bounce_get() const
 
 void CElmEntry::v_bounce_set(Handle<Value> value)
 {
-   if (!value->IsBoolean())
-     return;
-
    Eina_Bool horizontal;
    elm_scroller_bounce_get(eo, &horizontal, NULL);
    elm_scroller_bounce_set(eo, horizontal, value->BooleanValue());
@@ -425,8 +407,7 @@ Handle<Value> CElmEntry::input_panel_enabled_get() const
 
 void CElmEntry::input_panel_enabled_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_input_panel_enabled_set(eo, value->BooleanValue());
+   elm_entry_input_panel_enabled_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::input_panel_return_key_disabled_get() const
@@ -436,8 +417,7 @@ Handle<Value> CElmEntry::input_panel_return_key_disabled_get() const
 
 void CElmEntry::input_panel_return_key_disabled_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_input_panel_return_key_disabled_set(eo, value->BooleanValue());
+   elm_entry_input_panel_return_key_disabled_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::input_panel_return_key_autoenabled_get() const
@@ -447,9 +427,6 @@ Handle<Value> CElmEntry::input_panel_return_key_autoenabled_get() const
 
 void CElmEntry::input_panel_return_key_autoenabled_set(Handle<Value> value)
 {
-   if (!value->IsBoolean())
-     return;
-
    elm_entry_input_panel_return_key_autoenabled_set(eo, value->BooleanValue());
 
    enabled_status.Dispose();
@@ -463,8 +440,7 @@ Handle<Value> CElmEntry::prediction_allow_get() const
 
 void CElmEntry::prediction_allow_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_entry_prediction_allow_set(eo, value->BooleanValue());
+   elm_entry_prediction_allow_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmEntry::anchor_hover_style_get() const

@@ -126,8 +126,7 @@ Handle<Value> CElmClock::edit_get() const
 
 void CElmClock::edit_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_clock_edit_set(eo, val->ToBoolean()->Value());
+   elm_clock_edit_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmClock::first_interval_get() const

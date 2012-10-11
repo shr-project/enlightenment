@@ -107,8 +107,7 @@ Handle<Value> CElmSpinner::editable_get() const
 
 void CElmSpinner::editable_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_spinner_editable_set(eo, val->BooleanValue());
+   elm_spinner_editable_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmSpinner::disabled_get() const
@@ -118,8 +117,7 @@ Handle<Value> CElmSpinner::disabled_get() const
 
 void CElmSpinner::disabled_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_object_disabled_set(eo, val->BooleanValue());
+   elm_object_disabled_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmSpinner::special_value_get() const
@@ -146,8 +144,7 @@ Handle<Value> CElmSpinner::wrap_get() const
 
 void CElmSpinner::wrap_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_spinner_wrap_set(eo, val->BooleanValue());
+   elm_spinner_wrap_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmSpinner::round_get() const

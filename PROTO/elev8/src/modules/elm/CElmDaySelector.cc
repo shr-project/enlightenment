@@ -56,8 +56,7 @@ Handle<Value> CElmDaySelector::day_selected_get(int day) const
 
 void CElmDaySelector::day_selected_set(int day, Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_dayselector_day_selected_set(eo, (Elm_Dayselector_Day)day, val->BooleanValue());
+   elm_dayselector_day_selected_set(eo, (Elm_Dayselector_Day)day, val->BooleanValue());
 }
 
 Handle<Value> CElmDaySelector::monday_get() const

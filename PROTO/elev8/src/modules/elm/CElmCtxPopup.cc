@@ -130,8 +130,7 @@ Handle<Value> CElmCtxPopup::horizontal_get() const
 
 void CElmCtxPopup::horizontal_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_ctxpopup_horizontal_set(eo, value->BooleanValue());
+   elm_ctxpopup_horizontal_set(eo, value->BooleanValue());
 }
 
 void CElmCtxPopup::on_item_select_set(Handle<Value> val)

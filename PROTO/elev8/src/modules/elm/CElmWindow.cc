@@ -112,8 +112,7 @@ Handle<Value> CElmWindow::conformant_get() const
 
 void CElmWindow::conformant_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_conformant_set(eo, val->BooleanValue());
+   elm_win_conformant_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::autodel_get() const
@@ -123,8 +122,7 @@ Handle<Value> CElmWindow::autodel_get() const
 
 void CElmWindow::autodel_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_autodel_set(eo, val->BooleanValue());
+   elm_win_autodel_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::borderless_get() const
@@ -134,8 +132,7 @@ Handle<Value> CElmWindow::borderless_get() const
 
 void CElmWindow::borderless_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_borderless_set(eo, val->BooleanValue());
+   elm_win_borderless_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::shaped_get() const
@@ -145,8 +142,7 @@ Handle<Value> CElmWindow::shaped_get() const
 
 void CElmWindow::shaped_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_shaped_set(eo, val->BooleanValue());
+   elm_win_shaped_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::alpha_get() const
@@ -156,8 +152,7 @@ Handle<Value> CElmWindow::alpha_get() const
 
 void CElmWindow::alpha_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_alpha_set(eo, val->BooleanValue());
+   elm_win_alpha_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::override_get() const
@@ -167,8 +162,7 @@ Handle<Value> CElmWindow::override_get() const
 
 void CElmWindow::override_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_override_set(eo, val->BooleanValue());
+   elm_win_override_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::fullscreen_get() const
@@ -178,8 +172,7 @@ Handle<Value> CElmWindow::fullscreen_get() const
 
 void CElmWindow::fullscreen_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_fullscreen_set(eo, val->BooleanValue());
+   elm_win_fullscreen_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::maximized_get() const
@@ -189,8 +182,7 @@ Handle<Value> CElmWindow::maximized_get() const
 
 void CElmWindow::maximized_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_maximized_set(eo, val->BooleanValue());
+   elm_win_maximized_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::iconified_get() const
@@ -200,8 +192,7 @@ Handle<Value> CElmWindow::iconified_get() const
 
 void CElmWindow::iconified_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_iconified_set(eo, val->BooleanValue());
+   elm_win_iconified_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::withdrawn_get() const
@@ -211,8 +202,7 @@ Handle<Value> CElmWindow::withdrawn_get() const
 
 void CElmWindow::withdrawn_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_withdrawn_set(eo, val->BooleanValue());
+   elm_win_withdrawn_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::urgent_get() const
@@ -222,8 +212,7 @@ Handle<Value> CElmWindow::urgent_get() const
 
 void CElmWindow::urgent_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_urgent_set(eo, val->BooleanValue());
+   elm_win_urgent_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::demand_attention_get() const
@@ -233,8 +222,7 @@ Handle<Value> CElmWindow::demand_attention_get() const
 
 void CElmWindow::demand_attention_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_demand_attention_set(eo, val->BooleanValue());
+   elm_win_demand_attention_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::modal_get() const
@@ -244,8 +232,7 @@ Handle<Value> CElmWindow::modal_get() const
 
 void CElmWindow::modal_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_modal_set(eo, val->BooleanValue());
+   elm_win_modal_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::sticky_get() const
@@ -255,8 +242,7 @@ Handle<Value> CElmWindow::sticky_get() const
 
 void CElmWindow::sticky_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_sticky_set(eo, val->BooleanValue());
+   elm_win_sticky_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::quickpanel_get() const
@@ -266,8 +252,7 @@ Handle<Value> CElmWindow::quickpanel_get() const
 
 void CElmWindow::quickpanel_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_quickpanel_set(eo, val->BooleanValue());
+   elm_win_quickpanel_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::screen_constrain_get() const
@@ -277,8 +262,7 @@ Handle<Value> CElmWindow::screen_constrain_get() const
 
 void CElmWindow::screen_constrain_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_screen_constrain_set(eo, val->BooleanValue());
+   elm_win_screen_constrain_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::focus_highlight_enabled_get() const
@@ -288,8 +272,7 @@ Handle<Value> CElmWindow::focus_highlight_enabled_get() const
 
 void CElmWindow::focus_highlight_enabled_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_focus_highlight_enabled_set(eo, val->BooleanValue());
+   elm_win_focus_highlight_enabled_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::keyboard_win_get() const
@@ -299,8 +282,7 @@ Handle<Value> CElmWindow::keyboard_win_get() const
 
 void CElmWindow::keyboard_win_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_win_keyboard_win_set(eo, val->BooleanValue());
+   elm_win_keyboard_win_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWindow::rotation_get() const
@@ -568,9 +550,6 @@ Handle<Value> CElmWindow::prop_focus_skip_get() const
 
 void CElmWindow::prop_focus_skip_set(Handle<Value> val)
 {
-   if (!val->IsBoolean())
-     return;
-
    elm_win_prop_focus_skip_set(eo, val->BooleanValue());
    prop_focus.Dispose();
    prop_focus = Persistent<Value>::New(val);
@@ -613,7 +592,7 @@ Handle<Value> CElmWindow::screen_size_get() const
 //Methods
 Handle<Value> CElmWindow::socket_listen(const Arguments& args)
 {
-   if((args[0]->IsString()) && (args[1]->IsInt32()) && (args[1]->IsBoolean()))
+   if(args[0]->IsString() && args[1]->IsInt32() && !args[1]->IsUndefined())
      return Boolean::New(elm_win_socket_listen(eo,
                               *String::Utf8Value(args[0]),
                               args[1]->ToInt32()->Value(),
@@ -642,9 +621,7 @@ Handle<Value> CElmWindow::raise(const Arguments&)
 
 Handle<Value> CElmWindow::center(const Arguments& args)
 {
-   if((args[0]->IsBoolean()) && (args[1]->IsBoolean()))
-     elm_win_center(eo, args[0]->BooleanValue(), args[1]->BooleanValue());
-
+   elm_win_center(eo, args[0]->BooleanValue(), args[1]->BooleanValue());
    return Undefined();
 }
 

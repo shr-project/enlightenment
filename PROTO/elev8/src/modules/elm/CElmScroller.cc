@@ -72,9 +72,6 @@ void CElmScroller::bounce_set(Handle<Value> val)
    Handle<Value> x = val->ToObject()->Get(String::NewSymbol("x"));
    Handle<Value> y = val->ToObject()->Get(String::NewSymbol("y"));
 
-   if ((!x->IsBoolean()) || (!y->IsBoolean()))
-     return;
-
    elm_scroller_bounce_set(eo, x->BooleanValue(), y->BooleanValue());
 }
 
@@ -251,8 +248,7 @@ Handle<Value> CElmScroller::page_bring_in(const Arguments &args)
 
 void CElmScroller::propagate_events_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_scroller_propagate_events_set(eo, val->BooleanValue());
+   elm_scroller_propagate_events_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmScroller::propagate_events_get() const
@@ -395,9 +391,6 @@ void CElmScroller::limit_minimum_size_set(Handle<Value> val)
 
    Local<Value> horizontal = val->ToObject()->Get(String::NewSymbol("horizontal"));
    Local<Value> vertical = val->ToObject()->Get(String::NewSymbol("vertical"));
-
-   if (!horizontal->IsBoolean() || !vertical->IsBoolean())
-     return;
 
    elm_scroller_content_min_limit(eo, horizontal->BooleanValue(), vertical->BooleanValue());
 

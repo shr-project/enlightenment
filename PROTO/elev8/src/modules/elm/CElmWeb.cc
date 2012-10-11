@@ -109,8 +109,7 @@ Handle<Value> CElmWeb::tab_propagate_get() const
 
 void CElmWeb::tab_propagate_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_web_tab_propagate_set(eo, val->BooleanValue());
+   elm_web_tab_propagate_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWeb::uri_get() const
@@ -159,8 +158,7 @@ Handle<Value> CElmWeb::text_matches_highlight_get() const
 
 void CElmWeb::text_matches_highlight_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_web_text_matches_highlight_set(eo, val->BooleanValue());
+   elm_web_text_matches_highlight_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWeb::history_enabled_get() const
@@ -170,8 +168,7 @@ Handle<Value> CElmWeb::history_enabled_get() const
 
 void CElmWeb::history_enabled_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_web_history_enabled_set(eo, val->BooleanValue());
+   elm_web_history_enabled_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWeb::zoom_get() const
@@ -207,8 +204,7 @@ Handle<Value> CElmWeb::inwin_mode_get() const
 
 void CElmWeb::inwin_mode_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_web_inwin_mode_set(eo, val->BooleanValue());
+   elm_web_inwin_mode_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmWeb::on_load_progress_get() const

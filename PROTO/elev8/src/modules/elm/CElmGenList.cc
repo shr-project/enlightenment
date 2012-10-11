@@ -193,8 +193,7 @@ Handle<Value> CElmGenList::multi_select_get() const
 
 void CElmGenList::multi_select_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_genlist_multi_select_set(eo, value->BooleanValue());
+   elm_genlist_multi_select_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenList::reorder_mode_get() const
@@ -204,8 +203,7 @@ Handle<Value> CElmGenList::reorder_mode_get() const
 
 void CElmGenList::reorder_mode_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_genlist_reorder_mode_set(eo, value->BooleanValue());
+   elm_genlist_reorder_mode_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenList::mode_get() const
@@ -271,7 +269,7 @@ void CElmGenList::vertical_bounce_set(Handle<Value> val)
 {
    Eina_Bool h;
    elm_scroller_bounce_get(eo, &h, NULL);
-   elm_scroller_bounce_set(eo, h, val->IsBoolean() && val->BooleanValue());
+   elm_scroller_bounce_set(eo, h, val->BooleanValue());
 }
 
 Handle<Value> CElmGenList::vertical_bounce_get() const
@@ -285,7 +283,7 @@ void CElmGenList::horizontal_bounce_set(Handle<Value> val)
 {
    Eina_Bool v;
    elm_scroller_bounce_get(eo, NULL, &v);
-   elm_scroller_bounce_set(eo, val->IsBoolean() && val->BooleanValue(), v);
+   elm_scroller_bounce_set(eo, val->BooleanValue(), v);
 }
 
 Handle<Value> CElmGenList::horizontal_bounce_get() const
@@ -302,8 +300,7 @@ Handle<Value> CElmGenList::highlight_mode_get() const
 
 void CElmGenList::highlight_mode_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_genlist_highlight_mode_set(eo, value->BooleanValue());
+   elm_genlist_highlight_mode_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenList::tree_effect_get() const
@@ -313,8 +310,7 @@ Handle<Value> CElmGenList::tree_effect_get() const
 
 void CElmGenList::tree_effect_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_genlist_tree_effect_enabled_set(eo, value->BooleanValue());
+   elm_genlist_tree_effect_enabled_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenList::decorate_mode_get() const
@@ -324,8 +320,7 @@ Handle<Value> CElmGenList::decorate_mode_get() const
 
 void CElmGenList::decorate_mode_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_genlist_decorate_mode_set(eo, value->BooleanValue());
+   elm_genlist_decorate_mode_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmGenList::homogeneous_get() const

@@ -152,27 +152,27 @@ void CElmDateTime::field_visible_set(Handle<Value> val)
    Local<Object> obj = val->ToObject();
    Local<Value> temp = obj->Get(String::NewSymbol("ampm"));
 
-   if (temp->IsBoolean())
+   if (!temp->IsUndefined())
      elm_datetime_field_visible_set(eo, ELM_DATETIME_AMPM, temp->BooleanValue());
 
    temp = obj->Get(String::NewSymbol("month"));
-   if (temp->IsBoolean())
+   if (!temp->IsUndefined())
      elm_datetime_field_visible_set(eo, ELM_DATETIME_MONTH, temp->BooleanValue());
 
    temp = obj->Get(String::NewSymbol("year"));
-   if (temp->IsBoolean())
+   if (!temp->IsUndefined())
      elm_datetime_field_visible_set(eo, ELM_DATETIME_YEAR, temp->BooleanValue());
 
    temp = obj->Get(String::NewSymbol("date"));
-   if (temp->IsBoolean())
+   if (!temp->IsUndefined())
      elm_datetime_field_visible_set(eo, ELM_DATETIME_DATE, temp->BooleanValue());
 
    temp = obj->Get(String::NewSymbol("hour"));
-   if (temp->IsBoolean())
+   if (!temp->IsUndefined())
      elm_datetime_field_visible_set(eo, ELM_DATETIME_HOUR, temp->BooleanValue());
 
    temp = obj->Get(String::NewSymbol("minute"));
-   if (temp->IsBoolean())
+   if (!temp->IsUndefined())
      elm_datetime_field_visible_set(eo, ELM_DATETIME_MINUTE, temp->BooleanValue());
 
 }

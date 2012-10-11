@@ -70,8 +70,7 @@ Handle<Value> CElmLabel::wrap_width_get() const
 
 void CElmLabel::ellipsis_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_label_ellipsis_set(eo, value->BooleanValue());
+   elm_label_ellipsis_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmLabel::ellipsis_get() const
@@ -81,8 +80,7 @@ Handle<Value> CElmLabel::ellipsis_get() const
 
 void CElmLabel::slide_set(Handle<Value> value)
 {
-   if (value->IsBoolean())
-     elm_label_slide_set(eo, value->BooleanValue());
+   elm_label_slide_set(eo, value->BooleanValue());
 }
 
 Handle<Value> CElmLabel::slide_get() const

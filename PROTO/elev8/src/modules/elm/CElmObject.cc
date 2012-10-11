@@ -535,7 +535,7 @@ Handle<Value> CElmObject::visible_get() const
 
 void CElmObject::visible_set(Handle<Value> val)
 {
-   ((val->IsBoolean() && val->BooleanValue()) ? evas_object_show : evas_object_hide)(eo);
+   (val->BooleanValue() ? evas_object_show : evas_object_hide)(eo);
 }
 
 Handle<Value> CElmObject::enabled_get() const
@@ -545,8 +545,7 @@ Handle<Value> CElmObject::enabled_get() const
 
 void CElmObject::enabled_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_object_disabled_set(eo, !val->BooleanValue());
+   elm_object_disabled_set(eo, !val->BooleanValue());
 }
 
 Handle<Value> CElmObject::hint_min_get() const
@@ -623,8 +622,7 @@ Handle<Value> CElmObject::focus_get() const
 
 void CElmObject::focus_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     evas_object_focus_set(eo, val->BooleanValue());
+   evas_object_focus_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmObject::layer_get() const
@@ -710,8 +708,7 @@ Handle<Value> CElmObject::antialias_get() const
 
 void CElmObject::antialias_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     evas_object_anti_alias_set(eo, val->BooleanValue());
+   evas_object_anti_alias_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmObject::static_clip_get() const
@@ -721,8 +718,7 @@ Handle<Value> CElmObject::static_clip_get() const
 
 void CElmObject::static_clip_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     evas_object_static_clip_set(eo, val->BooleanValue());
+   evas_object_static_clip_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmObject::size_hint_aspect_get() const
@@ -791,9 +787,6 @@ Handle<Value> CElmObject::resize_get() const
 
 void CElmObject::resize_set(Handle<Value> val)
 {
-   if (!val->IsBoolean())
-     return;
-
    Evas_Object *top = elm_object_top_widget_get(eo);
    if (!top)
      return;

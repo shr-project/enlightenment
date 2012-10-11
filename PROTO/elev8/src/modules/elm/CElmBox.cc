@@ -19,8 +19,7 @@ CElmBox::CElmBox(Local <Object> _jsObject, CElmObject *parent)
 
 void CElmBox::horizontal_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_box_horizontal_set(eo, val->BooleanValue());
+   elm_box_horizontal_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmBox::horizontal_get() const
@@ -30,8 +29,7 @@ Handle<Value> CElmBox::horizontal_get() const
 
 void CElmBox::homogeneous_set(Handle<Value> val)
 {
-   if (val->IsBoolean())
-     elm_box_homogeneous_set(eo, val->BooleanValue());
+   elm_box_homogeneous_set(eo, val->BooleanValue());
 }
 
 Handle<Value> CElmBox::homogeneous_get() const
