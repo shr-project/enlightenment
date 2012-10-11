@@ -199,8 +199,7 @@ TimelineModel = EUI.Model({
 
       var new_tweets =  JSON.parse(req.responseText);
       this.items = new_tweets.concat(this.items);
-      this.notifyControllers(
-        arrayBetweenBoundaries(0, new_tweets.length -1));
+      this.notifyControllers();
     }.bind(this));
     this.notifyControllers(-1, 'beginSlowLoad');
   },
@@ -291,7 +290,7 @@ SearchTimelineModel = TimelineModel.extend({
       this.items = this.items.concat(results);
       this.notifyControllers(arrayBetweenBoundaries(old_length, this.items.length -1));
     }.bind(this));
-      this.notifyControllers(this.length() + 1, 'beginSlowLoad');
+    this.notifyControllers(this.length() + 1, 'beginSlowLoad');
   },
   fetchNewerTweets: function() {
     var params = {q: this.query, include_entities: true,
@@ -301,10 +300,9 @@ SearchTimelineModel = TimelineModel.extend({
       this.notifyControllers(-1, 'finishSlowLoad');
       if (req.status != '200') return;
 
-      var new_tweets =  JSON.parse(req.responseText).results;
+      var new_tweets = JSON.parse(req.responseText).results;
       this.items = new_tweets.concat(this.items);
-      this.notifyControllers(
-        arrayBetweenBoundaries(0, new_tweets.length -1));
+      this.notifyControllers();
     }.bind(this));
     this.notifyControllers(-1, 'beginSlowLoad');
   }
