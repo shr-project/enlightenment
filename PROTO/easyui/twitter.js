@@ -215,6 +215,7 @@ TimelineModel = EUI.Model({
 });
 
 TweetController = EUI.TableController({
+  editable: true,
   init: function(model, replying_tweet){
     this.title = 'What\'s happening?';
     this.replying_tweet = replying_tweet;
@@ -309,6 +310,7 @@ SearchTimelineModel = TimelineModel.extend({
 });
 
 SearchController = EUI.TableController({
+  editable: true,
   init: function() {
     this.fields = [
       [EUI.widgets.Entry({scrollable: true, field: 'search', single_line: true})]
