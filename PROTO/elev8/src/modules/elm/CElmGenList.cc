@@ -575,4 +575,66 @@ Handle<Value> CElmGenList::GetSelected(Local<String>, const AccessorInfo &info)
    return Boolean::New(elm_genlist_item_selected_get(item->object_item));
 }
 
+Handle<Value> CElmGenList::BringIn(const Arguments &args)
+{
+   Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(args.This());
+
+   if (!args.Length())
+     {
+        elm_genlist_item_bring_in(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_NONE);
+        return Undefined();
+     }
+
+   String::Utf8Value mode(args[0]);
+
+   if (!strcmp(*mode, "in"))
+     elm_genlist_item_bring_in(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_IN);
+   else if (!strcmp(*mode, "top"))
+     elm_genlist_item_bring_in(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_TOP);
+   else if (!strcmp(*mode, "middle"))
+     elm_genlist_item_bring_in(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_MIDDLE);
+   else
+     elm_genlist_item_bring_in(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_NONE);
+
+   return Undefined();
+}
+
+Handle<Value> CElmGenList::Index(const Arguments &args)
+{
+   Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(args.This());
+   return Uint32::New(elm_genlist_item_index_get(item->object_item));
+}
+
+Handle<Value> CElmGenList::Show(const Arguments &args)
+{
+   Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(args.This());
+
+   if (!args.Length())
+     {
+        elm_genlist_item_bring_in(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_NONE);
+        return Undefined();
+     }
+
+   String::Utf8Value mode(args[0]);
+
+   if (!strcmp(*mode, "in"))
+     elm_genlist_item_show(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_IN);
+   else if (!strcmp(*mode, "top"))
+     elm_genlist_item_show(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_TOP);
+   else if (!strcmp(*mode, "middle"))
+     elm_genlist_item_show(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_MIDDLE);
+   else
+     elm_genlist_item_show(item->object_item, ELM_GENLIST_ITEM_SCROLLTO_NONE);
+
+   return Undefined();
+}
+
+Handle<Value> CElmGenList::Update(const Arguments &args)
+{
+   Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(args.This());
+   elm_genlist_item_update(item->object_item);
+
+   return Undefined();
+}
+
 }

@@ -78,6 +78,14 @@ public:
    static Handle<Value> GetSelected(Local<String>, const AccessorInfo &info);
    static void SetSelected(Local<String>, Local<Value> value, const AccessorInfo &info);
 
+   static Handle<Value> BringIn(const Arguments &args);
+
+   static Handle<Value> Index(const Arguments &args);
+
+   static Handle<Value> Show(const Arguments &args);
+
+   static Handle<Value> Update(const Arguments &args);
+
    friend Handle<Value> CElmObject::New<CElmGenGrid>(const Arguments&);
 };
 

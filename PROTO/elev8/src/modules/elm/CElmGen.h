@@ -18,7 +18,6 @@ struct Item {
    Elm_Object_Item *object_item;
 
    static Persistent<String> str_item;
-   static Persistent<String> str_data;
    static Persistent<String> str_before;
    static Persistent<String> str_attrs;
    static Persistent<String> str_class;
@@ -29,9 +28,18 @@ struct Item {
       static Persistent<ObjectTemplate> tmpl;
       if (tmpl.IsEmpty())
         {
-           tmpl = Persistent<ObjectTemplate>::New(ObjectTemplate::New());
+           Local<FunctionTemplate> klass = FunctionTemplate::New();
+           klass->SetClassName(String::NewSymbol("GenItem"));
+
+           Local<ObjectTemplate> prototype = klass->PrototypeTemplate();
+           prototype->Set(String::NewSymbol("bring_in"), FunctionTemplate::New(T::BringIn));
+           prototype->Set(String::NewSymbol("index"), FunctionTemplate::New(T::Index));
+           prototype->Set(String::NewSymbol("show"), FunctionTemplate::New(T::Show));
+           prototype->Set(String::NewSymbol("update"), FunctionTemplate::New(T::Update));
+           prototype->SetAccessor(String::NewSymbol("selected"), T::GetSelected, T::SetSelected);
+
+           tmpl = Persistent<ObjectTemplate>::New(klass->InstanceTemplate());
            tmpl->SetNamedPropertyHandler(ElementGet, ElementSet);
-           tmpl->SetAccessor(String::NewSymbol("selected"), T::GetSelected, T::SetSelected);
         }
 
       jsObject = Persistent<Object>::New(tmpl->NewInstance());
@@ -72,11 +80,10 @@ struct Item {
 
    static Handle<Value> ElementSet(Local<String> attr, Local<Value> val, const AccessorInfo& info)
    {
-      Local<Object> attrs = info.This()->GetHiddenValue(str_attrs)->ToObject();
-
-      if (info.This()->HasOwnProperty(attr))
+      if (!info.This()->GetRealNamedPropertyInPrototypeChain(attr).IsEmpty())
         return Handle<Value>();
 
+      Local<Object> attrs = info.This()->GetHiddenValue(str_attrs)->ToObject();
       attrs->Set(attr, val);
       T::UpdateItem(info.This());
       return val;
@@ -84,6 +91,9 @@ struct Item {
 
    static Handle<Value> ElementGet(Local<String> attr, const AccessorInfo& info)
    {
+      if (!info.This()->GetRealNamedPropertyInPrototypeChain(attr).IsEmpty())
+        return Handle<Value>();
+
       Local<Value> attrs = info.This()->GetHiddenValue(str_attrs);
       return attrs->ToObject()->Get(attr);
    }
@@ -114,8 +124,6 @@ template <class T>
 Persistent<String> Item<T>::str_class = Persistent<String>::New(String::NewSymbol("class"));
 template <class T>
 Persistent<String> Item<T>::str_before = Persistent<String>::New(String::NewSymbol("before"));
-template <class T>
-Persistent<String> Item<T>::str_data = Persistent<String>::New(String::NewSymbol("data"));
 
 template <class T>
 class ItemClass {

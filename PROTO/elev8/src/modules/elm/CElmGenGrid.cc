@@ -341,4 +341,66 @@ Handle<Value> CElmGenGrid::GetSelected(Local<String>, const AccessorInfo &info)
    return Boolean::New(elm_genlist_item_selected_get(item->object_item));
 }
 
+Handle<Value> CElmGenGrid::BringIn(const Arguments &args)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(args.This());
+
+   if (!args.Length())
+     {
+        elm_gengrid_item_show(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_NONE);
+        return Undefined();
+     }
+
+   String::Utf8Value mode(args[0]);
+
+   if (!strcmp(*mode, "in"))
+     elm_gengrid_item_bring_in(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_IN);
+   else if (!strcmp(*mode, "top"))
+     elm_gengrid_item_bring_in(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_TOP);
+   else if (!strcmp(*mode, "middle"))
+     elm_gengrid_item_bring_in(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_MIDDLE);
+   else
+     elm_gengrid_item_bring_in(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_NONE);
+
+   return Undefined();
+}
+
+Handle<Value> CElmGenGrid::Index(const Arguments &args)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(args.This());
+   return Uint32::New(elm_gengrid_item_index_get(item->object_item));
+}
+
+Handle<Value> CElmGenGrid::Show(const Arguments &args)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(args.This());
+
+   if (!args.Length())
+     {
+        elm_gengrid_item_show(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_NONE);
+        return Undefined();
+     }
+
+   String::Utf8Value mode(args[0]);
+
+   if (!strcmp(*mode, "in"))
+     elm_gengrid_item_show(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_IN);
+   else if (!strcmp(*mode, "top"))
+     elm_gengrid_item_show(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_TOP);
+   else if (!strcmp(*mode, "middle"))
+     elm_gengrid_item_show(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_MIDDLE);
+   else
+     elm_gengrid_item_show(item->object_item, ELM_GENGRID_ITEM_SCROLLTO_NONE);
+
+   return Undefined();
+}
+
+Handle<Value> CElmGenGrid::Update(const Arguments &args)
+{
+   Item<CElmGenGrid> *item = Item<CElmGenGrid>::Unwrap(args.This());
+   elm_gengrid_item_update(item->object_item);
+
+   return Undefined();
+}
+
 }
