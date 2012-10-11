@@ -314,7 +314,8 @@ SearchController = EUI.TableController({
     this.pushController(new TimelineController(new SearchTimelineModel(text), 'search', text));
   },
   saveSearchQuery: function(text) {
-    this.parent.appendQuery(text);
+    this.parent.saveSearchQuery(text);
+    this.popController();
   },
   title: 'Search',
   icon: 'search'
@@ -342,7 +343,7 @@ SavedSearchController = EUI.ListController({
     if(menuItem == 'Remove')
       this.model.deleteItemAtIndex(index);
   },
-  appendQuery: function(text) {
+  saveSearchQuery: function(text) {
     this.model.insert({ text: text });
   }
 });
