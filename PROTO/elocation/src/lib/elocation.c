@@ -17,9 +17,11 @@ static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
 static EDBus_Object *obj_ubuntu = NULL;
+static EDBus_Object *obj_meta = NULL;
 static EDBus_Proxy *ubuntu_geoclue = NULL;
 static EDBus_Proxy *ubuntu_address = NULL;
 static EDBus_Proxy *ubuntu_position = NULL;
+static EDBus_Proxy *meta_geoclue = NULL;
 
 int _elocation_log_dom = -1;
 
@@ -233,10 +235,23 @@ geoclue_stop(void *data, int ev_type, void *event)
 }
 
 static void
+_reference_add_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   DBG("Reference added");
+}
+
+static void
+_reference_del_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   DBG("Reference removed");
+}
+
+static void
 create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
    const char *object_path;
    const char *signature;
+   EDBus_Pending *pending1, *pending2;
 
    signature = edbus_message_signature_get(reply);
    if (strcmp(signature, "o"))
@@ -248,6 +263,37 @@ create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
    if (!edbus_message_arguments_get(reply, "o", &object_path)) return;
 
    DBG("Object path for client: %s", object_path);
+
+   /* With the created object path we now have a meta provider we can operate on.
+    * Geoclue handles the selection of the best provider internally for the meta
+    * provider */
+   obj_meta = edbus_object_get(conn, GEOCLUE_DBUS_NAME, object_path);
+   if (!obj_ubuntu)
+     {
+        ERR("Error: could not get object");
+        return;
+     }
+
+   meta_geoclue = edbus_proxy_get(obj_meta, GEOCLUE_GEOCLUE_IFACE);
+   if (!meta_geoclue)
+     {
+        ERR("Error: could not get proxy");
+        return;
+     }
+
+   pending1 = edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending2 = edbus_proxy_call(meta_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
+   if (!pending2)
+     {
+        ERR("Error: could not call");
+        return;
+     }
 }
 
 static void
@@ -272,19 +318,7 @@ _name_owner_changed(void *data , const char *bus, const char *old, const char *n
 }
 
 static void
-_reference_add_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
-{
-   DBG("Reference added");
-}
-
-static void
-_reference_del_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
-{
-   DBG("Reference removed");
-}
-
-static void
-status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pendding)
+status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 {
    int *status;
    const char *signature;
@@ -426,14 +460,14 @@ elocation_init()
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
-#if 0
+
    manager_master = edbus_proxy_get(obj_master, GEOCLUE_MASTER_IFACE);
    if (!manager_master)
      {
-        fprintf(stderr, "Error: could not get proxy\n");
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
-#endif
+
    ubuntu_address = edbus_proxy_get(obj_ubuntu, GEOCLUE_ADDRESS_IFACE);
    if (!ubuntu_address)
      {
@@ -447,14 +481,13 @@ elocation_init()
         ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
-#if 0
+
    pending = edbus_proxy_call(manager_master, "Create", create_cb, NULL, -1, "");
    if (!pending)
      {
-        fprintf(stderr, "Error: could not call\n");
+        ERR("Error: could not call");
         return EXIT_FAILURE;
      }
-#endif
 
    provider = calloc(1, sizeof(Elocation_Provider));
    pending2 = edbus_proxy_call(ubuntu_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
@@ -488,11 +521,17 @@ elocation_init()
 EAPI void
 elocation_shutdown()
 {
-   EDBus_Pending *pending3;
+   EDBus_Pending *pending, *pending2;
 
    /* To allow geoclue freeing unused providers we free our reference on it here */
-   pending3 = edbus_proxy_call(ubuntu_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, "");
-   if (!pending3)
+   pending = edbus_proxy_call(ubuntu_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, "");
+   if (!pending)
+     {
+        ERR("Error: could not call");
+     }
+
+   pending2 = edbus_proxy_call(meta_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, "");
+   if (!pending2)
      {
         ERR("Error: could not call");
      }
