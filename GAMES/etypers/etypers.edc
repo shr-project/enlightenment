@@ -114,8 +114,11 @@ collections {
                }
                color: 0 0 200 200;
                align: 0 0;
+               min: 0 20;
+               fixed: 0 1;
                rel1.to: "score";
                rel1.relative: 0 1;
+               rel2.relative: 1 0;
             }
          }
          part { name: "level_value";
@@ -133,6 +136,40 @@ collections {
                align: 0 0 ;
                rel1.relative: 1 0;
                rel1.to: "level";
+            }
+         }
+         part { name: "correct";
+            type: TEXT;
+            scale: 1;
+            description { state: "default" 0.0;
+               text { font: "Sans:style=Bold";
+                   size: 12;
+                   min: 0 0;
+                   max: 1 0;
+                   align: 0 0;
+                   text: "Correct:";
+               }
+               color: 0 0 200 200;
+               align: 0 0;
+               rel1.to: "level";
+               rel1.relative: 0 1;
+            }
+         }
+         part { name: "correct_value";
+            type: TEXT;
+            scale: 1;
+            description { state: "default" 0.0;
+               text { font: "Sans:style=Bold";
+                   size: 12;
+                   min: 0 0;
+                   max: 1 0;
+                   align: 0 0;
+                   text: "100%";
+               }
+               color: 200 200 200 200;
+               align: 0 0 ;
+               rel1.relative: 1 0;
+               rel1.to: "correct";
             }
          }
          part { name: "input_clipper";
