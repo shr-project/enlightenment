@@ -42,7 +42,7 @@ _dummy_free(void *user_data, void *func_data)
 }
 
 static void
-provider_info_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    char *name = NULL, *desc = NULL;
    const char *signature;
@@ -122,13 +122,13 @@ unmarshall_address(const EDBus_Message *reply)
 }
 
 static void
-address_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+address_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    unmarshall_address(reply);
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
 static void
-address_signal_cb(void *data , const EDBus_Message *reply)
+address_signal_cb(void *data, const EDBus_Message *reply)
 {
    unmarshall_address(reply);
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
@@ -198,14 +198,14 @@ unmarshall_position(const EDBus_Message *reply)
 }
 
 static void
-position_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+position_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    unmarshall_position(reply);
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
 
 static void
-position_signal_cb(void *data , const EDBus_Message *reply)
+position_signal_cb(void *data, const EDBus_Message *reply)
 {
    unmarshall_position(reply);
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
@@ -225,19 +225,19 @@ geoclue_stop(void *data, int ev_type, void *event)
 }
 
 static void
-_reference_add_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+_reference_add_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    DBG("Reference added");
 }
 
 static void
-_reference_del_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+_reference_del_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    DBG("Reference removed");
 }
 
 static void
-create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    const char *object_path;
    const char *signature;
@@ -294,7 +294,7 @@ create_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 }
 
 static void
-_name_owner_changed(void *data , const char *bus, const char *old, const char *new)
+_name_owner_changed(void *data, const char *bus, const char *old, const char *new)
 {
    if (old[0] == '\0' && new[0] != '\0')
      {
@@ -315,7 +315,7 @@ _name_owner_changed(void *data , const char *bus, const char *old, const char *n
 }
 
 static void
-status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
+status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    int *status;
    const char *signature;
@@ -337,7 +337,7 @@ status_cb(void *data , const EDBus_Message *reply, EDBus_Pending *pending)
 }
 
 static void
-status_signal_cb(void *data , const EDBus_Message *reply)
+status_signal_cb(void *data, const EDBus_Message *reply)
 {
    int *status;
    const char *signature;
