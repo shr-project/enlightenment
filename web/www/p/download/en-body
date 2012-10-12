@@ -297,10 +297,10 @@
    <?php frame1("width=100%");?>
    <div class="main"><p><b><a href=
      "http://trac.enlightenment.org/e/wiki/Enlightenment">Enlightenment</a> </b><em>
-     0.16.999.76819 </em></p><p>
+     0.16.999.77927 </em></p><p>
      Enlightenment, the window manager... </p><p align=right><?php blinkdl("i/dl.png", 
      "DOWNLOAD ENLIGHTENMENT",
-     "http://download.enlightenment.org/snapshots/2012-09-18/enlightenment-0.16.999.76819.tar.gz"
+     "http://download.enlightenment.org/snapshots/2012-10-12/enlightenment-0.16.999.77927.tar.gz"
    );?></p></div>
    <?php frame2();?>
    
