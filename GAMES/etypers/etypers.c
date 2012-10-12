@@ -223,14 +223,18 @@ _update_gui(AppData *appdata)
 static void
 _game_reset(AppData *appdata)
 {
-   //Reset Life Wall
    elm_object_text_set(appdata->entry, "");
    elm_object_part_text_set(appdata->ly, "level_value", "1");
    elm_object_part_text_set(appdata->ly, "score_value", "0");
+   elm_object_part_text_set(appdata->ly, "correct_value", "100%");
 
    _remove_all_enemies(appdata);
    _reset_defense_wall(appdata);
    elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
+
+   appdata->state = Ready;
+   appdata->hit_cnt = 0.0f;
+   appdata->hit_try_cnt = 0.0f;
 }
 
 static void
@@ -516,7 +520,10 @@ _game_level_cb(void *data, Evas_Object *obj, void *event_info)
    appdata->level = (int) data;
    appdata->state = Playing;
    appdata->score = 0;
+   appdata->hit_cnt = 0.0f;
+   appdata->hit_try_cnt = 0.0;
    elm_object_text_set(appdata->entry, "");
+   elm_object_part_text_set(appdata->ly, "correct_value", "100%");
    _remove_all_enemies(appdata);
    _reset_defense_wall(appdata);
    elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
@@ -718,10 +725,7 @@ _key_down_cb(void *data, int type, void *event_info)
    else if (!strcmp(event->keyname, "Escape"))
      {
         if (appdata->state == GameOver)
-          {
-             _game_reset(appdata);
-             appdata->state = Ready;
-          }
+          _game_reset(appdata);
         _pause_or_resume(appdata);
      }
 
