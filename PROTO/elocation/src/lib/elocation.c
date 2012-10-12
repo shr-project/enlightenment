@@ -34,7 +34,7 @@ EAPI int ELOCATION_EVENT_STATUS;
 EAPI int ELOCATION_EVENT_POSITION;
 EAPI int ELOCATION_EVENT_ADDRESS;
 
-void *
+static void
 _dummy_free(void *user_data, void *func_data)
 {
    /* Don't free the event data after dispatching the event. We keep track of
