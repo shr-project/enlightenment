@@ -1,6 +1,5 @@
 <Evas>
 d3d_gl - start hurry (vincent)
-map - check rotation util inconsistency rotation
 map - check the uv set inconsistency for evas_object_image. (pending to EVAS 2.0)
 map - apply evas_object_move while map is enabled
 line - width_set API? 
@@ -10,29 +9,31 @@ filter - let's start
 cutout_rect - static?! nowhere free it actually.
 proxy - source image visible set feature
 textblock - check the size_formatted_get value when the text has the spaces
+image - image doesn't rendered when load_size_set is called again.
 
 <Elementary>
 naviframe - need to block the style set while transiton is going on
 naviframe - more transition effect styles.
-naviframe - optimize for translation effect speed
+naviframe - optimize for translation effect speed (mapbuf for content)
 naviframe - elementary_test -> naviframe_complex -> change view & push/pop
 hoversel - add horizontal mode style.
 genlist - need to check to prevent flickerling when theme_hook is called
 gengrid - segfault with elm_gengrid_item_sorted_insert func (#984)
-widget  - Raw evas objects are not proper as the child member of the widget cause of the color.
-widget - hold/freeze doesn't work for popup?
+widget  - raw evas objects are not proper as the child member of the widget cause of the color.
 index - check the FIXEMEs
 conformant - how to skip the calc the size if the window is in background.
 general - elm_policy_set/elm_policy_get Use Elm_Policy parameter.
 layout - signal_callback_add/del,call... not for common APIs?
 transit - consider mix the separate evas_map effects
-mapbuf - icon flickering when (icon is swallowed into a layout)
 popup - scroll freeze & hold?
+popup - each item heights are not same consistently.
+win - fix size API?
 
 <Ecore>
-Ecore_X - Use Ecore_X_Error_Code for ecore_x_error_code_get() (pending to Ecore 2.0)
+Ecore_X - use Ecore_X_Error_Code for ecore_x_error_code_get() (pending to Ecore 2.0)
 
 <Eina>
+eina_vector
 check random functions
 eina_log_level off
 
