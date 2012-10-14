@@ -305,7 +305,7 @@ bless
 disease
 corpse
 zealot
-babeque
+barbecue
 translation
 yell
 obelisk
