@@ -1009,7 +1009,8 @@ _level_load(Game *game)
    /* World */
    game->cur_world = ephysics_world_new();
    ephysics_world_simulation_set(game->cur_world, 1/60., 4);
-   ephysics_world_render_geometry_set(game->cur_world, 0, 0, WIDTH, HEIGHT);
+   ephysics_world_render_geometry_set(game->cur_world, 0, 0, -5,
+                                      WIDTH, HEIGHT, 10);
    ephysics_world_bodies_outside_bottom_autodel_set(game->cur_world, EINA_TRUE);
    ephysics_world_event_callback_add(game->cur_world,
                                      EPHYSICS_CALLBACK_WORLD_STOPPED,
