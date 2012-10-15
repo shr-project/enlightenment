@@ -16,6 +16,8 @@ static Elocation_Provider *provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
+static EDBus_Signal_Handler *cb_meta_address_provider_changed = NULL;
+static EDBus_Signal_Handler *cb_meta_position_provider_changed = NULL;
 static EDBus_Object *obj_ubuntu = NULL;
 static EDBus_Object *obj_meta = NULL;
 static EDBus_Proxy *ubuntu_geoclue = NULL;
@@ -53,10 +55,38 @@ provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    if (strcmp(signature, "ss")) return;
 
    if (!edbus_message_arguments_get(reply, "ss", &name, &desc)) return;
+
+   DBG("Provider name: %s, %s", provider->name, provider->description);
+}
+
+static void
+meta_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   char *name = NULL, *desc = NULL, *service = NULL, *path = NULL;
+   const char *signature;
+
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "ssss")) return;
+
+   if (!edbus_message_arguments_get(reply, "ssss", &name, &desc, &service, &path)) return;
+
+   DBG("Meta provider name: %s, %s, %s, %s", provider->name, provider->description, service, path);
+}
+
+static void
+meta_provider_info_signal_cb(void *data, const EDBus_Message *reply)
+{
+   char *name = NULL, *desc = NULL, *service = NULL, *path = NULL;
+   const char *signature;
+
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "ssss")) return;
+
+   if (!edbus_message_arguments_get(reply, "ssss", &name, &desc, &service, &path)) return;
    provider->name = strdup(name);
    provider->description = strdup(desc);
 
-   DBG("Provider name: %s, %s", provider->name, provider->description);
+   DBG("Meta provider name: %s, %s, %s, %s", provider->name, provider->description, service, path);
 }
 
 static void
@@ -352,6 +382,9 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    time = 0; /* Still need to figure out what this is used for */
    resources = ELOCATION_RESOURCE_ALL;
 
+   cb_meta_address_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "AddressProviderChanged", meta_provider_info_signal_cb, NULL);
+   cb_meta_position_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "PositionProviderChanged", meta_provider_info_signal_cb, NULL);
+
    edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources);
    edbus_proxy_call(meta_masterclient, "AddressStart", _dummy_cb, NULL, -1, "");
    edbus_proxy_call(meta_masterclient, "PositionStart", _dummy_cb, NULL, -1, "");
@@ -378,6 +411,20 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
      }
 
    pending2 = edbus_proxy_call(meta_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
+   if (!pending2)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending2 = edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_provider_info_cb, NULL, -1, "");
+   if (!pending2)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending2 = edbus_proxy_call(meta_masterclient, "GetPositionProvider", meta_provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
         ERR("Error: could not call");
