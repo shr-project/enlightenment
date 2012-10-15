@@ -22,6 +22,8 @@ static EDBus_Proxy *ubuntu_geoclue = NULL;
 static EDBus_Proxy *ubuntu_address = NULL;
 static EDBus_Proxy *ubuntu_position = NULL;
 static EDBus_Proxy *meta_geoclue = NULL;
+static EDBus_Proxy *meta_address = NULL;
+static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
@@ -237,84 +239,6 @@ _reference_del_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending
 }
 
 static void
-create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
-{
-   const char *object_path;
-   const char *signature;
-   EDBus_Pending *pending1, *pending2;
-
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "o"))
-     {
-        ERR("Error: create callback message did not match signature");
-        return;
-     }
-
-   if (!edbus_message_arguments_get(reply, "o", &object_path)) return;
-
-   DBG("Object path for client: %s", object_path);
-
-   /* With the created object path we now have a meta provider we can operate on.
-    * Geoclue handles the selection of the best provider internally for the meta
-    * provider */
-   obj_meta = edbus_object_get(conn, GEOCLUE_DBUS_NAME, object_path);
-   if (!obj_ubuntu)
-     {
-        ERR("Error: could not get object");
-        return;
-     }
-
-   meta_geoclue = edbus_proxy_get(obj_meta, GEOCLUE_GEOCLUE_IFACE);
-   if (!meta_geoclue)
-     {
-        ERR("Error: could not get proxy");
-        return;
-     }
-
-   meta_masterclient = edbus_proxy_get(obj_meta, GEOCLUE_MASTERCLIENT_IFACE);
-   if (!meta_masterclient)
-     {
-        ERR("Error: could not get proxy");
-        return;
-     }
-
-   pending1 = edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, "");
-   if (!pending1)
-     {
-        ERR("Error: could not call");
-        return;
-     }
-
-   pending2 = edbus_proxy_call(meta_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
-   if (!pending2)
-     {
-        ERR("Error: could not call");
-        return;
-     }
-}
-
-static void
-_name_owner_changed(void *data, const char *bus, const char *old, const char *new)
-{
-   if (old[0] == '\0' && new[0] != '\0')
-     {
-        ecore_event_add(ELOCATION_EVENT_IN, NULL, NULL, NULL);
-        unique_name = strdup(new);
-     }
-   else if (old[0] != '\0' && new[0] == '\0')
-     {
-        if (strcmp(unique_name, old) != 0)
-           WARN("%s was not the known name %s, ignored.", old, unique_name);
-        else
-           ecore_event_add(ELOCATION_EVENT_OUT, NULL, NULL, NULL);
-     }
-   else
-     {
-        DBG("unknow change from %s to %s", old, new);
-     }
-}
-
-static void
 status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    int *status;
@@ -356,6 +280,116 @@ status_signal_cb(void *data, const EDBus_Message *reply)
 
    provider->status = *status;
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
+}
+
+static void
+create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   const char *object_path;
+   const char *signature;
+   EDBus_Pending *pending1, *pending2;
+
+   signature = edbus_message_signature_get(reply);
+   if (strcmp(signature, "o"))
+     {
+        ERR("Error: create callback message did not match signature");
+        return;
+     }
+
+   if (!edbus_message_arguments_get(reply, "o", &object_path)) return;
+
+   DBG("Object path for client: %s", object_path);
+
+   /* With the created object path we now have a meta provider we can operate on.
+    * Geoclue handles the selection of the best provider internally for the meta
+    * provider */
+   obj_meta = edbus_object_get(conn, GEOCLUE_DBUS_NAME, object_path);
+   if (!obj_meta)
+     {
+        ERR("Error: could not get object");
+        return;
+     }
+
+   meta_geoclue = edbus_proxy_get(obj_meta, GEOCLUE_GEOCLUE_IFACE);
+   if (!meta_geoclue)
+     {
+        ERR("Error: could not get proxy");
+        return;
+     }
+
+   meta_address = edbus_proxy_get(obj_meta, GEOCLUE_ADDRESS_IFACE);
+   if (!meta_address)
+     {
+        ERR("Error: could not get proxy");
+        return;
+     }
+
+   meta_position = edbus_proxy_get(obj_meta, GEOCLUE_POSITION_IFACE);
+   if (!meta_position)
+     {
+        ERR("Error: could not get proxy");
+        return;
+     }
+
+   meta_masterclient = edbus_proxy_get(obj_meta, GEOCLUE_MASTERCLIENT_IFACE);
+   if (!meta_masterclient)
+     {
+        ERR("Error: could not get proxy");
+        return;
+     }
+
+   pending1 = edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending = edbus_proxy_call(meta_address, "GetAddress", address_cb, NULL, -1, "");
+   if (!pending)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending = edbus_proxy_call(meta_position, "GetPosition", position_cb, NULL, -1, "");
+   if (!pending)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending2 = edbus_proxy_call(meta_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
+   if (!pending2)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   cb_address_changed = edbus_proxy_signal_handler_add(meta_address, "AddressChanged", address_signal_cb, NULL);
+   cb_position_changed = edbus_proxy_signal_handler_add(meta_position, "PositionChanged", position_signal_cb, NULL);
+   cb_status_changed = edbus_proxy_signal_handler_add(meta_geoclue, "StatusChanged", status_signal_cb, NULL);
+}
+
+static void
+_name_owner_changed(void *data, const char *bus, const char *old, const char *new)
+{
+   if (old[0] == '\0' && new[0] != '\0')
+     {
+        ecore_event_add(ELOCATION_EVENT_IN, NULL, NULL, NULL);
+        unique_name = strdup(new);
+     }
+   else if (old[0] != '\0' && new[0] == '\0')
+     {
+        if (strcmp(unique_name, old) != 0)
+           WARN("%s was not the known name %s, ignored.", old, unique_name);
+        else
+           ecore_event_add(ELOCATION_EVENT_OUT, NULL, NULL, NULL);
+     }
+   else
+     {
+        DBG("unknow change from %s to %s", old, new);
+     }
 }
 
 EAPI Eina_Bool
