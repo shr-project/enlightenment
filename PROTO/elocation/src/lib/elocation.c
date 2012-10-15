@@ -385,9 +385,26 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    cb_meta_address_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "AddressProviderChanged", meta_provider_info_signal_cb, NULL);
    cb_meta_position_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "PositionProviderChanged", meta_provider_info_signal_cb, NULL);
 
-   edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources);
-   edbus_proxy_call(meta_masterclient, "AddressStart", _dummy_cb, NULL, -1, "");
-   edbus_proxy_call(meta_masterclient, "PositionStart", _dummy_cb, NULL, -1, "");
+   pending1 = edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources);
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending1 = edbus_proxy_call(meta_masterclient, "AddressStart", _dummy_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
+   pending1 = edbus_proxy_call(meta_masterclient, "PositionStart", _dummy_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
 
    pending1 = edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, "");
    if (!pending1)
@@ -396,15 +413,15 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
-   pending = edbus_proxy_call(meta_address, "GetAddress", address_cb, NULL, -1, "");
-   if (!pending)
+   pending1 = edbus_proxy_call(meta_address, "GetAddress", address_cb, NULL, -1, "");
+   if (!pending1)
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending = edbus_proxy_call(meta_position, "GetPosition", position_cb, NULL, -1, "");
-   if (!pending)
+   pending1 = edbus_proxy_call(meta_position, "GetPosition", position_cb, NULL, -1, "");
+   if (!pending1)
      {
         ERR("Error: could not call");
         return;
