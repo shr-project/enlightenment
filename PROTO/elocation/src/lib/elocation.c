@@ -283,11 +283,18 @@ status_signal_cb(void *data, const EDBus_Message *reply)
 }
 
 static void
+_dummy_cb(void *data, const EDBus_Message *msg, EDBus_Pending *pending)
+{
+}
+
+static void
 create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    const char *object_path;
    const char *signature;
    EDBus_Pending *pending1, *pending2;
+   Eina_Bool updates;
+   int accur_level, time, resources;
 
    signature = edbus_message_signature_get(reply);
    if (strcmp(signature, "o"))
@@ -337,6 +344,17 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         ERR("Error: could not get proxy");
         return;
      }
+
+   /* Send Geoclue a set of requirements we have for the provider and start the address and position
+    * meta provider afterwards. After this we should be ready for operation. */
+   updates = EINA_FALSE; /* Especially the web providers do not offer updates */
+   accur_level = ELOCATION_ACCURACY_LEVEL_COUNTRY;
+   time = 0; /* Still need to figure out what this is used for */
+   resources = ELOCATION_RESOURCE_ALL;
+
+   edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources);
+   edbus_proxy_call(meta_masterclient, "AddressStart", _dummy_cb, NULL, -1, "");
+   edbus_proxy_call(meta_masterclient, "PositionStart", _dummy_cb, NULL, -1, "");
 
    pending1 = edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, "");
    if (!pending1)
