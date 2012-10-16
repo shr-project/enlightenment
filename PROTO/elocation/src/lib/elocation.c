@@ -43,20 +43,6 @@ _dummy_free(void *user_data, void *func_data)
 }
 
 static void
-provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
-{
-   char *name = NULL, *desc = NULL;
-   const char *signature;
-
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "ss")) return;
-
-   if (!edbus_message_arguments_get(reply, "ss", &name, &desc)) return;
-
-   DBG("Provider name: %s, %s", provider->name, provider->description);
-}
-
-static void
 meta_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    char *name = NULL, *desc = NULL, *service = NULL, *path = NULL;
@@ -424,14 +410,6 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 
    pending1 = edbus_proxy_call(meta_geoclue, "GetStatus", status_cb, NULL, -1, "");
    if (!pending1)
-     {
-        ERR("Error: could not call");
-        return;
-     }
-
-   provider = calloc(1, sizeof(Elocation_Provider));
-   pending2 = edbus_proxy_call(meta_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
-   if (!pending2)
      {
         ERR("Error: could not call");
         return;
