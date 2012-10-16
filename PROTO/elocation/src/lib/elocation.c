@@ -12,7 +12,8 @@
 
 static char *unique_name = NULL;
 static EDBus_Connection *conn = NULL;
-static Elocation_Provider *provider = NULL;
+static Elocation_Provider *address_provider = NULL;
+static Elocation_Provider *position_provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
@@ -43,21 +44,7 @@ _dummy_free(void *user_data, void *func_data)
 }
 
 static void
-meta_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
-{
-   char *name = NULL, *desc = NULL, *service = NULL, *path = NULL;
-   const char *signature;
-
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "ssss")) return;
-
-   if (!edbus_message_arguments_get(reply, "ssss", &name, &desc, &service, &path)) return;
-
-   DBG("Meta provider name: %s, %s, %s, %s", provider->name, provider->description, service, path);
-}
-
-static void
-meta_provider_info_signal_cb(void *data, const EDBus_Message *reply)
+unmarshall_provider(const EDBus_Message *reply, Elocation_Provider *provider)
 {
    char *name = NULL, *desc = NULL, *service = NULL, *path = NULL;
    const char *signature;
@@ -68,8 +55,48 @@ meta_provider_info_signal_cb(void *data, const EDBus_Message *reply)
    if (!edbus_message_arguments_get(reply, "ssss", &name, &desc, &service, &path)) return;
    provider->name = strdup(name);
    provider->description = strdup(desc);
+   provider->service = strdup(service);
+   provider->path = strdup(path);
+}
 
-   DBG("Meta provider name: %s, %s, %s, %s", provider->name, provider->description, service, path);
+static void
+meta_address_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   unmarshall_provider(reply, address_provider);
+   DBG("Meta address provider name: %s, %s, %s, %s", address_provider->name,
+                                                     address_provider->description,
+                                                     address_provider->service,
+                                                     address_provider->path);
+}
+
+static void
+meta_position_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   unmarshall_provider(reply, position_provider);
+   DBG("Meta position provider name: %s, %s, %s, %s", position_provider->name,
+                                                      position_provider->description,
+                                                      position_provider->service,
+                                                      position_provider->path);
+}
+
+static void
+meta_address_provider_info_signal_cb(void *data, const EDBus_Message *reply)
+{
+   unmarshall_provider(reply, address_provider);
+   DBG("Meta address provider name changed: %s, %s, %s, %s", address_provider->name,
+                                                             address_provider->description,
+                                                             address_provider->service,
+                                                             address_provider->path);
+}
+
+static void
+meta_position_provider_info_signal_cb(void *data, const EDBus_Message *reply)
+{
+   unmarshall_provider(reply, position_provider);
+   DBG("Meta position provider name changed: %s, %s, %s, %s", position_provider->name,
+                                                              position_provider->description,
+                                                              position_provider->service,
+                                                              position_provider->path);
 }
 
 static void
@@ -268,7 +295,7 @@ status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 
    if (!edbus_message_arguments_get(reply,"i",  status)) return;
 
-   provider->status = *status;
+   address_provider->status = position_provider->status = *status;
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
@@ -289,7 +316,7 @@ status_signal_cb(void *data, const EDBus_Message *reply)
 
    if (!edbus_message_arguments_get(reply,"i",  status)) return;
 
-   provider->status = *status;
+   address_provider->status = position_provider->status = *status;
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
@@ -363,8 +390,8 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    time = 0; /* Still need to figure out what this is used for */
    resources = ELOCATION_RESOURCE_ALL;
 
-   cb_meta_address_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "AddressProviderChanged", meta_provider_info_signal_cb, NULL);
-   cb_meta_position_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "PositionProviderChanged", meta_provider_info_signal_cb, NULL);
+   cb_meta_address_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "AddressProviderChanged", meta_address_provider_info_signal_cb, NULL);
+   cb_meta_position_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "PositionProviderChanged", meta_position_provider_info_signal_cb, NULL);
 
    pending1 = edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources);
    if (!pending1)
@@ -415,14 +442,14 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
-   pending2 = edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_provider_info_cb, NULL, -1, "");
+   pending2 = edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_address_provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending2 = edbus_proxy_call(meta_masterclient, "GetPositionProvider", meta_provider_info_cb, NULL, -1, "");
+   pending2 = edbus_proxy_call(meta_masterclient, "GetPositionProvider", meta_position_provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
         ERR("Error: could not call");
@@ -554,6 +581,9 @@ elocation_init()
         EINA_LOG_ERR("Could not register 'elocation' log domain.");
      }
 
+   address_provider = calloc(1, sizeof(Elocation_Provider));
+   position_provider = calloc(1, sizeof(Elocation_Provider));
+
    conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (!conn)
      {
@@ -616,7 +646,18 @@ elocation_shutdown()
         ERR("Error: could not call");
      }
 
-   free(provider);
+   free(address_provider->name);
+   free(address_provider->description);
+   free(address_provider->service);
+   free(address_provider->path);
+   free(address_provider);
+
+   free(position_provider->name);
+   free(position_provider->description);
+   free(position_provider->service);
+   free(position_provider->path);
+   free(position_provider);
+
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_signal_handler_unref(cb_address_changed);
    edbus_signal_handler_unref(cb_position_changed);
