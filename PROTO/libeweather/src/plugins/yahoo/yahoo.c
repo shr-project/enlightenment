@@ -197,10 +197,13 @@ _weather_cb_check(void *data)
      inst->server =
 	ecore_con_server_connect(ECORE_CON_REMOTE_SYSTEM, inst->host, 80, inst);
 
-   if (!inst->server) return EINA_FALSE;
-
+   if (!inst->server)
+     {
+        inst->check_timer = NULL;
+        return ECORE_CALLBACK_CANCEL;
+     }
    ecore_timer_interval_set(inst->check_timer, inst->weather->poll_time);
-   return EINA_TRUE;
+   return ECORE_CALLBACK_RENEW;
 }
 
    static Eina_Bool
