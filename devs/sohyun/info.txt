@@ -1,0 +1,10 @@
+login:        sohyun 
+IRC Nick:     sohyun
+Name:         Sohyun Kim
+Location:     Suwon, Korea
+E-Mail:       sohyun.anna@gmail.com, anna1014.kim@samsung.com
+WWW:          
+Managing:     emotion, elementary
+Contributing: evas, ecore
+Platform:     Ubuntu (Linux), Mac OS X
+GeoData:      37.249034 127.038535
