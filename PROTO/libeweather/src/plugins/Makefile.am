@@ -1,4 +1,4 @@
 MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = google test yahoo
+SUBDIRS = test yahoo
 

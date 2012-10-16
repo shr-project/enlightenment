@@ -134,7 +134,6 @@ src/bin/Makefile
 src/plugins/Makefile
 src/plugins/test/Makefile
 src/plugins/yahoo/Makefile
-src/plugins/google/Makefile
 ])
 
 echo
