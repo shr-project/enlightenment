@@ -25,6 +25,7 @@ static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
+static int *status = 0;
 
 int _elocation_log_dom = -1;
 
@@ -267,7 +268,6 @@ _reference_del_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending
 static void
 status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
-   int *status;
    const char *signature;
 
    /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
@@ -289,7 +289,6 @@ status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 static void
 status_signal_cb(void *data, const EDBus_Message *reply)
 {
-   int *status;
    const char *signature;
 
    /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
@@ -423,6 +422,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   pending1 = edbus_proxy_call(meta_geoclue, "GetStatus", status_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+
    provider = calloc(1, sizeof(Elocation_Provider));
    pending2 = edbus_proxy_call(meta_geoclue, "GetProviderInfo", provider_info_cb, NULL, -1, "");
    if (!pending2)
@@ -490,16 +496,12 @@ elocation_position_get(Elocation_Position *position_shadow)
 }
 
 EAPI Eina_Bool
-elocation_status_get(int *status)
+elocation_status_get(int *status_shadow)
 {
-   EDBus_Pending *pending;
+   if (!status) return EINA_FALSE;
 
-   pending = edbus_proxy_call(meta_geoclue, "GetStatus", status_cb, NULL, -1, "");
-   if (!pending)
-     {
-        ERR("Error: could not call");
-        return EXIT_FAILURE;
-     }
+   status_shadow = status;
+   return EINA_TRUE;
 }
 
 EAPI Elocation_Position *
