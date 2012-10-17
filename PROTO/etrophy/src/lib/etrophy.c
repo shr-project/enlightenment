@@ -128,8 +128,11 @@ _trophy_shutdown(void)
 EAPI Etrophy_Trophy *
 etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal)
 {
-   Etrophy_Trophy *trophy = calloc(1, sizeof(Etrophy_Trophy));
+   Etrophy_Trophy *trophy;
 
+   EINA_SAFETY_ON_NULL_RETURN_VAL(name, NULL);
+
+   trophy = calloc(1, sizeof(Etrophy_Trophy));
    if (!trophy)
      {
         ERR("Could not calloc Etrophy_Trophy.");
@@ -148,6 +151,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Vis
 EAPI void
 etrophy_trophy_free(Etrophy_Trophy *trophy)
 {
+   EINA_SAFETY_ON_NULL_RETURN(trophy);
    eina_stringshare_del(trophy->name);
    eina_stringshare_del(trophy->description);
    free(trophy);
@@ -156,18 +160,21 @@ etrophy_trophy_free(Etrophy_Trophy *trophy)
 EAPI inline const char *
 etrophy_trophy_name_get(const Etrophy_Trophy *trophy)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(trophy, NULL);
    return trophy->name;
 }
 
 EAPI inline const char *
 etrophy_trophy_description_get(const Etrophy_Trophy *trophy)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(trophy, NULL);
    return trophy->description;
 }
 
 EAPI inline Etrophy_Trophy_Visibility
 etrophy_trophy_visibility_get(const Etrophy_Trophy *trophy)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(trophy, 0);
    return trophy->visibility;
 }
 
@@ -175,6 +182,7 @@ EAPI inline void
 etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *goal,
                         unsigned int *counter)
 {
+   EINA_SAFETY_ON_NULL_RETURN(trophy);
    if (goal) *goal = trophy->goal;
    if (counter) *counter = trophy->counter;
 }
@@ -182,6 +190,8 @@ etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *goal,
 EAPI inline void
 etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value)
 {
+   EINA_SAFETY_ON_NULL_RETURN(trophy);
+
    if (trophy->counter == trophy->goal) return;
 
    trophy->counter += value;
@@ -194,12 +204,14 @@ etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value)
 EAPI inline Eina_Bool
 etrophy_trophy_earned_get(const Etrophy_Trophy *trophy)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(trophy, EINA_FALSE);
    return (trophy->goal == trophy->counter);
 }
 
 EAPI inline unsigned int
 etrophy_trophy_date_get(const Etrophy_Trophy *trophy)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(trophy, 0);
    return trophy->date;
 }
 
@@ -232,8 +244,11 @@ _lock_shutdown(void)
 EAPI Etrophy_Lock *
 etrophy_lock_new(const char *name, Etrophy_Lock_State state)
 {
-   Etrophy_Lock *lock = calloc(1, sizeof(Etrophy_Lock));
+   Etrophy_Lock *lock;
 
+   EINA_SAFETY_ON_NULL_RETURN_VAL(name, NULL);
+
+   lock = calloc(1, sizeof(Etrophy_Lock));
    if (!lock)
      {
         ERR("Could not calloc Etrophy_Lock.");
@@ -250,6 +265,7 @@ etrophy_lock_new(const char *name, Etrophy_Lock_State state)
 EAPI void
 etrophy_lock_free(Etrophy_Lock *lock)
 {
+   EINA_SAFETY_ON_NULL_RETURN(lock);
    eina_stringshare_del(lock->name);
    free(lock);
 }
@@ -257,12 +273,14 @@ etrophy_lock_free(Etrophy_Lock *lock)
 EAPI inline const char *
 etrophy_lock_name_get(const Etrophy_Lock *lock)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(lock, NULL);
    return lock->name;
 }
 
 EAPI inline Etrophy_Lock_State
 etrophy_lock_state_get(const Etrophy_Lock *lock)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(lock, 0);
    return lock->state;
 }
 
@@ -278,6 +296,7 @@ etrophy_lock_state_set(Etrophy_Lock *lock, Etrophy_Lock_State state)
 EAPI inline unsigned int
 etrophy_lock_date_get(const Etrophy_Lock *lock)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(lock, 0);
    return lock->date;
 }
 
@@ -330,6 +349,7 @@ etrophy_score_new(const char *player_name, int score)
 EAPI void
 etrophy_score_free(Etrophy_Score *escore)
 {
+   EINA_SAFETY_ON_NULL_RETURN(escore);
    eina_stringshare_del(escore->player_name);
    free(escore);
 }
@@ -337,18 +357,21 @@ etrophy_score_free(Etrophy_Score *escore)
 EAPI inline const char *
 etrophy_score_player_name_get(const Etrophy_Score *escore)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(escore, NULL);
    return escore->player_name;
 }
 
 EAPI inline int
 etrophy_score_score_get(const Etrophy_Score *escore)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(escore, 0);
    return escore->score;
 }
 
 EAPI inline unsigned int
 etrophy_score_date_get(const Etrophy_Score *escore)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(escore, 0);
    return escore->date;
 }
 
@@ -379,8 +402,11 @@ _level_shutdown(void)
 EAPI Etrophy_Level *
 etrophy_level_new(const char *name)
 {
-   Etrophy_Level *level = calloc(1, sizeof(Etrophy_Level));
+   Etrophy_Level *level;
 
+   EINA_SAFETY_ON_NULL_RETURN_VAL(name, NULL);
+
+   level = calloc(1, sizeof(Etrophy_Level));
    if (!level)
      {
         ERR("Could not calloc Etrophy_Level.");
@@ -396,6 +422,7 @@ etrophy_level_new(const char *name)
 EAPI void
 etrophy_level_free(Etrophy_Level *level)
 {
+   EINA_SAFETY_ON_NULL_RETURN(level);
    eina_stringshare_del(level->name);
    if (level->scores)
      {
@@ -409,6 +436,7 @@ etrophy_level_free(Etrophy_Level *level)
 EAPI inline const char *
 etrophy_level_name_get(const Etrophy_Level *level)
 {
+   EINA_SAFETY_ON_NULL_RETURN_VAL(level, NULL);
    return level->name;
 }
 
@@ -525,6 +553,7 @@ etrophy_gamescore_new(const char *gamename)
 EAPI void
 etrophy_gamescore_free(Etrophy_Gamescore *gamescore)
 {
+   EINA_SAFETY_ON_NULL_RETURN(gamescore);
    if (gamescore->levels)
      {
         Etrophy_Level *levels_elem;
