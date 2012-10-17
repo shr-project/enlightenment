@@ -47,7 +47,8 @@
  */
 EAPI extern int ELOCATION_EVENT_STATUS; /**< Status changed */
 EAPI extern int ELOCATION_EVENT_POSITION; /**< Position changed */
-EAPI extern int ELOCATION_EVENT_ADDRESS; /**<Address changed */
+EAPI extern int ELOCATION_EVENT_ADDRESS; /**< Address changed */
+EAPI extern int ELOCATION_EVENT_VELOCITY; /**< Velocity changed */
 /**@}*/
 
 /**
@@ -128,6 +129,19 @@ typedef struct _Elocation_Postion
    double altitude;
    Elocation_Accuracy *accur;
 } Elocation_Position;
+
+/**
+ * @typedef Elocation_Velocity
+ * @since 1.8
+ *
+ */
+typedef struct _Elocation_Velocity
+{
+   unsigned int timestamp; /**< Timestamp of data read out in seconds since epoch */
+   double speed;
+   double direction;
+   double climb;
+} Elocation_Velocity;
 
 /**
  * @typedef Elocation_Requirements

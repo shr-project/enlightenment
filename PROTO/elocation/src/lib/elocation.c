@@ -17,6 +17,7 @@ static Elocation_Provider *position_provider = NULL;
 static EDBus_Signal_Handler *cb_position_changed = NULL;
 static EDBus_Signal_Handler *cb_address_changed = NULL;
 static EDBus_Signal_Handler *cb_status_changed = NULL;
+static EDBus_Signal_Handler *cb_velocity_changed = NULL;
 static EDBus_Signal_Handler *cb_meta_address_provider_changed = NULL;
 static EDBus_Signal_Handler *cb_meta_position_provider_changed = NULL;
 static EDBus_Object *obj_meta = NULL;
@@ -24,8 +25,10 @@ static EDBus_Proxy *meta_geoclue = NULL;
 static EDBus_Proxy *meta_address = NULL;
 static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
+static EDBus_Proxy *meta_velocity = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
+static Elocation_Velocity *velocity = NULL;
 static int *status = 0;
 
 int _elocation_log_dom = -1;
@@ -35,6 +38,7 @@ EAPI int ELOCATION_EVENT_OUT;
 EAPI int ELOCATION_EVENT_STATUS;
 EAPI int ELOCATION_EVENT_POSITION;
 EAPI int ELOCATION_EVENT_ADDRESS;
+EAPI int ELOCATION_EVENT_VELOCITY;
 
 static void
 _dummy_free(void *user_data, void *func_data)
@@ -189,6 +193,61 @@ address_signal_cb(void *data, const EDBus_Message *reply)
 {
    unmarshall_address(reply);
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
+}
+
+static void
+unmarshall_velocity(const EDBus_Message *reply)
+{
+   GeoclueVelocityFields fields;
+   int32_t timestamp = 0;
+   double speed = 0.0;
+   double direction = 0.0;
+   double climb = 0.0;
+
+   if (!edbus_message_arguments_get(reply, "iiddd", &fields, &timestamp,
+                                    &speed, &direction, &climb))
+     return;
+
+   velocity->timestamp = timestamp;
+
+   /* GeoClue uses some flags to mark velocity fields as valid. We set invalid
+    * fields to 0.0 */
+   if (fields & GEOCLUE_VELOCITY_FIELDS_SPEED)
+      velocity->speed = speed;
+   else
+      velocity->speed = 0.0;
+
+   if (fields & GEOCLUE_VELOCITY_FIELDS_DIRECTION)
+      velocity->direction = direction;
+   else
+      velocity->direction = 0.0;
+
+   if (fields & GEOCLUE_VELOCITY_FIELDS_CLIMB)
+      velocity->climb = climb;
+   else
+      velocity->climb = 0.0;
+}
+
+static void
+velocity_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
+   unmarshall_velocity(reply);
+   ecore_event_add(ELOCATION_EVENT_VELOCITY, velocity, _dummy_free, NULL);
+}
+
+static void
+velocity_signal_cb(void *data, const EDBus_Message *reply)
+{
+   unmarshall_velocity(reply);
+   ecore_event_add(ELOCATION_EVENT_VELOCITY, velocity, _dummy_free, NULL);
 }
 
 static void
@@ -391,6 +450,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   meta_velocity = edbus_proxy_get(obj_meta, GEOCLUE_VELOCITY_IFACE);
+   if (!meta_velocity)
+     {
+        ERR("Error: could not get proxy for velocity");
+        return;
+     }
+
    /* Send Geoclue a set of requirements we have for the provider and start the address and position
     * meta provider afterwards. After this we should be ready for operation. */
    updates = EINA_FALSE; /* Especially the web providers do not offer updates */
@@ -450,6 +516,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   pending1 = edbus_proxy_call(meta_velocity, "GetVelocity", velocity_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call GetVelocity");
+        return;
+     }
+
    pending2 = edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_address_provider_info_cb, NULL, -1, "");
    if (!pending2)
      {
@@ -467,6 +540,7 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    cb_address_changed = edbus_proxy_signal_handler_add(meta_address, "AddressChanged", address_signal_cb, NULL);
    cb_position_changed = edbus_proxy_signal_handler_add(meta_position, "PositionChanged", position_signal_cb, NULL);
    cb_status_changed = edbus_proxy_signal_handler_add(meta_geoclue, "StatusChanged", status_signal_cb, NULL);
+   cb_velocity_changed = edbus_proxy_signal_handler_add(meta_velocity, "VelocityChanged", velocity_signal_cb, NULL);
 }
 
 static void
@@ -614,6 +688,9 @@ elocation_init()
    if (ELOCATION_EVENT_ADDRESS == 0)
       ELOCATION_EVENT_ADDRESS = ecore_event_type_new();
 
+   if (ELOCATION_EVENT_VELOCITY == 0)
+      ELOCATION_EVENT_VELOCITY = ecore_event_type_new();
+
    obj_master= edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
    if (!obj_master)
      {
@@ -670,6 +747,7 @@ elocation_shutdown()
    edbus_signal_handler_unref(cb_address_changed);
    edbus_signal_handler_unref(cb_position_changed);
    edbus_signal_handler_unref(cb_status_changed);
+   edbus_signal_handler_unref(cb_velocity_changed);
    edbus_connection_unref(conn);
    edbus_shutdown();
    ecore_shutdown();
