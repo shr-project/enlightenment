@@ -15,7 +15,7 @@
 
 #include <Ecore_Getopt.h>
 #include <Ecore_File.h>
-#include <E_DBus.h>
+#include <EDBus.h>
 #include <Ecore_X.h>
 #include <stdlib.h>
 #include "gettext.h"
@@ -34,7 +34,7 @@ struct Cursor {
 };
 
 struct Eve_DBus_Request_Name_Response {
-  E_DBus_Connection *conn;
+  EDBus_Connection *conn;
   const char *url;
 };
 
@@ -376,14 +376,16 @@ static const Ecore_Getopt options = {
    }
 };
 
-static DBusMessage *
-_cb_dbus_open_url(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
+static EDBus_Message *
+_cb_dbus_open_url(const EDBus_Service_Interface *iface __UNUSED__,
+                  const EDBus_Message *msg)
 {
    Browser_Window *win = eina_list_data_get(app.windows);
    char *tmp_uri;
    char *uri;
 
-   dbus_message_get_args(msg, NULL, DBUS_TYPE_STRING, &tmp_uri, DBUS_TYPE_INVALID);
+   if (!edbus_message_arguments_get(msg, "s", &tmp_uri))
+     goto end;
 
    if ((uri = uri_sanitize(tmp_uri)))
      {
@@ -391,48 +393,51 @@ _cb_dbus_open_url(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
         ecore_x_window_focus(elm_win_xwindow_get(win->win));
         free(uri);
      }
-
-   return dbus_message_new_method_return(msg);
+end:
+   return edbus_message_method_return_new(msg);
 }
 
+static const EDBus_Method methods[] = {
+   {
+    "open_url", EDBUS_ARGS({"s", "url"}), EDBUS_ARGS({NULL, NULL}),
+    _cb_dbus_open_url
+   },
+   { }
+};
+
 static void
-_cb_dbus_request_name(void *data, DBusMessage *msg __UNUSED__, DBusError *err)
+_cb_dbus_request_name(void *data, const EDBus_Message *msg,
+                      EDBus_Pending *pending)
 {
    struct Eve_DBus_Request_Name_Response *response = data;
-   DBusError new_err;
-   dbus_uint32_t ret;
+   unsigned ret;
 
-   if (dbus_error_is_set(err))
-      {
-         dbus_error_free(err);
-         goto cleanup;
-      }
+   if (edbus_message_error_get(msg, NULL, NULL))
+     goto cleanup;
 
-   dbus_error_init(&new_err);
-   dbus_message_get_args(msg, &new_err, DBUS_TYPE_UINT32, &ret, DBUS_TYPE_INVALID);
+   if (!edbus_message_arguments_get(msg, "u", &ret))
+     goto cleanup;
 
    switch (ret) {
-   case DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER:
-   case DBUS_REQUEST_NAME_REPLY_ALREADY_OWNER:
+   case EDBUS_NAME_REQUEST_REPLY_PRIMARY_OWNER:
+   case EDBUS_NAME_REQUEST_REPLY_ALREADY_OWNER:
       {
-         E_DBus_Interface *iface = e_dbus_interface_new("mobi.profusion.eve");
-         E_DBus_Object *eve_dbus = e_dbus_object_add(response->conn, "/mobi/profusion/eve", NULL);
-         e_dbus_interface_method_add(iface, "open_url", "s", "", _cb_dbus_open_url);
-         e_dbus_object_interface_attach(eve_dbus, iface);
+         edbus_service_interface_register(response->conn,
+                                          "/mobi/profusion/eve",
+                                          "mobi.profusion.eve", methods, NULL);
       }
       break;
-   case DBUS_REQUEST_NAME_REPLY_IN_QUEUE:
-   case DBUS_REQUEST_NAME_REPLY_EXISTS:
+   case EDBUS_NAME_REQUEST_REPLY_IN_QUEUE:
+   case EDBUS_NAME_REQUEST_REPLY_EXISTS:
       {
-         DBusMessage *open_url = dbus_message_new_method_call("mobi.profusion.eve",
-                                                              "/mobi/profusion/eve",
-                                                              "mobi.profusion.eve",
-                                                              "open_url");
-         DBusMessageIter iter;
-         dbus_message_iter_init_append(open_url, &iter);
-         dbus_message_iter_append_basic(&iter, DBUS_TYPE_STRING, &response->url);
-         e_dbus_message_send(response->conn, open_url, NULL, -1, NULL);
-         dbus_message_unref(open_url);
+         EDBus_Message *open_url;
+         open_url = edbus_message_method_call_new("mobi.profusion.eve",
+                                                  "/mobi/profusion/eve",
+                                                  "mobi.profusion.eve",
+                                                  "open_url");
+         edbus_message_arguments_set(open_url, "s", response->url);
+         edbus_connection_send(response->conn, open_url, NULL, NULL, -1);
+         edbus_message_unref(open_url);
       }
       exit(0);
    }
@@ -627,7 +632,7 @@ elm_main(int argc, char **argv)
    const char *user_agent_str;
    char *backing_store_option = NULL;
    Backing_Store backing_store_enum;
-   E_DBus_Connection *conn = NULL;
+   EDBus_Connection *conn = NULL;
    size_t dirlen;
    Ecore_Timer *session_save_timer = NULL;
 
@@ -712,7 +717,7 @@ elm_main(int argc, char **argv)
    elm_theme_extension_add(NULL, PACKAGE_DATA_DIR "/default.edj");
    ewk_init();
    eve_state_init();
-   e_dbus_init();
+   edbus_init();
 
    home = getenv("HOME");
    if (!home || !home[0])
@@ -866,7 +871,7 @@ elm_main(int argc, char **argv)
    else
       url = config_home_page_get(config);
 
-   conn = e_dbus_bus_get(DBUS_BUS_SESSION);
+   conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (conn)
      {
         struct Eve_DBus_Request_Name_Response *response = calloc(1, sizeof(*response));
@@ -875,7 +880,8 @@ elm_main(int argc, char **argv)
         response->conn = conn;
         response->url = url;
 
-        e_dbus_request_name(conn, "mobi.profusion.eve", 0, _cb_dbus_request_name, response);
+        edbus_name_request(conn, "mobi.profusion.eve", 0,
+                           _cb_dbus_request_name, response);
      }
 
    if (config_restore_state_get(config) && session_windows_count(session) > 0 && session_restore())
@@ -904,7 +910,7 @@ end_fav:
    _cb_session_save(session);
    session_free(session);
 end_session:
-   if (conn) e_dbus_connection_close(conn);
+   if (conn) edbus_connection_unref(conn);
    if (session_save_timer) ecore_timer_del(session_save_timer);
 
    eina_log_domain_unregister(_log_domain);
@@ -912,7 +918,7 @@ end_session:
    elm_shutdown();
    ewk_shutdown();
    eve_state_shutdown();
-   e_dbus_shutdown();
+   edbus_shutdown();
    return r;
 }
 
