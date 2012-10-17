@@ -103,21 +103,16 @@ static void
 unmarshall_address(const EDBus_Message *reply)
 {
    int32_t level, timestamp;
-   EDBus_Message_Iter *iter, *sub, *dict, *entry;
+   EDBus_Message_Iter *sub, *dict, *entry;
    double horizontal;
    double vertical;
-   const char *key, *signature;
+   const char *key;
    char *value;
 
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature,"ia{ss}(idd)")) return;
+   if (!edbus_message_arguments_get(reply, "ia{ss}(idd)", &timestamp, &dict, &sub))
+     return;
 
-   iter = edbus_message_iter_get(reply);
-
-   edbus_message_iter_get_and_next(iter, 'i', &timestamp);
    address->timestamp = timestamp;
-
-   edbus_message_iter_arguments_get(iter, "a{ss}", &dict);
 
    address->country = NULL;
    address->countrycode = NULL;
@@ -156,7 +151,6 @@ unmarshall_address(const EDBus_Message *reply)
          }
     }
 
-   edbus_message_iter_get_and_next(iter, 'r', &sub);
    edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
    address->accur->level = level;
    address->accur->horizontal = horizontal;
@@ -186,9 +180,8 @@ unmarshall_position(const EDBus_Message *reply)
    double latitude = 0.0;
    double longitude = 0.0;
    double altitude = 0.0;
-   EDBus_Message_Iter *iter, *sub;
+   EDBus_Message_Iter *sub;
    const char *err, *errmsg;
-   const char *signature;
 
    if (edbus_message_error_get(reply, &err, &errmsg))
      {
@@ -196,23 +189,10 @@ unmarshall_position(const EDBus_Message *reply)
         return;
      }
 
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "iiddd(idd)"))
-     {
-        ERR("Error: position callback message did not match signature");
-        return;
-     }
+   if (!edbus_message_arguments_get(reply, "iiddd(idd)", &fields, &timestamp,
+                                    &latitude, &longitude, &altitude, &sub))
+     return;
 
-   iter = edbus_message_iter_get(reply);
-
-   // Possible to use a single edbus_message_iter_arguments_get(sub, "iiddd(idd)" ... here?
-
-   edbus_message_iter_get_and_next(iter, 'i', &fields);
-   edbus_message_iter_get_and_next(iter, 'i', &timestamp);
-   edbus_message_iter_get_and_next(iter, 'd', &latitude);
-   edbus_message_iter_get_and_next(iter, 'd', &longitude);
-   edbus_message_iter_get_and_next(iter, 'd', &altitude);
-   edbus_message_iter_get_and_next(iter, 'r', &sub );
    edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
 
    position->timestamp = timestamp;
