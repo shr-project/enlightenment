@@ -431,6 +431,9 @@ _cb_dbus_request_name(void *data, const EDBus_Message *msg,
    case EDBUS_NAME_REQUEST_REPLY_EXISTS:
       {
          EDBus_Message *open_url;
+
+	 ERR("eve is already running. Opening %s there and exiting",
+             response->url);
          open_url = edbus_message_method_call_new("mobi.profusion.eve",
                                                   "/mobi/profusion/eve",
                                                   "mobi.profusion.eve",
@@ -439,7 +442,7 @@ _cb_dbus_request_name(void *data, const EDBus_Message *msg,
          edbus_connection_send(response->conn, open_url, NULL, NULL, -1);
          edbus_message_unref(open_url);
       }
-      exit(0);
+      elm_exit();
    }
 
 cleanup:
