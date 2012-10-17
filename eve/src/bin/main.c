@@ -894,9 +894,10 @@ elm_main(int argc, char **argv)
         goto end;
      }
 
+   elm_run();
+
    if (tmp_uri) free(tmp_uri);
 
-   elm_run();
 end:
    config_save(config, NULL);
    config_free(config);
