@@ -58,6 +58,14 @@ unmarshall_provider(const EDBus_Message *reply, Elocation_Provider *provider)
 static void
 meta_address_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
    unmarshall_provider(reply, address_provider);
    DBG("Meta address provider name: %s, %s, %s, %s", address_provider->name,
                                                      address_provider->description,
@@ -68,6 +76,14 @@ meta_address_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pend
 static void
 meta_position_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
    unmarshall_provider(reply, position_provider);
    DBG("Meta position provider name: %s, %s, %s, %s", position_provider->name,
                                                       position_provider->description,
@@ -156,9 +172,18 @@ unmarshall_address(const EDBus_Message *reply)
 static void
 address_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
    unmarshall_address(reply);
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
+
 static void
 address_signal_cb(void *data, const EDBus_Message *reply)
 {
@@ -178,12 +203,6 @@ unmarshall_position(const EDBus_Message *reply)
    double altitude = 0.0;
    EDBus_Message_Iter *sub;
    const char *err, *errmsg;
-
-   if (edbus_message_error_get(reply, &err, &errmsg))
-     {
-        ERR("Error: %s %s", err, errmsg);
-        return;
-     }
 
    if (!edbus_message_arguments_get(reply, "iiddd(idd)", &fields, &timestamp,
                                     &latitude, &longitude, &altitude, &sub))
@@ -218,6 +237,14 @@ unmarshall_position(const EDBus_Message *reply)
 static void
 position_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
    unmarshall_position(reply);
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
@@ -245,18 +272,42 @@ geoclue_stop(void *data, int ev_type, void *event)
 static void
 _reference_add_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
    DBG("Reference added");
 }
 
 static void
 _reference_del_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
    DBG("Reference removed");
 }
 
 static void
 status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
    /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
    status = malloc(sizeof(*status));
 
@@ -290,6 +341,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    EDBus_Pending *pending1, *pending2;
    Eina_Bool updates;
    int accur_level, time, resources;
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
 
    if (!edbus_message_arguments_get(reply, "o", &object_path)) return;
 
