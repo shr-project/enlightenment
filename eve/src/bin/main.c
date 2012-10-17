@@ -398,10 +398,7 @@ end:
 }
 
 static const EDBus_Method methods[] = {
-   {
-    "open_url", EDBUS_ARGS({"s", "url"}), EDBUS_ARGS({NULL, NULL}),
-    _cb_dbus_open_url
-   },
+   { "open_url", EDBUS_ARGS({"s", "url"}), NULL, _cb_dbus_open_url },
    { }
 };
 
