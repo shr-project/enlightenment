@@ -26,6 +26,7 @@ static EDBus_Proxy *meta_address = NULL;
 static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
 static EDBus_Proxy *meta_velocity = NULL;
+static EDBus_Proxy *meta_rgeocode = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
 static Elocation_Velocity *velocity = NULL;
@@ -113,6 +114,68 @@ meta_position_provider_info_signal_cb(void *data, const EDBus_Message *reply)
                                                               position_provider->description,
                                                               position_provider->service,
                                                               position_provider->path);
+}
+
+static void
+rgeocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   EDBus_Message_Iter *sub, *dict, *entry;
+   const char *country = NULL, *countrycode = NULL, *locality = NULL, *postalcode = NULL;
+   const char  *region = NULL, *timezone = NULL;
+   int32_t level;
+   double horizontal;
+   double vertical;
+   const char *key;
+   char *value;
+   Elocation_Address *addr;
+   const char *err, *errmsg;
+
+   addr = alloca(sizeof(Elocation_Address));
+   addr->accur = alloca(sizeof(Elocation_Accuracy));
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
+   if (!edbus_message_arguments_get(reply, "a{ss}(idd)", &dict, &sub))
+     return;
+
+   while (edbus_message_iter_get_and_next(dict, 'e', &entry))
+    {
+       edbus_message_iter_arguments_get(entry, "ss", &key, &value);
+
+       if (!strcmp(key, "country"))
+         {
+            addr->country = strdup(value);
+         }
+       else if (!strcmp(key, "countrycode"))
+         {
+            addr->countrycode = strdup(value);
+         }
+       else if (!strcmp(key, "locality"))
+         {
+            addr->locality = strdup(value);
+         }
+       else if (!strcmp(key, "postalcode"))
+         {
+            addr->postalcode = strdup(value);
+         }
+       else if (!strcmp(key, "region"))
+         {
+            addr->region = strdup(value);
+         }
+       else if (!strcmp(key, "timezone"))
+         {
+            addr->timezone = strdup(value);
+         }
+    }
+
+   edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
+   addr->accur->level = level;
+   addr->accur->horizontal = horizontal;
+   addr->accur->vertical = vertical;
 }
 
 static void
@@ -456,6 +519,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   meta_rgeocode = edbus_proxy_get(obj_meta, GEOCLUE_REVERSEGEOCODE_IFACE);
+   if (!meta_rgeocode)
+     {
+        ERR("Error: could not get proxy for reverse geocode");
+        return;
+     }
+
    /* Send Geoclue a set of requirements we have for the provider and start the address and position
     * meta provider afterwards. After this we should be ready for operation. */
    updates = EINA_FALSE; /* Especially the web providers do not offer updates */
@@ -563,6 +633,20 @@ _name_owner_changed(void *data, const char *bus, const char *old, const char *ne
      }
 }
 
+Eina_Bool
+elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
+{
+   EDBus_Pending *pending1;
+
+   //FIXME create message with position values
+
+   pending1 = edbus_proxy_call(meta_rgeocode, "PositionToAddress", rgeocode_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+}
 EAPI Eina_Bool
 elocation_address_get(Elocation_Address *address_shadow)
 {
