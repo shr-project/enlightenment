@@ -26,6 +26,7 @@ static EDBus_Proxy *meta_address = NULL;
 static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
 static EDBus_Proxy *meta_velocity = NULL;
+static EDBus_Proxy *meta_geocode = NULL;
 static EDBus_Proxy *meta_rgeocode = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
@@ -176,6 +177,56 @@ rgeocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    addr->accur->level = level;
    addr->accur->horizontal = horizontal;
    addr->accur->vertical = vertical;
+}
+
+static void
+geocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   GeocluePositionFields fields;
+   int32_t level;
+   double horizontal = 0.0;
+   double vertical = 0.0;
+   double latitude = 0.0;
+   double longitude = 0.0;
+   double altitude = 0.0;
+   EDBus_Message_Iter *sub;
+   Elocation_Position *pos;
+   const char *err, *errmsg;
+
+   pos = alloca(sizeof(Elocation_Position));
+   pos->accur = alloca(sizeof(Elocation_Accuracy));
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
+   if (!edbus_message_arguments_get(reply, "iddd(idd)", &fields,&latitude,
+                                    &longitude, &altitude, &sub))
+     return;
+
+   /* GeoClue uses some flags to mark position fields as valid. We set invalid
+    * fields to 0.0 */
+   if (fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
+      pos->latitude = latitude;
+   else
+      pos->latitude = 0.0;
+
+   if (fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
+      pos->longitude = longitude;
+   else
+      pos->longitude = 0.0;
+
+   if (fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
+      pos->altitude = altitude;
+   else
+      pos->altitude = 0.0;
+
+   edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
+   pos->accur->level = level;
+   pos->accur->horizontal = horizontal;
+   pos->accur->vertical = vertical;
 }
 
 static void
@@ -519,6 +570,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   meta_geocode = edbus_proxy_get(obj_meta, GEOCLUE_GEOCODE_IFACE);
+   if (!meta_geocode)
+     {
+        ERR("Error: could not get proxy for geocode");
+        return;
+     }
+
    meta_rgeocode = edbus_proxy_get(obj_meta, GEOCLUE_REVERSEGEOCODE_IFACE);
    if (!meta_rgeocode)
      {
@@ -647,6 +705,37 @@ elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Add
         return;
      }
 }
+
+Eina_Bool
+elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow)
+{
+   EDBus_Pending *pending1;
+
+   //FIXME create message with address values
+
+   pending1 = edbus_proxy_call(meta_geocode, "AddressToPosition", geocode_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+}
+
+Eina_Bool
+elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow)
+{
+   EDBus_Pending *pending1;
+
+   //FIXME create message with address
+
+   pending1 = edbus_proxy_call(meta_geocode, "FreeformAddressToPosition", geocode_cb, NULL, -1, "");
+   if (!pending1)
+     {
+        ERR("Error: could not call");
+        return;
+     }
+}
+
 EAPI Eina_Bool
 elocation_address_get(Elocation_Address *address_shadow)
 {
