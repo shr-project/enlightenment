@@ -1,0 +1,12 @@
+Source: eflxx_examples
+Priority: optional
+Maintainer: Andreas Volz <andreas.volz@tux-style.com>
+Build-Depends: debhelper (>= 7), autotools-dev, cdbs, pkg-config, libtool, libelementaryxx
+Standards-Version: 3.8.3
+Section: libs
+Homepage: http://trac.enlightenment.org/e/wiki/EFLxx
+
+Package: eflxx_examples
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Elementaryxx C++ Examples
