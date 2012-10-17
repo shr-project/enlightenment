@@ -261,7 +261,6 @@ unmarshall_position(const EDBus_Message *reply)
    double longitude = 0.0;
    double altitude = 0.0;
    EDBus_Message_Iter *sub;
-   const char *err, *errmsg;
 
    if (!edbus_message_arguments_get(reply, "iiddd(idd)", &fields, &timestamp,
                                     &latitude, &longitude, &altitude, &sub))
@@ -271,7 +270,7 @@ unmarshall_position(const EDBus_Message *reply)
 
    position->timestamp = timestamp;
 
-   /* GeoClue uses soem flags to mark position fields as valid. We set invalid
+   /* GeoClue uses some flags to mark position fields as valid. We set invalid
     * fields to 0.0 */
    if (fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
       position->latitude = latitude;
