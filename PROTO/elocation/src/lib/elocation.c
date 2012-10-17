@@ -47,10 +47,6 @@ static void
 unmarshall_provider(const EDBus_Message *reply, Elocation_Provider *provider)
 {
    char *name = NULL, *desc = NULL, *service = NULL, *path = NULL;
-   const char *signature;
-
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "ssss")) return;
 
    if (!edbus_message_arguments_get(reply, "ssss", &name, &desc, &service, &path)) return;
    provider->name = strdup(name);
@@ -261,17 +257,8 @@ _reference_del_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending
 static void
 status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
-   const char *signature;
-
    /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
    status = malloc(sizeof(*status));
-
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "i"))
-     {
-        ERR("Error: status callback message did not match signature");
-        return;
-     }
 
    if (!edbus_message_arguments_get(reply,"i",  status)) return;
 
@@ -282,17 +269,8 @@ status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 static void
 status_signal_cb(void *data, const EDBus_Message *reply)
 {
-   const char *signature;
-
    /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
    status = malloc(sizeof(*status));
-
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "i"))
-     {
-        ERR("Error: status signal callback message did not match signature");
-        return;
-     }
 
    if (!edbus_message_arguments_get(reply,"i",  status)) return;
 
@@ -309,17 +287,9 @@ static void
 create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    const char *object_path;
-   const char *signature;
    EDBus_Pending *pending1, *pending2;
    Eina_Bool updates;
    int accur_level, time, resources;
-
-   signature = edbus_message_signature_get(reply);
-   if (strcmp(signature, "o"))
-     {
-        ERR("Error: create callback message did not match signature");
-        return;
-     }
 
    if (!edbus_message_arguments_get(reply, "o", &object_path)) return;
 
