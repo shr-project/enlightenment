@@ -752,7 +752,7 @@ elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Add
    iter = edbus_message_iter_get(msg);
    edbus_message_iter_basic_append(iter, 'd', position_shadow->latitude);
    edbus_message_iter_basic_append(iter, 'd', position_shadow->longitude);
-   structure = edbus_message_iter_container_new(iter, 'r', "idd");
+   structure = edbus_message_iter_container_new(iter, 'r', NULL);
    edbus_message_iter_basic_append(structure, 'i', position_shadow->accur->level);
    edbus_message_iter_basic_append(structure, 'd', position_shadow->accur->horizontal);
    edbus_message_iter_basic_append(structure, 'd', position_shadow->accur->vertical);
