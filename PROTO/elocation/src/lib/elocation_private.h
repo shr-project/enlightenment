@@ -51,6 +51,12 @@ extern int _elocation_log_dom;
 #define SKYHOOK_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/Skyhook"
 #define UBUNTU_DBUS_NAME "org.freedesktop.Geoclue.Providers.UbuntuGeoIP"
 #define UBUNTU_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/UbuntuGeoIP"
+#define GEONAMES_DBUS_NAME "org.freedesktop.Geoclue.Providers.Geonames"
+#define GEONAMES_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/Geonames"
+#define PLAZES_DBUS_NAME "org.freedesktop.Geoclue.Providers.Plazes"
+#define PLAZES_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/Plazes"
+#define YAHOO_DBUS_NAME "org.freedesktop.Geoclue.Providers.Yahoo"
+#define YAHOO_OBJECT_PATH "/org/freedesktop/Geoclue/Providers/Yahoo"
 
 /* Master interfaces to control geoclue */
 #define GEOCLUE_MASTER_IFACE "org.freedesktop.Geoclue.Master"
