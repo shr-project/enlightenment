@@ -677,14 +677,11 @@ _name_owner_changed(void *data, const char *bus, const char *old, const char *ne
 Eina_Bool
 elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
 {
-   EDBus_Pending *pending1;
-
    //FIXME create message with position values
 
-   pending1 = edbus_proxy_call(meta_rgeocode, "PositionToAddress", rgeocode_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_rgeocode, "PositionToAddress", rgeocode_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call PositionToAddress");
         return EINA_FALSE;
      }
    return EINA_TRUE;
@@ -693,14 +690,11 @@ elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Add
 Eina_Bool
 elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow)
 {
-   EDBus_Pending *pending1;
-
    //FIXME create message with address values
 
-   pending1 = edbus_proxy_call(meta_geocode, "AddressToPosition", geocode_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_geocode, "AddressToPosition", geocode_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call AddressToPosition");
         return EINA_FALSE;
      }
    return EINA_TRUE;
@@ -709,14 +703,11 @@ elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Posit
 Eina_Bool
 elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow)
 {
-   EDBus_Pending *pending1;
-
    //FIXME create message with address
 
-   pending1 = edbus_proxy_call(meta_geocode, "FreeformAddressToPosition", geocode_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_geocode, "FreeformAddressToPosition", geocode_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call FreeformAddressToPosition");
         return EINA_FALSE;
      }
    return EINA_TRUE;
@@ -809,7 +800,6 @@ elocation_init()
    EDBus_Message *msg;
    EDBus_Object *obj_master = NULL;
    EDBus_Proxy *manager_master = NULL;
-   EDBus_Pending *pending, *pending2, *pending3;
 
    if (!eina_init()) return EINA_FALSE;
    if (!ecore_init()) return EINA_FALSE;
@@ -863,10 +853,9 @@ elocation_init()
         return EXIT_FAILURE;
      }
 
-   pending = edbus_proxy_call(manager_master, "Create", create_cb, NULL, -1, "");
-   if (!pending)
+   if (!edbus_proxy_call(manager_master, "Create", create_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call Create");
         return EXIT_FAILURE;
      }
 
@@ -880,13 +869,10 @@ elocation_init()
 EAPI void
 elocation_shutdown()
 {
-   EDBus_Pending *pending, *pending2;
-
    /* To allow geoclue freeing unused providers we free our reference on it here */
-   pending2 = edbus_proxy_call(meta_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, "");
-   if (!pending2)
+   if (!edbus_proxy_call(meta_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call RemoveReference");
      }
 
    free(address_provider->name);
