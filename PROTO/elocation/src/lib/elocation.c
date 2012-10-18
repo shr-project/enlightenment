@@ -524,35 +524,35 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    obj_meta = edbus_object_get(conn, GEOCLUE_DBUS_NAME, object_path);
    if (!obj_meta)
      {
-        ERR("Error: could not get object");
+        ERR("Error: could not get object for client");
         return;
      }
 
    meta_geoclue = edbus_proxy_get(obj_meta, GEOCLUE_GEOCLUE_IFACE);
    if (!meta_geoclue)
      {
-        ERR("Error: could not get proxy");
+        ERR("Error: could not get proxy for geoclue");
         return;
      }
 
    meta_address = edbus_proxy_get(obj_meta, GEOCLUE_ADDRESS_IFACE);
    if (!meta_address)
      {
-        ERR("Error: could not get proxy");
+        ERR("Error: could not get proxy address");
         return;
      }
 
    meta_position = edbus_proxy_get(obj_meta, GEOCLUE_POSITION_IFACE);
    if (!meta_position)
      {
-        ERR("Error: could not get proxy");
+        ERR("Error: could not get proxy for position");
         return;
      }
 
    meta_masterclient = edbus_proxy_get(obj_meta, GEOCLUE_MASTERCLIENT_IFACE);
    if (!meta_masterclient)
      {
-        ERR("Error: could not get proxy");
+        ERR("Error: could not get proxy for master client");
         return;
      }
 
@@ -589,43 +589,43 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 
    if (!edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call SetRequirements");
         return;
      }
 
    if (!edbus_proxy_call(meta_masterclient, "AddressStart", _dummy_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call AddressStart");
         return;
      }
 
    if (!edbus_proxy_call(meta_masterclient, "PositionStart", _dummy_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call PositionStart");
         return;
      }
 
    if (!edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call AddReference");
         return;
      }
 
    if (!edbus_proxy_call(meta_address, "GetAddress", address_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call GetAddress");
         return;
      }
 
    if (!edbus_proxy_call(meta_position, "GetPosition", position_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call GetPosition");
         return;
      }
 
    if (!edbus_proxy_call(meta_geoclue, "GetStatus", status_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call GetStatus");
         return;
      }
 
@@ -637,13 +637,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 
    if (!edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_address_provider_info_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call GetAddressProvider");
         return;
      }
 
    if (!edbus_proxy_call(meta_masterclient, "GetPositionProvider", meta_position_provider_info_cb, NULL, -1, ""))
      {
-        ERR("Error: could not call");
+        ERR("Error: could not call GetPositionProvider");
         return;
      }
 
