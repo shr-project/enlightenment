@@ -151,10 +151,25 @@ libraries is on the right.
 <div class="main">
 
 <h2>E17 Documentation</h2>
-<div>
-<center><p>
+
+<table border=0 cellpadding=0 cellspacing=8><tr>
+<td class='main' width='*'><div class="main">
+
+</div></td>
+<td class='main'><div class="main">
+
+<center>
+<table border=0 cellpadding=0 cellspacing=10>
+ <tr>
+  <td>
    <?php blinkurl("i/logo-s.png", "E17", "http://trac.enlightenment.org/e/wiki/User_Guide"); ?>
-</p></center>
+  </td>
+ </tr>
+</table>
+</center>
+</div></td>
+</tr></table>
+
 </div>
 <?php frame2();?>
 
