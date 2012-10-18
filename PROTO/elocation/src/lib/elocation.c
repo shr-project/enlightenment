@@ -43,16 +43,19 @@ _dummy_free(void *user_data, void *func_data)
     * it on our own */
 }
 
-static void
+static Eina_Bool
 unmarshall_provider(const EDBus_Message *reply, Elocation_Provider *provider)
 {
    char *name = NULL, *desc = NULL, *service = NULL, *path = NULL;
 
-   if (!edbus_message_arguments_get(reply, "ssss", &name, &desc, &service, &path)) return;
+   if (!edbus_message_arguments_get(reply, "ssss", &name, &desc, &service, &path))
+     return EINA_FALSE;
+
    provider->name = strdup(name);
    provider->description = strdup(desc);
    provider->service = strdup(service);
    provider->path = strdup(path);
+   return EINA_TRUE;
 }
 
 static void
@@ -66,7 +69,12 @@ meta_address_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pend
         return;
      }
 
-   unmarshall_provider(reply, address_provider);
+   if (!unmarshall_provider(reply, address_provider))
+     {
+        ERR("Error: Unable to unmarshall address provider");
+        return;
+     }
+
    DBG("Meta address provider name: %s, %s, %s, %s", address_provider->name,
                                                      address_provider->description,
                                                      address_provider->service,
@@ -84,7 +92,12 @@ meta_position_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pen
         return;
      }
 
-   unmarshall_provider(reply, position_provider);
+   if (!unmarshall_provider(reply, position_provider))
+     {
+        ERR("Error: Unable to unmarshall position provider");
+        return;
+     }
+
    DBG("Meta position provider name: %s, %s, %s, %s", position_provider->name,
                                                       position_provider->description,
                                                       position_provider->service,
@@ -94,7 +107,12 @@ meta_position_provider_info_cb(void *data, const EDBus_Message *reply, EDBus_Pen
 static void
 meta_address_provider_info_signal_cb(void *data, const EDBus_Message *reply)
 {
-   unmarshall_provider(reply, address_provider);
+   if (!unmarshall_provider(reply, address_provider))
+     {
+        ERR("Error: Unable to unmarshall address provider");
+        return;
+     }
+
    DBG("Meta address provider name changed: %s, %s, %s, %s", address_provider->name,
                                                              address_provider->description,
                                                              address_provider->service,
@@ -104,7 +122,12 @@ meta_address_provider_info_signal_cb(void *data, const EDBus_Message *reply)
 static void
 meta_position_provider_info_signal_cb(void *data, const EDBus_Message *reply)
 {
-   unmarshall_provider(reply, position_provider);
+   if (!unmarshall_provider(reply, position_provider))
+     {
+        ERR("Error: Unable to unmarshall position provider");
+        return;
+     }
+
    DBG("Meta position provider name changed: %s, %s, %s, %s", position_provider->name,
                                                               position_provider->description,
                                                               position_provider->service,
@@ -223,7 +246,7 @@ geocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    pos->accur->vertical = vertical;
 }
 
-static void
+static Eina_Bool
 unmarshall_address(const EDBus_Message *reply)
 {
    int32_t level, timestamp;
@@ -234,7 +257,7 @@ unmarshall_address(const EDBus_Message *reply)
    char *value;
 
    if (!edbus_message_arguments_get(reply, "ia{ss}(idd)", &timestamp, &dict, &sub))
-     return;
+     return EINA_FALSE;
 
    address->timestamp = timestamp;
 
@@ -279,6 +302,7 @@ unmarshall_address(const EDBus_Message *reply)
    address->accur->level = level;
    address->accur->horizontal = horizontal;
    address->accur->vertical = vertical;
+   return EINA_TRUE;
 }
 
 static void
@@ -292,18 +316,28 @@ address_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
-   unmarshall_address(reply);
+   if (!unmarshall_address(reply))
+     {
+        ERR("Error: Unable to unmarshall address");
+        return;
+     }
+
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
 
 static void
 address_signal_cb(void *data, const EDBus_Message *reply)
 {
-   unmarshall_address(reply);
+   if (!unmarshall_address(reply))
+     {
+        ERR("Error: Unable to unmarshall address");
+        return;
+     }
+
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
 
-static void
+static Eina_Bool
 unmarshall_velocity(const EDBus_Message *reply)
 {
    GeoclueVelocityFields fields;
@@ -314,7 +348,7 @@ unmarshall_velocity(const EDBus_Message *reply)
 
    if (!edbus_message_arguments_get(reply, "iiddd", &fields, &timestamp,
                                     &speed, &direction, &climb))
-     return;
+     return EINA_FALSE;
 
    velocity->timestamp = timestamp;
 
@@ -334,6 +368,8 @@ unmarshall_velocity(const EDBus_Message *reply)
       velocity->climb = climb;
    else
       velocity->climb = 0.0;
+
+   return EINA_TRUE;
 }
 
 static void
@@ -347,18 +383,28 @@ velocity_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
-   unmarshall_velocity(reply);
+   if (!unmarshall_velocity(reply))
+     {
+        ERR("Error: Unable to unmarshall velocity");
+        return;
+     }
+
    ecore_event_add(ELOCATION_EVENT_VELOCITY, velocity, _dummy_free, NULL);
 }
 
 static void
 velocity_signal_cb(void *data, const EDBus_Message *reply)
 {
-   unmarshall_velocity(reply);
+   if (!unmarshall_velocity(reply))
+     {
+        ERR("Error: Unable to unmarshall velocity");
+        return;
+     }
+
    ecore_event_add(ELOCATION_EVENT_VELOCITY, velocity, _dummy_free, NULL);
 }
 
-static void
+static Eina_Bool
 unmarshall_position(const EDBus_Message *reply)
 {
    GeocluePositionFields fields;
@@ -372,9 +418,10 @@ unmarshall_position(const EDBus_Message *reply)
 
    if (!edbus_message_arguments_get(reply, "iiddd(idd)", &fields, &timestamp,
                                     &latitude, &longitude, &altitude, &sub))
-     return;
+     return EINA_FALSE;
 
-   edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
+   if (!edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical))
+     return EINA_FALSE;
 
    position->timestamp = timestamp;
 
@@ -398,6 +445,8 @@ unmarshall_position(const EDBus_Message *reply)
    position->accur->level = level;
    position->accur->horizontal = horizontal;
    position->accur->vertical = vertical;
+
+   return EINA_TRUE;
 }
 
 static void
@@ -411,14 +460,24 @@ position_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
-   unmarshall_position(reply);
+   if (!unmarshall_position(reply))
+     {
+        ERR("Error: Unable to unmarshall position");
+        return;
+     }
+
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
 
 static void
 position_signal_cb(void *data, const EDBus_Message *reply)
 {
-   unmarshall_position(reply);
+   if (!unmarshall_position(reply))
+     {
+        ERR("Error: Unable to unmarshall position");
+        return;
+     }
+
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
 static Eina_Bool
@@ -477,7 +536,11 @@ status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
    status = malloc(sizeof(*status));
 
-   if (!edbus_message_arguments_get(reply,"i",  status)) return;
+   if (!edbus_message_arguments_get(reply,"i",  status))
+     {
+        ERR("Error: Unable to unmarshall status");
+        return;
+     }
 
    address_provider->status = position_provider->status = *status;
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
@@ -489,7 +552,11 @@ status_signal_cb(void *data, const EDBus_Message *reply)
    /* We need this to be malloced to be passed to ecore_event_add. Or provide a dummy free callback. */
    status = malloc(sizeof(*status));
 
-   if (!edbus_message_arguments_get(reply,"i",  status)) return;
+   if (!edbus_message_arguments_get(reply,"i",  status))
+     {
+        ERR("Error: Unable to unmarshall status");
+        return;
+     }
 
    address_provider->status = position_provider->status = *status;
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
