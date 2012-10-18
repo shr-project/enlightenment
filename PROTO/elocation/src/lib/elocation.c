@@ -480,6 +480,7 @@ position_signal_cb(void *data, const EDBus_Message *reply)
 
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
+
 static Eina_Bool
 geoclue_start(void *data, int ev_type, void *event)
 {
@@ -744,35 +745,63 @@ _name_owner_changed(void *data, const char *bus, const char *old, const char *ne
 Eina_Bool
 elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
 {
-   //FIXME create message with position values
+   EDBus_Message *msg;
+   EDBus_Message_Iter *iter, *structure;
 
-   if (!edbus_proxy_call(meta_rgeocode, "PositionToAddress", rgeocode_cb, NULL, -1, ""))
+   msg = edbus_proxy_method_call_new(meta_rgeocode, "PositionToAddress");
+   iter = edbus_message_iter_get(msg);
+   edbus_message_iter_basic_append(iter, 'd', position_shadow->latitude);
+   edbus_message_iter_basic_append(iter, 'd', position_shadow->longitude);
+   structure = edbus_message_iter_container_new(iter, 'r', "idd");
+   edbus_message_iter_basic_append(structure, 'i', position_shadow->accur->level);
+   edbus_message_iter_basic_append(structure, 'd', position_shadow->accur->horizontal);
+   edbus_message_iter_basic_append(structure, 'd', position_shadow->accur->vertical);
+   edbus_message_iter_container_close(iter, structure);
+   if (!edbus_proxy_send(meta_rgeocode, msg, rgeocode_cb, NULL, -1))
      {
         ERR("Error: could not call PositionToAddress");
         return EINA_FALSE;
      }
+   edbus_message_unref(msg);
+
    return EINA_TRUE;
 }
 
 Eina_Bool
 elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow)
 {
-   //FIXME create message with address values
+   EDBus_Message *msg;
+   EDBus_Message_Iter *iter, *dict, *entry;
 
-   if (!edbus_proxy_call(meta_geocode, "AddressToPosition", geocode_cb, NULL, -1, ""))
+   msg = edbus_proxy_method_call_new(meta_geocode, "AddressToPosition");
+   iter = edbus_message_iter_get(msg);
+   edbus_message_iter_arguments_set(iter, "a{ss}", &dict);
+
+   entry = edbus_message_iter_container_new(dict, 'e', "ss");
+
+   edbus_message_iter_arguments_set(entry, "ss", "country", address_shadow->country);
+   edbus_message_iter_arguments_set(entry, "ss", "countrycode", address_shadow->countrycode);
+   edbus_message_iter_arguments_set(entry, "ss", "locality", address_shadow->locality);
+   edbus_message_iter_arguments_set(entry, "ss", "postalcode", address_shadow->postalcode);
+   edbus_message_iter_arguments_set(entry, "ss", "region", address_shadow->region);
+   edbus_message_iter_arguments_set(entry, "ss", "timezone", address_shadow->timezone);
+
+   edbus_message_iter_container_close(dict, entry);
+   edbus_message_iter_container_close(iter, dict);
+   if (!edbus_proxy_send(meta_geocode, msg, geocode_cb, NULL, -1))
      {
         ERR("Error: could not call AddressToPosition");
         return EINA_FALSE;
      }
+   edbus_message_unref(msg);
+
    return EINA_TRUE;
 }
 
 Eina_Bool
 elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow)
 {
-   //FIXME create message with address
-
-   if (!edbus_proxy_call(meta_geocode, "FreeformAddressToPosition", geocode_cb, NULL, -1, ""))
+   if (!edbus_proxy_call(meta_geocode, "FreeformAddressToPosition", geocode_cb, NULL, -1, "s", freeform_address))
      {
         ERR("Error: could not call FreeformAddressToPosition");
         return EINA_FALSE;
