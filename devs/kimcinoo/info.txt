@@ -1,0 +1,10 @@
+Login:        kimcinoo
+IRC Nick:     kimcinoo
+Name:         Shinwoo Kim
+Location:     Suwon, Korea
+E-Mail:       kimcinoo.efl@gmail.com
+WWW:          http://blog.naver.com/cinook
+Managing:     elementary
+Contributing: ecore, edje, e
+Platform:     Ubuntu (Linux), Mac OS X, Windows XP/7
+GeoData:      37.266184 127.071163
