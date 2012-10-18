@@ -152,10 +152,12 @@ libraries is on the right.
 
 <h2>E17 Documentation</h2>
 
-<table border=0 cellpadding=0 cellspacing=8><tr>
+<table border=0 cellpadding=0 cellspacing=8 width='100%'><tr>
+<!--
 <td class='main' width='*'><div class="main">
 <p> </p>
 </div></td>
+-->
 
 <td class='main'><div class="main">
 
