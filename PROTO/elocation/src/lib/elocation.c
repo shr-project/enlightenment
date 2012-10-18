@@ -14,12 +14,6 @@ static char *unique_name = NULL;
 static EDBus_Connection *conn = NULL;
 static Elocation_Provider *address_provider = NULL;
 static Elocation_Provider *position_provider = NULL;
-static EDBus_Signal_Handler *cb_position_changed = NULL;
-static EDBus_Signal_Handler *cb_address_changed = NULL;
-static EDBus_Signal_Handler *cb_status_changed = NULL;
-static EDBus_Signal_Handler *cb_velocity_changed = NULL;
-static EDBus_Signal_Handler *cb_meta_address_provider_changed = NULL;
-static EDBus_Signal_Handler *cb_meta_position_provider_changed = NULL;
 static EDBus_Object *obj_meta = NULL;
 static EDBus_Proxy *meta_geoclue = NULL;
 static EDBus_Proxy *meta_address = NULL;
@@ -510,7 +504,6 @@ static void
 create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
    const char *object_path;
-   EDBus_Pending *pending1, *pending2;
    Eina_Bool updates;
    int accur_level, time, resources;
    const char *err, *errmsg;
@@ -591,83 +584,73 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    time = 0; /* Still need to figure out what this is used for */
    resources = ELOCATION_RESOURCE_ALL;
 
-   cb_meta_address_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "AddressProviderChanged", meta_address_provider_info_signal_cb, NULL);
-   cb_meta_position_provider_changed = edbus_proxy_signal_handler_add(meta_masterclient, "PositionProviderChanged", meta_position_provider_info_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_masterclient, "AddressProviderChanged", meta_address_provider_info_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_masterclient, "PositionProviderChanged", meta_position_provider_info_signal_cb, NULL);
 
-   pending1 = edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources);
-   if (!pending1)
+   if (!edbus_proxy_call(meta_masterclient, "SetRequirements", _dummy_cb, NULL, -1, "iibi", accur_level, time, updates, resources))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending1 = edbus_proxy_call(meta_masterclient, "AddressStart", _dummy_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_masterclient, "AddressStart", _dummy_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending1 = edbus_proxy_call(meta_masterclient, "PositionStart", _dummy_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_masterclient, "PositionStart", _dummy_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending1 = edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_geoclue, "AddReference", _reference_add_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending1 = edbus_proxy_call(meta_address, "GetAddress", address_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_address, "GetAddress", address_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending1 = edbus_proxy_call(meta_position, "GetPosition", position_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_position, "GetPosition", position_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending1 = edbus_proxy_call(meta_geoclue, "GetStatus", status_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_geoclue, "GetStatus", status_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending1 = edbus_proxy_call(meta_velocity, "GetVelocity", velocity_cb, NULL, -1, "");
-   if (!pending1)
+   if (!edbus_proxy_call(meta_velocity, "GetVelocity", velocity_cb, NULL, -1, ""))
      {
         ERR("Error: could not call GetVelocity");
         return;
      }
 
-   pending2 = edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_address_provider_info_cb, NULL, -1, "");
-   if (!pending2)
+   if (!edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_address_provider_info_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   pending2 = edbus_proxy_call(meta_masterclient, "GetPositionProvider", meta_position_provider_info_cb, NULL, -1, "");
-   if (!pending2)
+   if (!edbus_proxy_call(meta_masterclient, "GetPositionProvider", meta_position_provider_info_cb, NULL, -1, ""))
      {
         ERR("Error: could not call");
         return;
      }
 
-   cb_address_changed = edbus_proxy_signal_handler_add(meta_address, "AddressChanged", address_signal_cb, NULL);
-   cb_position_changed = edbus_proxy_signal_handler_add(meta_position, "PositionChanged", position_signal_cb, NULL);
-   cb_status_changed = edbus_proxy_signal_handler_add(meta_geoclue, "StatusChanged", status_signal_cb, NULL);
-   cb_velocity_changed = edbus_proxy_signal_handler_add(meta_velocity, "VelocityChanged", velocity_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_address, "AddressChanged", address_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_position, "PositionChanged", position_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_geoclue, "StatusChanged", status_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_velocity, "VelocityChanged", velocity_signal_cb, NULL);
 }
 
 static void
@@ -702,8 +685,9 @@ elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Add
    if (!pending1)
      {
         ERR("Error: could not call");
-        return;
+        return EINA_FALSE;
      }
+   return EINA_TRUE;
 }
 
 Eina_Bool
@@ -717,8 +701,9 @@ elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Posit
    if (!pending1)
      {
         ERR("Error: could not call");
-        return;
+        return EINA_FALSE;
      }
+   return EINA_TRUE;
 }
 
 Eina_Bool
@@ -732,8 +717,9 @@ elocation_freeform_address_to_position(const char *freeform_address, Elocation_P
    if (!pending1)
      {
         ERR("Error: could not call");
-        return;
+        return EINA_FALSE;
      }
+   return EINA_TRUE;
 }
 
 EAPI Eina_Bool
@@ -916,10 +902,6 @@ elocation_shutdown()
    free(position_provider);
 
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
-   edbus_signal_handler_unref(cb_address_changed);
-   edbus_signal_handler_unref(cb_position_changed);
-   edbus_signal_handler_unref(cb_status_changed);
-   edbus_signal_handler_unref(cb_velocity_changed);
    edbus_connection_unref(conn);
    edbus_shutdown();
    ecore_shutdown();
