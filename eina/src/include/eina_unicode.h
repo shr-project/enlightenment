@@ -143,7 +143,7 @@ EAPI Eina_Unicode eina_unicode_utf8_get_next(const char *buf, int *iindex) EINA_
  *
  * @param buf the string
  * @param iindex the index to look at and return by.
- * @return the codepoint found.
+ * @return the codepoint found, 0 if @p buf or @p iindex are NULL
  * @since 1.1.0
  */
 EAPI Eina_Unicode eina_unicode_utf8_get_prev(const char *buf, int *iindex) EINA_ARG_NONNULL(1, 2);
