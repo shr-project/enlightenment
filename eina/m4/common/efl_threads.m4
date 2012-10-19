@@ -74,6 +74,17 @@ pthread_barrier_init(&barrier, NULL, 1);
                        ]])],
       [efl_have_pthread_barrier="yes"],
       [efl_have_pthread_barrier="no"])
+   AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM([[
+#include <stdlib.h>
+#include <pthread.h>
+#include <sched.h>
+                       ]],
+                       [[
+pthread_attr_setaffinity_np(NULL, 0, NULL);
+                       ]])],
+      [efl_have_setaffinity="yes"],
+      [efl_have_setaffinity="no"])
    CFLAGS=${SAVE_CFLAGS}
    LIBS=${SAVE_LIBS}
 
@@ -129,33 +140,8 @@ if test "x${efl_have_posix_threads_spinlock}" = "xyes" ; then
    AC_DEFINE([EFL_HAVE_POSIX_THREADS_SPINLOCK], [1], [Define to mention that POSIX threads spinlocks are supported])
 fi
 
-dnl Check ON-OFF threads
+AS_IF([test "x$_efl_have_posix_threads" = "xyes" || test "x$_efl_have_win32_threads" = "xyes"],
+   [$1],
+   [m4_if([$2], [$2], [AC_MSG_ERROR([Threads are required.])])])
 
-_efl_enable_on_off_threads="no"
-AC_ARG_ENABLE([on-off-threads],
-   [AC_HELP_STRING([--enable-on-off-threads], [only turn this on if you know what you are doing, and do not complain if the world freeze])],
-   [_efl_enable_on_off_threads="${enableval}"])
-
-efl_have_on_off_threads="no"
-if test "x${_efl_have_posix_threads}" = "xyes" && test "x${_efl_enable_on_off_threads}" = "xyes"; then
-   efl_have_on_off_threads="yes"
-   AC_DEFINE([EFL_ON_OFF_THREADS], [1], [make it possible to disable all locks])
-fi
-AC_MSG_CHECKING([whether to turn on/off threads lock on demand])
-AC_MSG_RESULT([${efl_have_on_off_threads}])
-
-dnl Check debug threads
-
-_efl_enable_debug_threads="no"
-AC_ARG_ENABLE([debug-threads],
-   [AC_HELP_STRING([--enable-debug-threads], [disable assert when you forgot to call eina_threads_init])],
-   [_efl_enable_debug_threads="${enableval}"])
-
-efl_have_debug_threads="no"
-if test "x${_efl_have_posix_threads}" = "xyes" && test "x${_efl_enable_debug_threads}" = "xyes"; then
-   efl_have_debug_threads="yes"
-   AC_DEFINE([EFL_DEBUG_THREADS], [1], [Assert when forgot to call eina_threads_init])
-fi
-
-AS_IF([test "x$_efl_have_posix_threads" = "xyes" || test "x$_efl_have_win32_threads" = "xyes"], [$1], [$2])
 ])
