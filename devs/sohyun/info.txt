@@ -1,4 +1,4 @@
-login:        sohyun 
+Login:        sohyun 
 IRC Nick:     sohyun
 Name:         Sohyun Kim
 Location:     Suwon, Korea
