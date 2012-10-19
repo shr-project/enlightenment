@@ -638,7 +638,7 @@ _ekbd_layout_state_update(Smart_Data *sd)
                                                    ww, hh);
                   evas_object_size_hint_max_set(ic, ww, hh);
                }
-             evas_object_smart_member_add(sd->s_obj, ic);
+             evas_object_smart_member_add(ic, sd->s_obj);
              edje_object_part_swallow(ky->obj, "e.swallow.content", ic);
           }
         ky->icon_obj = ic;
