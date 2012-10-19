@@ -1,5 +1,5 @@
-Login:        daniel
-IRC Nick:     asdfuser_w
+Login:        asdfuser
+IRC Nick:     asdfuser, asdfuser_w
 Name:         Daniel Willmann
 Location:     Staines, United Kingdom
 E-Mail:       daniel@totalueberwachung.de, d.willmann@samsung.com
