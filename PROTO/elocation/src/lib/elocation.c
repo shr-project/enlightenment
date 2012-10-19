@@ -15,13 +15,14 @@ static EDBus_Connection *conn = NULL;
 static Elocation_Provider *address_provider = NULL;
 static Elocation_Provider *position_provider = NULL;
 static EDBus_Object *obj_meta = NULL;
+static EDBus_Object *obj_geonames = NULL;
 static EDBus_Proxy *meta_geoclue = NULL;
 static EDBus_Proxy *meta_address = NULL;
 static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
 static EDBus_Proxy *meta_velocity = NULL;
-static EDBus_Proxy *meta_geocode = NULL;
-static EDBus_Proxy *meta_rgeocode = NULL;
+static EDBus_Proxy *geonames_geocode = NULL;
+static EDBus_Proxy *geonames_rgeocode = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
 static Elocation_Velocity *velocity = NULL;
@@ -631,20 +632,6 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
-   meta_geocode = edbus_proxy_get(obj_meta, GEOCLUE_GEOCODE_IFACE);
-   if (!meta_geocode)
-     {
-        ERR("Error: could not get proxy for geocode");
-        return;
-     }
-
-   meta_rgeocode = edbus_proxy_get(obj_meta, GEOCLUE_REVERSEGEOCODE_IFACE);
-   if (!meta_rgeocode)
-     {
-        ERR("Error: could not get proxy for reverse geocode");
-        return;
-     }
-
    /* Send Geoclue a set of requirements we have for the provider and start the address and position
     * meta provider afterwards. After this we should be ready for operation. */
    updates = EINA_FALSE; /* Especially the web providers do not offer updates */
@@ -742,13 +729,13 @@ _name_owner_changed(void *data, const char *bus, const char *old, const char *ne
      }
 }
 
-Eina_Bool
+EAPI Eina_Bool
 elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
 {
    EDBus_Message *msg;
    EDBus_Message_Iter *iter, *structure;
 
-   msg = edbus_proxy_method_call_new(meta_rgeocode, "PositionToAddress");
+   msg = edbus_proxy_method_call_new(geonames_rgeocode, "PositionToAddress");
    iter = edbus_message_iter_get(msg);
    edbus_message_iter_basic_append(iter, 'd', position_shadow->latitude);
    edbus_message_iter_basic_append(iter, 'd', position_shadow->longitude);
@@ -757,7 +744,7 @@ elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Add
    edbus_message_iter_basic_append(structure, 'd', position_shadow->accur->horizontal);
    edbus_message_iter_basic_append(structure, 'd', position_shadow->accur->vertical);
    edbus_message_iter_container_close(iter, structure);
-   if (!edbus_proxy_send(meta_rgeocode, msg, rgeocode_cb, NULL, -1))
+   if (!edbus_proxy_send(geonames_rgeocode, msg, rgeocode_cb, NULL, -1))
      {
         ERR("Error: could not call PositionToAddress");
         return EINA_FALSE;
@@ -767,13 +754,13 @@ elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Add
    return EINA_TRUE;
 }
 
-Eina_Bool
+EAPI Eina_Bool
 elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow)
 {
    EDBus_Message *msg;
    EDBus_Message_Iter *iter, *entry, *array;
 
-   msg = edbus_proxy_method_call_new(meta_geocode, "AddressToPosition");
+   msg = edbus_proxy_method_call_new(geonames_geocode, "AddressToPosition");
    iter = edbus_message_iter_get(msg);
 
    array = edbus_message_iter_container_new(iter, 'a', "{ss}");
@@ -822,7 +809,7 @@ elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Posit
 
    edbus_message_iter_container_close(iter, array);
 
-   if (!edbus_proxy_send(meta_geocode, msg, geocode_cb, NULL, -1))
+   if (!edbus_proxy_send(geonames_geocode, msg, geocode_cb, NULL, -1))
      {
         ERR("Error: could not call AddressToPosition");
         return EINA_FALSE;
@@ -832,10 +819,10 @@ elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Posit
    return EINA_TRUE;
 }
 
-Eina_Bool
+EAPI Eina_Bool
 elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow)
 {
-   if (!edbus_proxy_call(meta_geocode, "FreeformAddressToPosition", geocode_cb, NULL, -1, "s", freeform_address))
+   if (!edbus_proxy_call(geonames_geocode, "FreeformAddressToPosition", geocode_cb, NULL, -1, "s", freeform_address))
      {
         ERR("Error: could not call FreeformAddressToPosition");
         return EINA_FALSE;
@@ -986,6 +973,36 @@ elocation_init()
    if (!edbus_proxy_call(manager_master, "Create", create_cb, NULL, -1, ""))
      {
         ERR("Error: could not call Create");
+        return EXIT_FAILURE;
+     }
+
+   /* Geocode and reverse geocode never show up as meta provider. Still we want
+    * to be able to convert so we keep them around directly here. */
+   obj_geonames= edbus_object_get(conn, GEONAMES_DBUS_NAME, GEONAMES_OBJECT_PATH);
+   if (!obj_geonames)
+     {
+        ERR("Error: could not get object for geonames");
+        return EXIT_FAILURE;
+     }
+
+   geonames_geocode = edbus_proxy_get(obj_geonames, GEOCLUE_GEOCODE_IFACE);
+   if (!geonames_geocode)
+     {
+        ERR("Error: could not get proxy");
+        return EXIT_FAILURE;
+     }
+
+   obj_geonames= edbus_object_get(conn, GEONAMES_DBUS_NAME, GEONAMES_OBJECT_PATH);
+   if (!obj_geonames)
+     {
+        ERR("Error: could not get object for geonames");
+        return EXIT_FAILURE;
+     }
+
+   geonames_rgeocode = edbus_proxy_get(obj_geonames, GEOCLUE_REVERSEGEOCODE_IFACE);
+   if (!geonames_rgeocode)
+     {
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 

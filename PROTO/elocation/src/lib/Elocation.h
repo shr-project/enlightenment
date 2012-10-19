@@ -227,6 +227,37 @@ EAPI Eina_Bool elocation_status_get(int *status);
  */
 EAPI Eina_Bool elocation_requirements_set(Elocation_Requirements *requirements);
 
+/**
+ * @brief Convert position to address
+ * @param position_shadow Position input
+ * @param address_shadow Address output
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow);
+
+/**
+ * @brief Convert address to position
+ * @param address_shadow Address input
+ * @param position_shadow Position output
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow);
+
+/**
+ * @brief Convert free form address tring to position
+ * @param freeform_address Address string in free form
+ * @param position_shadow Position output
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow);
+
+
 EAPI Eina_Bool elocation_init();
 EAPI void elocation_shutdown();
 #endif
