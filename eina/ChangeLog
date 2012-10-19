@@ -363,3 +363,7 @@
 
         * Add eina_barrier API to cover pthread_barrier functionality
 
+2012-10-19  Patryk Kaczmarek
+
+	* eina_stringshare_add_length return NULL when func args are wrong.
+
