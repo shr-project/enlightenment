@@ -188,6 +188,21 @@ etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *goal,
 }
 
 EAPI inline void
+etrophy_trophy_counter_set(Etrophy_Trophy *trophy, unsigned int value)
+{
+   EINA_SAFETY_ON_NULL_RETURN(trophy);
+
+   if (trophy->counter == trophy->goal) return;
+   if (trophy->counter >= value) return;
+
+   trophy->counter = value;
+   if (trophy->counter > trophy->goal)
+     trophy->counter = trophy->goal;
+
+   trophy->date = (unsigned int)ecore_time_get();
+}
+
+EAPI inline void
 etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value)
 {
    EINA_SAFETY_ON_NULL_RETURN(trophy);

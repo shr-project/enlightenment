@@ -63,6 +63,7 @@ EAPI const char               *etrophy_trophy_name_get(const Etrophy_Trophy *tro
 EAPI const char               *etrophy_trophy_description_get(const Etrophy_Trophy *trophy);
 EAPI Etrophy_Trophy_Visibility etrophy_trophy_visibility_get(const Etrophy_Trophy *trophy);
 EAPI void                      etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *goal, unsigned int *counter);
+EAPI void                      etrophy_trophy_counter_set(Etrophy_Trophy *trophy, unsigned int value);
 EAPI void                      etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value);
 EAPI Eina_Bool                 etrophy_trophy_earned_get(const Etrophy_Trophy *trophy);
 EAPI unsigned int              etrophy_trophy_date_get(const Etrophy_Trophy *trophy);
