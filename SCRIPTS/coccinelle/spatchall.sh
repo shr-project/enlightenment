@@ -18,13 +18,15 @@ OPTIONS:
 	            spatchall.sh -t "ecore TMP/st/elementary" myscript.cocci
 
 	-q       Use very quiet spatch output
+	-d       Dry run (show diff, don't apply)
 
         -h       Show this help
 EOF
 }
 
+DRY_RUN="-in_place"
 
-while getopts "at:qh" flag
+while getopts "at:qdh" flag
 do
 	case "$flag" in
 	a)
@@ -35,6 +37,9 @@ do
 		;;
 	q)
 		QUIET="-very_quiet"
+		;;
+	d)
+		DRY_RUN=""
 		;;
 	h)
 		usage
@@ -69,7 +74,7 @@ function call_spatch {
 	spatch -sp-file $SCRIPT -macro_file_builtins ${TOPDIR}/SCRIPTS/coccinelle/ecocci.h \
 	       -I /usr/include/ -I /usr/local/include/ \
 	       $includes \
-	       $QUIET -all_includes -include_headers -relax_include_path -in_place $ARGS -dir ./
+	       $QUIET -all_includes -include_headers -relax_include_path $DRY_RUN $ARGS -dir ./
 	popd
 }
 
