@@ -771,23 +771,57 @@ Eina_Bool
 elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow)
 {
    EDBus_Message *msg;
-   EDBus_Message_Iter *iter, *dict, *entry;
+   EDBus_Message_Iter *iter, *entry, *array;
 
    msg = edbus_proxy_method_call_new(meta_geocode, "AddressToPosition");
    iter = edbus_message_iter_get(msg);
-   edbus_message_iter_arguments_set(iter, "a{ss}", &dict);
 
-   entry = edbus_message_iter_container_new(dict, 'e', "ss");
+   array = edbus_message_iter_container_new(iter, 'a', "{ss}");
 
-   edbus_message_iter_arguments_set(entry, "ss", "country", address_shadow->country);
-   edbus_message_iter_arguments_set(entry, "ss", "countrycode", address_shadow->countrycode);
-   edbus_message_iter_arguments_set(entry, "ss", "locality", address_shadow->locality);
-   edbus_message_iter_arguments_set(entry, "ss", "postalcode", address_shadow->postalcode);
-   edbus_message_iter_arguments_set(entry, "ss", "region", address_shadow->region);
-   edbus_message_iter_arguments_set(entry, "ss", "timezone", address_shadow->timezone);
+   if (address_shadow->country)
+     {
+        entry = edbus_message_iter_container_new(array, 'e', NULL);
+        edbus_message_iter_arguments_set(entry, "ss", "country", address_shadow->country);
+        edbus_message_iter_container_close(array, entry);
+     }
 
-   edbus_message_iter_container_close(dict, entry);
-   edbus_message_iter_container_close(iter, dict);
+   if (address_shadow->countrycode)
+     {
+        entry = edbus_message_iter_container_new(array, 'e', NULL);
+        edbus_message_iter_arguments_set(entry, "ss", "countrycode", address_shadow->countrycode);
+        edbus_message_iter_container_close(array, entry);
+     }
+
+   if (address_shadow->locality)
+     {
+        entry = edbus_message_iter_container_new(array, 'e', NULL);
+        edbus_message_iter_arguments_set(entry, "ss", "locality", address_shadow->locality);
+        edbus_message_iter_container_close(array, entry);
+     }
+
+   if (address_shadow->postalcode)
+     {
+        entry = edbus_message_iter_container_new(array, 'e', NULL);
+        edbus_message_iter_arguments_set(entry, "ss", "postalcode", address_shadow->postalcode);
+        edbus_message_iter_container_close(array, entry);
+     }
+
+   if (address_shadow->region)
+     {
+        entry = edbus_message_iter_container_new(array, 'e', NULL);
+        edbus_message_iter_arguments_set(entry, "ss", "region", address_shadow->region);
+        edbus_message_iter_container_close(array, entry);
+     }
+
+   if (address_shadow->timezone)
+     {
+        entry = edbus_message_iter_container_new(array, 'e', NULL);
+        edbus_message_iter_arguments_set(entry, "ss", "timezone", address_shadow->timezone);
+        edbus_message_iter_container_close(array, entry);
+     }
+
+   edbus_message_iter_container_close(iter, array);
+
    if (!edbus_proxy_send(meta_geocode, msg, geocode_cb, NULL, -1))
      {
         ERR("Error: could not call AddressToPosition");
