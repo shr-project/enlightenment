@@ -1,0 +1,9 @@
+Login:        daniel
+IRC Nick:     asdfuser_w
+Name:         Daniel Willmann
+Location:     Staines, United Kingdom
+E-Mail:       daniel@totalueberwachung.de, d.willmann@samsung.com
+WWW:          http://totalueberwachung.de
+Contributing: elev8, ecore
+Platform:     Gentoo (Linux), Ubuntu (Linux)
+GeoData:      51.431901, -0.51067
