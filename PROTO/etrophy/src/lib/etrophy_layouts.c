@@ -53,8 +53,8 @@ _score_level_changed_cb(void *data, Evas_Object *obj, void *event_info __UNUSED_
    while (item)
      {
         if (elm_genlist_item_item_class_get(item) == &itc_group)
-             if (value == i++)
-               elm_genlist_item_bring_in(item, ELM_GENLIST_ITEM_SCROLLTO_TOP);
+          if (value == i++)
+            elm_genlist_item_bring_in(item, ELM_GENLIST_ITEM_SCROLLTO_TOP);
         item = elm_genlist_item_next_get(item);
      }
 }
@@ -99,7 +99,7 @@ etrophy_score_layout_add(Evas_Object *parent, Etrophy_Gamescore *gamescore)
 
    itc.item_style = "double_label";
    itc.func.text_get = _text_get;
-   itc.func.content_get  = NULL;
+   itc.func.content_get = NULL;
    itc.func.state_get = NULL;
    itc.func.del = NULL;
 
@@ -128,7 +128,7 @@ etrophy_score_layout_add(Evas_Object *parent, Etrophy_Gamescore *gamescore)
              item = elm_genlist_item_append(genlist, &itc, score, NULL,
                                             ELM_GENLIST_ITEM_NONE, NULL, NULL);
              elm_genlist_item_select_mode_set(
-                item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
+               item, ELM_OBJECT_SELECT_MODE_DISPLAY_ONLY);
           }
      }
 

@@ -49,39 +49,39 @@ static int _etrophy_init_count = 0;
 
 struct _Etrophy_Trophy
 {
-   const char *name;
-   const char *description;
+   const char               *name;
+   const char               *description;
    Etrophy_Trophy_Visibility visibility;
-   unsigned int counter;
-   unsigned int goal;
-   unsigned int date;
+   unsigned int              counter;
+   unsigned int              goal;
+   unsigned int              date;
 };
 
 struct _Etrophy_Lock
 {
-   const char *name;
+   const char        *name;
    Etrophy_Lock_State state;
-   unsigned int date;
+   unsigned int       date;
 };
 
 struct _Etrophy_Score
 {
-   const char *player_name;
-   int score;
+   const char  *player_name;
+   int          score;
    unsigned int date;
 };
 
 struct _Etrophy_Level
 {
    const char *name;
-   Eina_List *scores;
+   Eina_List  *scores;
 };
 
 struct _Etrophy_Gamescore
 {
-   Eina_List *levels;
-   Eina_List *trophies;
-   Eina_List *locks;
+   Eina_List  *levels;
+   Eina_List  *trophies;
+   Eina_List  *locks;
    const char *__eet_filename;
 };
 
@@ -142,7 +142,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Vis
    trophy->name = eina_stringshare_add(name);
    trophy->description = eina_stringshare_add(description);
    trophy->visibility = visibility;
-   trophy->date = (unsigned int) ecore_time_get();
+   trophy->date = (unsigned int)ecore_time_get();
    trophy->goal = goal;
 
    return trophy;
@@ -198,14 +198,14 @@ etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value)
    if (trophy->counter > trophy->goal)
      trophy->counter = trophy->goal;
 
-   trophy->date = (unsigned int) ecore_time_get();
+   trophy->date = (unsigned int)ecore_time_get();
 }
 
 EAPI inline Eina_Bool
 etrophy_trophy_earned_get(const Etrophy_Trophy *trophy)
 {
    EINA_SAFETY_ON_NULL_RETURN_VAL(trophy, EINA_FALSE);
-   return (trophy->goal == trophy->counter);
+   return trophy->goal == trophy->counter;
 }
 
 EAPI inline unsigned int
@@ -257,7 +257,7 @@ etrophy_lock_new(const char *name, Etrophy_Lock_State state)
 
    lock->name = eina_stringshare_add(name);
    lock->state = state;
-   lock->date = (unsigned int) ecore_time_get();
+   lock->date = (unsigned int)ecore_time_get();
 
    return lock;
 }
@@ -290,7 +290,7 @@ etrophy_lock_state_set(Etrophy_Lock *lock, Etrophy_Lock_State state)
    EINA_SAFETY_ON_NULL_RETURN(lock);
    if (state >= ETROPHY_LOCK_STATE_LAST_VALUE) return;
    lock->state = state;
-   lock->date = (unsigned int) ecore_time_get();
+   lock->date = (unsigned int)ecore_time_get();
 }
 
 EAPI inline unsigned int
@@ -339,7 +339,7 @@ etrophy_score_new(const char *player_name, int score)
 
    escore->player_name = eina_stringshare_add(player_name);
    escore->score = score;
-   escore->date = (unsigned int) ecore_time_get();
+   escore->date = (unsigned int)ecore_time_get();
 
    DBG("Score created. Player: %s, score: %i", player_name, score);
 
@@ -427,7 +427,7 @@ etrophy_level_free(Etrophy_Level *level)
    if (level->scores)
      {
         Etrophy_Score *scores_elem;
-        EINA_LIST_FREE (level->scores, scores_elem)
+        EINA_LIST_FREE(level->scores, scores_elem)
           etrophy_score_free(scores_elem);
      }
    free(level);
@@ -469,7 +469,7 @@ etrophy_level_scores_list_clear(Etrophy_Level *level)
 {
    EINA_SAFETY_ON_NULL_RETURN(level);
    Etrophy_Score *data;
-   EINA_LIST_FREE (level->scores, data)
+   EINA_LIST_FREE(level->scores, data)
      etrophy_score_free(data);
 }
 
@@ -544,7 +544,7 @@ etrophy_gamescore_new(const char *gamename)
         INF("Directory %s created.", filename);
      }
    else
-        INF("Base directory: %s.", filename);
+     INF("Base directory: %s.", filename);
 
    snprintf(filename, sizeof(filename), "%s/.etrophy/%s.eet", home, gamename);
    gamescore->__eet_filename = eina_stringshare_add(filename);
@@ -558,17 +558,17 @@ etrophy_gamescore_free(Etrophy_Gamescore *gamescore)
    if (!gamescore) return;
    {
       Etrophy_Level *levels_elem;
-      EINA_LIST_FREE (gamescore->levels, levels_elem)
+      EINA_LIST_FREE(gamescore->levels, levels_elem)
         etrophy_level_free(levels_elem);
    }
    {
       Etrophy_Trophy *trophies_elem;
-      EINA_LIST_FREE (gamescore->trophies, trophies_elem)
+      EINA_LIST_FREE(gamescore->trophies, trophies_elem)
         etrophy_trophy_free(trophies_elem);
    }
    {
       Etrophy_Lock *locks_elem;
-      EINA_LIST_FREE (gamescore->locks, locks_elem)
+      EINA_LIST_FREE(gamescore->locks, locks_elem)
         etrophy_lock_free(locks_elem);
    }
    free(gamescore);
@@ -600,8 +600,8 @@ etrophy_gamescore_level_get(Etrophy_Gamescore *gamescore, const char *name)
    EINA_SAFETY_ON_NULL_RETURN_VAL(name, NULL);
 
    EINA_LIST_FOREACH(gamescore->levels, l, level)
-      if (!strcmp(name, level->name))
-        return level;
+     if (!strcmp(name, level->name))
+       return level;
 
    return NULL;
 }
@@ -611,7 +611,7 @@ etrophy_gamescore_levels_list_clear(Etrophy_Gamescore *gamescore)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
    Etrophy_Level *data;
-   EINA_LIST_FREE (gamescore->levels, data)
+   EINA_LIST_FREE(gamescore->levels, data)
      etrophy_level_free(data);
 }
 
@@ -648,8 +648,8 @@ etrophy_gamescore_trophy_get(Etrophy_Gamescore *gamescore, const char *name)
    EINA_SAFETY_ON_NULL_RETURN_VAL(name, NULL);
 
    EINA_LIST_FOREACH(gamescore->trophies, l, trophy)
-      if (!strcmp(name, trophy->name))
-        return trophy;
+     if (!strcmp(name, trophy->name))
+       return trophy;
 
    return NULL;
 }
@@ -659,7 +659,7 @@ etrophy_gamescore_trophies_list_clear(Etrophy_Gamescore *gamescore)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
    Etrophy_Trophy *data;
-   EINA_LIST_FREE (gamescore->trophies, data)
+   EINA_LIST_FREE(gamescore->trophies, data)
      etrophy_trophy_free(data);
 }
 
@@ -696,8 +696,8 @@ etrophy_gamescore_lock_get(Etrophy_Gamescore *gamescore, const char *name)
    EINA_SAFETY_ON_NULL_RETURN_VAL(name, NULL);
 
    EINA_LIST_FOREACH(gamescore->locks, l, lock)
-      if (!strcmp(name, lock->name))
-        return lock;
+     if (!strcmp(name, lock->name))
+       return lock;
 
    return NULL;
 }
@@ -707,7 +707,7 @@ etrophy_gamescore_locks_list_clear(Etrophy_Gamescore *gamescore)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
    Etrophy_Lock *data;
-   EINA_LIST_FREE (gamescore->locks, data)
+   EINA_LIST_FREE(gamescore->locks, data)
      etrophy_lock_free(data);
 }
 
@@ -794,15 +794,15 @@ etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *leve
      }
 
    if (!level)
-   {
-       level = etrophy_level_new(level_name);
-       if (!level)
-       {
-           etrophy_score_free(escore);
-           return NULL;
-       }
-       gamescore->levels = eina_list_append(gamescore->levels, level);
-   }
+     {
+        level = etrophy_level_new(level_name);
+        if (!level)
+          {
+             etrophy_score_free(escore);
+             return NULL;
+          }
+        gamescore->levels = eina_list_append(gamescore->levels, level);
+     }
 
    level->scores = eina_list_sorted_insert(level->scores, _score_cmp, escore);
 
