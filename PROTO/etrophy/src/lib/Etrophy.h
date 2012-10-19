@@ -95,6 +95,7 @@ EAPI void etrophy_level_scores_list_clear(Etrophy_Level *level);
 /* Etrophy_Gamescore */
 EAPI Etrophy_Gamescore *etrophy_gamescore_new(const char *gamename);
 EAPI void etrophy_gamescore_free(Etrophy_Gamescore *gamescore);
+EAPI Eet_Data_Descriptor *etrophy_gamescore_edd_get(void);
 EAPI Etrophy_Gamescore *etrophy_gamescore_path_load(const char *filename);
 EAPI Etrophy_Gamescore *etrophy_gamescore_load(const char *gamename);
 EAPI Eina_Bool etrophy_gamescore_save(Etrophy_Gamescore *gamescore, const char *filename);

@@ -804,6 +804,12 @@ etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *leve
    return escore;
 }
 
+EAPI Eet_Data_Descriptor *
+etrophy_gamescore_edd_get(void)
+{
+   return _gamescore_descriptor;
+}
+
 EAPI Etrophy_Gamescore *
 etrophy_gamescore_path_load(const char *filename)
 {
