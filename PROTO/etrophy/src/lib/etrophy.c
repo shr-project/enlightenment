@@ -151,7 +151,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Vis
 EAPI void
 etrophy_trophy_free(Etrophy_Trophy *trophy)
 {
-   EINA_SAFETY_ON_NULL_RETURN(trophy);
+   if (!trophy) return;
    eina_stringshare_del(trophy->name);
    eina_stringshare_del(trophy->description);
    free(trophy);
@@ -265,7 +265,7 @@ etrophy_lock_new(const char *name, Etrophy_Lock_State state)
 EAPI void
 etrophy_lock_free(Etrophy_Lock *lock)
 {
-   EINA_SAFETY_ON_NULL_RETURN(lock);
+   if (!lock) return;
    eina_stringshare_del(lock->name);
    free(lock);
 }
@@ -349,7 +349,7 @@ etrophy_score_new(const char *player_name, int score)
 EAPI void
 etrophy_score_free(Etrophy_Score *escore)
 {
-   EINA_SAFETY_ON_NULL_RETURN(escore);
+   if (!escore) return;
    eina_stringshare_del(escore->player_name);
    free(escore);
 }
@@ -422,7 +422,7 @@ etrophy_level_new(const char *name)
 EAPI void
 etrophy_level_free(Etrophy_Level *level)
 {
-   EINA_SAFETY_ON_NULL_RETURN(level);
+   if (!level) return;
    eina_stringshare_del(level->name);
    if (level->scores)
      {
@@ -452,6 +452,7 @@ EAPI inline void
 etrophy_level_score_add(Etrophy_Level *level, Etrophy_Score *escore)
 {
    EINA_SAFETY_ON_NULL_RETURN(level);
+   EINA_SAFETY_ON_NULL_RETURN(escore);
    level->scores = eina_list_sorted_insert(level->scores, _score_cmp, escore);
 }
 
@@ -459,6 +460,7 @@ EAPI inline void
 etrophy_level_score_del(Etrophy_Level *level, Etrophy_Score *escore)
 {
    EINA_SAFETY_ON_NULL_RETURN(level);
+   EINA_SAFETY_ON_NULL_RETURN(escore);
    level->scores = eina_list_remove(level->scores, escore);
 }
 
@@ -553,25 +555,22 @@ etrophy_gamescore_new(const char *gamename)
 EAPI void
 etrophy_gamescore_free(Etrophy_Gamescore *gamescore)
 {
-   EINA_SAFETY_ON_NULL_RETURN(gamescore);
-   if (gamescore->levels)
-     {
-        Etrophy_Level *levels_elem;
-        EINA_LIST_FREE (gamescore->levels, levels_elem)
-          etrophy_level_free(levels_elem);
-     }
-   if (gamescore->trophies)
-     {
-        Etrophy_Trophy *trophies_elem;
-        EINA_LIST_FREE (gamescore->trophies, trophies_elem)
-          etrophy_trophy_free(trophies_elem);
-     }
-   if (gamescore->locks)
-     {
-        Etrophy_Lock *locks_elem;
-        EINA_LIST_FREE (gamescore->locks, locks_elem)
-          etrophy_lock_free(locks_elem);
-     }
+   if (!gamescore) return;
+   {
+      Etrophy_Level *levels_elem;
+      EINA_LIST_FREE (gamescore->levels, levels_elem)
+        etrophy_level_free(levels_elem);
+   }
+   {
+      Etrophy_Trophy *trophies_elem;
+      EINA_LIST_FREE (gamescore->trophies, trophies_elem)
+        etrophy_trophy_free(trophies_elem);
+   }
+   {
+      Etrophy_Lock *locks_elem;
+      EINA_LIST_FREE (gamescore->locks, locks_elem)
+        etrophy_lock_free(locks_elem);
+   }
    free(gamescore);
 }
 
@@ -579,6 +578,7 @@ EAPI inline void
 etrophy_gamescore_level_add(Etrophy_Gamescore *gamescore, Etrophy_Level *level)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
+   EINA_SAFETY_ON_NULL_RETURN(level);
    gamescore->levels = eina_list_append(gamescore->levels, level);
 }
 
@@ -586,6 +586,7 @@ EAPI inline void
 etrophy_gamescore_level_del(Etrophy_Gamescore *gamescore, Etrophy_Level *level)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
+   EINA_SAFETY_ON_NULL_RETURN(level);
    gamescore->levels = eina_list_remove(gamescore->levels, level);
 }
 
@@ -625,6 +626,7 @@ EAPI inline void
 etrophy_gamescore_trophy_add(Etrophy_Gamescore *gamescore, Etrophy_Trophy *trophy)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
+   EINA_SAFETY_ON_NULL_RETURN(trophy);
    gamescore->trophies = eina_list_append(gamescore->trophies, trophy);
 }
 
@@ -632,6 +634,7 @@ EAPI inline void
 etrophy_gamescore_trophy_del(Etrophy_Gamescore *gamescore, Etrophy_Trophy *trophy)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
+   EINA_SAFETY_ON_NULL_RETURN(trophy);
    gamescore->trophies = eina_list_remove(gamescore->trophies, trophy);
 }
 
@@ -671,6 +674,7 @@ EAPI inline void
 etrophy_gamescore_lock_add(Etrophy_Gamescore *gamescore, Etrophy_Lock *lock)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
+   EINA_SAFETY_ON_NULL_RETURN(lock);
    gamescore->locks = eina_list_append(gamescore->locks, lock);
 }
 
@@ -678,6 +682,7 @@ EAPI inline void
 etrophy_gamescore_lock_del(Etrophy_Gamescore *gamescore, Etrophy_Lock *lock)
 {
    EINA_SAFETY_ON_NULL_RETURN(gamescore);
+   EINA_SAFETY_ON_NULL_RETURN(lock);
    gamescore->locks = eina_list_remove(gamescore->locks, lock);
 }
 
