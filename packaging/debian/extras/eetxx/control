@@ -1,7 +1,7 @@
 Source: eetxx
 Priority: optional
 Maintainer: Andreas Volz <andreas.volz@tux-style.com>
-Build-Depends: debhelper (>= 7), autotools-dev, libeflxx-dev, libeet-dev (>= 1.4), cdbs, pkg-config, libtool, zlibc
+Build-Depends: debhelper (>= 7), autotools-dev, libeflxx-dev, libeet-dev (>= 1.4), cdbs, pkg-config, libtool, zlib1g-dev
 Standards-Version: 3.8.3
 Section: libs
 Homepage: http://trac.enlightenment.org/e/wiki/EFLxx
