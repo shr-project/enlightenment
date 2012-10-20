@@ -1,0 +1,113 @@
+New EFL release cycle 1.7.1
+Cedric Bail
+cedric.bail@free.fr
+
+<p>
+We'd like to announce a new release of several Enlightenment components.
+This release is bug fix only of our 1.7 branches. As we will base Enlightenment 17
+release on the 1.7 branches, we strongly encourage packager to package this
+branch and report any issue. In general we do encourage our community to highly
+test this release on their preferred distribution to improve the quality and help
+every one enjoy Enlightenment 17 release.
+</p>
+
+<p>
+Please read the ChangeLog and NEWS in each release tarballl to know what has been fixed.
+This release corresponds with SVN revision number 78286 and you will find them in our
+branch.
+</p>
+
+<p>
+We'd also like to take the opportunity to point out that in November
+we will have our first ever
+<a href=http://trac.enlightenment.org/e/wiki/Events>EFL Developer Day</a>.
+It is a co-located event as part of
+<a href=http://events.linuxfoundation.org/events/linuxcon-europe>Linuxcon Europe</a>.
+Please come along and take the time to meet the developers and other
+users. We also hope to have released Enlightenment 0.17 by then.
+</p>
+
+<p><ul>
+
+<li>Eina 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/eina-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eina-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eet 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/eet-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eet-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evas 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/evas-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evas-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Ecore 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/ecore-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/ecore-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Embryo 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/embryo-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/embryo-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Edje 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/edje-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/edje-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Efreet 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/efreet-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/efreet-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>E_dbus 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/e_dbus-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/e_dbus-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eeze 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/eeze-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eeze-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Expedite 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/expedite-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/expedite-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evas Generic Loaders 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/evas_generic_loaders-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evas_generic_loaders-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eio 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/eio-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eio-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Emotion 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/emotion-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/emotion-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Ethumb 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/ethumb-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/ethumb-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Elementary 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/elementary-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/elementary-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evil 1.7.1 - 
+[<a href="http://download.enlightenment.org/releases/evil-1.7.1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evil-1.7.1.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
