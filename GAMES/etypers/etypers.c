@@ -63,6 +63,7 @@ struct _AppData
    unsigned long score;
    float hit_cnt;
    float hit_try_cnt;
+   unsigned long combo;
    Evas_Coord bound_w;
    Evas_Coord bound_h;
    Evas_Coord_Rectangle defense_rect;
@@ -232,9 +233,11 @@ _game_reset(AppData *appdata)
    _reset_defense_wall(appdata);
    elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
 
+   appdata->score = 0;
    appdata->state = Ready;
    appdata->hit_cnt = 0.0f;
    appdata->hit_try_cnt = 0.0f;
+   appdata->combo = 0;
 }
 
 static void
@@ -306,7 +309,7 @@ _animator_cb(void *data)
    Enemy *enemy;
    Eina_Inlist *l;
    float drop_dist = (float) ((current_time - appdata->last_frame_time) *
-                              DROP_DIST_WEIGHT) + (appdata->level * 0.075);
+                              DROP_DIST_WEIGHT) + (appdata->level * 0.095);
 
    EINA_INLIST_FOREACH_SAFE(appdata->enemies, l, enemy)
      {
@@ -448,10 +451,10 @@ static void _minus_score(AppData *appdata)
 }
 
 static void
-_update_correctness(AppData *appdata, int combo)
+_update_correctness(AppData *appdata, Eina_Bool hit)
 {
    appdata->hit_try_cnt += 1.0f;
-   if (combo) appdata->hit_cnt += 1.0f;
+   if (hit) appdata->hit_cnt += 1.0f;
 
    char buf[10];
    int correctness = (int) ((appdata->hit_cnt / appdata->hit_try_cnt) * 100.0f);
@@ -467,8 +470,8 @@ _enemies_kill(AppData *appdata, Evas_Object *obj, const char *input_text,
    Eina_Inlist *l;
    Enemy *enemy;
    const char *enemy_text;
+   Eina_Bool hit = EINA_FALSE;
 
-   int combo = 0;
    EINA_INLIST_FOREACH_SAFE(appdata->enemies, l, enemy)
      {
         enemy_text = elm_object_text_get(enemy->entry);
@@ -484,17 +487,22 @@ _enemies_kill(AppData *appdata, Evas_Object *obj, const char *input_text,
 
         if (!strncmp(input_text, enemy_text, (strlen(input_text) - 1)))
           {
-             ++combo;
-             if (combo > 1)
-               _combo(appdata, enemy, combo);
+             hit = EINA_TRUE;
+             appdata->combo++;
+             if (appdata->combo > 1)
+               _combo(appdata, enemy, appdata->combo);
              _enemy_kill(appdata, enemy);
           }
      }
 
    //Minus score if it doesn't any hits
-   if (combo == 0) _minus_score(appdata);
+   if (!hit)
+     {
+        _minus_score(appdata);
+        appdata->combo = 0;
+     }
 
-   _update_correctness(appdata, combo);
+   _update_correctness(appdata, hit);
 
    elm_object_text_set(obj, NULL);
 
@@ -518,15 +526,9 @@ _game_level_cb(void *data, Evas_Object *obj, void *event_info)
    AppData *appdata = evas_object_data_get(obj, "appdata");
    evas_object_del(obj);
    appdata->level = (int) data;
+
+   _game_reset(appdata);
    appdata->state = Playing;
-   appdata->score = 0;
-   appdata->hit_cnt = 0.0f;
-   appdata->hit_try_cnt = 0.0;
-   elm_object_text_set(appdata->entry, "");
-   elm_object_part_text_set(appdata->ly, "correct_value", "100%");
-   _remove_all_enemies(appdata);
-   _reset_defense_wall(appdata);
-   elm_object_signal_emit(appdata->ly, "elm,state,gamereset", "etypers");
    _resume(appdata);
 }
 
