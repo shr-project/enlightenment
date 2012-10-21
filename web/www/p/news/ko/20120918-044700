@@ -1,0 +1,34 @@
+New E17 Snapshot (76767)
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p> Some of you may be anticipating that I would start to copy
+and paste the text of previous snapshot releases. To those people
+I say: NOT ON MY WATCH!
+This time, in addition to featuring the usual improvements of 
+<b>LESS CRASHING</b> and <b>IMPROVEMENTS TO NOT CRASHING</b>, 
+I'm pleased to announce some other changes, though this is not in any way
+a comprehensive list, and not all the changes were made by me: 
+</p>
+<p>
+<li>DND Week! Drag-n-drop improvements everywhere including:
+<li>Dragging from other applications into EFM</li>
+<li>Dragging gadgets from shelf to desktop</li>
+<li>Dragging gadgets from desktop to shelf</li>
+<li>Autoscrolling during DND in filemanager</li>
+</li>
+<li>Mixer-related crashes reduced by 32.33%</li>
+<li>Spring-loaded folders in filemanager</li>
+<li>Overhaul of filemanager menu system</li>
+<li>Filemanager will no longer break your cpu when navigating directories with lots of .avi files</li>
+</p>
+
+<p><ul>
+
+<li>E17 76767 - 
+[<a href="http://download.enlightenment.org/snapshots/2012-09-17/enlightenment-0.16.999.76767.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/snapshots/2012-09-17/enlightenment-0.16.999.76767.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->

@@ -1,0 +1,58 @@
+New E17 Snapshot (77927)
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+Exciting times over here at Enlightenment HQ. We're gearing up for
+<a href="http://events.linuxfoundation.org/events/linuxcon-europe">LinuxCon EU 2012</a>
+and an eventual E17 release. Yes, really.
+It's been a while since the last release, so, in addition to featuring the usual improvements of 
+<b>LESS CRASHING</b> and <b>IMPROVEMENTS TO NOT CRASHING</b>, 
+I'm pleased to announce a monster truckload of other changes, though this is not in any way
+a comprehensive list, and not all the changes were made by me: 
+</p>
+<p>
+<li>Lots of translation updates</li>
+<li>Support for XCURSOR_PATH</li>
+<li>Speedups to application menu generation</li>
+<li>DND now works properly with ibar</li>
+<li>Desklock background now updates properly when set to use "current wallpaper"</li>
+<li>Shelf autohide fixes</li>
+<li>Startup time improvements when using multiple shelves</li>
+<li>iBox has a new mode for desktop use which allows it to resize based on content size</li>
+<li>Shelf menus now have more items</li>
+<li>Clock gadgets should now update immediately following any timezone change</li>
+<li>Various comp module improvements</li>
+<li>Video previews in filemanager</li>
+<li>Filemanager now has a secure delete option</li>
+<li>Shiny new RandR dialog (not yet complete, be warned!)</li>
+<li>"Slide pointer to newly-focused window" option now also slides pointer when closing a window changes focus</li>
+<li>Fullscreen windows now set and unset focus properly</li>
+<li>Lots of desktop gadget DND improvements to not crashing</li>
+<li>Keyboard layout switching should be more reliable now</li>
+<li>Desklock now supports having its own language and keyboard layout</li>
+<li>Improvements to filemanager basic move/copy support for some corner cases</li>
+<li>Windows will now properly update their iconified status at all times</li>
+<li>Text file previews in filemanager</li>
+<li>Desktop editor no longer opens with a blank desktop if left open when restarting E</li>
+<li>File previews now work better with .desktop files</li>
+<li>Clock popup is now smarter about hiding</li>
+<li>Connman gadget improvements</li>
+<li>Pulseaudio mixer code will no longer sometimes intercept gstreamer function calls</li>
+<li>Moving a gadget from one site to another no longer causes the gadget's config to be lost</li>
+<li>Config option to disable module delays, usually improves startup times</li>
+<li>Module settings dialog is now remembered across restarts</li>
+<li>LD_LIBRARY_PATH is no longer set by E17</li>
+<li>Changing shelf autohide on a vertical shelf no longer causes scrollbars to appear on desktop</li>
+<li>Filemanager now supports DND into pathbar buttons</li>
+</p>
+
+<p><ul>
+
+<li>E17 77927 - 
+[<a href="http://download.enlightenment.org/snapshots/2012-10-12/enlightenment-0.16.999.77927.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/snapshots/2012-10-12/enlightenment-0.16.999.77927.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
