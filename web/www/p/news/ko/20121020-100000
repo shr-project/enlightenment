@@ -1,30 +1,23 @@
-New EFL release cycle 1.7.1
-Cedric Bail
+EFL 1.7.1 배포
+세드릭 바일
 cedric.bail@free.fr
 
 <p>
-We'd like to announce a new release of several Enlightenment components.
-This release is bug fix only of our 1.7 branches. As we will base Enlightenment 17
-release on the 1.7 branches, we strongly encourage packager to package this
-branch and report any issue. In general we do encourage our community to highly
-test this release on their preferred distribution to improve the quality and help
-every one enjoy Enlightenment 17 release.
+여러 Enlightenment 컴포넌트를 배포합니다.
+이 배포 버전은 1.7 브랜치의 버그 수정 버전입니다. Enlightenment 17이 EFL 1.7 브랜치를 기준으로 배포될 예정이기 때문에 패키징을 하는 분들은 이 브랜치를 패키징하시고 이슈가 있는 경우 알려주세요. 여러분이 즐겨 사용하는 배포판에서 이번 EFL 배포 버전을 테스트해주시면 Enlightenment 17의 품질도 높이고 다른 분들이 즐겁게 사용할 수 있게 도움을 주실 수 있습니다.
 </p>
 
 <p>
-Please read the ChangeLog and NEWS in each release tarballl to know what has been fixed.
-This release corresponds with SVN revision number 78286 and you will find them in our
-branch.
+수정된 내역을 확인하고 싶으시면 배포된 tarball에 있는 ChangeLog와 NEWS 파일을 읽어주세요.
+이번 배포 버전은 SVN 리비전 78286 버전에 기반하고 있으며 배포 내용은 브랜치에서도 확인할 수 있습니다.
 </p>
 
 <p>
-We'd also like to take the opportunity to point out that in November
-we will have our first ever
-<a href=http://trac.enlightenment.org/e/wiki/Events>EFL Developer Day</a>.
-It is a co-located event as part of
-<a href=http://events.linuxfoundation.org/events/linuxcon-europe>Linuxcon Europe</a>.
-Please come along and take the time to meet the developers and other
-users. We also hope to have released Enlightenment 0.17 by then.
+또한 올해 11월에 처음으로 
+<a href=http://trac.enlightenment.org/e/wiki/Events>EFL 개발자의 날</a> 행사를 합니다.
+이 행사는
+<a href=http://events.linuxfoundation.org/events/linuxcon-europe>Linuxcon 유럽</a>과 같은 시기에 같은 곳에서 열립니다.
+시간을 내시어 다른 개발자와 사용자분들을 만나보세요. 그 때까지 Enlightenment 0.17 버전을 배포할 수 있으면 좋겠습니다.
 </p>
 
 <p><ul>
