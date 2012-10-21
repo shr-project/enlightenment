@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2000-2007 Carsten Haitzler, Geoff Harrison and various contributors
- * Copyright (C) 2004-2008 Kim Woelders
+ * Copyright (C) 2004-2012 Kim Woelders
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -22,9 +22,11 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+
 #if HAVE_SOUND
-#if USE_SOUND_LOADER_AUDIOFILE
 #include "sound.h"
+
+#if USE_SOUND_LOADER_AUDIOFILE
 #include <audiofile.h>
 
 int
@@ -48,13 +50,14 @@ SoundSampleGetData(const char *file, SoundSampleData * ssd)
 #else
    afSetVirtualByteOrder(in_file, AF_DEFAULT_TRACK, AF_BYTEORDER_LITTLEENDIAN);
 #endif
-   if (EDebug(EDBUG_TYPE_SOUND))
-      Eprintf("SoundSampleGetData chan=%d width=%d rate=%d\n", ssd->channels,
-	      ssd->bit_per_sample, ssd->rate);
 
    bytes_per_frame = (ssd->bit_per_sample * ssd->channels) / 8;
    ssd->size = frame_count * bytes_per_frame;
    ssd->data = EMALLOC(unsigned char, ssd->size);
+
+   if (EDebug(EDBUG_TYPE_SOUND))
+      Eprintf("SoundSampleGetData frames=%u chan=%u width=%u rate=%u\n",
+	      frame_count, ssd->channels, ssd->bit_per_sample, ssd->rate);
 
    frames_read =
       afReadFrames(in_file, AF_DEFAULT_TRACK, ssd->data, frame_count);
@@ -72,5 +75,50 @@ SoundSampleGetData(const char *file, SoundSampleData * ssd)
 }
 
 #endif /* USE_SOUND_LOADER_AUDIOFILE */
+
+#if USE_SOUND_LOADER_SNDFILE
+#include <sndfile.h>
+
+int
+SoundSampleGetData(const char *file, SoundSampleData * ssd)
+{
+   SNDFILE            *sf;
+   SF_INFO             sf_info;
+   int                 bytes_per_frame, frame_count, frames_read;
+
+   sf = sf_open(file, SFM_READ, &sf_info);
+   if (!sf)
+      return -1;
+
+   ssd->channels = (unsigned int)sf_info.channels;
+   ssd->rate = (unsigned int)sf_info.samplerate;
+   ssd->bit_per_sample = 16;
+
+   frame_count = sf_info.frames;
+   bytes_per_frame = (ssd->bit_per_sample * ssd->channels) / 8;
+   ssd->size = frame_count * bytes_per_frame;
+   ssd->data = EMALLOC(unsigned char, ssd->size);
+
+   if (EDebug(EDBUG_TYPE_SOUND))
+      Eprintf("SoundSampleGetData frames=%u chan=%u width=%u rate=%u\n",
+	      frame_count, ssd->channels, ssd->bit_per_sample, ssd->rate);
+
+   frames_read = sf_readf_short(sf, ssd->data, frame_count);
+
+   sf_close(sf);
+
+   if (frames_read <= 0)
+     {
+	ssd->size = 0;
+	_EFREE(ssd->data);
+	return -1;
+     }
+
+   ssd->size = frames_read * bytes_per_frame;
+
+   return 0;
+}
+
+#endif /* USE_SOUND_LOADER_SNDFILE */
 
 #endif /* HAVE_SOUND */

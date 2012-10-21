@@ -92,19 +92,31 @@ if test "x$enable_sound" = "xyes"; then
   AC_ARG_ENABLE(sound_esound,
     [  --enable-sound-esound   compile with EsounD sound support @<:@default=yes@:>@],,
     enable_sound_esound=yes)
+  AC_ARG_WITH(sndldr,
+    [  --with-sndldr           select sound loader (audiofile/sndfile/none) @<:@default=audiofile@:>@],,
+    with_sndldr=audiofile)
 fi
 enable_sound=no
 
-if test "x$enable_sound_pulse" = "xyes"; then
-  PKG_CHECK_MODULES(PA, libpulse,, enable_sound_pulse=no)
+if test "x$with_sndldr" = "xsndfile"; then
+  PKG_CHECK_MODULES(SNDFILE, sndfile,
+    AC_DEFINE(USE_SOUND_LOADER_SNDFILE, 1, [Use sndfile sound loader]),
+    with_sndldr=none)
 fi
+
+if test "x$with_sndldr" = "xaudiofile"; then
+  PKG_CHECK_MODULES(AUDIOFILE, audiofile,
+    AC_DEFINE(USE_SOUND_LOADER_AUDIOFILE, 1, [Use audiofile sound loader]),
+    with_sndldr=none)
+fi
+
 if test "x$enable_sound_pulse" = "xyes"; then
-  AC_DEFINE(HAVE_SOUND, 1, [Sound support])
-  AC_DEFINE(HAVE_SOUND_PA, 1, [PulseAudio sound support])
-  AC_DEFINE(USE_SOUND_LOADER_AUDIOFILE, 1, [Use audiofile sound loader])
-  PKG_CHECK_MODULES(AUDIOFILE, audiofile,,)
-  enable_sound=pulseaudio
-  enable_sound_esound=no
+  PKG_CHECK_MODULES(PA, libpulse,
+    AC_DEFINE(HAVE_SOUND, 1, [Sound support])
+    AC_DEFINE(HAVE_SOUND_PA, 1, [PulseAudio sound support])
+    enable_sound=pulseaudio
+    enable_sound_esound=no,
+    enable_sound_pulse=no)
 fi
 AM_CONDITIONAL(USE_LIBPA, test "x$enable_sound_pulse" = "xyes")
 
@@ -113,14 +125,11 @@ if test "x$enable_sound_esound" = "xyes"; then
     enable_sound_esound=no
     AC_MSG_WARN([EsounD sound support was requested but not found.])
   ])
-  AC_CHECK_HEADERS(audiofile.h,, enable_sound_esound=no)
-fi
-if test "x$enable_sound_esound" = "xyes"; then
-  AC_DEFINE(HAVE_SOUND, 1, [Sound support])
-  AC_DEFINE(HAVE_SOUND_ESD, 1, [EsounD sound support])
-  AC_DEFINE(USE_SOUND_LOADER_AUDIOFILE, 1, [Use audiofile sound loader])
-  PKG_CHECK_MODULES(AUDIOFILE, audiofile,,)
-  enable_sound=esound
+  if test "x$enable_sound_esound" = "xyes"; then
+    AC_DEFINE(HAVE_SOUND, 1, [Sound support])
+    AC_DEFINE(HAVE_SOUND_ESD, 1, [EsounD sound support])
+    enable_sound=esound
+  fi
 fi
 AM_CONDITIONAL(USE_LIBESD, test "x$enable_sound_esound" = "xyes")
 
@@ -479,6 +488,7 @@ echo
 echo "Support for"
 echo "  Localisation ................. $USE_NLS"
 echo "  Sound ........................ $enable_sound"
+echo "  Sound loader ................. $with_sndldr"
 echo "  Old GNOME hints .............. $enable_hints_gnome"
 echo "  Session management ........... $enable_sm"
 echo "  Zoom ......................... $enable_zoom"
