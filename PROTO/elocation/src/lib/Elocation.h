@@ -49,6 +49,8 @@ EAPI extern int ELOCATION_EVENT_STATUS; /**< Status changed */
 EAPI extern int ELOCATION_EVENT_POSITION; /**< Position changed */
 EAPI extern int ELOCATION_EVENT_ADDRESS; /**< Address changed */
 EAPI extern int ELOCATION_EVENT_VELOCITY; /**< Velocity changed */
+EAPI extern int ELOCATION_EVENT_GEOCODE; /**< Reply for geocode convertion arrived */
+EAPI extern int ELOCATION_EVENT_REVERSEGEOCODE; /**< Reply for geocode convertion arrived */
 /**@}*/
 
 /**

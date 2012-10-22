@@ -25,6 +25,8 @@ static EDBus_Proxy *geonames_geocode = NULL;
 static EDBus_Proxy *geonames_rgeocode = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
+static Elocation_Address *addr_geocode = NULL;
+static Elocation_Position *pos_geocode = NULL;
 static Elocation_Velocity *velocity = NULL;
 static int *status = 0;
 
@@ -36,6 +38,8 @@ EAPI int ELOCATION_EVENT_STATUS;
 EAPI int ELOCATION_EVENT_POSITION;
 EAPI int ELOCATION_EVENT_ADDRESS;
 EAPI int ELOCATION_EVENT_VELOCITY;
+EAPI int ELOCATION_EVENT_GEOCODE;
+EAPI int ELOCATION_EVENT_REVERSEGEOCODE;
 
 static void
 _dummy_free(void *user_data, void *func_data)
@@ -146,11 +150,7 @@ rgeocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    double vertical;
    const char *key;
    char *value;
-   Elocation_Address *addr;
    const char *err, *errmsg;
-
-   addr = alloca(sizeof(Elocation_Address));
-   addr->accur = alloca(sizeof(Elocation_Accuracy));
 
    if (edbus_message_error_get(reply, &err, &errmsg))
      {
@@ -167,34 +167,35 @@ rgeocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 
        if (!strcmp(key, "country"))
          {
-            addr->country = strdup(value);
+            addr_geocode->country = strdup(value);
          }
        else if (!strcmp(key, "countrycode"))
          {
-            addr->countrycode = strdup(value);
+            addr_geocode->countrycode = strdup(value);
          }
        else if (!strcmp(key, "locality"))
          {
-            addr->locality = strdup(value);
+            addr_geocode->locality = strdup(value);
          }
        else if (!strcmp(key, "postalcode"))
          {
-            addr->postalcode = strdup(value);
+            addr_geocode->postalcode = strdup(value);
          }
        else if (!strcmp(key, "region"))
          {
-            addr->region = strdup(value);
+            addr_geocode->region = strdup(value);
          }
        else if (!strcmp(key, "timezone"))
          {
-            addr->timezone = strdup(value);
+            addr_geocode->timezone = strdup(value);
          }
     }
 
    edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
-   addr->accur->level = level;
-   addr->accur->horizontal = horizontal;
-   addr->accur->vertical = vertical;
+   addr_geocode->accur->level = level;
+   addr_geocode->accur->horizontal = horizontal;
+   addr_geocode->accur->vertical = vertical;
+   ecore_event_add(ELOCATION_EVENT_REVERSEGEOCODE, addr_geocode, _dummy_free, NULL);
 }
 
 static void
@@ -211,9 +212,6 @@ geocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    Elocation_Position *pos;
    const char *err, *errmsg;
 
-   pos = alloca(sizeof(Elocation_Position));
-   pos->accur = alloca(sizeof(Elocation_Accuracy));
-
    if (edbus_message_error_get(reply, &err, &errmsg))
      {
         ERR("Error: %s %s", err, errmsg);
@@ -227,24 +225,25 @@ geocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    /* GeoClue uses some flags to mark position fields as valid. We set invalid
     * fields to 0.0 */
    if (fields & GEOCLUE_POSITION_FIELDS_LATITUDE)
-      pos->latitude = latitude;
+      pos_geocode->latitude = latitude;
    else
-      pos->latitude = 0.0;
+      pos_geocode->latitude = 0.0;
 
    if (fields & GEOCLUE_POSITION_FIELDS_LONGITUDE)
-      pos->longitude = longitude;
+      pos_geocode->longitude = longitude;
    else
-      pos->longitude = 0.0;
+      pos_geocode->longitude = 0.0;
 
    if (fields & GEOCLUE_POSITION_FIELDS_ALTITUDE)
-      pos->altitude = altitude;
+      pos_geocode->altitude = altitude;
    else
-      pos->altitude = 0.0;
+      pos_geocode->altitude = 0.0;
 
    edbus_message_iter_arguments_get(sub, "idd", &level, &horizontal, &vertical);
-   pos->accur->level = level;
-   pos->accur->horizontal = horizontal;
-   pos->accur->vertical = vertical;
+   pos_geocode->accur->level = level;
+   pos_geocode->accur->horizontal = horizontal;
+   pos_geocode->accur->vertical = vertical;
+   ecore_event_add(ELOCATION_EVENT_GEOCODE, pos_geocode, _dummy_free, NULL);
 }
 
 static Eina_Bool
@@ -931,6 +930,18 @@ elocation_init()
    address_provider = calloc(1, sizeof(Elocation_Provider));
    position_provider = calloc(1, sizeof(Elocation_Provider));
 
+   addr_geocode = calloc(1, sizeof(Elocation_Address));
+   if (!addr_geocode) return EINA_FALSE;
+
+   addr_geocode->accur = calloc(1, sizeof(Elocation_Accuracy));
+   if (!addr_geocode->accur) return EINA_FALSE;
+
+   pos_geocode = calloc(1, sizeof(Elocation_Position));
+   if (!pos_geocode) return EINA_FALSE;
+
+   pos_geocode->accur = calloc(1, sizeof(Elocation_Position));
+   if (!pos_geocode->accur) return EINA_FALSE;
+
    conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (!conn)
      {
@@ -955,6 +966,12 @@ elocation_init()
 
    if (ELOCATION_EVENT_VELOCITY == 0)
       ELOCATION_EVENT_VELOCITY = ecore_event_type_new();
+
+   if (ELOCATION_EVENT_GEOCODE == 0)
+      ELOCATION_EVENT_GEOCODE = ecore_event_type_new();
+
+   if (ELOCATION_EVENT_REVERSEGEOCODE == 0)
+      ELOCATION_EVENT_REVERSEGEOCODE = ecore_event_type_new();
 
    obj_master= edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
    if (!obj_master)
@@ -1033,6 +1050,11 @@ elocation_shutdown()
    free(position_provider->service);
    free(position_provider->path);
    free(position_provider);
+
+   free(pos_geocode->accur);
+   free(pos_geocode);
+   free(addr_geocode->accur);
+   free(addr_geocode);
 
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_connection_unref(conn);
