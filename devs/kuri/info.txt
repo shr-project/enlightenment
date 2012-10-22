@@ -1,0 +1,10 @@
+Login:         kuri
+IRC Nick:      kuri
+Name:          Guillaume Friloux
+Location:      Ustaritz, Bask Country
+E-Mail:        sysegv@gmail.com
+WWW:           http://paranoia.abuser.eu
+Managing:   
+Contributing:  shotgun, esskyuehl
+Group:         Libs
+Platform:      Archlinux
