@@ -757,7 +757,7 @@ _win_create(int w, int h, AppData *appdata)
    evas_object_smart_callback_add(win, "delete,request", _win_del, NULL);
    evas_object_resize(win, w, h);
    evas_object_show(win);
-   evas_object_event_callback_add(appdata->win, EVAS_CALLBACK_RESIZE,
+   evas_object_event_callback_add(win, EVAS_CALLBACK_RESIZE,
                                   _win_resize, appdata);
    return win;
 }
