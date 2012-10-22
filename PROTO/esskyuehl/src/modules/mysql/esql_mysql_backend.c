@@ -379,7 +379,7 @@ esql_mysac_init(Esql *e)
    e->backend.res_free = esql_mysac_res_free;
    e->backend.free = esql_mysac_free;
 
-   e->backend.db = mysac_new(1024);
+   e->backend.db = mysac_new(4096);
    EINA_SAFETY_ON_NULL_RETURN(e->backend.db);
 }
 
