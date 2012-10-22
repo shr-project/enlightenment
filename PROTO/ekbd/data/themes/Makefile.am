@@ -8,7 +8,32 @@ filesdir = $(datadir)/ekbd/themes/
 files_DATA = default.edj
 
 EXTRA_DIST = \
-default.edc
+base_bg.png \
+base_menu_cur.png \
+base_tie.png \
+big_arrow_up.png \
+bt_basew.png \
+bt_base2.png \
+bt_dis_hilight.png \
+bt_glow.png \
+bt_hilight.png \
+bt_hilightw.png \
+bt_shine.png \
+default.edc \
+inset_sunk.png \
+key.png \
+key_select.png \
+k_grad.png \
+k_tabhl.png \
+k_tabhm.png \
+k_tabhr.png \
+k_tabl.png \
+k_tabr.png \
+k_tpsh.png \
+k_wtgr.png \
+module_icon.png \
+shine_tie.png
+
 
 default.edj: Makefile $(EXTRA_DIST)
 	$(EDJE_CC) $(EDJE_FLAGS) \
