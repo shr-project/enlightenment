@@ -759,50 +759,36 @@ elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Posit
    EDBus_Message *msg;
    EDBus_Message_Iter *iter, *entry, *array;
 
+   #define ENTRY(key) { #key, address_shadow->key }
+   struct keyval {
+      const char *key;
+      const char *val;
+   } keyval[] = {
+      ENTRY(country),
+      ENTRY(countrycode),
+      ENTRY(locality),
+      ENTRY(postalcode),
+      ENTRY(region),
+      ENTRY(timezone),
+      { NULL, NULL }
+   };
+   #undef ENTRY
+
+   struct keyval *k;
+
    msg = edbus_proxy_method_call_new(geonames_geocode, "AddressToPosition");
    iter = edbus_message_iter_get(msg);
 
    array = edbus_message_iter_container_new(iter, 'a', "{ss}");
 
-   if (address_shadow->country)
+   for (k = keyval; k && k->key; k++)
      {
-        entry = edbus_message_iter_container_new(array, 'e', NULL);
-        edbus_message_iter_arguments_set(entry, "ss", "country", address_shadow->country);
-        edbus_message_iter_container_close(array, entry);
-     }
+        EDBus_Message_Iter *entry;
 
-   if (address_shadow->countrycode)
-     {
-        entry = edbus_message_iter_container_new(array, 'e', NULL);
-        edbus_message_iter_arguments_set(entry, "ss", "countrycode", address_shadow->countrycode);
-        edbus_message_iter_container_close(array, entry);
-     }
+        if (!k->val) continue;
 
-   if (address_shadow->locality)
-     {
         entry = edbus_message_iter_container_new(array, 'e', NULL);
-        edbus_message_iter_arguments_set(entry, "ss", "locality", address_shadow->locality);
-        edbus_message_iter_container_close(array, entry);
-     }
-
-   if (address_shadow->postalcode)
-     {
-        entry = edbus_message_iter_container_new(array, 'e', NULL);
-        edbus_message_iter_arguments_set(entry, "ss", "postalcode", address_shadow->postalcode);
-        edbus_message_iter_container_close(array, entry);
-     }
-
-   if (address_shadow->region)
-     {
-        entry = edbus_message_iter_container_new(array, 'e', NULL);
-        edbus_message_iter_arguments_set(entry, "ss", "region", address_shadow->region);
-        edbus_message_iter_container_close(array, entry);
-     }
-
-   if (address_shadow->timezone)
-     {
-        entry = edbus_message_iter_container_new(array, 'e', NULL);
-        edbus_message_iter_arguments_set(entry, "ss", "timezone", address_shadow->timezone);
+        edbus_message_iter_arguments_set(entry, "ss", k->key, k->val);
         edbus_message_iter_container_close(array, entry);
      }
 
