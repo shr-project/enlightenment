@@ -7,14 +7,6 @@
 #include <Ecore.h>
 #include <Elocation.h>
 
-/* TODO:
-   o Create a client object to operate on
-   o Ask master for providers
-   o Set requirements
-   o Start (how to stop?) service to get position updates
-   o Implement MasterClient interface
-*/
-
 static Eina_Bool
 status_changed(void *data, int ev_type, void *event)
 {
