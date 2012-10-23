@@ -82,7 +82,7 @@ AC_SUBST([pkgconfig_requires_private])
 
 # doxygen program for documentation building
 
-#EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
+EFL_CHECK_DOXYGEN([build_doc="yes"], [build_doc="no"])
 
 ### Checks for libraries
 
@@ -101,6 +101,9 @@ AM_PROG_CC_C_O
 AC_OUTPUT([
 elocation.pc
 Makefile
+doc/Makefile
+doc/elocation.dox
+doc/Doxyfile
 src/Makefile
 src/lib/Makefile
 src/bin/Makefile
@@ -116,6 +119,8 @@ echo "Compilation............: make (or gmake)"
 echo "  CPPFLAGS.............: $CPPFLAGS"
 echo "  CFLAGS...............: $CFLAGS"
 echo "  LDFLAGS..............: $LDFLAGS"
+echo
+echo "  Documentation........: ${build_doc}"
 echo
 echo "Installation...........: make install (as root if needed, with 'su' or 'sudo')"
 echo "  prefix...............: $prefix"

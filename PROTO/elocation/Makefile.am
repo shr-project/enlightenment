@@ -42,9 +42,9 @@ m4/efl_threads.m4
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = elocation.pc
 
-.PHONY: coverage benchmark
+.PHONY: doc coverage benchmark
 
 # Documentation
-#doc:
-#	@echo "entering doc/"
-#	make -C doc doc
+doc:
+	@echo "entering doc/"
+	make -C doc doc
