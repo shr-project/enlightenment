@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for linux at Tue Oct 23 15:21:00 2012.
+# Generated for linux at Tue Oct 23 15:55:59 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.linux linux
@@ -21,6 +21,7 @@
 #   - edje
 #   - elementary
 #   - e
+#   - clouseau
 #   - python-edje
 #   - emotion
 #   - terminology
@@ -32,7 +33,7 @@ MAKEOPTS = --print-directory -j2
 V=@
 
 .DEFAULT: missing-target
-.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile e_dbus-compile e_dbus-clean e_dbus-dependencies e_dbus-install e_dbus-test e_dbus-doc e_dbus-distcheck e_dbus-all-users-compile e_dbus-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile eeze-compile eeze-clean eeze-dependencies eeze-install eeze-test eeze-doc eeze-distcheck eeze-all-users-compile eeze-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile edbus-compile edbus-clean edbus-dependencies edbus-install edbus-test edbus-doc edbus-distcheck edbus-all-users-compile edbus-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile python-e_dbus-compile python-e_dbus-clean python-e_dbus-dependencies python-e_dbus-install python-e_dbus-test python-e_dbus-doc python-e_dbus-distcheck python-e_dbus-all-users-compile python-e_dbus-direct-users-compile embryo-compile embryo-clean embryo-dependencies embryo-install embryo-test embryo-doc embryo-distcheck embryo-all-users-compile embryo-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile e-compile e-clean e-dependencies e-install e-test e-doc e-distcheck e-all-users-compile e-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile
+.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile e_dbus-compile e_dbus-clean e_dbus-dependencies e_dbus-install e_dbus-test e_dbus-doc e_dbus-distcheck e_dbus-all-users-compile e_dbus-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile eeze-compile eeze-clean eeze-dependencies eeze-install eeze-test eeze-doc eeze-distcheck eeze-all-users-compile eeze-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile edbus-compile edbus-clean edbus-dependencies edbus-install edbus-test edbus-doc edbus-distcheck edbus-all-users-compile edbus-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile python-e_dbus-compile python-e_dbus-clean python-e_dbus-dependencies python-e_dbus-install python-e_dbus-test python-e_dbus-doc python-e_dbus-distcheck python-e_dbus-all-users-compile python-e_dbus-direct-users-compile embryo-compile embryo-clean embryo-dependencies embryo-install embryo-test embryo-doc embryo-distcheck embryo-all-users-compile embryo-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile e-compile e-clean e-dependencies e-install e-test e-doc e-distcheck e-all-users-compile e-direct-users-compile clouseau-compile clouseau-clean clouseau-dependencies clouseau-install clouseau-test clouseau-doc clouseau-distcheck clouseau-all-users-compile clouseau-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile
 
 missing-target:
 	@echo "Missing target."
@@ -63,14 +64,14 @@ help:
 	@echo "   PACKAGE-direct-users-compile compile all direct users of package."
 	@echo ""
 	@echo "Known packages:"
-	@echo "   efl evas ecore eio e_dbus efreet eeze efx edbus python-evas python-ecore python-e_dbus embryo edje elementary e python-edje emotion terminology"
+	@echo "   efl evas ecore eio e_dbus efreet eeze efx edbus python-evas python-ecore python-e_dbus embryo edje elementary e clouseau python-edje emotion terminology"
 	@echo ""
 
-all: efl-compile evas-compile ecore-compile eio-compile e_dbus-compile efreet-compile eeze-compile efx-compile edbus-compile python-evas-compile python-ecore-compile python-e_dbus-compile embryo-compile edje-compile elementary-compile e-compile python-edje-compile emotion-compile terminology-compile
-clean: efl-clean evas-clean ecore-clean eio-clean e_dbus-clean efreet-clean eeze-clean efx-clean edbus-clean python-evas-clean python-ecore-clean python-e_dbus-clean embryo-clean edje-clean elementary-clean e-clean python-edje-clean emotion-clean terminology-clean
-test: efl-test evas-test ecore-test eio-test e_dbus-test efreet-test eeze-test efx-test edbus-test python-evas-test python-ecore-test python-e_dbus-test embryo-test edje-test elementary-test e-test python-edje-test emotion-test terminology-test
-doc: efl-doc evas-doc ecore-doc eio-doc e_dbus-doc efreet-doc eeze-doc efx-doc edbus-doc python-evas-doc python-ecore-doc python-e_dbus-doc embryo-doc edje-doc elementary-doc e-doc python-edje-doc emotion-doc terminology-doc
-distcheck: efl-distcheck evas-distcheck ecore-distcheck eio-distcheck e_dbus-distcheck efreet-distcheck eeze-distcheck efx-distcheck edbus-distcheck python-evas-distcheck python-ecore-distcheck python-e_dbus-distcheck embryo-distcheck edje-distcheck elementary-distcheck e-distcheck python-edje-distcheck emotion-distcheck terminology-distcheck
+all: efl-compile evas-compile ecore-compile eio-compile e_dbus-compile efreet-compile eeze-compile efx-compile edbus-compile python-evas-compile python-ecore-compile python-e_dbus-compile embryo-compile edje-compile elementary-compile e-compile clouseau-compile python-edje-compile emotion-compile terminology-compile
+clean: efl-clean evas-clean ecore-clean eio-clean e_dbus-clean efreet-clean eeze-clean efx-clean edbus-clean python-evas-clean python-ecore-clean python-e_dbus-clean embryo-clean edje-clean elementary-clean e-clean clouseau-clean python-edje-clean emotion-clean terminology-clean
+test: efl-test evas-test ecore-test eio-test e_dbus-test efreet-test eeze-test efx-test edbus-test python-evas-test python-ecore-test python-e_dbus-test embryo-test edje-test elementary-test e-test clouseau-test python-edje-test emotion-test terminology-test
+doc: efl-doc evas-doc ecore-doc eio-doc e_dbus-doc efreet-doc eeze-doc efx-doc edbus-doc python-evas-doc python-ecore-doc python-e_dbus-doc embryo-doc edje-doc elementary-doc e-doc clouseau-doc python-edje-doc emotion-doc terminology-doc
+distcheck: efl-distcheck evas-distcheck ecore-distcheck eio-distcheck e_dbus-distcheck efreet-distcheck eeze-distcheck efx-distcheck edbus-distcheck python-evas-distcheck python-ecore-distcheck python-e_dbus-distcheck embryo-distcheck edje-distcheck elementary-distcheck e-distcheck clouseau-distcheck python-edje-distcheck emotion-distcheck terminology-distcheck
 
 ########################################################################
 # efl rules
@@ -194,9 +195,9 @@ efl-distcheck: $(BUILDROOT)/efl/stamps/compile
 	touch $(BUILDROOT)/efl/stamps/distcheck
 	$(V)echo "Success checking distribution efl."
 
-efl-direct-users-compile: embryo-compile edje-compile edbus-compile efx-compile e-compile evas-compile eeze-compile efreet-compile e_dbus-compile eio-compile terminology-compile elementary-compile ecore-compile emotion-compile
+efl-direct-users-compile: embryo-compile edje-compile edbus-compile efx-compile e-compile evas-compile eeze-compile efreet-compile e_dbus-compile eio-compile terminology-compile elementary-compile ecore-compile clouseau-compile emotion-compile
 
-efl-all-users-compile: embryo-compile edje-compile edbus-compile efx-compile e-compile python-evas-compile evas-compile python-edje-compile eeze-compile python-e_dbus-compile efreet-compile e_dbus-compile eio-compile terminology-compile python-ecore-compile elementary-compile ecore-compile emotion-compile
+efl-all-users-compile: embryo-compile edje-compile edbus-compile efx-compile e-compile python-evas-compile evas-compile python-edje-compile eeze-compile python-e_dbus-compile efreet-compile e_dbus-compile eio-compile terminology-compile python-ecore-compile elementary-compile ecore-compile clouseau-compile emotion-compile
 
 ########################################################################
 # evas rules
@@ -324,9 +325,9 @@ evas-distcheck: $(BUILDROOT)/evas/stamps/compile
 	touch $(BUILDROOT)/evas/stamps/distcheck
 	$(V)echo "Success checking distribution evas."
 
-evas-direct-users-compile: edje-compile emotion-compile efx-compile e-compile python-evas-compile e_dbus-compile elementary-compile ecore-compile terminology-compile
+evas-direct-users-compile: edje-compile emotion-compile efx-compile e-compile python-evas-compile e_dbus-compile elementary-compile ecore-compile clouseau-compile terminology-compile
 
-evas-all-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile python-evas-compile ecore-compile python-edje-compile eeze-compile efreet-compile e_dbus-compile eio-compile python-ecore-compile elementary-compile python-e_dbus-compile terminology-compile
+evas-all-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile python-evas-compile ecore-compile python-edje-compile eeze-compile efreet-compile e_dbus-compile eio-compile python-ecore-compile elementary-compile python-e_dbus-compile clouseau-compile terminology-compile
 
 ########################################################################
 # ecore rules
@@ -459,9 +460,9 @@ ecore-distcheck: $(BUILDROOT)/ecore/stamps/compile
 	touch $(BUILDROOT)/ecore/stamps/distcheck
 	$(V)echo "Success checking distribution ecore."
 
-ecore-direct-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile eeze-compile efreet-compile e_dbus-compile eio-compile elementary-compile python-ecore-compile terminology-compile
+ecore-direct-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile eeze-compile efreet-compile e_dbus-compile eio-compile elementary-compile python-ecore-compile clouseau-compile terminology-compile
 
-ecore-all-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile python-edje-compile eeze-compile efreet-compile e_dbus-compile eio-compile python-ecore-compile elementary-compile python-e_dbus-compile terminology-compile
+ecore-all-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile python-edje-compile eeze-compile efreet-compile e_dbus-compile eio-compile python-ecore-compile elementary-compile python-e_dbus-compile clouseau-compile terminology-compile
 
 ########################################################################
 # eio rules
@@ -570,7 +571,7 @@ eio-distcheck: $(BUILDROOT)/eio/stamps/compile
 
 eio-direct-users-compile: edje-compile emotion-compile
 
-eio-all-users-compile: edje-compile emotion-compile e-compile python-edje-compile elementary-compile terminology-compile
+eio-all-users-compile: edje-compile emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
 
 ########################################################################
 # e_dbus rules
@@ -1612,7 +1613,7 @@ embryo-distcheck: $(BUILDROOT)/embryo/stamps/compile
 
 embryo-direct-users-compile: edje-compile
 
-embryo-all-users-compile: edje-compile emotion-compile e-compile python-edje-compile elementary-compile terminology-compile
+embryo-all-users-compile: edje-compile emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
 
 ########################################################################
 # edje rules
@@ -1737,9 +1738,9 @@ edje-distcheck: $(BUILDROOT)/edje/stamps/compile
 	touch $(BUILDROOT)/edje/stamps/distcheck
 	$(V)echo "Success checking distribution edje."
 
-edje-direct-users-compile: emotion-compile python-edje-compile e-compile terminology-compile elementary-compile
+edje-direct-users-compile: emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
 
-edje-all-users-compile: emotion-compile e-compile elementary-compile python-edje-compile terminology-compile
+edje-all-users-compile: emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
 
 ########################################################################
 # elementary rules
@@ -1846,9 +1847,9 @@ elementary-distcheck: $(BUILDROOT)/elementary/stamps/compile
 	touch $(BUILDROOT)/elementary/stamps/distcheck
 	$(V)echo "Success checking distribution elementary."
 
-elementary-direct-users-compile: e-compile terminology-compile
+elementary-direct-users-compile: clouseau-compile e-compile terminology-compile
 
-elementary-all-users-compile: e-compile terminology-compile
+elementary-all-users-compile: clouseau-compile e-compile terminology-compile
 
 ########################################################################
 # e rules
@@ -2013,6 +2014,115 @@ e-distcheck: $(BUILDROOT)/e/stamps/compile
 e-direct-users-compile:
 
 e-all-users-compile:
+
+########################################################################
+# clouseau rules
+clouseau-dependencies: $(BUILDROOT)/clouseau/stamps/dependencies edje-install ecore-install efl-install elementary-install evas-install
+$(BUILDROOT)/clouseau/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/evas/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/dependencies
+
+clouseau-clean:
+	if test -d $(BUILDROOT)/clouseau/compile; then chmod -R u+w $(BUILDROOT)/clouseau/compile; fi
+	rm -fr $(BUILDROOT)/clouseau/compile
+	rm -fr $(BUILDROOT)/clouseau/stamps
+
+$(BUILDROOT)/clouseau/stamps/autogen: $(SRCROOT)/clouseau/autogen.sh $(SRCROOT)/clouseau/configure.ac
+	$(V)echo "Running 'autogen.sh' for clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/autogen
+	cd $(SRCROOT)/clouseau && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for clouseau."
+
+$(BUILDROOT)/clouseau/stamps/configure: $(BUILDROOT)/clouseau/stamps/autogen $(BUILDROOT)/clouseau/stamps/dependencies
+	$(V)echo "Configuring clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/clouseau/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/clouseau/compile && \
+	$(SRCROOT)/clouseau/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/configure
+	$(V)echo "Success configuring clouseau."
+
+$(BUILDROOT)/clouseau/stamps/compile: $(BUILDROOT)/clouseau/stamps/configure clouseau-compile
+clouseau-compile: $(BUILDROOT)/clouseau/stamps/configure
+	$(V)echo "Compiling clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/clouseau/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/clouseau/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile;\
+	else\
+		echo "clouseau is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/clouseau/stamps/compile -o -f $(BUILDROOT)/clouseau/stamps/compile-updated; then\
+		touch $(BUILDROOT)/clouseau/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling clouseau."
+
+$(BUILDROOT)/clouseau/stamps/install: $(BUILDROOT)/clouseau/stamps/compile clouseau-install
+clouseau-install: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)echo "Installing clouseau..."
+	$(V)if test ! -f $(BUILDROOT)/clouseau/stamps/install -o $(BUILDROOT)/clouseau/stamps/compile -nt $(BUILDROOT)/clouseau/stamps/install; then\
+		rm -f $(BUILDROOT)/clouseau/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/clouseau/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/clouseau/compile;\
+		mkdir -p $(BUILDROOT)/clouseau/stamps;\
+		touch $(BUILDROOT)/clouseau/stamps/install;\
+	else\
+		echo "clouseau did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing clouseau."
+
+$(BUILDROOT)/clouseau/stamps/test: $(BUILDROOT)/clouseau/stamps/compile clouseau-test
+clouseau-test: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/test
+	$(V)echo 'No test target defined for clouseau'
+
+$(BUILDROOT)/clouseau/stamps/doc: $(BUILDROOT)/clouseau/stamps/compile clouseau-doc
+clouseau-doc: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/doc
+	$(V)echo 'No doc target defined for clouseau'
+
+$(BUILDROOT)/clouseau/stamps/distcheck: $(BUILDROOT)/clouseau/stamps/compile clouseau-distcheck
+clouseau-distcheck: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)echo "Checking distribution clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/clouseau/compile
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/distcheck
+	$(V)echo "Success checking distribution clouseau."
+
+clouseau-direct-users-compile:
+
+clouseau-all-users-compile:
 
 ########################################################################
 # python-edje rules

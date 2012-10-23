@@ -210,6 +210,13 @@ Package(
     )
 
 Package(
+    name="clouseau",
+    dependencies={
+        "common": ["efl", "ecore", "evas", "edje", "elementary"],
+        },
+    )
+
+Package(
     name="e",
     doc_target="doc",
     exclusive_platforms=["linux"],
