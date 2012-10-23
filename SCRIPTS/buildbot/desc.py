@@ -159,6 +159,22 @@ Package(
     )
 
 Package(
+    name="emotion",
+    doc_target="doc",
+    dependencies={
+        "common": ["efl", "ecore", "evas", "eeze", "eio", "edje"],
+        },
+    )
+
+Package(
+    name="efx",
+    doc_target="doc",
+    dependencies={
+        "common": ["efl", "ecore", "evas"],
+        },
+    )
+
+Package(
     name="e_dbus",
     doc_target="doc",
     exclusive_platforms=["linux"],
@@ -261,6 +277,13 @@ Package(
             "--enable-tasks",
             "--enable-conf-randr",
             ],
+        },
+    )
+
+Package(
+    name="terminology",
+    dependencies={
+        "common": ["efl", "ecore", "evas", "edje", "emotion", "efreet", "elementary"],
         },
     )
 
