@@ -52,6 +52,8 @@ AC_SUBST(VMAJ)
 
 PKG_CHECK_MODULES([EFL],
   [
+   eina >= 1.0.0
+   eet >= 1.0.0
    elementary >= 0.7.0
    evas >= 1.0.0
    ecore >= 1.0.0
