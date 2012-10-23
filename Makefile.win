@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for win at Tue Oct 23 09:33:03 2012.
+# Generated for win at Tue Oct 23 11:22:58 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
@@ -94,7 +94,8 @@ $(BUILDROOT)/efl/stamps/configure: $(BUILDROOT)/efl/stamps/autogen $(BUILDROOT)/
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
 	cd $(BUILDROOT)/efl/compile && \
-	$(SRCROOT)/efl/configure --prefix=$(INSTALLROOT) 
+	$(SRCROOT)/efl/configure --prefix=$(INSTALLROOT) --enable-tests \
+		--enable-doc
 	$(V)mkdir -p $(BUILDROOT)/efl/stamps
 	touch $(BUILDROOT)/efl/stamps/configure
 	$(V)echo "Success configuring efl."
@@ -145,17 +146,17 @@ efl-install: $(BUILDROOT)/efl/stamps/compile
 
 $(BUILDROOT)/efl/stamps/test: $(BUILDROOT)/efl/stamps/compile efl-test
 efl-test: $(BUILDROOT)/efl/stamps/compile
-	$(V)echo "Testing (make coverage) efl..."
+	$(V)echo "Testing (make check) efl..."
 	$(V)rm -f $(BUILDROOT)/efl/stamps/test
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/efl/compile
+	make $(MAKEOPTS) check -C $(BUILDROOT)/efl/compile
 	$(V)mkdir -p $(BUILDROOT)/efl/stamps
 	touch $(BUILDROOT)/efl/stamps/test
-	$(V)echo "Success testing (make coverage) efl."
+	$(V)echo "Success testing (make check) efl."
 
 $(BUILDROOT)/efl/stamps/doc: $(BUILDROOT)/efl/stamps/compile efl-doc
 efl-doc: $(BUILDROOT)/efl/stamps/compile
@@ -222,10 +223,7 @@ $(BUILDROOT)/evas/stamps/configure: $(BUILDROOT)/evas/stamps/autogen $(BUILDROOT
 	$(SRCROOT)/evas/configure --prefix=$(INSTALLROOT) --enable-doc \
 		--enable-tests \
 		--enable-coverage \
-		--enable-buffer \
-		--enable-convert-yuv \
-		--enable-async-events \
-		--enable-async-preload
+		--enable-buffer
 	$(V)mkdir -p $(BUILDROOT)/evas/stamps
 	touch $(BUILDROOT)/evas/stamps/configure
 	$(V)echo "Success configuring evas."

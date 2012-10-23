@@ -38,8 +38,14 @@ engine.env_default_set({
 
 Package(
     name="efl",
-    test_target="coverage",
+    test_target="check",
     doc_target="doc",
+    configure_flags={
+        "common": [
+            "--enable-tests",
+            "--enable-doc",
+            ],
+        },
     )
 
 Package(
@@ -55,9 +61,6 @@ Package(
             "--enable-tests",
             "--enable-coverage",
             "--enable-buffer",
-            "--enable-convert-yuv",
-            "--enable-async-events",
-            "--enable-async-preload",
             ],
         "linux": [
             "--enable-gl-xlib",
@@ -248,8 +251,6 @@ Package(
             "--enable-gadman",
             "--enable-mixer",
             "--enable-connman",
-            "--enable-bluez",
-            "--enable-ofono",
             "--enable-illume2",
             "--enable-syscon",
             "--enable-everything",

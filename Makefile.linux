@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for linux at Tue Oct 23 09:33:09 2012.
+# Generated for linux at Tue Oct 23 11:22:54 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.linux linux
@@ -99,7 +99,8 @@ $(BUILDROOT)/efl/stamps/configure: $(BUILDROOT)/efl/stamps/autogen $(BUILDROOT)/
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
 	cd $(BUILDROOT)/efl/compile && \
-	$(SRCROOT)/efl/configure --prefix=$(INSTALLROOT) 
+	$(SRCROOT)/efl/configure --prefix=$(INSTALLROOT) --enable-tests \
+		--enable-doc
 	$(V)mkdir -p $(BUILDROOT)/efl/stamps
 	touch $(BUILDROOT)/efl/stamps/configure
 	$(V)echo "Success configuring efl."
@@ -150,17 +151,17 @@ efl-install: $(BUILDROOT)/efl/stamps/compile
 
 $(BUILDROOT)/efl/stamps/test: $(BUILDROOT)/efl/stamps/compile efl-test
 efl-test: $(BUILDROOT)/efl/stamps/compile
-	$(V)echo "Testing (make coverage) efl..."
+	$(V)echo "Testing (make check) efl..."
 	$(V)rm -f $(BUILDROOT)/efl/stamps/test
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/efl/compile
+	make $(MAKEOPTS) check -C $(BUILDROOT)/efl/compile
 	$(V)mkdir -p $(BUILDROOT)/efl/stamps
 	touch $(BUILDROOT)/efl/stamps/test
-	$(V)echo "Success testing (make coverage) efl."
+	$(V)echo "Success testing (make check) efl."
 
 $(BUILDROOT)/efl/stamps/doc: $(BUILDROOT)/efl/stamps/compile efl-doc
 efl-doc: $(BUILDROOT)/efl/stamps/compile
@@ -228,9 +229,6 @@ $(BUILDROOT)/evas/stamps/configure: $(BUILDROOT)/evas/stamps/autogen $(BUILDROOT
 		--enable-tests \
 		--enable-coverage \
 		--enable-buffer \
-		--enable-convert-yuv \
-		--enable-async-events \
-		--enable-async-preload \
 		--enable-gl-xlib \
 		--enable-software-xlib
 	$(V)mkdir -p $(BUILDROOT)/evas/stamps
@@ -1910,8 +1908,6 @@ $(BUILDROOT)/e/stamps/configure: $(BUILDROOT)/e/stamps/autogen $(BUILDROOT)/e/st
 		--enable-gadman \
 		--enable-mixer \
 		--enable-connman \
-		--enable-bluez \
-		--enable-ofono \
 		--enable-illume2 \
 		--enable-syscon \
 		--enable-everything \
