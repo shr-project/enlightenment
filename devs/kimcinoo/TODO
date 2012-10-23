@@ -1,0 +1,7 @@
+[devs]
+  - add images
+  - arrange TODO list
+
+[elementary]
+  - panel: add access feature
+  - toolbar: fix focus chain on access
