@@ -37,48 +37,9 @@ engine.env_default_set({
 
 
 Package(
-    name="evil",
-    exclusive_platforms=["win"],
-    )
-
-Package(
-    name="eina",
+    name="efl",
     test_target="coverage",
     doc_target="doc",
-    dependencies={
-        "win": ["evil"],
-        },
-    configure_flags={
-        "common": [
-            "--enable-doc",
-            "--enable-tests",
-            "--enable-coverage",
-            "--enable-benchmark",
-            "--disable-benchmark-glib",
-            ],
-        },
-    )
-
-Package(
-    name="eet",
-    test_target="coverage",
-    doc_target="doc",
-    dependencies={
-        "common": ["eina"],
-        "win": ["evil"],
-        },
-    configure_flags={
-        "common": [
-            "--enable-doc",
-            "--enable-tests",
-            "--enable-coverage",
-            "--enable-gnutls",
-            "--disable-openssl",
-            "--enable-cipher",
-            "--enable-signature",
-            "--enable-assert",
-            ],
-        },
     )
 
 Package(
@@ -86,8 +47,7 @@ Package(
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["eina", "eet"],
-        "win": ["evil"],
+        "common": ["efl"],
         },
     configure_flags={
         "common": [
@@ -111,8 +71,7 @@ Package(
     test_target="check",
     doc_target="doc",
     dependencies={
-        "common": ["eina", "evas"],
-        "win": ["evil"],
+        "common": ["efl", "evas"],
         },
     configure_flags={
         "common": [
@@ -136,16 +95,14 @@ Package(
 Package(
     name="eio",
     dependencies={
-        "common": ["eina", "eet", "ecore"],
-        "win": ["evil"],
+        "common": ["efl", "ecore"],
         },
     )
 
 Package(
     name="embryo",
     dependencies={
-        "common": ["eina"],
-        "win": ["evil"],
+        "common": ["efl"],
         },
     )
 
@@ -154,8 +111,7 @@ Package(
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["eina", "eet", "evas", "ecore", "embryo", "eio"],
-        "win": ["evil"],
+        "common": ["efl", "evas", "ecore", "embryo", "eio"],
         },
     configure_flags={
         "common": [
@@ -171,8 +127,7 @@ Package(
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["eina", "eet", "ecore"],
-        "win": ["evil"],
+        "common": ["efl", "ecore"],
         },
     configure_flags={
         "common": [
@@ -188,7 +143,7 @@ Package(
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={
-        "common": ["eina", "eet", "ecore"],
+        "common": ["efl", "ecore"],
         },
     configure_flags={
         "common": [
@@ -205,7 +160,7 @@ Package(
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={
-        "common": ["eina", "ecore", "evas"],
+        "common": ["efl", "ecore", "evas"],
         },
     configure_flags={
         "common": [
@@ -220,19 +175,35 @@ Package(
     )
 
 Package(
+    name="edbus",
+    doc_target="doc",
+    exclusive_platforms=["linux"],
+    dependencies={
+        "common": ["efl", "ecore"],
+        },
+    )
+
+Package(
+    name="elementary",
+    dependencies={
+        "common": ["efl", "ecore", "evas", "edje"],
+        },
+    )
+
+Package(
     name="e",
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={
         "common": [
-            "eina",
-            "eet",
+            "efl",
             "evas",
             "ecore",
             "edje",
             "efreet",
             "eeze",
             "e_dbus",
+            "elementary",
             ],
         },
     configure_flags={
@@ -289,14 +260,6 @@ Package(
             "--enable-tasks",
             "--enable-conf-randr",
             ],
-        },
-    )
-
-Package(
-    name="elementary",
-    dependencies={
-        "common": ["eina", "ecore", "evas", "edje", "eet"],
-        "win": ["evil"],
         },
     )
 

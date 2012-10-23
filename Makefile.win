@@ -1,13 +1,11 @@
 # -*- mode: makefile -*-
-# Generated for win at Thu Jun 28 09:08:57 2012.
+# Generated for win at Tue Oct 23 09:33:03 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
 #
 # Packages used:
-#   - evil
-#   - eina
-#   - eet
+#   - efl
 #   - evas
 #   - ecore
 #   - efreet
@@ -26,7 +24,7 @@ MAKEOPTS = --print-directory -j2
 V=@
 
 .DEFAULT: missing-target
-.PHONY: missing-target help all clean evil-compile evil-clean evil-dependencies evil-install evil-test evil-doc evil-distcheck evil-all-users-compile evil-direct-users-compile eina-compile eina-clean eina-dependencies eina-install eina-test eina-doc eina-distcheck eina-all-users-compile eina-direct-users-compile eet-compile eet-clean eet-dependencies eet-install eet-test eet-doc eet-distcheck eet-all-users-compile eet-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile embryo-compile embryo-clean embryo-dependencies embryo-install embryo-test embryo-doc embryo-distcheck embryo-all-users-compile embryo-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile
+.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile embryo-compile embryo-clean embryo-dependencies embryo-install embryo-test embryo-doc embryo-distcheck embryo-all-users-compile embryo-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile
 
 missing-target:
 	@echo "Missing target."
@@ -57,389 +55,144 @@ help:
 	@echo "   PACKAGE-direct-users-compile compile all direct users of package."
 	@echo ""
 	@echo "Known packages:"
-	@echo "   evil eina eet evas ecore efreet eio python-evas python-ecore embryo edje python-edje elementary"
+	@echo "   efl evas ecore efreet eio python-evas python-ecore embryo edje python-edje elementary"
 	@echo ""
 
-all: evil-compile eina-compile eet-compile evas-compile ecore-compile efreet-compile eio-compile python-evas-compile python-ecore-compile embryo-compile edje-compile python-edje-compile elementary-compile
-clean: evil-clean eina-clean eet-clean evas-clean ecore-clean efreet-clean eio-clean python-evas-clean python-ecore-clean embryo-clean edje-clean python-edje-clean elementary-clean
-test: evil-test eina-test eet-test evas-test ecore-test efreet-test eio-test python-evas-test python-ecore-test embryo-test edje-test python-edje-test elementary-test
-doc: evil-doc eina-doc eet-doc evas-doc ecore-doc efreet-doc eio-doc python-evas-doc python-ecore-doc embryo-doc edje-doc python-edje-doc elementary-doc
-distcheck: evil-distcheck eina-distcheck eet-distcheck evas-distcheck ecore-distcheck efreet-distcheck eio-distcheck python-evas-distcheck python-ecore-distcheck embryo-distcheck edje-distcheck python-edje-distcheck elementary-distcheck
+all: efl-compile evas-compile ecore-compile efreet-compile eio-compile python-evas-compile python-ecore-compile embryo-compile edje-compile python-edje-compile elementary-compile
+clean: efl-clean evas-clean ecore-clean efreet-clean eio-clean python-evas-clean python-ecore-clean embryo-clean edje-clean python-edje-clean elementary-clean
+test: efl-test evas-test ecore-test efreet-test eio-test python-evas-test python-ecore-test embryo-test edje-test python-edje-test elementary-test
+doc: efl-doc evas-doc ecore-doc efreet-doc eio-doc python-evas-doc python-ecore-doc embryo-doc edje-doc python-edje-doc elementary-doc
+distcheck: efl-distcheck evas-distcheck ecore-distcheck efreet-distcheck eio-distcheck python-evas-distcheck python-ecore-distcheck embryo-distcheck edje-distcheck python-edje-distcheck elementary-distcheck
 
 ########################################################################
-# evil rules
-evil-dependencies: $(BUILDROOT)/evil/stamps/dependencies 
-$(BUILDROOT)/evil/stamps/dependencies: 
-	$(V)mkdir -p $(BUILDROOT)/evil/stamps
-	touch $(BUILDROOT)/evil/stamps/dependencies
+# efl rules
+efl-dependencies: $(BUILDROOT)/efl/stamps/dependencies 
+$(BUILDROOT)/efl/stamps/dependencies: 
+	$(V)mkdir -p $(BUILDROOT)/efl/stamps
+	touch $(BUILDROOT)/efl/stamps/dependencies
 
-evil-clean:
-	if test -d $(BUILDROOT)/evil/compile; then chmod -R u+w $(BUILDROOT)/evil/compile; fi
-	rm -fr $(BUILDROOT)/evil/compile
-	rm -fr $(BUILDROOT)/evil/stamps
+efl-clean:
+	if test -d $(BUILDROOT)/efl/compile; then chmod -R u+w $(BUILDROOT)/efl/compile; fi
+	rm -fr $(BUILDROOT)/efl/compile
+	rm -fr $(BUILDROOT)/efl/stamps
 
-$(BUILDROOT)/evil/stamps/autogen: $(SRCROOT)/evil/autogen.sh $(SRCROOT)/evil/configure.ac
-	$(V)echo "Running 'autogen.sh' for evil..."
-	$(V)rm -f $(BUILDROOT)/evil/stamps/autogen
-	cd $(SRCROOT)/evil && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/evil/stamps
-	touch $(BUILDROOT)/evil/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for evil."
+$(BUILDROOT)/efl/stamps/autogen: $(SRCROOT)/efl/autogen.sh $(SRCROOT)/efl/configure.ac
+	$(V)echo "Running 'autogen.sh' for efl..."
+	$(V)rm -f $(BUILDROOT)/efl/stamps/autogen
+	cd $(SRCROOT)/efl && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/efl/stamps
+	touch $(BUILDROOT)/efl/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for efl."
 
-$(BUILDROOT)/evil/stamps/configure: $(BUILDROOT)/evil/stamps/autogen $(BUILDROOT)/evil/stamps/dependencies
-	$(V)echo "Configuring evil..."
-	$(V)rm -f $(BUILDROOT)/evil/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/evil/compile
+$(BUILDROOT)/efl/stamps/configure: $(BUILDROOT)/efl/stamps/autogen $(BUILDROOT)/efl/stamps/dependencies
+	$(V)echo "Configuring efl..."
+	$(V)rm -f $(BUILDROOT)/efl/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/efl/compile
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	cd $(BUILDROOT)/evil/compile && \
-	$(SRCROOT)/evil/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/evil/stamps
-	touch $(BUILDROOT)/evil/stamps/configure
-	$(V)echo "Success configuring evil."
+	cd $(BUILDROOT)/efl/compile && \
+	$(SRCROOT)/efl/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/efl/stamps
+	touch $(BUILDROOT)/efl/stamps/configure
+	$(V)echo "Success configuring efl."
 
-$(BUILDROOT)/evil/stamps/compile: $(BUILDROOT)/evil/stamps/configure evil-compile
-evil-compile: $(BUILDROOT)/evil/stamps/configure
-	$(V)echo "Compiling evil..."
-	$(V)rm -f $(BUILDROOT)/evil/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/evil/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/evil/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/evil/stamps/compile-updated;\
+$(BUILDROOT)/efl/stamps/compile: $(BUILDROOT)/efl/stamps/configure efl-compile
+efl-compile: $(BUILDROOT)/efl/stamps/configure
+	$(V)echo "Compiling efl..."
+	$(V)rm -f $(BUILDROOT)/efl/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/efl/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/efl/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/efl/stamps/compile-updated;\
 	fi
-	$(V)if test -f $(BUILDROOT)/evil/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/evil/compile";\
+	$(V)if test -f $(BUILDROOT)/efl/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/efl/compile";\
 		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/evil/compile;\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/efl/compile;\
 	else\
-		echo "evil is up to date.";\
+		echo "efl is up to date.";\
 	fi
-	$(V)if test ! -f $(BUILDROOT)/evil/stamps/compile -o -f $(BUILDROOT)/evil/stamps/compile-updated; then\
-		touch $(BUILDROOT)/evil/stamps/compile;\
+	$(V)if test ! -f $(BUILDROOT)/efl/stamps/compile -o -f $(BUILDROOT)/efl/stamps/compile-updated; then\
+		touch $(BUILDROOT)/efl/stamps/compile;\
 		echo "Compile updated, needs reinstall.";\
 	fi
-	$(V)echo "Success compiling evil."
+	$(V)echo "Success compiling efl."
 
-$(BUILDROOT)/evil/stamps/install: $(BUILDROOT)/evil/stamps/compile evil-install
-evil-install: $(BUILDROOT)/evil/stamps/compile
-	$(V)echo "Installing evil..."
-	$(V)if test ! -f $(BUILDROOT)/evil/stamps/install -o $(BUILDROOT)/evil/stamps/compile -nt $(BUILDROOT)/evil/stamps/install; then\
-		rm -f $(BUILDROOT)/evil/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/evil/compile";\
+$(BUILDROOT)/efl/stamps/install: $(BUILDROOT)/efl/stamps/compile efl-install
+efl-install: $(BUILDROOT)/efl/stamps/compile
+	$(V)echo "Installing efl..."
+	$(V)if test ! -f $(BUILDROOT)/efl/stamps/install -o $(BUILDROOT)/efl/stamps/compile -nt $(BUILDROOT)/efl/stamps/install; then\
+		rm -f $(BUILDROOT)/efl/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/efl/compile";\
 		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/evil/compile;\
-		mkdir -p $(BUILDROOT)/evil/stamps;\
-		touch $(BUILDROOT)/evil/stamps/install;\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/efl/compile;\
+		mkdir -p $(BUILDROOT)/efl/stamps;\
+		touch $(BUILDROOT)/efl/stamps/install;\
 	else\
-		echo "evil did not change, not need to reinstall.";\
+		echo "efl did not change, not need to reinstall.";\
 	fi
-	$(V)echo "Success installing evil."
+	$(V)echo "Success installing efl."
 
-$(BUILDROOT)/evil/stamps/test: $(BUILDROOT)/evil/stamps/compile evil-test
-evil-test: $(BUILDROOT)/evil/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/evil/stamps
-	touch $(BUILDROOT)/evil/stamps/test
-	$(V)echo 'No test target defined for evil'
-
-$(BUILDROOT)/evil/stamps/doc: $(BUILDROOT)/evil/stamps/compile evil-doc
-evil-doc: $(BUILDROOT)/evil/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/evil/stamps
-	touch $(BUILDROOT)/evil/stamps/doc
-	$(V)echo 'No doc target defined for evil'
-
-$(BUILDROOT)/evil/stamps/distcheck: $(BUILDROOT)/evil/stamps/compile evil-distcheck
-evil-distcheck: $(BUILDROOT)/evil/stamps/compile
-	$(V)echo "Checking distribution evil..."
-	$(V)rm -f $(BUILDROOT)/evil/stamps/distcheck
+$(BUILDROOT)/efl/stamps/test: $(BUILDROOT)/efl/stamps/compile efl-test
+efl-test: $(BUILDROOT)/efl/stamps/compile
+	$(V)echo "Testing (make coverage) efl..."
+	$(V)rm -f $(BUILDROOT)/efl/stamps/test
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/evil/compile
-	$(V)mkdir -p $(BUILDROOT)/evil/stamps
-	touch $(BUILDROOT)/evil/stamps/distcheck
-	$(V)echo "Success checking distribution evil."
+	make $(MAKEOPTS) coverage -C $(BUILDROOT)/efl/compile
+	$(V)mkdir -p $(BUILDROOT)/efl/stamps
+	touch $(BUILDROOT)/efl/stamps/test
+	$(V)echo "Success testing (make coverage) efl."
 
-evil-direct-users-compile: embryo-compile edje-compile evas-compile efreet-compile eina-compile eet-compile elementary-compile ecore-compile eio-compile
-
-evil-all-users-compile: embryo-compile edje-compile python-evas-compile evas-compile python-edje-compile efreet-compile eina-compile ecore-compile elementary-compile python-ecore-compile eet-compile eio-compile
-
-########################################################################
-# eina rules
-eina-dependencies: $(BUILDROOT)/eina/stamps/dependencies evil-install
-$(BUILDROOT)/eina/stamps/dependencies: $(BUILDROOT)/evil/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/eina/stamps
-	touch $(BUILDROOT)/eina/stamps/dependencies
-
-eina-clean:
-	if test -d $(BUILDROOT)/eina/compile; then chmod -R u+w $(BUILDROOT)/eina/compile; fi
-	rm -fr $(BUILDROOT)/eina/compile
-	rm -fr $(BUILDROOT)/eina/stamps
-
-$(BUILDROOT)/eina/stamps/autogen: $(SRCROOT)/eina/autogen.sh $(SRCROOT)/eina/configure.ac
-	$(V)echo "Running 'autogen.sh' for eina..."
-	$(V)rm -f $(BUILDROOT)/eina/stamps/autogen
-	cd $(SRCROOT)/eina && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/eina/stamps
-	touch $(BUILDROOT)/eina/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for eina."
-
-$(BUILDROOT)/eina/stamps/configure: $(BUILDROOT)/eina/stamps/autogen $(BUILDROOT)/eina/stamps/dependencies
-	$(V)echo "Configuring eina..."
-	$(V)rm -f $(BUILDROOT)/eina/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/eina/compile
+$(BUILDROOT)/efl/stamps/doc: $(BUILDROOT)/efl/stamps/compile efl-doc
+efl-doc: $(BUILDROOT)/efl/stamps/compile
+	$(V)echo "Generating documentation (make doc) efl..."
+	$(V)rm -f $(BUILDROOT)/efl/stamps/doc
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	cd $(BUILDROOT)/eina/compile && \
-	$(SRCROOT)/eina/configure --prefix=$(INSTALLROOT) --enable-doc \
-		--enable-tests \
-		--enable-coverage \
-		--enable-benchmark \
-		--disable-benchmark-glib
-	$(V)mkdir -p $(BUILDROOT)/eina/stamps
-	touch $(BUILDROOT)/eina/stamps/configure
-	$(V)echo "Success configuring eina."
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/efl/compile
+	$(V)mkdir -p $(BUILDROOT)/efl/stamps
+	touch $(BUILDROOT)/efl/stamps/doc
+	$(V)echo "Success generating documentation (make doc) efl."
 
-$(BUILDROOT)/eina/stamps/compile: $(BUILDROOT)/eina/stamps/configure eina-compile
-eina-compile: $(BUILDROOT)/eina/stamps/configure
-	$(V)echo "Compiling eina..."
-	$(V)rm -f $(BUILDROOT)/eina/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/eina/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/eina/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/eina/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/eina/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/eina/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/eina/compile;\
-	else\
-		echo "eina is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/eina/stamps/compile -o -f $(BUILDROOT)/eina/stamps/compile-updated; then\
-		touch $(BUILDROOT)/eina/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling eina."
-
-$(BUILDROOT)/eina/stamps/install: $(BUILDROOT)/eina/stamps/compile eina-install
-eina-install: $(BUILDROOT)/eina/stamps/compile
-	$(V)echo "Installing eina..."
-	$(V)if test ! -f $(BUILDROOT)/eina/stamps/install -o $(BUILDROOT)/eina/stamps/compile -nt $(BUILDROOT)/eina/stamps/install; then\
-		rm -f $(BUILDROOT)/eina/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/eina/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/eina/compile;\
-		mkdir -p $(BUILDROOT)/eina/stamps;\
-		touch $(BUILDROOT)/eina/stamps/install;\
-	else\
-		echo "eina did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing eina."
-
-$(BUILDROOT)/eina/stamps/test: $(BUILDROOT)/eina/stamps/compile eina-test
-eina-test: $(BUILDROOT)/eina/stamps/compile
-	$(V)echo "Testing (make coverage) eina..."
-	$(V)rm -f $(BUILDROOT)/eina/stamps/test
+$(BUILDROOT)/efl/stamps/distcheck: $(BUILDROOT)/efl/stamps/compile efl-distcheck
+efl-distcheck: $(BUILDROOT)/efl/stamps/compile
+	$(V)echo "Checking distribution efl..."
+	$(V)rm -f $(BUILDROOT)/efl/stamps/distcheck
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/eina/compile
-	$(V)mkdir -p $(BUILDROOT)/eina/stamps
-	touch $(BUILDROOT)/eina/stamps/test
-	$(V)echo "Success testing (make coverage) eina."
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/efl/compile
+	$(V)mkdir -p $(BUILDROOT)/efl/stamps
+	touch $(BUILDROOT)/efl/stamps/distcheck
+	$(V)echo "Success checking distribution efl."
 
-$(BUILDROOT)/eina/stamps/doc: $(BUILDROOT)/eina/stamps/compile eina-doc
-eina-doc: $(BUILDROOT)/eina/stamps/compile
-	$(V)echo "Generating documentation (make doc) eina..."
-	$(V)rm -f $(BUILDROOT)/eina/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/eina/compile
-	$(V)mkdir -p $(BUILDROOT)/eina/stamps
-	touch $(BUILDROOT)/eina/stamps/doc
-	$(V)echo "Success generating documentation (make doc) eina."
+efl-direct-users-compile: embryo-compile edje-compile evas-compile efreet-compile elementary-compile ecore-compile eio-compile
 
-$(BUILDROOT)/eina/stamps/distcheck: $(BUILDROOT)/eina/stamps/compile eina-distcheck
-eina-distcheck: $(BUILDROOT)/eina/stamps/compile
-	$(V)echo "Checking distribution eina..."
-	$(V)rm -f $(BUILDROOT)/eina/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/eina/compile
-	$(V)mkdir -p $(BUILDROOT)/eina/stamps
-	touch $(BUILDROOT)/eina/stamps/distcheck
-	$(V)echo "Success checking distribution eina."
-
-eina-direct-users-compile: embryo-compile edje-compile eet-compile efreet-compile evas-compile elementary-compile ecore-compile eio-compile
-
-eina-all-users-compile: embryo-compile edje-compile python-evas-compile eet-compile python-edje-compile efreet-compile evas-compile elementary-compile ecore-compile python-ecore-compile eio-compile
-
-########################################################################
-# eet rules
-eet-dependencies: $(BUILDROOT)/eet/stamps/dependencies eina-install evil-install
-$(BUILDROOT)/eet/stamps/dependencies: $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/evil/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/eet/stamps
-	touch $(BUILDROOT)/eet/stamps/dependencies
-
-eet-clean:
-	if test -d $(BUILDROOT)/eet/compile; then chmod -R u+w $(BUILDROOT)/eet/compile; fi
-	rm -fr $(BUILDROOT)/eet/compile
-	rm -fr $(BUILDROOT)/eet/stamps
-
-$(BUILDROOT)/eet/stamps/autogen: $(SRCROOT)/eet/autogen.sh $(SRCROOT)/eet/configure.ac
-	$(V)echo "Running 'autogen.sh' for eet..."
-	$(V)rm -f $(BUILDROOT)/eet/stamps/autogen
-	cd $(SRCROOT)/eet && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/eet/stamps
-	touch $(BUILDROOT)/eet/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for eet."
-
-$(BUILDROOT)/eet/stamps/configure: $(BUILDROOT)/eet/stamps/autogen $(BUILDROOT)/eet/stamps/dependencies
-	$(V)echo "Configuring eet..."
-	$(V)rm -f $(BUILDROOT)/eet/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/eet/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	cd $(BUILDROOT)/eet/compile && \
-	$(SRCROOT)/eet/configure --prefix=$(INSTALLROOT) --enable-doc \
-		--enable-tests \
-		--enable-coverage \
-		--enable-gnutls \
-		--disable-openssl \
-		--enable-cipher \
-		--enable-signature \
-		--enable-assert
-	$(V)mkdir -p $(BUILDROOT)/eet/stamps
-	touch $(BUILDROOT)/eet/stamps/configure
-	$(V)echo "Success configuring eet."
-
-$(BUILDROOT)/eet/stamps/compile: $(BUILDROOT)/eet/stamps/configure eet-compile
-eet-compile: $(BUILDROOT)/eet/stamps/configure
-	$(V)echo "Compiling eet..."
-	$(V)rm -f $(BUILDROOT)/eet/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/eet/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/eet/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/eet/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/eet/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/eet/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/eet/compile;\
-	else\
-		echo "eet is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/eet/stamps/compile -o -f $(BUILDROOT)/eet/stamps/compile-updated; then\
-		touch $(BUILDROOT)/eet/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling eet."
-
-$(BUILDROOT)/eet/stamps/install: $(BUILDROOT)/eet/stamps/compile eet-install
-eet-install: $(BUILDROOT)/eet/stamps/compile
-	$(V)echo "Installing eet..."
-	$(V)if test ! -f $(BUILDROOT)/eet/stamps/install -o $(BUILDROOT)/eet/stamps/compile -nt $(BUILDROOT)/eet/stamps/install; then\
-		rm -f $(BUILDROOT)/eet/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/eet/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/eet/compile;\
-		mkdir -p $(BUILDROOT)/eet/stamps;\
-		touch $(BUILDROOT)/eet/stamps/install;\
-	else\
-		echo "eet did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing eet."
-
-$(BUILDROOT)/eet/stamps/test: $(BUILDROOT)/eet/stamps/compile eet-test
-eet-test: $(BUILDROOT)/eet/stamps/compile
-	$(V)echo "Testing (make coverage) eet..."
-	$(V)rm -f $(BUILDROOT)/eet/stamps/test
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/eet/compile
-	$(V)mkdir -p $(BUILDROOT)/eet/stamps
-	touch $(BUILDROOT)/eet/stamps/test
-	$(V)echo "Success testing (make coverage) eet."
-
-$(BUILDROOT)/eet/stamps/doc: $(BUILDROOT)/eet/stamps/compile eet-doc
-eet-doc: $(BUILDROOT)/eet/stamps/compile
-	$(V)echo "Generating documentation (make doc) eet..."
-	$(V)rm -f $(BUILDROOT)/eet/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/eet/compile
-	$(V)mkdir -p $(BUILDROOT)/eet/stamps
-	touch $(BUILDROOT)/eet/stamps/doc
-	$(V)echo "Success generating documentation (make doc) eet."
-
-$(BUILDROOT)/eet/stamps/distcheck: $(BUILDROOT)/eet/stamps/compile eet-distcheck
-eet-distcheck: $(BUILDROOT)/eet/stamps/compile
-	$(V)echo "Checking distribution eet..."
-	$(V)rm -f $(BUILDROOT)/eet/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/eet/compile
-	$(V)mkdir -p $(BUILDROOT)/eet/stamps
-	touch $(BUILDROOT)/eet/stamps/distcheck
-	$(V)echo "Success checking distribution eet."
-
-eet-direct-users-compile: edje-compile evas-compile eio-compile elementary-compile efreet-compile
-
-eet-all-users-compile: edje-compile python-evas-compile evas-compile python-edje-compile efreet-compile ecore-compile elementary-compile python-ecore-compile eio-compile
+efl-all-users-compile: embryo-compile edje-compile python-evas-compile evas-compile python-edje-compile efreet-compile ecore-compile elementary-compile python-ecore-compile eio-compile
 
 ########################################################################
 # evas rules
-evas-dependencies: $(BUILDROOT)/evas/stamps/dependencies eina-install evil-install eet-install
-$(BUILDROOT)/evas/stamps/dependencies: $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/evil/stamps/install $(BUILDROOT)/eet/stamps/install
+evas-dependencies: $(BUILDROOT)/evas/stamps/dependencies efl-install
+$(BUILDROOT)/evas/stamps/dependencies: $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/evas/stamps
 	touch $(BUILDROOT)/evas/stamps/dependencies
 
@@ -569,8 +322,8 @@ evas-all-users-compile: edje-compile python-evas-compile python-edje-compile efr
 
 ########################################################################
 # ecore rules
-ecore-dependencies: $(BUILDROOT)/ecore/stamps/dependencies eina-install evil-install evas-install
-$(BUILDROOT)/ecore/stamps/dependencies: $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/evil/stamps/install $(BUILDROOT)/evas/stamps/install
+ecore-dependencies: $(BUILDROOT)/ecore/stamps/dependencies evas-install efl-install
+$(BUILDROOT)/ecore/stamps/dependencies: $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
 	touch $(BUILDROOT)/ecore/stamps/dependencies
 
@@ -696,14 +449,14 @@ ecore-distcheck: $(BUILDROOT)/ecore/stamps/compile
 	touch $(BUILDROOT)/ecore/stamps/distcheck
 	$(V)echo "Success checking distribution ecore."
 
-ecore-direct-users-compile: edje-compile python-ecore-compile eio-compile elementary-compile efreet-compile
+ecore-direct-users-compile: edje-compile elementary-compile python-ecore-compile eio-compile efreet-compile
 
 ecore-all-users-compile: edje-compile python-edje-compile efreet-compile elementary-compile python-ecore-compile eio-compile
 
 ########################################################################
 # efreet rules
-efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies eina-install ecore-install evil-install eet-install
-$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/evil/stamps/install $(BUILDROOT)/eet/stamps/install
+efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies ecore-install efl-install
+$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
 	touch $(BUILDROOT)/efreet/stamps/dependencies
 
@@ -829,8 +582,8 @@ efreet-all-users-compile:
 
 ########################################################################
 # eio rules
-eio-dependencies: $(BUILDROOT)/eio/stamps/dependencies eina-install ecore-install evil-install eet-install
-$(BUILDROOT)/eio/stamps/dependencies: $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/evil/stamps/install $(BUILDROOT)/eet/stamps/install
+eio-dependencies: $(BUILDROOT)/eio/stamps/dependencies ecore-install efl-install
+$(BUILDROOT)/eio/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/eio/stamps
 	touch $(BUILDROOT)/eio/stamps/dependencies
 
@@ -1158,8 +911,8 @@ python-ecore-all-users-compile:
 
 ########################################################################
 # embryo rules
-embryo-dependencies: $(BUILDROOT)/embryo/stamps/dependencies eina-install evil-install
-$(BUILDROOT)/embryo/stamps/dependencies: $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/evil/stamps/install
+embryo-dependencies: $(BUILDROOT)/embryo/stamps/dependencies efl-install
+$(BUILDROOT)/embryo/stamps/dependencies: $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
 	touch $(BUILDROOT)/embryo/stamps/dependencies
 
@@ -1267,8 +1020,8 @@ embryo-all-users-compile: edje-compile elementary-compile python-edje-compile
 
 ########################################################################
 # edje rules
-edje-dependencies: $(BUILDROOT)/edje/stamps/dependencies embryo-install evas-install evil-install eina-install eet-install ecore-install eio-install
-$(BUILDROOT)/edje/stamps/dependencies: $(BUILDROOT)/embryo/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/evil/stamps/install $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/eet/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/eio/stamps/install
+edje-dependencies: $(BUILDROOT)/edje/stamps/dependencies embryo-install evas-install efl-install eio-install ecore-install
+$(BUILDROOT)/edje/stamps/dependencies: $(BUILDROOT)/embryo/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/eio/stamps/install $(BUILDROOT)/ecore/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/edje/stamps
 	touch $(BUILDROOT)/edje/stamps/dependencies
 
@@ -1503,8 +1256,8 @@ python-edje-all-users-compile:
 
 ########################################################################
 # elementary rules
-elementary-dependencies: $(BUILDROOT)/elementary/stamps/dependencies edje-install evas-install evil-install eina-install eet-install ecore-install
-$(BUILDROOT)/elementary/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/evil/stamps/install $(BUILDROOT)/eina/stamps/install $(BUILDROOT)/eet/stamps/install $(BUILDROOT)/ecore/stamps/install
+elementary-dependencies: $(BUILDROOT)/elementary/stamps/dependencies edje-install ecore-install efl-install evas-install
+$(BUILDROOT)/elementary/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/evas/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
 	touch $(BUILDROOT)/elementary/stamps/dependencies
 
