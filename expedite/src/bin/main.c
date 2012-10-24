@@ -1176,9 +1176,6 @@ static const Expedite_Engine engines[] = {
 #if HAVE_EVAS_PSL1GHT
   { "psl1ght",    engine_psl1ght_args, engine_psl1ght_loop, engine_psl1ght_shutdown },
 #endif
-#if HAVE_EVAS_SOFTWARE_16_X11
-  { "x11-16",engine_software_16_x11_args, engine_software_16_x11_loop, engine_software_16_x11_shutdown },
-#endif
 #if HAVE_EVAS_SOFTWARE_16_DDRAW
   { "ddraw-16",engine_software_16_ddraw_args, engine_software_16_ddraw_loop, engine_software_16_ddraw_shutdown },
 #endif
@@ -1360,7 +1357,7 @@ _engine_args(int argc, char **argv)
 int
 main(int argc, char **argv)
 {
-#if defined (HAVE_EVAS_SOFTWARE_XLIB) || defined (HAVE_EVAS_XRENDER_X11) ||defined (HAVE_EVAS_OPENGL_X11) || defined (HAVE_EVAS_SOFTWARE_16_X11)
+#if defined (HAVE_EVAS_SOFTWARE_XLIB) || defined (HAVE_EVAS_XRENDER_X11) ||defined (HAVE_EVAS_OPENGL_X11)
    XInitThreads();
 #endif
 

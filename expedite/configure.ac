@@ -89,9 +89,6 @@ EXPEDITE_CHECK_ENGINE([directfb], [DirectFB], "yes")
 EXPEDITE_CHECK_ENGINE([opengl-cocoa], [OpenGL Cocoa], "yes", [gl_cocoa_libs="-framework Cocoa"])
 AC_SUBST(gl_cocoa_libs)
 
-# Software 16bit X11
-EXPEDITE_CHECK_ENGINE([software-16-x11], [Software 16 bits X11], "yes")
-
 # 16bit WinCE
 EXPEDITE_CHECK_ENGINE([software-16-wince], [Software 16 bits WinCE], "yes", [wince_16_libs="-laygshell"])
 AC_SUBST(wince_16_libs)
@@ -138,7 +135,7 @@ PKG_CHECK_MODULES([EVAS], evas >= 1.6.99 eet >= 1.6.99)
 
 # Xlib
 
-if test "x$have_software_xlib" = "xyes" -o "x$have_software_16_x11" = "xyes" -o "x$have_xrender_x11" = "xyes" -o "x$have_opengl_x11" = "xyes"; then
+if test "x$have_software_xlib" = "xyes" -o "x$have_xrender_x11" = "xyes" -o "x$have_opengl_x11" = "xyes"; then
    AC_PATH_XTRA
    AC_CHECK_HEADERS([X11/Xlib.h X11/Xutil.h],
       [have_xlib="yes"],
@@ -269,7 +266,6 @@ echo "    Open GL Cocoa................: ${have_opengl_cocoa}"
 echo "    FB...........................: ${have_fb}"
 echo "    DirectFB.....................: ${have_directfb}"
 echo "    PSL1GHT......................: ${have_psl1ght}"
-echo "    Software X11 16 bits.........: ${have_software_16_x11}"
 echo "    Software WinCE 16 bits.......: ${have_software_16_wince}"
 echo
 echo "  Installation:"

@@ -12,7 +12,7 @@
 #include <math.h>
 #include <time.h>
 
-#if defined (HAVE_EVAS_SOFTWARE_XLIB) || defined (HAVE_EVAS_XRENDER_X11) ||defined (HAVE_EVAS_OPENGL_X11) || defined (HAVE_EVAS_SOFTWARE_16_X11)
+#if defined (HAVE_EVAS_SOFTWARE_XLIB) || defined (HAVE_EVAS_XRENDER_X11) ||defined (HAVE_EVAS_OPENGL_X11)
 #include <X11/Xlib.h>
 #endif
 
@@ -70,9 +70,6 @@
 #endif
 #if HAVE_EVAS_PSL1GHT
 #include "engine_psl1ght.h"
-#endif
-#if HAVE_EVAS_SOFTWARE_16_X11
-#include "engine_software_16_x11.h"
 #endif
 #if HAVE_EVAS_SOFTWARE_16_DDRAW
 #include "engine_software_16_ddraw.h"

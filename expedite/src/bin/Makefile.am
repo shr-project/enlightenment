@@ -217,9 +217,9 @@ expedite_SOURCES += \
 engine_gl_cocoa.m engine_gl_cocoa.h
 endif
 
-if BUILD_SOFTWARE_16_X11
+if BUILD_SOFTWARE_16_WINCE
 expedite_SOURCES += \
-engine_software_16_x11.c engine_software_16_x11.h
+engine_software_16_wince.c engine_software_16_wince.h  engine_software_16_wince.rc
 endif
 
 if BUILD_SOFTWARE_16_WINCE
