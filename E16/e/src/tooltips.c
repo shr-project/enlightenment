@@ -306,7 +306,6 @@ TooltipShow(ToolTip * tt, const char *text, ActionClass * ac, int x, int y)
 		      17);
 	     if (temp_w > labels_width)
 		labels_width = temp_w;
-	     temp_w = 0;
 
 	     if (ActionGetEvent(aa) == EVENT_DOUBLE_DOWN)
 	       {

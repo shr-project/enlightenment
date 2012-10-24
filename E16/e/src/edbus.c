@@ -305,9 +305,9 @@ DbusInit(void)
    if (!dbus_connection_add_filter(dbus_data.conn, DbusMsgHandler, NULL, NULL))
       return;
 
-   err = dbus_connection_set_watch_functions(dbus_data.conn,
-					     DbusWatchAdd, DbusWatchRemove,
-					     DbusWatchToggle, NULL, NULL);
+   dbus_connection_set_watch_functions(dbus_data.conn,
+				       DbusWatchAdd, DbusWatchRemove,
+				       DbusWatchToggle, NULL, NULL);
 
    /* Handle pending D-Bus stuff */
    DbusHandleFd();

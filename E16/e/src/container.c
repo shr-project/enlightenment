@@ -382,7 +382,7 @@ ContainerLayoutImageWin(Container * ct)
    int                 i, xo, yo;
    int                 item_pad, padl, padr, padt, padb;
    ContainerObject    *cto;
-   EImageBorder       *pad, *pad_base;
+   EImageBorder       *pad;
 
    if (ct->orientation)
       ct->ic_box = ImageclassFind("ICONBOX_VERTICAL", 0);
@@ -404,17 +404,16 @@ ContainerLayoutImageWin(Container * ct)
 
    if (ct->draw_icon_base)
      {
-	pad_base = ImageclassGetPadding(ct->ic_item_base);
-	padl = pad_base->left;
-	padr = pad_base->right;
-	padt = pad_base->top;
-	padb = pad_base->bottom;
+	pad = ImageclassGetPadding(ct->ic_item_base);
+	padl = pad->left;
+	padr = pad->right;
+	padt = pad->top;
+	padb = pad->bottom;
 
 	item_pad = 0;
      }
    else
      {
-	pad_base = NULL;
 	padl = padr = padt = padb = 0;
 
 	item_pad = 2;

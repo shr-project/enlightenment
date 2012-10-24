@@ -129,11 +129,6 @@ e16_db_close(ECfgFile * ecf)
    Efree(ecf);
 }
 
-static void
-e16_db_flush(void)
-{
-}
-
 static const char  *
 ECfgFileFindValue(ECfgFile * ecf, const char *key)
 {
@@ -272,7 +267,6 @@ ConfigurationSave(void)
    MODULE_LIST_FREE(pml);
 
    e16_db_close(ecf);
-   e16_db_flush();
 }
 
 const CfgItem      *

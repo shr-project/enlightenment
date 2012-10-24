@@ -653,7 +653,7 @@ ActionEncode(Action * aa, char *buf, int len)
 	if (aa->anybutton)
 	   strcpy(btn, "*");
 	else
-	   sprintf(btn, "%u", aa->button);
+	   sprintf(btn, "%d", aa->button);
 	len = Esnprintf(buf, len, "%-11s %4s %s %s\n", event, mod, btn,
 			(aa->action->params) ? aa->action->params : "");
 	break;

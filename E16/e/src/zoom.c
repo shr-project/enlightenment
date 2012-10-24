@@ -209,7 +209,7 @@ SetMode(XRRScreenResources * xsr, RRCrtc crtc, RRMode mode, Rotation rot)
 static void
 SetPanning(XRRScreenResources * xsr, RRCrtc crtc, int on)
 {
-   XRRPanning         *xpa = NULL;
+   XRRPanning         *xpa;
 
    xpa = XRRGetPanning(disp, xsr, crtc);
    if (!xpa)

@@ -57,7 +57,7 @@ GrabKeyboardRelease(void)
 int
 GrabPointerSet(Win win, unsigned int csr, int confine)
 {
-   int                 ret = -1;
+   int                 ret;
    Window              confine_to = (confine) ? WinGetXwin(VROOT) : None;
 
    ret = XGrabPointer(disp, WinGetXwin(win), False,

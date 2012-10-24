@@ -778,7 +778,7 @@ const DialogDef     DlgComposite = {
  * Combined configuration dialog
  */
 
-static const DialogDef *dialogs[] = {
+static const DialogDef *const dialogs[] = {
    &DlgFocus,
    &DlgMoveResize,
    &DlgPlacement,

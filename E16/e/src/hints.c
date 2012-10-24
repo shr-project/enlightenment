@@ -366,7 +366,7 @@ typedef union {
       unsigned            docked:1;
       unsigned            iconified:1;
    } b;
-   int                 all:32;
+   unsigned            all:32;
 } EWinInfoFlags;
 
 #define ENL_DATA_ITEMS      12

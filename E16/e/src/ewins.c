@@ -2021,14 +2021,14 @@ EwinChange(EWin * ewin __UNUSED__, unsigned int flag)
    EWinChanges.flags |= flag;
 }
 
-void
+static void
 EwinChangesStart(EWin * ewin)
 {
    EWinChanges.flags = 0;
    EWinChanges.desk = EoGetDesk(ewin);
 }
 
-void
+static void
 EwinChangesProcess(EWin * ewin)
 {
    if (!EWinChanges.flags)

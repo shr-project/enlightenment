@@ -92,7 +92,7 @@ static void
 append_merge_dir(char *dir, char ***list, int *count)
 {
    char                ss[FILEPATH_LEN_MAX], s1[FILEPATH_LEN_MAX];
-   char              **str = NULL, *s;
+   char              **str, *s;
    int                 i, num;
 
    str = E_ls(dir, &num);

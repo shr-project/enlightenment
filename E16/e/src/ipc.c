@@ -833,7 +833,6 @@ IpcWinop(const WinOp * wop, EWin * ewin, const char *prm)
 
      case EWIN_OP_NO_REDIRECT:
 	on = EoGetNoRedirect(ewin);
-	on = ewin->o.noredir;
 	if (SetEwinBoolean(wop->name, &on, param1, 1))
 	   EoSetNoRedirect(ewin, on);
 	break;

@@ -282,12 +282,12 @@ DeskControlsCreate(Desk * dsk)
 
    if (Conf.desks.dragbar_width > 0)
      {
-	b = ButtonCreate("_DESKTOP_DRAG_CONTROL", 1, ic2, ac2, NULL, NULL,
-			 -1, FLAG_FIXED, 1, 99999, 1, 99999, 0, 0, x[0], 0,
-			 y[0], 0, 0, w[0], 0, h[0], 0, dsk->num, 0);
-	b = ButtonCreate("_DESKTOP_DRAG_CONTROL", 1, ic3, ac3, NULL, NULL,
-			 -1, FLAG_FIXED, 1, 99999, 1, 99999, 0, 0, x[1], 0,
-			 y[1], 0, 0, w[1], 0, h[1], 0, dsk->num, 0);
+	ButtonCreate("_DESKTOP_DRAG_CONTROL", 1, ic2, ac2, NULL, NULL,
+		     -1, FLAG_FIXED, 1, 99999, 1, 99999, 0, 0, x[0], 0,
+		     y[0], 0, 0, w[0], 0, h[0], 0, dsk->num, 0);
+	ButtonCreate("_DESKTOP_DRAG_CONTROL", 1, ic3, ac3, NULL, NULL,
+		     -1, FLAG_FIXED, 1, 99999, 1, 99999, 0, 0, x[1], 0,
+		     y[1], 0, 0, w[1], 0, h[1], 0, dsk->num, 0);
 	b = ButtonCreate("_DESKTOP_DRAG_CONTROL", 1, ic1, ac1, NULL, NULL,
 			 -1, FLAG_FIXED, 1, 99999, 1, 99999, 0, 0, x[2], 0,
 			 y[2], 0, 0, w[2], 0, h[2], 0, dsk->num, 0);
@@ -2719,7 +2719,7 @@ DesksIpcDesk(const char *params)
      }
    else if (!strncmp(cmd, "set", 3))
      {
-	sscanf(prm, "%i", &desk);
+	sscanf(prm, "%u", &desk);
 	ChangeNumberOfDesktops(desk);
      }
    else if (!strncmp(cmd, "list", 2))
@@ -2738,7 +2738,7 @@ DesksIpcDesk(const char *params)
      }
    else if (!strncmp(cmd, "goto", 2))
      {
-	sscanf(prm, "%i", &desk);
+	sscanf(prm, "%u", &desk);
 	DeskOpGoto(desk);
      }
    else if (!strncmp(cmd, "next", 2))
@@ -2759,13 +2759,13 @@ DesksIpcDesk(const char *params)
      }
    else if (!strncmp(cmd, "raise", 2))
      {
-	sscanf(prm, "%i", &desk);
+	sscanf(prm, "%u", &desk);
 	SoundPlay(SOUND_DESKTOP_RAISE);
 	DeskRaise(desk);
      }
    else if (!strncmp(cmd, "lower", 2))
      {
-	sscanf(prm, "%i", &desk);
+	sscanf(prm, "%u", &desk);
 	SoundPlay(SOUND_DESKTOP_LOWER);
 	DeskLower(desk);
      }

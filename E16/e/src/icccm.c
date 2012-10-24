@@ -779,7 +779,7 @@ ICCCM_GetHints(EWin * ewin)
    ICCCM_GetWmClientLeader(ewin);
 }
 
-void
+static void
 ICCCM_SetIconSizes(void)
 {
    XIconSize          *is;

@@ -876,9 +876,9 @@ ButtonsConfigSave(void)
       fprintf(fs, "536 %i\n", b->geom.ysizerel);
       fprintf(fs, "537 %i\n", b->geom.ysizeabs);
       fprintf(fs, "538 %i\n", b->geom.size_from_image);
-      fprintf(fs, "539 %i\n", EoGetDeskNum(b));
+      fprintf(fs, "539 %u\n", EoGetDeskNum(b));
       fprintf(fs, "540 %i\n", EoIsSticky(b));
-      fprintf(fs, "542 %i\n", EoIsShown(b));
+      fprintf(fs, "542 %u\n", EoIsShown(b));
 
       if (b->flags)
 	{

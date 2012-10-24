@@ -671,8 +671,7 @@ EventsCompress(XEvent * evq, int count)
 			   ev->xdestroywindow.window)
 			  continue;
 		       ev2->type = EX_EVENT_CREATE_GONE;
-		       j = -1;	/* Break for() */
-		       break;
+		       goto loop_quit_DestroyNotify;
 		    case DestroyNotify:
 		       break;
 		    case UnmapNotify:
@@ -709,6 +708,7 @@ EventsCompress(XEvent * evq, int count)
 		       break;
 		    }
 	       }
+	   loop_quit_DestroyNotify:
 	     break;
 
 	  case Expose:

@@ -355,7 +355,7 @@ EwinsInGroup(const EWin * ewin1, const EWin * ewin2)
    return NULL;
 }
 
-void
+static void
 RemoveEwinFromGroup(EWin * ewin, Group * g)
 {
    int                 i, j, k, i2;

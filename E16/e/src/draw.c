@@ -397,7 +397,7 @@ void
 DrawEwinShape(EWin * ewin, int md, int x, int y, int w, int h,
 	      int firstlast, int seqno)
 {
-   static ShapeData    sd, *psd = &sd;
+   static ShapeData    sd, *const psd = &sd;
    Window              root = WinGetXwin(VROOT);
    int                 dx, dy;
 

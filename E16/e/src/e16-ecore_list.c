@@ -333,7 +333,7 @@ Functions that remove nodes from an Ecore_List.
 EAPI void          *
 ecore_list_remove(Ecore_List * list)
 {
-   void               *ret = NULL;
+   void               *ret;
    Ecore_List_Node    *old;
 
    if (ecore_list_empty_is(list))
@@ -396,7 +396,7 @@ ecore_list_remove_destroy(Ecore_List * list)
 EAPI void          *
 ecore_list_first_remove(Ecore_List * list)
 {
-   void               *ret = NULL;
+   void               *ret;
    Ecore_List_Node    *old;
 
    if (ecore_list_empty_is(list))
@@ -432,7 +432,7 @@ ecore_list_first_remove(Ecore_List * list)
 EAPI void          *
 ecore_list_last_remove(Ecore_List * list)
 {
-   void               *ret = NULL;
+   void               *ret;
    Ecore_List_Node    *old, *prev;
 
    if (ecore_list_empty_is(list))
@@ -708,7 +708,7 @@ _ecore_list_node_new(void)
  * @return  @c TRUE.
  * @ingroup Ecore_Data_List_Node_Group
  */
-EAPI int
+static int
 _ecore_list_node_destroy(Ecore_List_Node * node, Ecore_Free_Cb free_func)
 {
    if (free_func && node->data)
@@ -750,7 +750,8 @@ ecore_list_items_get(Ecore_List * list, int *pnum)
    if (!lst)
       return NULL;
 
-   for (i = 0, ecore_list_first_goto(list); (b = ecore_list_next(list));)
+   for (i = 0, ecore_list_first_goto(list);
+	(b = ecore_list_next(list)) != NULL;)
       lst[i++] = b;
 
    *pnum = num;

@@ -324,7 +324,7 @@ CommsDoSend(Window win, const char *s)
 	  {
 	     ss[8 + j] = s[i + j];
 	     if (!s[i + j])
-		j = 12;
+		break;
 	  }
 	ss[20] = 0;
 	for (k = 0; k < 20; k++)

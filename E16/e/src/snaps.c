@@ -384,7 +384,7 @@ _SnapUpdateEwinCmd(Snapshot * sn, const EWin * ewin)
 static void
 _SnapUpdateEwinGroups(Snapshot * sn, const EWin * ewin, char onoff)
 {
-   EWin              **gwins = NULL;
+   EWin              **gwins;
    Group              *const *groups;
    int                 i, j, num, num_groups;
 

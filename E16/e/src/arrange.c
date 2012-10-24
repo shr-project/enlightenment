@@ -856,7 +856,6 @@ ArrangeEwinXY(EWin * ewin, int *px, int *py)
    RectBox            *fixed, *ret, newrect;
 
    fixed = NULL;
-   ret = NULL;
 
    EwinListGetAll(&num);
    if (num <= 1)

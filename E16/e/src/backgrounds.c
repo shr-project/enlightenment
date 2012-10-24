@@ -102,7 +102,7 @@ _BackgroundGetFgFile(Background * bg)
 char               *
 BackgroundGetUniqueString(Background * bg)
 {
-   static const char  *chmap =
+   static const char   chmap[] =
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
    char                s[256], *f;
    int                 r, g, b;
@@ -1307,7 +1307,7 @@ BackgroundsConfigSave(void)
 	for (j = 0; j < N_BG_ASSIGNED; j++)
 	  {
 	     if (bg == bg_assigned[j])
-		fprintf(fs, "%d %d\n", BG_DESKNUM, j);
+		fprintf(fs, "%d %u\n", BG_DESKNUM, j);
 	  }
 
 	fprintf(fs, "1000\n");

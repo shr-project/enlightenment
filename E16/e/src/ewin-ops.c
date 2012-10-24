@@ -1453,7 +1453,7 @@ EwinOpKill(EWin * ewin, int source __UNUSED__)
 void
 EwinOpRaise(EWin * ewin, int source __UNUSED__)
 {
-   EWin              **gwins = NULL;
+   EWin              **gwins;
    int                 i, num;
 
    SoundPlay(SOUND_RAISE);
@@ -1467,7 +1467,7 @@ EwinOpRaise(EWin * ewin, int source __UNUSED__)
 void
 EwinOpLower(EWin * ewin, int source __UNUSED__)
 {
-   EWin              **gwins = NULL;
+   EWin              **gwins;
    int                 i, num;
 
    SoundPlay(SOUND_LOWER);
@@ -1481,7 +1481,7 @@ EwinOpLower(EWin * ewin, int source __UNUSED__)
 void
 EwinOpStick(EWin * ewin, int source __UNUSED__, int on)
 {
-   EWin              **gwins = NULL;
+   EWin              **gwins;
    int                 i, num;
 
    gwins = ListWinGroupMembersForEwin(ewin, GROUP_ACTION_STICK,
@@ -1553,7 +1553,7 @@ EwinOpNeverFocus(EWin * ewin, int on)
 void
 EwinOpIconify(EWin * ewin, int source __UNUSED__, int on)
 {
-   EWin              **gwins = NULL;
+   EWin              **gwins;
    int                 i, num;
 
    gwins = ListWinGroupMembersForEwin(ewin, GROUP_ACTION_ICONIFY,
@@ -1571,7 +1571,7 @@ EwinOpIconify(EWin * ewin, int source __UNUSED__, int on)
 void
 EwinOpShade(EWin * ewin, int source __UNUSED__, int on)
 {
-   EWin              **gwins = NULL;
+   EWin              **gwins;
    int                 i, num;
 
    gwins = ListWinGroupMembersForEwin(ewin, GROUP_ACTION_SHADE,
@@ -1607,7 +1607,7 @@ EwinOpSetLayer(EWin * ewin, int source __UNUSED__, int layer)
 void
 EwinOpSetBorder(EWin * ewin, int source __UNUSED__, const char *name)
 {
-   EWin              **gwins = NULL;
+   EWin              **gwins;
    int                 i, num;
    char                has_shaded;
    Border             *b;
@@ -1618,9 +1618,8 @@ EwinOpSetBorder(EWin * ewin, int source __UNUSED__, const char *name)
       return;
 
    has_shaded = 0;
-   gwins =
-      ListWinGroupMembersForEwin(ewin, GROUP_ACTION_SET_WINDOW_BORDER,
-				 Mode.nogroup, &num);
+   gwins = ListWinGroupMembersForEwin(ewin, GROUP_ACTION_SET_WINDOW_BORDER,
+				      Mode.nogroup, &num);
    for (i = 0; i < num; i++)
      {
 	if (gwins[i]->state.shaded)
