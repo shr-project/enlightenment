@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2000-2007 Carsten Haitzler, Geoff Harrison and various contributors
- * Copyright (C) 2004-2011 Kim Woelders
+ * Copyright (C) 2004-2012 Kim Woelders
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -526,11 +526,13 @@ FocusNewDeskBegin(void)
 
    focus_pending_new = NULL;
    doFocusToEwin(NULL, FOCUS_DESK_LEAVE);
+   FocusEnable(0);
 }
 
 void
 FocusNewDesk(void)
 {
+   FocusEnable(1);
    FocusToEWin(NULL, FOCUS_DESK_ENTER);
 
    /* Unfreeze keyboard */
@@ -1017,7 +1019,9 @@ FocusInitTimeout(void *data __UNUSED__)
 static void
 _FocusIdler(void *data __UNUSED__)
 {
-   if (!focus_inhibit && focus_pending_why)
+   if (focus_inhibit)
+      return;
+   if (focus_pending_why)
       FocusSet();
    if (click_pending_update_grabs)
       doClickGrabsUpdate();
