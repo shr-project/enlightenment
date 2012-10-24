@@ -49,5 +49,6 @@ EventFdDesc        *EventFdRegister(int fd, EventFdHandler * handler);
 void                EventFdUnregister(EventFdDesc * efd);
 
 int                 EventsUpdateXY(int *px, int *py);
+void                EventsBlock(int mode);
 
 #endif /* _EVENTS_H_ */

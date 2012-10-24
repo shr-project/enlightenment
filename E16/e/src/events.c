@@ -416,6 +416,14 @@ EventsUpdateXY(int *px, int *py)
    return ss;
 }
 
+void
+EventsBlock(int mode)
+{
+   Mode.events.block = mode;
+   if (EDebug(EDBUG_TYPE_EVENTS))
+      Eprintf("%s: mode=%d\n", __func__, Mode.events.block);
+}
+
 static void
 ModeGetXY(int rx, int ry)
 {
@@ -935,7 +943,8 @@ EventsMain(void)
    for (;;)
      {
 	pfetch = 0;
-	count = EventsProcess(&evq_ptr, &evq_alloc, &pfetch);
+	if (!Mode.events.block)
+	   count = EventsProcess(&evq_ptr, &evq_alloc, &pfetch);
 
 	if (pfetch)
 	  {
@@ -964,16 +973,23 @@ EventsMain(void)
 	/* Run idlers */
 	IdlersRun();
 
+	/* Get time to first non-expired (0 means none) */
+	time2 = TimersRunNextIn(time2);
+
 	if (Mode.wm.exit_mode)
 	   break;
 
-	if (XPending(disp))
+	if (Mode.events.block)
+	   XFlush(disp);
+	else if (XPending(disp))
 	   continue;
 
 	FD_ZERO(&fdset);
 	fdsize = -1;
 	for (i = 0; i < nfds; i++)
 	  {
+	     if (Mode.events.block && i == 0)
+		continue;
 	     fd = pfds[i].fd;
 	     if (fd < 0)
 		continue;
@@ -983,8 +999,6 @@ EventsMain(void)
 	  }
 	fdsize++;
 
-	/* Get time to first non-expired (0 means none) */
-	time2 = TimersRunNextIn(time2);
 	if (time2 > 0.)
 	  {
 	     tval.tv_sec = (long)time2 / 1000;

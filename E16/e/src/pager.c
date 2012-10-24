@@ -194,6 +194,9 @@ PagerScanTimeout(void *data)
    if (pager_mode != PAGER_MODE_SNAP)
       goto nomore;
 
+   if (Mode.events.block)
+      return 1;
+
    ewin = p->ewin;
    if (!ewin || !EoIsShown(ewin))
       goto nomore;
@@ -876,6 +879,8 @@ PagersCheckUpdate(void)
 static void
 _PagersIdler(void *data __UNUSED__)
 {
+   if (Mode.events.block)
+      return;
    PagersCheckUpdate();
 }
 

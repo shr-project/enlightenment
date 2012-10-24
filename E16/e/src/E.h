@@ -363,6 +363,7 @@ typedef struct {
       unsigned int        last_button;
       unsigned int        last_keycode;
       unsigned int        last_keystate;
+      char                block;
       char                double_click;
       char                on_screen;
 #if USE_COMPOSITE
