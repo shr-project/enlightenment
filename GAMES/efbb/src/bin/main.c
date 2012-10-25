@@ -1008,6 +1008,7 @@ _level_load(Game *game)
 
    /* World */
    game->cur_world = ephysics_world_new();
+   ephysics_world_stack_enable_set(game->cur_world, EINA_FALSE);
    ephysics_world_simulation_set(game->cur_world, 1/60., 4);
    ephysics_world_render_geometry_set(game->cur_world, 0, 0, -5,
                                       WIDTH, HEIGHT, 10);

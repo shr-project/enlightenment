@@ -82,8 +82,8 @@ void
 level_select_screen_show(Evas_Object *level_select_screen)
 {
    Etrophy_Gamescore *gamescore;
+   const Eina_List *locks, *l;
    Elm_Object_Item *item;
-   Eina_List *locks, *l;
    Evas_Object *grid;
 
    gamescore = evas_object_data_get(level_select_screen, "gamescore");
