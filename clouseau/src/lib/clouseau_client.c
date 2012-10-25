@@ -322,10 +322,7 @@ ecore_main_loop_begin(void)
 
    if (!_elm_is_init)
      {
-        char *margv[] = { "clouseau" };
-        /* Make sure we init elementary, wouldn't be needed once we
-         * take away the ui to another proc. */
-        elm_init(1, margv);
+        _my_app_name = "clouseau";
      }
 
    if(!_connect_to_daemon())
