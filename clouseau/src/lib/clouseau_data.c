@@ -762,6 +762,9 @@ clouseau_data_packet_info_get(void *data, int size)
    char *ch = data;
    Variant_st *v;
 
+   if (size <= 0)
+      return NULL;
+
    switch (*ch)
      {
       case BMP_RAW_DATA:
