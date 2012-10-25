@@ -14630,6 +14630,24 @@ styles
       // tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
       tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
    }
+   style {
+      name: "dialog_style_left";
+      // base: "font=Edje-Vera font_size=10 text_class=tb_plain align=right color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+      base: "font=Edje-Vera font_size=10 text_class=tb_plain align=center color=#000 style=shadow shadow_color=#ffffff14 wrap=word";
+      
+      tag:  "br" "\n";
+      // tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+      tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+   }
+   style {
+      name: "dialog_style_right";
+      // base: "font=Edje-Vera font_size=10 text_class=tb_plain align=right color=#000 style=shadow shadow_color=#ffffff80 wrap=word";
+      base: "font=Edje-Vera font_size=10 text_class=tb_plain align=center color=#000 style=shadow shadow_color=#ffffff14 wrap=word";
+      
+      tag:  "br" "\n";
+      // tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+      tag:  "hilight" "+ font=Edje-Vera-Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14";
+   }
 }
 
 group {
@@ -14797,6 +14815,39 @@ group {
                min:      1 1;
             }
          }
+         description {
+            state:    "left" 0.0;
+            inherit: "default" 0.0;
+            text.style: "dialog_style_left";
+         }
+         description {
+            state:    "right" 0.0;
+            inherit: "default" 0.0;
+            text.style: "dialog_style_right";
+         }
+      }
+   }
+   programs {
+      program {
+         name: "left";
+         signal: "e,state,left";
+         source: "e";
+         action: STATE_SET "left" 0.0;
+         target: "e.textblock.message";
+      }
+      program {
+         name: "right";
+         signal: "e,state,right";
+         source: "e";
+         action: STATE_SET "right" 0.0;
+         target: "e.textblock.message";
+      }
+      program {
+         name: "center";
+         signal: "e,state,center";
+         source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.textblock.message";
       }
    }
 }

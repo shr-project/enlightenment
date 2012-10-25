@@ -104,6 +104,18 @@ collections {
             tag: "br" "\n";
             tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#fff";
          }
+         style {
+            name: "dialog_style_left";
+            base: "font=Sans font_size=10 text_class=tb_plain align=left color=#ccc wrap=word";
+            tag: "br" "\n";
+            tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#fff";
+         }
+         style {
+            name: "dialog_style_right";
+            base: "font=Sans font_size=10 text_class=tb_plain align=right color=#ccc wrap=word";
+            tag: "br" "\n";
+            tag: "hilight" "+ font=Sans:style=Bold text_class=tb_light color=#fff";
+         }
       }
       parts {
          part {
@@ -120,6 +132,39 @@ collections {
                   min: 1 1;
                }
             }
+            description {
+               state:    "left" 0.0;
+               inherit: "default" 0.0;
+               text.style: "dialog_style_left";
+            }
+            description {
+               state:    "right" 0.0;
+               inherit: "default" 0.0;
+               text.style: "dialog_style_right";
+            }
+         }
+      }
+      programs {
+         program {
+            name: "left";
+            signal: "e,state,left";
+            source: "e";
+            action: STATE_SET "left" 0.0;
+            target: "e.textblock.message";
+         }
+         program {
+            name: "right";
+            signal: "e,state,right";
+            source: "e";
+            action: STATE_SET "right" 0.0;
+            target: "e.textblock.message";
+         }
+         program {
+            name: "center";
+            signal: "e,state,center";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "e.textblock.message";
          }
       }
    }

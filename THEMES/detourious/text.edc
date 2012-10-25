@@ -124,6 +124,18 @@ styles {
 		tag:  "hilight" "+ font="FONT_BOLD" font_size="TEXT_SIZE_BOLD" color=#252525 style=shadow shadow_color=#ffffff90 text_class=tb_light";
 		tag:  "br" "\n";
 	}
+    style {
+		name: "dialog_left";
+		base: "font="FONT" font_size="TEXT_SIZE" align=left color=#070707 wrap=word text_class=tb_plain";
+		tag:  "hilight" "+ font="FONT_BOLD" font_size="TEXT_SIZE_BOLD" color=#252525 style=shadow shadow_color=#ffffff90 text_class=tb_light";
+		tag:  "br" "\n";
+	}
+    style {
+		name: "dialog_right";
+		base: "font="FONT" font_size="TEXT_SIZE" align=right color=#070707 wrap=word text_class=tb_plain";
+		tag:  "hilight" "+ font="FONT_BOLD" font_size="TEXT_SIZE_BOLD" color=#252525 style=shadow shadow_color=#ffffff90 text_class=tb_light";
+		tag:  "br" "\n";
+	}
 	style {
 		name: "sys_style";
 		base: "font="FONT_BOLD" font_size="TEXT_SIZE_BOLD" align=center color=#3c3c3c wrap=word text_class=tb_large";
