@@ -21,6 +21,7 @@ static EDBus_Proxy *meta_address = NULL;
 static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
 static EDBus_Proxy *meta_velocity = NULL;
+static EDBus_Proxy *meta_nmea = NULL;
 static EDBus_Proxy *geonames_geocode = NULL;
 static EDBus_Proxy *geonames_rgeocode = NULL;
 static Elocation_Address *address = NULL;
@@ -29,6 +30,7 @@ static Elocation_Address *addr_geocode = NULL;
 static Elocation_Position *pos_geocode = NULL;
 static Elocation_Velocity *velocity = NULL;
 static int *status = 0;
+static char nmea_sentence[256];
 
 int _elocation_log_dom = -1;
 
@@ -40,10 +42,9 @@ EAPI int ELOCATION_EVENT_ADDRESS;
 EAPI int ELOCATION_EVENT_VELOCITY;
 EAPI int ELOCATION_EVENT_GEOCODE;
 EAPI int ELOCATION_EVENT_REVERSEGEOCODE;
+EAPI int ELOCATION_EVENT_NMEA;
 
 /* FIXME: Signatures of Tizen interfaces
- * Nmea: Method GetNmea()->(is) timestamp, nmea_data
- * Nmea: Signal NmeaChanged->(is) timestamp, nmea_data
  * Satellite: Method GetSatellite()->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
  * Satellite: Method GetLastSatellite()->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
  * Satellite: Signal SatelliteChanged->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
@@ -414,6 +415,49 @@ velocity_signal_cb(void *data, const EDBus_Message *reply)
 }
 
 static Eina_Bool
+unmarshall_nmea(const EDBus_Message *reply)
+{
+   int32_t timestamp = 0;
+
+   if (!edbus_message_arguments_get(reply, "is", &timestamp, &nmea_sentence))
+     return EINA_FALSE;
+
+   return EINA_TRUE;
+}
+
+static void
+nmea_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
+   if (!unmarshall_nmea(reply))
+     {
+        ERR("Error: Unable to unmarshall nmea");
+        return;
+     }
+
+   ecore_event_add(ELOCATION_EVENT_NMEA, nmea_sentence, _dummy_free, NULL);
+}
+
+static void
+nmea_signal_cb(void *data, const EDBus_Message *reply)
+{
+   if (!unmarshall_nmea(reply))
+     {
+        ERR("Error: Unable to unmarshall nmea");
+        return;
+     }
+
+   ecore_event_add(ELOCATION_EVENT_NMEA, nmea_sentence, _dummy_free, NULL);
+}
+
+static Eina_Bool
 unmarshall_position(const EDBus_Message *reply)
 {
    GeocluePositionFields fields;
@@ -640,6 +684,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   meta_nmea = edbus_proxy_get(obj_meta, GEOCLUE_NMEA_IFACE);
+   if (!meta_nmea)
+     {
+        ERR("Error: could not get proxy for nmea");
+        return;
+     }
+
    /* Send Geoclue a set of requirements we have for the provider and start the address and position
     * meta provider afterwards. After this we should be ready for operation. */
    updates = EINA_FALSE; /* Especially the web providers do not offer updates */
@@ -698,6 +749,12 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   if (!edbus_proxy_call(meta_nmea, "GetNmea", nmea_cb, NULL, -1, ""))
+     {
+        ERR("Error: could not call GetNmea");
+        return;
+     }
+
    if (!edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_address_provider_info_cb, NULL, -1, ""))
      {
         ERR("Error: could not call GetAddressProvider");
@@ -714,6 +771,7 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    edbus_proxy_signal_handler_add(meta_position, "PositionChanged", position_signal_cb, NULL);
    edbus_proxy_signal_handler_add(meta_geoclue, "StatusChanged", status_signal_cb, NULL);
    edbus_proxy_signal_handler_add(meta_velocity, "VelocityChanged", velocity_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_nmea, "NmeaChanged", nmea_signal_cb, NULL);
 }
 
 static void
@@ -967,6 +1025,9 @@ elocation_init()
 
    if (ELOCATION_EVENT_REVERSEGEOCODE == 0)
       ELOCATION_EVENT_REVERSEGEOCODE = ecore_event_type_new();
+
+   if (ELOCATION_EVENT_NMEA == 0)
+      ELOCATION_EVENT_NMEA = ecore_event_type_new();
 
    obj_master= edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
    if (!obj_master)
