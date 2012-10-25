@@ -13,6 +13,12 @@ my_win_del(void *data, Evas_Object *obj, void *event_info)
    elm_exit(); /* exit the program's main loop that runs in elm_run() */
 }
 
+static void
+_edje_tb_mouse_down_cb(void *data, Evas *e EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+{
+   evas_object_focus_set(data, EINA_TRUE);
+}
+
 static char *
 _buf_append(char *buf, const char *str, int *len, int *alloc)
 {
@@ -223,7 +229,7 @@ main(int argc, char *argv[])
         else if (!strcmp(type, "edje"))
           {
              edje_object_part_text_set(tb, "elm.text", buf);
-             evas_object_focus_set(tb, EINA_TRUE);
+             evas_object_event_callback_add(tb, EVAS_CALLBACK_MOUSE_DOWN, _edje_tb_mouse_down_cb, tb);
           }
         else if (!strcmp(type, "elm"))
           {
