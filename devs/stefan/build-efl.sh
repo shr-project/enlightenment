@@ -61,10 +61,11 @@ do_build_and_install()
 	echo "Building $e"
 	echo
 	case $e in
-	eina)
-#		flags="--enable-debug-threads"
+	efl)
+		flags="--enable-tests"
 		;;
 	evas)
+		flags="--enable-tests"
 #		flags="--enable-gl-x11 --enable-gl-xlib --enable-software-xcb"
 		;;
 	ecore)
