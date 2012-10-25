@@ -1,3 +1,24 @@
+/**
+ * @brief Elocation Library
+ *
+ * @mainpage Elocation
+ * @version 0.0.0
+ * @author Stefan Schmidt <stefan@datenfreihafen.org>
+ * @date 2012
+ *
+ * @section intro Elocation Use Cases
+ *
+ * Elocation is meant as a convenience library to ease application developers
+ * the usage of geo information in their apps. Adding a geo tag to a picture or
+ * translating an address to a GPS position and show it on a map widget.
+ *
+ * Currently it offer the following functionality:
+ * @li Request current address in textual form
+ * @li Request current position in GPS format
+ * @li Translate a position into and address or an address in a position
+ *
+ * You can fidn the API documentation at @ref Location
+*/
 #ifndef _ELOCATION_H
 #define _ELOCATION_H
 
@@ -37,8 +58,14 @@
 #include <EDBus.h>
 
 /**
- * @defgroup Location_Events Available location events
- * @brief Location events that are emitted from the library
+ * @file Elocation.h
+ *
+ * @defgroup Location Location
+ */
+
+/**
+ * @ingroup Location
+ * @brief Available location events that are emitted from the library
  * @since 1.8
  *
  * Ecore events emitted by the library. Applications can register ecore event
@@ -54,11 +81,13 @@ EAPI extern int ELOCATION_EVENT_REVERSEGEOCODE; /**< Reply for geocode translati
 /**@}*/
 
 /**
+ * @ingroup Location
  * @typedef Elocation_Accuracy_Level
  * @since 1.8
  *
  * Different location accuracy levels from country level up to detailed,
  * e.g. GPS, information.
+ * @{
  */
 typedef enum {
    ELOCATION_ACCURACY_LEVEL_NONE = 0,
@@ -69,14 +98,17 @@ typedef enum {
    ELOCATION_ACCURACY_LEVEL_STREET,
    ELOCATION_ACCURACY_LEVEL_DETAILED,
 } Elocation_Accuracy_Level;
+/**@}*/
 
 /**
+ * @ingroup Location
  * @typedef Elocation_Resource_Flags
  * @since 1.8
  *
  * Flags for available system resources to be used for locating. So far they
  * cover physical resources like network connection, cellular network
  * connection and GPS.
+ * @{
  */
 typedef enum {
    ELOCATION_RESOURCE_NONE = 0,
@@ -86,8 +118,10 @@ typedef enum {
 
    ELOCATION_RESOURCE_ALL = (1 << 10) - 1 /**< All resources are available */
 } Elocation_Resource_Flags;
+/**@}*/
 
 /**
+ * @ingroup Location
  * @typedef Elocation_Accuracy
  * @since 1.8
  *
@@ -102,6 +136,7 @@ typedef struct _Elocation_Accuracy
 } Elocation_Accuracy;
 
 /**
+ * @ingroup Location
  * @typedef Elocation_Address
  * @since 1.8
  *
@@ -122,6 +157,7 @@ typedef struct _Elocation_Address
 } Elocation_Address;
 
 /**
+ * @ingroup Location
  * @typedef Elocation_Position
  * @since 1.8
  *
@@ -137,6 +173,7 @@ typedef struct _Elocation_Postion
 } Elocation_Position;
 
 /**
+ * @ingroup Location
  * @typedef Elocation_Velocity
  * @since 1.8
  *
@@ -154,6 +191,7 @@ typedef struct _Elocation_Velocity
 } Elocation_Velocity;
 
 /**
+ * @ingroup Location
  * @typedef Elocation_Requirements
  * @since 1.8
  *
@@ -177,6 +215,7 @@ typedef struct _Elocation_Requirements
  * all other elocation functions. Once finished with it it need to be destroyed
  * with a call to #elocation_address_free.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Elocation_Address *elocation_address_new();
@@ -188,6 +227,7 @@ EAPI Elocation_Address *elocation_address_new();
  * Destroys an address object created with #elocation_address_new. Should be
  * used during the cleanup of the application.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI void elocation_address_free(Elocation_Address *address);
@@ -200,6 +240,7 @@ EAPI void elocation_address_free(Elocation_Address *address);
  * all other elocation functions. Once finished with it it need to be destroyed
  * with a call to #elocation_address_free.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Elocation_Position *elocation_position_new();
@@ -211,6 +252,7 @@ EAPI Elocation_Position *elocation_position_new();
  * Destroys a position object created with #elocation_address_new. Should be
  * used during the cleanup of the application.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI void elocation_position_free(Elocation_Position *position);
@@ -226,6 +268,7 @@ EAPI void elocation_position_free(Elocation_Position *position);
  * #ELOCATION_EVENT_ADDRESS ecore event which will have the address object as
  * event.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_address_get(Elocation_Address *address);
@@ -241,6 +284,7 @@ EAPI Eina_Bool elocation_address_get(Elocation_Address *address);
  * #ELOCATION_EVENT_POSITION ecore event which will have the position object as
  * event.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_position_get(Elocation_Position *position);
@@ -250,6 +294,7 @@ EAPI Eina_Bool elocation_position_get(Elocation_Position *position);
  * @param status Status
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_status_get(int *status);
@@ -259,6 +304,7 @@ EAPI Eina_Bool elocation_status_get(int *status);
  * @param requirements Requirements
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_requirements_set(Elocation_Requirements *requirements);
@@ -269,6 +315,7 @@ EAPI Eina_Bool elocation_requirements_set(Elocation_Requirements *requirements);
  * @param address_shadow Address output
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow);
@@ -279,6 +326,7 @@ EAPI Eina_Bool elocation_position_to_address(Elocation_Position *position_shadow
  * @param position_shadow Position output
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow);
@@ -289,6 +337,7 @@ EAPI Eina_Bool elocation_address_to_position(Elocation_Address *address_shadow, 
  * @param position_shadow Position output
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow);
