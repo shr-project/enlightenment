@@ -1,7 +1,11 @@
++: Done
+
 [devs]
   - add images
   - arrange TODO list
 
 [elementary]
-  - panel: add access feature
-  - toolbar: fix focus chain on access
+  + panel: add access feature
+  + toolbar: fix focus chain on access
+  - naviframe: access enhancement
+  - clock: add access feature
