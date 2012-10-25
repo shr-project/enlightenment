@@ -37,7 +37,7 @@ efenniht-light.edj: $(COMMON_EDCS) $(E_EDCS) $(IMAGES) Makefile
 		$(BUILDDIR)/efenniht-light.edj
 
 elm-efenniht.edj: $(COMMON_EDCS) $(ELM_EDCS) $(IMAGES) Makefile
-	$(EDJE_CC) -id images/ -id ../../elementary/data/themes/ \
+	$(EDJE_CC) -id images/ -id ../../elementary/data/themes/images/ \
 		$(SRCDIR)/elm-efenniht.edc \
 		$(BUILDDIR)/elm-efenniht.edj
 
