@@ -62,13 +62,20 @@ extern int _elocation_log_dom;
 #define GEOCLUE_MASTER_IFACE "org.freedesktop.Geoclue.Master"
 #define GEOCLUE_MASTERCLIENT_IFACE "org.freedesktop.Geoclue.MasterClient"
 
-/* Provider interfaces to access location data*/
+/* Provider interfaces to access location data */
 #define GEOCLUE_GEOCLUE_IFACE "org.freedesktop.Geoclue"
 #define GEOCLUE_POSITION_IFACE "org.freedesktop.Geoclue.Position"
 #define GEOCLUE_ADDRESS_IFACE "org.freedesktop.Geoclue.Address"
 #define GEOCLUE_VELOCITY_IFACE "org.freedesktop.Geoclue.Velocity"
 #define GEOCLUE_GEOCODE_IFACE "org.freedesktop.Geoclue.Geocode"
 #define GEOCLUE_REVERSEGEOCODE_IFACE "org.freedesktop.Geoclue.ReverseGeocode"
+
+/* More provider interfaces. These three are not in upstream geoclue but only
+ * in the Tizen version. Lets hope they get upstream at some point. Right now
+ * we will test at runtime if they are offered and ignore them if not  */
+#define GEOCLUE_NMEA_IFACE "org.freedesktop.Geoclue.Nmea"
+#define GEOCLUE_SATELLITE_IFACE "org.freedesktop.Geoclue.Satellite"
+#define GEOCLUE_POI_IFACE "org.freedesktop.Geoclue.Poi"
 
 #define GEOCLUE_ADDRESS_KEY_AREA "area"
 #define GEOCLUE_ADDRESS_KEY_COUNTRY "country"

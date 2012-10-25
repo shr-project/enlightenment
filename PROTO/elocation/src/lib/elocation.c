@@ -41,6 +41,15 @@ EAPI int ELOCATION_EVENT_VELOCITY;
 EAPI int ELOCATION_EVENT_GEOCODE;
 EAPI int ELOCATION_EVENT_REVERSEGEOCODE;
 
+/* FIXME: Signatures of Tizen interfaces
+ * Nmea: Method GetNmea()->(is) timestamp, nmea_data
+ * Nmea: Signal NmeaChanged->(is) timestamp, nmea_data
+ * Satellite: Method GetSatellite()->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
+ * Satellite: Method GetLastSatellite()->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
+ * Satellite: Signal SatelliteChanged->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
+ * Poi: Method SearchByPosition(sssidddd)->(ia(iiddddddsssssssssss) keyword, lang, country_code, limit, left, top, right, bottom -> count, landmark
+ */
+
 static void
 _dummy_free(void *user_data, void *func_data)
 {
