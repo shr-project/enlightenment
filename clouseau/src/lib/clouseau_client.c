@@ -300,7 +300,7 @@ _connect_to_daemon(void)
 EAPI int
 elm_init(int argc, char **argv)
 {
-   int (*_elm_init)(int, char **) = dlsym(RTLD_NEXT, "elm_init");
+   int (*_elm_init)(int, char **) = dlsym(RTLD_NEXT, __func__);
 
    if (!_elm_is_init)
      {
@@ -317,8 +317,7 @@ elm_init(int argc, char **argv)
 EAPI void
 ecore_main_loop_begin(void)
 {
-   void (*_ecore_main_loop_begin)(void) =
-      dlsym(RTLD_NEXT, "ecore_main_loop_begin");
+   void (*_ecore_main_loop_begin)(void) = dlsym(RTLD_NEXT, __func__);
 
    if (!_elm_is_init)
      {
@@ -348,7 +347,7 @@ evas_object_new(Evas *e)
 {
    Eina_Lock_Bt_Func lock_bt[EINA_LOCK_DEBUG_BT_NUM];
    int lock_bt_num;
-   Evas_Object *(*_evas_object_new)(Evas *e) = dlsym(RTLD_NEXT, "evas_object_new");
+   Evas_Object *(*_evas_object_new)(Evas *e) = dlsym(RTLD_NEXT, __func__);
    Eina_Strbuf *str;
    Evas_Object *r;
    char **strings;
@@ -376,7 +375,7 @@ evas_object_new(Evas *e)
 EAPI void
 evas_object_free(Evas_Object *obj, int clean_layer)
 {
-   void (*_evas_object_free)(Evas_Object *obj, int clean_layer) = dlsym(RTLD_NEXT, "evas_object_free");
+   void (*_evas_object_free)(Evas_Object *obj, int clean_layer) = dlsym(RTLD_NEXT, __func__);
    const char *tmp;
 
    tmp = evas_object_data_get(obj, ".clouseau.bt");
