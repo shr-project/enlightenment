@@ -683,7 +683,7 @@ chat_window_chat_new(Contact *c, Chat_Window *cw, Eina_Bool focus)
 
    obj = elm_object_content_get(cw->pager);
    elm_naviframe_item_simple_push(cw->pager, panes);
-   if (focus)
+   if (focus || (eina_list_count(cw->contacts) == 1))
      {
         elm_win_title_set(cw->win, contact_name_get(c));
         elm_toolbar_item_selected_set(c->chat_tb_item, EINA_TRUE);
