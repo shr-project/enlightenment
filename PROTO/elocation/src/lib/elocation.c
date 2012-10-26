@@ -25,6 +25,7 @@ static EDBus_Proxy *meta_nmea = NULL;
 static EDBus_Proxy *meta_satellite = NULL;
 static EDBus_Proxy *geonames_geocode = NULL;
 static EDBus_Proxy *geonames_rgeocode = NULL;
+static EDBus_Proxy *master_poi = NULL;
 static Elocation_Address *address = NULL;
 static Elocation_Position *position = NULL;
 static Elocation_Address *addr_geocode = NULL;
@@ -45,10 +46,7 @@ EAPI int ELOCATION_EVENT_GEOCODE;
 EAPI int ELOCATION_EVENT_REVERSEGEOCODE;
 EAPI int ELOCATION_EVENT_NMEA;
 EAPI int ELOCATION_EVENT_SATELLITE;
-
-/* FIXME: Signatures of Tizen interfaces
- * Poi: Method SearchByPosition(sssidddd)->(ia(iiddddddsssssssssss) keyword, lang, country_code, limit, left, top, right, bottom -> count, landmark
- */
+EAPI int ELOCATION_EVENT_POI;
 
 static void
 _dummy_free(void *user_data, void *func_data)
@@ -205,6 +203,42 @@ rgeocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    addr_geocode->accur->horizontal = horizontal;
    addr_geocode->accur->vertical = vertical;
    ecore_event_add(ELOCATION_EVENT_REVERSEGEOCODE, addr_geocode, _dummy_free, NULL);
+}
+
+static void
+poi_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   int32_t count, id, rank;
+   double lat, lon, bound_left, bound_top, bound_right, bound_bottom;
+   const char *name, *icon, *house, *road, *village, *suburb, *postcode;
+   const char *city, *county, *country, *country_code;
+   EDBus_Message_Iter *array, *struct_landmark;
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
+   if (!edbus_message_arguments_get(reply, "ia(iiddddddsssssssssss", &count ,&array))
+     return;
+
+   /* TODO re-check that the parameter ordering is what we expect */
+   while (edbus_message_iter_get_and_next(array, 'r', &struct_landmark))
+     {
+        edbus_message_iter_arguments_get(struct_landmark, "iiddddddsssssssssss", &id, &rank,
+                                         &lat, &lon, &bound_left, &bound_top, &bound_right,
+                                         &bound_bottom, &name, &icon, &house, &road,
+                                         &village, &suburb, &postcode, &city, &county,
+                                         &country, &country_code);
+        DBG("Landmark received: %i, %i, %f, %f, %f, %f, %f, %f, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,",
+                                         id, rank, lat, lon, bound_left, bound_top, bound_right,
+                                         bound_bottom, name, icon, house, road, village,
+                                         suburb, postcode, city, county, country, country_code);
+     }
+
+   ecore_event_add(ELOCATION_EVENT_POI, NULL, _dummy_free, NULL);
 }
 
 static void
@@ -892,6 +926,35 @@ _name_owner_changed(void *data, const char *bus, const char *old, const char *ne
      }
 }
 
+Eina_Bool
+elocation_landmarks_get(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
+{
+   EDBus_Message *msg;
+   EDBus_Message_Iter *iter;
+   const char *keyword, *lang, *country_code;
+   int limit;
+   double left, top, right, bottom;
+
+   msg = edbus_proxy_method_call_new(master_poi, "SearchByPosition");
+   iter = edbus_message_iter_get(msg);
+   edbus_message_iter_basic_append(iter, 's', keyword);
+   edbus_message_iter_basic_append(iter, 's', lang);
+   edbus_message_iter_basic_append(iter, 's', country_code);
+   edbus_message_iter_basic_append(iter, 'i', limit);
+   edbus_message_iter_basic_append(iter, 'd', left);
+   edbus_message_iter_basic_append(iter, 'd', top);
+   edbus_message_iter_basic_append(iter, 'd', right);
+   edbus_message_iter_basic_append(iter, 'd', bottom);
+   if (!edbus_proxy_send(master_poi, msg, poi_cb, NULL, -1))
+     {
+        ERR("Error: could not call SearchByPosition");
+        return EINA_FALSE;
+     }
+   edbus_message_unref(msg);
+
+   return EINA_TRUE;
+}
+
 EAPI Eina_Bool
 elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
 {
@@ -1129,6 +1192,9 @@ elocation_init()
    if (ELOCATION_EVENT_SATELLITE == 0)
       ELOCATION_EVENT_SATELLITE = ecore_event_type_new();
 
+   if (ELOCATION_EVENT_POI == 0)
+      ELOCATION_EVENT_POI = ecore_event_type_new();
+
    obj_master= edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
    if (!obj_master)
      {
@@ -1151,10 +1217,17 @@ elocation_init()
 
    /* Geocode and reverse geocode never show up as meta provider. Still we want
     * to be able to convert so we keep them around directly here. */
-   obj_geonames= edbus_object_get(conn, GEONAMES_DBUS_NAME, GEONAMES_OBJECT_PATH);
+   obj_geonames = edbus_object_get(conn, GEONAMES_DBUS_NAME, GEONAMES_OBJECT_PATH);
    if (!obj_geonames)
      {
         ERR("Error: could not get object for geonames");
+        return EXIT_FAILURE;
+     }
+
+   master_poi = edbus_proxy_get(obj_master, GEOCLUE_POI_IFACE);
+   if (!master_poi)
+     {
+        ERR("Error: could not get proxy");
         return EXIT_FAILURE;
      }
 

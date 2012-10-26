@@ -80,6 +80,7 @@ EAPI extern int ELOCATION_EVENT_GEOCODE; /**< Reply for geocode translation arri
 EAPI extern int ELOCATION_EVENT_REVERSEGEOCODE; /**< Reply for geocode translation arrived */
 EAPI extern int ELOCATION_EVENT_NMEA; /**< NMEA update */
 EAPI extern int ELOCATION_EVENT_SATELLITE; /**< Satellite info changed */
+EAPI extern int ELOCATION_EVENT_POI; /**< POI reply */
 /**@}*/
 
 /**
