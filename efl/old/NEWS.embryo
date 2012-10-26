@@ -1,0 +1,53 @@
+Embryo 1.8.0
+
+Changes since Embryo 1.7.0:
+---------------------------
+
+Fixes:
+
+    * Fix windows utf8 shitepsace parse issue.
+
+Changes since Embryo 1.2.0:
+---------------------------
+
+Fixes:
+
+    * Fix divide by 0 n FP support to avoid FPE.
+
+Changes since Embryo 1.1.0:
+---------------------------
+
+Additions:
+
+    * exotic support
+    * asin()
+    * acos()
+    * atan()
+    * atan2()
+    * log1p()
+    * cbrt()
+    * exp(),
+    * exp2()
+    * hypot()
+    * EMBRYO_12
+    
+Fixes:
+
+    * windows compilation support
+
+Improvements:
+
+    * exotic support
+    
+Changes since Embryo 1.0.0:
+---------------------------
+
+Fixes:
+
+    * on windows use fseek instead of rewind as rewind doesn't exist on wince
+    * delete tmp files on windows
+
+Improvements:
+
+    * make embryo_cc use eina_prefix to determine installation location
+
