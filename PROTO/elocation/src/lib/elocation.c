@@ -22,6 +22,7 @@ static EDBus_Proxy *meta_position = NULL;
 static EDBus_Proxy *meta_masterclient = NULL;
 static EDBus_Proxy *meta_velocity = NULL;
 static EDBus_Proxy *meta_nmea = NULL;
+static EDBus_Proxy *meta_satellite = NULL;
 static EDBus_Proxy *geonames_geocode = NULL;
 static EDBus_Proxy *geonames_rgeocode = NULL;
 static Elocation_Address *address = NULL;
@@ -43,11 +44,9 @@ EAPI int ELOCATION_EVENT_VELOCITY;
 EAPI int ELOCATION_EVENT_GEOCODE;
 EAPI int ELOCATION_EVENT_REVERSEGEOCODE;
 EAPI int ELOCATION_EVENT_NMEA;
+EAPI int ELOCATION_EVENT_SATELLITE;
 
 /* FIXME: Signatures of Tizen interfaces
- * Satellite: Method GetSatellite()->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
- * Satellite: Method GetLastSatellite()->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
- * Satellite: Signal SatelliteChanged->(iiiaia(iiii)) timestamp, satellite_used, satellite_visible, used_prn, sat_info
  * Poi: Method SearchByPosition(sssidddd)->(ia(iiddddddsssssssssss) keyword, lang, country_code, limit, left, top, right, bottom -> count, landmark
  */
 
@@ -458,6 +457,84 @@ nmea_signal_cb(void *data, const EDBus_Message *reply)
 }
 
 static Eina_Bool
+unmarshall_satellite(const EDBus_Message *reply)
+{
+   int32_t timestamp = 0, satellite_used = 0, satellite_visible = 0;
+   int32_t snr = 0, elevation = 0, azimuth = 0, prn = 0, used_prn = 0;
+   EDBus_Message_Iter *sub_prn, *sub_info, *struct_info;
+
+   if (!edbus_message_arguments_get(reply, "iiiaia(iiii)", &timestamp, &satellite_used,
+                                    &satellite_visible, &sub_prn, &sub_info))
+     return EINA_FALSE;
+
+   while (edbus_message_iter_get_and_next(sub_prn, 'i', &used_prn))
+     {
+       DBG("Satellite used PRN %i", used_prn);
+     }
+
+   /* TODO re-check that the parameter ordering is what we expect */
+   while (edbus_message_iter_get_and_next(sub_info, 'r', &struct_info))
+     {
+        edbus_message_iter_arguments_get(struct_info, "iiii", &prn, &elevation, &azimuth, &snr);
+        DBG("Satellite info %i, %i, %i, %i", prn, elevation, azimuth, snr);
+     }
+
+   return EINA_TRUE;
+}
+
+static void
+satellite_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
+   if (!unmarshall_satellite(reply))
+     {
+        ERR("Error: Unable to unmarshall satellite");
+        return;
+     }
+
+   ecore_event_add(ELOCATION_EVENT_SATELLITE, NULL, _dummy_free, NULL);
+}
+
+static void
+last_satellite_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
+{
+   const char *err, *errmsg;
+
+   if (edbus_message_error_get(reply, &err, &errmsg))
+     {
+        ERR("Error: %s %s", err, errmsg);
+        return;
+     }
+
+   if (!unmarshall_satellite(reply))
+     {
+        ERR("Error: Unable to unmarshall last satellite");
+        return;
+     }
+
+   ecore_event_add(ELOCATION_EVENT_SATELLITE, NULL, _dummy_free, NULL);
+}
+
+static void
+satellite_signal_cb(void *data, const EDBus_Message *reply)
+{
+   if (!unmarshall_satellite(reply))
+     {
+        ERR("Error: Unable to unmarshall satellite");
+        return;
+     }
+
+   ecore_event_add(ELOCATION_EVENT_SATELLITE, NULL, _dummy_free, NULL);
+}
+
+static Eina_Bool
 unmarshall_position(const EDBus_Message *reply)
 {
    GeocluePositionFields fields;
@@ -691,6 +768,13 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   meta_satellite = edbus_proxy_get(obj_meta, GEOCLUE_SATELLITE_IFACE);
+   if (!meta_satellite)
+     {
+        ERR("Error: could not get proxy for satellite");
+        return;
+     }
+
    /* Send Geoclue a set of requirements we have for the provider and start the address and position
     * meta provider afterwards. After this we should be ready for operation. */
    updates = EINA_FALSE; /* Especially the web providers do not offer updates */
@@ -755,6 +839,18 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   if (!edbus_proxy_call(meta_satellite, "GetSatellite", satellite_cb, NULL, -1, ""))
+     {
+        ERR("Error: could not call GetSatellite");
+        return;
+     }
+
+   if (!edbus_proxy_call(meta_satellite, "GetLastSatellite", last_satellite_cb, NULL, -1, ""))
+     {
+        ERR("Error: could not call GetLastSatellite");
+        return;
+     }
+
    if (!edbus_proxy_call(meta_masterclient, "GetAddressProvider", meta_address_provider_info_cb, NULL, -1, ""))
      {
         ERR("Error: could not call GetAddressProvider");
@@ -772,6 +868,7 @@ create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    edbus_proxy_signal_handler_add(meta_geoclue, "StatusChanged", status_signal_cb, NULL);
    edbus_proxy_signal_handler_add(meta_velocity, "VelocityChanged", velocity_signal_cb, NULL);
    edbus_proxy_signal_handler_add(meta_nmea, "NmeaChanged", nmea_signal_cb, NULL);
+   edbus_proxy_signal_handler_add(meta_satellite, "SatelliteChanged", satellite_signal_cb, NULL);
 }
 
 static void
@@ -1028,6 +1125,9 @@ elocation_init()
 
    if (ELOCATION_EVENT_NMEA == 0)
       ELOCATION_EVENT_NMEA = ecore_event_type_new();
+
+   if (ELOCATION_EVENT_SATELLITE == 0)
+      ELOCATION_EVENT_SATELLITE = ecore_event_type_new();
 
    obj_master= edbus_object_get(conn, GEOCLUE_DBUS_NAME, GEOCLUE_OBJECT_PATH);
    if (!obj_master)
