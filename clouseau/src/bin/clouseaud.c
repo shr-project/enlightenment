@@ -73,7 +73,7 @@ _daemon_cleanup(void)
 
 void daemonize(void)
 {
-   int i,lfp;
+   int i,lfp, ret;
    char str[10];
    time_t currentTime;
 
@@ -87,15 +87,16 @@ void daemonize(void)
    /* child (daemon) continues */
    setsid(); /* obtain a new process group */
    for (i=getdtablesize();i>=0;--i) close(i); /* close all descriptors */
-   i=open("/dev/null",O_RDWR); dup(i); dup(i); /* handle standart I/O */
+   i=open("/dev/null",O_RDWR);
+   ret = dup(i); ret = dup(i); /* handle standart I/O */
    umask(027); /* set newly created file permissions */
-   chdir(RUNNING_DIR); /* change running directory */
+   ret = chdir(RUNNING_DIR); /* change running directory */
    lfp=open(LOCK_FILE,O_RDWR|O_CREAT,0640);
    if (lfp<0) exit(1); /* can not open */
    if (lockf(lfp,F_TLOCK,0)<0) exit(0); /* can not lock */
    /* first instance continues */
    sprintf(str,"%d\n",getpid());
-   write(lfp,str,strlen(str)); /* record pid to lockfile */
+   ret = write(lfp,str,strlen(str)); /* record pid to lockfile */
    signal(SIGCHLD,SIG_IGN); /* ignore child */
    signal(SIGTSTP,SIG_IGN); /* ignore tty signals */
    signal(SIGTTOU,SIG_IGN);
