@@ -177,6 +177,7 @@ clouseau_object_information_get(Clouseau_Tree_Item *treeit)
    oinfo = calloc(1, sizeof(Clouseau_Object));
 
    oinfo->evas_props.pass_events = evas_object_pass_events_get(obj);
+   oinfo->evas_props.repeat_events = evas_object_repeat_events_get(obj);
    oinfo->evas_props.has_focus = evas_object_focus_get(obj);
    oinfo->evas_props.is_visible = evas_object_visible_get(obj);
    oinfo->evas_props.name = eina_stringshare_add(evas_object_name_get(obj));
@@ -514,6 +515,8 @@ clouseau_object_information_list_populate(Clouseau_Tree_Item *treeit, Evas_Objec
 
    _clouseau_information_bool_to_tree(main_tit, "Pass events",
                                       oinfo->evas_props.pass_events);
+   _clouseau_information_bool_to_tree(main_tit, "Repeat events",
+                                      oinfo->evas_props.repeat_events);
    _clouseau_information_bool_to_tree(main_tit, "Has clipees",
                                       oinfo->evas_props.is_clipper);
 

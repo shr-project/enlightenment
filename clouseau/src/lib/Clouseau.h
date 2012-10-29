@@ -63,6 +63,7 @@ struct _Clouseau_Evas_Props
    double weight_x, weight_y;
    int r, g, b, a;
    Eina_Bool pass_events;
+   Eina_Bool repeat_events;
    Eina_Bool has_focus;
    Eina_Bool is_clipper;
    Eina_Bool is_visible;
