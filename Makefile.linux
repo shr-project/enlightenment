@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for linux at Tue Oct 23 15:55:59 2012.
+# Generated for linux at Mon Oct 29 09:58:01 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.linux linux
@@ -9,22 +9,21 @@
 #   - evas
 #   - ecore
 #   - eio
+#   - edje
 #   - e_dbus
 #   - efreet
 #   - eeze
+#   - emotion
+#   - elementary
+#   - terminology
+#   - e
+#   - clouseau
 #   - efx
 #   - edbus
 #   - python-evas
 #   - python-ecore
-#   - python-e_dbus
-#   - embryo
-#   - edje
-#   - elementary
-#   - e
-#   - clouseau
 #   - python-edje
-#   - emotion
-#   - terminology
+#   - python-e_dbus
 
 SRCROOT = $(shell pwd)
 BUILDROOT = $(shell pwd)/build
@@ -33,7 +32,7 @@ MAKEOPTS = --print-directory -j2
 V=@
 
 .DEFAULT: missing-target
-.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile e_dbus-compile e_dbus-clean e_dbus-dependencies e_dbus-install e_dbus-test e_dbus-doc e_dbus-distcheck e_dbus-all-users-compile e_dbus-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile eeze-compile eeze-clean eeze-dependencies eeze-install eeze-test eeze-doc eeze-distcheck eeze-all-users-compile eeze-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile edbus-compile edbus-clean edbus-dependencies edbus-install edbus-test edbus-doc edbus-distcheck edbus-all-users-compile edbus-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile python-e_dbus-compile python-e_dbus-clean python-e_dbus-dependencies python-e_dbus-install python-e_dbus-test python-e_dbus-doc python-e_dbus-distcheck python-e_dbus-all-users-compile python-e_dbus-direct-users-compile embryo-compile embryo-clean embryo-dependencies embryo-install embryo-test embryo-doc embryo-distcheck embryo-all-users-compile embryo-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile e-compile e-clean e-dependencies e-install e-test e-doc e-distcheck e-all-users-compile e-direct-users-compile clouseau-compile clouseau-clean clouseau-dependencies clouseau-install clouseau-test clouseau-doc clouseau-distcheck clouseau-all-users-compile clouseau-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile
+.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile e_dbus-compile e_dbus-clean e_dbus-dependencies e_dbus-install e_dbus-test e_dbus-doc e_dbus-distcheck e_dbus-all-users-compile e_dbus-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile eeze-compile eeze-clean eeze-dependencies eeze-install eeze-test eeze-doc eeze-distcheck eeze-all-users-compile eeze-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile e-compile e-clean e-dependencies e-install e-test e-doc e-distcheck e-all-users-compile e-direct-users-compile clouseau-compile clouseau-clean clouseau-dependencies clouseau-install clouseau-test clouseau-doc clouseau-distcheck clouseau-all-users-compile clouseau-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile edbus-compile edbus-clean edbus-dependencies edbus-install edbus-test edbus-doc edbus-distcheck edbus-all-users-compile edbus-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile python-e_dbus-compile python-e_dbus-clean python-e_dbus-dependencies python-e_dbus-install python-e_dbus-test python-e_dbus-doc python-e_dbus-distcheck python-e_dbus-all-users-compile python-e_dbus-direct-users-compile
 
 missing-target:
 	@echo "Missing target."
@@ -64,14 +63,14 @@ help:
 	@echo "   PACKAGE-direct-users-compile compile all direct users of package."
 	@echo ""
 	@echo "Known packages:"
-	@echo "   efl evas ecore eio e_dbus efreet eeze efx edbus python-evas python-ecore python-e_dbus embryo edje elementary e clouseau python-edje emotion terminology"
+	@echo "   efl evas ecore eio edje e_dbus efreet eeze emotion elementary terminology e clouseau efx edbus python-evas python-ecore python-edje python-e_dbus"
 	@echo ""
 
-all: efl-compile evas-compile ecore-compile eio-compile e_dbus-compile efreet-compile eeze-compile efx-compile edbus-compile python-evas-compile python-ecore-compile python-e_dbus-compile embryo-compile edje-compile elementary-compile e-compile clouseau-compile python-edje-compile emotion-compile terminology-compile
-clean: efl-clean evas-clean ecore-clean eio-clean e_dbus-clean efreet-clean eeze-clean efx-clean edbus-clean python-evas-clean python-ecore-clean python-e_dbus-clean embryo-clean edje-clean elementary-clean e-clean clouseau-clean python-edje-clean emotion-clean terminology-clean
-test: efl-test evas-test ecore-test eio-test e_dbus-test efreet-test eeze-test efx-test edbus-test python-evas-test python-ecore-test python-e_dbus-test embryo-test edje-test elementary-test e-test clouseau-test python-edje-test emotion-test terminology-test
-doc: efl-doc evas-doc ecore-doc eio-doc e_dbus-doc efreet-doc eeze-doc efx-doc edbus-doc python-evas-doc python-ecore-doc python-e_dbus-doc embryo-doc edje-doc elementary-doc e-doc clouseau-doc python-edje-doc emotion-doc terminology-doc
-distcheck: efl-distcheck evas-distcheck ecore-distcheck eio-distcheck e_dbus-distcheck efreet-distcheck eeze-distcheck efx-distcheck edbus-distcheck python-evas-distcheck python-ecore-distcheck python-e_dbus-distcheck embryo-distcheck edje-distcheck elementary-distcheck e-distcheck clouseau-distcheck python-edje-distcheck emotion-distcheck terminology-distcheck
+all: efl-compile evas-compile ecore-compile eio-compile edje-compile e_dbus-compile efreet-compile eeze-compile emotion-compile elementary-compile terminology-compile e-compile clouseau-compile efx-compile edbus-compile python-evas-compile python-ecore-compile python-edje-compile python-e_dbus-compile
+clean: efl-clean evas-clean ecore-clean eio-clean edje-clean e_dbus-clean efreet-clean eeze-clean emotion-clean elementary-clean terminology-clean e-clean clouseau-clean efx-clean edbus-clean python-evas-clean python-ecore-clean python-edje-clean python-e_dbus-clean
+test: efl-test evas-test ecore-test eio-test edje-test e_dbus-test efreet-test eeze-test emotion-test elementary-test terminology-test e-test clouseau-test efx-test edbus-test python-evas-test python-ecore-test python-edje-test python-e_dbus-test
+doc: efl-doc evas-doc ecore-doc eio-doc edje-doc e_dbus-doc efreet-doc eeze-doc emotion-doc elementary-doc terminology-doc e-doc clouseau-doc efx-doc edbus-doc python-evas-doc python-ecore-doc python-edje-doc python-e_dbus-doc
+distcheck: efl-distcheck evas-distcheck ecore-distcheck eio-distcheck edje-distcheck e_dbus-distcheck efreet-distcheck eeze-distcheck emotion-distcheck elementary-distcheck terminology-distcheck e-distcheck clouseau-distcheck efx-distcheck edbus-distcheck python-evas-distcheck python-ecore-distcheck python-edje-distcheck python-e_dbus-distcheck
 
 ########################################################################
 # efl rules
@@ -195,9 +194,9 @@ efl-distcheck: $(BUILDROOT)/efl/stamps/compile
 	touch $(BUILDROOT)/efl/stamps/distcheck
 	$(V)echo "Success checking distribution efl."
 
-efl-direct-users-compile: embryo-compile edje-compile edbus-compile efx-compile e-compile evas-compile eeze-compile efreet-compile e_dbus-compile eio-compile terminology-compile elementary-compile ecore-compile clouseau-compile emotion-compile
+efl-direct-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile evas-compile eeze-compile efreet-compile e_dbus-compile eio-compile elementary-compile ecore-compile clouseau-compile terminology-compile
 
-efl-all-users-compile: embryo-compile edje-compile edbus-compile efx-compile e-compile python-evas-compile evas-compile python-edje-compile eeze-compile python-e_dbus-compile efreet-compile e_dbus-compile eio-compile terminology-compile python-ecore-compile elementary-compile ecore-compile clouseau-compile emotion-compile
+efl-all-users-compile: edje-compile emotion-compile edbus-compile efx-compile e-compile python-evas-compile evas-compile python-edje-compile eeze-compile python-e_dbus-compile efreet-compile e_dbus-compile eio-compile python-ecore-compile elementary-compile ecore-compile clouseau-compile terminology-compile
 
 ########################################################################
 # evas rules
@@ -569,9 +568,136 @@ eio-distcheck: $(BUILDROOT)/eio/stamps/compile
 	touch $(BUILDROOT)/eio/stamps/distcheck
 	$(V)echo "Success checking distribution eio."
 
-eio-direct-users-compile: edje-compile emotion-compile
+eio-direct-users-compile: edje-compile emotion-compile elementary-compile
 
 eio-all-users-compile: edje-compile emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
+
+########################################################################
+# edje rules
+edje-dependencies: $(BUILDROOT)/edje/stamps/dependencies evas-install efl-install eio-install ecore-install
+$(BUILDROOT)/edje/stamps/dependencies: $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/eio/stamps/install $(BUILDROOT)/ecore/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/edje/stamps
+	touch $(BUILDROOT)/edje/stamps/dependencies
+
+edje-clean:
+	if test -d $(BUILDROOT)/edje/compile; then chmod -R u+w $(BUILDROOT)/edje/compile; fi
+	rm -fr $(BUILDROOT)/edje/compile
+	rm -fr $(BUILDROOT)/edje/stamps
+
+$(BUILDROOT)/edje/stamps/autogen: $(SRCROOT)/edje/autogen.sh $(SRCROOT)/edje/configure.ac
+	$(V)echo "Running 'autogen.sh' for edje..."
+	$(V)rm -f $(BUILDROOT)/edje/stamps/autogen
+	cd $(SRCROOT)/edje && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/edje/stamps
+	touch $(BUILDROOT)/edje/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for edje."
+
+$(BUILDROOT)/edje/stamps/configure: $(BUILDROOT)/edje/stamps/autogen $(BUILDROOT)/edje/stamps/dependencies
+	$(V)echo "Configuring edje..."
+	$(V)rm -f $(BUILDROOT)/edje/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/edje/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/edje/compile && \
+	$(SRCROOT)/edje/configure --prefix=$(INSTALLROOT) --enable-tests \
+		--enable-doc \
+		--enable-coverage
+	$(V)mkdir -p $(BUILDROOT)/edje/stamps
+	touch $(BUILDROOT)/edje/stamps/configure
+	$(V)echo "Success configuring edje."
+
+$(BUILDROOT)/edje/stamps/compile: $(BUILDROOT)/edje/stamps/configure edje-compile
+edje-compile: $(BUILDROOT)/edje/stamps/configure
+	$(V)echo "Compiling edje..."
+	$(V)rm -f $(BUILDROOT)/edje/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/edje/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/edje/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/edje/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/edje/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/edje/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/edje/compile;\
+	else\
+		echo "edje is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/edje/stamps/compile -o -f $(BUILDROOT)/edje/stamps/compile-updated; then\
+		touch $(BUILDROOT)/edje/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling edje."
+
+$(BUILDROOT)/edje/stamps/install: $(BUILDROOT)/edje/stamps/compile edje-install
+edje-install: $(BUILDROOT)/edje/stamps/compile
+	$(V)echo "Installing edje..."
+	$(V)if test ! -f $(BUILDROOT)/edje/stamps/install -o $(BUILDROOT)/edje/stamps/compile -nt $(BUILDROOT)/edje/stamps/install; then\
+		rm -f $(BUILDROOT)/edje/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/edje/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/edje/compile;\
+		mkdir -p $(BUILDROOT)/edje/stamps;\
+		touch $(BUILDROOT)/edje/stamps/install;\
+	else\
+		echo "edje did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing edje."
+
+$(BUILDROOT)/edje/stamps/test: $(BUILDROOT)/edje/stamps/compile edje-test
+edje-test: $(BUILDROOT)/edje/stamps/compile
+	$(V)echo "Testing (make coverage) edje..."
+	$(V)rm -f $(BUILDROOT)/edje/stamps/test
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) coverage -C $(BUILDROOT)/edje/compile
+	$(V)mkdir -p $(BUILDROOT)/edje/stamps
+	touch $(BUILDROOT)/edje/stamps/test
+	$(V)echo "Success testing (make coverage) edje."
+
+$(BUILDROOT)/edje/stamps/doc: $(BUILDROOT)/edje/stamps/compile edje-doc
+edje-doc: $(BUILDROOT)/edje/stamps/compile
+	$(V)echo "Generating documentation (make doc) edje..."
+	$(V)rm -f $(BUILDROOT)/edje/stamps/doc
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/edje/compile
+	$(V)mkdir -p $(BUILDROOT)/edje/stamps
+	touch $(BUILDROOT)/edje/stamps/doc
+	$(V)echo "Success generating documentation (make doc) edje."
+
+$(BUILDROOT)/edje/stamps/distcheck: $(BUILDROOT)/edje/stamps/compile edje-distcheck
+edje-distcheck: $(BUILDROOT)/edje/stamps/compile
+	$(V)echo "Checking distribution edje..."
+	$(V)rm -f $(BUILDROOT)/edje/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/edje/compile
+	$(V)mkdir -p $(BUILDROOT)/edje/stamps
+	touch $(BUILDROOT)/edje/stamps/distcheck
+	$(V)echo "Success checking distribution edje."
+
+edje-direct-users-compile: emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
+
+edje-all-users-compile: emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
 
 ########################################################################
 # e_dbus rules
@@ -691,9 +817,9 @@ e_dbus-distcheck: $(BUILDROOT)/e_dbus/stamps/compile
 	touch $(BUILDROOT)/e_dbus/stamps/distcheck
 	$(V)echo "Success checking distribution e_dbus."
 
-e_dbus-direct-users-compile: python-e_dbus-compile e-compile
+e_dbus-direct-users-compile: elementary-compile python-e_dbus-compile e-compile
 
-e_dbus-all-users-compile: e-compile python-e_dbus-compile
+e_dbus-all-users-compile: elementary-compile python-e_dbus-compile clouseau-compile e-compile terminology-compile
 
 ########################################################################
 # efreet rules
@@ -818,9 +944,9 @@ efreet-distcheck: $(BUILDROOT)/efreet/stamps/compile
 	touch $(BUILDROOT)/efreet/stamps/distcheck
 	$(V)echo "Success checking distribution efreet."
 
-efreet-direct-users-compile: e-compile terminology-compile
+efreet-direct-users-compile: elementary-compile e-compile terminology-compile
 
-efreet-all-users-compile: e-compile terminology-compile
+efreet-all-users-compile: elementary-compile clouseau-compile e-compile terminology-compile
 
 ########################################################################
 # eeze rules
@@ -940,7 +1066,615 @@ eeze-distcheck: $(BUILDROOT)/eeze/stamps/compile
 
 eeze-direct-users-compile: emotion-compile e-compile
 
-eeze-all-users-compile: emotion-compile e-compile terminology-compile
+eeze-all-users-compile: emotion-compile elementary-compile clouseau-compile e-compile terminology-compile
+
+########################################################################
+# emotion rules
+emotion-dependencies: $(BUILDROOT)/emotion/stamps/dependencies edje-install evas-install eeze-install efl-install ecore-install eio-install
+$(BUILDROOT)/emotion/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/eeze/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/eio/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
+	touch $(BUILDROOT)/emotion/stamps/dependencies
+
+emotion-clean:
+	if test -d $(BUILDROOT)/emotion/compile; then chmod -R u+w $(BUILDROOT)/emotion/compile; fi
+	rm -fr $(BUILDROOT)/emotion/compile
+	rm -fr $(BUILDROOT)/emotion/stamps
+
+$(BUILDROOT)/emotion/stamps/autogen: $(SRCROOT)/emotion/autogen.sh $(SRCROOT)/emotion/configure.ac
+	$(V)echo "Running 'autogen.sh' for emotion..."
+	$(V)rm -f $(BUILDROOT)/emotion/stamps/autogen
+	cd $(SRCROOT)/emotion && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
+	touch $(BUILDROOT)/emotion/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for emotion."
+
+$(BUILDROOT)/emotion/stamps/configure: $(BUILDROOT)/emotion/stamps/autogen $(BUILDROOT)/emotion/stamps/dependencies
+	$(V)echo "Configuring emotion..."
+	$(V)rm -f $(BUILDROOT)/emotion/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/emotion/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/emotion/compile && \
+	$(SRCROOT)/emotion/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
+	touch $(BUILDROOT)/emotion/stamps/configure
+	$(V)echo "Success configuring emotion."
+
+$(BUILDROOT)/emotion/stamps/compile: $(BUILDROOT)/emotion/stamps/configure emotion-compile
+emotion-compile: $(BUILDROOT)/emotion/stamps/configure
+	$(V)echo "Compiling emotion..."
+	$(V)rm -f $(BUILDROOT)/emotion/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/emotion/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/emotion/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/emotion/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/emotion/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/emotion/compile;\
+	else\
+		echo "emotion is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/emotion/stamps/compile -o -f $(BUILDROOT)/emotion/stamps/compile-updated; then\
+		touch $(BUILDROOT)/emotion/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling emotion."
+
+$(BUILDROOT)/emotion/stamps/install: $(BUILDROOT)/emotion/stamps/compile emotion-install
+emotion-install: $(BUILDROOT)/emotion/stamps/compile
+	$(V)echo "Installing emotion..."
+	$(V)if test ! -f $(BUILDROOT)/emotion/stamps/install -o $(BUILDROOT)/emotion/stamps/compile -nt $(BUILDROOT)/emotion/stamps/install; then\
+		rm -f $(BUILDROOT)/emotion/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/emotion/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/emotion/compile;\
+		mkdir -p $(BUILDROOT)/emotion/stamps;\
+		touch $(BUILDROOT)/emotion/stamps/install;\
+	else\
+		echo "emotion did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing emotion."
+
+$(BUILDROOT)/emotion/stamps/test: $(BUILDROOT)/emotion/stamps/compile emotion-test
+emotion-test: $(BUILDROOT)/emotion/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
+	touch $(BUILDROOT)/emotion/stamps/test
+	$(V)echo 'No test target defined for emotion'
+
+$(BUILDROOT)/emotion/stamps/doc: $(BUILDROOT)/emotion/stamps/compile emotion-doc
+emotion-doc: $(BUILDROOT)/emotion/stamps/compile
+	$(V)echo "Generating documentation (make doc) emotion..."
+	$(V)rm -f $(BUILDROOT)/emotion/stamps/doc
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/emotion/compile
+	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
+	touch $(BUILDROOT)/emotion/stamps/doc
+	$(V)echo "Success generating documentation (make doc) emotion."
+
+$(BUILDROOT)/emotion/stamps/distcheck: $(BUILDROOT)/emotion/stamps/compile emotion-distcheck
+emotion-distcheck: $(BUILDROOT)/emotion/stamps/compile
+	$(V)echo "Checking distribution emotion..."
+	$(V)rm -f $(BUILDROOT)/emotion/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/emotion/compile
+	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
+	touch $(BUILDROOT)/emotion/stamps/distcheck
+	$(V)echo "Success checking distribution emotion."
+
+emotion-direct-users-compile: elementary-compile terminology-compile
+
+emotion-all-users-compile: elementary-compile clouseau-compile e-compile terminology-compile
+
+########################################################################
+# elementary rules
+elementary-dependencies: $(BUILDROOT)/elementary/stamps/dependencies edje-install emotion-install evas-install efreet-install efl-install e_dbus-install ecore-install eio-install
+$(BUILDROOT)/elementary/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/emotion/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/e_dbus/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/eio/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
+	touch $(BUILDROOT)/elementary/stamps/dependencies
+
+elementary-clean:
+	if test -d $(BUILDROOT)/elementary/compile; then chmod -R u+w $(BUILDROOT)/elementary/compile; fi
+	rm -fr $(BUILDROOT)/elementary/compile
+	rm -fr $(BUILDROOT)/elementary/stamps
+
+$(BUILDROOT)/elementary/stamps/autogen: $(SRCROOT)/elementary/autogen.sh $(SRCROOT)/elementary/configure.ac
+	$(V)echo "Running 'autogen.sh' for elementary..."
+	$(V)rm -f $(BUILDROOT)/elementary/stamps/autogen
+	cd $(SRCROOT)/elementary && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
+	touch $(BUILDROOT)/elementary/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for elementary."
+
+$(BUILDROOT)/elementary/stamps/configure: $(BUILDROOT)/elementary/stamps/autogen $(BUILDROOT)/elementary/stamps/dependencies
+	$(V)echo "Configuring elementary..."
+	$(V)rm -f $(BUILDROOT)/elementary/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/elementary/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/elementary/compile && \
+	$(SRCROOT)/elementary/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
+	touch $(BUILDROOT)/elementary/stamps/configure
+	$(V)echo "Success configuring elementary."
+
+$(BUILDROOT)/elementary/stamps/compile: $(BUILDROOT)/elementary/stamps/configure elementary-compile
+elementary-compile: $(BUILDROOT)/elementary/stamps/configure
+	$(V)echo "Compiling elementary..."
+	$(V)rm -f $(BUILDROOT)/elementary/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/elementary/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/elementary/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/elementary/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/elementary/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/elementary/compile;\
+	else\
+		echo "elementary is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/elementary/stamps/compile -o -f $(BUILDROOT)/elementary/stamps/compile-updated; then\
+		touch $(BUILDROOT)/elementary/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling elementary."
+
+$(BUILDROOT)/elementary/stamps/install: $(BUILDROOT)/elementary/stamps/compile elementary-install
+elementary-install: $(BUILDROOT)/elementary/stamps/compile
+	$(V)echo "Installing elementary..."
+	$(V)if test ! -f $(BUILDROOT)/elementary/stamps/install -o $(BUILDROOT)/elementary/stamps/compile -nt $(BUILDROOT)/elementary/stamps/install; then\
+		rm -f $(BUILDROOT)/elementary/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/elementary/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/elementary/compile;\
+		mkdir -p $(BUILDROOT)/elementary/stamps;\
+		touch $(BUILDROOT)/elementary/stamps/install;\
+	else\
+		echo "elementary did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing elementary."
+
+$(BUILDROOT)/elementary/stamps/test: $(BUILDROOT)/elementary/stamps/compile elementary-test
+elementary-test: $(BUILDROOT)/elementary/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
+	touch $(BUILDROOT)/elementary/stamps/test
+	$(V)echo 'No test target defined for elementary'
+
+$(BUILDROOT)/elementary/stamps/doc: $(BUILDROOT)/elementary/stamps/compile elementary-doc
+elementary-doc: $(BUILDROOT)/elementary/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
+	touch $(BUILDROOT)/elementary/stamps/doc
+	$(V)echo 'No doc target defined for elementary'
+
+$(BUILDROOT)/elementary/stamps/distcheck: $(BUILDROOT)/elementary/stamps/compile elementary-distcheck
+elementary-distcheck: $(BUILDROOT)/elementary/stamps/compile
+	$(V)echo "Checking distribution elementary..."
+	$(V)rm -f $(BUILDROOT)/elementary/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/elementary/compile
+	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
+	touch $(BUILDROOT)/elementary/stamps/distcheck
+	$(V)echo "Success checking distribution elementary."
+
+elementary-direct-users-compile: clouseau-compile e-compile terminology-compile
+
+elementary-all-users-compile: clouseau-compile e-compile terminology-compile
+
+########################################################################
+# terminology rules
+terminology-dependencies: $(BUILDROOT)/terminology/stamps/dependencies edje-install emotion-install evas-install efreet-install efl-install elementary-install ecore-install
+$(BUILDROOT)/terminology/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/emotion/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/ecore/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
+	touch $(BUILDROOT)/terminology/stamps/dependencies
+
+terminology-clean:
+	if test -d $(BUILDROOT)/terminology/compile; then chmod -R u+w $(BUILDROOT)/terminology/compile; fi
+	rm -fr $(BUILDROOT)/terminology/compile
+	rm -fr $(BUILDROOT)/terminology/stamps
+
+$(BUILDROOT)/terminology/stamps/autogen: $(SRCROOT)/terminology/autogen.sh $(SRCROOT)/terminology/configure.ac
+	$(V)echo "Running 'autogen.sh' for terminology..."
+	$(V)rm -f $(BUILDROOT)/terminology/stamps/autogen
+	cd $(SRCROOT)/terminology && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
+	touch $(BUILDROOT)/terminology/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for terminology."
+
+$(BUILDROOT)/terminology/stamps/configure: $(BUILDROOT)/terminology/stamps/autogen $(BUILDROOT)/terminology/stamps/dependencies
+	$(V)echo "Configuring terminology..."
+	$(V)rm -f $(BUILDROOT)/terminology/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/terminology/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/terminology/compile && \
+	$(SRCROOT)/terminology/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
+	touch $(BUILDROOT)/terminology/stamps/configure
+	$(V)echo "Success configuring terminology."
+
+$(BUILDROOT)/terminology/stamps/compile: $(BUILDROOT)/terminology/stamps/configure terminology-compile
+terminology-compile: $(BUILDROOT)/terminology/stamps/configure
+	$(V)echo "Compiling terminology..."
+	$(V)rm -f $(BUILDROOT)/terminology/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/terminology/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/terminology/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/terminology/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/terminology/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/terminology/compile;\
+	else\
+		echo "terminology is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/terminology/stamps/compile -o -f $(BUILDROOT)/terminology/stamps/compile-updated; then\
+		touch $(BUILDROOT)/terminology/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling terminology."
+
+$(BUILDROOT)/terminology/stamps/install: $(BUILDROOT)/terminology/stamps/compile terminology-install
+terminology-install: $(BUILDROOT)/terminology/stamps/compile
+	$(V)echo "Installing terminology..."
+	$(V)if test ! -f $(BUILDROOT)/terminology/stamps/install -o $(BUILDROOT)/terminology/stamps/compile -nt $(BUILDROOT)/terminology/stamps/install; then\
+		rm -f $(BUILDROOT)/terminology/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/terminology/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/terminology/compile;\
+		mkdir -p $(BUILDROOT)/terminology/stamps;\
+		touch $(BUILDROOT)/terminology/stamps/install;\
+	else\
+		echo "terminology did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing terminology."
+
+$(BUILDROOT)/terminology/stamps/test: $(BUILDROOT)/terminology/stamps/compile terminology-test
+terminology-test: $(BUILDROOT)/terminology/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
+	touch $(BUILDROOT)/terminology/stamps/test
+	$(V)echo 'No test target defined for terminology'
+
+$(BUILDROOT)/terminology/stamps/doc: $(BUILDROOT)/terminology/stamps/compile terminology-doc
+terminology-doc: $(BUILDROOT)/terminology/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
+	touch $(BUILDROOT)/terminology/stamps/doc
+	$(V)echo 'No doc target defined for terminology'
+
+$(BUILDROOT)/terminology/stamps/distcheck: $(BUILDROOT)/terminology/stamps/compile terminology-distcheck
+terminology-distcheck: $(BUILDROOT)/terminology/stamps/compile
+	$(V)echo "Checking distribution terminology..."
+	$(V)rm -f $(BUILDROOT)/terminology/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/terminology/compile
+	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
+	touch $(BUILDROOT)/terminology/stamps/distcheck
+	$(V)echo "Success checking distribution terminology."
+
+terminology-direct-users-compile:
+
+terminology-all-users-compile:
+
+########################################################################
+# e rules
+e-dependencies: $(BUILDROOT)/e/stamps/dependencies edje-install evas-install eeze-install efreet-install elementary-install efl-install e_dbus-install ecore-install
+$(BUILDROOT)/e/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/eeze/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/e_dbus/stamps/install $(BUILDROOT)/ecore/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/e/stamps
+	touch $(BUILDROOT)/e/stamps/dependencies
+
+e-clean:
+	if test -d $(BUILDROOT)/e/compile; then chmod -R u+w $(BUILDROOT)/e/compile; fi
+	rm -fr $(BUILDROOT)/e/compile
+	rm -fr $(BUILDROOT)/e/stamps
+
+$(BUILDROOT)/e/stamps/autogen: $(SRCROOT)/e/autogen.sh $(SRCROOT)/e/configure.ac
+	$(V)echo "Running 'autogen.sh' for e..."
+	$(V)rm -f $(BUILDROOT)/e/stamps/autogen
+	cd $(SRCROOT)/e && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/e/stamps
+	touch $(BUILDROOT)/e/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for e."
+
+$(BUILDROOT)/e/stamps/configure: $(BUILDROOT)/e/stamps/autogen $(BUILDROOT)/e/stamps/dependencies
+	$(V)echo "Configuring e..."
+	$(V)rm -f $(BUILDROOT)/e/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/e/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/e/compile && \
+	$(SRCROOT)/e/configure --prefix=$(INSTALLROOT) --enable-doc \
+		--enable-pam \
+		--enable-device-udev \
+		--enable-enotify \
+		--enable-enotify \
+		--enable-ibar \
+		--enable-dropshadow \
+		--enable-clock \
+		--enable-pager \
+		--enable-battery \
+		--enable-temperature \
+		--enable-notification \
+		--enable-cpufreq \
+		--enable-ibox \
+		--enable-start \
+		--enable-winlist \
+		--enable-fileman \
+		--enable-fileman-opinfo \
+		--enable-wizard \
+		--enable-conf \
+		--enable-conf-wallpaper2 \
+		--enable-conf-theme \
+		--enable-conf-intl \
+		--enable-msgbus \
+		--enable-conf-applications \
+		--enable-conf-display \
+		--enable-conf-shelves \
+		--enable-conf-keybindings \
+		--enable-conf-edgebindings \
+		--enable-conf-window-remembers \
+		--enable-conf-window-manipulation \
+		--enable-conf-menus \
+		--enable-conf-dialogs \
+		--enable-conf-performance \
+		--enable-conf-paths \
+		--enable-conf-interaction \
+		--enable-gadman \
+		--enable-mixer \
+		--enable-connman \
+		--enable-illume2 \
+		--enable-syscon \
+		--enable-everything \
+		--enable-systray \
+		--enable-comp \
+		--enable-shot \
+		--enable-backlight \
+		--enable-tasks \
+		--enable-conf-randr
+	$(V)mkdir -p $(BUILDROOT)/e/stamps
+	touch $(BUILDROOT)/e/stamps/configure
+	$(V)echo "Success configuring e."
+
+$(BUILDROOT)/e/stamps/compile: $(BUILDROOT)/e/stamps/configure e-compile
+e-compile: $(BUILDROOT)/e/stamps/configure
+	$(V)echo "Compiling e..."
+	$(V)rm -f $(BUILDROOT)/e/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/e/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/e/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/e/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/e/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/e/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/e/compile;\
+	else\
+		echo "e is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/e/stamps/compile -o -f $(BUILDROOT)/e/stamps/compile-updated; then\
+		touch $(BUILDROOT)/e/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling e."
+
+$(BUILDROOT)/e/stamps/install: $(BUILDROOT)/e/stamps/compile e-install
+e-install: $(BUILDROOT)/e/stamps/compile
+	$(V)echo "Installing e..."
+	$(V)if test ! -f $(BUILDROOT)/e/stamps/install -o $(BUILDROOT)/e/stamps/compile -nt $(BUILDROOT)/e/stamps/install; then\
+		rm -f $(BUILDROOT)/e/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/e/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/e/compile;\
+		mkdir -p $(BUILDROOT)/e/stamps;\
+		touch $(BUILDROOT)/e/stamps/install;\
+	else\
+		echo "e did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing e."
+
+$(BUILDROOT)/e/stamps/test: $(BUILDROOT)/e/stamps/compile e-test
+e-test: $(BUILDROOT)/e/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/e/stamps
+	touch $(BUILDROOT)/e/stamps/test
+	$(V)echo 'No test target defined for e'
+
+$(BUILDROOT)/e/stamps/doc: $(BUILDROOT)/e/stamps/compile e-doc
+e-doc: $(BUILDROOT)/e/stamps/compile
+	$(V)echo "Generating documentation (make doc) e..."
+	$(V)rm -f $(BUILDROOT)/e/stamps/doc
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/e/compile
+	$(V)mkdir -p $(BUILDROOT)/e/stamps
+	touch $(BUILDROOT)/e/stamps/doc
+	$(V)echo "Success generating documentation (make doc) e."
+
+$(BUILDROOT)/e/stamps/distcheck: $(BUILDROOT)/e/stamps/compile e-distcheck
+e-distcheck: $(BUILDROOT)/e/stamps/compile
+	$(V)echo "Checking distribution e..."
+	$(V)rm -f $(BUILDROOT)/e/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/e/compile
+	$(V)mkdir -p $(BUILDROOT)/e/stamps
+	touch $(BUILDROOT)/e/stamps/distcheck
+	$(V)echo "Success checking distribution e."
+
+e-direct-users-compile:
+
+e-all-users-compile:
+
+########################################################################
+# clouseau rules
+clouseau-dependencies: $(BUILDROOT)/clouseau/stamps/dependencies edje-install ecore-install efl-install elementary-install evas-install
+$(BUILDROOT)/clouseau/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/evas/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/dependencies
+
+clouseau-clean:
+	if test -d $(BUILDROOT)/clouseau/compile; then chmod -R u+w $(BUILDROOT)/clouseau/compile; fi
+	rm -fr $(BUILDROOT)/clouseau/compile
+	rm -fr $(BUILDROOT)/clouseau/stamps
+
+$(BUILDROOT)/clouseau/stamps/autogen: $(SRCROOT)/clouseau/autogen.sh $(SRCROOT)/clouseau/configure.ac
+	$(V)echo "Running 'autogen.sh' for clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/autogen
+	cd $(SRCROOT)/clouseau && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for clouseau."
+
+$(BUILDROOT)/clouseau/stamps/configure: $(BUILDROOT)/clouseau/stamps/autogen $(BUILDROOT)/clouseau/stamps/dependencies
+	$(V)echo "Configuring clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/clouseau/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/clouseau/compile && \
+	$(SRCROOT)/clouseau/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/configure
+	$(V)echo "Success configuring clouseau."
+
+$(BUILDROOT)/clouseau/stamps/compile: $(BUILDROOT)/clouseau/stamps/configure clouseau-compile
+clouseau-compile: $(BUILDROOT)/clouseau/stamps/configure
+	$(V)echo "Compiling clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/clouseau/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/clouseau/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile;\
+	else\
+		echo "clouseau is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/clouseau/stamps/compile -o -f $(BUILDROOT)/clouseau/stamps/compile-updated; then\
+		touch $(BUILDROOT)/clouseau/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling clouseau."
+
+$(BUILDROOT)/clouseau/stamps/install: $(BUILDROOT)/clouseau/stamps/compile clouseau-install
+clouseau-install: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)echo "Installing clouseau..."
+	$(V)if test ! -f $(BUILDROOT)/clouseau/stamps/install -o $(BUILDROOT)/clouseau/stamps/compile -nt $(BUILDROOT)/clouseau/stamps/install; then\
+		rm -f $(BUILDROOT)/clouseau/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/clouseau/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/clouseau/compile;\
+		mkdir -p $(BUILDROOT)/clouseau/stamps;\
+		touch $(BUILDROOT)/clouseau/stamps/install;\
+	else\
+		echo "clouseau did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing clouseau."
+
+$(BUILDROOT)/clouseau/stamps/test: $(BUILDROOT)/clouseau/stamps/compile clouseau-test
+clouseau-test: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/test
+	$(V)echo 'No test target defined for clouseau'
+
+$(BUILDROOT)/clouseau/stamps/doc: $(BUILDROOT)/clouseau/stamps/compile clouseau-doc
+clouseau-doc: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/doc
+	$(V)echo 'No doc target defined for clouseau'
+
+$(BUILDROOT)/clouseau/stamps/distcheck: $(BUILDROOT)/clouseau/stamps/compile clouseau-distcheck
+clouseau-distcheck: $(BUILDROOT)/clouseau/stamps/compile
+	$(V)echo "Checking distribution clouseau..."
+	$(V)rm -f $(BUILDROOT)/clouseau/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/clouseau/compile
+	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
+	touch $(BUILDROOT)/clouseau/stamps/distcheck
+	$(V)echo "Success checking distribution clouseau."
+
+clouseau-direct-users-compile:
+
+clouseau-all-users-compile:
 
 ########################################################################
 # efx rules
@@ -1398,733 +2132,6 @@ python-ecore-direct-users-compile:
 python-ecore-all-users-compile:
 
 ########################################################################
-# python-e_dbus rules
-python-e_dbus-dependencies: $(BUILDROOT)/python-e_dbus/stamps/dependencies e_dbus-install python-evas-install
-$(BUILDROOT)/python-e_dbus/stamps/dependencies: $(BUILDROOT)/e_dbus/stamps/install $(BUILDROOT)/python-evas/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
-	touch $(BUILDROOT)/python-e_dbus/stamps/dependencies
-
-python-e_dbus-clean:
-	if test -d $(BUILDROOT)/python-e_dbus/compile; then chmod -R u+w $(BUILDROOT)/python-e_dbus/compile; fi
-	rm -fr $(BUILDROOT)/python-e_dbus/compile
-	rm -fr $(BUILDROOT)/python-e_dbus/stamps
-
-$(BUILDROOT)/python-e_dbus/stamps/autogen: $(SRCROOT)/BINDINGS/python/python-e_dbus/autogen.sh $(SRCROOT)/BINDINGS/python/python-e_dbus/configure.ac
-	$(V)echo "Running 'autogen.sh' for python-e_dbus..."
-	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/autogen
-	cd $(SRCROOT)/BINDINGS/python/python-e_dbus && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
-	touch $(BUILDROOT)/python-e_dbus/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for python-e_dbus."
-
-$(BUILDROOT)/python-e_dbus/stamps/configure: $(BUILDROOT)/python-e_dbus/stamps/autogen $(BUILDROOT)/python-e_dbus/stamps/dependencies
-	$(V)echo "Configuring python-e_dbus..."
-	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/python-e_dbus/compile && \
-	$(SRCROOT)/BINDINGS/python/python-e_dbus/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
-	touch $(BUILDROOT)/python-e_dbus/stamps/configure
-	$(V)echo "Success configuring python-e_dbus."
-
-$(BUILDROOT)/python-e_dbus/stamps/compile: $(BUILDROOT)/python-e_dbus/stamps/configure python-e_dbus-compile
-python-e_dbus-compile: $(BUILDROOT)/python-e_dbus/stamps/configure
-	$(V)echo "Compiling python-e_dbus..."
-	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/python-e_dbus/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/python-e_dbus/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/python-e_dbus/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/python-e_dbus/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/python-e_dbus/compile;\
-	else\
-		echo "python-e_dbus is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/python-e_dbus/stamps/compile -o -f $(BUILDROOT)/python-e_dbus/stamps/compile-updated; then\
-		touch $(BUILDROOT)/python-e_dbus/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling python-e_dbus."
-
-$(BUILDROOT)/python-e_dbus/stamps/install: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-install
-python-e_dbus-install: $(BUILDROOT)/python-e_dbus/stamps/compile
-	$(V)echo "Installing python-e_dbus..."
-	$(V)if test ! -f $(BUILDROOT)/python-e_dbus/stamps/install -o $(BUILDROOT)/python-e_dbus/stamps/compile -nt $(BUILDROOT)/python-e_dbus/stamps/install; then\
-		rm -f $(BUILDROOT)/python-e_dbus/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/python-e_dbus/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/python-e_dbus/compile;\
-		mkdir -p $(BUILDROOT)/python-e_dbus/stamps;\
-		touch $(BUILDROOT)/python-e_dbus/stamps/install;\
-	else\
-		echo "python-e_dbus did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing python-e_dbus."
-
-$(BUILDROOT)/python-e_dbus/stamps/test: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-test
-python-e_dbus-test: $(BUILDROOT)/python-e_dbus/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
-	touch $(BUILDROOT)/python-e_dbus/stamps/test
-	$(V)echo 'No test target defined for python-e_dbus'
-
-$(BUILDROOT)/python-e_dbus/stamps/doc: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-doc
-python-e_dbus-doc: $(BUILDROOT)/python-e_dbus/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
-	touch $(BUILDROOT)/python-e_dbus/stamps/doc
-	$(V)echo 'No doc target defined for python-e_dbus'
-
-$(BUILDROOT)/python-e_dbus/stamps/distcheck: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-distcheck
-python-e_dbus-distcheck: $(BUILDROOT)/python-e_dbus/stamps/compile
-	$(V)echo "Checking distribution python-e_dbus..."
-	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/python-e_dbus/compile
-	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
-	touch $(BUILDROOT)/python-e_dbus/stamps/distcheck
-	$(V)echo "Success checking distribution python-e_dbus."
-
-python-e_dbus-direct-users-compile:
-
-python-e_dbus-all-users-compile:
-
-########################################################################
-# embryo rules
-embryo-dependencies: $(BUILDROOT)/embryo/stamps/dependencies efl-install
-$(BUILDROOT)/embryo/stamps/dependencies: $(BUILDROOT)/efl/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
-	touch $(BUILDROOT)/embryo/stamps/dependencies
-
-embryo-clean:
-	if test -d $(BUILDROOT)/embryo/compile; then chmod -R u+w $(BUILDROOT)/embryo/compile; fi
-	rm -fr $(BUILDROOT)/embryo/compile
-	rm -fr $(BUILDROOT)/embryo/stamps
-
-$(BUILDROOT)/embryo/stamps/autogen: $(SRCROOT)/embryo/autogen.sh $(SRCROOT)/embryo/configure.ac
-	$(V)echo "Running 'autogen.sh' for embryo..."
-	$(V)rm -f $(BUILDROOT)/embryo/stamps/autogen
-	cd $(SRCROOT)/embryo && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
-	touch $(BUILDROOT)/embryo/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for embryo."
-
-$(BUILDROOT)/embryo/stamps/configure: $(BUILDROOT)/embryo/stamps/autogen $(BUILDROOT)/embryo/stamps/dependencies
-	$(V)echo "Configuring embryo..."
-	$(V)rm -f $(BUILDROOT)/embryo/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/embryo/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/embryo/compile && \
-	$(SRCROOT)/embryo/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
-	touch $(BUILDROOT)/embryo/stamps/configure
-	$(V)echo "Success configuring embryo."
-
-$(BUILDROOT)/embryo/stamps/compile: $(BUILDROOT)/embryo/stamps/configure embryo-compile
-embryo-compile: $(BUILDROOT)/embryo/stamps/configure
-	$(V)echo "Compiling embryo..."
-	$(V)rm -f $(BUILDROOT)/embryo/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/embryo/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/embryo/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/embryo/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/embryo/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/embryo/compile;\
-	else\
-		echo "embryo is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/embryo/stamps/compile -o -f $(BUILDROOT)/embryo/stamps/compile-updated; then\
-		touch $(BUILDROOT)/embryo/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling embryo."
-
-$(BUILDROOT)/embryo/stamps/install: $(BUILDROOT)/embryo/stamps/compile embryo-install
-embryo-install: $(BUILDROOT)/embryo/stamps/compile
-	$(V)echo "Installing embryo..."
-	$(V)if test ! -f $(BUILDROOT)/embryo/stamps/install -o $(BUILDROOT)/embryo/stamps/compile -nt $(BUILDROOT)/embryo/stamps/install; then\
-		rm -f $(BUILDROOT)/embryo/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/embryo/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/embryo/compile;\
-		mkdir -p $(BUILDROOT)/embryo/stamps;\
-		touch $(BUILDROOT)/embryo/stamps/install;\
-	else\
-		echo "embryo did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing embryo."
-
-$(BUILDROOT)/embryo/stamps/test: $(BUILDROOT)/embryo/stamps/compile embryo-test
-embryo-test: $(BUILDROOT)/embryo/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
-	touch $(BUILDROOT)/embryo/stamps/test
-	$(V)echo 'No test target defined for embryo'
-
-$(BUILDROOT)/embryo/stamps/doc: $(BUILDROOT)/embryo/stamps/compile embryo-doc
-embryo-doc: $(BUILDROOT)/embryo/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
-	touch $(BUILDROOT)/embryo/stamps/doc
-	$(V)echo 'No doc target defined for embryo'
-
-$(BUILDROOT)/embryo/stamps/distcheck: $(BUILDROOT)/embryo/stamps/compile embryo-distcheck
-embryo-distcheck: $(BUILDROOT)/embryo/stamps/compile
-	$(V)echo "Checking distribution embryo..."
-	$(V)rm -f $(BUILDROOT)/embryo/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/embryo/compile
-	$(V)mkdir -p $(BUILDROOT)/embryo/stamps
-	touch $(BUILDROOT)/embryo/stamps/distcheck
-	$(V)echo "Success checking distribution embryo."
-
-embryo-direct-users-compile: edje-compile
-
-embryo-all-users-compile: edje-compile emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
-
-########################################################################
-# edje rules
-edje-dependencies: $(BUILDROOT)/edje/stamps/dependencies embryo-install evas-install efl-install eio-install ecore-install
-$(BUILDROOT)/edje/stamps/dependencies: $(BUILDROOT)/embryo/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/eio/stamps/install $(BUILDROOT)/ecore/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/edje/stamps
-	touch $(BUILDROOT)/edje/stamps/dependencies
-
-edje-clean:
-	if test -d $(BUILDROOT)/edje/compile; then chmod -R u+w $(BUILDROOT)/edje/compile; fi
-	rm -fr $(BUILDROOT)/edje/compile
-	rm -fr $(BUILDROOT)/edje/stamps
-
-$(BUILDROOT)/edje/stamps/autogen: $(SRCROOT)/edje/autogen.sh $(SRCROOT)/edje/configure.ac
-	$(V)echo "Running 'autogen.sh' for edje..."
-	$(V)rm -f $(BUILDROOT)/edje/stamps/autogen
-	cd $(SRCROOT)/edje && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/edje/stamps
-	touch $(BUILDROOT)/edje/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for edje."
-
-$(BUILDROOT)/edje/stamps/configure: $(BUILDROOT)/edje/stamps/autogen $(BUILDROOT)/edje/stamps/dependencies
-	$(V)echo "Configuring edje..."
-	$(V)rm -f $(BUILDROOT)/edje/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/edje/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/edje/compile && \
-	$(SRCROOT)/edje/configure --prefix=$(INSTALLROOT) --enable-tests \
-		--enable-doc \
-		--enable-coverage
-	$(V)mkdir -p $(BUILDROOT)/edje/stamps
-	touch $(BUILDROOT)/edje/stamps/configure
-	$(V)echo "Success configuring edje."
-
-$(BUILDROOT)/edje/stamps/compile: $(BUILDROOT)/edje/stamps/configure edje-compile
-edje-compile: $(BUILDROOT)/edje/stamps/configure
-	$(V)echo "Compiling edje..."
-	$(V)rm -f $(BUILDROOT)/edje/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/edje/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/edje/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/edje/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/edje/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/edje/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/edje/compile;\
-	else\
-		echo "edje is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/edje/stamps/compile -o -f $(BUILDROOT)/edje/stamps/compile-updated; then\
-		touch $(BUILDROOT)/edje/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling edje."
-
-$(BUILDROOT)/edje/stamps/install: $(BUILDROOT)/edje/stamps/compile edje-install
-edje-install: $(BUILDROOT)/edje/stamps/compile
-	$(V)echo "Installing edje..."
-	$(V)if test ! -f $(BUILDROOT)/edje/stamps/install -o $(BUILDROOT)/edje/stamps/compile -nt $(BUILDROOT)/edje/stamps/install; then\
-		rm -f $(BUILDROOT)/edje/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/edje/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/edje/compile;\
-		mkdir -p $(BUILDROOT)/edje/stamps;\
-		touch $(BUILDROOT)/edje/stamps/install;\
-	else\
-		echo "edje did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing edje."
-
-$(BUILDROOT)/edje/stamps/test: $(BUILDROOT)/edje/stamps/compile edje-test
-edje-test: $(BUILDROOT)/edje/stamps/compile
-	$(V)echo "Testing (make coverage) edje..."
-	$(V)rm -f $(BUILDROOT)/edje/stamps/test
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/edje/compile
-	$(V)mkdir -p $(BUILDROOT)/edje/stamps
-	touch $(BUILDROOT)/edje/stamps/test
-	$(V)echo "Success testing (make coverage) edje."
-
-$(BUILDROOT)/edje/stamps/doc: $(BUILDROOT)/edje/stamps/compile edje-doc
-edje-doc: $(BUILDROOT)/edje/stamps/compile
-	$(V)echo "Generating documentation (make doc) edje..."
-	$(V)rm -f $(BUILDROOT)/edje/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/edje/compile
-	$(V)mkdir -p $(BUILDROOT)/edje/stamps
-	touch $(BUILDROOT)/edje/stamps/doc
-	$(V)echo "Success generating documentation (make doc) edje."
-
-$(BUILDROOT)/edje/stamps/distcheck: $(BUILDROOT)/edje/stamps/compile edje-distcheck
-edje-distcheck: $(BUILDROOT)/edje/stamps/compile
-	$(V)echo "Checking distribution edje..."
-	$(V)rm -f $(BUILDROOT)/edje/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/edje/compile
-	$(V)mkdir -p $(BUILDROOT)/edje/stamps
-	touch $(BUILDROOT)/edje/stamps/distcheck
-	$(V)echo "Success checking distribution edje."
-
-edje-direct-users-compile: emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
-
-edje-all-users-compile: emotion-compile e-compile python-edje-compile elementary-compile clouseau-compile terminology-compile
-
-########################################################################
-# elementary rules
-elementary-dependencies: $(BUILDROOT)/elementary/stamps/dependencies edje-install ecore-install efl-install evas-install
-$(BUILDROOT)/elementary/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/evas/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
-	touch $(BUILDROOT)/elementary/stamps/dependencies
-
-elementary-clean:
-	if test -d $(BUILDROOT)/elementary/compile; then chmod -R u+w $(BUILDROOT)/elementary/compile; fi
-	rm -fr $(BUILDROOT)/elementary/compile
-	rm -fr $(BUILDROOT)/elementary/stamps
-
-$(BUILDROOT)/elementary/stamps/autogen: $(SRCROOT)/elementary/autogen.sh $(SRCROOT)/elementary/configure.ac
-	$(V)echo "Running 'autogen.sh' for elementary..."
-	$(V)rm -f $(BUILDROOT)/elementary/stamps/autogen
-	cd $(SRCROOT)/elementary && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
-	touch $(BUILDROOT)/elementary/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for elementary."
-
-$(BUILDROOT)/elementary/stamps/configure: $(BUILDROOT)/elementary/stamps/autogen $(BUILDROOT)/elementary/stamps/dependencies
-	$(V)echo "Configuring elementary..."
-	$(V)rm -f $(BUILDROOT)/elementary/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/elementary/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/elementary/compile && \
-	$(SRCROOT)/elementary/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
-	touch $(BUILDROOT)/elementary/stamps/configure
-	$(V)echo "Success configuring elementary."
-
-$(BUILDROOT)/elementary/stamps/compile: $(BUILDROOT)/elementary/stamps/configure elementary-compile
-elementary-compile: $(BUILDROOT)/elementary/stamps/configure
-	$(V)echo "Compiling elementary..."
-	$(V)rm -f $(BUILDROOT)/elementary/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/elementary/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/elementary/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/elementary/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/elementary/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/elementary/compile;\
-	else\
-		echo "elementary is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/elementary/stamps/compile -o -f $(BUILDROOT)/elementary/stamps/compile-updated; then\
-		touch $(BUILDROOT)/elementary/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling elementary."
-
-$(BUILDROOT)/elementary/stamps/install: $(BUILDROOT)/elementary/stamps/compile elementary-install
-elementary-install: $(BUILDROOT)/elementary/stamps/compile
-	$(V)echo "Installing elementary..."
-	$(V)if test ! -f $(BUILDROOT)/elementary/stamps/install -o $(BUILDROOT)/elementary/stamps/compile -nt $(BUILDROOT)/elementary/stamps/install; then\
-		rm -f $(BUILDROOT)/elementary/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/elementary/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/elementary/compile;\
-		mkdir -p $(BUILDROOT)/elementary/stamps;\
-		touch $(BUILDROOT)/elementary/stamps/install;\
-	else\
-		echo "elementary did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing elementary."
-
-$(BUILDROOT)/elementary/stamps/test: $(BUILDROOT)/elementary/stamps/compile elementary-test
-elementary-test: $(BUILDROOT)/elementary/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
-	touch $(BUILDROOT)/elementary/stamps/test
-	$(V)echo 'No test target defined for elementary'
-
-$(BUILDROOT)/elementary/stamps/doc: $(BUILDROOT)/elementary/stamps/compile elementary-doc
-elementary-doc: $(BUILDROOT)/elementary/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
-	touch $(BUILDROOT)/elementary/stamps/doc
-	$(V)echo 'No doc target defined for elementary'
-
-$(BUILDROOT)/elementary/stamps/distcheck: $(BUILDROOT)/elementary/stamps/compile elementary-distcheck
-elementary-distcheck: $(BUILDROOT)/elementary/stamps/compile
-	$(V)echo "Checking distribution elementary..."
-	$(V)rm -f $(BUILDROOT)/elementary/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/elementary/compile
-	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
-	touch $(BUILDROOT)/elementary/stamps/distcheck
-	$(V)echo "Success checking distribution elementary."
-
-elementary-direct-users-compile: clouseau-compile e-compile terminology-compile
-
-elementary-all-users-compile: clouseau-compile e-compile terminology-compile
-
-########################################################################
-# e rules
-e-dependencies: $(BUILDROOT)/e/stamps/dependencies edje-install evas-install eeze-install efreet-install elementary-install efl-install e_dbus-install ecore-install
-$(BUILDROOT)/e/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/eeze/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/e_dbus/stamps/install $(BUILDROOT)/ecore/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/e/stamps
-	touch $(BUILDROOT)/e/stamps/dependencies
-
-e-clean:
-	if test -d $(BUILDROOT)/e/compile; then chmod -R u+w $(BUILDROOT)/e/compile; fi
-	rm -fr $(BUILDROOT)/e/compile
-	rm -fr $(BUILDROOT)/e/stamps
-
-$(BUILDROOT)/e/stamps/autogen: $(SRCROOT)/e/autogen.sh $(SRCROOT)/e/configure.ac
-	$(V)echo "Running 'autogen.sh' for e..."
-	$(V)rm -f $(BUILDROOT)/e/stamps/autogen
-	cd $(SRCROOT)/e && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/e/stamps
-	touch $(BUILDROOT)/e/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for e."
-
-$(BUILDROOT)/e/stamps/configure: $(BUILDROOT)/e/stamps/autogen $(BUILDROOT)/e/stamps/dependencies
-	$(V)echo "Configuring e..."
-	$(V)rm -f $(BUILDROOT)/e/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/e/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/e/compile && \
-	$(SRCROOT)/e/configure --prefix=$(INSTALLROOT) --enable-doc \
-		--enable-pam \
-		--enable-device-udev \
-		--enable-enotify \
-		--enable-enotify \
-		--enable-ibar \
-		--enable-dropshadow \
-		--enable-clock \
-		--enable-pager \
-		--enable-battery \
-		--enable-temperature \
-		--enable-notification \
-		--enable-cpufreq \
-		--enable-ibox \
-		--enable-start \
-		--enable-winlist \
-		--enable-fileman \
-		--enable-fileman-opinfo \
-		--enable-wizard \
-		--enable-conf \
-		--enable-conf-wallpaper2 \
-		--enable-conf-theme \
-		--enable-conf-intl \
-		--enable-msgbus \
-		--enable-conf-applications \
-		--enable-conf-display \
-		--enable-conf-shelves \
-		--enable-conf-keybindings \
-		--enable-conf-edgebindings \
-		--enable-conf-window-remembers \
-		--enable-conf-window-manipulation \
-		--enable-conf-menus \
-		--enable-conf-dialogs \
-		--enable-conf-performance \
-		--enable-conf-paths \
-		--enable-conf-interaction \
-		--enable-gadman \
-		--enable-mixer \
-		--enable-connman \
-		--enable-illume2 \
-		--enable-syscon \
-		--enable-everything \
-		--enable-systray \
-		--enable-comp \
-		--enable-shot \
-		--enable-backlight \
-		--enable-tasks \
-		--enable-conf-randr
-	$(V)mkdir -p $(BUILDROOT)/e/stamps
-	touch $(BUILDROOT)/e/stamps/configure
-	$(V)echo "Success configuring e."
-
-$(BUILDROOT)/e/stamps/compile: $(BUILDROOT)/e/stamps/configure e-compile
-e-compile: $(BUILDROOT)/e/stamps/configure
-	$(V)echo "Compiling e..."
-	$(V)rm -f $(BUILDROOT)/e/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/e/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/e/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/e/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/e/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/e/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/e/compile;\
-	else\
-		echo "e is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/e/stamps/compile -o -f $(BUILDROOT)/e/stamps/compile-updated; then\
-		touch $(BUILDROOT)/e/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling e."
-
-$(BUILDROOT)/e/stamps/install: $(BUILDROOT)/e/stamps/compile e-install
-e-install: $(BUILDROOT)/e/stamps/compile
-	$(V)echo "Installing e..."
-	$(V)if test ! -f $(BUILDROOT)/e/stamps/install -o $(BUILDROOT)/e/stamps/compile -nt $(BUILDROOT)/e/stamps/install; then\
-		rm -f $(BUILDROOT)/e/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/e/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/e/compile;\
-		mkdir -p $(BUILDROOT)/e/stamps;\
-		touch $(BUILDROOT)/e/stamps/install;\
-	else\
-		echo "e did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing e."
-
-$(BUILDROOT)/e/stamps/test: $(BUILDROOT)/e/stamps/compile e-test
-e-test: $(BUILDROOT)/e/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/e/stamps
-	touch $(BUILDROOT)/e/stamps/test
-	$(V)echo 'No test target defined for e'
-
-$(BUILDROOT)/e/stamps/doc: $(BUILDROOT)/e/stamps/compile e-doc
-e-doc: $(BUILDROOT)/e/stamps/compile
-	$(V)echo "Generating documentation (make doc) e..."
-	$(V)rm -f $(BUILDROOT)/e/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/e/compile
-	$(V)mkdir -p $(BUILDROOT)/e/stamps
-	touch $(BUILDROOT)/e/stamps/doc
-	$(V)echo "Success generating documentation (make doc) e."
-
-$(BUILDROOT)/e/stamps/distcheck: $(BUILDROOT)/e/stamps/compile e-distcheck
-e-distcheck: $(BUILDROOT)/e/stamps/compile
-	$(V)echo "Checking distribution e..."
-	$(V)rm -f $(BUILDROOT)/e/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/e/compile
-	$(V)mkdir -p $(BUILDROOT)/e/stamps
-	touch $(BUILDROOT)/e/stamps/distcheck
-	$(V)echo "Success checking distribution e."
-
-e-direct-users-compile:
-
-e-all-users-compile:
-
-########################################################################
-# clouseau rules
-clouseau-dependencies: $(BUILDROOT)/clouseau/stamps/dependencies edje-install ecore-install efl-install elementary-install evas-install
-$(BUILDROOT)/clouseau/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/evas/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
-	touch $(BUILDROOT)/clouseau/stamps/dependencies
-
-clouseau-clean:
-	if test -d $(BUILDROOT)/clouseau/compile; then chmod -R u+w $(BUILDROOT)/clouseau/compile; fi
-	rm -fr $(BUILDROOT)/clouseau/compile
-	rm -fr $(BUILDROOT)/clouseau/stamps
-
-$(BUILDROOT)/clouseau/stamps/autogen: $(SRCROOT)/clouseau/autogen.sh $(SRCROOT)/clouseau/configure.ac
-	$(V)echo "Running 'autogen.sh' for clouseau..."
-	$(V)rm -f $(BUILDROOT)/clouseau/stamps/autogen
-	cd $(SRCROOT)/clouseau && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
-	touch $(BUILDROOT)/clouseau/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for clouseau."
-
-$(BUILDROOT)/clouseau/stamps/configure: $(BUILDROOT)/clouseau/stamps/autogen $(BUILDROOT)/clouseau/stamps/dependencies
-	$(V)echo "Configuring clouseau..."
-	$(V)rm -f $(BUILDROOT)/clouseau/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/clouseau/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/clouseau/compile && \
-	$(SRCROOT)/clouseau/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
-	touch $(BUILDROOT)/clouseau/stamps/configure
-	$(V)echo "Success configuring clouseau."
-
-$(BUILDROOT)/clouseau/stamps/compile: $(BUILDROOT)/clouseau/stamps/configure clouseau-compile
-clouseau-compile: $(BUILDROOT)/clouseau/stamps/configure
-	$(V)echo "Compiling clouseau..."
-	$(V)rm -f $(BUILDROOT)/clouseau/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/clouseau/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/clouseau/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/clouseau/compile;\
-	else\
-		echo "clouseau is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/clouseau/stamps/compile -o -f $(BUILDROOT)/clouseau/stamps/compile-updated; then\
-		touch $(BUILDROOT)/clouseau/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling clouseau."
-
-$(BUILDROOT)/clouseau/stamps/install: $(BUILDROOT)/clouseau/stamps/compile clouseau-install
-clouseau-install: $(BUILDROOT)/clouseau/stamps/compile
-	$(V)echo "Installing clouseau..."
-	$(V)if test ! -f $(BUILDROOT)/clouseau/stamps/install -o $(BUILDROOT)/clouseau/stamps/compile -nt $(BUILDROOT)/clouseau/stamps/install; then\
-		rm -f $(BUILDROOT)/clouseau/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/clouseau/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/clouseau/compile;\
-		mkdir -p $(BUILDROOT)/clouseau/stamps;\
-		touch $(BUILDROOT)/clouseau/stamps/install;\
-	else\
-		echo "clouseau did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing clouseau."
-
-$(BUILDROOT)/clouseau/stamps/test: $(BUILDROOT)/clouseau/stamps/compile clouseau-test
-clouseau-test: $(BUILDROOT)/clouseau/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
-	touch $(BUILDROOT)/clouseau/stamps/test
-	$(V)echo 'No test target defined for clouseau'
-
-$(BUILDROOT)/clouseau/stamps/doc: $(BUILDROOT)/clouseau/stamps/compile clouseau-doc
-clouseau-doc: $(BUILDROOT)/clouseau/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
-	touch $(BUILDROOT)/clouseau/stamps/doc
-	$(V)echo 'No doc target defined for clouseau'
-
-$(BUILDROOT)/clouseau/stamps/distcheck: $(BUILDROOT)/clouseau/stamps/compile clouseau-distcheck
-clouseau-distcheck: $(BUILDROOT)/clouseau/stamps/compile
-	$(V)echo "Checking distribution clouseau..."
-	$(V)rm -f $(BUILDROOT)/clouseau/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/clouseau/compile
-	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
-	touch $(BUILDROOT)/clouseau/stamps/distcheck
-	$(V)echo "Success checking distribution clouseau."
-
-clouseau-direct-users-compile:
-
-clouseau-all-users-compile:
-
-########################################################################
 # python-edje rules
 python-edje-dependencies: $(BUILDROOT)/python-edje/stamps/dependencies edje-install python-evas-install
 $(BUILDROOT)/python-edje/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/python-evas/stamps/install
@@ -2234,227 +2241,110 @@ python-edje-direct-users-compile:
 python-edje-all-users-compile:
 
 ########################################################################
-# emotion rules
-emotion-dependencies: $(BUILDROOT)/emotion/stamps/dependencies edje-install evas-install eeze-install efl-install ecore-install eio-install
-$(BUILDROOT)/emotion/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/eeze/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/eio/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
-	touch $(BUILDROOT)/emotion/stamps/dependencies
+# python-e_dbus rules
+python-e_dbus-dependencies: $(BUILDROOT)/python-e_dbus/stamps/dependencies e_dbus-install python-evas-install
+$(BUILDROOT)/python-e_dbus/stamps/dependencies: $(BUILDROOT)/e_dbus/stamps/install $(BUILDROOT)/python-evas/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
+	touch $(BUILDROOT)/python-e_dbus/stamps/dependencies
 
-emotion-clean:
-	if test -d $(BUILDROOT)/emotion/compile; then chmod -R u+w $(BUILDROOT)/emotion/compile; fi
-	rm -fr $(BUILDROOT)/emotion/compile
-	rm -fr $(BUILDROOT)/emotion/stamps
+python-e_dbus-clean:
+	if test -d $(BUILDROOT)/python-e_dbus/compile; then chmod -R u+w $(BUILDROOT)/python-e_dbus/compile; fi
+	rm -fr $(BUILDROOT)/python-e_dbus/compile
+	rm -fr $(BUILDROOT)/python-e_dbus/stamps
 
-$(BUILDROOT)/emotion/stamps/autogen: $(SRCROOT)/emotion/autogen.sh $(SRCROOT)/emotion/configure.ac
-	$(V)echo "Running 'autogen.sh' for emotion..."
-	$(V)rm -f $(BUILDROOT)/emotion/stamps/autogen
-	cd $(SRCROOT)/emotion && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
-	touch $(BUILDROOT)/emotion/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for emotion."
+$(BUILDROOT)/python-e_dbus/stamps/autogen: $(SRCROOT)/BINDINGS/python/python-e_dbus/autogen.sh $(SRCROOT)/BINDINGS/python/python-e_dbus/configure.ac
+	$(V)echo "Running 'autogen.sh' for python-e_dbus..."
+	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/autogen
+	cd $(SRCROOT)/BINDINGS/python/python-e_dbus && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
+	touch $(BUILDROOT)/python-e_dbus/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for python-e_dbus."
 
-$(BUILDROOT)/emotion/stamps/configure: $(BUILDROOT)/emotion/stamps/autogen $(BUILDROOT)/emotion/stamps/dependencies
-	$(V)echo "Configuring emotion..."
-	$(V)rm -f $(BUILDROOT)/emotion/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/emotion/compile
+$(BUILDROOT)/python-e_dbus/stamps/configure: $(BUILDROOT)/python-e_dbus/stamps/autogen $(BUILDROOT)/python-e_dbus/stamps/dependencies
+	$(V)echo "Configuring python-e_dbus..."
+	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/compile
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/emotion/compile && \
-	$(SRCROOT)/emotion/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
-	touch $(BUILDROOT)/emotion/stamps/configure
-	$(V)echo "Success configuring emotion."
+	cd $(BUILDROOT)/python-e_dbus/compile && \
+	$(SRCROOT)/BINDINGS/python/python-e_dbus/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
+	touch $(BUILDROOT)/python-e_dbus/stamps/configure
+	$(V)echo "Success configuring python-e_dbus."
 
-$(BUILDROOT)/emotion/stamps/compile: $(BUILDROOT)/emotion/stamps/configure emotion-compile
-emotion-compile: $(BUILDROOT)/emotion/stamps/configure
-	$(V)echo "Compiling emotion..."
-	$(V)rm -f $(BUILDROOT)/emotion/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/emotion/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/emotion/stamps/compile-updated;\
+$(BUILDROOT)/python-e_dbus/stamps/compile: $(BUILDROOT)/python-e_dbus/stamps/configure python-e_dbus-compile
+python-e_dbus-compile: $(BUILDROOT)/python-e_dbus/stamps/configure
+	$(V)echo "Compiling python-e_dbus..."
+	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/python-e_dbus/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/python-e_dbus/stamps/compile-updated;\
 	fi
-	$(V)if test -f $(BUILDROOT)/emotion/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/emotion/compile";\
+	$(V)if test -f $(BUILDROOT)/python-e_dbus/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/python-e_dbus/compile";\
 		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/emotion/compile;\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/python-e_dbus/compile;\
 	else\
-		echo "emotion is up to date.";\
+		echo "python-e_dbus is up to date.";\
 	fi
-	$(V)if test ! -f $(BUILDROOT)/emotion/stamps/compile -o -f $(BUILDROOT)/emotion/stamps/compile-updated; then\
-		touch $(BUILDROOT)/emotion/stamps/compile;\
+	$(V)if test ! -f $(BUILDROOT)/python-e_dbus/stamps/compile -o -f $(BUILDROOT)/python-e_dbus/stamps/compile-updated; then\
+		touch $(BUILDROOT)/python-e_dbus/stamps/compile;\
 		echo "Compile updated, needs reinstall.";\
 	fi
-	$(V)echo "Success compiling emotion."
+	$(V)echo "Success compiling python-e_dbus."
 
-$(BUILDROOT)/emotion/stamps/install: $(BUILDROOT)/emotion/stamps/compile emotion-install
-emotion-install: $(BUILDROOT)/emotion/stamps/compile
-	$(V)echo "Installing emotion..."
-	$(V)if test ! -f $(BUILDROOT)/emotion/stamps/install -o $(BUILDROOT)/emotion/stamps/compile -nt $(BUILDROOT)/emotion/stamps/install; then\
-		rm -f $(BUILDROOT)/emotion/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/emotion/compile";\
+$(BUILDROOT)/python-e_dbus/stamps/install: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-install
+python-e_dbus-install: $(BUILDROOT)/python-e_dbus/stamps/compile
+	$(V)echo "Installing python-e_dbus..."
+	$(V)if test ! -f $(BUILDROOT)/python-e_dbus/stamps/install -o $(BUILDROOT)/python-e_dbus/stamps/compile -nt $(BUILDROOT)/python-e_dbus/stamps/install; then\
+		rm -f $(BUILDROOT)/python-e_dbus/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/python-e_dbus/compile";\
 		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/emotion/compile;\
-		mkdir -p $(BUILDROOT)/emotion/stamps;\
-		touch $(BUILDROOT)/emotion/stamps/install;\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/python-e_dbus/compile;\
+		mkdir -p $(BUILDROOT)/python-e_dbus/stamps;\
+		touch $(BUILDROOT)/python-e_dbus/stamps/install;\
 	else\
-		echo "emotion did not change, not need to reinstall.";\
+		echo "python-e_dbus did not change, not need to reinstall.";\
 	fi
-	$(V)echo "Success installing emotion."
+	$(V)echo "Success installing python-e_dbus."
 
-$(BUILDROOT)/emotion/stamps/test: $(BUILDROOT)/emotion/stamps/compile emotion-test
-emotion-test: $(BUILDROOT)/emotion/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
-	touch $(BUILDROOT)/emotion/stamps/test
-	$(V)echo 'No test target defined for emotion'
+$(BUILDROOT)/python-e_dbus/stamps/test: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-test
+python-e_dbus-test: $(BUILDROOT)/python-e_dbus/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
+	touch $(BUILDROOT)/python-e_dbus/stamps/test
+	$(V)echo 'No test target defined for python-e_dbus'
 
-$(BUILDROOT)/emotion/stamps/doc: $(BUILDROOT)/emotion/stamps/compile emotion-doc
-emotion-doc: $(BUILDROOT)/emotion/stamps/compile
-	$(V)echo "Generating documentation (make doc) emotion..."
-	$(V)rm -f $(BUILDROOT)/emotion/stamps/doc
+$(BUILDROOT)/python-e_dbus/stamps/doc: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-doc
+python-e_dbus-doc: $(BUILDROOT)/python-e_dbus/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
+	touch $(BUILDROOT)/python-e_dbus/stamps/doc
+	$(V)echo 'No doc target defined for python-e_dbus'
+
+$(BUILDROOT)/python-e_dbus/stamps/distcheck: $(BUILDROOT)/python-e_dbus/stamps/compile python-e_dbus-distcheck
+python-e_dbus-distcheck: $(BUILDROOT)/python-e_dbus/stamps/compile
+	$(V)echo "Checking distribution python-e_dbus..."
+	$(V)rm -f $(BUILDROOT)/python-e_dbus/stamps/distcheck
 	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
 	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
 	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/emotion/compile
-	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
-	touch $(BUILDROOT)/emotion/stamps/doc
-	$(V)echo "Success generating documentation (make doc) emotion."
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/python-e_dbus/compile
+	$(V)mkdir -p $(BUILDROOT)/python-e_dbus/stamps
+	touch $(BUILDROOT)/python-e_dbus/stamps/distcheck
+	$(V)echo "Success checking distribution python-e_dbus."
 
-$(BUILDROOT)/emotion/stamps/distcheck: $(BUILDROOT)/emotion/stamps/compile emotion-distcheck
-emotion-distcheck: $(BUILDROOT)/emotion/stamps/compile
-	$(V)echo "Checking distribution emotion..."
-	$(V)rm -f $(BUILDROOT)/emotion/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/emotion/compile
-	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
-	touch $(BUILDROOT)/emotion/stamps/distcheck
-	$(V)echo "Success checking distribution emotion."
+python-e_dbus-direct-users-compile:
 
-emotion-direct-users-compile: terminology-compile
-
-emotion-all-users-compile: terminology-compile
-
-########################################################################
-# terminology rules
-terminology-dependencies: $(BUILDROOT)/terminology/stamps/dependencies edje-install emotion-install evas-install efreet-install efl-install elementary-install ecore-install
-$(BUILDROOT)/terminology/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/emotion/stamps/install $(BUILDROOT)/evas/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/ecore/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
-	touch $(BUILDROOT)/terminology/stamps/dependencies
-
-terminology-clean:
-	if test -d $(BUILDROOT)/terminology/compile; then chmod -R u+w $(BUILDROOT)/terminology/compile; fi
-	rm -fr $(BUILDROOT)/terminology/compile
-	rm -fr $(BUILDROOT)/terminology/stamps
-
-$(BUILDROOT)/terminology/stamps/autogen: $(SRCROOT)/terminology/autogen.sh $(SRCROOT)/terminology/configure.ac
-	$(V)echo "Running 'autogen.sh' for terminology..."
-	$(V)rm -f $(BUILDROOT)/terminology/stamps/autogen
-	cd $(SRCROOT)/terminology && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
-	touch $(BUILDROOT)/terminology/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for terminology."
-
-$(BUILDROOT)/terminology/stamps/configure: $(BUILDROOT)/terminology/stamps/autogen $(BUILDROOT)/terminology/stamps/dependencies
-	$(V)echo "Configuring terminology..."
-	$(V)rm -f $(BUILDROOT)/terminology/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/terminology/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/terminology/compile && \
-	$(SRCROOT)/terminology/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
-	touch $(BUILDROOT)/terminology/stamps/configure
-	$(V)echo "Success configuring terminology."
-
-$(BUILDROOT)/terminology/stamps/compile: $(BUILDROOT)/terminology/stamps/configure terminology-compile
-terminology-compile: $(BUILDROOT)/terminology/stamps/configure
-	$(V)echo "Compiling terminology..."
-	$(V)rm -f $(BUILDROOT)/terminology/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/terminology/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/terminology/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/terminology/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/terminology/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/terminology/compile;\
-	else\
-		echo "terminology is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/terminology/stamps/compile -o -f $(BUILDROOT)/terminology/stamps/compile-updated; then\
-		touch $(BUILDROOT)/terminology/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling terminology."
-
-$(BUILDROOT)/terminology/stamps/install: $(BUILDROOT)/terminology/stamps/compile terminology-install
-terminology-install: $(BUILDROOT)/terminology/stamps/compile
-	$(V)echo "Installing terminology..."
-	$(V)if test ! -f $(BUILDROOT)/terminology/stamps/install -o $(BUILDROOT)/terminology/stamps/compile -nt $(BUILDROOT)/terminology/stamps/install; then\
-		rm -f $(BUILDROOT)/terminology/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/terminology/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/terminology/compile;\
-		mkdir -p $(BUILDROOT)/terminology/stamps;\
-		touch $(BUILDROOT)/terminology/stamps/install;\
-	else\
-		echo "terminology did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing terminology."
-
-$(BUILDROOT)/terminology/stamps/test: $(BUILDROOT)/terminology/stamps/compile terminology-test
-terminology-test: $(BUILDROOT)/terminology/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
-	touch $(BUILDROOT)/terminology/stamps/test
-	$(V)echo 'No test target defined for terminology'
-
-$(BUILDROOT)/terminology/stamps/doc: $(BUILDROOT)/terminology/stamps/compile terminology-doc
-terminology-doc: $(BUILDROOT)/terminology/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
-	touch $(BUILDROOT)/terminology/stamps/doc
-	$(V)echo 'No doc target defined for terminology'
-
-$(BUILDROOT)/terminology/stamps/distcheck: $(BUILDROOT)/terminology/stamps/compile terminology-distcheck
-terminology-distcheck: $(BUILDROOT)/terminology/stamps/compile
-	$(V)echo "Checking distribution terminology..."
-	$(V)rm -f $(BUILDROOT)/terminology/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/terminology/compile
-	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
-	touch $(BUILDROOT)/terminology/stamps/distcheck
-	$(V)echo "Success checking distribution terminology."
-
-terminology-direct-users-compile:
-
-terminology-all-users-compile:
+python-e_dbus-all-users-compile:

@@ -103,18 +103,11 @@ Package(
     )
 
 Package(
-    name="embryo",
-    dependencies={
-        "common": ["efl"],
-        },
-    )
-
-Package(
     name="edje",
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "evas", "ecore", "embryo", "eio"],
+        "common": ["efl", "evas", "ecore", "eio"],
         },
     configure_flags={
         "common": [
@@ -205,7 +198,7 @@ Package(
 Package(
     name="elementary",
     dependencies={
-        "common": ["efl", "ecore", "evas", "edje"],
+        "common": ["efl", "ecore", "evas", "edje", "e_dbus", "efreet", "emotion", "eio"],
         },
     )
 
