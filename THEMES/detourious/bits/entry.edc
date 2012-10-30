@@ -1,238 +1,289 @@
 
 group {
-	name: "e/widgets/entry";
-	min: 26 26;
-	parts {
-		part {
-			name: "entry";
-			type: IMAGE;
-			mouse_events: 0;
-			description {
-				state: "default" 0.0;
-				min: 22 24;
-				max: 9999 24;
-				image {
-					normal: "images/entry_im0.png";
-					border: 6 6 8 7;
-				}
-				color_class: "dialog_base";
-			}
-			description {
-				state: "disabled" 0.0;
-				inherit: "default" 0.0;
-				color: 255 255 255 0;
-				visible: 0;
-			}
-		}
+   name: "e/widgets/entry/scrollframe";
+   parts {
+      part {
+         name: "entry";
+         type: IMAGE;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            min: 22 24;
+            max: 9999 24;
+            image {
+               normal: "images/entry_im0.png";
+               border: 6 6 8 7;
+            }
+            color_class: "dialog_base";
+         }
+         description {
+            state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 0;
+            visible: 0;
+         }
+      }
 
-		part {
-			name: "focus_clip";
-			type: RECT;
-			mouse_events: 0;
-			description {
-				state: "default" 0.0;
-				color: 255 255 255 0;
-			}
-			description {
-				state: "focused" 0.0;
-				inherit: "default" 0.0;
-				color: 255 255 255 255;
-			}
-		}
+      part { name: "clipper"; type: RECT;
+         description { state: "default" 0.0;
+            rel1.to: "entry";
+            rel2.to: "entry";
+         }
+      }
 
-		part {
-			name: "focus";
-			mouse_events: 0;
-			clip_to: "focus_clip";
-			description {
-				state: "default" 0.0;
-				image.normal: "images/button_im3.png";
-				image.border: 7 7 7 7;
-				rel1 { 
-					to: "entry"; 
-					relative: 0.0 0.0; 
-					offset: 0 0; 
-				}
-				rel2 { 
-					to: "entry"; 
-					relative: 1.0 1.0; 
-					offset: -1 -2; 
-				}
-				color_class: "focus";
-			}
-		}
+      part {
+         name: "focus_clip";
+         type: RECT;
+         mouse_events: 0;
+         description {
+            state: "default" 0.0;
+            color: 255 255 255 0;
+         }
+         description {
+            state: "focused" 0.0;
+            inherit: "default" 0.0;
+            color: 255 255 255 255;
+         }
+      }
 
-		part {
-			name: "e.swallow.text";
-			type: SWALLOW;
-			description {
-				state: "default" 0.0;
-				fixed: 1 1;
-				rel1 { 
-					to: "entry"; 
-					relative: 0.0 0.0; 
-					offset: 6 8; 
-				}
-				rel2 { 
-					to: "entry"; 
-					relative: 1.0 1.0; 
-					offset: -7 -8; 
-				}
-			}
-		}
-	}
-	programs {
-		# ifdef FOCUS
-		#  undef FOCUS
-		# endif
-		#define FOCUS(NAME,SIGNAL,STATE) \
-		program { \
-			name: NAME; \
-			signal: SIGNAL; \
-			source: "e"; \
-			action: STATE_SET STATE 0.0; \
-			target: "focus_clip"; \
-		}
-		FOCUS("focus_in", "e,state,focused", "focused")
-		FOCUS("focus_out", "e,state,unfocused", "default")
-	}
+      part {
+         name: "focus";
+         mouse_events: 0;
+         clip_to: "focus_clip";
+         description {
+            state: "default" 0.0;
+            image.normal: "images/button_im3.png";
+            image.border: 7 7 7 7;
+            rel1 { 
+               to: "entry"; 
+               relative: 0.0 0.0; 
+               offset: 0 0; 
+            }
+            rel2 { 
+               to: "entry"; 
+               relative: 1.0 1.0; 
+               offset: -1 -2; 
+            }
+            color_class: "focus";
+         }
+      }
 
-	programs {
-		program {
-			name: "disable";
-			signal: "e,state,disabled";
-			source: "e";
-			action: STATE_SET "disabled" 0.0;
-			target: "entry";
-		}
-		program {
-			name: "enable";
-			signal: "e,state,enabled";
-			source: "e";
-			action: STATE_SET "default" 0.0;
-			target: "entry";
-		}
-	}
+      part {
+         name: "e.swallow.content";
+         type: SWALLOW;
+         mouse_events: 1;
+         clip_to: "clipper";
+         description {
+            state: "default" 0.0;
+            rel1 { 
+               to: "entry"; 
+               relative: 0.0 0.0; 
+               offset: 6 8; 
+            }
+            rel2 { 
+               to: "entry"; 
+               relative: 1.0 1.0; 
+               offset: -7 -8; 
+            }
+         }
+      }
+   }
+   programs {
+      # ifdef FOCUS
+      #  undef FOCUS
+      # endif
+      #define FOCUS(NAME,SIGNAL,STATE) \
+      program { \
+         name: NAME; \
+         signal: SIGNAL; \
+         source: "e"; \
+         action: STATE_SET STATE 0.0; \
+         target: "focus_clip"; \
+      }
+      FOCUS("focus_in", "e,state,focused", "focused")
+      FOCUS("focus_out", "e,state,unfocused", "default")
+   }
+
+   programs {
+      program {
+         name: "disable";
+         signal: "e,state,disabled";
+         source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "entry";
+      }
+      program {
+         name: "enable";
+         signal: "e,state,enabled";
+         source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "entry";
+      }
+   }
 }
 
 group {
-	name: "e/widgets/entry/text";
-	parts {
-		part {
-			name: "e.text.text";
-			type: TEXT;
-			effect: TEXT_EFFECT;
-			scale: 1;
-			mouse_events: 0;
-			description {
-				state: "default" 0.0;
-				TEXT_COLOR;
-				TEXT_NORMAL("entry", 0.0 0.0, 1 1);
-			}
-			description {
-				state: "disabled" 0.0;
-				inherit: "default" 0.0;
-				TEXT_COLOR_DISABLED;
-			}
-		}
-		programs {
-			program {
-				name: "disable";
-				signal: "e,state,disabled";
-				source: "e";
-				action: STATE_SET "disabled" 0.0;
-				target: "e.text.text";
-			}
-			program {
-				name: "enable";
-				signal: "e,state,enabled";
-				source: "e";
-				action: STATE_SET "default" 0.0;
-				target: "e.text.text";
-			}
-		}
-	}
+   name: "e/widgets/entry/text";
+   styles {
+      style { name: "entry_textblock_style";
+         base: "font=Sans font_size=10 color=#000 text_class=entry color_classs=entry_text";
+      }
+      style { name: "entry_textblock_disabled_style";
+         base: "font=Sans font_size=10 color=#000 text_class=entry color_class=entry_text_disabled";
+      }
+   }
+   parts {
+      part {
+         name: "e.text.text";
+         type: TEXTBLOCK;
+         mouse_events: 1;
+         scale: 1;
+         entry_mode: EDITABLE;
+         select_mode: DEFAULT;
+         cursor_mode: BEFORE;
+         multiline: 0;
+         source: "e/widgets/entry/selection"; // selection under
+         source4: "e/widgets/entry/cursor"; // cursorover
+         description { state: "default" 0.0;
+            color_class: "entry_text";
+            text {
+               text: "";
+               style: "entry_textblock_style";
+               min: 1 1;
+               align: 0.0 0.5;
+            }
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            text.style: "entry_textblock_disabled_style";
+            color_class: "entry_text_disabled";
+         }
+      }
+      programs {
+         program { name: "focus";
+            signal: "load";
+            source: "";
+            action: FOCUS_SET;
+            target: "e.text.text";
+         }
+         program {
+            name: "disable";
+            signal: "e,state,disabled";
+            source: "e";
+            action: STATE_SET "disabled" 0.0;
+            target: "e.text.text";
+         }
+         program {
+            name: "enable";
+            signal: "e,state,enabled";
+            source: "e";
+            action: STATE_SET "default" 0.0;
+            target: "e.text.text";
+         }
+      }
+   }
+}
+
+group {
+   name: "e/widgets/entry/password";
+   inherit: "e/widgets/entry/text";
+   parts {
+      part { name: "e.text.text";
+         entry_mode: PASSWORD;
+         description { state: "default" 0.0;
+            text.repch: "*";
+         }
+      }
+   }
+}
+
+group {
+   name: "e/widgets/entry/cursor";
+   min: 1 0;
+   parts {
+      part {
+         name: "cursor";
+         type: RECT;
+         description {
+            state: "default" 0.0;
+            color: 60 60 60 255;
+            visible: 0;
+         }
+         description {
+            state: "visible" 0.0;
+            inherit: "default" 0.0;
+            visible: 1;
+            rel1 { 
+               offset: 0 2; 
+            }
+            rel2 { 
+               offset: -1 -5; 
+            }
+         }
+      }
+   }
+   programs {
+      program {
+         signal: "e,action,show,cursor"; source: "e";
+         action: ACTION_STOP;
+         target: "cursor_show";
+         target: "cursor_hide";
+         target: "cursor_show_timer";
+         target: "cursor_hide_timer";
+         after: "cursor_show";
+      }
+      program {
+         name: "on_cursor_hide";
+         signal: "e,action,hide,cursor";
+         source: "e";
+         action: ACTION_STOP;
+         target: "cursor_show";
+         target: "cursor_hide";
+         target: "cursor_show_timer";
+         target: "cursor_hide_timer";
+         after: "cursor_hide_stop";
+      }
+      program {
+         name: "cursor_hide_stop";
+         action: STATE_SET "default" 0.0;
+         target: "cursor";
+      }
+      program { name: "cursor_show";
+         action: STATE_SET "visible" 0.0;
+         target: "cursor";
+         after: "cursor_show_timer";
+      }
+      program { name: "cursor_hide";
+         action: STATE_SET "default" 0.0;
+         target: "cursor";
+         after: "cursor_hide_timer";
+      }
+      program { name: "cursor_show_timer";
+         in: 1.0 0.0;
+         after: "cursor_hide";
+      }
+      program { name: "cursor_hide_timer";
+         in: 0.25 0.0;
+         after: "cursor_show";
+      }
+   }
 }
 group {
-	name: "e/widgets/entry/cursor";
-	min: 1 0;
-	parts {
-		part {
-			name: "cursor";
-			type: RECT;
-			description {
-				state: "default" 0.0;
-				color: 60 60 60 255;
-				visible: 0;
-			}
-			description {
-				state: "visible" 0.0;
-				inherit: "default" 0.0;
-				visible: 1;
-				rel1 { 
-					offset: 0 2; 
-				}
-				rel2 { 
-					offset: -1 -5; 
-				}
-			}
-		}
-	}
-	programs {
-		program {
-			name: "on_cursor_show";
-			signal:  "e,action,show,cursor";
-			source:  "e";
-			action: ACTION_STOP;
-			target: "cursor_show";
-			target: "cursor_hide";
-			target: "cursor_show_timer";
-			target: "cursor_hide_timer";
-			after: "cursor_show";
-		}
-		program {
-			name: "cursor_show";
-			action: STATE_SET "visible" 0.0;
-			target: "cursor";
-			after: "cursor_show_timer";
-		}
-		program {
-			name: "cursor_hide";
-			action: STATE_SET "default" 0.0;
-			target: "cursor";
-			after: "cursor_hide_timer";
-		}
-		program {
-			name: "cursor_show_timer";
-			in: 1.0 0.0;
-			after: "cursor_hide";
-		}
-		program {
-			name: "cursor_hide_timer";
-			in: 0.25 0.0;
-			after: "cursor_show";
-		}
-	}
-}
-group {
-	name: "e/widgets/entry/selection";
-	data {
-		item: "on_foreground" "1";
-	}
-	parts {
-		part {
-			name: "selection";
-			type: RECT;
-			description {
-				state: "default" 0.0;
-				color: 138 171 225 128;
-				rel1 { 
-					offset: 0 1; 
-				}
-				rel2 { 
-					offset: 0 -3; 
-				}
-			}
-		}
-	}
+   name: "e/widgets/entry/selection";
+   parts {
+      part {
+         name: "selection";
+         type: RECT;
+         description {
+            state: "default" 0.0;
+            color: 138 171 225 128;
+            rel1 { 
+               offset: 0 1; 
+            }
+            rel2 { 
+               offset: 0 -3; 
+            }
+         }
+      }
+   }
 }
