@@ -1,100 +1,166 @@
-# Russian translation for enlightenment
+# Russian translation of Comp-Scale module
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the enlightenment package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# Black Raven, 2009.
+# Igor Murzov <e-mail@date.by>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: enlightenment\n"
+"Project-Id-Version: Comp-Scale\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-01-04 18:16+0100\n"
-"PO-Revision-Date: 2009-12-11 19:59+0000\n"
-"Last-Translator: Black Raven <Unknown>\n"
+"POT-Creation-Date: 2012-10-27 20:46+0400\n"
+"PO-Revision-Date: 2012-10-27 20:46+0400\n"
+"Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-12-12 04:43+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
 
-#. create our config dialog
-#: ../src/e_mod_config.c:44
-#, fuzzy
-msgid "Scaleeton Module"
-msgstr "Skeleton Module"
+#: src/e_mod_config.c:57
+msgid "Scale Windows Module"
+msgstr "Модуль масштабирования окон"
 
-#: ../src/e_mod_config.c:84
-msgid "General"
-msgstr "Общее"
+#: src/e_mod_config.c:119
+msgid "Current Desktop"
+msgstr "Текущий рабочий стол"
 
-#: ../src/e_mod_config.c:86
-msgid "Use Switch 1"
-msgstr "Использовать Переключатель 1"
+#: src/e_mod_config.c:120 src/e_mod_config.c:153
+msgid "Minimum space between windows"
+msgstr "Минимальное расстояние между окнами"
 
-#. add right-side item
-#: ../src/e_mod_main.c:735 ../src/e_mod_main.c:972
-msgid "Scale"
+#: src/e_mod_config.c:122 src/e_mod_config.c:155
+#, c-format
+msgid "%1.0f"
+msgstr "%1.0f"
+
+#: src/e_mod_config.c:126 src/e_mod_config.c:159
+msgid "Scale duration"
+msgstr "Продолжительность масштабирования"
+
+#: src/e_mod_config.c:128 src/e_mod_config.c:161 src/e_mod_config.c:200
+#, c-format
+msgid "%1.2f"
+msgstr "%1.2f"
+
+#: src/e_mod_config.c:133 src/e_mod_config.c:165
+msgid "Slotted Layout"
+msgstr "Ячеистое расположение"
+
+#: src/e_mod_config.c:135 src/e_mod_config.c:167
+msgid "Natural Layout"
+msgstr "Естественное расположение"
+
+#: src/e_mod_config.c:139 src/e_mod_config.c:169
+msgid "Grow more!"
+msgstr "Расширять больше!"
+
+#: src/e_mod_config.c:142 src/e_mod_config.c:172
+msgid "Keep it tight!"
+msgstr "Располагать плотнее!"
+
+#: src/e_mod_config.c:145 src/e_mod_config.c:178
+msgid "Show iconified windows"
 msgstr ""
 
-#: ../src/e_mod_main.c:766
-#, fuzzy
-msgid ""
-"Scale Module Configuration data needed upgrading. Your old configuration<br> "
-"has been wiped and a new set of defaults initialized. This<br>will happen "
-"regularly during development, so don't report a<br>bug. This simply means "
-"the module needs new configuration<br>data by default for usable "
-"functionality that your old<br>configuration simply lacks. This new set of "
-"defaults will fix<br>that by adding it in. You can re-configure things now "
-"to your<br>liking. Sorry for the inconvenience.<br>"
-msgstr ""
-"Skeleton Module: Было необходимо обновление настроек. Старые настройки<br> "
-"были удалены и новый набор был инициализирован значениями по умолчанию."
-"<br>Это будет случаться регулярно, поэтому не нужно сообщать об ошибках."
-"<br>Это просто означает, что модулю необходимы новые настройки<br>по "
-"умолчанию для использования функций, которые отсутствуют<br> в старых "
-"настройках. Этот новый набор значений по умолчанию <br> исправит это. Вы "
-"можете сейчас все по вашему желанию.<br>Приносим извинения за доставленные "
-"неудобства<br>"
+#: src/e_mod_config.c:152
+msgid "Show All Desktops"
+msgstr "Показывать все рабочие столы"
 
-#: ../src/e_mod_main.c:786
-#, fuzzy
-msgid ""
-"Your Scale Module configuration is NEWER than the module version. This is "
-"very<br>strange. This should not happen unless you downgraded<br>the module "
-"or copied the configuration from a place where<br>a newer version of the "
-"module was running. This is bad and<br>as a precaution your configuration "
-"has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
-msgstr ""
-"Ваши настройки Skeleton Module НОВЕЕ чем версия модуля. Это "
-"очень<br>странно. Это невозможно если только вы не переходили<br>на старую "
-"версию или копировали настройки из места, <br> где использовалась более "
-"новая версия. Это плохо, и<br>на всякий случай ваши настройки сброшены на "
-"значения по умолчанию.<br>Приносим извинения за доставленные неудобства.<br>"
+#: src/e_mod_config.c:175 src/e_mod_config.c:206
+msgid "Fade in windows"
+msgstr "Выпячивать окна"
 
-#: ../src/e_mod_main.c:817 ../src/e_mod_main.c:876
-msgid "Desktop"
-msgstr ""
+#: src/e_mod_config.c:185 src/e_mod_config.c:209
+msgid "Fade out shelves and popups"
+msgstr "Прятать полки и всплывающие окна"
 
-#: ../src/e_mod_main.c:818 ../src/e_mod_main.c:877
+#: src/e_mod_config.c:188 src/e_mod_config.c:212
+msgid "Darken desktop"
+msgstr "Затемнять рабочий стол"
+
+#: src/e_mod_config.c:196
+msgid "Pager Settings"
+msgstr "Настройки пейджера"
+
+#: src/e_mod_config.c:198
+msgid "Zoom duration"
+msgstr "Продолжительность приближения"
+
+#: src/e_mod_config.c:203
+msgid "Overlap Shelves"
+msgstr "Перекрывать полки"
+
+#: src/e_mod_main.c:229
+msgid "Look"
+msgstr "Вид"
+
+#: src/e_mod_main.c:231
+msgid "Composite Scale Windows"
+msgstr "Масштабирование окон в композитном режиме"
+
+#: src/e_mod_main.c:277 src/e_mod_main.c:303 src/e_mod_main.c:305
+#: src/e_mod_main.c:307 src/e_mod_main.c:309 src/e_mod_main.c:311
+#: src/e_mod_main.c:313 src/e_mod_main.c:315 src/e_mod_main.c:374
+#: src/e_mod_main.c:375 src/e_mod_main.c:376 src/e_mod_main.c:377
+#: src/e_mod_main.c:378 src/e_mod_main.c:503
 msgid "Scale Windows"
-msgstr ""
+msgstr "Масштабирование окон"
 
-#: ../src/e_mod_main.c:1057
-#, fuzzy
-msgid "Scale Windows Configuration Updated"
-msgstr "Настройки Skeleton обновлены"
+#: src/e_mod_main.c:305 src/e_mod_main.c:375
+msgid "Scale Windows (All Desktops)"
+msgstr "Масштабирование окон (со всех рабочих столов)"
 
-#: ../src/e_mod_main.c:1123
+#: src/e_mod_main.c:307 src/e_mod_main.c:376
+msgid "Scale Windows (By Class)"
+msgstr "Масштабирование окон (по классам)"
+
+#: src/e_mod_main.c:309 src/e_mod_main.c:320 src/e_mod_main.c:377
+#: src/e_mod_main.c:381
+msgid "Select Next"
+msgstr "Выбрать следующее"
+
+#: src/e_mod_main.c:311 src/e_mod_main.c:322 src/e_mod_main.c:378
+#: src/e_mod_main.c:382
+msgid "Select Previous"
+msgstr "Выбрать предыдущее"
+
+#: src/e_mod_main.c:313
+msgid "Select Next (All)"
+msgstr "Выбрать следующее (Все)"
+
+#: src/e_mod_main.c:315
+msgid "Select Previous (All)"
+msgstr "Выбрать предыдущее (Все)"
+
+#: src/e_mod_main.c:318 src/e_mod_main.c:320 src/e_mod_main.c:322
+#: src/e_mod_main.c:324 src/e_mod_main.c:326 src/e_mod_main.c:328
+#: src/e_mod_main.c:330 src/e_mod_main.c:380 src/e_mod_main.c:381
+#: src/e_mod_main.c:382 src/e_mod_main.c:383 src/e_mod_main.c:384
+#: src/e_mod_main.c:385 src/e_mod_main.c:386 src/e_mod_main.c:515
+msgid "Scale Pager"
+msgstr "Масштабирующий пейджер"
+
+#: src/e_mod_main.c:324 src/e_mod_main.c:383
+msgid "Select Left"
+msgstr "Выбрать слева"
+
+#: src/e_mod_main.c:326 src/e_mod_main.c:384
+msgid "Select Right"
+msgstr "Выбрать справа"
+
+#: src/e_mod_main.c:328 src/e_mod_main.c:385
+msgid "Select Up"
+msgstr "Выбрать сверху"
+
+#: src/e_mod_main.c:330 src/e_mod_main.c:386
+msgid "Select Down"
+msgstr "Выбрать снизу"
+
+#: src/e_mod_main.c:509
+msgid "Scale all Windows"
+msgstr "Масштабирование всех окон"
+
+#: src/e_mod_main.c:614
 msgid "Settings"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Skel"
-#~ msgstr "Skeleton"
-
-#~ msgid "Skeleton"
-#~ msgstr "Skeleton"
-
-#~ msgid "Configuration"
-#~ msgstr "Настройки"
+msgstr "Настройки"
