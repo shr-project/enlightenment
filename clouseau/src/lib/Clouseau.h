@@ -64,12 +64,14 @@ struct _Clouseau_Evas_Props
    int r, g, b, a;
    Eina_Bool pass_events;
    Eina_Bool repeat_events;
+   Eina_Bool propagate_events;
    Eina_Bool has_focus;
    Eina_Bool is_clipper;
    Eina_Bool is_visible;
    Evas_Object_Pointer_Mode mode;
    Clouseau_Evas_Map_Point_Props *points;
    int points_count;
+   unsigned long long clipper;
 };
 
 struct _Clouseau_Evas_Text_Props

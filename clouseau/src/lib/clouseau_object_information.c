@@ -178,6 +178,7 @@ clouseau_object_information_get(Clouseau_Tree_Item *treeit)
 
    oinfo->evas_props.pass_events = evas_object_pass_events_get(obj);
    oinfo->evas_props.repeat_events = evas_object_repeat_events_get(obj);
+   oinfo->evas_props.propagate_events = evas_object_propagate_events_get(obj);
    oinfo->evas_props.has_focus = evas_object_focus_get(obj);
    oinfo->evas_props.is_visible = evas_object_visible_get(obj);
    oinfo->evas_props.name = eina_stringshare_add(evas_object_name_get(obj));
@@ -204,6 +205,7 @@ clouseau_object_information_get(Clouseau_Tree_Item *treeit)
    oinfo->evas_props.mode = evas_object_pointer_mode_get(obj);
 
    oinfo->evas_props.is_clipper = !!evas_object_clipees_get(obj);
+   oinfo->evas_props.clipper = (uintptr_t) evas_object_clip_get(obj);
    oinfo->evas_props.bt = eina_stringshare_ref(evas_object_data_get(obj, ".clouseau.bt"));
 
    map = evas_object_map_get(obj);
@@ -517,8 +519,15 @@ clouseau_object_information_list_populate(Clouseau_Tree_Item *treeit, Evas_Objec
                                       oinfo->evas_props.pass_events);
    _clouseau_information_bool_to_tree(main_tit, "Repeat events",
                                       oinfo->evas_props.repeat_events);
+   _clouseau_information_bool_to_tree(main_tit, "Propagate events",
+                                      oinfo->evas_props.propagate_events);
    _clouseau_information_bool_to_tree(main_tit, "Has clipees",
                                       oinfo->evas_props.is_clipper);
+   if (oinfo->evas_props.clipper)
+     {
+        snprintf(buf, sizeof(buf), "%llx", oinfo->evas_props.clipper);
+        _clouseau_information_string_to_tree(main_tit, "Clipper", buf);
+     }
 
    if (oinfo->evas_props.points_count)
      {

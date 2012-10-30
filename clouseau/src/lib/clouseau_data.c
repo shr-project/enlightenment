@@ -519,11 +519,15 @@ _clouseau_object_desc_make(void)
    EET_DATA_DESCRIPTOR_ADD_BASIC(clouseau_object_edd, Clouseau_Object,
                                  "evas_props.repeat_events", evas_props.repeat_events, EET_T_UCHAR);
    EET_DATA_DESCRIPTOR_ADD_BASIC(clouseau_object_edd, Clouseau_Object,
+                                 "evas_props.propagate_events", evas_props.propagate_events, EET_T_UCHAR);
+   EET_DATA_DESCRIPTOR_ADD_BASIC(clouseau_object_edd, Clouseau_Object,
                                  "evas_props.has_focus", evas_props.has_focus, EET_T_UCHAR);
    EET_DATA_DESCRIPTOR_ADD_BASIC(clouseau_object_edd, Clouseau_Object,
                                  "evas_props.is_clipper", evas_props.is_clipper, EET_T_UCHAR);
    EET_DATA_DESCRIPTOR_ADD_BASIC(clouseau_object_edd, Clouseau_Object,
                                  "evas_props.is_visible", evas_props.is_visible, EET_T_UCHAR);
+   EET_DATA_DESCRIPTOR_ADD_BASIC(clouseau_object_edd, Clouseau_Object,
+                                 "evas_props.clipper", evas_props.clipper, EET_T_ULONG_LONG);
    EET_DATA_DESCRIPTOR_ADD_BASIC(clouseau_object_edd, Clouseau_Object,
                                  "evas_props.mode", evas_props.mode, EET_T_INT);
 
