@@ -1,0 +1,23 @@
+# $Id: PKGBUILD 35869 2010-12-23 16:59:26Z rvanharen $
+# Maintainer: Ronald van Haren <ronald.archlinux.org>
+# Contributor: Ronald van Haren <ronald.archlinux.org>
+
+pkgname=evas_generic_loaders-svn
+pkgver=78717
+pkgrel=1
+pkgdesc="Extra gadgets for e17"
+arch=('i686' 'x86_64')
+groups=('e17-libs-svn' 'e17-svn')
+url="http://www.enlightenment.org"
+license=('BSD')
+depends=('librsvg')
+makedepends=('subversion')
+conflicts=('evas_generic_loaders')
+provides=('evas_generic_loaders')
+replaces=('evas_generic_loaders-cvs')
+options=('!libtool' '!emptydirs')
+md5sums=()
+         
+_svnmod="evas_generic_loaders"
+
+. ../PKGBUILD-ecommon

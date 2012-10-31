@@ -1,0 +1,22 @@
+# $Id: PKGBUILD 25629 2010-09-07 19:25:26Z rvanharen $
+# Maintainer: Ronald van Haren <ronald.archlinux.org>
+# Contributor: Ronald van Haren <ronald.archlinux.org>
+
+pkgname=eeze-svn
+pkgver=78717
+pkgrel=1
+pkgdesc="E17 file chunk reading/writing library"
+arch=('i686' 'x86_64')
+groups=('e17-libs-svn' 'e17-svn')
+url="http://www.enlightenment.org"
+license=('LGPL2')
+depends=('glibc')
+conflicts=('eeze')
+provides=('eeze')
+options=('!libtool' '!emptydirs')
+source=()
+md5sums=()
+
+_svnmod="eeze"
+
+. ../PKGBUILD-ecommon

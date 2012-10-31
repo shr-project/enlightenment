@@ -1,0 +1,12 @@
+project_dir=/path/to/sources
+
+build() {
+   cd $project_dir/$_svnmod
+   make
+}
+
+package() {
+   cd $project_dir/$_svnmod
+   make DESTDIR=$pkgdir install
+}
+

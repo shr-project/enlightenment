@@ -1,0 +1,8 @@
+Written by Tom Hacohen, based on PKGBUILDs by Ronald van Haren <ronald.archlinux.org>. If you have any issues, fix them yourslef.
+If you are interested in building e off svn, and not from your own sources, please use Ronald's script instead: https://dev.archlinux.org/~ronald/e17.html
+
+1. Update PKGBUILD-ecommon with your project path.
+2. Modify the list of packages to be built by modifying build_e.sh.
+3. Make sure to run ./autogen with the wanted options and prefix before using this script.
+4. Run "./build_e.sh version" e.g: "./build_e.sh 78987".
+

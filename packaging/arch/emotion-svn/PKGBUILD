@@ -1,0 +1,22 @@
+# $Id: PKGBUILD 70361 2012-05-05 07:40:39Z rvanharen $
+# Maintainer: Ronald van Haren <ronald.archlinux.org>
+
+pkgname=emotion-svn
+pkgver=78717
+pkgrel=1
+pkgdesc="Library to easily integrate media playback into EFL applications"
+arch=('i686' 'x86_64')
+groups=('e17-libs-svn' 'e17-svn')
+url="http://www.enlightenment.org"
+license=('BSD')
+depends=('gstreamer0.10' 'edje-svn' 'eeze-svn')
+makedepends=('subversion')
+conflicts=('emotion')
+provides=('emotion')
+options=(!libtool)
+source=()
+md5sums=()
+
+_svnmod="emotion"
+
+. ../PKGBUILD-ecommon

@@ -1,0 +1,22 @@
+# $Id: PKGBUILD 25629 2010-09-07 19:25:26Z rvanharen $
+# Maintainer: Ronald van Haren <ronald.archlinux.org>
+# Contributor: Ronald van Haren <ronald.archlinux.org>
+
+pkgname=e_dbus-svn
+pkgver=78717
+pkgrel=1
+pkgdesc="dbus abstraction layer for e17"
+arch=('i686' 'x86_64')
+groups=('e17-libs-svn' 'e17-svn')
+url="http://www.enlightenment.org"
+license=('BSD')
+depends=('ecore-svn' 'dbus-core' )
+conflicts=('e_dbus')
+provides=('e_dbus')
+options=('!libtool' '!emptydirs')
+source=()
+md5sums=()
+
+_svnmod="e_dbus"
+
+. ../PKGBUILD-ecommon
