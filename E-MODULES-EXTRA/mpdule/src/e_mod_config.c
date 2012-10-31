@@ -106,7 +106,7 @@ _basic_create_widgets (E_Config_Dialog * cfd, Evas * evas,
   e_widget_frametable_object_append (of, port_entry, 0, 5, 1, 1, 1, 0, 1, 0);
   e_widget_list_object_append (o, of, 1, 1, 0.5);
 
-  ob = e_widget_check_add(evas, D_("Show Popup:"), &(cfdata->show_popup));
+  ob = e_widget_check_add(evas, D_("Show Popup"), &(cfdata->show_popup));
   e_widget_frametable_object_append(of, ob, 0, 6, 1, 1, 1, 0, 1, 0);
 
   return o;
