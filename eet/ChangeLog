@@ -642,3 +642,8 @@
 2012-10-04  Vincent Torri
 
 	* Update lz4 code to rev. 77. This fix compilation on NetBSD 5.0
+
+2012-10-31  Cedric Bail
+
+	* Add eet_list_entries().
+	* Add eet -l -v to give more information about an eet file.

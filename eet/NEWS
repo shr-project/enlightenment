@@ -1,7 +1,10 @@
-Eet 1.7.1
+Eet 1.8.0
 
 Changes since Eet 1.7.0:
 --------------------------
+
+Improvements:
+    * Display more information with eet -l.
 
 Fixes:
     * Fix PPC (big endian) image codec bug.
