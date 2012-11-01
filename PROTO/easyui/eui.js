@@ -4,6 +4,29 @@ elm = require('elm.so');
 fs = require('fs');
 taffy = require('taffy').taffy;
 
+themes = {
+  'default': {
+    'app': {
+      name: 'eui.edj',
+      group: 'app'
+    },
+    'list': {
+      name: 'eui.edj',
+      group: 'list'
+    },
+    'split': {
+      name: 'eui.edj',
+      group: 'split'
+    }
+  }
+};
+
+defaults = {
+  title: 'EasyUI Application',
+  themes: themes,
+  theme: 'default'
+};
+
 /**
  * The base class of controllers.
  * @extends Class
@@ -64,7 +87,7 @@ Controller = Class.extend({
       return this.cachedViewDescriptor;
 
     this.cachedViewDescriptor = elm.Layout({
-      file: { name: 'eui.edj', group: 'app' },
+      file: EUI.defaults._theme['app'],
       content: {
         view: this.viewDescriptor,
         toolbar: elm.Toolbar({
@@ -1043,10 +1066,7 @@ GenController = Controller.extend({
     this._type = _type;
     this.viewDescriptor = elm.Layout({
       horizontal: false,
-      file: {
-        name: "eui.edj",
-        group: "list"
-      },
+      file: EUI.defaults._theme['list'],
       content: {
         search: elm.Entry({
           before: "list",
@@ -1727,10 +1747,12 @@ Container = Controller.extend({
  */
 FrameController = Container.extend({
   /** @inheritdoc */
-  viewDescriptor: elm.Naviframe({
-    title_visible: false,
-    elements: {}
-  }),
+  willInitialize: function() {
+    this.viewDescriptor = elm.Naviframe({
+      title_visible: false,
+      elements: {}
+    });
+  },
   /**
    * @inheritdoc
    * @event
@@ -1766,13 +1788,15 @@ FrameController = Container.extend({
  */
 SplitController = Container.extend({
   /** @inheritdoc */
-  viewDescriptor: elm.Layout({
-    expand: 'both',
-    fill: 'both',
-    resize: true,
-    file: { name: 'eui.edj', group: 'split' },
-    content: {}
-  }),
+  willInitialize: function() {
+    this.viewDescriptor = elm.Layout({
+      expand: 'both',
+      fill: 'both',
+      resize: true,
+      file: EUI.defaults._theme['split'],
+      content: {}
+    });
+  },
   /**
    * @inheritdoc
    * @event
@@ -1830,11 +1854,13 @@ SplitController = Container.extend({
  */
 ToolController = Container.extend({
   /** @inheritdoc */
-  viewDescriptor: elm.Toolbar({
-    shrink_mode: 'expand',
-    select_mode: 'always',
-    elements: {}
-  }),
+  willInitialize: function() {
+    this.viewDescriptor = elm.Toolbar({
+      shrink_mode: 'expand',
+      select_mode: 'always',
+      elements: {}
+    });
+  },
 
   /**
    * Fired when a item is selected.
@@ -1895,13 +1921,15 @@ ToolController = Container.extend({
  */
 TabController = Container.extend({
   /** @inheritdoc */
-  viewDescriptor: elm.Layout({
-    expand: 'both',
-    fill: 'both',
-    resize: true,
-    file: { name: 'eui.edj', group: 'app' },
-    content: {}
-  }),
+  willInitialize: function() {
+    this.viewDescriptor = elm.Layout({
+      expand: 'both',
+      fill: 'both',
+      resize: true,
+      file: EUI.defaults._theme['app'],
+      content: {}
+    });
+  },
 
   /**
    * @inheritdoc
@@ -1953,12 +1981,14 @@ TabController = Container.extend({
  */
 ImageController = Controller.extend({
   /** @inheritdoc */
-  viewDescriptor: elm.Photocam({
-    expand: 'both',
-    fill: 'both',
-    zoom_mode: "auto-fill",
-    zoom: 5.0
-  }),
+  willInitialize: function() {
+    this.viewDescriptor = elm.Photocam({
+      expand: 'both',
+      fill: 'both',
+      zoom_mode: "auto-fill",
+      zoom: 5.0
+    });
+  },
   /** @inheritdoc */
   navigationBarStyle: 'overlap',
   /**
@@ -2001,20 +2031,22 @@ ImageController = Controller.extend({
  */
 VideoController = Controller.extend({
   /** @inheritdoc */
-  viewDescriptor: elm.Box({
-    expand: 'both',
-    fill: 'both',
-    horizontal: false,
-    elements: {
-      video: elm.Video({
-        expand: 'both',
-        fill: 'both',
-      }),
-      controllers: elm.VideoControllers({
+  willInitialize: function() {
+    this.viewDescriptor = elm.Box({
+      expand: 'both',
+      fill: 'both',
+      horizontal: false,
+      elements: {
+        video: elm.Video({
+          expand: 'both',
+          fill: 'both',
+        }),
+        controllers: elm.VideoControllers({
 
-      })
-    }
-  }),
+        })
+      }
+    });
+  },
   /** */
   playerBar : ['Play', 'Pause'],
   /**
@@ -2061,11 +2093,13 @@ TableController = Controller.extend({
    */
   fields: [[]],
   /** @inheritdoc */
-  viewDescriptor: elm.Table({
-    expand: 'both',
-    fill: 'both',
-    elements: {}
-  }),
+  willInitialize: function() {
+    this.viewDescriptor = elm.Table({
+      expand: 'both',
+      fill: 'both',
+      elements: {}
+    });
+  },
   /**
    * @inheritdoc
    * @event
@@ -2344,6 +2378,21 @@ exports.uiMode = (function() {
   return 'phone';
 })();
 
+exports.defaults = utils.clone(defaults);
+exports.defaults._theme = exports.defaults.themes[exports.defaults.theme];
+
+/**
+ * Overwrite EUI.defaults values.
+ * @param {Object} options
+ */
+exports.setDefaults = function(options) {
+  if (options) {
+    var keys = Object.keys(options);
+    for (var i = 0; i < keys.length; ++i)
+      exports.defaults[keys[i]] = options[keys[i]];
+  }
+};
+
 exports.app = function(app) {
 
   if (!(app instanceof Controller))
@@ -2352,7 +2401,7 @@ exports.app = function(app) {
   EUI.window = elm.realise(elm.Window({
     width: 320,
     height: 480,
-    title:  app.title || 'EasyUI Application',
+    title:  app.title || EUI.defaults.title,
     on_delete: function() { EUI.__shutting_down = true },
     elements: {
       'background': elm.Background({
