@@ -13,7 +13,7 @@ PhotoController = EUI.ImageController({
         if (this.chromeVisible)
           return;
 
-        this.index = (this.index + 1) % this.length();
+        this.index = (this.index + 1) % this.length;
         this.setImage(this.index);
       }.bind(this), 5000);
     } else {
@@ -51,7 +51,7 @@ PhotoController = EUI.ImageController({
       }
     ];
 
-    if (this.length() > 1) {
+    if (this.length > 1) {
       items.push({
         tag: 'left',
         icon: 'go-previous',

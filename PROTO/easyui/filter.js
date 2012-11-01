@@ -9,16 +9,16 @@ var MyList = EUI.ListController({
   },
   search: function(text) {
     if (text == '')
-      this.model.setFilter(null);
+      this.model.filter = null;
     else
-      this.model.setFilter({likenocase: text});
+      this.model.filter = {likenocase: text};
   },
   toolbarItems: ['Apple', 'Melon', 'All'],
   selectedToolbarItem: function (item) {
     if (item == 'All')
-      this.model.setFilter(null);
+      this.model.filter = null;
     else
-      this.model.setFilter({likenocase: item});
+      this.model.filter = {likenocase: item};
   }
 });
 

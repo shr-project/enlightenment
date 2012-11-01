@@ -1,5 +1,6 @@
 EUI = require('eui');
 ajax = require('ajax');
+Property = require('class').Property;
 
 const reddit_url = 'http://www.reddit.com/';
 
@@ -116,18 +117,20 @@ SearchModel = EUI.Model({
   length: function() {
     return this.array.length;
   },
-  setFilter: function(terms) {
-    var query = terms.split(' ');
-    this.array = [];
-    ajax.get(reddit_url + '/r/all/search.json', {q: query}, function(request) {
-      var subr = {};
-      var temp = JSON.parse(request.responseText).data.children;
-      for (var i in temp)
-        subr[temp[i].data.subreddit] = 1;
-      this.array = Object.keys(subr);
-      this.notifyControllers();
-    }.bind(this));
-  },
+  filter: new Property ({
+    set: function(terms) {
+      var query = terms.split(' ');
+      this.array = [];
+      ajax.get(reddit_url + '/r/all/search.json', {q: query}, function(request) {
+        var subr = {};
+        var temp = JSON.parse(request.responseText).data.children;
+        for (var i in temp)
+          subr[temp[i].data.subreddit] = 1;
+        this.array = Object.keys(subr);
+        this.notifyControllers();
+      }.bind(this));
+    }
+  }),
 });
 
 RedditSearchController = EUI.ListController({
@@ -141,7 +144,7 @@ RedditSearchController = EUI.ListController({
     this.parent.onSubredditSelected(this.model.itemAtIndex(index));
   },
   search: function(text) {
-    this.model.setFilter(text);
+    this.model.filter = text;
   }
 });
 

@@ -1,4 +1,5 @@
 EUI = require('eui');
+Property = require('class').Property;
 
 localStorage.database = "dict.eet";
 elm.addThemeOverlay("./themes/dict.edj");
@@ -16,59 +17,61 @@ DictModel = EUI.Model({
   itemAtIndex: function(index) {
     return this.entries[index];
   },
-  setFilter: function(terms) {
+  filter: new Property({
+    set: function(terms) {
 
-    if (this.timeout)
-      clearTimeout(this.timeout);
+      if (this.timeout)
+        clearTimeout(this.timeout);
 
-    this.timeout = setTimeout(function() {
-      this.timeout = clearTimeout(this.timeout);
+      this.timeout = setTimeout(function() {
+        this.timeout = clearTimeout(this.timeout);
 
-      if (!terms.length) {
-        this.entries = [];
-        this.notifyControllers();
-      }
-
-      terms = terms.toUpperCase();
-      var firstLetter = terms[0];
-      if (!this.indexes[firstLetter]) {
-        var index = localStorage.getItem("i" + firstLetter);
-        if (!index)
-          return [];
-        this.indexes[firstLetter] = JSON.parse(index);
-      }
-
-      var tmp = this.indexes[firstLetter];
-      for (var i = 1; tmp && i < terms.length; i++)
-        tmp = tmp[terms[i]];
-
-      var linearize = function(tree, current_word) {
-        var output = [];
-        for (var key in tree) {
-          if (!tree.hasOwnProperty(key))
-            continue;
-          if (key == '_')
-            output.push({text: (terms + current_word).toLowerCase(), id: tree[key]})
-          else
-            output = output.concat(linearize(tree[key], current_word + key));
+        if (!terms.length) {
+          this.entries = [];
+          this.notifyControllers();
         }
-        return output;
-      }
 
-      tmp = linearize(tmp, '');
-      tmp.sort(function(a, b) {
-        if (a.text == b.text)
-          return 0;
-        if (a.text < b.text)
-          return -1;
-        return 1;
-      });
+        terms = terms.toUpperCase();
+        var firstLetter = terms[0];
+        if (!this.indexes[firstLetter]) {
+          var index = localStorage.getItem("i" + firstLetter);
+          if (!index)
+            return [];
+          this.indexes[firstLetter] = JSON.parse(index);
+        }
 
-      this.entries = tmp;
-      this.notifyControllers();
+        var tmp = this.indexes[firstLetter];
+        for (var i = 1; tmp && i < terms.length; i++)
+          tmp = tmp[terms[i]];
 
-    }.bind(this), 200);
-  }
+        var linearize = function(tree, current_word) {
+          var output = [];
+          for (var key in tree) {
+            if (!tree.hasOwnProperty(key))
+              continue;
+            if (key == '_')
+              output.push({text: (terms + current_word).toLowerCase(), id: tree[key]})
+            else
+              output = output.concat(linearize(tree[key], current_word + key));
+          }
+          return output;
+        }
+
+        tmp = linearize(tmp, '');
+        tmp.sort(function(a, b) {
+          if (a.text == b.text)
+            return 0;
+          if (a.text < b.text)
+            return -1;
+          return 1;
+        });
+
+        this.entries = tmp;
+        this.notifyControllers();
+
+      }.bind(this), 200);
+    }
+  })
 });
 
 var dictModel = new DictModel();
@@ -115,7 +118,7 @@ Search = ListItems.extend({
     })
   },
   search: function(text) {
-    this.model.setFilter(text);
+    this.model.filter = text;
   }
 });
 

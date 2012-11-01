@@ -19,9 +19,9 @@ Controller = Class.extend({
     this.naviframe_item = view;
   },
 
-  _getView: function() {
-    return this.viewContent.content.view;
-  },
+  view: new Property({
+    get: function() { return this.viewContent.content.view; }
+  }),
 
   _getViewDescriptor: function() {
     if (this.cachedViewDescriptor !== undefined)
@@ -105,7 +105,7 @@ Controller = Class.extend({
   },
 
   _isRealized: new Property({
-    get: function() { return this.naviframe instanceof elm.Naviframe }
+    get: function() { return this.naviframe instanceof elm.Naviframe; }
   }),
 
   _isEqual: function(realized) {
@@ -344,9 +344,9 @@ Model = Class.extend({
   itemAtIndex: function(index) {
     return null;
   },
-  length: function() {
-    return 0;
-  },
+  length: new Property({
+    value: 0
+  }),
   notifyControllers: function(indexes, hint) {
     if (this.controllers.length)
       for (var i = 0; i < this.controllers.length; i++)
@@ -365,13 +365,11 @@ Model = Class.extend({
   updateItemAtIndex: function(index, data) {},
 
   selectedIndex: new Property({
-    get: function() {
-      return this._selectedIndex;
-    },
+    get: function() { return this.__selectedIndex; },
     set: function(value) {
       if (typeof(value) !== 'number' || this._selectedIndex === value)
         return;
-      this._selectedIndex = value;
+      this.__selectedIndex = value;
       this.notifyControllers(value, 'select');
     }
   })
@@ -384,9 +382,9 @@ ArrayModel = Model.extend({
   itemAtIndex: function(index) {
     return this.array[index];
   },
-  length: function() {
-    return this.array.length;
-  },
+  length: new Property({
+    get: function() { return this.array.length; }
+  }),
   deleteItemAtIndex: function(index) {
     this.array.splice(index, 1);
     this.notifyControllers(index, 'delete');
@@ -423,14 +421,17 @@ FilteredModel = Model.extend({
     var item = this.array(this.filter).get()[index];
     return item && item.item;
   },
-  length: function() {
-    return this.array(this.filter).count();
-  },
-  setFilter: function(filter) {
-    if (filter) this.filter = {item: filter};
-    else delete this.filter;
-    this.notifyControllers();
-  },
+  length: new Property({
+    get: function() { return this.array(this.filter).count(); }
+  }),
+  filter: new Property({
+    get: function() { return this.__filter; },
+    set: function(filter) {
+      if (filter) this.__filter = {item: filter};
+      else delete this.__filter;
+      this.notifyControllers();
+    }
+  }),
   deleteItemAtIndex: function(index) {
     var item = this.array(this.filter).get()[index];
     this.array(item['___id']).remove();
@@ -521,9 +522,9 @@ FileModel = Model.extend({
   itemAtIndex: function(index) {
     return this.array[index];
   },
-  length: function() {
-    return this.array.length;
-  }
+  length: new Property({
+    get: function() { return this.array.length; }
+  })
 });
 
 DBModel = Model.extend({
@@ -535,9 +536,9 @@ DBModel = Model.extend({
   itemAtIndex: function (index) {
     return this.entries().get()[index];
   },
-  length: function() {
-    return this.entries().count();
-  },
+  length: new Property({
+    get: function() { return this.entries().count(); }
+  }),
   updateItemAtIndex: function(index, values) {
     var item = this.itemAtIndex(index);
     this.entries(item['___id']).update(values);
@@ -615,7 +616,7 @@ GenController = Controller.extend({
             'end': this.searchBarItems && this.searchBarItems.right
           },
           on_change: function () {
-            this.search(this._getView().content.search.text);
+            this.search(this.view.content.search.text);
           }.bind(this)
         }),
         list: _type({
@@ -712,7 +713,7 @@ GenController = Controller.extend({
       if (!this.navigationBarItems.right)
         this.navigationBarItems.right = 'Add';
       this.viewDescriptor.content.list.on_longpress = function (item) {
-        item['class'] = this._getView().content.list.classes['delete'];
+        item['class'] = this.view.content.list.classes['delete'];
       }.bind(this);
     }
     this._super();
@@ -722,7 +723,7 @@ GenController = Controller.extend({
     if (!item)
       return;
 
-    var view = this._getView().content.list;
+    var view = this.view.content.list;
     var data = { model_index: index };
 
     if (item.group !== undefined) {
@@ -790,7 +791,7 @@ GenController = Controller.extend({
   },
   _updateAllIndexes: function(view, indexes) {
     this._groups = {};
-    for (var i = 0, j = this.model.length(); i < j; ++i) {
+    for (var i = 0, j = this.model.length; i < j; ++i) {
       this.updateItemAtIndex(i);
     }
 
@@ -800,12 +801,13 @@ GenController = Controller.extend({
     }
   },
   updateView: function(indexes, hint) {
+
     this.searchBarVisible = !!this.search;
 
     if (hint === 'select')
       return;
 
-    var view = this._getView().content.list;
+    var view = this.view.content.list;
 
     if (hint === 'delete') {
       this._removeIndexesFromView(view, indexes);
@@ -821,12 +823,12 @@ GenController = Controller.extend({
   },
 
   searchBarVisible: new Property({
-    get: function() { return this._cachedSearchBarVisible },
+    get: function() { return this._cachedSearchBarVisible; },
     set: function(setting) {
       if (setting === this._cachedSearchBarVisible)
         return;
       this._cachedSearchBarVisible = setting;
-      this._getView().signal_emit(setting ? "show,search" : "hide,search", "");
+      this.view.signal_emit(setting ? "show,search" : "hide,search", "");
     }
   })
 
@@ -887,8 +889,8 @@ ListController = GenController.extend({
       }
 
       ctxMenu.hover_parent = EUI.window;
-      ctxMenu.x = this._getView().content.list.pointer.x;
-      ctxMenu.y = this._getView().content.list.pointer.y;
+      ctxMenu.x = this.view.content.list.pointer.x;
+      ctxMenu.y = this.view.content.list.pointer.y;
       ctxMenu.listIndex = item.data.model_index;
       ctxMenu.show();
     }
@@ -919,7 +921,7 @@ ListController = GenController.extend({
     }.bind(this), 600);
   },
   _showLoadingItem: function(edge){
-    var view = this._getView().content.list;
+    var view = this.view.content.list;
     var loading_element = {
       class: view.classes.loading
     };
@@ -932,7 +934,7 @@ ListController = GenController.extend({
     view.bring_in_item(view.elements[edge], "in");
  },
   _hideLoadingItem: function(edge) {
-    var view = this._getView().content.list;
+    var view = this.view.content.list;
     if (view.elements[edge])
       delete view.elements[edge];
 
@@ -946,8 +948,8 @@ GridController = GenController.extend({
     this._super(elm.Gengrid);
   },
   didRealizeView: function() {
-    this._getView().content.list.item_size_vertical = 128;
-    this._getView().content.list.item_size_horizontal = 128;
+    this.view.content.list.item_size_vertical = 128;
+    this.view.content.list.item_size_horizontal = 128;
     this._super();
   }
 });
@@ -1078,7 +1080,7 @@ var WebController = Controller.extend({
   },
 
   updateView: function() {
-    var view = this._getView();
+    var view = this.view;
 
     if (!view)
       return;
@@ -1151,12 +1153,12 @@ Container = Controller.extend({
     throw "It's a 'Container' and can't be pushed in a regular 'Controller'";
   },
   _setRealizedApp: function(realized) {
-    this.view = realized;
+    this._view = realized;
     this.didRealizeView();
   },
-  _getView: function() {
-    return this.view;
-  },
+  view: new Property({
+    get: function() { return this._view; },
+  }),
   didRealizeView: function () {
     if (this.model)
       this.model.addController(this);
@@ -1177,7 +1179,7 @@ FrameController = Container.extend({
     var ctrl = this.model.itemAtIndex(index || 0);
     if (!ctrl) return;
 
-    var view = this._getView();
+    var view = this.view;
 
     if (ctrl._isRealized) {
       var elements = view.elements;
@@ -1202,9 +1204,9 @@ SplitController = Container.extend({
     content: {}
   }),
   updateView: function(index, hint) {
-    var view = this._getView();
+    var view = this.view;
     var panels = ['left', 'right'];
-    var len = Math.min(this.model.length(), panels.length);
+    var len = Math.min(this.model.length, panels.length);
 
     for (var i = 0; i < len; i++) {
 
@@ -1229,7 +1231,7 @@ SplitController = Container.extend({
 
   leftPanelVisible: new Property({
     set: function(setting) {
-      this._getView().signal_emit(setting ? "show,left" : "hide,left", "");
+      this.view.signal_emit(setting ? "show,left" : "hide,left", "");
     }
   })
 });
@@ -1245,7 +1247,7 @@ ToolController = Container.extend({
 
   updateView: function(index, hint) {
 
-    var elements = this._getView().elements;
+    var elements = this.view.elements;
     var selected = this.model.selectedIndex;
 
     var update = function(index) {
@@ -1270,13 +1272,13 @@ ToolController = Container.extend({
     if (index !== undefined)
       update(index);
     else
-      for (var len = this.model.length(), index = 0; index < len; index++)
+      for (var len = this.model.length, index = 0; index < len; index++)
         update(index);
 
     /* Update toolbar items */
     var items = this.toolbarItems;
     if (items.length) {
-      var len = this.model.length();
+      var len = this.model.length;
       elements[len] = { separator: true };
       for (var i = 0; i < items.length; i++) {
         elements[len + i] = items[i];
@@ -1305,7 +1307,7 @@ TabController = Container.extend({
       this.model.selectedIndex = index;
     };
 
-    var view = this._getView();
+    var view = this.view;
     view.content.toolbar = this.toolbar._realizeApp();
     this.toolbar._setRealizedApp(view.content.toolbar);
 
@@ -1318,13 +1320,13 @@ TabController = Container.extend({
 
     this.model.addController(this);
 
-    if (this.model.length())
+    if (this.model.length)
       this.model.selectedIndex = 0;
   },
 
   updateView: function(index, hint) {
 
-    var view = this._getView();
+    var view = this.view;
     view.signal_emit(this.tabPosition + ',toolbar', '');
     view.signal_emit((this.hasTabBar == false ? 'hide' : 'show') + ',toolbar', '');
   },
@@ -1339,23 +1341,23 @@ ImageController = Controller.extend({
   }),
   navigationBarStyle: 'overlap',
   didRealizeView: function() {
-    this._getView().on_click = function() {
+    this.view.on_click = function() {
       if (this.didClickView)
         this.didClickView();
     }.bind(this);
     this._super();
   },
-  length: function () {
-    return this.model.length();
-  },
+  length: new Property({
+    get: function () { return this.model.length; }
+  }),
   setImage: function(index) {
-    if ((index < 0) || (index >= this.length()))
+    if ((index < 0) || (index >= this.length))
       return;
     this.index = index;
     this.didChangeModel();
   },
   updateView: function() {
-    this._getView().file = this.model.itemAtIndex(this.index).path;
+    this.view.file = this.model.itemAtIndex(this.index).path;
   },
 });
 
@@ -1375,11 +1377,11 @@ VideoController = Controller.extend({
     }
   }),
   playerBar : ['Play', 'Pause'],
-  length: function () {
-    return this.model.length();
-  },
+  length: new Property({
+    get: function () { return this.model.length; }
+  }),
   setVideo: function(index) {
-    if ((index < 0) || (index >= this.length()))
+    if ((index < 0) || (index >= this.length))
       return;
     this.index = index;
     this.didChangeModel();
@@ -1388,7 +1390,7 @@ VideoController = Controller.extend({
     return this.model.itemAtIndex(this.index);
   },
   updateView: function() {
-    var elements = this._getView().elements;
+    var elements = this.view.elements;
     if (!elements.controllers.video)
       elements.controllers.video = elements.video;
 
@@ -1404,7 +1406,7 @@ TableController = Controller.extend({
   }),
   updateView: function(index, hint) {
 
-    var elements = this._getView().elements;
+    var elements = this.view.elements;
     var record = this.model && this.model.itemAtIndex(this.index) || {};
 
     for (var row in this.fields) {
@@ -1453,7 +1455,7 @@ TableController = Controller.extend({
   },
   getValues: function() {
     var values = {};
-    var elements = this._getView().elements;
+    var elements = this.view.elements;
     for (var key in elements) {
       var real = elements[key].element;
       if (real && real.field)
@@ -1462,11 +1464,11 @@ TableController = Controller.extend({
     return values;
   },
   index: new Property({
-    get: function() { return this._index.value },
+    get: function() { return this.__index; },
     set: function(value) {
       if (!this.model) throw "Model must be defined before index";
-      if (value >= 0 && value < this.model.length())
-        this._index.value = value;
+      if (value >= 0 && value < this.model.length)
+        this.__index = value;
     }
   })
 });

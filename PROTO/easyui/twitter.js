@@ -175,7 +175,7 @@ TimelineModel = EUI.Model({
     var params = this.buildUrlParameters({max_id: this.items[this.items.length - 1].id_str});
 
     twitterAjax.get(this.url, params, function(req) {
-      this.notifyControllers(this.length() + 1, 'finishSlowLoad');
+      this.notifyControllers(this.length + 1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       //exclude from results the first item, which is repetead
@@ -187,7 +187,7 @@ TimelineModel = EUI.Model({
         arrayBetweenBoundaries(old_length, this.items.length -1));
     }.bind(this));
 
-    this.notifyControllers(this.length() + 1, 'beginSlowLoad');
+    this.notifyControllers(this.length + 1, 'beginSlowLoad');
   },
   fetchNewerTweets: function(){
     //to get twitters newer than the first one that we have
@@ -280,7 +280,7 @@ SearchTimelineModel = TimelineModel.extend({
       max_id: this.items[this.items.length -1].id_str}
 
     twitterAjax.get(this.url, params, function(req) {
-      this.notifyControllers(this.length() + 1, 'finishSlowLoad');
+      this.notifyControllers(this.length + 1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       //exclude from results the first item, which is repetead
@@ -290,7 +290,7 @@ SearchTimelineModel = TimelineModel.extend({
       this.items = this.items.concat(results);
       this.notifyControllers(arrayBetweenBoundaries(old_length, this.items.length -1));
     }.bind(this));
-    this.notifyControllers(this.length() + 1, 'beginSlowLoad');
+    this.notifyControllers(this.length + 1, 'beginSlowLoad');
   },
   fetchNewerTweets: function() {
     var params = {q: this.query, include_entities: true,
@@ -735,7 +735,7 @@ TimelineController = EUI.ListController({
   didScrollOverEdge: function(edge) {
     //TODO maybe, with tweaks in usability, it will never show an empty timeline,
     //thus this check won't be necessary.
-    if (!this.model.length()) return;
+    if (!this.model.length) return;
 
     if (edge == 'top')
       this.model.fetchNewerTweets();

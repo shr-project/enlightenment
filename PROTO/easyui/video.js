@@ -22,7 +22,7 @@ VideoShareSheet = EUI.ActionSheet({
 VideoController = EUI.VideoController({
   extractPathsFromFileModel: function(model){
     array = [];
-    for (var i = 0; i < model.length(); i++){
+    for (var i = 0, j = model.length; i < j; i++){
       if (model.itemAtIndex(i).isFile)
         array.push(model.itemAtIndex(i).path);
     }
@@ -38,7 +38,7 @@ VideoController = EUI.VideoController({
 
     var items = ['share'];
 
-    if (this.length() > 1) {
+    if (this.length > 1) {
       items.push('left');
       items.push('right');
     }
@@ -82,7 +82,7 @@ VideoCollectionController = EUI.GridController({
   init: function(item, patterns) {
     this.title = item.name;
     this.model = new EUI.FileModel(item.path, patterns);
-    print(item.path, this.model.length());
+    print(item.path, this.model.length);
   },
 
   toolbarItems: [ "share" ],
