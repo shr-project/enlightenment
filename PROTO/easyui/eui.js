@@ -4,10 +4,17 @@ elm = require('elm.so');
 fs = require('fs');
 taffy = require('taffy').taffy;
 
-/** @extends Class */
+/**
+ * The base class of controllers.
+ * @extends Class
+ * @abstract
+ */
 Controller = Class.extend({
 
   /**
+   * Returns the value of feature, or defaultValue if it's undefined.
+   * If feature is a function, returns its return value.
+   *
    * @param {Mixed} feature
    * @param {Mixed} defaultValue
    * @protected
@@ -21,7 +28,14 @@ Controller = Class.extend({
   },
 
   /**
-   * Receive the reference to the realization of the view descriptor and keep it.
+   * Low level (unrealized elm object) description of this controller's user interface.
+   * @property {Descriptor}
+   * @abstract
+   */
+  viewDescriptor: undefined,
+
+  /**
+   * Sets the reference to the realized view descriptor.
    * @param {Realized} view Realized view description
    * @protected
    */
@@ -31,7 +45,7 @@ Controller = Class.extend({
   },
 
   /**
-   * Keep the realized content of Controller.viewDescriptor.
+   * Realized content of view #viewDescriptor.
    * @type {Realized}
    * @readonly
    */
@@ -40,8 +54,8 @@ Controller = Class.extend({
   }),
 
   /**
-   * Return a enveloped version of Controller.viewDescription
-   * on a layout with a toolbar.
+   * Returns the contents of the #viewDescriptor
+   * wrapped in a layout with a toolbar.
    * @return {Descriptor}
    * @protected
    */
@@ -69,8 +83,8 @@ Controller = Class.extend({
   },
 
   /**
-   * Fired when the controller is popped.
-   * @event
+   * Fired after the controller is popped.
+   * @private
    */
   _shutdown: function() {
     if (EUI.__shutting_down)
@@ -87,7 +101,7 @@ Controller = Class.extend({
   },
 
   /**
-   * Add a new instance of Controller on view stack.
+   * Pushes a {@link Controller} on top of the application stack.
    * @param {Controller} ctrl
    */
   pushController: function(ctrl) {
@@ -114,8 +128,12 @@ Controller = Class.extend({
   },
 
   /**
-   * Return the content of Controller.viewDescriptor
-   * inside an application frame.
+   * Wraps this controller's {@link #viewDescriptor} in an elm.Naviframe, so
+   * that controllers can be pushed to or popped from the application stack.
+   *
+   * It consist in a frame with the result of
+   * this._getViewDescriptor() call inside.
+   *
    * @return {Descriptor}
    * @protected
    */
@@ -136,7 +154,7 @@ Controller = Class.extend({
   },
 
   /**
-   * Receive a reference to the realized application descriptor and keep it.
+   * Sets the reference to the realized application view descriptor.
    * @param {Realized} realized
    * @protected
    */
@@ -147,7 +165,7 @@ Controller = Class.extend({
   },
 
   /**
-   * Return true if the Controller.viewDescriptor was realized.
+   * Returns true if the #viewDescriptor was realized.
    * @type {Boolean}
    * @protected
    */
@@ -156,7 +174,7 @@ Controller = Class.extend({
   }),
 
   /**
-   * Check if is the same realized application.
+   * Returns true if realized is the application itself.
    * @param {Controller} realized
    * @return {Boolean}
    * @protected
@@ -166,7 +184,7 @@ Controller = Class.extend({
   },
 
   /**
-   * Fired when model chages.
+   * Fired after the model is changed.
    * @param {Number/Array} indexes
    * @param {String} hint
    * @event
@@ -178,23 +196,35 @@ Controller = Class.extend({
   },
 
   /**
-   * Fired before init be called.
+   * Fired before #init is called.
    * @template
    * @event
    */
   willInitialize: function () {},
 
   /**
-   * Fired after init be called.
+   * Triggered when an object of {@link Controller} is instantiated.
+   *
+   * Abstract initializer method. Parameters passed to the constructor
+   * are passed to this method.
+   *
+   * @template
+   * @event
+   */
+  init: function() {},
+
+  /**
+   * Fired after #init was called.
    * @template
    * @event
    */
   didInitialize: function () {},
 
   /**
+   * Fired when an View update is required.
    * @event
    * @template
-   * @param {Number/Array} indexes
+   * @param {Number/Array} indexes Indexes to be updated
    * @param {String} hint
    */
   updateView: function(indexes, hint) {},
@@ -211,7 +241,8 @@ Controller = Class.extend({
   },
 
   /**
-   * @protected
+   * Updates the toolbar content if the #toolbarItems is changed.
+   * @private
    */
   _evaluateToolbarChanges: function() {
 
@@ -248,7 +279,20 @@ Controller = Class.extend({
     toolbar.cachedItems = items;
   },
 
-  /** @protected */
+  /**
+   * Creates and returns a Description according to the item type.
+   *
+   * * If the item is the string 'back' or the item is a reference to its parent controller,
+   * then a 'Back' button that pop the current controller will be returned.
+   * * If the item is the string 'sidePanel' or the item is a reference to the side panel,
+   * then an 'Application' button that show/hide the side panel will be returned.
+   * * Otherwise a regular button will be returned. When clicked, this button will
+   * fires the #selectedNavigationBarItem event.
+   *
+   * @param {Mixed} item
+   * @return {Descriptor}
+   * @private
+   */
   _createNavigationBarItem: function(item) {
 
     if (typeof(item) === 'string') {
@@ -324,7 +368,16 @@ Controller = Class.extend({
     return item;
   },
 
-  /** @protected */
+  /**
+   * Creates and returns a Description of navigation bar items according to items.
+   *
+   * * If items is an array of items, returns theirs Descriptors in a elm.Box().
+   * * Otherwise, returns the items Descriptor.
+   *
+   * @param {Mixed} items
+   * @return {Descriptor}
+   * @private
+   */
   _createNavigationBarItems: function(items) {
     if (items === undefined || items.length === 0)
       return;
@@ -338,7 +391,11 @@ Controller = Class.extend({
     return elm.Box({ horizontal: true, elements: elements });
   },
 
-  /** @protected */
+  /**
+   * Updates the navigation bar if #title or #navigationBarItems are changed.
+   * @private
+   * @event
+   */
   _evaluateNavigationBarChanges: function() {
 
     if (!this._isRealized) return;
@@ -371,19 +428,30 @@ Controller = Class.extend({
     this.naviframe.cachedTitle = title;
   },
 
-  /** @protected */
+  /**
+   * Updates the visibility of view's elements.
+   * @private
+   * @event
+   */
   _updateInterfaceElementVisibility: function() {
     this.naviframe.title_visible =
       (this.title || Object.keys(this.navigationBarItems).length);
   },
 
-  /** @protected */
+  /**
+   * Updates the window properties.
+   * @private
+   * @event
+   */
   _updateWindowProperties: function() {
     if (!this._isRealized) return;
     EUI.window.fullscreen = this.isFullscreen;
   },
 
-  /** */
+  /**
+   * Updates the view elements if needed.
+   * @private
+   */
   evaluateViewChanges: function() {
     this._evaluateToolbarChanges();
     this._evaluateNavigationBarChanges();
@@ -392,54 +460,101 @@ Controller = Class.extend({
   },
 
   /**
+   * Fired when an navigation bar item is clicked.
+   * @require #navigationBarItems
    * @template
-   * @require Controller#navigationBarItems
+   * @event
    */
   selectedNavigationBarItem: function(item) {},
 
+  /**
+   * Text to be shown on navigation bar
+   * and buttons that references this controller.
+   * @type {String/Function}
+   */
   title: new Property({
     watch: function() { this._evaluateNavigationBarChanges() }
   }),
 
   /**
    * @type {Object/Function}
-   * @example
+   * @require #selectedToolbarItem
+   *
+   * Items of navigation bar grouped in an Object.
+   *
+   * The position of the items on the controller title bar is given by the left
+   * and right positioning attributes of the navigationBarItems object.
+   * Positioning attributes accepts as values single items or an array of items.
+   * Items could be strings or objects. On object items, *icon* and *label*
+   * attributes are used on items. On string items, the string is used
+   * as text of the item.
+   *
+   * ** Special Cases **
+   *
+   * * Using the special string 'back' or the parent controller as item, a special
+   * button that pops the current controller will be placed on navigation bar.
+   * * Using the special string 'sidePanel' or the side panel as item, a special
+   * button that shows/hides the side panel will be placed on navigation bar.
+   *
+   * In regular cases, the #selectedToolbarItem event will be fired when an
+   * item is clicked.
+   *
+   *
+   *     this.navigationBarItems = { right: 'next', left: 'previous' };
+   *     // or
    *     this.navigationBarItems = function() {
-   *         return { right: ['next'], left: ['previous'] };
+   *         return { right: ['Save', 'New'], left: 'Cancel' };
    *     };
+   *
    */
   navigationBarItems: new Property({
     value: {},
     watch: function() { this._evaluateNavigationBarChanges() }
   }),
 
-  /** @type {String/Function} */
+  /**
+   * String that represents the navigation bar style.
+   * @type {String/Function}
+   */
   navigationBarStyle: new Property({
     watch: function() { this._evaluateNavigationBarChanges() }
   }),
 
   /**
-   * Fired when an item is selected on application toolbar.
+   * Fired when an item is selected on the controller toolbar.
+   * @param {Mixed} item
+   * @require #toolbarItems
    * @template
    * @event
    */
   selectedToolbarItem: function(item) {},
 
   /**
-   * @type Array/Function
-   * @require Controller.selectedToolbarItem
+   * Array of toolbar items.
+   *
+   * Items could be simple strings or objects. On object items, *icon* and
+   * *label* attributes will be used as icon and text of the toolbar item. On
+   * string items, the string will be used as text of the toolbar item.
+   *
+   * @require #selectedToolbarItem
+   * @type {Array/Function}
    */
   toolbarItems: new Property({
     value: [],
     watch: function() { this._evaluateToolbarChanges() }
   }),
 
-  /** @type {Boolean} */
+  /**
+   * Sets or returns the fullscreen state of the application.
+   * @type {Boolean}
+   */
   isFullscreen: new Property({
     watch: function() { this._updateWindowProperties() }
   }),
 
   /**
+   * Returns the first {@link SplitController} on the parent
+   * chain, or undefined if not found.
    * @type {SplitController}
    * @readonly
    */

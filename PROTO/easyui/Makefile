@@ -1,4 +1,7 @@
 
+SOURCES = \
+  eui.js
+  
 EXAMPLES = \
 	browser.js \
 	calculator.js \
@@ -24,7 +27,7 @@ EXAMPLES = \
 GUIDESDIR = jsduck/guides
 READMES = $(EXAMPLES:%.js=$(GUIDESDIR)/%/README.md)
 
-docs: $(READMES)
+docs: $(READMES) $(SOURCES)
 	jsduck --config=./jsduck/config.json
 
 $(GUIDESDIR)/%/README.md: %.js
