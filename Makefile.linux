@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for linux at Mon Oct 29 09:58:01 2012.
+# Generated for linux at Thu Nov  1 14:49:26 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.linux linux
@@ -28,7 +28,7 @@
 SRCROOT = $(shell pwd)
 BUILDROOT = $(shell pwd)/build
 INSTALLROOT = $(shell pwd)/install
-MAKEOPTS = --print-directory -j2
+MAKEOPTS = --print-directory -j1
 V=@
 
 .DEFAULT: missing-target
