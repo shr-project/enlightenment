@@ -320,7 +320,7 @@ Controller = Class.extend({
       var btn = elm.Button({});
 
       if (item.title)
-        btn.label = title;
+        btn.label = item.title;
 
       if (item.icon)
         btn.icon = elm.Icon({ image: item.icon });
@@ -332,6 +332,7 @@ Controller = Class.extend({
         case this.split.left:
           if (EUI.uiMode === 'tablet')
             return;
+          btn.icon = btn.icon || elm.Icon({ image: 'Apps' });
           btn.on_click = function() { this.split.leftPanelVisible = true }.bind(this);
           break;
         default:
