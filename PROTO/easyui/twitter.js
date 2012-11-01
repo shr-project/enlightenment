@@ -237,6 +237,13 @@ TweetController = EUI.TableController({
     if (tweet.length > 0)
       this.model.tweet(tweet, this.replying_tweet);
     this.popController();
+  },
+  didChangeEntry: function(){
+    var chars_left = 140 - this.getValues().text.length;
+    if (chars_left == 140)
+      this.title = "What's happening?";
+    else
+      this.title = chars_left;
   }
 });
 
