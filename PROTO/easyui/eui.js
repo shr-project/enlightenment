@@ -570,29 +570,58 @@ Controller = Class.extend({
 
 });
 
-/** @extends Class */
+/**
+ * Model base class
+ * @extends Class
+ * @abstract
+ */
 Model = Class.extend({
+
   /**
+   * Fired before #init is called.
    * @protected
    * @event
    */
   willInitialize: function(){
+
+    /**
+     * Keeps the list of registered controllers.
+     * @type {Array}
+     * @private
+     */
     this.controllers = [];
   },
+
   /**
+   * Abstract initializer method.
+   *
+   * Parameters passed to the constructor are passed to this method.
+   * @template
+   * @event
+   */
+  init: function() {},
+
+  /**
+   * Returns the element at index or null if not found.
    * @param {Number} index
+   * @return {Mixed}
    */
   itemAtIndex: function(index) {
     return null;
   },
+
   /**
+   * Number of elements in the model.
    * @type {Number}
    * @readonly
    */
   length: new Property({
     value: 0
   }),
+
   /**
+   * Notifies all connected controllers of change.
+   * See #addController
    * @param {Number/Array} indexes
    * @param {String} hint
    */
@@ -601,14 +630,20 @@ Model = Class.extend({
       for (var i = 0; i < this.controllers.length; i++)
         this.controllers[i].didChangeModel(indexes, hint);
   },
+
   /**
+   * Connect controller to this model so it
+   * receives events whenever the model changes.
    * @param {Controller} controller
    */
   addController: function(controller) {
     if (this.controllers.indexOf(controller) < 0)
       this.controllers.push(controller);
   },
+
   /**
+   * Unconnect controller from this model, so it does
+   * not receive events whenever this model changes.
    * @param {Controller} controller
    */
   removeController: function(controller){
@@ -616,18 +651,26 @@ Model = Class.extend({
       if (this.controllers[i] == controller)
         this.controllers.splice(i, 1);
   },
+
   /**
+   * Delete item at specified index.
    * @param {Number} index
    * @template
    */
   deleteItemAtIndex: function(index) {},
+
   /**
-   * @param {Number} index
-   * @param {Mixed} data
+   * Replaces the data of the item at specified index.
+   * @param {Number} index Index of element to be replaced.
+   * @param {Mixed} data Content to replace with
    * @template
    */
   updateItemAtIndex: function(index, data) {},
-  /** @type {Number} */
+
+  /**
+   * Selected item index.
+   * @type {Number}
+   */
   selectedIndex: new Property({
     get: function() { return this.__selectedIndex; },
     set: function(value) {
@@ -639,22 +682,29 @@ Model = Class.extend({
   })
 });
 
-/** @extend Model */
+/**
+ * Wraps the native array on {@link Model} interface.
+ * @extend Model
+ */
 ArrayModel = Model.extend({
+
   /**
-   * @param {Array} array
+   * Initialize the content of model.
+   *
+   * If item is not an array, an array with one element will be created.
+   *
+   * @param {Array} array The initial content.
+   * @event
    */
   init: function(array) {
     this.array = [].concat(array);
   },
+
   /** @inheritdoc */
   itemAtIndex: function(index) {
     return this.array[index];
   },
-  /**
-   * @type {Number}
-   * @readonly
-   */
+  /** @inheritdoc */
   length: new Property({
     get: function() { return this.array.length; }
   }),
@@ -663,7 +713,15 @@ ArrayModel = Model.extend({
     this.array.splice(index, 1);
     this.notifyControllers(index, 'delete');
   },
-  /** @inheritdoc */
+  /**
+   * Updates the content of *item* at *index* with data.
+   *
+   * * If item at *index* and *data* are objects, item will be updated.
+   * * Otherwise, item will be replaced with *data*.
+   *
+   * @param {Number} index
+   * @param {Mixed} data
+   */
   updateItemAtIndex: function(index, data) {
     var item = this.array[index];
     if (typeof(data) === 'object' && typeof(item) === 'object') {
@@ -676,6 +734,7 @@ ArrayModel = Model.extend({
     this.notifyControllers(index, 'update');
   },
   /**
+   * Returns the index of data or null if not found.
    * @param {Mixed} data
    * @return {Number}
    */
@@ -683,6 +742,7 @@ ArrayModel = Model.extend({
     return this.array.indexOf(data);
   },
   /**
+   * Pushes data to the model.
    * @param {Mixed} data
    */
   pushItem: function(data) {
@@ -690,10 +750,15 @@ ArrayModel = Model.extend({
   }
 });
 
-/** @extend Model */
-FilteredModel = Model.extend({
+/**
+ * Adds filter feature to the {@link ArrayModel}.
+ * See [Filter Example](#!/guide/filter)
+ * @extend ArrayModel
+ */
+FilteredModel = ArrayModel.extend({
   /**
-   * @param {Array} array
+   * @inheritdoc
+   * @event
    */
   init: function(array) {
     this.array = taffy();
@@ -708,14 +773,14 @@ FilteredModel = Model.extend({
     var item = this.array(this.filter).get()[index];
     return item && item.item;
   },
-  /**
-   * @type {Number}
-   * @readonly
-   */
+  /** @inheritdoc */
   length: new Property({
     get: function() { return this.array(this.filter).count(); }
   }),
-  /** @type {String} */
+  /**
+   * Filter object to be applied on model.
+   * @type {String}
+   */
   filter: new Property({
     get: function() { return this.__filter; },
     set: function(filter) {
@@ -736,21 +801,29 @@ FilteredModel = Model.extend({
     this.array(item['___id']).update({item: data});
     this.notifyControllers([index]);
   },
-  /**
-   * @param {Mixed} data
-   */
+  /** @inheritdoc */
   pushItem: function(data) {
     this.array.insert({item: data});
     this.notifyControllers();
   }
 });
 
-/** @extend Model */
+/**
+ * Models that represents the content of a filesystem hierarchy.
+ * See [File Example](#!/guide/file)
+ * @extend Model
+ */
 FileModel = Model.extend({
   /**
-   * @param {String} path
-   * @param {String} patterns
-   * @param {Number} depth
+   * Initializes the model.
+   *
+   * Parameters are passed to this method through the constructor.
+   * Uses the glob syntax on patterns to filter the model content.
+   *
+   * @param {String} path The initial path.
+   * @param {String} patterns Patterns to be matched.
+   * @param {Number} [depth] Internal use.
+   * @event
    */
   init: function(path, patterns, depth) {
     this.path = path;
@@ -826,17 +899,25 @@ FileModel = Model.extend({
   itemAtIndex: function(index) {
     return this.array[index];
   },
-  /** @type {Number} */
+  /** @inheritdoc */
   length: new Property({
     get: function() { return this.array.length; }
   })
 });
 
-/** @extend Model */
+/**
+ * A persistent model of objects.
+ * See [Notes Example](#!/guide/notes)
+ * @extend Model
+ */
 DBModel = Model.extend({
   /**
+   * Pre initialize the model.
+   *
+   * Prepare the {@link DBModel} to be initialized.
+   *
    * @event
-   * @param {String} database
+   * @param {String} database The database name.
    */
   willInitialize: function(database) {
     this._super();
@@ -847,22 +928,34 @@ DBModel = Model.extend({
   itemAtIndex: function (index) {
     return this.entries().get()[index];
   },
-  /** @type {Number} */
+  /** @inheritdoc */
   length: new Property({
     get: function() { return this.entries().count(); }
   }),
-  /** @inheritdoc */
+  /**
+   * Updates the content of item at *index* with *values*.
+   * @param {Number} index
+   * @param {Object} values
+   */
   updateItemAtIndex: function(index, values) {
     var item = this.itemAtIndex(index);
     this.entries(item['___id']).update(values);
     this.notifyControllers([index]);
   },
-  /** */
+  /**
+   * Inserts an object into model.
+   * @param {Object} data
+   */
   insert: function(data) {
     this.entries.insert(data);
     this.notifyControllers();
   },
-  /** */
+  /**
+   * Returns the index of the element that have the same
+   * value on *key* attribute than *item*.
+   * @param {Object} item
+   * @param {String} [key='id']
+   */
   indexOf: function(item, key) {
     var search = {};
     key = key || 'id';
@@ -875,7 +968,9 @@ DBModel = Model.extend({
     this.entries(item['___id']).remove();
     this.notifyControllers();
   },
-  /** */
+  /**
+   * Removes all model content.
+   */
   clear: function() {
     this.entries().remove();
     this.notifyControllers();
@@ -915,11 +1010,13 @@ ActionSheet = Class.extend({
 });
 
 /**
+ *
  * @extends Controller
  * @private
  */
 GenController = Controller.extend({
   /**
+   * @inheritdoc
    * @event
    */
   willInitialize: function(_type) {
@@ -1036,7 +1133,10 @@ GenController = Controller.extend({
 
     return {};
   },
-  /** @event */
+  /**
+   * @inheritdoc
+   * @event
+   */
   didInitialize: function(_type) {
     if (this.editable) {
       if (!this.navigationBarItems.right)
@@ -1047,7 +1147,7 @@ GenController = Controller.extend({
     }
     this._super();
   },
-  /** @event */
+  /** @private */
   updateItemAtIndex: function(index) {
     var item = this._fetchItemUsingCache(index);
     if (!item)
@@ -1133,7 +1233,10 @@ GenController = Controller.extend({
       i++;
     }
   },
-  /**  */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function(indexes, hint) {
 
     this.searchBarVisible = !!this.search;
@@ -1156,7 +1259,9 @@ GenController = Controller.extend({
     this._updateAllIndexes(view, indexes);
   },
 
-  /** */
+  /**
+   * State of search bar visibility.
+   */
   searchBarVisible: new Property({
     get: function() { return this._cachedSearchBarVisible; },
     set: function(setting) {
