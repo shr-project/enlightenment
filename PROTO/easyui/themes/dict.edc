@@ -1,3 +1,9 @@
+fonts {
+   font: "LinLibertine_R.otf" "LinuxLibertine";
+   font: "LinLibertine_RI.otf" "LinuxLibertine:style=Italic";
+   font: "LinLibertine_RZI.otf" "LinuxLibertine:style=Bold Italic";
+}
+
 collections {
 #include "dict/theme/button.edc"
 #include "dict/theme/check.edc"
