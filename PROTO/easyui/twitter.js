@@ -405,6 +405,33 @@ AuthController = EUI.TableController({
 
 BrowserController = EUI.WebController({});
 
+TimelineItemBuilder = (function() {
+  var formatTweet = function(tweet) {
+    var user = '';
+
+    if (tweet.retweeted_status) {
+      user += tweet.retweeted_status.user.name;
+
+      if (tweet.user.id_str != gUserID)
+        user += ' [Retweeted by ' + tweet.user.name + ']';
+    } else
+      user += tweet.user.name;
+
+    if (tweet.retweeted)
+      user += ' (Retweeted)'
+
+    return {
+      text: tweet.text,
+      text_sub: "By " + user,
+      icon: tweet.file
+    }
+  }
+
+  return {
+    formatTweet: formatTweet
+  }
+})();
+
 BaseProfileController = EUI.ListController({
   style: 'double_label',
   getProfileImage: function() {
@@ -414,28 +441,44 @@ BaseProfileController = EUI.ListController({
       var item = this.fields[0];
 
       item.icon = req.responseText;
-      this.updateView(0);
+      this.updateView();
     }.bind(this));
   },
   init: function(user_id) {
     this.fields = [];
+    var canShowProfile = false;
 
+    //these two gets are for having tweets and profile data before showing them
     twitterAjax.get('1/users/show.json', {user_id: user_id}, function(req) {
       if (req.status != '200') return;
+      this.profile = JSON.parse(req.responseText);
 
-      this.showProfile(JSON.parse(req.responseText));
+      if (canShowProfile)
+        this.showProfile();
+      else
+        canShowProfile = true;
+    }.bind(this));
+
+    twitterAjax.get("1/statuses/user_timeline.json",
+                    {user_id: user_id, count: 5}, function(req) {
+      if (req.status == '200')
+        this.tweets = JSON.parse(req.responseText);
+
+      if (canShowProfile)
+        this.showProfile();
+      else
+        canShowProfile = true;
     }.bind(this));
 
     this.model = new EUI.ArrayModel([]);
   },
-  showProfile: function(profile) {
-    this.title = profile.name;
-    this.profile = profile;
+  showProfile: function() {
+    this.title = this.profile.name;
 
     this.fields = [
       {
-        text: profile.name,
-        text_sub: '@' + profile.screen_name
+        text: this.profile.name,
+        text_sub: '@' + this.profile.screen_name
       },
       {
         style: 'full',
@@ -443,11 +486,11 @@ BaseProfileController = EUI.ListController({
           hint_min: {width: 100, height: 100},
           elements: {
             description: {row: 0, col: 0,
-              element: this.createLabel(profile.description.replace(/\r/g, '<br/>'))},
+              element: this.createLabel(this.profile.description.replace(/\r/g, '<br/>'))},
             location: {row: 1, col: 0,
-              element: this.createLabel(profile.location)},
+              element: this.createLabel(this.profile.location)},
             url: {row: 2, col: 0,
-              element: this.createLabel(profile.url || '<i>Not available</i>')}
+              element: this.createLabel(this.profile.url || '<i>Not available</i>')}
           }
         })
       },
@@ -457,15 +500,29 @@ BaseProfileController = EUI.ListController({
           hint_min: {width: 50, height: 50},
           elements: {
             tweets: {row: 3, col: 0,
-              element: this.createLabel('Tweets: <b>' + profile.statuses_count + '</b>')},
+              element: this.createLabel('Tweets: <b>' + this.profile.statuses_count + '</b>')},
             following: {row: 5, col: 0,
-              element: this.createLabel('Following: <b>' + profile.friends_count + '</b>')},
+              element: this.createLabel('Following: <b>' + this.profile.friends_count + '</b>')},
             followers: {row: 6, col: 0,
-              element: this.createLabel('Followers: <b>' + profile.followers_count + '</b>')}
+              element: this.createLabel('Followers: <b>' + this.profile.followers_count + '</b>')}
           }
         })
       },
     ];
+
+    for (var i in this.tweets) {
+      var tweet = TimelineItemBuilder.formatTweet(this.tweets[i]);
+      tweet.group = 'Tweets';
+      tweet.tag = 'tweet',
+      this.fields.push(tweet);
+    }
+    //Add more tweets button
+    this.fields.push({
+      text: 'More tweets',
+      tag: 'more-tweets',
+      end: 'arrow_right',
+      group: 'Tweets'
+    });
 
     for (var i = 0; i < this.fields.length; i++)
       this.model.pushItem(this.fields[i]);
@@ -477,22 +534,17 @@ BaseProfileController = EUI.ListController({
     });
   },
   itemAtIndex: function(index) {
-    if (index == 0 && !this.fields[index].icon)
+    var item = this.fields[index];
+    if (index == 0 && !item.icon)
       this.getProfileImage();
-    return this.fields[index];
-  },
-  toolbarItems: function() {
-    return [{label: 'Tweets', tag: 'tweets'}];
-  },
-  callbackFollowUnfollow: function(req) {
-    if (req.status != 200) return;
 
-    //update profile
-    this.profile = JSON.parse(req.responseText);
-    this.evaluateViewChanges();
+    if (item.tag == 'tweet' && !item.file && this.fields[0].icon)
+      item.icon = this.fields[0].icon;
+
+    return item;
   },
-  selectedToolbarItem: function(item) {
-    if (item.tag == 'tweets')
+  selectedItemAtIndex: function(index) {
+    if (this.fields[index].tag == 'more-tweets')
         this.pushController(new TimelineController(
            new TimelineModel(this.profile.id_str),
            'tweets', this.profile.screen_name));
@@ -500,29 +552,45 @@ BaseProfileController = EUI.ListController({
 });
 
 UserProfileController = BaseProfileController.extend({
-  toolbarItems: function() {
-    var toolbarItems = this._super();
+  showProfile: function(profile) {
+    this._super(profile);
 
-    if (!this.profile)
-      return;
-
-    if (this.profile.following)
-      toolbarItems.push({label: 'Unfollow', tag: 'unfollow'});
-    else
-      toolbarItems.push({label: 'Follow', tag: 'follow'});
-
-    return toolbarItems;
+    //[un]follow action
+    this.fields.push({
+      text: this.profile.following ? 'Unfollow' : 'Follow',
+      tag: 'follow-action',
+      end: 'arrow_right',
+      group: 'Actions'
+    });
+    this.unFollowIndex = this.fields.length -1;
+    this.model.pushItem(this.fields[this.unFollowIndex]);
   },
-  selectedToolbarItem: function(item) {
-    if (item.tag == 'follow')
-      twitterAjax.post('1/friendships/create.json', {user_id: this.profile.id_str},
-                       this.callbackFollowUnfollow.bind(this));
-    else if (item.tag =='unfollow')
-      twitterAjax.post('1/friendships/destroy.json', {user_id: this.profile.id_str},
-                       this.callbackFollowUnfollow.bind(this));
-    else
-      this._super(item);
-  }
+  callbackFollowUnfollow: function(req) {
+    if (req.status != 200) return;
+
+    //update profile
+    this.profile = JSON.parse(req.responseText);
+    this.evaluateViewChanges();
+    this.fields[this.unFollowIndex].text =
+      this.profile.following ? 'Unfollow' : 'Follow';
+    this.updateView(this.unFollowIndex);
+  },
+  selectedItemAtIndex: function(index) {
+    if (this.fields[index].tag == 'follow-action'){
+      if (this.profile.following)
+        twitterAjax.post('1/friendships/destroy.json',
+                          {user_id: this.profile.id_str},
+                          this.callbackFollowUnfollow.bind(this));
+      else
+         twitterAjax.post('1/friendships/create.json',
+                          {user_id: this.profile.id_str},
+                          this.callbackFollowUnfollow.bind(this));
+
+      return;
+    }
+
+    this._super(index);
+  },
 });
 
 LoggedInUserProfileController = BaseProfileController.extend({
@@ -533,13 +601,18 @@ LoggedInUserProfileController = BaseProfileController.extend({
   showProfile: function(profile) {
     this._super(profile);
     this.title = 'Me';
+
+    //signout action
+    this.fields.push({
+      text: 'Sign out',
+      tag: 'sign-out',
+      end: 'arrow_right',
+      group: 'Actions'
+    });
+    this.model.pushItem(this.fields[this.fields.length]);
   },
-  toolbarItems: function() {
-    return [{label: 'Tweets', tag: 'tweets'},
-            {label: 'Sign out', tag: 'sign-out'}];
-  },
-  selectedToolbarItem: function(item) {
-    if (item.tag == 'sign-out') {
+  selectedItemAtIndex: function(index) {
+    if (this.fields[index].tag == 'sign-out') {
       gToken = gTokenSecret = null;
 
       localStorage.removeItem('gToken');
@@ -551,7 +624,7 @@ LoggedInUserProfileController = BaseProfileController.extend({
       return;
     }
 
-    this._super(item);
+    this._super(index);
   }
 });
 
@@ -584,24 +657,7 @@ TimelineController = EUI.ListController({
   },
   itemAtIndex: function(index){
     var item = this.model.itemAtIndex(index);
-    var user = '';
-
-    if (item.retweeted_status) {
-      user += item.retweeted_status.user.name;
-
-      if (item.user.id_str != gUserID)
-        user += ' [Retweeted by ' + item.user.name + ']';
-    } else
-      user += item.user.name;
-
-    if (item.retweeted)
-      user += ' (Retweeted)'
-
-    return {
-      text: item.text,
-      text_sub: "By " + user,
-      icon: item.file
-    }
+    return TimelineItemBuilder.formatTweet(item);
   },
   navigationBarItems: function() {
     if (this.type === 'home')
