@@ -402,6 +402,10 @@ static const EDBus_Method methods[] = {
    { }
 };
 
+static const EDBus_Service_Interface_Desc desc = {
+   "mobi.profusion.eve", methods
+};
+
 static void
 _cb_dbus_request_name(void *data, const EDBus_Message *msg,
                       EDBus_Pending *pending)
@@ -420,8 +424,7 @@ _cb_dbus_request_name(void *data, const EDBus_Message *msg,
    case EDBUS_NAME_REQUEST_REPLY_ALREADY_OWNER:
       {
          edbus_service_interface_register(response->conn,
-                                          "/mobi/profusion/eve",
-                                          "mobi.profusion.eve", methods, NULL);
+                                          "/mobi/profusion/eve", &desc);
       }
       break;
    case EDBUS_NAME_REQUEST_REPLY_IN_QUEUE:
