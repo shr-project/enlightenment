@@ -1787,7 +1787,7 @@ exports.widgets.Entry = wrapElm(elm.Entry, {
   setValue: function (value) {
     value = (value !== undefined) ? value : '';
     if (this.text != value)
-      this.text = value;
+      this.text = this.utf8_to_markup(value);
   },
   getValue: function() { return this.markup_to_utf8(this.text) }
 });
