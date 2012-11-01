@@ -142,9 +142,9 @@ proxy_text_random.c
 #filter_object_blur.c \
 #filter_object_blur_solid.c
 
-expedite_CFLAGS = @WIN32_CFLAGS@
+expedite_CFLAGS = @WIN32_CFLAGS@ @WAYLAND_CLIENT_CFLAGS@ @WAYLAND_EGL_CFLAGS@
 expedite_CXXFLAGS = @EXPEDITE_CXXFLAGS@
-expedite_LDADD = @SDL_LIBS@ @x_libs@ @gdi_libs@ @ddraw_libs@ @d3d_libs@ @wince_16_libs@ @DIRECTFB_LIBS@ @XCB_LIBS@ @EVAS_LIBS@ @EINA_LIBS@ @EVIL_LIBS@ @gl_cocoa_libs@ -lm
+expedite_LDADD = @SDL_LIBS@ @x_libs@ @gdi_libs@ @ddraw_libs@ @d3d_libs@ @wince_16_libs@ @DIRECTFB_LIBS@ @XCB_LIBS@ @EVAS_LIBS@ @EINA_LIBS@ @EVIL_LIBS@ @gl_cocoa_libs@ @WAYLAND_CLIENT_LIBS@ @WAYLAND_EGL_LIBS@ -lm
 expedite_LDFLAGS = @lt_enable_auto_import@
 
 if BUILD_SOFTWARE_XLIB
@@ -222,9 +222,14 @@ expedite_SOURCES += \
 engine_software_16_wince.c engine_software_16_wince.h  engine_software_16_wince.rc
 endif
 
-if BUILD_SOFTWARE_16_WINCE
+if BUILD_WAYLAND_EGL
 expedite_SOURCES += \
-engine_software_16_wince.c engine_software_16_wince.h  engine_software_16_wince.rc
+engine_wayland_egl.c engine_wayland_egl.h
+endif
+
+if BUILD_WAYLAND_SHM
+expedite_SOURCES += \
+engine_wayland_shm.c engine_wayland_shm.h
 endif
 
 .rc.lo:

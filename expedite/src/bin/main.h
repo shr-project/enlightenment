@@ -77,6 +77,12 @@
 #if HAVE_EVAS_SOFTWARE_16_WINCE
 #include "engine_software_16_wince.h"
 #endif
+#if defined(HAVE_EVAS_WAYLAND_EGL) && defined(BUILD_WAYLAND_EGL)
+#include "engine_wayland_egl.h"
+#endif
+#if defined(HAVE_EVAS_WAYLAND_SHM) && defined(BUILD_WAYLAND_SHM)
+#include "engine_wayland_shm.h"
+#endif
 
 #ifdef __cplusplus
 extern "C"

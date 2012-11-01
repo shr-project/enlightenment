@@ -1186,6 +1186,12 @@ static const Expedite_Engine engines[] = {
   { "wince-ddraw", engine_software_16_wince_args, engine_software_16_wince_loop, engine_software_16_wince_shutdown },
   { "wince-gdi", engine_software_16_wince_args, engine_software_16_wince_loop, engine_software_16_wince_shutdown },
 #endif
+#if defined(HAVE_EVAS_WAYLAND_EGL) && defined(BUILD_WAYLAND_EGL)
+  { "wayland-egl", engine_wayland_egl_args, engine_wayland_egl_loop, engine_wayland_egl_shutdown },
+#endif
+#if defined(HAVE_EVAS_WAYLAND_SHM) && defined(BUILD_WAYLAND_SHM)
+  { "wayland-shm", engine_wayland_shm_args, engine_wayland_shm_loop, engine_wayland_shm_shutdown },
+#endif
   { NULL, NULL, NULL, NULL }
 };
 
