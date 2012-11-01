@@ -110,6 +110,14 @@ function build_etc()
 
 function build_themes()
 {
+    #dark theme
+	echo ""
+	echo "============ efenniht ============"
+	pushd THEMES/dark/edje
+		./build.sh
+		cp dark.edj ~/.e/e/themes/
+	popd
+
 	#efenniht theme
 	echo ""
 	echo "============ efenniht ============"
