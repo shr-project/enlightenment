@@ -377,7 +377,7 @@ AuthController = EUI.TableController({
                     })]
                   ]
   },
-  didUriChange: function(uri) {
+  didChangeUri: function(uri) {
     //if it goes to the callback page, it means that it was authenticated
     if (uri.uri.substring(0, gCallbackUrl.length) == gCallbackUrl){
       var parsedParameters = parseParametersResponse(

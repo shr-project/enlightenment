@@ -2173,10 +2173,10 @@ Widgets.Photocam = wrapElm(elm.Photocam, {
 Widgets.Web = wrapElm(elm.Web, {
   type: 'Web',
   event_map: {
-    on_load_progress: 'didLoadProgress',
-    on_ready: 'didReady',
-    on_title_change: 'didTitleChange',
-    on_uri_change: 'didUriChange',
+    on_load_progress: 'didChangeProgress',
+    on_ready: 'didFinishLoading',
+    on_title_change: 'didChangeTitle',
+    on_uri_change: 'didChangeUri',
   },
 });
 
