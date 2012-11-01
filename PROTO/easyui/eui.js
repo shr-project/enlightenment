@@ -1008,6 +1008,32 @@ ActionSheet = Class.extend({
  * @private
  */
 GenController = Controller.extend({
+
+  /**
+   * Implementations should return an object that describes the specified item.
+   *
+   * Properties might include:
+   *
+   *  * text
+   *  * subtext
+   *  * icon
+   *  * end
+   *
+   * See [Photo Example](#!/guide/photo)
+   *
+   * @param {Number} index
+   * @template
+   */
+  itemAtIndex: function(index) {},
+
+  /**
+   * Triggered when an item is selected.
+   * @param {Number} index
+   * @template
+   * @event
+   */
+  selectedItemAtIndex: function(index) {},
+
   /**
    * @inheritdoc
    * @event
