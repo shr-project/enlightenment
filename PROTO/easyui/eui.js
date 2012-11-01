@@ -1462,11 +1462,11 @@ TableController = Controller.extend({
     return values;
   },
   index: new Property({
-    get: function() { return this._index },
+    get: function() { return this._index.value },
     set: function(value) {
       if (!this.model) throw "Model must be defined before index";
       if (value >= 0 && value < this.model.length())
-        this._index = value;
+        this._index.value = value;
     }
   })
 });
