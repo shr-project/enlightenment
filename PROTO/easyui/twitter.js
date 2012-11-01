@@ -405,26 +405,7 @@ AuthController = EUI.TableController({
 
 BrowserController = EUI.WebController({});
 
-SettingsController = EUI.TableController({
-  title: 'Settings',
-  icon: 'preferences-desktop',
-  fields: [
-    [EUI.widgets.Button({text: 'Sign out'})]
-  ],
-  didClickOnElement: function(item) {
-    switch (item.text){
-      case 'Sign out':
-        gToken = gTokenSecret = null;
-
-        localStorage.removeItem('gToken');
-        localStorage.removeItem('gTokenSecret');
-        localStorage.removeItem('gScreenName');
-        localStorage.removeItem('gUserID');
-    }
-  }
-});
-
-ProfileController = EUI.ListController({
+BaseProfileController = EUI.ListController({
   style: 'double_label',
   getProfileImage: function() {
     //gets profile image
@@ -436,7 +417,18 @@ ProfileController = EUI.ListController({
       this.updateView(0);
     }.bind(this));
   },
-  init: function(profile) {
+  init: function(user_id) {
+    this.fields = [];
+
+    twitterAjax.get('1/users/show.json', {user_id: user_id}, function(req) {
+      if (req.status != '200') return;
+
+      this.showProfile(JSON.parse(req.responseText));
+    }.bind(this));
+
+    this.model = new EUI.ArrayModel([]);
+  },
+  showProfile: function(profile) {
     this.title = profile.name;
     this.profile = profile;
 
@@ -455,7 +447,7 @@ ProfileController = EUI.ListController({
             location: {row: 1, col: 0,
               element: this.createLabel(profile.location)},
             url: {row: 2, col: 0,
-              element: this.createLabel(profile.url)}
+              element: this.createLabel(profile.url || '<i>Not available</i>')}
           }
         })
       },
@@ -475,8 +467,8 @@ ProfileController = EUI.ListController({
       },
     ];
 
-    this.model = new EUI.ArrayModel(this.fields);
-    this.getProfileImage();
+    for (var i = 0; i < this.fields.length; i++)
+      this.model.pushItem(this.fields[i]);
   },
   createLabel: function(text) {
     return EUI.widgets.Label({
@@ -485,21 +477,12 @@ ProfileController = EUI.ListController({
     });
   },
   itemAtIndex: function(index) {
+    if (index == 0 && !this.fields[index].icon)
+      this.getProfileImage();
     return this.fields[index];
   },
   toolbarItems: function() {
-    var toolbarItems = [{label: 'Tweets', tag: 'tweets'}];
-
-    if (this.profile.id_str != gUserID) {
-      if (this.profile.following)
-        toolbarItems.push({label: 'Unfollow', tag: 'unfollow'});
-      else
-        toolbarItems.push({label: 'Follow', tag: 'follow'});
-    } else {
-      toolbarItems.push({label: 'Sign out', tag: 'sign-out'});
-    }
-
-    return toolbarItems;
+    return [{label: 'Tweets', tag: 'tweets'}];
   },
   callbackFollowUnfollow: function(req) {
     if (req.status != 200) return;
@@ -509,30 +492,66 @@ ProfileController = EUI.ListController({
     this.evaluateViewChanges();
   },
   selectedToolbarItem: function(item) {
-    switch (item.tag) {
-      case 'tweets':
+    if (item.tag == 'tweets')
         this.pushController(new TimelineController(
            new TimelineModel(this.profile.id_str),
            'tweets', this.profile.screen_name));
-        break;
-      case 'follow':
-        twitterAjax.post('1/friendships/create.json', {user_id: this.profile.id_str},
-                         this.callbackFollowUnfollow.bind(this));
-        break;
-      case 'unfollow':
-        twitterAjax.post('1/friendships/destroy.json', {user_id: this.profile.id_str},
-                         this.callbackFollowUnfollow.bind(this));
-        break;
-      case 'sign-out':
-        gToken = gTokenSecret = null;
+  }
+});
 
-        localStorage.removeItem('gToken');
-        localStorage.removeItem('gTokenSecret');
-        localStorage.removeItem('gScreenName');
-        localStorage.removeItem('gUserID');
+UserProfileController = BaseProfileController.extend({
+  toolbarItems: function() {
+    var toolbarItems = this._super();
 
-        this.popController();
-      }
+    if (!this.profile)
+      return;
+
+    if (this.profile.following)
+      toolbarItems.push({label: 'Unfollow', tag: 'unfollow'});
+    else
+      toolbarItems.push({label: 'Follow', tag: 'follow'});
+
+    return toolbarItems;
+  },
+  selectedToolbarItem: function(item) {
+    if (item.tag == 'follow')
+      twitterAjax.post('1/friendships/create.json', {user_id: this.profile.id_str},
+                       this.callbackFollowUnfollow.bind(this));
+    else if (item.tag =='unfollow')
+      twitterAjax.post('1/friendships/destroy.json', {user_id: this.profile.id_str},
+                       this.callbackFollowUnfollow.bind(this));
+    else
+      this._super(item);
+  }
+});
+
+LoggedInUserProfileController = BaseProfileController.extend({
+  init: function(){
+    this._super(gUserID);
+    this.title = 'Me';
+  },
+  showProfile: function(profile) {
+    this._super(profile);
+    this.title = 'Me';
+  },
+  toolbarItems: function() {
+    return [{label: 'Tweets', tag: 'tweets'},
+            {label: 'Sign out', tag: 'sign-out'}];
+  },
+  selectedToolbarItem: function(item) {
+    if (item.tag == 'sign-out') {
+      gToken = gTokenSecret = null;
+
+      localStorage.removeItem('gToken');
+      localStorage.removeItem('gTokenSecret');
+      localStorage.removeItem('gScreenName');
+      localStorage.removeItem('gUserID');
+
+      this.popController();
+      return;
+    }
+
+    this._super(item);
   }
 });
 
@@ -649,13 +668,12 @@ TimelineController = EUI.ListController({
         //must be a url or a profile
         if (menuItem.url)
           this.pushController(new BrowserController(menuItem.url));
-        else
-//          this.pushController(new TimelineController(new TimelineModel(menuItem.id_str), 'tweets', menuItem.screen_name));
-        twitterAjax.get('1/users/show.json', {user_id: menuItem.id_str}, function(req) {
-          if (req.status != '200') return;
-
-          this.pushController(new ProfileController(JSON.parse(req.responseText)));
-        }.bind(this));
+        else {
+          if (menuItem.id_str == gUserID)
+            this.pushController(new LoggedInUserProfileController());
+          else
+            this.pushController(new UserProfileController(menuItem.id_str));
+        }
     }
   },
   didScrollOverEdge: function(edge) {
@@ -674,7 +692,7 @@ Gralha = EUI.TabController({
   model: new EUI.ArrayModel([
     new TimelineController(new TimelineModel(), 'home', 'Home'),
     new SavedSearchController(),
-    new SettingsController()
+    new LoggedInUserProfileController(gUserID)
   ]),
   title: 'Gralha',
   titleVisible: false,
