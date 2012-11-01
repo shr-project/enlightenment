@@ -308,6 +308,9 @@ Controller = Class.extend({
           });
           break;
         case 'sidePanel':
+          if (EUI.uiMode === 'tablet')
+            return;
+
           btn = elm.Button({
             icon: this.split.left.icon || 'apps',
             label: this.split.left.title,
@@ -1690,8 +1693,16 @@ SplitController = Container.extend({
     var panels = ['left', 'right'];
     var len = Math.min(this.model.length, panels.length);
 
-    for (var i = 0; i < len; i++) {
+    switch (EUI.uiMode) {
+    case 'tablet':
+      this.view.signal_emit("tablet,mode", "");
+      break;
+    case 'phone':
+      this.view.signal_emit("phone,mode", "");
+      break;
+    }
 
+    for (var i = 0; i < len; i++) {
       var ctrl = this.model.itemAtIndex(i);
       var panel = panels[i];
 
@@ -1714,7 +1725,8 @@ SplitController = Container.extend({
   /** */
   leftPanelVisible: new Property({
     set: function(setting) {
-      this.view.signal_emit(setting ? "show,left" : "hide,left", "");
+      if (EUI.uiMode !== 'tablet')
+        this.view.signal_emit(setting ? "show,left" : "hide,left", "");
     }
   })
 });
@@ -2180,6 +2192,12 @@ exports.controllers = [];
 exports.loadingState = 0;
 
 /** */
+exports.uiMode = (function() {
+  if (environment['EASYUI_UI_MODE'] === 'tablet')
+    return 'tablet';
+  return 'phone';
+})();
+
 exports.app = function(app) {
 
   if (!(app instanceof Controller))
