@@ -1,0 +1,11 @@
+{
+  "--title": "EasyUI",
+  "--warnings": ["-no_doc"],
+  "--output": "../docs",
+  "--meta-tags": "todo.rb",
+  "--external": ["Realized", "Descriptor"],
+  "--": [
+    "../class/class.js",
+    "../eui.js"
+  ]
+}

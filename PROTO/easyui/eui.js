@@ -4,8 +4,14 @@ elm = require('elm.so');
 fs = require('fs');
 taffy = require('taffy').taffy;
 
+/** @extends Class */
 Controller = Class.extend({
 
+  /**
+   * @param {Mixed} feature
+   * @param {Mixed} defaultValue
+   * @protected
+   */
   _feature: function(feature, defaultValue) {
     if (feature === undefined)
       return defaultValue;
@@ -14,15 +20,31 @@ Controller = Class.extend({
     return feature;
   },
 
+  /**
+   * Receive the reference to the realization of the view descriptor and keep it.
+   * @param {Realized} view Realized view description
+   * @protected
+   */
   _setViewContent: function(view) {
     this.viewContent = view.content;
     this.naviframe_item = view;
   },
 
+  /**
+   * Keep the realized content of Controller.viewDescriptor.
+   * @type {Realized}
+   * @readonly
+   */
   view: new Property({
     get: function() { return this.viewContent.content.view; }
   }),
 
+  /**
+   * Return a enveloped version of Controller.viewDescription
+   * on a layout with a toolbar.
+   * @return {Descriptor}
+   * @protected
+   */
   _getViewDescriptor: function() {
     if (this.cachedViewDescriptor !== undefined)
       return this.cachedViewDescriptor;
@@ -41,10 +63,15 @@ Controller = Class.extend({
     return this.cachedViewDescriptor;
   },
 
+  /** Pop the controller that is on top of the stack. */
   popController: function() {
     this.naviframe.pop();
   },
 
+  /**
+   * Fired when the controller is popped.
+   * @event
+   */
   _shutdown: function() {
     if (EUI.__shutting_down)
       return;
@@ -59,6 +86,10 @@ Controller = Class.extend({
       this.parent.evaluateViewChanges();
   },
 
+  /**
+   * Add a new instance of Controller on view stack.
+   * @param {Controller} ctrl
+   */
   pushController: function(ctrl) {
     ctrl.parent = this;
 
@@ -82,6 +113,12 @@ Controller = Class.extend({
     ctrl.didRealizeView();
   },
 
+  /**
+   * Return the content of Controller.viewDescriptor
+   * inside an application frame.
+   * @return {Descriptor}
+   * @protected
+   */
   _realizeApp: function() {
     return elm.Naviframe({
       expand: 'both',
@@ -98,30 +135,74 @@ Controller = Class.extend({
     });
   },
 
+  /**
+   * Receive a reference to the realized application descriptor and keep it.
+   * @param {Realized} realized
+   * @protected
+   */
   _setRealizedApp: function(realized) {
     this.naviframe = realized;
     this._setViewContent(realized.elements[0]);
     this.didRealizeView();
   },
 
+  /**
+   * Return true if the Controller.viewDescriptor was realized.
+   * @type {Boolean}
+   * @protected
+   */
   _isRealized: new Property({
     get: function() { return this.naviframe instanceof elm.Naviframe; }
   }),
 
+  /**
+   * Check if is the same realized application.
+   * @param {Controller} realized
+   * @return {Boolean}
+   * @protected
+   */
   _isEqual: function(realized) {
       return ((this.naviframe) && (realized === this.naviframe));
   },
 
+  /**
+   * Fired when model chages.
+   * @param {Number/Array} indexes
+   * @param {String} hint
+   * @event
+   */
   didChangeModel: function (indexes, hint) {
     this._cachedItem = undefined;
     this.updateView(indexes, hint);
     this.evaluateViewChanges();
   },
 
+  /**
+   * Fired before init be called.
+   * @template
+   * @event
+   */
   willInitialize: function () {},
 
+  /**
+   * Fired after init be called.
+   * @template
+   * @event
+   */
   didInitialize: function () {},
 
+  /**
+   * @event
+   * @template
+   * @param {Number/Array} indexes
+   * @param {String} hint
+   */
+  updateView: function(indexes, hint) {},
+
+  /**
+   * Fired after view is realized.
+   * @event
+   */
   didRealizeView: function () {
     if (this.model)
       this.model.addController(this);
@@ -129,6 +210,9 @@ Controller = Class.extend({
     this.evaluateViewChanges();
   },
 
+  /**
+   * @protected
+   */
   _evaluateToolbarChanges: function() {
 
     if (!this._isRealized) return;
@@ -164,6 +248,7 @@ Controller = Class.extend({
     toolbar.cachedItems = items;
   },
 
+  /** @protected */
   _createNavigationBarItem: function(item) {
 
     if (typeof(item) === 'string') {
@@ -239,6 +324,7 @@ Controller = Class.extend({
     return item;
   },
 
+  /** @protected */
   _createNavigationBarItems: function(items) {
     if (items === undefined || items.length === 0)
       return;
@@ -252,6 +338,7 @@ Controller = Class.extend({
     return elm.Box({ horizontal: true, elements: elements });
   },
 
+  /** @protected */
   _evaluateNavigationBarChanges: function() {
 
     if (!this._isRealized) return;
@@ -284,16 +371,19 @@ Controller = Class.extend({
     this.naviframe.cachedTitle = title;
   },
 
+  /** @protected */
   _updateInterfaceElementVisibility: function() {
     this.naviframe.title_visible =
       (this.title || Object.keys(this.navigationBarItems).length);
   },
 
+  /** @protected */
   _updateWindowProperties: function() {
     if (!this._isRealized) return;
     EUI.window.fullscreen = this.isFullscreen;
   },
 
+  /** */
   evaluateViewChanges: function() {
     this._evaluateToolbarChanges();
     this._evaluateNavigationBarChanges();
@@ -301,30 +391,58 @@ Controller = Class.extend({
     this._updateWindowProperties();
   },
 
-  selectedNavigationBarItem: function() {},
+  /**
+   * @template
+   * @require Controller#navigationBarItems
+   */
+  selectedNavigationBarItem: function(item) {},
 
   title: new Property({
     watch: function() { this._evaluateNavigationBarChanges() }
   }),
 
+  /**
+   * @type {Object/Function}
+   * @example
+   *     this.navigationBarItems = function() {
+   *         return { right: ['next'], left: ['previous'] };
+   *     };
+   */
   navigationBarItems: new Property({
     value: {},
     watch: function() { this._evaluateNavigationBarChanges() }
   }),
 
+  /** @type {String/Function} */
   navigationBarStyle: new Property({
     watch: function() { this._evaluateNavigationBarChanges() }
   }),
 
+  /**
+   * Fired when an item is selected on application toolbar.
+   * @template
+   * @event
+   */
+  selectedToolbarItem: function(item) {},
+
+  /**
+   * @type Array/Function
+   * @require Controller.selectedToolbarItem
+   */
   toolbarItems: new Property({
     value: [],
     watch: function() { this._evaluateToolbarChanges() }
   }),
 
+  /** @type {Boolean} */
   isFullscreen: new Property({
     watch: function() { this._updateWindowProperties() }
   }),
 
+  /**
+   * @type {SplitController}
+   * @readonly
+   */
   split: new Property({
     get: function() {
       if (this instanceof SplitController)
@@ -337,33 +455,64 @@ Controller = Class.extend({
 
 });
 
+/** @extends Class */
 Model = Class.extend({
+  /**
+   * @protected
+   * @event
+   */
   willInitialize: function(){
     this.controllers = [];
   },
+  /**
+   * @param {Number} index
+   */
   itemAtIndex: function(index) {
     return null;
   },
+  /**
+   * @type {Number}
+   * @readonly
+   */
   length: new Property({
     value: 0
   }),
+  /**
+   * @param {Number/Array} indexes
+   * @param {String} hint
+   */
   notifyControllers: function(indexes, hint) {
     if (this.controllers.length)
       for (var i = 0; i < this.controllers.length; i++)
         this.controllers[i].didChangeModel(indexes, hint);
   },
+  /**
+   * @param {Controller} controller
+   */
   addController: function(controller) {
     if (this.controllers.indexOf(controller) < 0)
       this.controllers.push(controller);
   },
+  /**
+   * @param {Controller} controller
+   */
   removeController: function(controller){
     for (var i = 0; i < this.controllers.length; i++)
       if (this.controllers[i] == controller)
         this.controllers.splice(i, 1);
   },
+  /**
+   * @param {Number} index
+   * @template
+   */
   deleteItemAtIndex: function(index) {},
+  /**
+   * @param {Number} index
+   * @param {Mixed} data
+   * @template
+   */
   updateItemAtIndex: function(index, data) {},
-
+  /** @type {Number} */
   selectedIndex: new Property({
     get: function() { return this.__selectedIndex; },
     set: function(value) {
@@ -375,20 +524,31 @@ Model = Class.extend({
   })
 });
 
+/** @extend Model */
 ArrayModel = Model.extend({
+  /**
+   * @param {Array} array
+   */
   init: function(array) {
     this.array = [].concat(array);
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     return this.array[index];
   },
+  /**
+   * @type {Number}
+   * @readonly
+   */
   length: new Property({
     get: function() { return this.array.length; }
   }),
+  /** @inheritdoc */
   deleteItemAtIndex: function(index) {
     this.array.splice(index, 1);
     this.notifyControllers(index, 'delete');
   },
+  /** @inheritdoc */
   updateItemAtIndex: function(index, data) {
     var item = this.array[index];
     if (typeof(data) === 'object' && typeof(item) === 'object') {
@@ -400,15 +560,26 @@ ArrayModel = Model.extend({
     }
     this.notifyControllers(index, 'update');
   },
+  /**
+   * @param {Mixed} data
+   * @return {Number}
+   */
   indexOf: function(data) {
     return this.array.indexOf(data);
   },
+  /**
+   * @param {Mixed} data
+   */
   pushItem: function(data) {
     this.notifyControllers(this.array.push(data) - 1, 'insert');
   }
 });
 
+/** @extend Model */
 FilteredModel = Model.extend({
+  /**
+   * @param {Array} array
+   */
   init: function(array) {
     this.array = taffy();
     for (var i in array) {
@@ -417,13 +588,19 @@ FilteredModel = Model.extend({
       this.array.insert({item: array[i]});
     }
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.array(this.filter).get()[index];
     return item && item.item;
   },
+  /**
+   * @type {Number}
+   * @readonly
+   */
   length: new Property({
     get: function() { return this.array(this.filter).count(); }
   }),
+  /** @type {String} */
   filter: new Property({
     get: function() { return this.__filter; },
     set: function(filter) {
@@ -432,23 +609,34 @@ FilteredModel = Model.extend({
       this.notifyControllers();
     }
   }),
+  /** @inheritdoc */
   deleteItemAtIndex: function(index) {
     var item = this.array(this.filter).get()[index];
     this.array(item['___id']).remove();
     this.notifyControllers(index, 'delete');
   },
+  /** @inheritdoc */
   updateItemAtIndex: function(index, data) {
     var item = this.array(this.filter).get()[index];
     this.array(item['___id']).update({item: data});
     this.notifyControllers([index]);
   },
+  /**
+   * @param {Mixed} data
+   */
   pushItem: function(data) {
     this.array.insert({item: data});
     this.notifyControllers();
   }
 });
 
+/** @extend Model */
 FileModel = Model.extend({
+  /**
+   * @param {String} path
+   * @param {String} patterns
+   * @param {Number} depth
+   */
   init: function(path, patterns, depth) {
     this.path = path;
     this.patterns = patterns;
@@ -519,53 +707,69 @@ FileModel = Model.extend({
 
     var root = fileModelTree(this.path, depth ? depth : 2);
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     return this.array[index];
   },
+  /** @type {Number} */
   length: new Property({
     get: function() { return this.array.length; }
   })
 });
 
+/** @extend Model */
 DBModel = Model.extend({
+  /**
+   * @event
+   * @param {String} database
+   */
   willInitialize: function(database) {
     this._super();
     this.entries = taffy();
     this.entries.store(database);
   },
+  /** @inheritdoc */
   itemAtIndex: function (index) {
     return this.entries().get()[index];
   },
+  /** @type {Number} */
   length: new Property({
     get: function() { return this.entries().count(); }
   }),
+  /** @inheritdoc */
   updateItemAtIndex: function(index, values) {
     var item = this.itemAtIndex(index);
     this.entries(item['___id']).update(values);
     this.notifyControllers([index]);
   },
+  /** */
   insert: function(data) {
     this.entries.insert(data);
     this.notifyControllers();
   },
+  /** */
   indexOf: function(item, key) {
     var search = {};
     key = key || 'id';
     search[key] = item[key];
     return this.entries().get().indexOf(this.entries(search).first());
   },
+  /** @inheritdoc */
   deleteItemAtIndex: function(index) {
     var item = this.itemAtIndex(index);
     this.entries(item['___id']).remove();
     this.notifyControllers();
   },
+  /** */
   clear: function() {
     this.entries().remove();
     this.notifyControllers();
   }
 });
 
+/** @extend Class */
 ActionSheet = Class.extend({
+  /** @event */
   didInitialize: function() {
     this.content = elm.Box({
       expand: 'both',
@@ -595,7 +799,14 @@ ActionSheet = Class.extend({
   }
 });
 
+/**
+ * @extends Controller
+ * @private
+ */
 GenController = Controller.extend({
+  /**
+   * @event
+   */
   willInitialize: function(_type) {
     this._groups = {};
     this._type = _type;
@@ -685,6 +896,7 @@ GenController = Controller.extend({
       }
     });
   },
+  /** @private */
   _fetchItemUsingCache: function(index) {
     if (this._cachedItem && this._cachedItem.model_index === index)
       return this._cachedItem;
@@ -699,6 +911,7 @@ GenController = Controller.extend({
 
     return {};
   },
+  /** @private */
   _itemFromData: function(data) {
     if (data.model_index !== undefined)
       return this._fetchItemUsingCache(data.model_index);
@@ -708,6 +921,7 @@ GenController = Controller.extend({
 
     return {};
   },
+  /** @event */
   didInitialize: function(_type) {
     if (this.editable) {
       if (!this.navigationBarItems.right)
@@ -718,6 +932,7 @@ GenController = Controller.extend({
     }
     this._super();
   },
+  /** @event */
   updateItemAtIndex: function(index) {
     var item = this._fetchItemUsingCache(index);
     if (!item)
@@ -757,6 +972,7 @@ GenController = Controller.extend({
 
     view.elements[index] = element;
   },
+  /** @private */
   _removeIndexesFromView: function(view, indexes) {
     /*
      * FIXME: This is far from ideal in the case where there are
@@ -783,12 +999,14 @@ GenController = Controller.extend({
       view.clear(indexes);
     }
   },
+  /** @private */
   _updateIndexes: function(indexes) {
     indexes = [].concat(indexes);
 
     for (var i = 0; i < indexes.length; i++)
       this.updateItemAtIndex(indexes[i]);
   },
+  /** @private */
   _updateAllIndexes: function(view, indexes) {
     this._groups = {};
     for (var i = 0, j = this.model.length; i < j; ++i) {
@@ -800,6 +1018,7 @@ GenController = Controller.extend({
       i++;
     }
   },
+  /**  */
   updateView: function(indexes, hint) {
 
     this.searchBarVisible = !!this.search;
@@ -822,6 +1041,7 @@ GenController = Controller.extend({
     this._updateAllIndexes(view, indexes);
   },
 
+  /** */
   searchBarVisible: new Property({
     get: function() { return this._cachedSearchBarVisible; },
     set: function(setting) {
@@ -834,12 +1054,15 @@ GenController = Controller.extend({
 
 });
 
+/** @extend GenController */
 ListController = GenController.extend({
+  /** @event */
   willInitialize: function() {
     this._super(elm.Genlist);
     this.contextMenuDirection = 'horizontal';
     this.listening_scroll = true;
   },
+  /** @event */
   didInitialize: function() {
     this._super();
     var list = this.viewDescriptor.content.list;
@@ -849,6 +1072,7 @@ ListController = GenController.extend({
     list.on_scrolled_over_left_edge = this.on_scrolled_over_edge.bind(this, "left");
     list.on_scrolled_over_right_edge = this.on_scrolled_over_edge.bind(this, "right");
   },
+  /** @private */
   on_longpress: function(item) {
     if (!this.contextMenuItems)
       return;
@@ -895,10 +1119,12 @@ ListController = GenController.extend({
       ctxMenu.show();
     }
   },
+  /** @private */
   on_scrolled_over_edge: function(edge) {
     if (this.listening_scroll && typeof(this.didScrollOverEdge) === 'function')
       this.didScrollOverEdge(edge);
   },
+  /** @inheritdoc */
   updateView: function(indexes, hint) {
     if (hint == 'beginSlowLoad') {
       var edge = indexes == -1 ? 'top' : 'bottom';
@@ -914,12 +1140,14 @@ ListController = GenController.extend({
 
     this._super(indexes, hint);
   },
+  /** @private */
   _ignoreScrollEvents: function() {
     this.listening_scroll = false;
     setTimeout(function() {
       this.listening_scroll = true
     }.bind(this), 600);
   },
+  /** @private */
   _showLoadingItem: function(edge){
     var view = this.view.content.list;
     var loading_element = {
@@ -933,6 +1161,7 @@ ListController = GenController.extend({
     view.elements[edge] = loading_element;
     view.bring_in_item(view.elements[edge], "in");
  },
+  /** @private */
   _hideLoadingItem: function(edge) {
     var view = this.view.content.list;
     if (view.elements[edge])
@@ -943,10 +1172,13 @@ ListController = GenController.extend({
   }
 });
 
+/** @extend GenController */
 GridController = GenController.extend({
+  /** @event */
   willInitialize: function() {
     this._super(elm.Gengrid);
   },
+  /** @event */
   didRealizeView: function() {
     this.view.content.list.item_size_vertical = 128;
     this.view.content.list.item_size_horizontal = 128;
@@ -954,7 +1186,11 @@ GridController = GenController.extend({
   }
 });
 
+/**
+ * @extend Controller
+ */
 var WebController = Controller.extend({
+  /** @type {Array} */
   toolbarItems: [
     { tag: 'back', icon: 'go-previous', label: 'Back' },
     { tag: 'forward', icon: 'go-next', label: 'Forward' },
@@ -978,6 +1214,7 @@ var WebController = Controller.extend({
     }
   ],
 
+  /** @event */
   selectedToolbarItem: function(item) {
     switch (item.tag) {
     case 'back':
@@ -995,10 +1232,10 @@ var WebController = Controller.extend({
     }
   },
 
-  /*
-   * @param url Initial WebController page.
-   *
-   * @brief Description of elev8 widgets that will be used on this application
+  /**
+   * Description of elev8 widgets that will be used on this application
+   * @param {String} url Initial WebController page.
+   * @event
    */
   willInitialize: function(url) {
     url = url || this.url || 'about:blank';
@@ -1079,6 +1316,7 @@ var WebController = Controller.extend({
     });
   },
 
+  /** */
   updateView: function() {
     var view = this.view;
 
@@ -1092,28 +1330,34 @@ var WebController = Controller.extend({
     }
   },
 
+  /** @private */
   goBack: function() {
     this.web.back();
   },
 
+  /** @private */
   goForward: function() {
     this.web.forward();
   },
 
+  /** @private */
   reload: function() {
     this.web.reload();
   },
 
+  /** @private */
   stop: function() {
     this.web.stop();
   },
 
+  /** @private */
   go: function(uri) {
     this.link_hover_notify.visible = false;
     this.progress.visible = false;
     this.web.uri = uri;
   },
 
+  /** @event */
   didUpdateToolbar: function(toolbar, items) {
     this.toolbar = toolbar;
     this.url_entry = toolbar.elements[3].element;
@@ -1132,6 +1376,7 @@ var WebController = Controller.extend({
     }.bind(this);
   },
 
+  /** @event */
   willPopController: function() {
     this.web.on_link_hover_in = null;
     this.web.on_link_hover_out = null;
@@ -1141,39 +1386,53 @@ var WebController = Controller.extend({
   }
 });
 
+/** @extend Controller */
 Container = Controller.extend({
+  /** */
   evaluateViewChanges: function() {},
+  /** @inheritdoc */
   _getViewDescriptor: function() {
     return this.viewDescriptor;
   },
+  /** @inheritdoc */
   _realizeApp: function() {
     return this._getViewDescriptor();
   },
+  /** @inheritdoc */
   _setViewContent: function(view) {
     throw "It's a 'Container' and can't be pushed in a regular 'Controller'";
   },
+  /** @inheritdoc */
   _setRealizedApp: function(realized) {
     this._view = realized;
     this.didRealizeView();
   },
+  /** @inheritdoc */
   view: new Property({
     get: function() { return this._view; },
   }),
+  /** @event */
   didRealizeView: function () {
     if (this.model)
       this.model.addController(this);
     this.updateView();
   },
+  /**
+   * @type {Number} index
+   */
   promoteController: function(index) {
     this.updateView(index, 'select');
   }
 });
 
+/** @extend Container */
 FrameController = Container.extend({
+  /** */
   viewDescriptor: elm.Naviframe({
     title_visible: false,
     elements: {}
   }),
+  /** */
   updateView: function(index, hint) {
 
     var ctrl = this.model.itemAtIndex(index || 0);
@@ -1195,7 +1454,9 @@ FrameController = Container.extend({
   },
 });
 
+/** @extend Container */
 SplitController = Container.extend({
+  /** */
   viewDescriptor: elm.Layout({
     expand: 'both',
     fill: 'both',
@@ -1203,6 +1464,7 @@ SplitController = Container.extend({
     file: { name: 'eui.edj', group: 'split' },
     content: {}
   }),
+  /** */
   updateView: function(index, hint) {
     var view = this.view;
     var panels = ['left', 'right'];
@@ -1229,6 +1491,7 @@ SplitController = Container.extend({
     }
   },
 
+  /** */
   leftPanelVisible: new Property({
     set: function(setting) {
       this.view.signal_emit(setting ? "show,left" : "hide,left", "");
@@ -1236,15 +1499,22 @@ SplitController = Container.extend({
   })
 });
 
+/** @extend Container */
 ToolController = Container.extend({
+  /** */
   viewDescriptor: elm.Toolbar({
     shrink_mode: 'expand',
     select_mode: 'always',
     elements: {}
   }),
 
+  /**
+   * @param {Number} index
+   * @template
+   */
   selectedItemAtIndex: function(index) {},
 
+  /** */
   updateView: function(index, hint) {
 
     var elements = this.view.elements;
@@ -1288,7 +1558,9 @@ ToolController = Container.extend({
   }
 });
 
+/** @extend Container */
 TabController = Container.extend({
+  /** */
   viewDescriptor: elm.Layout({
     expand: 'both',
     fill: 'both',
@@ -1297,6 +1569,7 @@ TabController = Container.extend({
     content: {}
   }),
 
+  /** @event */
   didRealizeView: function() {
 
     this.toolbar = new ToolController();
@@ -1324,6 +1597,7 @@ TabController = Container.extend({
       this.model.selectedIndex = 0;
   },
 
+  /** */
   updateView: function(index, hint) {
 
     var view = this.view;
@@ -1332,14 +1606,18 @@ TabController = Container.extend({
   },
 });
 
+/** @extend Controller */
 ImageController = Controller.extend({
+  /** */
   viewDescriptor: elm.Photocam({
     expand: 'both',
     fill: 'both',
     zoom_mode: "auto-fill",
     zoom: 5.0
   }),
+  /** @type {String} */
   navigationBarStyle: 'overlap',
+  /** */
   didRealizeView: function() {
     this.view.on_click = function() {
       if (this.didClickView)
@@ -1347,21 +1625,29 @@ ImageController = Controller.extend({
     }.bind(this);
     this._super();
   },
+  /**
+   * @type {Number}
+   * @readonly
+   */
   length: new Property({
     get: function () { return this.model.length; }
   }),
+  /** */
   setImage: function(index) {
     if ((index < 0) || (index >= this.length))
       return;
     this.index = index;
     this.didChangeModel();
   },
+  /** */
   updateView: function() {
     this.view.file = this.model.itemAtIndex(this.index).path;
   },
 });
 
+/** @extend Controller */
 VideoController = Controller.extend({
+  /** */
   viewDescriptor: elm.Box({
     expand: 'both',
     fill: 'both',
@@ -1376,19 +1662,29 @@ VideoController = Controller.extend({
       })
     }
   }),
+  /** */
   playerBar : ['Play', 'Pause'],
+  /**
+   * @type {Number}
+   * @readonly
+   */
   length: new Property({
     get: function () { return this.model.length; }
   }),
+  /**
+   * @param {Number} index
+   */
   setVideo: function(index) {
     if ((index < 0) || (index >= this.length))
       return;
     this.index = index;
     this.didChangeModel();
   },
+  /** */
   itemAtIndex : function(index){
     return this.model.itemAtIndex(this.index);
   },
+  /** */
   updateView: function() {
     var elements = this.view.elements;
     if (!elements.controllers.video)
@@ -1398,12 +1694,15 @@ VideoController = Controller.extend({
   },
 });
 
+/** @extend Controller */
 TableController = Controller.extend({
+  /** */
   viewDescriptor: elm.Table({
     expand: 'both',
     fill: 'both',
     elements: {}
   }),
+  /** */
   updateView: function(index, hint) {
 
     var elements = this.view.elements;
@@ -1453,6 +1752,7 @@ TableController = Controller.extend({
       }
     }
   },
+  /** */
   getValues: function() {
     var values = {};
     var elements = this.view.elements;
@@ -1463,6 +1763,7 @@ TableController = Controller.extend({
     }
     return values;
   },
+  /** */
   index: new Property({
     get: function() { return this.__index; },
     set: function(value) {
@@ -1473,13 +1774,16 @@ TableController = Controller.extend({
   })
 });
 
+/** @extend TableController */
 FormController = TableController.extend({
+  /** */
   navigationBarItems: function() {
     return this.editable && {
       left: 'Cancel',
       right: (this.index === undefined) ? 'Add' : 'Save'
     };
   },
+  /** */
   selectedNavigationBarItem: function(item) {
     switch (item) {
       case 'Add':
@@ -1493,7 +1797,13 @@ FormController = TableController.extend({
   },
 });
 
+/**
+ * @extend Class
+ * @singleton
+ * @private
+ */
 RoutingSingleton = Class.extend({
+  /** */
   database: {
     edit: {
       'image/*': [
@@ -1522,10 +1832,15 @@ RoutingSingleton = Class.extend({
     }
   },
 
+  /** */
   possibleActions: function() {
     return Object.keys(this.database);
   },
 
+  /**
+   * @param {String} mime_type
+   * @param {String} file
+   */
   possibleActionsForType: function(action, mime_type) {
     var handlers = this.database[action];
     if (handlers === undefined)
@@ -1542,18 +1857,35 @@ RoutingSingleton = Class.extend({
     return possible_handlers;
   },
 
+  /**
+   * @param {String} mime_type
+   * @param {String} file
+   */
   edit: function(mime_type, file) {
     return this.performAction('edit', mime_type, file);
   },
 
+  /**
+   * @param {String} mime_type
+   * @param {String} file
+   */
   share: function(mime_type, file) {
     return this.performAction('share', mime_type, file);
   },
 
+  /**
+   * @param {String} mime_type
+   * @param {String} file
+   */
   view: function(mime_type, file) {
     return this.performAction('view', mime_type, file);
   },
 
+  /**
+   * @param {String} action
+   * @param {String} mime_type
+   * @param {String} file
+   */
   performAction: function(action, mime_type, file) {
     var possible_handlers = this.possibleActionsForType(action, mime_type);
 
@@ -1571,6 +1903,7 @@ RoutingSingleton = Class.extend({
     return true;
   },
 
+  /** */
   init: function() {
     var database = {};
 
@@ -1595,6 +1928,7 @@ RoutingSingleton = Class.extend({
   }
 });
 
+/** @singleton */
 Routing = {
   __instance__: new RoutingSingleton(),
   edit: function(mime_type, file) {
@@ -1616,10 +1950,16 @@ Routing = {
   }
 };
 
+/** @class */
 EUI = exports;
 
+/** */
 exports.controllers = [];
+
+/** */
 exports.loadingState = 0;
+
+/** */
 exports.app = function(app) {
 
   if (!(app instanceof Controller))
@@ -1656,6 +1996,7 @@ exports.app = function(app) {
   app._setRealizedApp(EUI.window.elements.app);
 };
 
+/** */
 exports.setLoadingState = function(state) {
   var blockUI = function() {
     if (!EUI.window) {
@@ -1693,66 +2034,93 @@ exports.setLoadingState = function(state) {
     unblockUI();
 };
 
+/** @method  */
 exports.DBModel = DBModel;
+/** @method  */
 exports.FileModel = FileModel;
+/** @method  */
 exports.FilteredModel = FilteredModel;
+/** @method  */
 exports.ArrayModel = ArrayModel;
+/** @method  */
 exports.Routing = Routing;
 
+/** @method */
 exports.Model = function(proto) {
   return Model.extend(proto);
-}
+};
 
+/** @method */
 exports.ListController = function(proto) {
   return ListController.extend(proto);
 };
 
+/** @method */
 exports.GridController = function(proto) {
   return GridController.extend(proto);
 };
 
+/** @method */
 exports.ActionSheet = function(proto) {
   return ActionSheet.extend(proto);
 };
 
+/** @method */
 exports.ImageController = function(proto) {
   return ImageController.extend(proto);
 };
 
+/** @method */
 exports.TabController = function(proto) {
   return TabController.extend(proto);
 };
 
+/** @method */
 exports.FormController = function(proto) {
   return FormController.extend(proto);
 };
 
+/** @method */
 exports.FrameController = function(proto) {
   return FrameController.extend(proto);
 };
 
+/** @method */
 exports.TableController = function(proto) {
   return TableController.extend(proto);
 };
 
+/** @method */
 exports.SearchController = function(proto) {
   return SearchController.extend(proto);
-}
+};
 
+/** @method */
 exports.SplitController = function(proto) {
   return SplitController.extend(proto);
 };
 
+/** @method */
 exports.WebController = function(proto) {
   return WebController.extend(proto);
-}
+};
 
+/** @method */
 exports.VideoController = function(proto) {
   return VideoController.extend(proto);
-}
+};
 
-exports.widgets = {};
+/**
+ * @property {Widgets}
+ * @readonly
+ */
+exports.widgets = undefined;
 
+/** @private */
+var Widgets = {};
+exports.widgets = Widgets;
+
+/** @private */
 var wrapElm = function(widget, _default) {
   return function(proto) {
     proto.expand = proto.expand || 'both';
@@ -1765,7 +2133,8 @@ var wrapElm = function(widget, _default) {
   }
 };
 
-exports.widgets.Button = wrapElm(elm.Button, {
+/** @method */
+Widgets.Button = wrapElm(elm.Button, {
   event_map: {
     on_click: 'didClickOnElement',
     on_press: 'didPressOnElement',
@@ -1775,11 +2144,13 @@ exports.widgets.Button = wrapElm(elm.Button, {
   getValue: function() { return this.text }
 });
 
-exports.widgets.Label = wrapElm(elm.Label, {
+/** @method */
+Widgets.Label = wrapElm(elm.Label, {
   setValue: function (value) { this.file = value; }
 });
 
-exports.widgets.Entry = wrapElm(elm.Entry, {
+/** @method */
+Widgets.Entry = wrapElm(elm.Entry, {
   event_map: {
     on_activate: 'didActivate',
     on_change: 'didChangeEntry'
@@ -1792,12 +2163,14 @@ exports.widgets.Entry = wrapElm(elm.Entry, {
   getValue: function() { return this.markup_to_utf8(this.text) }
 });
 
-exports.widgets.Photocam = wrapElm(elm.Photocam, {
+/** @method */
+Widgets.Photocam = wrapElm(elm.Photocam, {
   setValue: function(value) { this.file = value },
   getValue: function() { return this.file }
 });
 
-exports.widgets.Web = wrapElm(elm.Web, {
+/** @method */
+Widgets.Web = wrapElm(elm.Web, {
   type: 'Web',
   event_map: {
     on_load_progress: 'didLoadProgress',
@@ -1807,18 +2180,22 @@ exports.widgets.Web = wrapElm(elm.Web, {
   },
 });
 
-exports.widgets.Icon = wrapElm(elm.Icon, {
+/** @method */
+Widgets.Icon = wrapElm(elm.Icon, {
   setValue: function (value) { if (this.file != value) this.file = value },
   getValue: function() { return this.file }
 });
 
-exports.widgets.Check = wrapElm(elm.Check, {
+/** @method */
+Widgets.Check = wrapElm(elm.Check, {
   setValue: function(value) { this.state = !!value },
   getValue: function() { return this.state }
 });
 
-exports.widgets.Table = wrapElm(elm.Table, {});
+/** @method */
+Widgets.Table = wrapElm(elm.Table, {});
 
+/** @method */
 exports.module_hooks = {
   'ajax': {
     beforeSend: function(request, options) {

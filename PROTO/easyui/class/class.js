@@ -4,16 +4,21 @@
  */
 // Inspired by base2 and Prototype
 var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
-// The base Class implementation (does nothing)
+/** The base Class implementation (does nothing) */
 Class = function(){};
 
+/** @class */
 Property = function(props) {
   for (var i in props)
     this[i] = props[i];
   return this;
 }
 
-// Create a new Class that inherits from this class
+/**
+ * Create a new Class that inherits from this class
+ * @method extend
+ * @member Class
+ */
 Class.extend = function(prop) {
   var _super = this.prototype;
 
@@ -85,7 +90,7 @@ Class.extend = function(prop) {
     }
   }
 
-  // The dummy class constructor
+  /** @constructor The dummy class constructor */
   function Class() {
     // All construction is actually done in the init method
     if (initializing) return;
