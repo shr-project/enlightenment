@@ -1,0 +1,53 @@
+[
+  {
+    "title": "Examples",
+    "items": [
+      {
+        "name": "browser",
+        "title": "Browser"
+      }, {
+        "name": "calculator",
+        "title": "Calculator"
+      }, {
+        "name": "dict",
+        "title": "Dictionary"
+      }, {
+        "name": "file",
+        "title": "Filesystem Viewer"
+      }, {
+        "name": "filter",
+        "title": "FilteredModel Sample"
+      }, {
+        "name": "group",
+        "title": "ListController Grouping Sample"
+      }, {
+        "name": "infinigag",
+        "title": "Infinigag Viewer"
+      }, {
+        "name": "notes",
+        "title": "Notes"
+      }, {
+        "name": "photo",
+        "title": "Photo Viewer"
+      }, {
+        "name": "reddit",
+        "title": "Reddit"
+      }, {
+        "name": "rss",
+        "title": "RSS"
+      }, {
+        "name": "split",
+        "title": "SplitController"
+      }, {
+        "name": "toolbar",
+        "title": "Toolbar Sample"
+      }, {
+        "name": "twitter",
+        "title": "Twitter"
+      }, {
+        "name": "video",
+        "title": "Video"
+      }
+    ]
+  }
+]

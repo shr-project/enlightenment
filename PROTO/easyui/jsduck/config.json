@@ -4,6 +4,7 @@
   "--output": "../docs",
   "--meta-tags": "todo.rb",
   "--external": ["Realized", "Descriptor"],
+  "--guides": "./guides.json",
   "--": [
     "../class/class.js",
     "../eui.js"
