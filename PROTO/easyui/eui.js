@@ -619,6 +619,7 @@ GenController = Controller.extend({
           }.bind(this)
         }),
         list: _type({
+          mode: this.mode ? this.mode : 'default',
           classes: {
             'default': {
               style: this.style,
