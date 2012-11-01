@@ -300,76 +300,50 @@ Controller = Class.extend({
   _createNavigationBarItem: function(item) {
 
     if (typeof(item) === 'string') {
-
-      var btn;
-
       switch (item) {
         case 'back':
-          btn = elm.Button({
-            icon: this.parent.icon || 'arrow_left',
-            label: this.parent.title || 'Back',
-            on_click: this.popController.bind(this)
-          });
+          item = this.parent;
           break;
         case 'sidePanel':
-          if (EUI.uiMode === 'tablet')
-            return;
-
-          btn = elm.Button({
-            icon: this.split.left.icon || 'apps',
-            label: this.split.left.title,
-            on_click: function() { this.leftPanelVisible = true }.bind(this.split)
-          });
+          item = this.split.left;
           break;
         default:
-          btn = elm.Button({
+          return elm.Button({
             label: item,
             on_click: this.selectedNavigationBarItem.bind(this, item)
           });
       }
-
-      if (!btn.label)
-        delete btn.label;
-
-      if (btn.icon)
-        btn.icon = elm.Icon({ image: btn.icon });
-      else
-        delete btn.icon;
-
-      return btn;
     }
 
     if (item instanceof Controller) {
 
       var btn = elm.Button({});
-      var title = item.title;
 
-      if (title)
+      if (item.title)
         btn.label = title;
 
       if (item.icon)
         btn.icon = elm.Icon({ image: item.icon });
 
-      if (item === this.parent)
-        btn.on_click = this.popController.bind(this);
-      else if (item === this.split.left)
-        btn.on_click = function() { this.split.leftPanelVisible = true }.bind(this);
-      else
-        btn.on_click = this.selectedNavigationBarItem.bind(this, item);
+      switch (item) {
+        case this.parent:
+          btn.on_click = this.popController.bind(this);
+          break;
+        case this.split.left:
+          if (EUI.uiMode === 'tablet')
+            return;
+          btn.on_click = function() { this.split.leftPanelVisible = true }.bind(this);
+          break;
+        default:
+          btn.on_click = this.selectedNavigationBarItem.bind(this, item);
+      }
 
       return btn;
     }
 
     if (typeof(item) === 'object' && item.hasOwnProperty('label')) {
-      var props = {
-        label: item.label,
-        on_click: this.selectedNavigationBarItem.bind(this, item)
-      };
-
-      for (var i = 0, keys = Object.keys(item), j = keys.length; i < j; ++i)
-        props[keys[i]] = item[keys[i]];
-
-      return elm.Button(props);
+      item.on_click = item.on_click || this.selectedNavigationBarItem.bind(this, item);
+      return elm.Button(item);
     }
 
     return item;
