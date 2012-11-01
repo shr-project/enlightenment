@@ -106,7 +106,6 @@ Search = ListItems.extend({
   title: 'Search',
   icon: 'search',
   model: dictModel,
-  hasNavigationBar: false,
   searchBarItems: {
     left: EUI.widgets.Button({
       icon: EUI.widgets.Icon({ image: imagedir + 'search.png'})
@@ -174,7 +173,6 @@ Dict = EUI.TabController({
   title: 'Dictionary',
   model: new EUI.ArrayModel([new Search(), new Bookmarks(), new History()]),
   tabPosition: 'bottom',
-  hasNavigationBar: false,
 });
 
 EUI.app(new Dict());

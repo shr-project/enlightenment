@@ -154,8 +154,6 @@ RedditApps = new EUI.ArrayModel([
 ]);
 
 RedditAppSwitch = new EUI.ListController({
-  hasNavigationBar: false,
-  hasToolbar: false,
   model: RedditApps,
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
@@ -165,15 +163,12 @@ RedditAppSwitch = new EUI.ListController({
     };
   },
   selectedItemAtIndex: function(index) {
-    var details = this.split.model.itemAtIndex(1);
-    details.promoteController(this.model.itemAtIndex(index));
+    this.model.selectedIndex = index;
     this.split.leftPanelVisible = false;
   }
 });
 
-RedditAppTabs = new EUI.TabController({
-  hasNavigationBar: false,
-  hasTabBar: false,
+RedditAppTabs = new EUI.FrameController({
   model: RedditApps,
 });
 

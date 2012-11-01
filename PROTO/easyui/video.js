@@ -34,7 +34,6 @@ VideoController = EUI.VideoController({
     this.model = model;
     this.index = index;
   },
-  hasNavigationBar: true,
   toolbarItems: function() {
 
     var items = ['share'];
@@ -85,7 +84,6 @@ VideoCollectionController = EUI.GridController({
     this.model = new EUI.FileModel(item.path, patterns);
     print(item.path, this.model.length());
   },
-  hasNavigationBar: true,
 
   toolbarItems: [ "share" ],
   selectedToolbarItem: function(item) {

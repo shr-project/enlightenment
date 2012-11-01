@@ -24,7 +24,7 @@ PhotoController = EUI.ImageController({
     return !!this.slideshow;
   },
   title: function() {
-    return this.model.itemAtIndex(this.index).name;
+    return this.chromeVisible ? this.model.itemAtIndex(this.index).name : null;
   },
   didClickView: function() {
     this.chromeVisible = !this.chromeVisible;
@@ -34,18 +34,15 @@ PhotoController = EUI.ImageController({
     if (this.slideshow)
       clearInterval(this.slideshow);
   },
-  hasNavigationBar: function() {
-    return this.chromeVisible;
-  },
-  hasToolbar: function() {
-    return this.chromeVisible;
-  },
   toolbarItems: function() {
     /*
      * The toolbar items for this controller are created dynamically,
      * depending on the amount of items in the album (there's no need for
      * prev/next buttons on an album with just one picture in it.)
      */
+    if (!this.chromeVisible)
+      return [];
+
     var items = [
       {
         tag: 'share',
@@ -94,7 +91,6 @@ PhotoAlbumController = EUI.GridController({
     this.title = item.name;
     this.model = new EUI.FileModel(item.path, patterns);
   },
-  hasNavigationBar: true,
   /*
    * In addition to also having a navigation bar, this controller also has a
    * toolbar.  Note that there's no need for a hasToolbar variable, since
@@ -186,7 +182,6 @@ AlbumListController = EUI.ListController({
    */
   patterns: patterns,
   model: new EUI.FileModel(path, this.patterns),
-  hasNavigationBar: true,
   title: 'Photo Albums',
   selectedItemAtIndex: function(index) {
     /*

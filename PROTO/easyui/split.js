@@ -29,13 +29,10 @@ Controller = EUI.TableController({
 AppsModel = new EUI.ArrayModel([]);
 
 AppsController = EUI.FrameController({
-  hasNavigationBar: false,
-  hasTabBar: false,
   model: AppsModel
 });
 
 AppsListController = EUI.ListController({
-  hasNavigationBar: false,
   model: AppsModel,
   icon: 'apps',
   itemAtIndex: function(index) {

@@ -7,12 +7,11 @@ var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ :
 // The base Class implementation (does nothing)
 Class = function(){};
 
-Property = function(getter, setter, default_value) {
-  this.getter = getter || function() { };
-  this.setter = setter || function(v) { };
-  this.default_value = default_value;
+Property = function(props) {
+  for (var i in props)
+    this[i] = props[i];
   return this;
-};
+}
 
 // Create a new Class that inherits from this class
 Class.extend = function(prop) {
@@ -47,9 +46,40 @@ Class.extend = function(prop) {
         };
       })(name, prop[name]);
     } else if (prop[name] instanceof Property) {
-      prototype['_' + name] = prop[name].default_value;
-      prototype.__defineSetter__(name, prop[name].setter);
-      prototype.__defineGetter__(name, prop[name].getter);
+
+      prototype['_' + name] = prop[name];
+
+      if (typeof(prop[name].set) === 'function') {
+        prototype.__defineSetter__(name, prop[name].set);
+      } else {
+        prototype.__defineSetter__(name, (function(name) {
+          function setter(val) {
+
+            if (typeof(val) === 'function') {
+              if (val === this.__lookupGetter__(name)) return;
+              this.__defineGetter__(name, val);
+            } else {
+              if (val === this[name]) return;
+              this.__defineGetter__(name, function(v) { return v }.bind(this, val));
+            }
+
+            this.__defineSetter__(name, setter);
+
+            var watch = this['_' + name].watch;
+
+            if (watch)
+              watch.apply(this);
+          }
+          return setter;
+        })(name));
+      }
+
+      if (prop[name].get)
+        prototype.__defineGetter__(name, prop[name].get);
+
+      if (prop[name].value !== undefined)
+        prototype[name] = prop[name].value;
+
     } else {
       prototype[name] = prop[name];
     }

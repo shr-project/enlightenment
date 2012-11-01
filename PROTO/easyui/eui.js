@@ -1,14 +1,10 @@
 Class = require('class').Class;
+Property = require('class').Property;
 elm = require('elm.so');
 fs = require('fs');
 taffy = require('taffy').taffy;
 
 Controller = Class.extend({
-  init: function(kwargs) {
-    var model = this._feature(this.model);
-    if (model)
-      model.addController(this);
-  },
 
   _feature: function(feature, defaultValue) {
     if (feature === undefined)
@@ -16,18 +12,6 @@ Controller = Class.extend({
     if (typeof(feature) === 'function')
       return feature.apply(this);
     return feature;
-  },
-
-  _getNavigationBarItems: function() {
-    return this._feature(this.navigationBarItems, {});
-  },
-
-  _getToolBarItems: function() {
-    return this._feature(this.toolbarItems, []);
-  },
-
-  _getTitle: function(defaultTitle) {
-    return this._feature(this.title, null);
   },
 
   _setViewContent: function(view) {
@@ -90,7 +74,7 @@ Controller = Class.extend({
     var cnt = Object.keys(ctrl.naviframe.elements).length;
     ctrl.naviframe.elements[cnt] = {
       content: ctrl._getViewDescriptor(),
-      style: ctrl._feature(ctrl.navigationBarStyle, null),
+      style: ctrl.navigationBarStyle,
       on_delete: ctrl._shutdown.bind(ctrl),
     };
 
@@ -108,7 +92,7 @@ Controller = Class.extend({
         {
           'content': this._getViewDescriptor(),
           'on_delete': this._shutdown.bind(this),
-          'style': this._feature(this.navigationBarStyle, null)
+          'style': this.navigationBarStyle
         }
       ]
     });
@@ -120,9 +104,9 @@ Controller = Class.extend({
     this.didRealizeView();
   },
 
-  _isRealized: function() {
-    return this.naviframe instanceof elm.Naviframe;
-  },
+  _isRealized: new Property({
+    get: function() { return this.naviframe instanceof elm.Naviframe }
+  }),
 
   _isEqual: function(realized) {
       return ((this.naviframe) && (realized === this.naviframe));
@@ -146,14 +130,17 @@ Controller = Class.extend({
   },
 
   _evaluateToolbarChanges: function() {
-    var items = this._getToolBarItems();
+
+    if (!this._isRealized) return;
+
+    var items = this.toolbarItems;
     var toolbar = this.viewContent.content.toolbar;
 
     if (toolbar.cachedItems == items)
       return;
 
     this.viewContent.signal_emit('bottom,toolbar', '');
-    var toolbarVisible = this._feature(this.hasToolbar, items.length > 0);
+    var toolbarVisible = this.toolbarItems.length;
     this.viewContent.signal_emit(toolbarVisible ? 'show,toolbar' : 'hide,toolbar', '');
 
     for (var i in items) {
@@ -187,14 +174,14 @@ Controller = Class.extend({
         case 'back':
           btn = elm.Button({
             icon: this.parent.icon || 'arrow_left',
-            label: this.parent._getTitle() || 'Back',
+            label: this.parent.title || 'Back',
             on_click: this.popController.bind(this)
           });
           break;
         case 'sidePanel':
           btn = elm.Button({
             icon: this.split.left.icon || 'apps',
-            label: this.split.left._getTitle(),
+            label: this.split.left.title,
             on_click: function() { this.leftPanelVisible = true }.bind(this.split)
           });
           break;
@@ -219,7 +206,7 @@ Controller = Class.extend({
     if (item instanceof Controller) {
 
       var btn = elm.Button({});
-      var title = item._getTitle();
+      var title = item.title;
 
       if (title)
         btn.label = title;
@@ -266,15 +253,16 @@ Controller = Class.extend({
   },
 
   _evaluateNavigationBarChanges: function() {
-    var items = this._getNavigationBarItems();
+
+    if (!this._isRealized) return;
+
+    var items = this.navigationBarItems;
+    var title = this.title;
 
     if (items == this.naviframe.cachedItems && title == this.naviframe.cachedTitle)
       return;
 
-    var title = this._getTitle();
     this.naviframe_item.title = title || '';
-    this.naviframe.title_visible = this._feature(this.titleVisible,
-                                                title || Object.keys(items).length);
 
     if (items === undefined) {
       this.naviframe.cachedItems = items;
@@ -297,12 +285,13 @@ Controller = Class.extend({
   },
 
   _updateInterfaceElementVisibility: function() {
-    if (this._feature(this.titleVisible, true))
-      this.naviframe.title_visible = this._feature(this.hasNavigationBar, true);
+    this.naviframe.title_visible =
+      (this.title || Object.keys(this.navigationBarItems).length);
   },
 
   _updateWindowProperties: function() {
-    EUI.window.fullscreen = this._feature(this.isFullscreen, false);
+    if (!this._isRealized) return;
+    EUI.window.fullscreen = this.isFullscreen;
   },
 
   evaluateViewChanges: function() {
@@ -312,25 +301,40 @@ Controller = Class.extend({
     this._updateWindowProperties();
   },
 
-  selectedNavigationBarItem: function() {}
-});
+  selectedNavigationBarItem: function() {},
 
-Controller.prototype.__defineGetter__("searchBarVisible", function() {
-  return this._cachedSearchBarVisible;
-});
-Controller.prototype.__defineSetter__("searchBarVisible", function(setting) {
-  if (setting === this._cachedSearchBarVisible)
-    return;
-  this._cachedSearchBarVisible = setting;
-  this._getView().signal_emit(setting ? "show,search" : "hide,search", "");
-});
+  title: new Property({
+    watch: function() { this._evaluateNavigationBarChanges() }
+  }),
 
-Controller.prototype.__defineGetter__("split", function() {
-  if (this instanceof SplitController)
-    return this;
-  if (this.parent)
-    return this.parent.split;
-  return undefined;
+  navigationBarItems: new Property({
+    value: {},
+    watch: function() { this._evaluateNavigationBarChanges() }
+  }),
+
+  navigationBarStyle: new Property({
+    watch: function() { this._evaluateNavigationBarChanges() }
+  }),
+
+  toolbarItems: new Property({
+    value: [],
+    watch: function() { this._evaluateToolbarChanges() }
+  }),
+
+  isFullscreen: new Property({
+    watch: function() { this._updateWindowProperties() }
+  }),
+
+  split: new Property({
+    get: function() {
+      if (this instanceof SplitController)
+        return this;
+      if (this.parent)
+        return this.parent.split;
+      return undefined;
+    }
+  })
+
 });
 
 Model = Class.extend({
@@ -359,16 +363,18 @@ Model = Class.extend({
   },
   deleteItemAtIndex: function(index) {},
   updateItemAtIndex: function(index, data) {},
-});
 
-Model.prototype.__defineGetter__('selectedIndex', function() {
-  return this._selectedIndex;
-});
-Model.prototype.__defineSetter__('selectedIndex', function(value) {
-  if (typeof(value) !== 'number' || this._selectedIndex === value)
-    return;
-  this._selectedIndex = value;
-  this.notifyControllers(value, 'select');
+  selectedIndex: new Property({
+    get: function() {
+      return this._selectedIndex;
+    },
+    set: function(value) {
+      if (typeof(value) !== 'number' || this._selectedIndex === value)
+        return;
+      this._selectedIndex = value;
+      this.notifyControllers(value, 'select');
+    }
+  })
 });
 
 ArrayModel = Model.extend({
@@ -702,11 +708,8 @@ GenController = Controller.extend({
   },
   didInitialize: function(_type) {
     if (this.editable) {
-      var items = this._getNavigationBarItems();
-      if (!items.right) {
-        this.navigationBarItems = this.navigationBarItems || {};
+      if (!this.navigationBarItems.right)
         this.navigationBarItems.right = 'Add';
-      }
       this.viewDescriptor.content.list.on_longpress = function (item) {
         item['class'] = this._getView().content.list.classes['delete'];
       }.bind(this);
@@ -815,6 +818,17 @@ GenController = Controller.extend({
 
     this._updateAllIndexes(view, indexes);
   },
+
+  searchBarVisible: new Property({
+    get: function() { return this._cachedSearchBarVisible },
+    set: function(setting) {
+      if (setting === this._cachedSearchBarVisible)
+        return;
+      this._cachedSearchBarVisible = setting;
+      this._getView().signal_emit(setting ? "show,search" : "hide,search", "");
+    }
+  })
+
 });
 
 ListController = GenController.extend({
@@ -1164,7 +1178,7 @@ FrameController = Container.extend({
 
     var view = this._getView();
 
-    if (ctrl._isRealized()) {
+    if (ctrl._isRealized) {
       var elements = view.elements;
       for (var i in elements)
         if (ctrl._isEqual(elements[i].content))
@@ -1196,7 +1210,7 @@ SplitController = Container.extend({
       var ctrl = this.model.itemAtIndex(i);
       var panel = panels[i];
 
-      if (ctrl._isRealized() && ctrl._isEqual(view.content[panel]))
+      if (ctrl._isRealized && ctrl._isEqual(view.content[panel]))
         continue;
 
       this[panel] = ctrl;
@@ -1211,10 +1225,12 @@ SplitController = Container.extend({
       ctrl._setRealizedApp(view.content[panel]);
     }
   },
-});
 
-SplitController.prototype.__defineSetter__("leftPanelVisible", function(setting) {
-  this._getView().signal_emit(setting ? "show,left" : "hide,left", "");
+  leftPanelVisible: new Property({
+    set: function(setting) {
+      this._getView().signal_emit(setting ? "show,left" : "hide,left", "");
+    }
+  })
 });
 
 ToolController = Container.extend({
@@ -1244,7 +1260,7 @@ ToolController = Container.extend({
       real.selected = (index === selected);
 
       var ctrl = this.model.itemAtIndex(index);
-      real.label = ctrl._getTitle();
+      real.label = ctrl.title;
       real.icon = ctrl.icon;
 
     }.bind(this);
@@ -1257,7 +1273,7 @@ ToolController = Container.extend({
         update(index);
 
     /* Update toolbar items */
-    var items = this._feature(this.toolbarItems, []);
+    var items = this.toolbarItems;
     if (items.length) {
       var len = this.model.length();
       elements[len] = { separator: true };
@@ -1298,6 +1314,8 @@ TabController = Container.extend({
 
     view.content.view = this.frame._realizeApp();
     this.frame._setRealizedApp(view.content.view);
+
+    this.model.addController(this);
 
     if (this.model.length())
       this.model.selectedIndex = 0;
@@ -1441,14 +1459,15 @@ TableController = Controller.extend({
         values[key] = real.getValue();
     }
     return values;
-  }
-});
-
-TableController.prototype.__defineGetter__("index", function() { return this._index });
-TableController.prototype.__defineSetter__("index", function(value) {
-  if (!this.model) throw "Model must be defined before index";
-  if (value >= 0 && value < this.model.length())
-    this._index = value;
+  },
+  index: new Property({
+    get: function() { return this._index },
+    set: function(value) {
+      if (!this.model) throw "Model must be defined before index";
+      if (value >= 0 && value < this.model.length())
+        this._index = value;
+    }
+  })
 });
 
 FormController = TableController.extend({
@@ -1606,7 +1625,7 @@ exports.app = function(app) {
   EUI.window = elm.realise(elm.Window({
     width: 320,
     height: 480,
-    title:  app._feature(app.title, 'EasyUI Application'),
+    title:  app.title || 'EasyUI Application',
     on_delete: function() { EUI.__shutting_down = true },
     elements: {
       'background': elm.Background({
@@ -1669,22 +1688,6 @@ exports.setLoadingState = function(state) {
     blockUI();
   else
     unblockUI();
-};
-
-exports.applyController = function(controller) {
-  var model = controller._feature(controller.model, null);
-  if (model)
-    model.notifyControllers();
-};
-
-exports.popController = function() {
-  var oldController = EUI.controllers.pop();
-  if (EUI.controllers.length == 0)
-    elm.quit();
-
-  var controller = EUI.controllers[EUI.controllers.length - 1];
-  EUI.applyController(controller);
-  EUI.window.elements.naviframe.pop(oldController.evasObject());
 };
 
 exports.DBModel = DBModel;
