@@ -42,7 +42,6 @@ Package(
     doc_target="doc",
     configure_flags={
         "common": [
-            "--enable-tests",
             "--enable-doc",
             ],
         },
