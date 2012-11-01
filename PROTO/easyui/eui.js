@@ -137,7 +137,7 @@ Controller = Class.extend({
    * @return {Descriptor}
    * @protected
    */
-  _realizeApp: function() {
+  _getWrappedViewDescriptor: function() {
     return elm.Naviframe({
       expand: 'both',
       fill: 'both',
@@ -1653,7 +1653,7 @@ Container = Controller.extend({
    * @inheritdoc
    * @protected
    */
-  _realizeApp: function() {
+  _getWrappedViewDescriptor: function() {
     return this._getViewDescriptor();
   },
   /**
@@ -1723,7 +1723,7 @@ FrameController = Container.extend({
     } else {
       var len = Object.keys(view.elements).length;
       ctrl.parent = this;
-      view.elements[len] = { content: ctrl._realizeApp() };
+      view.elements[len] = { content: ctrl._getWrappedViewDescriptor() };
       ctrl._setRealizedApp(view.elements[len].content);
     }
   },
@@ -1774,7 +1774,7 @@ SplitController = Container.extend({
       this[panel] = ctrl;
       ctrl.parent = this;
 
-      var app = ctrl._realizeApp();
+      var app = ctrl._getWrappedViewDescriptor();
       delete app.resize;
       delete app.expand;
       delete app.fill;
@@ -1891,14 +1891,14 @@ TabController = Container.extend({
     };
 
     var view = this.view;
-    view.content.toolbar = this.toolbar._realizeApp();
+    view.content.toolbar = this.toolbar._getWrappedViewDescriptor();
     this.toolbar._setRealizedApp(view.content.toolbar);
 
     this.frame = new FrameController();
     this.frame.parent = this;
     this.frame.model = this.model;
 
-    view.content.view = this.frame._realizeApp();
+    view.content.view = this.frame._getWrappedViewDescriptor();
     this.frame._setRealizedApp(view.content.view);
 
     this.model.addListener(this);
@@ -2349,7 +2349,7 @@ exports.app = function(app) {
     }
   }));
 
-  EUI.window.elements.app = app._realizeApp();
+  EUI.window.elements.app = app._getWrappedViewDescriptor();
   app._setRealizedApp(EUI.window.elements.app);
 };
 
