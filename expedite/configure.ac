@@ -93,6 +93,12 @@ AC_SUBST(gl_cocoa_libs)
 EXPEDITE_CHECK_ENGINE([software-16-wince], [Software 16 bits WinCE], "yes", [wince_16_libs="-laygshell"])
 AC_SUBST(wince_16_libs)
 
+# Wayland EGL
+EXPEDITE_CHECK_ENGINE([wayland-egl], [Wayland EGL], "yes")
+
+# Wayland SHM
+EXPEDITE_CHECK_ENGINE([wayland-shm], [Wayland SHM], "yes")
+
 ### Checks for programs
 
 AC_ISC_POSIX
@@ -181,6 +187,25 @@ if test "x$have_directfb" = "xyes"; then
 fi
 AM_CONDITIONAL(BUILD_DIRECTFB, test "x$have_directfb" = "xyes")
 
+# Wayland
+
+if test "x$want_wayland_egl" = "xyes" -o "x$want_wayland_shm" = "xyes"; then
+    PKG_CHECK_MODULES([WAYLAND_CLIENT], [wayland-client], [have_wl="yes"], [have_wl="no"])
+    AM_CONDITIONAL(BUILD_WAYLAND, test "x$have_wl" = "xyes")
+    AM_CONDITIONAL(BUILD_WAYLAND_SHM, test "x$have_wl" = "xyes")
+    if test "x$have_wl" = "xyes"; then
+        AC_DEFINE(BUILD_WAYLAND, 1, [build wayland support])
+        AC_DEFINE(BUILD_WAYLAND_SHM, 1, [build wayland SHM support])
+    fi
+
+    if test "x$have_wl" = "xyes" -a "x$want_wayland_egl" = "xyes"; then
+        PKG_CHECK_MODULES([WAYLAND_EGL], [wayland-egl], [have_wl_egl="yes"], [have_wl_egl="no"])
+        AM_CONDITIONAL(BUILD_WAYLAND_EGL, test "x$have_wl_egl" = "xyes")
+        if test "x$have_wl_egl" = "xyes"; then
+            AC_DEFINE(BUILD_WAYLAND_EGL, 1, [build wayland EGL support])
+        fi
+    fi
+fi
 
 ### Checks for header files
 
@@ -267,6 +292,8 @@ echo "    FB...........................: ${have_fb}"
 echo "    DirectFB.....................: ${have_directfb}"
 echo "    PSL1GHT......................: ${have_psl1ght}"
 echo "    Software WinCE 16 bits.......: ${have_software_16_wince}"
+echo "    Wayland EGL..................: ${have_wl}"
+echo "    Wayland SHM..................: ${have_wl_egl}"
 echo
 echo "  Installation:"
 echo "    prefix.......................: ${prefix}"
