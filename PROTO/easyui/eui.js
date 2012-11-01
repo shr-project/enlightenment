@@ -90,14 +90,14 @@ Controller = Class.extend({
     if (EUI.__shutting_down)
       return;
 
-    if (this.willPopController)
-      this.willPopController();
-
     if (this.model)
       this.model.removeController(this);
 
     if (this.parent)
       this.parent.evaluateViewChanges();
+
+    if (this.didPopController)
+      this.didPopController();
   },
 
   /**
@@ -197,6 +197,8 @@ Controller = Class.extend({
 
   /**
    * Fired before #init is called.
+   *
+   * Parameters passed to the constructor are passed to this method.
    * @template
    * @event
    */
@@ -215,6 +217,8 @@ Controller = Class.extend({
 
   /**
    * Fired after #init was called.
+   *
+   * Parameters passed to the constructor are passed to this method.
    * @template
    * @event
    */
@@ -1277,15 +1281,24 @@ GenController = Controller.extend({
 
 });
 
-/** @extend GenController */
+/**
+ * Shows a searchable list with model content.
+ * @extend GenController
+ */
 ListController = GenController.extend({
-  /** @event */
+  /**
+   * Fired before #init is called.
+   * @event
+   */
   willInitialize: function() {
     this._super(elm.Genlist);
     this.contextMenuDirection = 'horizontal';
     this.listening_scroll = true;
   },
-  /** @event */
+  /**
+   * Fired after #init is called.
+   * @event
+   */
   didInitialize: function() {
     this._super();
     var list = this.viewDescriptor.content.list;
@@ -1347,7 +1360,10 @@ ListController = GenController.extend({
     if (this.listening_scroll && typeof(this.didScrollOverEdge) === 'function')
       this.didScrollOverEdge(edge);
   },
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function(indexes, hint) {
     if (hint == 'beginSlowLoad') {
       var edge = indexes == -1 ? 'top' : 'bottom';
@@ -1395,13 +1411,22 @@ ListController = GenController.extend({
   }
 });
 
-/** @extend GenController */
+/**
+ * Shows a grid with the model content.
+ * @extend GenController
+ */
 GridController = GenController.extend({
-  /** @event */
+  /**
+   * Fired before #init is called.
+   * @event
+   */
   willInitialize: function() {
     this._super(elm.Gengrid);
   },
-  /** @event */
+  /**
+   * Fired after #init is called.
+   * @event
+   */
   didRealizeView: function() {
     this.view.content.list.item_size_vertical = 128;
     this.view.content.list.item_size_horizontal = 128;
@@ -1410,10 +1435,11 @@ GridController = GenController.extend({
 });
 
 /**
+ * Web viewer controller.
  * @extend Controller
  */
 var WebController = Controller.extend({
-  /** @type {Array} */
+  /** @inheritdoc */
   toolbarItems: [
     { tag: 'back', icon: 'go-previous', label: 'Back' },
     { tag: 'forward', icon: 'go-next', label: 'Forward' },
@@ -1437,7 +1463,10 @@ var WebController = Controller.extend({
     }
   ],
 
-  /** @event */
+  /**
+   * @inheritdoc
+   * @event
+   */
   selectedToolbarItem: function(item) {
     switch (item.tag) {
     case 'back':
@@ -1456,9 +1485,9 @@ var WebController = Controller.extend({
   },
 
   /**
-   * Description of elev8 widgets that will be used on this application
-   * @param {String} url Initial WebController page.
+   * @inheritdoc
    * @event
+   * @param {String} url Initial URL
    */
   willInitialize: function(url) {
     url = url || this.url || 'about:blank';
@@ -1539,7 +1568,10 @@ var WebController = Controller.extend({
     });
   },
 
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function() {
     var view = this.view;
 
@@ -1580,7 +1612,10 @@ var WebController = Controller.extend({
     this.web.uri = uri;
   },
 
-  /** @event */
+  /**
+   * Fired after toolbar change.
+   * @event
+   */
   didUpdateToolbar: function(toolbar, items) {
     this.toolbar = toolbar;
     this.url_entry = toolbar.elements[3].element;
@@ -1599,8 +1634,11 @@ var WebController = Controller.extend({
     }.bind(this);
   },
 
-  /** @event */
-  willPopController: function() {
+  /**
+   * Fired after {@link Controller} was popped.
+   * @event
+   */
+  didPopController: function() {
     this.web.on_link_hover_in = null;
     this.web.on_link_hover_out = null;
     this.web.on_load_progress = null;
@@ -1609,23 +1647,41 @@ var WebController = Controller.extend({
   }
 });
 
-/** @extend Controller */
+/**
+ * Container base class.
+ *
+ * Manage a model of {@link Controller}s.
+ *
+ * @extend Controller
+ */
 Container = Controller.extend({
-  /** */
+  /**
+   * @inheritdoc
+   * @protected
+   */
   evaluateViewChanges: function() {},
-  /** @inheritdoc */
+  /** @private */
   _getViewDescriptor: function() {
     return this.viewDescriptor;
   },
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @protected
+   */
   _realizeApp: function() {
     return this._getViewDescriptor();
   },
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @protected
+   */
   _setViewContent: function(view) {
     throw "It's a 'Container' and can't be pushed in a regular 'Controller'";
   },
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @protected
+   */
   _setRealizedApp: function(realized) {
     this._view = realized;
     this.didRealizeView();
@@ -1634,13 +1690,17 @@ Container = Controller.extend({
   view: new Property({
     get: function() { return this._view; },
   }),
-  /** @event */
+  /**
+   * @inheritdoc
+   * @event
+   */
   didRealizeView: function () {
     if (this.model)
       this.model.addController(this);
     this.updateView();
   },
   /**
+   * Promote the controller at the specified index to the top of the stack.
    * @type {Number} index
    */
   promoteController: function(index) {
@@ -1648,14 +1708,21 @@ Container = Controller.extend({
   }
 });
 
-/** @extend Container */
+/**
+ * Show only the specified {@link Controller}.
+ * @inheritdoc
+ * @extend Container
+ */
 FrameController = Container.extend({
-  /** */
+  /** @inheritdoc */
   viewDescriptor: elm.Naviframe({
     title_visible: false,
     elements: {}
   }),
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function(index, hint) {
 
     var ctrl = this.model.itemAtIndex(index || 0);
@@ -1677,9 +1744,16 @@ FrameController = Container.extend({
   },
 });
 
-/** @extend Container */
+/**
+ * Split view in two or more {@link Controller}s.
+ *
+ * The most left {@link Controller} can be hidden.
+ *
+ * @inheritdoc
+ * @extend Container
+ */
 SplitController = Container.extend({
-  /** */
+  /** @inheritdoc */
   viewDescriptor: elm.Layout({
     expand: 'both',
     fill: 'both',
@@ -1687,7 +1761,10 @@ SplitController = Container.extend({
     file: { name: 'eui.edj', group: 'split' },
     content: {}
   }),
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function(index, hint) {
     var view = this.view;
     var panels = ['left', 'right'];
@@ -1722,7 +1799,9 @@ SplitController = Container.extend({
     }
   },
 
-  /** */
+  /**
+   * Left panel visibility state.
+   */
   leftPanelVisible: new Property({
     set: function(setting) {
       if (EUI.uiMode !== 'tablet')
@@ -1731,9 +1810,14 @@ SplitController = Container.extend({
   })
 });
 
-/** @extend Container */
+/**
+ * Toolbar controller.
+ *
+ * @inheritdoc
+ * @extend Container
+ */
 ToolController = Container.extend({
-  /** */
+  /** @inheritdoc */
   viewDescriptor: elm.Toolbar({
     shrink_mode: 'expand',
     select_mode: 'always',
@@ -1741,12 +1825,15 @@ ToolController = Container.extend({
   }),
 
   /**
+   * Fired when a item is selected.
    * @param {Number} index
-   * @template
    */
   selectedItemAtIndex: function(index) {},
 
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function(index, hint) {
 
     var elements = this.view.elements;
@@ -1790,9 +1877,12 @@ ToolController = Container.extend({
   }
 });
 
-/** @extend Container */
+/**
+ * Shows a toolbar and the selected controller.
+ * @extend Container
+ */
 TabController = Container.extend({
-  /** */
+  /** @inheritdoc */
   viewDescriptor: elm.Layout({
     expand: 'both',
     fill: 'both',
@@ -1801,7 +1891,10 @@ TabController = Container.extend({
     content: {}
   }),
 
-  /** @event */
+  /**
+   * @inheritdoc
+   * @event
+   */
   didRealizeView: function() {
 
     this.toolbar = new ToolController();
@@ -1829,7 +1922,10 @@ TabController = Container.extend({
       this.model.selectedIndex = 0;
   },
 
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function(index, hint) {
 
     var view = this.view;
@@ -1838,18 +1934,25 @@ TabController = Container.extend({
   },
 });
 
-/** @extend Controller */
+/**
+ * Image viewer controller.
+ *
+ * @extend Controller
+ */
 ImageController = Controller.extend({
-  /** */
+  /** @inheritdoc */
   viewDescriptor: elm.Photocam({
     expand: 'both',
     fill: 'both',
     zoom_mode: "auto-fill",
     zoom: 5.0
   }),
-  /** @type {String} */
+  /** @inheritdoc */
   navigationBarStyle: 'overlap',
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   didRealizeView: function() {
     this.view.on_click = function() {
       if (this.didClickView)
@@ -1857,29 +1960,35 @@ ImageController = Controller.extend({
     }.bind(this);
     this._super();
   },
-  /**
-   * @type {Number}
-   * @readonly
-   */
+  /** @inheritdoc Model#length */
   length: new Property({
     get: function () { return this.model.length; }
   }),
-  /** */
+  /**
+   * Specifies the image to be shown.
+   * @param {Number} index
+   */
   setImage: function(index) {
     if ((index < 0) || (index >= this.length))
       return;
     this.index = index;
     this.didChangeModel();
   },
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function() {
     this.view.file = this.model.itemAtIndex(this.index).path;
   },
 });
 
-/** @extend Controller */
+/**
+ * Video viewer controller.
+ * @extend Controller
+ */
 VideoController = Controller.extend({
-  /** */
+  /** @inheritdoc */
   viewDescriptor: elm.Box({
     expand: 'both',
     fill: 'both',
@@ -1916,7 +2025,10 @@ VideoController = Controller.extend({
   itemAtIndex : function(index){
     return this.model.itemAtIndex(this.index);
   },
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function() {
     var elements = this.view.elements;
     if (!elements.controllers.video)
@@ -1926,15 +2038,26 @@ VideoController = Controller.extend({
   },
 });
 
-/** @extend Controller */
+/**
+ * Base controller for {@link Widgets}.
+ * @extend Controller
+ */
 TableController = Controller.extend({
-  /** */
+  /**
+   * Bidimensional array to positioning {@link Widgets} in the view.
+   * @type {Array}
+   */
+  fields: [[]],
+  /** @inheritdoc */
   viewDescriptor: elm.Table({
     expand: 'both',
     fill: 'both',
     elements: {}
   }),
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   updateView: function(index, hint) {
 
     var elements = this.view.elements;
@@ -1984,7 +2107,10 @@ TableController = Controller.extend({
       }
     }
   },
-  /** */
+  /**
+   * Returns a copy of the values shown on view.
+   * @return {Object}
+   */
   getValues: function() {
     var values = {};
     var elements = this.view.elements;
@@ -1995,7 +2121,9 @@ TableController = Controller.extend({
     }
     return values;
   },
-  /** */
+  /**
+   * Selected item index.
+   */
   index: new Property({
     get: function() { return this.__index; },
     set: function(value) {
@@ -2006,16 +2134,25 @@ TableController = Controller.extend({
   })
 });
 
-/** @extend TableController */
+/**
+ * Extends {@link TableController} to automate insert and update actions on model..
+ * @extend TableController
+ */
 FormController = TableController.extend({
-  /** */
+  /**
+   * @inheritdoc
+   * @property
+   */
   navigationBarItems: function() {
     return this.editable && {
       left: 'Cancel',
       right: (this.index === undefined) ? 'Add' : 'Save'
     };
   },
-  /** */
+  /**
+   * @inheritdoc
+   * @event
+   */
   selectedNavigationBarItem: function(item) {
     switch (item) {
       case 'Add':
@@ -2182,13 +2319,10 @@ Routing = {
   }
 };
 
-/** @class */
 EUI = exports;
 
-/** */
 exports.controllers = [];
 
-/** */
 exports.loadingState = 0;
 
 /** */
@@ -2272,93 +2406,74 @@ exports.setLoadingState = function(state) {
     unblockUI();
 };
 
-/** @method  */
 exports.DBModel = DBModel;
-/** @method  */
+
 exports.FileModel = FileModel;
-/** @method  */
+
 exports.FilteredModel = FilteredModel;
-/** @method  */
 exports.ArrayModel = ArrayModel;
-/** @method  */
 exports.Routing = Routing;
 
-/** @method */
 exports.Model = function(proto) {
   return Model.extend(proto);
 };
 
-/** @method */
 exports.ListController = function(proto) {
   return ListController.extend(proto);
 };
 
-/** @method */
 exports.GridController = function(proto) {
   return GridController.extend(proto);
 };
 
-/** @method */
 exports.ActionSheet = function(proto) {
   return ActionSheet.extend(proto);
 };
 
-/** @method */
 exports.ImageController = function(proto) {
   return ImageController.extend(proto);
 };
 
-/** @method */
 exports.TabController = function(proto) {
   return TabController.extend(proto);
 };
 
-/** @method */
 exports.FormController = function(proto) {
   return FormController.extend(proto);
 };
 
-/** @method */
 exports.FrameController = function(proto) {
   return FrameController.extend(proto);
 };
 
-/** @method */
 exports.TableController = function(proto) {
   return TableController.extend(proto);
 };
 
-/** @method */
 exports.SearchController = function(proto) {
   return SearchController.extend(proto);
 };
 
-/** @method */
 exports.SplitController = function(proto) {
   return SplitController.extend(proto);
 };
 
-/** @method */
 exports.WebController = function(proto) {
   return WebController.extend(proto);
 };
 
-/** @method */
 exports.VideoController = function(proto) {
   return VideoController.extend(proto);
 };
 
-/**
- * @property {Widgets}
- * @readonly
- */
 exports.widgets = undefined;
 
-/** @private */
+/**
+ * @class
+ */
 var Widgets = {};
 exports.widgets = Widgets;
 
-/** @private */
 var wrapElm = function(widget, _default) {
   return function(proto) {
     proto.expand = proto.expand || 'both';
