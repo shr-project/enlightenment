@@ -113,7 +113,7 @@ TimelineModel = EUI.Model({
       if (req.status != '200') return;
 
       this.items = JSON.parse(req.responseText);
-      this.notifyControllers();
+      this.notifyListeners();
     }.bind(this));
   },
   length: function(){
@@ -135,7 +135,7 @@ TimelineModel = EUI.Model({
         if (!item) return;
 
         item.file = req.responseText;
-        this.notifyControllers(index);
+        this.notifyListeners(index);
       }.bind(this));
     }
 
@@ -151,7 +151,7 @@ TimelineModel = EUI.Model({
       for (var i in this.items){
         if (this.items[i].id_str == retweet.retweeted_status.id_str){
           this.items[i] = retweet;
-          this.notifyControllers(i);
+          this.notifyListeners(i);
           break;
         }
       }
@@ -167,7 +167,7 @@ TimelineModel = EUI.Model({
 
       item = JSON.parse(req.responseText);
       this.items.unshift(item);
-      this.notifyControllers(0); //just the first item needs to be updated
+      this.notifyListeners(0); //just the first item needs to be updated
     }.bind(this));
   },
   fetchOlderTweets: function(){
@@ -175,7 +175,7 @@ TimelineModel = EUI.Model({
     var params = this.buildUrlParameters({max_id: this.items[this.items.length - 1].id_str});
 
     twitterAjax.get(this.url, params, function(req) {
-      this.notifyControllers(this.length + 1, 'finishSlowLoad');
+      this.notifyListeners(this.length + 1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       //exclude from results the first item, which is repetead
@@ -183,25 +183,25 @@ TimelineModel = EUI.Model({
 
       var old_length = this.items.length;
       this.items = this.items.concat(results);
-      this.notifyControllers(
+      this.notifyListeners(
         arrayBetweenBoundaries(old_length, this.items.length -1));
     }.bind(this));
 
-    this.notifyControllers(this.length + 1, 'beginSlowLoad');
+    this.notifyListeners(this.length + 1, 'beginSlowLoad');
   },
   fetchNewerTweets: function(){
     //to get twitters newer than the first one that we have
     var params = this.buildUrlParameters({since_id: this.items[0].id_str});
 
     twitterAjax.get(this.url, params, function(req) {
-      this.notifyControllers(-1, 'finishSlowLoad');
+      this.notifyListeners(-1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       var new_tweets =  JSON.parse(req.responseText);
       this.items = new_tweets.concat(this.items);
-      this.notifyControllers();
+      this.notifyListeners();
     }.bind(this));
-    this.notifyControllers(-1, 'beginSlowLoad');
+    this.notifyListeners(-1, 'beginSlowLoad');
   },
   untweet: function(index) {
     var id_tweet = this.items[index].id_str;
@@ -209,7 +209,7 @@ TimelineModel = EUI.Model({
       if (req.status != '200') return;
 
       this.items.splice(index, 1);
-      this.notifyControllers();
+      this.notifyListeners();
     }.bind(this));
   }
 });
@@ -257,7 +257,7 @@ SearchTimelineModel = TimelineModel.extend({
       if (req.status != '200') return;
 
       this.items = JSON.parse(req.responseText).results;
-      this.notifyControllers();
+      this.notifyListeners();
     }.bind(this));
   },
   itemAtIndex: function(index) {
@@ -270,7 +270,7 @@ SearchTimelineModel = TimelineModel.extend({
         if (!item) return;
 
         item.file = req.responseText;
-        this.notifyControllers(index);
+        this.notifyListeners(index);
       }.bind(this));
     }
 
@@ -287,7 +287,7 @@ SearchTimelineModel = TimelineModel.extend({
       max_id: this.items[this.items.length -1].id_str}
 
     twitterAjax.get(this.url, params, function(req) {
-      this.notifyControllers(this.length + 1, 'finishSlowLoad');
+      this.notifyListeners(this.length + 1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       //exclude from results the first item, which is repetead
@@ -295,23 +295,23 @@ SearchTimelineModel = TimelineModel.extend({
 
       var old_length = this.items.length;
       this.items = this.items.concat(results);
-      this.notifyControllers(arrayBetweenBoundaries(old_length, this.items.length -1));
+      this.notifyListeners(arrayBetweenBoundaries(old_length, this.items.length -1));
     }.bind(this));
-    this.notifyControllers(this.length + 1, 'beginSlowLoad');
+    this.notifyListeners(this.length + 1, 'beginSlowLoad');
   },
   fetchNewerTweets: function() {
     var params = {q: this.query, include_entities: true,
       since_id: this.items[0].id_str}
 
     twitterAjax.get(this.url, params, function(req) {
-      this.notifyControllers(-1, 'finishSlowLoad');
+      this.notifyListeners(-1, 'finishSlowLoad');
       if (req.status != '200') return;
 
       var new_tweets = JSON.parse(req.responseText).results;
       this.items = new_tweets.concat(this.items);
-      this.notifyControllers();
+      this.notifyListeners();
     }.bind(this));
-    this.notifyControllers(-1, 'beginSlowLoad');
+    this.notifyListeners(-1, 'beginSlowLoad');
   }
 });
 

@@ -27,7 +27,7 @@ RSSModel = EUI.Model({
           return;
 
         this._array = request.responseXML.rss.channel.item;
-        this.notifyControllers();
+        this.notifyListeners();
       }.bind(this)
     });
   },
@@ -91,7 +91,7 @@ RedditModel = EUI.Model({
     ajax.ajax(this.url, {
       onSuccess: function(request) {
         this.items = JSON.parse(request.responseText).data.children;
-        this.notifyControllers();
+        this.notifyListeners();
       }.bind(this)
     });
   },
@@ -178,7 +178,7 @@ SearchModel = EUI.Model({
         for (var i in temp)
           subr[temp[i].data.subreddit] = 1;
         this.array = Object.keys(subr);
-        this.notifyControllers();
+        this.notifyListeners();
       }.bind(this));
     }
   }),

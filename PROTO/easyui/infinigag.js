@@ -19,7 +19,7 @@ InfinigagModel = EUI.Model({
       this.items = this.items.concat(resp['images']);
 
       /* Notify the controller about model changes */
-      this.notifyControllers();
+      this.notifyListeners();
     }.bind(this);
     this.refresh();
   },
@@ -40,7 +40,7 @@ InfinigagModel = EUI.Model({
         delete item.request;
 
         /* Notify the controller about item updated at index */
-        this.notifyControllers(index);
+        this.notifyListeners(index);
       }.bind(this, index);
 
       item.request.open("GET", item.image.big);
@@ -89,7 +89,7 @@ Infinigag = EUI.TableController({
       case 'Next': this.index++; break;
       case 'Prev': this.index--; break;
     }
-    this.model.notifyControllers(this.index);
+    this.model.notifyListeners(this.index);
   },
 
   /* Use the item title */

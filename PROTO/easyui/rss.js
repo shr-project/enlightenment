@@ -36,7 +36,7 @@ RSSModel = EUI.Model({
           return;
 
         this._array = request.responseXML.rss.channel.item;
-        this.notifyControllers();
+        this.notifyListeners();
       }.bind(this)
     });
   },
@@ -62,7 +62,7 @@ RSSModel = EUI.Model({
         onSuccess: function(request) {
           item.icon = request.responseText;
           delete item.request;
-          this.notifyControllers(index);
+          this.notifyListeners(index);
         }.bind(this)
       });
     }

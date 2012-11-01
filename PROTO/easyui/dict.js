@@ -28,7 +28,7 @@ DictModel = EUI.Model({
 
         if (!terms.length) {
           this.entries = [];
-          this.notifyControllers();
+          this.notifyListeners();
         }
 
         terms = terms.toUpperCase();
@@ -67,7 +67,7 @@ DictModel = EUI.Model({
         });
 
         this.entries = tmp;
-        this.notifyControllers();
+        this.notifyListeners();
 
       }.bind(this), 200);
     }

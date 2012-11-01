@@ -18,7 +18,7 @@ RottenTomatoesModel = EUI.Model({
       },
       onSuccess: function(request) {
         this.array = JSON.parse(request.responseText).movies || [];
-        this.notifyControllers();
+        this.notifyListeners();
       }.bind(this)
     });
   },
@@ -31,7 +31,7 @@ RottenTomatoesModel = EUI.Model({
     movie.request = ajax.get(movie.posters.original, null, function(request) {
       movie.file = movie.poster = request.responseText;
       delete movie.request;
-      this.notifyControllers();
+      this.notifyListeners();
     }.bind(this, movie));
   },
   length: function() {
@@ -55,7 +55,7 @@ RottenTomatoesModel = EUI.Model({
      item.request =  ajax.ajax(item.posters.thumbnail, {
         onSuccess: function(request) {
           item.file = request.responseText;
-          this.notifyControllers();
+          this.notifyListeners();
         }.bind(this)
       });
     }

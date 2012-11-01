@@ -31,7 +31,7 @@ BrainModel = EUI.Model({
   },
   deleteItemAtIndex: function(index) {
     this.value = 0;
-    this.notifyControllers();
+    this.notifyListeners();
   },
   updateItemAtIndex: function(index, data) {
     var next_operator;
@@ -81,7 +81,7 @@ BrainModel = EUI.Model({
           case '/':
             if (this.value == '0') {
               this.show = 'erro';
-              this.notifyControllers();
+              this.notifyListeners();
               return;
             }
             this.previous /= Number(this.value);
@@ -113,7 +113,7 @@ BrainModel = EUI.Model({
           if ((this.value.length > 1) && (this.value[0] == '0') && (this.value[1] != '.'))
             this.value = this.value.slice(1);
     }
-    this.notifyControllers();
+    this.notifyListeners();
   },
 });
 

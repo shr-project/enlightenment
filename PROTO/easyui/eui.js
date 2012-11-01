@@ -91,7 +91,7 @@ Controller = Class.extend({
       return;
 
     if (this.model)
-      this.model.removeController(this);
+      this.model.removeListener(this);
 
     if (this.parent)
       this.parent.evaluateViewChanges();
@@ -239,7 +239,7 @@ Controller = Class.extend({
    */
   didRealizeView: function () {
     if (this.model)
-      this.model.addController(this);
+      this.model.addListener(this);
     this.updateView();
     this.evaluateViewChanges();
   },
@@ -566,11 +566,11 @@ Model = Class.extend({
   willInitialize: function(){
 
     /**
-     * Keeps the list of registered controllers.
+     * Keeps the list of registered listeners.
      * @type {Array}
      * @private
      */
-    this.controllers = [];
+    this.listeners = [];
   },
 
   /**
@@ -601,36 +601,47 @@ Model = Class.extend({
   }),
 
   /**
-   * Notifies all connected controllers of change.
-   * See #addController
+   * Notifies all listeners of change.
+   * See #addListener
    * @param {Number/Array} indexes
    * @param {String} hint
    */
-  notifyControllers: function(indexes, hint) {
-    if (this.controllers.length)
-      for (var i = 0; i < this.controllers.length; i++)
-        this.controllers[i].didChangeModel(indexes, hint);
+  notifyListeners: function(indexes, hint) {
+    if (this.listeners.length)
+      for (var i = 0; i < this.listeners.length; i++)
+        this.listeners[i].didChangeModel(indexes, hint, this);
   },
 
   /**
-   * Connect controller to this model so it
+   * Connect listener to this model so it
    * receives events whenever the model changes.
-   * @param {Controller} controller
+   *
+   * A listener must have a didChangeModel method, that
+   * will be called on a change in the model. This method
+   * has the following signature:
+   *
+   *     didChangeModel(indexes, hint, model)
+   *
+   * Where *indexes* is an array with the modified items
+   * indexes, *hint* is a string containing an arbitrary
+   * hint for the listener and *model* is the
+   * changed model.
+   * @param {Object} listener
    */
-  addController: function(controller) {
-    if (this.controllers.indexOf(controller) < 0)
-      this.controllers.push(controller);
+  addListener: function(listener) {
+    if (this.listeners.indexOf(listener) < 0)
+      this.listeners.push(listener);
   },
 
   /**
-   * Unconnect controller from this model, so it does
+   * Unconnect listener from this model, so it does
    * not receive events whenever this model changes.
-   * @param {Controller} controller
+   * @param {Object} listener
    */
-  removeController: function(controller){
-    for (var i = 0; i < this.controllers.length; i++)
-      if (this.controllers[i] == controller)
-        this.controllers.splice(i, 1);
+  removeListener: function(listener){
+    var index = this.listeners.indexOf(listener);
+    if (index > -1)
+      this.listeners.splice(index, 1);
   },
 
   /**
@@ -658,7 +669,7 @@ Model = Class.extend({
       if (typeof(value) !== 'number' || this._selectedIndex === value)
         return;
       this.__selectedIndex = value;
-      this.notifyControllers(value, 'select');
+      this.notifyListeners(value, 'select');
     }
   })
 });
@@ -692,7 +703,7 @@ ArrayModel = Model.extend({
   /** @inheritdoc */
   deleteItemAtIndex: function(index) {
     this.array.splice(index, 1);
-    this.notifyControllers(index, 'delete');
+    this.notifyListeners(index, 'delete');
   },
   /**
    * Updates the content of *item* at *index* with data.
@@ -712,7 +723,7 @@ ArrayModel = Model.extend({
     } else {
       this.array[index] = data;
     }
-    this.notifyControllers(index, 'update');
+    this.notifyListeners(index, 'update');
   },
   /**
    * Returns the index of data or null if not found.
@@ -727,7 +738,7 @@ ArrayModel = Model.extend({
    * @param {Mixed} data
    */
   pushItem: function(data) {
-    this.notifyControllers(this.array.push(data) - 1, 'insert');
+    this.notifyListeners(this.array.push(data) - 1, 'insert');
   }
 });
 
@@ -767,25 +778,25 @@ FilteredModel = ArrayModel.extend({
     set: function(filter) {
       if (filter) this.__filter = {item: filter};
       else delete this.__filter;
-      this.notifyControllers();
+      this.notifyListeners();
     }
   }),
   /** @inheritdoc */
   deleteItemAtIndex: function(index) {
     var item = this.array(this.filter).get()[index];
     this.array(item['___id']).remove();
-    this.notifyControllers(index, 'delete');
+    this.notifyListeners(index, 'delete');
   },
   /** @inheritdoc */
   updateItemAtIndex: function(index, data) {
     var item = this.array(this.filter).get()[index];
     this.array(item['___id']).update({item: data});
-    this.notifyControllers([index]);
+    this.notifyListeners([index]);
   },
   /** @inheritdoc */
   pushItem: function(data) {
     this.array.insert({item: data});
-    this.notifyControllers();
+    this.notifyListeners();
   }
 });
 
@@ -819,7 +830,7 @@ FileModel = Model.extend({
        * still be empty.
        */
       this.array = entries;
-      this.notifyControllers();
+      this.notifyListeners();
       /*
        * Function 'updateModel' will be called as a callback, thus the context
        * of the FileModel object MUST be binded to it, otherwise
@@ -921,7 +932,7 @@ DBModel = Model.extend({
   updateItemAtIndex: function(index, values) {
     var item = this.itemAtIndex(index);
     this.entries(item['___id']).update(values);
-    this.notifyControllers([index]);
+    this.notifyListeners([index]);
   },
   /**
    * Inserts an object into model.
@@ -929,7 +940,7 @@ DBModel = Model.extend({
    */
   insert: function(data) {
     this.entries.insert(data);
-    this.notifyControllers();
+    this.notifyListeners();
   },
   /**
    * Returns the index of the element that have the same
@@ -947,14 +958,14 @@ DBModel = Model.extend({
   deleteItemAtIndex: function(index) {
     var item = this.itemAtIndex(index);
     this.entries(item['___id']).remove();
-    this.notifyControllers();
+    this.notifyListeners();
   },
   /**
    * Removes all model content.
    */
   clear: function() {
     this.entries().remove();
-    this.notifyControllers();
+    this.notifyListeners();
   }
 });
 
@@ -1670,7 +1681,7 @@ Container = Controller.extend({
    */
   didRealizeView: function () {
     if (this.model)
-      this.model.addController(this);
+      this.model.addListener(this);
     this.updateView();
   },
   /**
@@ -1890,7 +1901,7 @@ TabController = Container.extend({
     view.content.view = this.frame._realizeApp();
     this.frame._setRealizedApp(view.content.view);
 
-    this.model.addController(this);
+    this.model.addListener(this);
 
     if (this.model.length)
       this.model.selectedIndex = 0;
