@@ -4,12 +4,22 @@ Property = require('class').Property;
 
 const reddit_url = 'http://www.reddit.com/';
 
+/** @extends EUI.Model */
 RSSModel = EUI.Model({
+  /**
+   * @param {String} url
+   * @param {String} path
+   * @event
+   */
   init: function(url, path) {
     this.url = this.url || url;
     this._array = [];
     this.refresh();
   },
+  /**
+   * Refresh model after finishing XML file download
+   * @event
+   */
   refresh: function() {
     ajax.ajax(this.url, {
       onSuccess: function(request) {
@@ -21,20 +31,30 @@ RSSModel = EUI.Model({
       }.bind(this)
     });
   },
+  /** @inheritdoc */
   length: function() {
     return this._array.length;
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     return this._array[index];
   }
 });
 
+/** @extends EUI.ListController */
 RSSList = EUI.ListController({
+  /** @type {String} */
   style: 'double_label',
+  /**
+   * @param {String} url
+   * @param {String} title
+   * @event
+   */
   init: function(url, title) {
     this.title = title;
     this.model = new RSSModel(url);
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
 
@@ -43,20 +63,30 @@ RSSList = EUI.ListController({
       text_sub: item.description
     };
   },
+  /** @inheritdoc */
   selectedItemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
     this.pushController(new WebBrowser(item.link));
   },
+  /** @type {Object} */
   navigationBarItems: { left: 'sidePanel' }
 });
 
+/** @extends EUI.Model */
 RedditModel = EUI.Model({
+  /**
+   * @param {String} endpoint
+   * @event
+   */
   init: function(endpoint) {
     this.items = [];
     this.url = reddit_url + endpoint;
 
     this.refresh();
   },
+  /**
+   * Refresh model after finishing HTML file download
+   */
   refresh: function() {
     ajax.ajax(this.url, {
       onSuccess: function(request) {
@@ -65,25 +95,38 @@ RedditModel = EUI.Model({
       }.bind(this)
     });
   },
+  /** @inheritdoc */
   length: function() {
     return this.items.length;
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     return this.items[index].data;
   }
 });
 
+/** @extends EUI.WebController */
 WebBrowser = EUI.WebController({
+  /** @type {Array} */
   navigationBarItems: [undefined, 'Articles'],
 });
 
+/** @extends EUI.ListController */
 RedditList = EUI.ListController({
+  /** @type {String} */
   style: 'double_label',
+  /**
+   * @param {String} endpoint
+   * @param {String} title
+   * @param {String} icon
+   * @event
+   */
   init: function(endpoint, title, icon) {
     this.model = new RedditModel(endpoint);
     this.title = title;
     this.icon = icon;
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
     return {
@@ -91,6 +134,7 @@ RedditList = EUI.ListController({
       text_sub: 'Posted by ' + item.author + ' in ' + item.subreddit
     };
   },
+  /** @inheritdoc */
   selectedItemAtIndex: function(index) {
     var url = this.model.itemAtIndex(index).permalink;
     if (url)
@@ -99,24 +143,31 @@ RedditList = EUI.ListController({
       url = item.url;
     this.pushController(new WebBrowser(url));
   },
+  /** @type {Object} */
   navigationBarItems: { left: 'sidePanel', right: 'Refresh' },
+  /** @inheritdoc */
   selectedNavigationBarItem: function(item) {
     if (item == 'Refresh')
       this.model.refresh();
   }
 });
 
+/** @extends EUI.Model */
 SearchModel = EUI.Model({
+  /** @inheritdoc */
   init: function() {
     this.array = [];
   },
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     if (index < this.array.length)
       return this.array[index];
   },
+  /** @inheritdoc */
   length: function() {
     return this.array.length;
   },
+  /** @type {String} */
   filter: new Property ({
     set: function(terms) {
       var query = terms.split(' ');
@@ -133,21 +184,30 @@ SearchModel = EUI.Model({
   }),
 });
 
+/** @extends EUI.ListController */
 RedditSearchController = EUI.ListController({
+  /** @type {String} */
   title: 'Search',
+  /** @type {SearchModel} */
   model: new SearchModel(),
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
     return item && {text: item};
   },
+  /** @inheritdoc */
   selectedItemAtIndex: function(index) {
     this.parent.onSubredditSelected(this.model.itemAtIndex(index));
   },
+  /**
+   * @param {String} text
+   */
   search: function(text) {
     this.model.filter = text;
   }
 });
 
+/** @extends EUI.ArrayModel */
 RedditApps = new EUI.ArrayModel([
   new RedditList('top.json', 'Home', 'go-home'),
   new RedditList('r/programming/top.json', 'Proggit', 'applications-development'),
@@ -156,8 +216,11 @@ RedditApps = new EUI.ArrayModel([
   new RSSList('http://feeds.bbci.co.uk/news/uk/rss.xml', 'BBC')
 ]);
 
+/** @extends EUI.ListController */
 RedditAppSwitch = new EUI.ListController({
+  /** @type {EUI.ArrayModel} */
   model: RedditApps,
+  /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
     return {
@@ -165,17 +228,22 @@ RedditAppSwitch = new EUI.ListController({
       icon: item.icon
     };
   },
+  /** @inheritdoc */
   selectedItemAtIndex: function(index) {
     this.model.selectedIndex = index;
     this.split.leftPanelVisible = false;
   }
 });
 
+/** @extends EUI.FrameController */
 RedditAppTabs = new EUI.FrameController({
+  /** @type {EUI.ArrayModel} */
   model: RedditApps,
 });
 
+/** @extends EUI.SplitController */
 Reddit = EUI.SplitController({
+  /** @type {EUI.ArrayModel} */
   model: new EUI.ArrayModel([
     new RedditAppSwitch(),
     new RedditAppTabs()
