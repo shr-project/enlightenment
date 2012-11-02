@@ -379,8 +379,8 @@ collections {
    //         target: "bg";
    //      }
    //      program {
-   //         name: "set_icon_unknow";
-   //         signal: "e,action,icon,unknow";
+   //         name: "set_icon_unknown";
+   //         signal: "e,action,icon,unknown";
    //         source: "e";
    //         action: STATE_SET "default" 0.0;
    //         target: "icon";
