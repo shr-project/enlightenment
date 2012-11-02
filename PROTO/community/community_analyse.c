@@ -269,9 +269,9 @@ main(int argc, char **argv)
    community = eina_hash_stringshared_new(NULL);
    ips = eina_hash_stringshared_new(NULL);
    days = eina_hash_new(_community_day_key_length,
-                             _community_day_key_cmp,
-                             _community_day_key_hash,
-                             NULL, 5);
+			_community_day_key_cmp,
+			_community_day_key_hash,
+			NULL, 5);
    countries = eina_hash_string_superfast_new(NULL);
    geo = GeoIP_new(GEOIP_STANDARD);
    memset(months, 0, sizeof (months));
