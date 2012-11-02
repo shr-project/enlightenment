@@ -122,7 +122,7 @@ Package(
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "ecore"],
+        "common": ["efl", "ecore", "edbus"],
         },
     configure_flags={
         "common": [

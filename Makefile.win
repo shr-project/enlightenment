@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for win at Fri Nov  2 08:38:40 2012.
+# Generated for win at Fri Nov  2 08:43:38 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
@@ -808,8 +808,8 @@ emotion-all-users-compile: elementary-compile clouseau-compile terminology-compi
 
 ########################################################################
 # efreet rules
-efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies ecore-install efl-install
-$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
+efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies ecore-install edbus-install efl-install
+$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/edbus/stamps/install $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
 	touch $(BUILDROOT)/efreet/stamps/dependencies
 

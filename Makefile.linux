@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for linux at Fri Nov  2 08:38:36 2012.
+# Generated for linux at Fri Nov  2 08:43:43 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.linux linux
@@ -11,15 +11,15 @@
 #   - eio
 #   - edje
 #   - e_dbus
-#   - efreet
 #   - eeze
 #   - emotion
+#   - efx
+#   - edbus
+#   - efreet
 #   - elementary
 #   - terminology
 #   - e
 #   - clouseau
-#   - efx
-#   - edbus
 #   - python-evas
 #   - python-ecore
 #   - python-edje
@@ -32,7 +32,7 @@ MAKEOPTS = --print-directory -j6
 V=@
 
 .DEFAULT: missing-target
-.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile e_dbus-compile e_dbus-clean e_dbus-dependencies e_dbus-install e_dbus-test e_dbus-doc e_dbus-distcheck e_dbus-all-users-compile e_dbus-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile eeze-compile eeze-clean eeze-dependencies eeze-install eeze-test eeze-doc eeze-distcheck eeze-all-users-compile eeze-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile e-compile e-clean e-dependencies e-install e-test e-doc e-distcheck e-all-users-compile e-direct-users-compile clouseau-compile clouseau-clean clouseau-dependencies clouseau-install clouseau-test clouseau-doc clouseau-distcheck clouseau-all-users-compile clouseau-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile edbus-compile edbus-clean edbus-dependencies edbus-install edbus-test edbus-doc edbus-distcheck edbus-all-users-compile edbus-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile python-e_dbus-compile python-e_dbus-clean python-e_dbus-dependencies python-e_dbus-install python-e_dbus-test python-e_dbus-doc python-e_dbus-distcheck python-e_dbus-all-users-compile python-e_dbus-direct-users-compile
+.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile evas-compile evas-clean evas-dependencies evas-install evas-test evas-doc evas-distcheck evas-all-users-compile evas-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile e_dbus-compile e_dbus-clean e_dbus-dependencies e_dbus-install e_dbus-test e_dbus-doc e_dbus-distcheck e_dbus-all-users-compile e_dbus-direct-users-compile eeze-compile eeze-clean eeze-dependencies eeze-install eeze-test eeze-doc eeze-distcheck eeze-all-users-compile eeze-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile edbus-compile edbus-clean edbus-dependencies edbus-install edbus-test edbus-doc edbus-distcheck edbus-all-users-compile edbus-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile e-compile e-clean e-dependencies e-install e-test e-doc e-distcheck e-all-users-compile e-direct-users-compile clouseau-compile clouseau-clean clouseau-dependencies clouseau-install clouseau-test clouseau-doc clouseau-distcheck clouseau-all-users-compile clouseau-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile python-e_dbus-compile python-e_dbus-clean python-e_dbus-dependencies python-e_dbus-install python-e_dbus-test python-e_dbus-doc python-e_dbus-distcheck python-e_dbus-all-users-compile python-e_dbus-direct-users-compile
 
 missing-target:
 	@echo "Missing target."
@@ -63,14 +63,14 @@ help:
 	@echo "   PACKAGE-direct-users-compile compile all direct users of package."
 	@echo ""
 	@echo "Known packages:"
-	@echo "   efl evas ecore eio edje e_dbus efreet eeze emotion elementary terminology e clouseau efx edbus python-evas python-ecore python-edje python-e_dbus"
+	@echo "   efl evas ecore eio edje e_dbus eeze emotion efx edbus efreet elementary terminology e clouseau python-evas python-ecore python-edje python-e_dbus"
 	@echo ""
 
-all: efl-compile evas-compile ecore-compile eio-compile edje-compile e_dbus-compile efreet-compile eeze-compile emotion-compile elementary-compile terminology-compile e-compile clouseau-compile efx-compile edbus-compile python-evas-compile python-ecore-compile python-edje-compile python-e_dbus-compile
-clean: efl-clean evas-clean ecore-clean eio-clean edje-clean e_dbus-clean efreet-clean eeze-clean emotion-clean elementary-clean terminology-clean e-clean clouseau-clean efx-clean edbus-clean python-evas-clean python-ecore-clean python-edje-clean python-e_dbus-clean
-test: efl-test evas-test ecore-test eio-test edje-test e_dbus-test efreet-test eeze-test emotion-test elementary-test terminology-test e-test clouseau-test efx-test edbus-test python-evas-test python-ecore-test python-edje-test python-e_dbus-test
-doc: efl-doc evas-doc ecore-doc eio-doc edje-doc e_dbus-doc efreet-doc eeze-doc emotion-doc elementary-doc terminology-doc e-doc clouseau-doc efx-doc edbus-doc python-evas-doc python-ecore-doc python-edje-doc python-e_dbus-doc
-distcheck: efl-distcheck evas-distcheck ecore-distcheck eio-distcheck edje-distcheck e_dbus-distcheck efreet-distcheck eeze-distcheck emotion-distcheck elementary-distcheck terminology-distcheck e-distcheck clouseau-distcheck efx-distcheck edbus-distcheck python-evas-distcheck python-ecore-distcheck python-edje-distcheck python-e_dbus-distcheck
+all: efl-compile evas-compile ecore-compile eio-compile edje-compile e_dbus-compile eeze-compile emotion-compile efx-compile edbus-compile efreet-compile elementary-compile terminology-compile e-compile clouseau-compile python-evas-compile python-ecore-compile python-edje-compile python-e_dbus-compile
+clean: efl-clean evas-clean ecore-clean eio-clean edje-clean e_dbus-clean eeze-clean emotion-clean efx-clean edbus-clean efreet-clean elementary-clean terminology-clean e-clean clouseau-clean python-evas-clean python-ecore-clean python-edje-clean python-e_dbus-clean
+test: efl-test evas-test ecore-test eio-test edje-test e_dbus-test eeze-test emotion-test efx-test edbus-test efreet-test elementary-test terminology-test e-test clouseau-test python-evas-test python-ecore-test python-edje-test python-e_dbus-test
+doc: efl-doc evas-doc ecore-doc eio-doc edje-doc e_dbus-doc eeze-doc emotion-doc efx-doc edbus-doc efreet-doc elementary-doc terminology-doc e-doc clouseau-doc python-evas-doc python-ecore-doc python-edje-doc python-e_dbus-doc
+distcheck: efl-distcheck evas-distcheck ecore-distcheck eio-distcheck edje-distcheck e_dbus-distcheck eeze-distcheck emotion-distcheck efx-distcheck edbus-distcheck efreet-distcheck elementary-distcheck terminology-distcheck e-distcheck clouseau-distcheck python-evas-distcheck python-ecore-distcheck python-edje-distcheck python-e_dbus-distcheck
 
 ########################################################################
 # efl rules
@@ -821,133 +821,6 @@ e_dbus-direct-users-compile: elementary-compile python-e_dbus-compile e-compile
 e_dbus-all-users-compile: elementary-compile python-e_dbus-compile clouseau-compile e-compile terminology-compile
 
 ########################################################################
-# efreet rules
-efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies ecore-install efl-install
-$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
-	touch $(BUILDROOT)/efreet/stamps/dependencies
-
-efreet-clean:
-	if test -d $(BUILDROOT)/efreet/compile; then chmod -R u+w $(BUILDROOT)/efreet/compile; fi
-	rm -fr $(BUILDROOT)/efreet/compile
-	rm -fr $(BUILDROOT)/efreet/stamps
-
-$(BUILDROOT)/efreet/stamps/autogen: $(SRCROOT)/efreet/autogen.sh $(SRCROOT)/efreet/configure.ac
-	$(V)echo "Running 'autogen.sh' for efreet..."
-	$(V)rm -f $(BUILDROOT)/efreet/stamps/autogen
-	cd $(SRCROOT)/efreet && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
-	touch $(BUILDROOT)/efreet/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for efreet."
-
-$(BUILDROOT)/efreet/stamps/configure: $(BUILDROOT)/efreet/stamps/autogen $(BUILDROOT)/efreet/stamps/dependencies
-	$(V)echo "Configuring efreet..."
-	$(V)rm -f $(BUILDROOT)/efreet/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/efreet/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/efreet/compile && \
-	$(SRCROOT)/efreet/configure --prefix=$(INSTALLROOT) --enable-tests \
-		--enable-doc \
-		--enable-coverage
-	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
-	touch $(BUILDROOT)/efreet/stamps/configure
-	$(V)echo "Success configuring efreet."
-
-$(BUILDROOT)/efreet/stamps/compile: $(BUILDROOT)/efreet/stamps/configure efreet-compile
-efreet-compile: $(BUILDROOT)/efreet/stamps/configure
-	$(V)echo "Compiling efreet..."
-	$(V)rm -f $(BUILDROOT)/efreet/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/efreet/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/efreet/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/efreet/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/efreet/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/efreet/compile;\
-	else\
-		echo "efreet is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/efreet/stamps/compile -o -f $(BUILDROOT)/efreet/stamps/compile-updated; then\
-		touch $(BUILDROOT)/efreet/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling efreet."
-
-$(BUILDROOT)/efreet/stamps/install: $(BUILDROOT)/efreet/stamps/compile efreet-install
-efreet-install: $(BUILDROOT)/efreet/stamps/compile
-	$(V)echo "Installing efreet..."
-	$(V)if test ! -f $(BUILDROOT)/efreet/stamps/install -o $(BUILDROOT)/efreet/stamps/compile -nt $(BUILDROOT)/efreet/stamps/install; then\
-		rm -f $(BUILDROOT)/efreet/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/efreet/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/efreet/compile;\
-		mkdir -p $(BUILDROOT)/efreet/stamps;\
-		touch $(BUILDROOT)/efreet/stamps/install;\
-	else\
-		echo "efreet did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing efreet."
-
-$(BUILDROOT)/efreet/stamps/test: $(BUILDROOT)/efreet/stamps/compile efreet-test
-efreet-test: $(BUILDROOT)/efreet/stamps/compile
-	$(V)echo "Testing (make coverage) efreet..."
-	$(V)rm -f $(BUILDROOT)/efreet/stamps/test
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/efreet/compile
-	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
-	touch $(BUILDROOT)/efreet/stamps/test
-	$(V)echo "Success testing (make coverage) efreet."
-
-$(BUILDROOT)/efreet/stamps/doc: $(BUILDROOT)/efreet/stamps/compile efreet-doc
-efreet-doc: $(BUILDROOT)/efreet/stamps/compile
-	$(V)echo "Generating documentation (make doc) efreet..."
-	$(V)rm -f $(BUILDROOT)/efreet/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/efreet/compile
-	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
-	touch $(BUILDROOT)/efreet/stamps/doc
-	$(V)echo "Success generating documentation (make doc) efreet."
-
-$(BUILDROOT)/efreet/stamps/distcheck: $(BUILDROOT)/efreet/stamps/compile efreet-distcheck
-efreet-distcheck: $(BUILDROOT)/efreet/stamps/compile
-	$(V)echo "Checking distribution efreet..."
-	$(V)rm -f $(BUILDROOT)/efreet/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/efreet/compile
-	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
-	touch $(BUILDROOT)/efreet/stamps/distcheck
-	$(V)echo "Success checking distribution efreet."
-
-efreet-direct-users-compile: elementary-compile e-compile terminology-compile
-
-efreet-all-users-compile: elementary-compile clouseau-compile e-compile terminology-compile
-
-########################################################################
 # eeze rules
 eeze-dependencies: $(BUILDROOT)/eeze/stamps/dependencies ecore-install efl-install
 $(BUILDROOT)/eeze/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
@@ -1183,6 +1056,367 @@ emotion-distcheck: $(BUILDROOT)/emotion/stamps/compile
 emotion-direct-users-compile: elementary-compile terminology-compile
 
 emotion-all-users-compile: elementary-compile clouseau-compile e-compile terminology-compile
+
+########################################################################
+# efx rules
+efx-dependencies: $(BUILDROOT)/efx/stamps/dependencies ecore-install efl-install evas-install
+$(BUILDROOT)/efx/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/evas/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/dependencies
+
+efx-clean:
+	if test -d $(BUILDROOT)/efx/compile; then chmod -R u+w $(BUILDROOT)/efx/compile; fi
+	rm -fr $(BUILDROOT)/efx/compile
+	rm -fr $(BUILDROOT)/efx/stamps
+
+$(BUILDROOT)/efx/stamps/autogen: $(SRCROOT)/efx/autogen.sh $(SRCROOT)/efx/configure.ac
+	$(V)echo "Running 'autogen.sh' for efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/autogen
+	cd $(SRCROOT)/efx && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for efx."
+
+$(BUILDROOT)/efx/stamps/configure: $(BUILDROOT)/efx/stamps/autogen $(BUILDROOT)/efx/stamps/dependencies
+	$(V)echo "Configuring efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/efx/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/efx/compile && \
+	$(SRCROOT)/efx/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/configure
+	$(V)echo "Success configuring efx."
+
+$(BUILDROOT)/efx/stamps/compile: $(BUILDROOT)/efx/stamps/configure efx-compile
+efx-compile: $(BUILDROOT)/efx/stamps/configure
+	$(V)echo "Compiling efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/efx/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/efx/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile;\
+	else\
+		echo "efx is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/efx/stamps/compile -o -f $(BUILDROOT)/efx/stamps/compile-updated; then\
+		touch $(BUILDROOT)/efx/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling efx."
+
+$(BUILDROOT)/efx/stamps/install: $(BUILDROOT)/efx/stamps/compile efx-install
+efx-install: $(BUILDROOT)/efx/stamps/compile
+	$(V)echo "Installing efx..."
+	$(V)if test ! -f $(BUILDROOT)/efx/stamps/install -o $(BUILDROOT)/efx/stamps/compile -nt $(BUILDROOT)/efx/stamps/install; then\
+		rm -f $(BUILDROOT)/efx/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile;\
+		mkdir -p $(BUILDROOT)/efx/stamps;\
+		touch $(BUILDROOT)/efx/stamps/install;\
+	else\
+		echo "efx did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing efx."
+
+$(BUILDROOT)/efx/stamps/test: $(BUILDROOT)/efx/stamps/compile efx-test
+efx-test: $(BUILDROOT)/efx/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/test
+	$(V)echo 'No test target defined for efx'
+
+$(BUILDROOT)/efx/stamps/doc: $(BUILDROOT)/efx/stamps/compile efx-doc
+efx-doc: $(BUILDROOT)/efx/stamps/compile
+	$(V)echo "Generating documentation (make doc) efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/doc
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/efx/compile
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/doc
+	$(V)echo "Success generating documentation (make doc) efx."
+
+$(BUILDROOT)/efx/stamps/distcheck: $(BUILDROOT)/efx/stamps/compile efx-distcheck
+efx-distcheck: $(BUILDROOT)/efx/stamps/compile
+	$(V)echo "Checking distribution efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/efx/compile
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/distcheck
+	$(V)echo "Success checking distribution efx."
+
+efx-direct-users-compile:
+
+efx-all-users-compile:
+
+########################################################################
+# edbus rules
+edbus-dependencies: $(BUILDROOT)/edbus/stamps/dependencies ecore-install efl-install
+$(BUILDROOT)/edbus/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
+	touch $(BUILDROOT)/edbus/stamps/dependencies
+
+edbus-clean:
+	if test -d $(BUILDROOT)/edbus/compile; then chmod -R u+w $(BUILDROOT)/edbus/compile; fi
+	rm -fr $(BUILDROOT)/edbus/compile
+	rm -fr $(BUILDROOT)/edbus/stamps
+
+$(BUILDROOT)/edbus/stamps/autogen: $(SRCROOT)/edbus/autogen.sh $(SRCROOT)/edbus/configure.ac
+	$(V)echo "Running 'autogen.sh' for edbus..."
+	$(V)rm -f $(BUILDROOT)/edbus/stamps/autogen
+	cd $(SRCROOT)/edbus && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
+	touch $(BUILDROOT)/edbus/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for edbus."
+
+$(BUILDROOT)/edbus/stamps/configure: $(BUILDROOT)/edbus/stamps/autogen $(BUILDROOT)/edbus/stamps/dependencies
+	$(V)echo "Configuring edbus..."
+	$(V)rm -f $(BUILDROOT)/edbus/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/edbus/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/edbus/compile && \
+	$(SRCROOT)/edbus/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
+	touch $(BUILDROOT)/edbus/stamps/configure
+	$(V)echo "Success configuring edbus."
+
+$(BUILDROOT)/edbus/stamps/compile: $(BUILDROOT)/edbus/stamps/configure edbus-compile
+edbus-compile: $(BUILDROOT)/edbus/stamps/configure
+	$(V)echo "Compiling edbus..."
+	$(V)rm -f $(BUILDROOT)/edbus/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/edbus/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/edbus/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/edbus/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/edbus/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/edbus/compile;\
+	else\
+		echo "edbus is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/edbus/stamps/compile -o -f $(BUILDROOT)/edbus/stamps/compile-updated; then\
+		touch $(BUILDROOT)/edbus/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling edbus."
+
+$(BUILDROOT)/edbus/stamps/install: $(BUILDROOT)/edbus/stamps/compile edbus-install
+edbus-install: $(BUILDROOT)/edbus/stamps/compile
+	$(V)echo "Installing edbus..."
+	$(V)if test ! -f $(BUILDROOT)/edbus/stamps/install -o $(BUILDROOT)/edbus/stamps/compile -nt $(BUILDROOT)/edbus/stamps/install; then\
+		rm -f $(BUILDROOT)/edbus/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/edbus/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/edbus/compile;\
+		mkdir -p $(BUILDROOT)/edbus/stamps;\
+		touch $(BUILDROOT)/edbus/stamps/install;\
+	else\
+		echo "edbus did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing edbus."
+
+$(BUILDROOT)/edbus/stamps/test: $(BUILDROOT)/edbus/stamps/compile edbus-test
+edbus-test: $(BUILDROOT)/edbus/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
+	touch $(BUILDROOT)/edbus/stamps/test
+	$(V)echo 'No test target defined for edbus'
+
+$(BUILDROOT)/edbus/stamps/doc: $(BUILDROOT)/edbus/stamps/compile edbus-doc
+edbus-doc: $(BUILDROOT)/edbus/stamps/compile
+	$(V)echo "Generating documentation (make doc) edbus..."
+	$(V)rm -f $(BUILDROOT)/edbus/stamps/doc
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/edbus/compile
+	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
+	touch $(BUILDROOT)/edbus/stamps/doc
+	$(V)echo "Success generating documentation (make doc) edbus."
+
+$(BUILDROOT)/edbus/stamps/distcheck: $(BUILDROOT)/edbus/stamps/compile edbus-distcheck
+edbus-distcheck: $(BUILDROOT)/edbus/stamps/compile
+	$(V)echo "Checking distribution edbus..."
+	$(V)rm -f $(BUILDROOT)/edbus/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/edbus/compile
+	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
+	touch $(BUILDROOT)/edbus/stamps/distcheck
+	$(V)echo "Success checking distribution edbus."
+
+edbus-direct-users-compile: efreet-compile
+
+edbus-all-users-compile: elementary-compile clouseau-compile e-compile terminology-compile efreet-compile
+
+########################################################################
+# efreet rules
+efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies ecore-install edbus-install efl-install
+$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/edbus/stamps/install $(BUILDROOT)/efl/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
+	touch $(BUILDROOT)/efreet/stamps/dependencies
+
+efreet-clean:
+	if test -d $(BUILDROOT)/efreet/compile; then chmod -R u+w $(BUILDROOT)/efreet/compile; fi
+	rm -fr $(BUILDROOT)/efreet/compile
+	rm -fr $(BUILDROOT)/efreet/stamps
+
+$(BUILDROOT)/efreet/stamps/autogen: $(SRCROOT)/efreet/autogen.sh $(SRCROOT)/efreet/configure.ac
+	$(V)echo "Running 'autogen.sh' for efreet..."
+	$(V)rm -f $(BUILDROOT)/efreet/stamps/autogen
+	cd $(SRCROOT)/efreet && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
+	touch $(BUILDROOT)/efreet/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for efreet."
+
+$(BUILDROOT)/efreet/stamps/configure: $(BUILDROOT)/efreet/stamps/autogen $(BUILDROOT)/efreet/stamps/dependencies
+	$(V)echo "Configuring efreet..."
+	$(V)rm -f $(BUILDROOT)/efreet/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/efreet/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	cd $(BUILDROOT)/efreet/compile && \
+	$(SRCROOT)/efreet/configure --prefix=$(INSTALLROOT) --enable-tests \
+		--enable-doc \
+		--enable-coverage
+	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
+	touch $(BUILDROOT)/efreet/stamps/configure
+	$(V)echo "Success configuring efreet."
+
+$(BUILDROOT)/efreet/stamps/compile: $(BUILDROOT)/efreet/stamps/configure efreet-compile
+efreet-compile: $(BUILDROOT)/efreet/stamps/configure
+	$(V)echo "Compiling efreet..."
+	$(V)rm -f $(BUILDROOT)/efreet/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/efreet/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/efreet/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/efreet/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/efreet/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/efreet/compile;\
+	else\
+		echo "efreet is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/efreet/stamps/compile -o -f $(BUILDROOT)/efreet/stamps/compile-updated; then\
+		touch $(BUILDROOT)/efreet/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling efreet."
+
+$(BUILDROOT)/efreet/stamps/install: $(BUILDROOT)/efreet/stamps/compile efreet-install
+efreet-install: $(BUILDROOT)/efreet/stamps/compile
+	$(V)echo "Installing efreet..."
+	$(V)if test ! -f $(BUILDROOT)/efreet/stamps/install -o $(BUILDROOT)/efreet/stamps/compile -nt $(BUILDROOT)/efreet/stamps/install; then\
+		rm -f $(BUILDROOT)/efreet/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/efreet/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/efreet/compile;\
+		mkdir -p $(BUILDROOT)/efreet/stamps;\
+		touch $(BUILDROOT)/efreet/stamps/install;\
+	else\
+		echo "efreet did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing efreet."
+
+$(BUILDROOT)/efreet/stamps/test: $(BUILDROOT)/efreet/stamps/compile efreet-test
+efreet-test: $(BUILDROOT)/efreet/stamps/compile
+	$(V)echo "Testing (make coverage) efreet..."
+	$(V)rm -f $(BUILDROOT)/efreet/stamps/test
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) coverage -C $(BUILDROOT)/efreet/compile
+	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
+	touch $(BUILDROOT)/efreet/stamps/test
+	$(V)echo "Success testing (make coverage) efreet."
+
+$(BUILDROOT)/efreet/stamps/doc: $(BUILDROOT)/efreet/stamps/compile efreet-doc
+efreet-doc: $(BUILDROOT)/efreet/stamps/compile
+	$(V)echo "Generating documentation (make doc) efreet..."
+	$(V)rm -f $(BUILDROOT)/efreet/stamps/doc
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/efreet/compile
+	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
+	touch $(BUILDROOT)/efreet/stamps/doc
+	$(V)echo "Success generating documentation (make doc) efreet."
+
+$(BUILDROOT)/efreet/stamps/distcheck: $(BUILDROOT)/efreet/stamps/compile efreet-distcheck
+efreet-distcheck: $(BUILDROOT)/efreet/stamps/compile
+	$(V)echo "Checking distribution efreet..."
+	$(V)rm -f $(BUILDROOT)/efreet/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
+	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/efreet/compile
+	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
+	touch $(BUILDROOT)/efreet/stamps/distcheck
+	$(V)echo "Success checking distribution efreet."
+
+efreet-direct-users-compile: elementary-compile e-compile terminology-compile
+
+efreet-all-users-compile: elementary-compile clouseau-compile e-compile terminology-compile
 
 ########################################################################
 # elementary rules
@@ -1674,240 +1908,6 @@ clouseau-distcheck: $(BUILDROOT)/clouseau/stamps/compile
 clouseau-direct-users-compile:
 
 clouseau-all-users-compile:
-
-########################################################################
-# efx rules
-efx-dependencies: $(BUILDROOT)/efx/stamps/dependencies ecore-install efl-install evas-install
-$(BUILDROOT)/efx/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/evas/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/dependencies
-
-efx-clean:
-	if test -d $(BUILDROOT)/efx/compile; then chmod -R u+w $(BUILDROOT)/efx/compile; fi
-	rm -fr $(BUILDROOT)/efx/compile
-	rm -fr $(BUILDROOT)/efx/stamps
-
-$(BUILDROOT)/efx/stamps/autogen: $(SRCROOT)/efx/autogen.sh $(SRCROOT)/efx/configure.ac
-	$(V)echo "Running 'autogen.sh' for efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/autogen
-	cd $(SRCROOT)/efx && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for efx."
-
-$(BUILDROOT)/efx/stamps/configure: $(BUILDROOT)/efx/stamps/autogen $(BUILDROOT)/efx/stamps/dependencies
-	$(V)echo "Configuring efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/efx/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/efx/compile && \
-	$(SRCROOT)/efx/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/configure
-	$(V)echo "Success configuring efx."
-
-$(BUILDROOT)/efx/stamps/compile: $(BUILDROOT)/efx/stamps/configure efx-compile
-efx-compile: $(BUILDROOT)/efx/stamps/configure
-	$(V)echo "Compiling efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/efx/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/efx/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile;\
-	else\
-		echo "efx is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/efx/stamps/compile -o -f $(BUILDROOT)/efx/stamps/compile-updated; then\
-		touch $(BUILDROOT)/efx/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling efx."
-
-$(BUILDROOT)/efx/stamps/install: $(BUILDROOT)/efx/stamps/compile efx-install
-efx-install: $(BUILDROOT)/efx/stamps/compile
-	$(V)echo "Installing efx..."
-	$(V)if test ! -f $(BUILDROOT)/efx/stamps/install -o $(BUILDROOT)/efx/stamps/compile -nt $(BUILDROOT)/efx/stamps/install; then\
-		rm -f $(BUILDROOT)/efx/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile;\
-		mkdir -p $(BUILDROOT)/efx/stamps;\
-		touch $(BUILDROOT)/efx/stamps/install;\
-	else\
-		echo "efx did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing efx."
-
-$(BUILDROOT)/efx/stamps/test: $(BUILDROOT)/efx/stamps/compile efx-test
-efx-test: $(BUILDROOT)/efx/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/test
-	$(V)echo 'No test target defined for efx'
-
-$(BUILDROOT)/efx/stamps/doc: $(BUILDROOT)/efx/stamps/compile efx-doc
-efx-doc: $(BUILDROOT)/efx/stamps/compile
-	$(V)echo "Generating documentation (make doc) efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/efx/compile
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/doc
-	$(V)echo "Success generating documentation (make doc) efx."
-
-$(BUILDROOT)/efx/stamps/distcheck: $(BUILDROOT)/efx/stamps/compile efx-distcheck
-efx-distcheck: $(BUILDROOT)/efx/stamps/compile
-	$(V)echo "Checking distribution efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/efx/compile
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/distcheck
-	$(V)echo "Success checking distribution efx."
-
-efx-direct-users-compile:
-
-efx-all-users-compile:
-
-########################################################################
-# edbus rules
-edbus-dependencies: $(BUILDROOT)/edbus/stamps/dependencies ecore-install efl-install
-$(BUILDROOT)/edbus/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
-	touch $(BUILDROOT)/edbus/stamps/dependencies
-
-edbus-clean:
-	if test -d $(BUILDROOT)/edbus/compile; then chmod -R u+w $(BUILDROOT)/edbus/compile; fi
-	rm -fr $(BUILDROOT)/edbus/compile
-	rm -fr $(BUILDROOT)/edbus/stamps
-
-$(BUILDROOT)/edbus/stamps/autogen: $(SRCROOT)/edbus/autogen.sh $(SRCROOT)/edbus/configure.ac
-	$(V)echo "Running 'autogen.sh' for edbus..."
-	$(V)rm -f $(BUILDROOT)/edbus/stamps/autogen
-	cd $(SRCROOT)/edbus && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
-	touch $(BUILDROOT)/edbus/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for edbus."
-
-$(BUILDROOT)/edbus/stamps/configure: $(BUILDROOT)/edbus/stamps/autogen $(BUILDROOT)/edbus/stamps/dependencies
-	$(V)echo "Configuring edbus..."
-	$(V)rm -f $(BUILDROOT)/edbus/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/edbus/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	cd $(BUILDROOT)/edbus/compile && \
-	$(SRCROOT)/edbus/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
-	touch $(BUILDROOT)/edbus/stamps/configure
-	$(V)echo "Success configuring edbus."
-
-$(BUILDROOT)/edbus/stamps/compile: $(BUILDROOT)/edbus/stamps/configure edbus-compile
-edbus-compile: $(BUILDROOT)/edbus/stamps/configure
-	$(V)echo "Compiling edbus..."
-	$(V)rm -f $(BUILDROOT)/edbus/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/edbus/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/edbus/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/edbus/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/edbus/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/edbus/compile;\
-	else\
-		echo "edbus is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/edbus/stamps/compile -o -f $(BUILDROOT)/edbus/stamps/compile-updated; then\
-		touch $(BUILDROOT)/edbus/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling edbus."
-
-$(BUILDROOT)/edbus/stamps/install: $(BUILDROOT)/edbus/stamps/compile edbus-install
-edbus-install: $(BUILDROOT)/edbus/stamps/compile
-	$(V)echo "Installing edbus..."
-	$(V)if test ! -f $(BUILDROOT)/edbus/stamps/install -o $(BUILDROOT)/edbus/stamps/compile -nt $(BUILDROOT)/edbus/stamps/install; then\
-		rm -f $(BUILDROOT)/edbus/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/edbus/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/edbus/compile;\
-		mkdir -p $(BUILDROOT)/edbus/stamps;\
-		touch $(BUILDROOT)/edbus/stamps/install;\
-	else\
-		echo "edbus did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing edbus."
-
-$(BUILDROOT)/edbus/stamps/test: $(BUILDROOT)/edbus/stamps/compile edbus-test
-edbus-test: $(BUILDROOT)/edbus/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
-	touch $(BUILDROOT)/edbus/stamps/test
-	$(V)echo 'No test target defined for edbus'
-
-$(BUILDROOT)/edbus/stamps/doc: $(BUILDROOT)/edbus/stamps/compile edbus-doc
-edbus-doc: $(BUILDROOT)/edbus/stamps/compile
-	$(V)echo "Generating documentation (make doc) edbus..."
-	$(V)rm -f $(BUILDROOT)/edbus/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/edbus/compile
-	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
-	touch $(BUILDROOT)/edbus/stamps/doc
-	$(V)echo "Success generating documentation (make doc) edbus."
-
-$(BUILDROOT)/edbus/stamps/distcheck: $(BUILDROOT)/edbus/stamps/compile edbus-distcheck
-edbus-distcheck: $(BUILDROOT)/edbus/stamps/compile
-	$(V)echo "Checking distribution edbus..."
-	$(V)rm -f $(BUILDROOT)/edbus/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections";\
-	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/edbus/compile
-	$(V)mkdir -p $(BUILDROOT)/edbus/stamps
-	touch $(BUILDROOT)/edbus/stamps/distcheck
-	$(V)echo "Success checking distribution edbus."
-
-edbus-direct-users-compile:
-
-edbus-all-users-compile:
 
 ########################################################################
 # python-evas rules
