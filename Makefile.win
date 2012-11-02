@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for win at Thu Nov  1 14:57:23 2012.
+# Generated for win at Fri Nov  2 08:38:40 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
@@ -23,7 +23,7 @@
 SRCROOT = $(shell pwd)
 BUILDROOT = $(shell pwd)/build
 INSTALLROOT = $(shell pwd)/install
-MAKEOPTS = --print-directory -j1
+MAKEOPTS = --print-directory -j6
 V=@
 
 .DEFAULT: missing-target

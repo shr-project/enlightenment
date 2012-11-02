@@ -78,7 +78,7 @@ out.write("""
 SRCROOT = $(shell pwd)
 BUILDROOT = $(shell pwd)/build
 INSTALLROOT = $(shell pwd)/install
-MAKEOPTS = --print-directory -j1
+MAKEOPTS = --print-directory -j6
 V=@
 
 .DEFAULT: missing-target
