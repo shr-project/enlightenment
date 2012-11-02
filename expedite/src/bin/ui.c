@@ -284,28 +284,28 @@ _ui_all(void)
         tim = localtime(&now);
         if (tim) strftime(datestr, sizeof(datestr), "%Y-%m-%d %H:%M:%S", tim);
         else snprintf(datestr, sizeof(datestr), "unknown");
-        //        printf("%5.2f , EVAS SPEED\n", fps / t_count);
-        printf("%5.2f , EVAS SPEED (WEIGHTED), "
-               "tn, %i , "
-               "t, %s , "
-               "ev , %i.%i.%i.%i , "
-               "p , %s , "
-               "sz , %i , %i , "
-               "c , %i , "
-               "e , %s , "
-               "fs , %i\n"
-               ,
-               wfps / (t_count * avgw),
-               //               fps / t_count,
+        printf("\n#####Test Result#####\n"
+               "evas speed: %5.2f\n"
+               "evas speed(weighted): %5.2f\n"
+               "testcase count: %i\n"
+               "date: %s\n"
+               "evas version: %i.%i.%i.%i\n"
+               "profile: %s\n"
+               "window size: %i, %i\n"
+               "loop count: %i\n"
+               "engine: %s\n"
+               "full screen: %i\n",
+               (fps / t_count),
+               (wfps / (t_count * avgw)),
                t_count,
                datestr,
-               evas_version->major, evas_version->minor, evas_version->micro, evas_version->revision,
+               evas_version->major, evas_version->minor, evas_version->micro,
+               evas_version->revision,
                profile,
                win_w, win_h,
                loops,
                engine,
-               fullscreen
-              );
+               fullscreen);
      }
 }
 
