@@ -1,5 +1,9 @@
 E_dbus 1.7.99
 
+NOTE: this library is deprecated in favor of 'edbus'
+NOTE: it is in maintenance mode and will not get upgrades, just bugfixes.
+
+
 ******************************************************************************
 
  FOR ANY ISSUES PLEASE EMAIL:

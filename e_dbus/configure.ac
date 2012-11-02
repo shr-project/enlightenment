@@ -409,3 +409,5 @@ echo
 echo "Installation...........: make install (as root if needed, with 'su' or 'sudo')"
 echo "  prefix...............: $prefix"
 echo
+echo "NOTE: this library is deprecated in favor of 'edbus'"
+echo "NOTE: it is in maintenance mode and will not get upgrades, just bugfixes."
