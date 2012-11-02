@@ -51,156 +51,156 @@ static int exit_after_test = 0;
 static double weights[] =
 {
    0.0, // no test 0
-     
-     50.4851, // test 1
-     97.3703, // test 2
-     10.0000, // test 3
-     87.3703, // ...
-     10.0000, 
-   
-     150.0000, // test 6
-     10.0000,
-     150.0000,
-     10.0000,
-     150.0000,
-   
-     10.0000, // test 11
-     150.0000,
-     10.0000,
-     10.6493, 
-     38.4818,
-   
-     40.7314, // test 16
-     32.0866,
-     21.3337,
-     21.2167,
-     71.6141,
-   
-     64.8893, // test 21
-     95.0880,
-     121.0438,
-     41.2646,
-     162.7149,
-   
-     89.1650, // test 26
-     105.3571,
-     40.9657,
-     98.4671,
-     28.4322,
-   
-     60.000, // test 31
-     75.5507,
-     51.6601,
-     135.4753,
-     38.2705,
-   
-     35.9915, // test 36
-     31.9500,
-     22.6752,
-     38.2702,
-     37.4459,
-   
-     37.2009, // test 41
-     34.5459,
-     38.5043,
-     50.0000,
-     37.0282,
-   
-     55.8886, // test 46
-     17.2535,
-     23.1457,
-     36.9874,
-     37.9336,
-   
-     17.1830, // test 51
-     20.7521,
-     29.0141,
-     131.6784,
-     13.6851,
-   
-     23.4462, // test 56
-     14.7573,
-     36.5261,
-      5.0000,
-      5.0000,
-   
-     24.3482, // test 61
-     10.4611,
-     86.0290,
-     82.0735,
-     18.6459,
-   
-     37.4608, // test 66
-     32.4417,
-     11.5449,
-      5.0000,
-     11.4172,
-   
-     13.3682, // test 71
-     10.0324,
-     10.0584,
-     10.0170,
-     5.4029,
-   
-     10.6349, // test 76
-     21.7728,
-     12.7933,
-     19.4177,
-     34.4192,
-   
-     23.9110, // test 81
-     22.8287,
-     41.2399,
-     30.1383,
-     22.0342,
-   
-     38.2952, // test 86
-     5.5560,
-     0.5000,
-     1.000,
-     10.000,
-   
-     5.000, // test 91
-     20.000, // MASK
-     20.000, // MASK 2
-     20.000, // MASK 3
-     20.000, // MASK 4
-   
-     20.000, // test 96
-     20.000, // MASK 6
-     20.000, // MASK 7
-     20.000, // MASK 8
-     20.000, // MASK 9
-   
-     20.000, // test 101
-     20.000, // MASK 11
-     20.000, // MASK 12
-     20.000, // MASK 13
-     20.000, // MASK 14
-   
-     20.000, // test 106 MASK 15
-     1.000,
-     2.000,
-     1.000,
-     2.000,
 
-     1.000, // test 111
-     2.000,
-     1.000,
-     2.000,
-     1.000,
+   50.4851, // test 1
+   97.3703, // test 2
+   10.0000, // test 3
+   87.3703, // ...
+   10.0000,
 
-     2.000,   // test 116
-     10.000,
-     10.000,
-   
-     0.0, // Exit
-   
-     0.0, // no final test - add a 0 at the end anyway to pad
-     0.0,
-     0.0,
-     0.0,
-     0.0
+   150.0000, // test 6
+   10.0000,
+   150.0000,
+   10.0000,
+   150.0000,
+
+   10.0000, // test 11
+   150.0000,
+   10.0000,
+   10.6493,
+   38.4818,
+
+   40.7314, // test 16
+   32.0866,
+   21.3337,
+   21.2167,
+   71.6141,
+
+   64.8893, // test 21
+   95.0880,
+   121.0438,
+   41.2646,
+   162.7149,
+
+   89.1650, // test 26
+   105.3571,
+   40.9657,
+   98.4671,
+   28.4322,
+
+   60.000, // test 31
+   75.5507,
+   51.6601,
+   135.4753,
+   38.2705,
+
+   35.9915, // test 36
+   31.9500,
+   22.6752,
+   38.2702,
+   37.4459,
+
+   37.2009, // test 41
+   34.5459,
+   38.5043,
+   50.0000,
+   37.0282,
+
+   55.8886, // test 46
+   17.2535,
+   23.1457,
+   36.9874,
+   37.9336,
+
+   17.1830, // test 51
+   20.7521,
+   29.0141,
+   131.6784,
+   13.6851,
+
+   23.4462, // test 56
+   14.7573,
+   36.5261,
+   5.0000,
+   5.0000,
+
+   24.3482, // test 61
+   10.4611,
+   86.0290,
+   82.0735,
+   18.6459,
+
+   37.4608, // test 66
+   32.4417,
+   11.5449,
+   5.0000,
+   11.4172,
+
+   13.3682, // test 71
+   10.0324,
+   10.0584,
+   10.0170,
+   5.4029,
+
+   10.6349, // test 76
+   21.7728,
+   12.7933,
+   19.4177,
+   34.4192,
+
+   23.9110, // test 81
+   22.8287,
+   41.2399,
+   30.1383,
+   22.0342,
+
+   38.2952, // test 86
+   5.5560,
+   0.5000,
+   1.000,
+   10.000,
+
+   5.000, // test 91
+   20.000, // MASK
+   20.000, // MASK 2
+   20.000, // MASK 3
+   20.000, // MASK 4
+
+   20.000, // test 96
+   20.000, // MASK 6
+   20.000, // MASK 7
+   20.000, // MASK 8
+   20.000, // MASK 9
+
+   20.000, // test 101
+   20.000, // MASK 11
+   20.000, // MASK 12
+   20.000, // MASK 13
+   20.000, // MASK 14
+
+   20.000, // test 106 MASK 15
+   1.000,
+   2.000,
+   1.000,
+   2.000,
+
+   1.000, // test 111
+   2.000,
+   1.000,
+   2.000,
+   1.000,
+
+   2.000,   // test 116
+   10.000,
+   10.000,
+
+   0.0, // Exit
+
+   0.0, // no final test - add a 0 at the end anyway to pad
+   0.0,
+   0.0,
+   0.0,
+   0.0
 };
 
 static void
@@ -243,32 +243,32 @@ _ui_all(void)
    evas_object_hide(o_byline);
    for (l = menu; l; l = l->next)
      {
-	Menu_Item *mi;
+        Menu_Item *mi;
 
-	mi = l->data;
-	if ((mi->func == about_start) ||
-	    (mi->func == _ui_exit) ||
-	    (mi->func == _ui_all))
-	  continue;
-	if (mi->func) mi->func();
+        mi = l->data;
+        if ((mi->func == about_start) ||
+            (mi->func == _ui_exit) ||
+            (mi->func == _ui_all))
+          continue;
+        if (mi->func) mi->func();
         evas_object_hide(o_title);
         evas_object_hide(o_byline);
-	while (p_fps == 0.0)
-	  {
-	     engine_loop();
-	     ui_loop();
-	     evas_render(evas);
-	  }
-	/* This give time to delete the objects of the previous test and make
-	   the result of next test more accurate. Draw back, some time is not
-	   counted at all. */
-	evas_render(evas);
-	t_count++;
-	fps += p_fps;
+        while (p_fps == 0.0)
+          {
+             engine_loop();
+             ui_loop();
+             evas_render(evas);
+          }
+        /* This give time to delete the objects of the previous test and make
+           the result of next test more accurate. Draw back, some time is not
+           counted at all. */
+        evas_render(evas);
+        t_count++;
+        fps += p_fps;
         wfps += (p_fps * weights[t_count]);
-	key_func("Escape");
+        key_func("Escape");
      }
-   for (i = 1; 
+   for (i = 1;
         (i < (1 + t_count)) &&
         (weights[i] > 0.0);
         i++)
@@ -279,12 +279,12 @@ _ui_all(void)
         char datestr[1024];
         struct tm *tim;
         time_t now;
-        
+
         now = time(NULL);
         tim = localtime(&now);
         if (tim) strftime(datestr, sizeof(datestr), "%Y-%m-%d %H:%M:%S", tim);
         else snprintf(datestr, sizeof(datestr), "unknown");
-//        printf("%5.2f , EVAS SPEED\n", fps / t_count);
+        //        printf("%5.2f , EVAS SPEED\n", fps / t_count);
         printf("%5.2f , EVAS SPEED (WEIGHTED), "
                "tn, %i , "
                "t, %s , "
@@ -296,7 +296,7 @@ _ui_all(void)
                "fs , %i\n"
                ,
                wfps / (t_count * avgw),
-//               fps / t_count,
+               //               fps / t_count,
                t_count,
                datestr,
                evas_version->major, evas_version->minor, evas_version->micro, evas_version->revision,
@@ -331,35 +331,35 @@ _ui_num(int n)
    mi = eina_list_nth(menu, n);
    if (mi)
      {
-	if ((mi->func == about_start) ||
-	    (mi->func == _ui_exit) ||
-	    (mi->func == _ui_all))
-	  goto done;
-	if (mi->func) mi->func();
+        if ((mi->func == about_start) ||
+            (mi->func == _ui_exit) ||
+            (mi->func == _ui_all))
+          goto done;
+        if (mi->func) mi->func();
         evas_object_hide(o_title);
         evas_object_hide(o_byline);
-	while (p_fps == 0.0)
-	  {
-	     ui_loop();
-	     engine_loop();
-	     evas_render(evas);
-	  }
-	/* This give time to delete the objects of the previous test and make
-	   the result of next test more accurate. Draw back, some time is not
-	   counted at all. */
-	evas_render(evas);
-	t_count++;
-	fps += p_fps;
+        while (p_fps == 0.0)
+          {
+             ui_loop();
+             engine_loop();
+             evas_render(evas);
+          }
+        /* This give time to delete the objects of the previous test and make
+           the result of next test more accurate. Draw back, some time is not
+           counted at all. */
+        evas_render(evas);
+        t_count++;
+        fps += p_fps;
         wfps += (p_fps * weights[n]);
-	key_func("Escape");
+        key_func("Escape");
      }
-   done:
+done:
    for (i = 1; i < ((sizeof(weights) / sizeof(double)) - 1); i++)
      avgw += weights[i];
-   avgw /= (i - 1);   
+   avgw /= (i - 1);
    if (t_count > 0)
      {
-//        printf("%5.2f , EVAS SPEED\n", fps / t_count);
+        //        printf("%5.2f , EVAS SPEED\n", fps / t_count);
         printf("%5.2f , EVAS SPEED (WEIGHTED)\n", wfps / (t_count * avgw));
      }
 }
@@ -381,12 +381,12 @@ _ui_select(void)
    evas_object_hide(o_byline);
    for (i = 0, l = menu; l; l = l->next, i++)
      {
-	Menu_Item *mi;
+        Menu_Item *mi;
 
-	mi = l->data;
-	evas_object_hide(mi->o_icon);
-	if (i == menu_sel)
-	  func = mi->func;
+        mi = l->data;
+        evas_object_hide(mi->o_icon);
+        if (i == menu_sel)
+          func = mi->func;
      }
    menu_active = 0;
    if (func) func();
@@ -402,23 +402,23 @@ _ui_key(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__, 
    ev = event_info;
    if (key_func)
      {
-	key_func(ev->keyname);
-	return;
+        key_func(ev->keyname);
+        return;
      }
    if ((!strcmp(ev->keyname, "Escape")) ||
        (!strcmp(ev->keyname, "q")) ||
        (!strcmp(ev->keyname, "Q")))
      {
-	_ui_exit();
+        _ui_exit();
      }
    if (menu_active)
      {
-	if (!strcmp(ev->keyname, "Left")) menu_sel++;
-	if (!strcmp(ev->keyname, "Right")) menu_sel--;
-	if (menu_sel < 0) menu_sel = 0;
-	else if ((unsigned int)menu_sel >= eina_list_count(menu)) menu_sel = eina_list_count(menu) - 1;
-	menu_anim_sel = menu_sel;
-	if (!strcmp(ev->keyname, "Return")) _ui_select();
+        if (!strcmp(ev->keyname, "Left")) menu_sel++;
+        if (!strcmp(ev->keyname, "Right")) menu_sel--;
+        if (menu_sel < 0) menu_sel = 0;
+        else if ((unsigned int)menu_sel >= eina_list_count(menu)) menu_sel = eina_list_count(menu) - 1;
+        menu_anim_sel = menu_sel;
+        if (!strcmp(ev->keyname, "Return")) _ui_select();
      }
 }
 
@@ -622,7 +622,7 @@ _ui_setup(void)
 
    if (run_all)
      {
-	_ui_all();
+        _ui_all();
      }
    else if (run_test > 0)
      {
@@ -644,11 +644,11 @@ _ui_setup(void)
      }
    else
      {
-	menu_active = 1;
+        menu_active = 1;
      }
 
    if (exit_after_test)
-    _ui_exit();
+     _ui_exit();
 
 }
 
@@ -659,21 +659,21 @@ ui_args(int argc, char **argv)
 
    for (i = 1; i < argc; i++)
      {
-	if (!strcmp(argv[i], "-a"))
-	  {
-	     run_all = 1;
+        if (!strcmp(argv[i], "-a"))
+          {
+             run_all = 1;
              exit_after_test = 1;
-	  }
-	else if ((!strcmp(argv[i], "-t")) && (i < (argc - 1)))
-	  {
+          }
+        else if ((!strcmp(argv[i], "-t")) && (i < (argc - 1)))
+          {
              run_test = atoi(argv[i + 1]) + 1;
              exit_after_test = 1;
              if (run_test < 2) run_test = 2;
-	  }
-	else if (!strcmp(argv[i], "-l"))
-	  {
+          }
+        else if (!strcmp(argv[i], "-l"))
+          {
              list_test = 1;
-	  }
+          }
      }
    _ui_setup();
    start = get_time();
@@ -690,116 +690,116 @@ ui_loop(void)
    evas_object_resize(o_wallpaper, win_w, win_h);
    if (loop_func)
      {
-	t = get_time();
-	f_loop++;
-	f_start++;
-	if ((t - t_loop) >= 1.0)
-	  {
-//	     ui_fps((double)f_loop / (t - t_loop));
-	     t_loop = t;
-	     f_loop = 0;
-	  }
-	loop_func(t - t_start, f_start);
-	return;
+        t = get_time();
+        f_loop++;
+        f_start++;
+        if ((t - t_loop) >= 1.0)
+          {
+             //	     ui_fps((double)f_loop / (t - t_loop));
+             t_loop = t;
+             f_loop = 0;
+          }
+        loop_func(t - t_start, f_start);
+        return;
      }
    t2 = get_time();
    if (first)
      {
-	t = 0.1;
-	pt = t2;
+        t = 0.1;
+        pt = t2;
      }
    else
      {
-	t = t2 - pt;
-	pt = t2;
+        t = t2 - pt;
+        pt = t2;
      }
    first = 0;
 
    /* menu layout */
    if (menu_active)
      {
-	Eina_List *l;
-	int i;
-	static double tr = 0.0;
-	double tt;
+        Eina_List *l;
+        int i;
+        static double tr = 0.0;
+        double tt;
 
-	tt = t;
-	tt += tr;
-	while (tt > 0.001)
-	  {
-	     menu_anim = (menu_anim * 0.995) + (menu_anim_sel * 0.005);
-	     tt -= 0.001;
-	  }
-	tr = tt;
-	for (i = 0, l = menu; l; l = l->next, i++)
-	  {
-	     char buf[4096];
-	     Menu_Item *mi;
-	     Evas_Coord x, y, w, h, tw, th;
-	     Evas_Coord len;
-	     double a;
-	     Evas_Object *o;
+        tt = t;
+        tt += tr;
+        while (tt > 0.001)
+          {
+             menu_anim = (menu_anim * 0.995) + (menu_anim_sel * 0.005);
+             tt -= 0.001;
+          }
+        tr = tt;
+        for (i = 0, l = menu; l; l = l->next, i++)
+          {
+             char buf[4096];
+             Menu_Item *mi;
+             Evas_Coord x, y, w, h, tw, th;
+             Evas_Coord len;
+             double a;
+             Evas_Object *o;
 
-	     mi = l->data;
-	     o = mi->o_icon;
-	     evas_object_geometry_get(o_menu_logo, NULL, NULL, &w, &h);
-	     len = ((w * 3) + 10) / 4;
-	     evas_object_geometry_get(o, NULL, NULL, &w, &h);
-	     x = (win_w / 2)
-	       + (sin((menu_anim - (double)i) * 0.33) * len)
-		 - (w / 2);
-	     y = (win_h / 2)
-	       + (cos((menu_anim - (double)i) * 0.33) * len)
-		 - (h / 2);
-	     evas_object_move(o, x, y);
-	     a = menu_anim - (double)i;
-	     if (a < 0) a = -a;
-	     a = 255 - (30 * a);
-	     evas_object_color_set(o, a, a, a, a);
-	     evas_object_show(o);
+             mi = l->data;
+             o = mi->o_icon;
+             evas_object_geometry_get(o_menu_logo, NULL, NULL, &w, &h);
+             len = ((w * 3) + 10) / 4;
+             evas_object_geometry_get(o, NULL, NULL, &w, &h);
+             x = (win_w / 2)
+                + (sin((menu_anim - (double)i) * 0.33) * len)
+                - (w / 2);
+             y = (win_h / 2)
+                + (cos((menu_anim - (double)i) * 0.33) * len)
+                - (h / 2);
+             evas_object_move(o, x, y);
+             a = menu_anim - (double)i;
+             if (a < 0) a = -a;
+             a = 255 - (30 * a);
+             evas_object_color_set(o, a, a, a, a);
+             evas_object_show(o);
 
-	     if (i == menu_sel)
-	       {
-		  a = menu_anim - (double)i;
-		  if (a < 0) a = -a;
-		  a = 255 - (255 * a);
+             if (i == menu_sel)
+               {
+                  a = menu_anim - (double)i;
+                  if (a < 0) a = -a;
+                  a = 255 - (255 * a);
 
-		  o = o_menu_icon_sel;
-		  evas_object_move(o, x - ((48 - w) / 2), y - ((48 - h) / 2));
-		  evas_object_color_set(o, a, a, a, a);
+                  o = o_menu_icon_sel;
+                  evas_object_move(o, x - ((48 - w) / 2), y - ((48 - h) / 2));
+                  evas_object_color_set(o, a, a, a, a);
 
-		  o = o_menu_title;
-		  evas_object_color_set(o, a, a, a, a);
-		  evas_object_text_text_set(o, mi->text);
-		  evas_object_geometry_get(o, NULL, NULL, &tw, &th);
-	          x = (win_w - tw) / 2;
-	          y = (win_h / 2) + len + 48;
-	          evas_object_move(o, x, y);
+                  o = o_menu_title;
+                  evas_object_color_set(o, a, a, a, a);
+                  evas_object_text_text_set(o, mi->text);
+                  evas_object_geometry_get(o, NULL, NULL, &tw, &th);
+                  x = (win_w - tw) / 2;
+                  y = (win_h / 2) + len + 48;
+                  evas_object_move(o, x, y);
 
-				 
-		  o = o_menu_text_sel;
-		  w = tw + 24;
-		  h = 28;
-		  x = x - 12;
-		  y = y + ((th - h) / 2);
-		  evas_object_move(o, x, y);
-		  evas_object_resize(o, w, h);
-		  evas_object_image_fill_set(o, 0, 0, w, h);
-		  evas_object_color_set(o, a, a, a, a);
 
-		  o = o_menu_icon;
-		  snprintf(buf, 4096, "%s%s", data_dir, mi->icon);
-		  evas_object_image_file_set(o, buf, NULL);
-		  evas_object_color_set(o, a / 2, a / 2, a / 2, a / 2);
-	       }
-	  }
+                  o = o_menu_text_sel;
+                  w = tw + 24;
+                  h = 28;
+                  x = x - 12;
+                  y = y + ((th - h) / 2);
+                  evas_object_move(o, x, y);
+                  evas_object_resize(o, w, h);
+                  evas_object_image_fill_set(o, 0, 0, w, h);
+                  evas_object_color_set(o, a, a, a, a);
+
+                  o = o_menu_icon;
+                  snprintf(buf, 4096, "%s%s", data_dir, mi->icon);
+                  evas_object_image_file_set(o, buf, NULL);
+                  evas_object_color_set(o, a / 2, a / 2, a / 2, a / 2);
+               }
+          }
         evas_object_move(o_menu_logo, (win_w - 120) / 2, ((win_h - 160) / 2));
-	evas_object_show(o_menu_logo);
-	evas_object_show(o_menu_title);
-	evas_object_show(o_menu_icon);
-	evas_object_show(o_menu_icon_sel);
-	evas_object_show(o_menu_icon_sel2);
-	evas_object_show(o_menu_text_sel);
+        evas_object_show(o_menu_logo);
+        evas_object_show(o_menu_title);
+        evas_object_show(o_menu_icon);
+        evas_object_show(o_menu_icon_sel);
+        evas_object_show(o_menu_icon_sel2);
+        evas_object_show(o_menu_text_sel);
      }
    else
      {
@@ -812,7 +812,7 @@ ui_menu(void)
    evas_object_show(o_title);
    evas_object_show(o_byline);
    evas_object_text_text_set
-     (o_byline, "LEFT/RIGHT - select, ENTER - select, ESCAPE - exit.");
+      (o_byline, "LEFT/RIGHT - select, ENTER - select, ESCAPE - exit.");
    menu_active = 1;
    key_func = NULL;
    loop_func = NULL;
@@ -833,10 +833,10 @@ void
 ui_fps(double fps)
 {
    /*
-   char buf[256];
+      char buf[256];
 
-   snprintf(buf, sizeof(buf), "ESCAPE - exit, FPS: %4.3f", fps);
-   evas_object_text_text_set(o_byline, buf);
+      snprintf(buf, sizeof(buf), "ESCAPE - exit, FPS: %4.3f", fps);
+      evas_object_text_text_set(o_byline, buf);
     */
    p_fps = fps;
 }
