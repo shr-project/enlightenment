@@ -1,4 +1,5 @@
 #include <ctype.h>
+#include <math.h>
 
 #include <Eina.h>
 #include <GeoIP.h>
@@ -51,6 +52,8 @@ struct _Community_Country
    long long int count;
    long long int population;
 
+   int popularity;
+
    Eina_Hash *access;
 };
 
@@ -71,17 +74,17 @@ _country_sort_cb(const void *a, const void *b)
    const Community_Country *ca = a;
    const Community_Country *cb = b;
 
-   return ca->count - cb->count;
+   return cb->popularity - ca->popularity;
 }
 
 static unsigned int
-_community_day_key_length(const void *key)
+_community_day_key_length(const void *key EINA_UNUSED)
 {
    return sizeof (Community_Day);
 }
 
 static int
-_community_day_key_cmp(const void *key1, int key1_length, const void *key2, int key2_length)
+_community_day_key_cmp(const void *key1, int key1_length EINA_UNUSED, const void *key2, int key2_length EINA_UNUSED)
 {
    const Community_Day *d1 = key1;
    const Community_Day *d2 = key2;
@@ -92,10 +95,10 @@ _community_day_key_cmp(const void *key1, int key1_length, const void *key2, int 
 }
 
 static int
-_community_day_key_hash(const void *key, int key_length)
+_community_day_key_hash(const void *key, int key_length EINA_UNUSED)
 {
    const Community_Day *d1 = key;
-   int day;
+   unsigned int day;
 
    day = d1->day + d1->month * 31 + d1->year * 31 * 12;
    return eina_hash_int32(&day, 4);
@@ -171,6 +174,81 @@ _eina_stringshare_up(const char *start, int length)
    return eina_stringshare_add(r);
 }
 
+static Eina_Bool
+_is_banned_country(const char *tld)
+{
+   const char *tlds[] = { "GL", "LI", "MC", NULL };
+   int i;
+
+   for (i = 0; tlds[i] != NULL; ++i)
+     if (!strcmp(tlds[i], tld))
+       return EINA_TRUE;
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_dump_everyone(Community_Country *country EINA_UNUSED)
+{
+   return EINA_FALSE;
+}
+
+static Eina_Bool
+_dump_notop(Community_Country *country)
+{
+   return _is_banned_country(country->tld);
+}
+
+static Eina_Bool
+_dump_nosmall(Community_Country *country)
+{
+   if (country->count < 10) return EINA_TRUE;
+   return EINA_FALSE;
+}
+
+static void
+_dump_map(FILE *fp, Eina_List *countries, Eina_Bool (*filter_cb)(Community_Country *country))
+{
+   Community_Country *country;
+   Eina_List *l;
+
+   fprintf(fp, "<html>\n\t<head>\n");
+   fprintf(fp, "\t\t<script type='text/javascript' src='https://www.google.com/jsapi'></script>\n");
+   fprintf(fp, "\t\t<script type='text/javascript'>\n");
+   fprintf(fp, "\t\t\tgoogle.load('visualization', '1', {'packages': ['geochart']});\n");
+   fprintf(fp, "\t\t\tgoogle.setOnLoadCallback(drawRegionsMap);\n\n");
+   fprintf(fp, "\t\t\tfunction drawRegionsMap() {\n");
+   fprintf(fp, "\t\t\t\tvar data = google.visualization.arrayToDataTable([\n");
+   fprintf(fp, "\t\t\t\t\t['Country', 'Popularity', 'Population']");
+
+   EINA_LIST_FOREACH(countries, l, country)
+     if (!filter_cb(country))
+       {
+          if (country->population && country->count)
+            {
+               fprintf(fp, ",\n\t\t\t\t\t['%s', %lli * 1000000 / %lli, %lli]",
+                       country->tld, country->count, country->population, country->count);
+            }
+          /*
+            else if (country->count)
+            {
+               fprintf(stderr, "Unknown population for '%s' (%s) accounted %lli\n",
+               country->tld, country->country, country->count);
+            }
+          */
+       }
+
+   fprintf(fp, "\n\t\t\t\t\t]);\n\n");
+   fprintf(fp, "\t\t\t\t\tvar options = { colorAxis : { maxValue : 10 } };\n\n");
+   fprintf(fp, "\t\t\t\t\tvar chart = new google.visualization.GeoChart(document.getElementById('chart_div'));\n");
+   fprintf(fp, "\t\t\t\t\tchart.draw(data, options);\n");
+   fprintf(fp, "\t\t\t};\n");
+   fprintf(fp, "\t\t</script>\n");
+   fprintf(fp, "\t</head>\n");
+   fprintf(fp, "\t<body>\n");
+   fprintf(fp, "\t\t<div id='chart_div' style='width: 900px; height: 500px;'></div>\n");
+   fprintf(fp, "\t</body>\n</html>\n");   
+}
+
 int
 main(int argc, char **argv)
 {
@@ -179,6 +257,7 @@ main(int argc, char **argv)
    Eina_File_Line *l;
    GeoIP *geo;
    Community_Country *country;
+   FILE *log;
    unsigned long long correct = 0;
    unsigned long long lines = 0;
    int i;
@@ -205,7 +284,6 @@ main(int argc, char **argv)
    EINA_ITERATOR_FOREACH(it, l)
      {
         const char *s;
-        int i;
 
         s = memchr(l->start, ',', l->length);
         if (!s) continue ;
@@ -230,7 +308,7 @@ main(int argc, char **argv)
         Eina_Iterator *it2;
         const char *s;
         const char *country_name;
-        const char *r;
+        const char *r = NULL;
 
         for (s = l->start; s < l->end; s++)
           {
@@ -386,6 +464,7 @@ main(int argc, char **argv)
              {
                 eina_hash_direct_add(country->access, id, cid);
                 country->count++;
+                if (country->population) country->popularity = floor((double) country->count * 10000000 / (double) country->population);
              }
         }
 
@@ -413,16 +492,20 @@ main(int argc, char **argv)
    eina_iterator_free(it);
    eina_file_close(f);
 
-   fprintf(stderr, "Total line: %lli\nCorrect line: %lli\n", lines, correct);
-   fprintf(stderr, "Watched day: %i and %i uniq users showed during that time.\n",
+   log = fopen("e17-clients.stats", "w");
+   if (!log) return -1;
+
+   fprintf(log, "Total line: %lli\nCorrect line: %lli\n", lines, correct);
+   fprintf(log, "Watched day: %i and %i uniq users showed during that time.\n",
            eina_hash_population(days), eina_hash_population(community));
-   fprintf(stderr, "Connection per month :\n");
+   fprintf(log, "\nUniq connection per month :\n");
    for (i = 0; i < 12; i++)
      if (months[i])
-       fprintf(stderr, "%lli connections in %s.\n", months[i], MONTH_STRING[i]);
+       fprintf(log, "%lli connections in %s.\n", months[i], MONTH_STRING[i]);
 
    {
       Eina_List *sorted = NULL;
+      Eina_List *l;
       FILE *fp;
 
       it = eina_hash_iterator_data_new(countries);
@@ -432,44 +515,48 @@ main(int argc, char **argv)
 
       sorted = eina_list_sort(sorted, -1, _country_sort_cb);
 
+      fprintf(log, "\nTOP Country popularity :\n");
+      i = 0;
+      EINA_LIST_FOREACH(sorted, l, country)
+        {
+           if (country->population && country->count)
+             {
+                fprintf(log, "'%s' [%s] - %i [%lli / %lli]\n",
+                        country->country, country->tld, country->popularity,
+                        country->count, country->population);
+                i++;
+                if (i > 10) break;
+             }
+        }
+
+      fprintf(log, "\nTOP Country popularity with more than 10 peoples using it :\n");
+      i = 0;
+      EINA_LIST_FOREACH(sorted, l, country)
+        {
+           if (country->count > 10)
+             {
+                fprintf(log, "'%s' [%s] - %i [%lli / %lli]\n",
+                        country->country, country->tld, country->popularity,
+                        country->count, country->population);
+                i++;
+                if (i > 10) break;
+             }
+        }
+
       fp = fopen("country_map.html", "w");
-      fprintf(fp, "<html>\n\t<head>\n");
-      fprintf(fp, "\t\t<script type='text/javascript' src='https://www.google.com/jsapi'></script>\n");
-      fprintf(fp, "\t\t<script type='text/javascript'>\n");
-      fprintf(fp, "\t\t\tgoogle.load('visualization', '1', {'packages': ['geochart']});\n");
-      fprintf(fp, "\t\t\tgoogle.setOnLoadCallback(drawRegionsMap);\n\n");
-      fprintf(fp, "\t\t\tfunction drawRegionsMap() {\n");
-      fprintf(fp, "\t\t\t\tvar data = google.visualization.arrayToDataTable([\n");
-      fprintf(fp, "\t\t\t\t\t['Country', 'Popularity', 'Population']");
+      _dump_map(fp, sorted, _dump_everyone);
+      fclose(fp);
 
-      EINA_LIST_FREE(sorted, country)
-        if (strcmp("GL", country->tld))
-          {
-             if (country->population && country->count)
-               {
-                  fprintf(fp, ",\n\t\t\t\t\t['%s', %lli * 1000000 / %lli, %lli]",
-                          country->tld, country->count, country->population, country->count);
-               }
-             else if (country->count)
-               {
-                  fprintf(stderr, "Unknown population for '%s' (%s) accounted %lli\n",
-                          country->tld, country->country, country->count);
-               }
-          }
+      fp = fopen("country_map_notop.html", "w");
+      _dump_map(fp, sorted, _dump_notop);
+      fclose(fp);
 
-      fprintf(fp, "\n\t\t\t\t\t]);\n\n");
-      fprintf(fp, "\t\t\t\t\tvar options = { colorAxis : { maxValue : 10 } };\n\n");
-      fprintf(fp, "\t\t\t\t\tvar chart = new google.visualization.GeoChart(document.getElementById('chart_div'));\n");
-      fprintf(fp, "\t\t\t\t\tchart.draw(data, options);\n");
-      fprintf(fp, "\t\t\t};\n");
-      fprintf(fp, "\t\t</script>\n");
-      fprintf(fp, "\t</head>\n");
-      fprintf(fp, "\t<body>\n");
-      fprintf(fp, "\t\t<div id='chart_div' style='width: 900px; height: 500px;'></div>\n");
-      fprintf(fp, "\t</body>\n</html>\n");
-
+      fp = fopen("country_map_nosmall.html", "w");
+      _dump_map(fp, sorted, _dump_nosmall);
       fclose(fp);
    }
+
+   fclose(log);
 
    eina_shutdown();
 
