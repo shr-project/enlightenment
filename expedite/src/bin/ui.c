@@ -268,12 +268,9 @@ _ui_all(void)
         wfps += (p_fps * weights[t_count]);
         key_func("Escape");
      }
-   for (i = 1;
-        (i < (1 + t_count)) &&
-        (weights[i] > 0.0);
-        i++)
+   for (i = 1; i < t_count + 1; i++)
      avgw += weights[i];
-   avgw /= (i - 1);
+   avgw /= t_count;
    if (t_count > 0)
      {
         char datestr[1024];
@@ -285,8 +282,8 @@ _ui_all(void)
         if (tim) strftime(datestr, sizeof(datestr), "%Y-%m-%d %H:%M:%S", tim);
         else snprintf(datestr, sizeof(datestr), "unknown");
         printf("\n#####Test Result#####\n"
-               "evas speed: %5.2f\n"
-               "evas speed(weighted): %5.2f\n"
+               "evas fps speed: %5.2f\n"
+               "evas fps speed(weighted): %5.2f\n"
                "testcase count: %i\n"
                "date: %s\n"
                "evas version: %i.%i.%i.%i\n"
@@ -296,7 +293,7 @@ _ui_all(void)
                "engine: %s\n"
                "full screen: %i\n",
                (fps / t_count),
-               (wfps / (t_count * avgw)),
+               (wfps / avgw) / t_count,
                t_count,
                datestr,
                evas_version->major, evas_version->minor, evas_version->micro,
