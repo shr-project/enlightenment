@@ -7,7 +7,6 @@ event - need to handle after pointer mode changed.
 antialiasing - support the edge for all every angle on s/w backend.
 filter - let's start
 cutout_rect - static?! nowhere free it actually.
-proxy - need to handle for the map applying (image type filter) case.
 textblock - check the size_formatted_get value when the text has the spaces
 image - image doesn't rendered when load_size_set is called again.
 event - in/out event call
@@ -41,3 +40,4 @@ eina_log_level off
 
 <Edje>
 edje_cc - check the Critical when naviframe style is inherited.
+edje_cc - check inheritant programs

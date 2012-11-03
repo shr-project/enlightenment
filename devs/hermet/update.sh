@@ -4,9 +4,9 @@ echo Updating EFL Packages
 
 svn update
 
-CFLAGS="-02 -g -W -Wall -Wextra -Wundef -Wshadow"
+CFLAGS="-O0 -g -Wall -j 8"
 
-for e in eina eet evas_generic_loaders evas ecore eeze efreet embryo eio edje e_dbus emotion ethumb elementary e expedite clouseau terminology ephoto
+for e in eina eet evas_generic_loaders evas ecore eeze efreet embryo edje e_dbus eio emotion ethumb elementary e expedite clouseau terminology ephoto
 do 
 	if [ -e $e ] && [ -d $e ]
 	then 
@@ -15,8 +15,8 @@ do
 		cd $e
 		make clean
 		make distclean
-		./autogen.sh
-		CFLAGS=${CFLAGS} make -j 4 2>&1 | tee ../build_"$e".log && sudo make install 2>&1 | tee ../build_"$e".log -a && sudo ldconfig
+		CFLAGS=${CFLGAS} ./autogen.sh
+		CFLAGS=${CFLAGS} make 2>&1 | tee ../build_"$e".log && sudo make install 2>&1 | tee ../build_"$e".log -a && sudo ldconfig
 		cd ..
 		echo End Done
 	fi 
