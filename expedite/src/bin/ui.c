@@ -232,6 +232,7 @@ _ui_all(void)
    unsigned int t_count = 0;
    unsigned int i;
    double avgw = 0.0;
+   Menu_Item *mi;
 
    evas_object_hide(o_menu_logo);
    evas_object_hide(o_menu_title);
@@ -241,11 +242,9 @@ _ui_all(void)
    evas_object_hide(o_menu_text_sel);
    evas_object_hide(o_title);
    evas_object_hide(o_byline);
-   for (l = menu; l; l = l->next)
-     {
-        Menu_Item *mi;
 
-        mi = l->data;
+   EINA_LIST_FOREACH(menu, l, mi)
+     {
         if ((mi->func == about_start) ||
             (mi->func == _ui_exit) ||
             (mi->func == _ui_all))
