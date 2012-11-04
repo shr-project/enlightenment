@@ -1,0 +1,1147 @@
+2011-01-29  Carsten Haitzler (The Rasterman)
+
+	1.0.0 release
+
+2011-01-29  Carsten Haitzler (The Rasterman)
+
+	* Enabled mempool for object allocation
+	* Allow shorter pre-render handler for rect objects if they are
+	  invisible
+
+2011-01-30  Tom Hacohen (TAsn)
+
+	* It's actually a merge from my local branch upstream so this
+	  includes many changes.
+	* Fixed cursor/selection handling with BiDi text.
+	* Fixed many BiDi issues in both textblock and text objects.
+	* Cleaned up textblock and font engine a lot.
+	* Added auto-alignment to tetxblock and text objects.
+	* Added mixedwrap (word wrap, and if a word is too big cut it) support
+	  to textblock.
+	* Renamed a lot of stuff.
+	* Made textblock faster, mostly by saving item sizes and caching
+	  layout items when text doesn't change.
+	* Added harfbuzz (ot layouting/shaping and etc) support.
+	* Currently you need to set the env var EVAS_USE_OT to '1' in order to
+	  use OT support (harfbuzz) that will change soon.
+	* More code cleanups will be coming in the future. This shipment is
+	  mostly to get code review started (and also make sure I don't have a
+	  merging hell later on).
+
+2011-01-31  ChunEon Park
+
+	* Fix lurking free bug in key grabs.
+
+
+2011-02-01  Carsten Haitzler (The Rasterman)
+
+	* Added WBMP loader thanks to Samsung.
+
+2011-02-01  Tom Hacohen (TAsn)
+
+	* Started using string objects instead of strings in most of the
+	  font engine (everywhere except draw). Haven't removed the
+	  paramteres yet, but did mark them as UNUSED. Removing them will be
+	  part of a future change.
+	* Removed run-time OT toggling support, OT is now fast, no need for that.
+	* Renamed all of the intl_props->text_props (because it really
+	  changed purpose
+	* Fixed spliting/merging of text_props to be fast and good, not
+	  hacky and complex like before.
+	* Added "mirrored mode" to table object.
+
+2011-02-07 Brett Nash (nash@nash.id.au)
+
+	* Proxy Objects; Now you can set an image to have a 'source' of
+	  another object.  The proxy will display the object as well.  Proxy
+	  objects should be mostly complete.
+	* Proxy objects should be complete; please report and bugs to me.
+	* Partial support for arbitrary clipping.  Final support coming soon
+	  (with some other changes).  You can set most objects as a clip on
+	  other objects.  This will use the alpha channel of the object as a
+	  clip on the object.  This is still buggy.
+        * CLIPPING DISABLED AND REMOVED DUE TO BEING TOO BUGGY AND INCOMPLETE *
+	* Software support for arbitrary maps.  So you can use any size map
+	  (not just 4 points) for maps.  Once again this is a little buggy.
+        * ARBITRARY MAPS DISABLED AND REMOVED DUE TO BEING TOO BUGGY AND INCOMPLETE *
+
+2011-02-02  Carsten Haitzler (The Rasterman)
+
+	* GL engine gets a speculative texture cache to shadow the
+	  normal image cache to avoid excess texture uploads when
+	  cycling images often. Should improve performance in some
+	  cases.
+
+2011-02-12  Carsten Haitzler (The Rasterman)
+
+	* Fix "ridiculous scaling size" bug, where scaling images to
+	  sizes like 1 billion pixels high or wide caused evas to try
+	  allocate scaletables on the stack and the stack just couldn't
+	  handle it. Now it only allocates a table for the visible
+	  region which will always be sane, and even has insanity
+	  checks now. At worst you'll get an unrendered image if the
+	  values are silly and some slowness. No crashes.
+
+2011-02-13  Brett Nash (nash@nash.id.au)
+
+	* Fix crash when deleting proxies.  This _technically_ breaks
+	  evas engines which realloc engine data when a border is set.
+	  Practically no engines do this.  There is a comment there (and
+	  if the engine does that border set won't work), in which case
+	  a more complex work-around is possible.
+
+2011-02-14  Tom Hacohen (TAsn)
+
+	* Added a newline character mode API to textblock. This lets us set
+	  the newline behavior to either normal (i.e only break a line, not
+	  a paragraph) to "behave as a PS" mode. Default is the latter.
+	  The former is the more correct approach but I guess everything else
+	  is in e is not yet ready to use it. These API should help with the
+	  transition.
+	* A lot of textblock speed improvements and reduced memory footprint.
+
+2011-02-16  Jeonghyun Yun
+
+	* Patch from Jeonghyun Yun <jh0506.yun@samsung.com> that
+	  improves BMP loader support to handle malformed RLE BMP's that
+	  encode more pixels per line than the image actuall has.
+
+2011-02-16  Tom Hacohen (TAsn)
+
+	* Dropped Evas_Encoding and moved to use Eina_unicode_utf8 instead.
+	* Started showing the unicode replacement character instead of missing
+	  glyphs.
+
+2011-02-20  Carsten Haitzler (The Rasterman)
+
+	* Fix bug in font string parsing that can result in a crash if a
+	  font element is long enough.
+	* Fix convert rgba8888 -> a8 bug so it wont crash.
+
+2011-02-21  Carsten Haitzler (The Rasterman)
+
+	* Fixed bug with memory access of old utf8 string when
+	  comparing prev and cur state with text obj.
+
+2011-02-22  Tom Hacohen (TAsn)
+
+	* Fixed a bug in textblock cursor position with empty textblocks.
+
+2011-02-22  Carsten Haitzler (The Rasterman)
+
+	* Fixed bug smart calc array where it'd nuke the array when nested
+	  process calls happen and leave some objects uncalculated, but
+	  removed from the array and marked as needing a calc thus never
+	  getting back into the array.
+
+2011-02-27  Vincent Torri
+
+	* Fixed static linking of the bmp, wbmp and tga loaders
+
+2011-03-07  Mike Blumenkrantz
+
+        * Fix segv when trying to set gl viewpoint with NULL ctx
+
+2011-03-08  Carsten Haitzler (The Rasterman)
+
+	* Fix problem with different x vsync api between SGI and EXT flavor
+        as they have the same base name, but different prototypes
+        * Add evas_object_ref() and evas_object_unref() to defer
+        deletion of objects until all references are removed
+
+2011-03-09  Carsten Haitzler (The Rasterman)
+
+	* Fix bug with evas_object_del() calling DEL callback BEFORE
+        the HIDE one.
+
+2011-03-10  Sung W. Park
+
+	* Fix bug with yinvert handling of native surfaces.
+
+2011-03-10  Carsten Haitzler (The Rasterman)
+
+	* Fix issue with loading alpha BMP's with "check if all pixel alpha
+        are 0 or not and then force alpha off if all are 0". This
+        means you can never have a 100% empty/transparent BMP though
+        in 32bpp mode.
+
+2011-03-11  Carsten Haitzler (The Rasterman)
+
+	* Add ICO loader to evas (also can load CUR cursor files in theory)
+
+2011-03-14  Carsten Haitzler (The Rasterman)
+
+	* Add "load from memory" API: evas_object_image_memfile_set() by
+        popular demand. Can load an image format from a memory address.
+
+2011-03-15  Cedric BAIL
+
+	* Fix issues with clipping and map.
+
+2011-03-18  Jiyoun Park
+
+	* Fix wrong call to free when using mempool for Evas_Object.
+
+2011-03-19  Carsten Haitzler (The Rasterman)
+
+	* Caching and timestamp checker for image files made much more
+        pedantic and it checks not just modified timestamp but also
+        inode number, size, and on linux, the nanonsecond resolution
+        timestamp as well.
+
+2011-03-19  Brett Nash (nash)
+
+	* Proxy: Bypass the clip on smart clipped objects.  This is probably
+	what you want if you are using proxies, as it means clips don't cause
+	the object to be invisible by the proxy.
+
+2011-03-22  Gustavo Sverzut Barbieri (k-s)
+
+	* Fix build of GL and static modules.
+	* Fix ico loader static build.
+
+2011-03-30  Tom Hacohen (TAsn) and Carsten Haitzler (The Rasterman)
+
+	* Added vertical alignment support to textblock.
+	  API: evas_object_textblock_valign_set/get
+
+2011-04-04  Sung W. Park
+
+	* Added Evas OpenGL interface to be able to get an OpenGL API for
+        rendering to image objects. This is the beginning so not
+        totally functional yet.
+
+2011-04-05  Cedric Bail
+
+	* Remove Evas Quartz backend.
+	* Remove Evas Cairo backend.
+	* Remove Evas Qtopia backend.
+	* Remove Evas Xrender backend.
+
+2011-04-06  Carsten Haitzler (The Rasterman)
+
+	* Fix bug in GL engine with someone stealing the GLX context away
+        as well as scissor clips when rotated output is not 0 (90, 180, 270).
+
+2011-04-07 Tom Hacohen (TAsn)
+
+	* Textblock: Major speed improvements.
+	* Textblock: Only relayout and remake paragraphs that have actually
+	  changed. This means we are a lot faster than before, especially with
+	  long texts.
+
+2011-04-10 Tom Hacohen (TAsn)
+
+	* Textblock: Fixed a bug in evas_object_textblock_text_markup_prepend
+	  that caused it to use the object's cursor instead of the cursor
+	  passed.
+
+2011-04-11  Carsten Haitzler (The Rasterman)
+
+	* Feature: Text & Textblock - Add 8 explicit shadow directions for
+        text style effects.
+
+2011-04-12 Myoungwoon Roy Kim (roy_kim)
+
+	* Font-engine: Added runtime italic (actually slanting) and
+	  emboldening. - Automatically slants/emboldens a font at runtime if
+	  italic/bold/crusiva and etc are requested but not found in the
+	  system.
+
+2011-04-14 Tom Hacohen (TAsn)
+
+	* Font-engine: Implemented higher level override API for the bidi
+	  functions. This implements clause HL4 of the bidi algorithm.
+	  This is very cool actually, it lets us to force-separate paragraphs
+	  so each part will get his bidi calculated on it's own. This is very
+	  useful for "to" field of email/sms applications where ',' is used to
+	  separate different text entities.
+
+2011-04-19 Brett Nash (nash)
+
+	* Filters: So filtering of various flavours.  They work only on images
+	  (use a proxy if you want it on other objects).  Documentation inline.
+	  Supports a filter object or filter under (the area where the object
+	  is filtered).  Various parameters to tweak, and potential for
+	  additional filters (but you get to write the shader ;-)
+        * FILTERS DISABLED AND REMOVED DUE TO BEING TOO BUGGY AND INCOMPLETE *
+
+2011-04-24 Thierry el Borgi
+
+	* Add PSD file format support.
+
+2011-04-26  Carsten Haitzler (The Rasterman)
+
+	* Added "generic" image loader that can just execute some command
+        to load any given file format and read the RGBA data as stdout
+        from the command, or from an intermediate temporary file or
+        shared memory segment the executable loader provides. Evas
+        doesn't care about the loader beyond it providing output via
+        stdout to define image parameters (size, alpha channel and data
+        information), and evas will call a specific loader binary
+        based on extension name of srouce file. This allows for evas to
+        load image data from files where the loader may be prone to
+        instability, or require use of libraries that are GPL or
+        otherwise undesirable in terms of the result to applications
+        using evas. So basically, if you want a GPL loader or have a
+        very unstable one, write a loader binary and call it
+        evas_image_loader.extension e.g. evas_image_loader.pdf or
+        evas_image_loader.xcf or evas_image_loader.xcf.gz etc. etc.
+
+2011-04-28 Shilpaonkar Singh
+
+	* Textblock: Add "password" tag to turn on/off password in the middle
+	  of the textblok. Especially useful for implementing "show last char"
+	  for password entries.
+
+2011-05-04  Carsten Haitzler (The Rasterman)
+
+	* Improved table layout for homogenous mode to handle not column
+        or row multiple sized table better.
+
+2011-05-04  Jiyoun Park
+
+	* OpenGL binary shader ability to cache (save and load back
+        later) to avoid re-compiling shaders on every time an app starts and
+        uses the GL engine. Faster startup time.
+
+2011-05-04 Tom Hacohen (TAsn)
+
+	* Textblock: Do standard compliant line breaks. In order to achieve
+	  that we now statically link against liblinebreak (available in
+	  src/static_deps/liblinebreak). It's usage can be disabled using the
+	  configure flag: "--disable-liblinebreak"; Disabling it will activate
+	  the fallback line breaking methods which are not very correct, but
+	  are possibly faster. I haven't noticed any difference between the
+	  two speed-wise, but there probably are in some rare cases.
+
+2011-05-06 Cedric Bail
+
+	* Don't try all image loader when user is pointing them on a directory.
+
+2011-05-11  Carsten Haitzler (The Rasterman)
+
+	* Fix problem with Evas engine not calling pre/post swap functions
+        in the GL engine when using EGL/OpenGL-ES2
+        * Fix SVG loader 2 phase loader having differing scale down code
+        for first and 2nd phase. Resulted in crash when loading some SVGs
+
+2011-05-11 Tom Hacohen (TAsn)
+
+	* Textblock: Added evas_textblock_node_format_list_get. This is very
+	  useful for edje_entry that uses anchors in the text.
+
+2011-05-12  Carsten Haitzler (The Rasterman)
+
+	* Add smart instance usage count get function for ability to free
+        data from memory from a smart class if needed.
+
+2011-05-12 Brian Wang
+
+	* Textblock: fix segfault with evas_textblock_cursor_content_get
+
+2011-05-12  Carsten Haitzler (The Rasterman)
+
+	* Add a smart "Grid" layout object that lays out objects in a regular
+        "virtual resolution" grid (eg 100x100) so you can lay them out
+        as a "scaled percentage" of the virtual resolution. virtual
+        resolution is defineable as is the geometry of each member.
+
+2011-05-18  Sung W. Park
+
+	* Fix some internal stencil and depth requests for OpenGL-ES2
+        due to OpenGL-ES limitations.
+        * Fix Surface recreation for FBO in Evas GL support.
+
+2011-05-23  Vincent Torri
+
+	* Fix compilation with libjpeg 8 on Windows.
+
+2011-05-24  Cedric Bail
+
+	* Use Eina_File when possible.
+
+2011-05-26  Carsten Haitzler (The Rasterman)
+
+	* Fix Evas table to handle weighting correctly for items and veto
+        rows or columns that have any child spanning that column not
+        able to expand.
+        * Fix Evas table to use actual fractional weights, not just
+        boolean expand/not expand from weight value.
+
+2011-05-27  Carsten Haitzler (The Rasterman)
+
+	* Add evas_event_thaw_eval() for conveneince of evaluating in state
+        and callbacks of the pointer after a thaw is complete.
+
+2011-05-29  Tom Hacohen (TAsn)
+
+	* Font-engine: Fixed a bug in glyph search causing inconsistent return
+	  values. The found fi should always be NULL if there was no fi found.
+
+2011-05-29  Tom Hacohen (TAsn)
+
+	* Font-engine: Conform to the API changes in Harfbuzz 0.6.0
+
+2011-05-29  Raoul Hecky
+
+	* Textblock: Added support for numeric escape codes. e.g "&#x3c;".
+
+2011-05-29  Vincent Torri
+
+	* Fix compilation when --disable-async-preload is passed to configure.
+
+2011-06-01  Cedric Bail
+
+	* Add +evas_object_image_extension_can_load_get and
+	evas_object_image_extension_can_load_fast_get that check if a file
+	may be opened by Evas_Object_Image.
+
+2011-06-07  Cedric Bail
+
+	* Use Eina_File for JPEG loader.
+	* Add evas_object_image_load_orientation_get and evas_object_image_load_orientation_set,
+	that tell if we should honor the orientation information when loading image file.
+
+2011-06-17  Carsten Haitzler (The Rasterman)
+
+	* Allow evas table to re-pack the same object without error and just
+        update packing parameters
+        * Allow to get packing location of table child
+
+2011-06-28  Tom Hacohen (TAsn)
+
+	* Polygon: Implemented "is_inside".
+
+2011-07-05  Hyoyoung Chang
+
+	* Fix bug where event causes event in callback on same object, but
+        with same event counter, so also filter out same event types.
+
+2011-07-06  Carsten Haitzler (The Rasterman)
+
+	* Fix bug in grab counting on object hide while events are frozen
+
+2011-07-07  Cedric Bail
+
+	* Fix infite loop when reinserting object during recalc stage.
+
+2011-07-27  Tom Hacohen (TAsn)
+
+	* Textblock: Closing tags formats is now well-defined for complex
+	  formats.
+	  For example: <font=Sans font_size=23 color=#FFF> should now be
+	  closed with </font> (or, like before, with the generic poper).
+	* Textblock: Add support for out-of-order tag openers/closers.
+	  Markup sequences like <b><i></b></i> are now legal and work as
+	  expeceted.
+
+2011-07-28  Tom Hacohen (TAsn)
+
+	* Textblock: Added support for quoting format parameters.
+	  Formats like: <font='Sans' color='#FFF'> are now legal.
+	* Textblock: Added font_weight and font_style formats.
+	  These format allow overriding the font style set using:
+	  font=':style=Bold'.
+
+2011-07-31  Tom Hacohen (TAsn)
+
+	* Textblock: Added font_width.
+	  This allows overriding the font width set using:
+	  font=':style=Condensed'
+
+2011-08-01  Tom Hacohen (TAsn)
+
+	* Textblock: Added lang to markup to set the lang of the text.
+
+2011-08-09  Tom Hacohen (TAsn)
+
+	* Textblock: Added evas_textblock_cursor_range_formats_get which
+	returns the formats inside a range.
+	* Textblock: Added evas_textblock_cursor_visible_range_get which
+	updates the cursors to the ends of the area currently visible on
+	screen.
+
+2011-08-17  Tom Hacohen (TAsn)
+
+	* Callbacks: Added priority support to callbacks.
+
+2011-08-23  Cedric Bail
+
+	* Fix evas_object_image_data_convert.
+	* Add YUV 601 input format to evas_object_image_data_convert.
+
+2011-08-29  Cedric Bail
+
+	* Add colorspaces NV12 and MT12 (64 * 32 macro block tiled
+	format, see Linux videodev documentation for more information).
+
+2011-10-17  Shilpa Singh
+
+	* Textblock: Added underline=dashed support.
+	Tag changes:
+	 - dashed is a legal value for underline
+	New tags:
+	 - underline_dash_color
+	 - underline_dash_width
+	 - underline_dash_gap
+
+2011-10-21  Carsten Haitzler (The Rasterman)
+
+	* Add function to request what the largest possible image (or texture)
+        size is from evas.
+
+2011-10-27  ChunEon Park (Hermet)
+
+	* Add evas_object_freeze_events_set/get to discard the object events.
+	they will be useful some cases such as transition.
+
+2011-11-02  Nicolas Aguirre
+	* Add gl_cocoa engine
+
+2011-11-16  Carsten Haitzler (The Rasterman)
+
+        * JPEG encode and decode in eet now uses ISLOW (not IFAST) due to
+        noticable quality losses in the chase for speed. It will use
+        IFAST for quality less than 60 when encoding
+
+2011-11-20  Carsten Haitzler (The Rasterman)
+
+        * TGA loader gets fixed alpha decode - real life tga's have
+        proper alpha values. also reduce false positive tga file
+        detection
+
+2011-11-24  Carsten Haitzler (The Rasterman)
+
+        * Fix repeat event inheritance from parent smart just like
+        pass events are inherited. This was inconsistent.
+
+2011-12-02 Carsten Haitzler (The Rasterman)
+
+        1.1.0 release
+
+2011-12-07  Carsten Haitzler (The Rasterman)
+
+        * Fix build if gcc too old - if immintrin.h doesn't exist,
+        don't enable SSE3.
+
+2011-12-08  Tom Hacohen (TAsn)
+
+	* Textblock markup: Support self closing format tags, i.e <br/>.
+	You should use <br/> and not <br>. The latter still works but it's use
+	is discouraged.
+	* Textblock: Added evas_textblock_text_markup_to_utf8.
+	This lets you convert textblock markup to plain text.
+	This converts formats and everything correctly.
+
+2011-12-12  Carsten Haitzler (The Rasterman)
+
+        * Fix rounding error in map clip bounds calculation
+
+2011-12-12  Tom Hacohen (TAsn)
+
+	* Textblock: Added evas_textblock_cursor_word_start/end.
+	Those functions let you jump to the start/end of the word under the
+	cursor.
+
+2011-12-13  Carsten Haitzler (The Rasterman)
+
+        * Fix grab count negative values if you do weird combinations of
+        press and release with multiple fingers or multiple mouse
+        buttons.
+
+2011-12-14  Cedric BAIL
+
+	* Use Eina_File when loading bmp, ico, pmaps and wbmp files.
+	* Fix potential race condition in wbmp loader code.
+
+2011-12-14  Tom Hacohen (TAsn)
+
+	* Textblock: Made "br" and "tab" default tags for newline and tab.
+	* Textblock: Added "b" and "i" as default tags that can be overridden
+	by style, and added the infra to support this.
+	* Textblock: Added evas_textblock_text_utf8_to_markup
+
+2011-12-16  Carsten Haitzler (The Rasterman)
+
+        * Fix clip bug that shows up in buffer engine
+        * Fix SSE3 routines with buggy output - disable
+        * Add new api to set and get default event flags.
+
+2011-12-19  Carsten Haitzler (The Rasterman)
+
+        * Add new canvas events called just before and after evas rendering
+        starts and stops.
+
+2011-12-21  ChunEon Park (Hermet)
+
+	* Events: repeat events should not be affected by children.
+	Fixed to object passes events to the next object in the same layer
+	if the repeat_events is enabled.
+
+2011-12-23 Sanghee Park
+
+        * Extend pixman support to allow other operations to use
+          pixman when doing software rendering. On x86 this isn't useful
+          but on ARMv7 with NEON pixman happens to do better with image
+          blending and nearest scale blending.
+        * Add tiled rotator for 32bit display as an option.
+
+2011-12-26  Christopher Michael (devilhorns)
+
+        * Add functions to get/set if an object is a 'frame_object'
+
+2011-12-27  Carsten Haitzler (The Rasterman)
+
+        * Add feature to get number of pressed devices (help fix
+          ecore-evas bug).
+
+2011-12-28  Carsten Haitzler (The Rasterman)
+
+        * Add recursive name find function - evas_object_name_child_find()
+
+2012-01-01  Carsten Haitzler (The Rasterman)
+
+        * Improve CPU use on nvidia drivers when vsyncing. It was
+          actually glXWaitGL() spinning, not glXSwapBuffers(), so this
+          points to a bug in the nvidia drivers where the sleep logic
+          in glXSwapBuffers() hasn't been transferred to glXWaitGL().
+          Avoid use of glXWaitGL() to avoid the nvidia bug.
+
+2012-01-02  Cedric Bail
+
+	* Fix unitialized value when running generic loader without any
+	application found to open the file.
+	* Use Eina_File when openning XPM file.
+
+2012-01-03  Cedric Bail
+
+	* Use Eina_File for PSD file to.
+
+2012-01-06  Sung W. Park (sung_)
+
+        * Add EvasGL support to software backend using OSMesa.  Requires OSMesa
+          library.  Due to caveats in OSMesa, surface config stays with a
+          context rather than with a surface.  So for now, the config of a
+          surface remains with the first context that it binds to.  May need
+          to come up with a different solution in the near future.
+
+2012-01-12  Sung W. Park (sung_)
+
+	* Add new api evas_gl_config_new/free() to ensure backward compatibility.
+          Previously, the user simply declared a Evas_GL_Config object but this
+          can cause issues if new configs are added. Now we have evas allocate it
+          for you.
+
+2012-01-16  Raphael Kubo da Costa (rakuco)
+
+	* Add evas_object_smart_callback_del_full() to allow users to
+	unregister a specific smart event callback instead of all
+	callbacks matching a given type and function pointer.
+
+2012-01-17  Carsten Haitzler (The Rasterman)
+
+        * Add EVAS_OBJECT_POINTER_MODE_NOGRAB_NO_REPEAT_UPDOWN pointer mode
+        for some very specific behavior needed for accessibility.
+
+2012-01-19  Cedric Bail
+
+	* Add double buffer support to buffer engine.
+
+2012-01-20  Sung W. Park (sung_)
+
+	* Add Direct Rendering to Evas' window optimization for Evas_GL.  This
+          optimization can be significant since it avoids and extra copy from
+          an offscreen buffer.  Normally, Evas_GL will render to a render
+          target using an FBO. This can be enabled by giving
+          EVAS_GL_OPTIONS_DIRECT hint in the config options_bits. Direct
+          rendering is actually done if the following conditions are met -
+          1) All GL rendering is done in the pixel_getter callback 2) No
+          rotation on the image object 3) Corresponding image
+          object has alpha disabled.
+
+2012-01-23  Tom Hacohen (TAsn)
+
+	* Textblock: Added evas_object_textblock_style_user_push/pop.
+	This is used to override the default style set for an evas object.
+	For example, this can be used to nicely change the font and size
+	in a text editor.
+
+2012-02-23  Carsten Haitzler (The Rasterman)
+
+        * Fix rouding of update regions for image objects when scaled
+        (leaves trails without this).
+
+2012-02-23  Cedric Bail
+
+	* Remove Software SDL engine.
+
+2012-02-23  Carsten Haitzler (The Rasterman)
+
+        * Add evas_object_ref_get() to be able to tell if others ref
+        an object.
+
+2012-04-03  Gustavo Sverzut Barbieri (k-s)
+
+	* Box layouts: fix handling of weights that have decimal parts,
+	they were being handled as "int" where "double" was expected.
+
+2012-04-12  Carsten Haitzler (The Rasterman)
+
+        * Fix gl engine clipping bug when rendering to evas map fbo's
+        when gl window buffer is smaller than the fbo. used wrong
+        surface size in clipping logic.
+
+2012-04-12  Tom Hacohen (TAsn)
+
+	* Textblock: Fixed compilation with liblinebreak disabled.
+
+2012-04-14  Carsten Haitzler (The Rasterman)
+
+        * Fix color multiplier staying set when rendering map.
+
+2012-04-22  Carsten Haitzler (The Rasterman)
+
+        * Fix shader binary saving to save with dir existing already.
+
+2012-04-26  Carsten Haitzler (The Rasterman)
+
+        1.2.0 release
+
+2012-04-26  Cedric Bail
+
+	* Lock less font rendering.
+	* Removing EVAS_FRAME_QUEUING, EVAS_SLI, METRIC_CACHE and WORD_CACHE.
+
+2012-04-29  Tom Hacohen (TAsn)
+
+	* Textblock: Fixed a couple of bugs with range delete.
+
+2012-04-30  Jérôme Pinot
+
+	* Add missing files in the tarballs.
+
+2012-05-01  Cedric Bail
+
+	* Compute limited bounding box for Smart object.
+	* Use bounding box to reduce the number of object explored during event propagation.
+
+2012-05-03  Iván Briano (Sachiel)
+
+	* Add CServe2 and image cache2 that makes use of it. Several changes
+	in the buffer and software engines to use the right cache if CServe2
+	is requested for the application.
+
+2012-05-14  Carsten Haitzler (The Rasterman)
+
+        * Fix pixman rendering support if you set alpha flag AFTER
+        setting image size for custom image data.
+
+2012-05-14  Sanghee Park
+
+	* Add Multisample Anti-Anliased surface format for Evas GL.
+        The formats are divided into High, Med, Low, None, where High represent
+        max number of samples.  Currently, this feature is only supported in GLES2
+        environment with GL_IMG_multisampled_render_to_texture extension supported.
+
+2012-05-16  Vincent Torri
+
+	* Use Esvg for svg rendering. If not found, librsvg is still used.
+
+2012-05-18  Cedric Bail
+
+	* Remove librsvg svg loader as it is a massive source of crash in e17. If
+	you still want to use it, use the evas_generic_loader librsvg binary.
+
+2012-05-18  ChunEon Park (Hermet)
+
+	* Update mapped objects rendering when their color is changed
+
+2012-05-24  Carsten Haitzler (The Rasterman)
+
+        * Fix evas_object_image_memfile_set() on non-linux systems.
+
+2012-05-29  Tom Hacohen (TAsn)
+
+	* Text: Fixed an issue with text object sizing.
+	* Font: Fixed run-time italic.
+
+2012-05-30  ChunEon Park (Hermet)
+
+	* Fixed to clean up when map actually changed. Now rendering updates will be
+	correct after evas_map acutally disabled/enabled for the smart object.
+
+2012-05-30  Cedric Bail
+
+	* Don't wake up prepare thread if there is nothing to prepare.
+
+2012-05-30  Daniel Zaoui
+
+	* Fix evas_free callback deletion to not sometimes abort evas freeing
+        in some situations, thus leaking.
+
+2012-06-10  Carsten Haitzler (The Rasterman)
+
+        * Fix evas font handling so bitmap fonts work again like they
+        once did. This ifxes max height, and max ascent/descent
+        calculation for 0 em fonts with 0 bbox size (bitmap case), and
+        fixes 1 rounding error in text objects that placed ascent in the wrong
+        place by 1 pixel for even ascents.
+
+2012-06-10  Cedric Bail
+
+	* Limit the updated region to fit in CPU cache for Pipe rendering.
+
+2012-06-12  ChunEon Park (Hermet)
+
+ 	* Fixed simple line drawing on s/w backened. Unmatched loop scope caused the
+  	destination buffer pointer march in place.
+
+2012-06-12  ChunEon Park (Hermet)
+
+ 	* Removed empty evas_object_map_source_set/get APIs. Will Not be implemented.
+
+2012-06-13  Mike Blumenkrantz
+
+        * Fix crash in evas_object_image_add() when called prior to setting an engine
+          for the given canvas.
+
+2012-06-14  Cedric Bail
+
+	* Cache convertion from Evas_Map to RGBA_Map.
+
+2012-06-15  Vincent Torri
+
+	* Add Textgrid object.
+
+2012-06-15  Mike Blumenkrantz
+
+        * evas_object_smart_members_get() now returns NULL on non-smart objects
+
+2012-04-26  Carsten Haitzler (The Rasterman)
+
+        * Fix GL engine bitmap font handling
+
+2012-06-19  Vincent Torri
+
+	* Remove uselesss software DirectDraw 16 bits engine
+
+2012-06-27  Sung W. Park (sung_)
+
+	* Added (w, h) <= 0 check in EvasGL surface that was never handled before.
+        * Handled evas_gl_make_current to return error when either surface 
+        or context is NULL.  Before, when that was the case, it just did 
+        make_current(NULL, NULL) internally. 
+
+2012-04-28  Carsten Haitzler (The Rasterman)
+
+        * Fix font instance refcounting for textprops that hang around.
+
+2012-06-29  Jiyoun Park
+
+	* upstream merge
+	* Merge remote-tracking branch 'remotes/origin/upstream'
+
+2012-07-03  Christopher Michael
+
+	* Merge Tizen changes to upstream EFL.
+	* Support gif scaling in evas gif loader.
+	* Create vertex & fragment shader(s) in the gl_common engine.
+	* Don't call glGetTexLevelParameteriv unless it is supported.
+	* Support evas_cserve2 in the wayland_shm engine.
+	* When freeing a gl_x11 window, make sure to call eglMakeCurrent with a null surface
+		to inform EGL that this window is no longer valid.
+
+2012-07-04  Cedric Bail
+
+	* Make pipeline rendering use more extensively the prepare stage.
+
+2012-07-04  Gustavo Lima Chaves
+
+	* Add simple interfaces support to Evas smart classes
+
+2012-07-05  ChunEon Park(Hermet)
+
+	* Fixed Map pipe region issue. It caused the incorrect object rendering order
+  	on gl backened.
+
+2012-07-05  Cedric Bail
+
+	* Strongly disable Evas pipe rendering.
+
+2012-07-05  Cedric Bail
+
+	* Don't let bad map sneek at render time and ban them as early as possible.
+
+2012-07-07  ChunEon Park(Hermet)
+
+	* Let Draw Text with viewport size instead of window size. When map is enabled then it should be rendered completely.
+
+2012-07-11  Tom Hacohen (TAsn)
+
+	* Fixed runtime emboldenment with bitmap fonts.
+
+2012-07-16  Hermet (ChunEon Park)
+
+	* Fixed to do pre render for the children of mapped object.
+
+2012-07-17  Cedric Bail
+
+	* Fix garbage left by mapped smart object when they fly away from the canvas.
+	* Fix map life cycle.
+
+2012-07-18  Carsten Haitzler (The Rasterman)
+
+        * Fix evas box to not skip dealing with size hint changes
+          while it lays out objects. This breaks elementary badly and it should
+          never have done this. This broke the general logic of size
+          hint handling.
+
+2012-07-19  Jiyoun Park(jypark)
+
+        * Fix jpeg save bug related with error handler
+
+2012-07-22  Cedric Bail
+
+	* Don't crash when calling evas_object_smart_type_check without type.
+
+2012-07-24  Ingvaldur Sigurjonsson
+
+	* Fix typoe in docs
+
+2012-07-24  Hermet (ChunEon Park)
+
+	* Fixed evas_gl resource list have cleared properly when it is released
+  	so it would be no problem when it is reinitialized in one same process.
+
+2012-07-24  Cedric Bail
+
+	* Handle Proxy with the right context.
+
+2012-07-24  Carsten Haitzler (The Rasterman)
+
+        * Fix long-standing bug when changing layer of a smart object,
+        its children dont change their layer value and pointer with it, thus
+        getting layer from them get you the wrong one.
+
+2012-07-26  Cedric Bail
+
+	* Keep track of inactive proxied object change so we always update the proxy correctly.
+
+2012-08-01  Jiyoun Park(jypark)
+
+        * Fix gif load bug. we initialize first frame buffer of gif loader
+
+2012-08-01  Jiyoun Park(jypark)
+
+        * Fix evas pointer count problem, if press/release events occurs not pair,
+	it screws up the evas event process. We are not deal with release event if
+	there is no pressed pointer.
+
+2012-08-01  Carsten Haitzler (The Rasterman)
+
+        * Provide share (Data) file for prefix finding and use
+        eina_prefix for modules too so we work with debian multiarch
+
+
+2012-08-02  Sung W. Park (sung_)
+
+        * Fix evas_gl's internal resource surface bug. For optimzation evas_gl
+        was using evas' window surface to do its resource creation and it 
+        wans't properly updated when a window is destroyed and recreated.
+
+2012-08-07  Cedric Bail
+
+	* Properly warn when user try to link object from different canvas.
+
+2012-08-13  Carsten Haitzler (The Rasterman)
+
+	* Fix async fd stuff to generate new pipe after a fork (pid mismatch)
+
+2012-08-14  Tom Hacohen (TAsn)
+
+	* Textblock: Fixed range geometry when the last item is a format.
+
+2012-08-17  Hermet (ChunEon Park)
+
+	* Let clip the mapped obj even if it is a child of the mapped obj and do
+  	it only when clipper exists
+
+2012-08-20  Hermet (ChunEon Park)
+
+	* Removed unnessesary lines which causes the gles resource leak and
+	corruption.
+
+2012-08-21  Sung W. Park (sung_)
+
+        * Fix evas_gl current_context update issue when evas_gl context is deleted.
+
+2012-08-23  Tom Hacohen (TAsn)
+
+	* Textblock: Fixed bug with 1 char word separators at the start of the
+	text when going to the start of the word (e.g: "=test").
+
+2012-08-26  Jiyoun Park(jypark)
+
+	* Jpeg loader: fix orientation didn't work if jpeg file format is JFIF.
+	Add code deal with JFIF file format.
+
+2012-08-27  Tom Hacohen (TAsn)
+
+	* Textblock: Make sure scale changes causes a complete recalc.
+
+2012-08-29  Christopher Michael (devilhorns)
+
+	* Wayland Egl Engine: Add support for Multi-Sample Anti-Aliasing and GL Direct Images.
+                              Add support for using native image binding.
+                              Add support for setting GL surface capabilities.
+
+2012-08-30  Carsten Haitzler (The Rasterman)
+
+        1.7.0 release
+
+2012-08-31  Christophe Sadoine
+
+       * Added a function: evas_map_util_quat_rotate().
+
+2012-09-02  Vincent Torri
+
+       * Fix seg fault in the esvg loader, latest code is required, and
+	 enable it on Windows.
+
+2012-09-03  Igor Murzov
+
+       * Add WEBP loader module and cserve2 binary loader patch.
+
+2012-09-03  Christopher Michael (devilhorns)
+
+       * When doing a move or geometry_get, we need to make sure that we 
+	 don't try to do these on the framespace clip object. Also, since we
+	 need the evas to get the framespace clip object, just directly use the
+	 framespace values from the canvas, rather than function call to get
+	 those values.
+
+2012-09-05  ChunEon Park (Hermet)
+
+       * Added EVAS_CALLBACK_IMAGE_RESIZE. Now user have a notify when image data size of the image object is changed.
+
+2012-09-05  Carsten Haitzler (The Rasterman)
+
+       * Fix EGL/GLES bug when setting up rgba dest alpha windows where they
+       cease to be rendered to. use a shared context and it works.
+
+2012-09-07  Carsten Haitzler (The Rasterman)
+
+       * Fix image alpha set bug if the image data has not been loaded
+       yet from disk. Fixes across software and gl engines needed.
+       * Fix map surface leak.
+
+2012-09-14  Carsten Haitzler (The Rasterman)
+
+       * Add env EVAS_GL_NO_BLACKLIST to disable blacklisting.
+
+2012-09-17  Carsten Haitzler (The Rasterman)
+
+       * Add evas_device API for being able to register devices, set
+       their names, descriptions, classes, parents, sources etc. etc.
+
+2012-09-20  Carsten Haitzler (The Rasterman)
+
+       * Fix native surface crash when setting to null in some
+       situations.
+
+2012-09-24  Sung W. Park (sung_)
+
+       * Refactored Evas GL engine code so wayland_egl and gl_x11 and other
+       engines can share the same code. The common codes are in gl_common/
+       directory and evas_engine just has to implement a few engine functions.
+
+2012-09-26  Carsten Haitzler (The Rasterman)
+
+       * Add the ability via env vars to do partial swaps in the gl
+       engine. This requires that we also can get from gl info as to
+       if a swap was a copy, swap, discard and if a swap with 2 or 3 
+       buffers. don't have that but env var will do for now for testing.
+
+2012-09-27  Jiyoun Park (jypark)
+
+       * Add the object display mode hint. this can be used to check object
+       mode like compress or expand or etc
+
+2012-10-03  Mike Blumenkrantz
+
+       * evas_object_del() now accepts NULL more peacefully
+
+2012-10-05  Sung W. Park (sung_)
+
+       * Added Debug feature for Evas GL's GL APIs. It can be set with 
+       EVAS_GL_API_DEBUG=1 and when it is set, all the GL calls will check
+       if make_current has been properly called.  Also, it'll check if all
+       the GL calls are called within the Pixel Getter function for Direct
+       Rendering option.
+
+2012-10-09 Daniel Zaoui and Tom Hacohen
+
+	* Evas: change Evas to use Eo.
+	This change adds Eo support to Evas while keeping the old API intact.
+	For more information, go to Eo.
+
+2012-10-10  Carsten Haitzler (The Rasterman)
+
+       * Fix font sizing issues when size scaling happens to down down
+       when it should round up. happens in rare sizing situations and fonts.
+
+2012-10-11 Sohyun Kim 
+
+       * Fix texture size issues when the image has nv12 format
+
+2012-10-11  Carsten Haitzler (The Rasterman)
+
+       * Fix C code fallback line rendering path in software
+
+2012-10-16  Carsten Haitzler (The Rasterman)
+
+       * Like 16bpp engine, 8bpp engine goes the way of the dodo.
+
+2012-10-16  ChunEon Park (Hermet)
+
+       * Fix the vertical line drawing on gl backened.
+
+2012-10-18  ChunEon Park (Hermet)
+
+       * Update move event when object freeze event is off.
+
+2012-10-19  ChunEon Park (Hermet)
+
+       * Added Proxy'source visibility set APIs
+
+2012-10-23  Carsten Haitzler (The Rasterman)
+
+       * Fix possible segfault in gl engine if image->im is null in
+       image size set.
+
+2012-10-24  ChunEon Park (Hermet)
+
+       * Added Proxy'source events set APIs.
+
+2012-10-25  Cedric Bail
+
+       * Make XPM loader faster.
+
+2012-10-25  ChunEon Park (Hermet)
+
+       * Added Evas_Coord_Size, Evas_Coord_Precision_Size type.
+
+2012-10-26  ChunEon Park (Hermet)
+
+       * Fixed event multi move memory leak.
+
+2012-10-30  Sung W. Park (sung_)
+
+       * Fix clip bug while computing coordinates for Evas GL
+       direct rendering optimization.
+ 
+2012-11-02  Carsten Haitzler (The Rasterman)
+
+       * Fix evas textblock tag parser to respect escaped spaces and
+         escaped single quotes. This fixes an edje text class restyling bug.
