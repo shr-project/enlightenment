@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Begin embryo.SlackBuild
+# Begin efl.SlackBuild
 
-NAME=embryo
+NAME=efl
 BUILD=1jp
 CWD=$(pwd)
 
@@ -23,7 +23,8 @@ CFLAGS=${SCFLAGS} CXXFLAGS=${SCFLAGS} \
 
 # Install
 make_install
-install_doc AUTHORS COPYING INSTALL README
+install_doc AUTHORS COPYING ChangeLog INSTALL README
+cp -r licenses ${PKG}/usr/doc/${NAME}-${VERSION}/
 
 # Add API doc
 api_doc
@@ -32,4 +33,4 @@ api_doc
 post_clean
 pack_slack
 
-# End embryo.SlackBuild
+# End efl.SlackBuild

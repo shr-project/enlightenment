@@ -1,10 +1,8 @@
-eina
-eet
+efl
 evas
 evas_generic_loaders
 ecore
 eio
-embryo
 edje
 efreet
 e_dbus

@@ -5,15 +5,15 @@
 # make exactly 11 lines for the formatting to be correct.  It's also
 # customary to leave one space after the ':'.
 
-    |-----handy-ruler------------------------------------------------------|
-eina: 
-eina: Enlightenment's data types library (List, hash, etc) in C.
-eina: 
-eina: Eina is part of the EFL
-eina: 
-eina: 
-eina: 
-eina: 
-eina: 
-eina: 
-eina: 
+   |-----handy-ruler------------------------------------------------------|
+efl: 
+efl: Enlightenment Foundation libraries.
+efl: 
+efl: This currently includes: eo, eina, eet, embryo.
+efl: 
+efl: website: http://enlightenment.org/
+efl: 
+efl: 
+efl: 
+efl: 
+efl: 
