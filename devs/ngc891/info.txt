@@ -4,7 +4,7 @@ Name:         Jerome Pinot
 Location:     Daejeon, South Korea
 E-Mail:       ngc891@gmail.com
 WWW:          http://ngc891.blogdns.net
-Managing:     SlackE17, ePeriodique
+Managing:     SlackE17, ePeriodique, elemines
 Contributing: documentation, cleaning
 Platform:     Slackware (Linux), OpenBSD
 GeoData:      36.364 127.358
