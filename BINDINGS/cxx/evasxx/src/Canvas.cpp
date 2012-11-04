@@ -175,10 +175,10 @@ Canvas *Canvas::wrap (Evas_Object *o)
   return new Canvas (evas_object_evas_get (o));
 }
 
-Canvas *Canvas::wrap (Evas *evas)
+/*Canvas *Canvas::wrap (Evas *evas)
 {
   return new Canvas (evas);
-}
+}*/
 
 } // end namespace Evasxx
 

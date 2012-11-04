@@ -91,7 +91,7 @@ public:
    * @param o The C to to be wrapped.
    * @return The wrapped C++ type.
    */   
-  static Canvas *wrap (Evas *evas);
+  //static Canvas *wrap (Evas *evas);
   
 private:
   Canvas( Evas* evas );
