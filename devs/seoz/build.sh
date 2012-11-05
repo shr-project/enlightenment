@@ -16,6 +16,7 @@
 
 set -e
 #set -x
+shopt -s expand_aliases
 
 export CFLAGS="-O2 -march=native -ffast-math -g3 -W -Wall -Wextra" # -Wshadow"
 export CC="ccache gcc"
