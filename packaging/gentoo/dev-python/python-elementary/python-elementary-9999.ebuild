@@ -23,4 +23,5 @@ RDEPEND=">=media-libs/elementary-9999"
 # python-evas is just required to build as it includes some useful header files
 DEPEND="
 	>=dev-python/python-evas-9999
+	>=dev-python/python-edje-9999
 	${RDEPEND}"

@@ -16,6 +16,7 @@ KEYWORDS=""
 IUSE=""
 
 RDEPEND=">=dev-python/python-elementary-9999
+	>=dev-python/python-e_dbus-9999
 	>net-misc/connman-1.3"
 
 DEPEND="
