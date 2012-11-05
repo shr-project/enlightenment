@@ -12,8 +12,8 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	libxss-dev libxp-dev
 	libxtst-dev graphviz libasound2-dev libpam0g-dev"
 
-defcore="efl evas evas_generic_loaders ecore eio edje emotion eeze
-	e_dbus edbus efreet PROTO/libeweather PROTO/emap elementary ephysics"
+defcore="efl evas_generic_loaders ecore eio edje emotion eeze e_dbus edbus
+	efreet PROTO/libeweather PROTO/emap elementary ephysics"
 defapps="ethumb terminology e ephoto rage expedite"
 
 defpkgs="$defcore $defapps"
