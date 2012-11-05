@@ -184,7 +184,7 @@ group {
 				state: "transition" 1.0;
 				inherit: "default" 0.0;
 				perspective {
-					zplane: 500;
+					zplane: 400;
 					focal: 1000;
 				}
 			}
@@ -202,7 +202,7 @@ group {
 				state: "transition" 0.0;
 				inherit: "default" 0.0;
 				perspective {
-					zplane: -500;
+					zplane: -400;
 					focal: 1000;
 				}
 			}
@@ -1060,12 +1060,12 @@ group {
 			description {
 				state: "default" 0.0;
 				color: 255 255 255 0;
+				image.normal: "images/bevel_under.png";
 			}
 			description {
 				state: "selected" 0.0;
 				inherit: "default" 0.0;
 				color: 255 255 255 60;
-				image.normal: "images/bevel_under.png";
 			}
 		}
 
@@ -1156,17 +1156,6 @@ group {
 	parts {
 
 		part {
-			name: "clip";
-			type: RECT;
-			mouse_events: 0;
-			description {
-				state: "default" 0.0;
-				rel1.relative: 0.05 0.0;
-				rel2.relative: 0.95 1.0;
-			}
-		}
-
-		part {
 			name: "bg";
 			mouse_events: 0;
 			type: RECT;
@@ -1180,7 +1169,7 @@ group {
 				color: 215 215 215 255;
 			}
 		}
-
+ 
 		part {
 			name: "arrow";
 			mouse_events: 0;
