@@ -1,0 +1,22 @@
+New E17 <b>Release</b>: ALPHA
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+At the EFL Dev Day during a talk by Jorge "turran" Zapata, decisions were made. These decisions resulted
+in actions which ended up breaking my gmail (no joke), possibly foreshadowing the breaking of the world later on.
+This is the announcement for the ALPHA release of Enlightenment DR 0.17. E17 is a desktop environment
+that's been under development for a couple years, and it's finally at the point where we're happy enough with it to
+do an alpha release. Conveniently, this comes mere hours before I will be giving a presentation at LinuxCon
+wherein I will announce the release schedule for E17.
+</p>
+
+<p><ul>
+
+<li>E17 ALPHA - 
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
