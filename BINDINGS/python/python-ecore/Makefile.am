@@ -109,7 +109,6 @@ c_ecore_evas_deps = \
 	ecore/evas/ecore.evas.c_ecore_evas_directfb.pxi \
 	ecore/evas/ecore.evas.c_ecore_evas_fb.pxi \
 	ecore/evas/ecore.evas.c_ecore_evas_gl_x11.pxi \
-	ecore/evas/ecore.evas.c_ecore_evas_software_x11_16.pxi \
 	ecore/evas/ecore.evas.c_ecore_evas_software_x11.pxi \
 	ecore/evas/ecore.evas.c_ecore_evas_xrender_x11.pxi
 

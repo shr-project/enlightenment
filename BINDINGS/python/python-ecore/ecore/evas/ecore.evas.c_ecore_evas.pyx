@@ -54,9 +54,6 @@ engine_id_mapping = {
     "sdl": ECORE_EVAS_ENGINE_SOFTWARE_SDL,
     "directfb": ECORE_EVAS_ENGINE_DIRECTFB,
     "fb": ECORE_EVAS_ENGINE_SOFTWARE_FB,
-    "software_16_x11": ECORE_EVAS_ENGINE_SOFTWARE_16_X11,
-    "software_16_ddraw": ECORE_EVAS_ENGINE_SOFTWARE_16_DDRAW,
-    "software_16_wince": ECORE_EVAS_ENGINE_SOFTWARE_16_WINCE,
     }
 
 cdef object engine_mapping
@@ -66,19 +63,13 @@ engine_mapping = {
   "opengl_x11": GLX11,
   "software_xcb": SoftwareX11,
   "xrender_xcb": XRenderX11,
-  "software_16_x11": SoftwareX11_16,
 #  "directfb": DirectFB,
   "fb": FB,
 #  "software_gdi": ,
 #  "software_ddraw": ,
 #  "direct3d": ,
 #  "opengl_glew": ,
-#  "software_16_ddraw": ,
-#  "software_16_wince": ,
-#  "software_16_wince_fb": ,
-#  "software_16_wince_gapi": ,
 #  "sdl": ,
-#  "software_16_sdl": ,
 #  "cocoa": ,
   "buffer": Buffer,
   }
@@ -196,4 +187,3 @@ include "ecore.evas.c_ecore_evas_gl_x11.pxi"
 include "ecore.evas.c_ecore_evas_xrender_x11.pxi"
 include "ecore.evas.c_ecore_evas_fb.pxi"
 include "ecore.evas.c_ecore_evas_buffer.pxi"
-include "ecore.evas.c_ecore_evas_software_x11_16.pxi"
