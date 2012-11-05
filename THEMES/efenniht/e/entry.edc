@@ -51,10 +51,10 @@ collections {
       name: "e/widgets/entry/text";
       styles {
          style { name: "entry_textblock_style";
-            base: "font=Sans font_size=10 color=#00000000 style=shadow,bottom text_class=entry color_classs=entry_text";
+            base: "font=Sans font_size=10 color=#000 style=shadow,bottom text_class=entry color_classs=entry_text";
          }
          style { name: "entry_textblock_disabled_style";
-            base: "font=Sans font_size=10 color=#000000 style=shadow,bottom text_class=entry color_class=entry_text_disabled";
+            base: "font=Sans font_size=10 color=#000 style=shadow,bottom text_class=entry color_class=entry_text_disabled";
          }
       }
       parts {
