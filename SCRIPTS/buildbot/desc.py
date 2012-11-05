@@ -48,32 +48,11 @@ Package(
     )
 
 Package(
-    name="evas",
-    test_target="coverage",
-    doc_target="doc",
-    dependencies={
-        "common": ["efl"],
-        },
-    configure_flags={
-        "common": [
-            "--enable-doc",
-            "--enable-tests",
-            "--enable-coverage",
-            "--enable-buffer",
-            ],
-        "linux": [
-            "--enable-gl-xlib",
-            "--enable-software-xlib",
-            ],
-        },
-    )
-
-Package(
     name="ecore",
     test_target="check",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "evas"],
+        "common": ["efl"],
         },
     configure_flags={
         "common": [
@@ -106,7 +85,7 @@ Package(
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "evas", "ecore", "eio"],
+        "common": ["efl", "ecore", "eio"],
         },
     configure_flags={
         "common": [
@@ -154,7 +133,7 @@ Package(
     name="emotion",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "ecore", "evas", "eeze", "eio", "edje"],
+        "common": ["efl", "ecore", "eeze", "eio", "edje"],
         },
     )
 
@@ -162,7 +141,7 @@ Package(
     name="efx",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "ecore", "evas"],
+        "common": ["efl", "ecore"],
         },
     )
 
@@ -171,7 +150,7 @@ Package(
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={
-        "common": ["efl", "ecore", "evas"],
+        "common": ["efl", "ecore"],
         },
     configure_flags={
         "common": [
@@ -197,14 +176,14 @@ Package(
 Package(
     name="elementary",
     dependencies={
-        "common": ["efl", "ecore", "evas", "edje", "e_dbus", "efreet", "emotion", "eio"],
+        "common": ["efl", "ecore", "edje", "e_dbus", "efreet", "emotion", "eio"],
         },
     )
 
 Package(
     name="clouseau",
     dependencies={
-        "common": ["efl", "ecore", "evas", "edje", "elementary"],
+        "common": ["efl", "ecore", "edje", "elementary"],
         },
     )
 
@@ -215,7 +194,6 @@ Package(
     dependencies={
         "common": [
             "efl",
-            "evas",
             "ecore",
             "edje",
             "efreet",
@@ -282,14 +260,14 @@ Package(
 Package(
     name="terminology",
     dependencies={
-        "common": ["efl", "ecore", "evas", "edje", "emotion", "efreet", "elementary"],
+        "common": ["efl", "ecore", "edje", "emotion", "efreet", "elementary"],
         },
     )
 
 Package(
     name="python-evas",
     srcdir="BINDINGS/python/python-evas",
-    dependencies={"common": ["evas"]},
+    dependencies={"common": ["efl"]},
     # generated code sucks, no way to change it:
     env={"common": {"CFLAGS": "-Wno-unused-parameter -Wno-unused-but-set-variable -Wno-shadow -Wno-strict-aliasing"}},
     )
