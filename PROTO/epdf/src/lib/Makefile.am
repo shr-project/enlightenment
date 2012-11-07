@@ -42,6 +42,7 @@ libepdf_la_LIBADD = mupdf/libepdf_mupdf.la mupdf/libfonts.la mupdf/libcmaps.la m
 
 else
 
+libepdf_la_SOURCES += epdf_dummy.cpp
 libepdf_la_LIBADD = poppler/libepdf_poppler.la
 
 endif
