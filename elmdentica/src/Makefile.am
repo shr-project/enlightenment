@@ -25,7 +25,7 @@ BUILT_SOURCES = statusnet_Common.h statusnet_Common.c statusnet_Common_Azy.h sta
 CLEANFILES = $(BUILT_SOURCES) .sources-ts
 $(BUILT_SOURCES): .sources-ts
 .sources-ts: statusnet.azy
-	azy_parser -eHn -m common-impl,common-headers -o $(top_builddir)/src $(top_builddir)/src/statusnet.azy
+	azy_parser -eHn -m common-impl,common-headers -o $(top_builddir)/src $(top_srcdir)/src/statusnet.azy
 	touch $(top_builddir)/src/.sources-ts
 
 bin_PROGRAMS = elmdentica
