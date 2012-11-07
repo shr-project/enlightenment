@@ -66,16 +66,10 @@ create_main_win(Viewer *v)
    elm_theme_extension_add(NULL, buf);
    v->theme_file = eina_stringshare_add(buf);
 
-   o = elm_win_add(NULL, "main", ELM_WIN_BASIC);
-   elm_win_title_set(o, "Edje Viewer");
+   o = elm_win_util_standard_add("main", "Edje Viewer");
    evas_object_smart_callback_add(o, "delete,request", on_win_del_req, v);
    evas_object_resize(o, 600, 400);
    v->gui.win = o;
-
-   o = elm_bg_add(v->gui.win);
-   elm_win_resize_object_add(v->gui.win, o);
-   evas_object_size_hint_weight_set(o, 1.0, 1.0);
-   evas_object_show(o);
 
    o = elm_layout_add(o);
    elm_layout_file_set(o, buf, "viewer/main");
