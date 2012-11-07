@@ -12,11 +12,10 @@ libehal_la_SOURCES = \
 e_hal_device.c  \
 e_hal_manager.c \
 e_hal_util.c \
-e_hal_main.c
+e_hal_main.c \
+e_hal_private.h
 
 libehal_la_LIBADD = \
 @EDBUS_LIBS@ $(top_builddir)/src/lib/dbus/libedbus.la
 
-libehal_la_LDFLAGS = -version-info @version_info@ @release_info@
-
-EXTRA_DIST = e_hal_private.h
+libehal_la_LDFLAGS = -no-undefined -version-info @version_info@ @release_info@

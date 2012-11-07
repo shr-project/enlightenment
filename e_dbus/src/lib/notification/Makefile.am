@@ -13,12 +13,11 @@ libenotify_la_SOURCES = \
 notification.c \
 marshal.c \
 client.c \
-daemon.c
+daemon.c \
+e_notify_private.h
 
 libenotify_la_LIBADD = \
 @EDBUS_LIBS@ $(top_builddir)/src/lib/dbus/libedbus.la \
 @EVAS_LIBS@
 
-libenotify_la_LDFLAGS = -version-info @version_info@ @release_info@
-
-EXTRA_DIST = e_notify_private.h
+libenotify_la_LDFLAGS = -no-undefined -version-info @version_info@ @release_info@

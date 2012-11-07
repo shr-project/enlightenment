@@ -14,11 +14,10 @@ e_bluez_element.c \
 e_bluez_manager.c \
 e_bluez_adapter.c \
 e_bluez_device.c \
-e_bluez_devicefound.c
+e_bluez_devicefound.c \
+e_bluez_private.h
 
 libebluez_la_LIBADD = \
 @EDBUS_LIBS@ $(top_builddir)/src/lib/dbus/libedbus.la
 
 libebluez_la_LDFLAGS = -version-info @version_info@ @release_info@
-
-EXTRA_DIST = e_bluez_private.h

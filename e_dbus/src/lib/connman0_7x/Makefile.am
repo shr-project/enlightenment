@@ -14,11 +14,10 @@ e_connman_element.c \
 e_connman_manager.c \
 e_connman_profile.c \
 e_connman_service.c \
-e_connman_technology.c
+e_connman_technology.c \
+e_connman_private.h
 
 libeconnman0_7x_la_LIBADD = \
 @EDBUS_LIBS@ $(top_builddir)/src/lib/dbus/libedbus.la
 
 libeconnman0_7x_la_LDFLAGS = -version-info @version_info@ @release_info@
-
-EXTRA_DIST = e_connman_private.h
