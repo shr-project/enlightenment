@@ -1,0 +1,118 @@
+# Spanish translation for everything-websearch
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: everything-websearch\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-11-08 02:06+0100\n"
+"PO-Revision-Date: 2012-11-08 02:06+0100\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: Enlightenment Team\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:587
+#: src/e_mod_main.c:1395
+msgid "Translate"
+msgstr "Traducir"
+
+#: src/e_mod_main.c:736
+msgid "Abort download"
+msgstr "Cancelar descarga"
+
+#: src/e_mod_main.c:781
+#, c-format
+msgid "Got %d kbytes of"
+msgstr "Obtenidos %d kbytes de"
+
+#: src/e_mod_main.c:795
+msgid "Enqueue in Playlist"
+msgstr "En cola en la lista de reproducción"
+
+#: src/e_mod_main.c:799
+msgid "Enqueue"
+msgstr "En cola"
+
+#: src/e_mod_main.c:802
+msgid "Play File"
+msgstr "Reproducir archivo"
+
+#: src/e_mod_main.c:806
+msgid "Play"
+msgstr "Reproducir"
+
+#: src/e_mod_main.c:836
+msgid "Finished download"
+msgstr "Descarga finalizada"
+
+#: src/e_mod_main.c:922
+msgid "Start download"
+msgstr "Iniciar descarga"
+
+#: src/e_mod_main.c:1004
+msgid "Enqueue files for download"
+msgstr "Archivos en cola para descargar"
+
+#: src/e_mod_main.c:1021
+#: src/e_mod_main.c:1401
+msgid "Youtube"
+msgstr "Youtube"
+
+#: src/e_mod_main.c:1062
+#: src/e_mod_main.c:1067
+#: src/e_mod_main.c:1094
+#: src/e_mod_main.c:1155
+msgid "Upload Image"
+msgstr "Subir una imagen"
+
+#: src/e_mod_main.c:1062
+msgid "Link copied to clipboard"
+msgstr "Enlace copiado al portapapeles"
+
+#: src/e_mod_main.c:1067
+msgid "Something went wrong :("
+msgstr "Algo fue mal :("
+
+#: src/e_mod_main.c:1092
+#, c-format
+msgid "Completed %1.1f%% of %s"
+msgstr "Completado %1.1f%% de %s"
+
+#: src/e_mod_main.c:1368
+#: src/e_mod_main.c:1540
+#: src/e_mod_main.c:1559
+msgid "Everything Websearch"
+msgstr "Everything Websearch"
+
+#: src/e_mod_main.c:1382
+msgid "General"
+msgstr "General"
+
+#: src/e_mod_main.c:1385
+msgid "Browser"
+msgstr "Navegador"
+
+#: src/e_mod_main.c:1390
+msgid "Language"
+msgstr "Idioma"
+
+#: src/e_mod_main.c:1404
+msgid "Video player"
+msgstr "Reproducor de vídeo"
+
+#: src/e_mod_main.c:1409
+msgid "Download directory"
+msgstr "Directorio de descarga"
+
+#: src/e_mod_main.c:1414
+msgid "Download requires mplayer and mp3lame"
+msgstr "La descarga requiere mplayer y mp3lame"
+
+#: src/e_mod_main.c:1537
+msgid "Launcher"
+msgstr "Lanzador"
+

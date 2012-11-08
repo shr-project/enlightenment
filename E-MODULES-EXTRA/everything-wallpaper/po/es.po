@@ -1,0 +1,45 @@
+# Spanish translation for everything-wallpaper.
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: everything-wallpaper\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-11-08 02:06+0100\n"
+"PO-Revision-Date: 2012-11-08 02:06+0100\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: Enlightenment Team\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:134
+msgid "Stretch"
+msgstr "Estirar"
+
+#: src/e_mod_main.c:135
+msgid "Center"
+msgstr "Centrar"
+
+#: src/e_mod_main.c:136
+msgid "Tile"
+msgstr "Mosaico"
+
+#: src/e_mod_main.c:137
+msgid "Within"
+msgstr "Dentro de"
+
+#: src/e_mod_main.c:138
+msgid "Fill"
+msgstr "Rellenar"
+
+#: src/e_mod_main.c:379
+msgid "Picture Import Error"
+msgstr "Error al importar la imagen"
+
+#: src/e_mod_main.c:380
+msgid "Enlightenment was unable to import the picture<br>due to conversion errors."
+msgstr "Enlightenment fue incapaz de importar la imagen<br>debido a errores de conversión."
+

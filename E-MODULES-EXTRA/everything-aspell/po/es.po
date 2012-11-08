@@ -1,0 +1,59 @@
+# Spanish translation for everything-aspell.
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: everything-aspell\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-11-08 02:06+0100\n"
+"PO-Revision-Date: 2012-11-08 02:06+0100\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: Enlightenment Team\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:449
+#: src/e_mod_main.c:606
+msgid "Everything Aspell"
+msgstr "Everything Aspell"
+
+#: src/e_mod_main.c:463
+msgid "General"
+msgstr "General"
+
+#: src/e_mod_main.c:468
+msgid "Spell checker"
+msgstr "Corrector ortográfico"
+
+#: src/e_mod_main.c:471
+#: src/e_mod_main.c:587
+msgid "Aspell"
+msgstr "Aspell"
+
+#: src/e_mod_main.c:474
+msgid "Hunspell"
+msgstr "Hunspell"
+
+#: src/e_mod_main.c:477
+msgid "Custom"
+msgstr "Personalizar"
+
+#: src/e_mod_main.c:481
+msgid "Custom Command"
+msgstr "Comando personalizado"
+
+#: src/e_mod_main.c:487
+msgid "Language"
+msgstr "Idioma"
+
+#: src/e_mod_main.c:585
+msgid "Launcher"
+msgstr "Lanzador"
+
+#: src/e_mod_main.c:587
+msgid "Everything Plugin"
+msgstr "Plugin Everything"
+

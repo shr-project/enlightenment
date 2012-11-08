@@ -1,0 +1,46 @@
+# Spanish translation for eOOorg
+# This file is put in the public domain.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: eooorg\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-11-08 02:06+0100\n"
+"PO-Revision-Date: 2012-11-08 02:06+0100\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: Enlightenment Team\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:113
+msgid "eOOorg Module Configuration data needed upgrading. Your old configuration<br> has been wiped and a new set of defaults initialized. This<br>will happen regularly during development, so don't report a<br>bug. This simply means the module needs new configuration<br>data by default for usable functionality that your old<br>configuration simply lacks. This new set of defaults will fix<br>that by adding it in. You can re-configure things now to your<br>liking. Sorry for the inconvenience.<br>"
+msgstr "La configuración del módulo eOOorg necesita actualizarse. Su antigua configuración <br> ha sido eliminada y un nueva configuración predeterminada se ha establecido, lo que <br> sucederá regularmente durante el desarrollo, así que no informe del <br> error. Esto simplemente significa que necesita nuevos datos de <br> configuración predeterminados para la funcionalidad que su antigua configuración <br> no posee. Este nuevo conjunto de configuraciones las arreglará <br> añadiendo las configuraciones que faltan. Ahora puede reconfigurar los ajustes a su <br> gusto. Lamentamos los inconvenientes.<br>"
+
+#: src/e_mod_main.c:133
+msgid "Your eOOorg Module configuration is NEWER than the module version. This is very<br>strange. This should not happen unless you downgraded<br>the module or copied the configuration from a place where<br>a newer version of the module was running. This is bad and<br>as a precaution your configuration has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
+msgstr "Su configuración del módulo eOOorg es MÁS RECIENTE que la versión del propio módulo. Esto es muy <br> extraño y no debería pasar a menos que haya desactualizado <br> el módulo o haya copiado la configuración de otro lugar en donde <br> se está ejecutando una versión más reciente del módulo. Esto no es bueno, y <br> como medida de precaución, su configuración ha sido restaurada a los ajustes predeterminados. Lamentamos los inconvenientes. <br>"
+
+#: src/e_mod_main.c:305
+#: src/e_mod_config.c:44
+msgid "OpenOffice.org Quickstart"
+msgstr "Inicio rápido de OpenOffice.org"
+
+#: src/e_mod_main.c:390
+msgid "OpenOffice.org Quickstart Configuration Updated"
+msgstr "Configuración del inicio rápido de OpenOffice.org actualizada"
+
+#: src/e_mod_main.c:432
+msgid "Settings"
+msgstr "Preferencias"
+
+#: src/e_mod_config.c:84
+msgid "General"
+msgstr "General"
+
+#: src/e_mod_config.c:86
+msgid "Use Switch 1"
+msgstr "Alternar uso 1"
+

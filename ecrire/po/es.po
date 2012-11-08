@@ -1,0 +1,128 @@
+# Spanish translation for ecrire
+# Copyright (C) YEAR Enlightenment development team
+# This file is distributed under the same license as the PACKAGE package.
+# Aníbal Garrido <khany@member.trisquel.info>, 2012.
+
+msgid ""
+msgstr ""
+"Project-Id-Version: ecrire\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-11-08 02:06+0100\n"
+"PO-Revision-Date: 2012-11-08 02:06+0100\n"
+"Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
+"Language-Team: Enlightenment Team\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/bin/ui/alerts.c:56
+msgid "<align=center>Would you like to save changes to document?<br>Any unsaved changes will be lost."
+msgstr "<align=center>Quiere guardar los cambios del documento?<br>Los cambios sin guardar se perderán."
+
+#: src/bin/ui/alerts.c:71
+#: src/bin/main.c:687
+msgid "Save"
+msgstr "Guardar"
+
+#: src/bin/ui/alerts.c:82
+msgid "Discard"
+msgstr "Descartar"
+
+#: src/bin/ui/alerts.c:88
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/bin/ui/search_dialog.c:144
+#: src/bin/main.c:705
+msgid "Find & Replace"
+msgstr "Buscar y sustituir"
+
+#: src/bin/ui/search_dialog.c:166
+msgid "Search for:"
+msgstr "Buscar por:"
+
+#: src/bin/ui/search_dialog.c:190
+msgid "Replace with:"
+msgstr "Sustituir por:"
+
+#: src/bin/ui/search_dialog.c:214
+msgid "Find"
+msgstr "Buscar"
+
+#: src/bin/ui/search_dialog.c:222
+msgid "Replace"
+msgstr "Sustituir"
+
+#: src/bin/ui/font_dialog.c:89
+msgid "Select Font"
+msgstr "Seleccione un tipo de letra"
+
+#: src/bin/ui/font_dialog.c:114
+msgid "Font size:"
+msgstr "Tamaño del tipo de letra:"
+
+#: src/bin/ui/font_dialog.c:119
+#, c-format
+msgid "%.0f pts"
+msgstr "%.0f pts"
+
+#: src/bin/ui/font_dialog.c:157
+msgid "Use Default Font:"
+msgstr "Usar el tipo de letra predefinido:"
+
+#: src/bin/ui/font_dialog.c:168
+msgid "Set"
+msgstr "Definir"
+
+#: src/bin/main.c:96
+#, c-format
+msgid "%s%s - %s"
+msgstr "%s%s - %s"
+
+#: src/bin/main.c:99
+#, c-format
+msgid "%sUntitled %d - %s"
+msgstr "%sSin título %d - %s"
+
+#: src/bin/main.c:123
+#, c-format
+msgid "Ln %d, Col %d"
+msgstr "Lín %d, Col %d"
+
+#: src/bin/main.c:684
+msgid "New"
+msgstr "Nuevo"
+
+#: src/bin/main.c:685
+msgid "Open"
+msgstr "Abrir"
+
+#: src/bin/main.c:688
+msgid "Save As"
+msgstr "Guardar como"
+
+#: src/bin/main.c:693
+msgid "Undo"
+msgstr "Deshacer"
+
+#: src/bin/main.c:695
+msgid "Redo"
+msgstr "Rehacer"
+
+#: src/bin/main.c:698
+msgid "Cut"
+msgstr "Cortar"
+
+#: src/bin/main.c:700
+msgid "Copy"
+msgstr "Copiar"
+
+#: src/bin/main.c:702
+msgid "Paste"
+msgstr "Pegar"
+
+#: src/bin/main.c:709
+msgid "Settings"
+msgstr "Preferencias"
+
