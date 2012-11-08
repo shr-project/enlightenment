@@ -236,7 +236,7 @@
 set -e
 PREFIX="/usr/local"
 PROJECTS="\
-eina eet evas evas_generic_loaders ecore embryo edje e_dbus efreet eeze e"
+eina eet PROTO/eobj evas evas_generic_loaders ecore embryo edje edbus efreet eeze e"
 SITE="svn.enlightenment.org"
 SVN="http://$SITE/svn/e/trunk"
 OPT="--prefix=$PREFIX"
