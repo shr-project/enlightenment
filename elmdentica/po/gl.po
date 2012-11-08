@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: elmdentica\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-08-30 19:32+0200\n"
-"PO-Revision-Date: 2012-09-16 11:07+0200\n"
+"PO-Revision-Date: 2012-11-08 01:52+0100\n"
 "Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
 "Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
 "Language: gl\n"
@@ -47,7 +47,7 @@ msgstr "Deixar de seguir"
 
 #: src/elmdentica.c:611
 msgid "Couldn't parse user info message..."
-msgstr "Non se puido  analizar a información de usuario na mensaxe..."
+msgstr "Non se puido  analizar a información da mensaxe de usuario..."
 
 #: src/elmdentica.c:673
 #: src/elmdentica.c:752
@@ -241,7 +241,7 @@ msgstr "Mensaxes directas"
 
 #: src/elmdentica.c:2196
 msgid "Everyone"
-msgstr "Tpdps"
+msgstr "Todos"
 
 #: src/elmdentica.c:2197
 msgid "Just me"
@@ -505,17 +505,17 @@ msgstr "Non se pode executar ecore_file_init()\n"
 #: src/settings.c:1505
 #, c-format
 msgid "Can't create preferences directories since asprintf failed\n"
-msgstr "Non se poden crear os directorios de preferencias dende que asprintf fallou\n"
+msgstr "Non se poden crear os directorios das preferencias dende que asprintf fallou\n"
 
 #: src/settings.c:1505
 #, c-format
 msgid "Can't create preferences directories since ecore_file_mkpath failed\n"
-msgstr "Non se poden crear os directorios de preferencias dende que ecore_file_mkpath fallou\n"
+msgstr "Non se poden crear os directorios das preferencias dende que ecore_file_mkpath fallou\n"
 
 #: src/settings.c:1513
 #, c-format
 msgid "Not enough memory to define conf.eet path"
-msgstr "Memoria insuficiente para definir conf.eet path"
+msgstr "Memoria insuficiente para definir a ruta de conf.eet"
 
 #: src/settings.c:1519
 #, c-format

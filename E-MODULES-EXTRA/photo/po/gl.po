@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Photo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-30 19:32+0200\n"
-"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"POT-Creation-Date: 2012-11-07 22:47+0100\n"
+"PO-Revision-Date: 2012-11-07 23:08+0100\n"
 "Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
 "Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
 "Language: gl\n"
@@ -16,9 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/photo_item.c:389
+#: src/photo_item.c:452
 #, c-format
-msgid "<hilight>File %s doesnt exists.</hilight><br><br>This file is in Photo module picture list, but it seems you removed it from the disk<br>It cant be set as background, sorry."
-msgstr "<hilight>O ficheiro %s non existe.</hilight><br><br>Este ficheiro está na lista do módulo Foto, pero parece que o eliminou do disco.<br>Non se pode establecer como fondo, sentímolo."
+msgid "<hilight>File %s doesn't exist.</hilight><br><br>This file is in the picture list, but it seems you removed<br>it from disk. It can't be set as background, sorry."
+msgstr "<hilight>O ficheiro %s non existe.</hilight><br><br>Este ficheiro está na lista de imaxes, pero parece que o eliminou do disco.<br>Non se pode establecer como fondo, sentímolo."
 
 #: src/photo_item.c:392
 #: src/photo_item.c:417
@@ -30,17 +31,12 @@ msgstr "Erro do módulo Foto"
 
 #: src/photo_item.c:413
 #, c-format
-msgid "<hilight>e17setroot needed</hilight><br><br>%s is not an edje file !<br>Photo module needs e17setroot util from e_utils package to set you're picture as backgroundPlease install it and try again"
-msgstr "<hilight>Precísase e17setroot</hilight><br><br>%s non é un ficheiro eje !<br>O módulo Foto precisa da utilidade e17setroot contida no paquete e_utils para establecer a imaxe como fondo. Por favor, intáleo e probe de novo."
-
-#: src/photo_item.c:452
-#, c-format
-msgid "<hilight>File %s doesnt exists !</hilight><br><br>This file is in Photo's module picture list, but it seems you removed it from the disk.<br>It cant be set opened in a viewer, sorry."
-msgstr "<hilight>O ficheiro %s non existe !</hilight><br><br>Este ficheiro está na lista do módulo Foto, pero parece que o eliminou do disco.<br>Non se pode abrir cun visor, sentímolo."
+msgid "<hilight>e17setroot needed</hilight><br><br>%s is not an edje file !<br>Photo module needs e17setroot util from e_utils package to set you're picture as backgroundPlease install it and try again."
+msgstr "<hilight>Precísase e17setroot</hilight><br><br>%s non é un ficheiro edje !<br>O módulo Foto precisa da utilidade e17setroot contida no paquete e_utils para establecer a imaxe como fondo. Por favor, intáleo e probe de novo."
 
 #: src/photo_item.c:472
 #, c-format
-msgid "<hilight>Viewer %s not found !</hilight><br><br>You can change the viewer for images in Photo module configuration panel (Advanced view)"
+msgid "<hilight>Viewer %s not found !</hilight><br><br>You can change the viewer for images in the Photo module configuration panel (Advanced view)"
 msgstr "<hilight>¡Non se encontrou o visor de imaxes %s!</hilight><br><br>Pode cambiar o visor de imaxes no panel de configuración do módulo Foto (Vista avanzada)."
 
 #: src/photo_config_dialog_dir.c:38
@@ -356,3 +352,11 @@ msgstr "Configuración predeterminada"
 msgid "Mouse actions"
 msgstr "Accións do rato"
 
+#~ msgid ""
+#~ "<hilight>File %s doesnt exists !</hilight><br><br>This file is in Photo's "
+#~ "module picture list, but it seems you removed it from the disk.<br>It "
+#~ "cant be set opened in a viewer, sorry."
+#~ msgstr ""
+#~ "<hilight>O ficheiro %s non existe !</hilight><br><br>Este ficheiro está "
+#~ "na lista do módulo Foto, pero parece que o eliminou do disco.<br>Non se "
+#~ "pode abrir cun visor, sentímolo."
