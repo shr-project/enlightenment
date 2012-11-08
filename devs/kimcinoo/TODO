@@ -8,4 +8,5 @@
   + panel: add access feature
   + toolbar: fix focus chain on access
   - naviframe: access enhancement
-  - clock: add access feature
+  + clock: add access feature
+  - smart activate for widget item
