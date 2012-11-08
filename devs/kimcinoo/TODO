@@ -10,3 +10,6 @@
   - naviframe: access enhancement
   + clock: add access feature
   - smart activate for widget item
+
+[e][module][access]
+  - using client message to create input window
