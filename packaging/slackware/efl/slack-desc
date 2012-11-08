@@ -9,7 +9,7 @@
 efl: 
 efl: Enlightenment Foundation libraries.
 efl: 
-efl: This currently includes: eo, eina, eet, embryo.
+efl: This currently includes: eo, eina, eet, embryo, evas.
 efl: 
 efl: website: http://enlightenment.org/
 efl: 
