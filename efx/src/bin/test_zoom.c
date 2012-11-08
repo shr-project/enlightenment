@@ -6,6 +6,11 @@
 #include <Ecore.h>
 #include <Ecore_Evas.h>
 
+#define WIDTH 450
+#define HEIGHT 450
+#define RECT_WIDTH 300
+#define RECT_HEIGHT 300
+
 static void _zoom(void *data, Efx_Map_Data *e, Evas_Object *obj);
 
 static void
@@ -60,18 +65,19 @@ main(void)
    efx_init();
    ecore_evas_init();
    eina_log_domain_level_set("efx", EINA_LOG_LEVEL_DBG);
-   ee = ecore_evas_software_x11_new(NULL, 0, 0, 0, 450, 450);
+   ee = ecore_evas_software_x11_new(NULL, 0, 0, 0, WIDTH, HEIGHT);
    ecore_evas_callback_delete_request_set(ee, _end);
    ecore_evas_title_set(ee, "zoom");
    ecore_evas_show(ee);
    e = ecore_evas_get(ee);
    r = evas_object_rectangle_add(e);
-   evas_object_resize(r, 450, 450);
+   evas_object_resize(r, WIDTH, HEIGHT);
    evas_object_show(r);
    r = evas_object_rectangle_add(e);
    evas_object_color_set(r, 255, 0, 0, 255);
-   evas_object_resize(r, 300, 300);
-   evas_object_move(r, (450 / 2) - (300 / 2), (450 / 2) - (300 / 2));
+   evas_object_resize(r, RECT_WIDTH, RECT_HEIGHT);
+   evas_object_move(r, (WIDTH / 2) - (RECT_WIDTH/ 2),
+                    (HEIGHT / 2) - (RECT_HEIGHT/ 2));
    evas_object_show(r);
    ecore_timer_add(1.0, _start, r);
    ecore_main_loop_begin();
