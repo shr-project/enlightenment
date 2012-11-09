@@ -3,8 +3,7 @@ IRC Nick:     antognolli
 Cloak:        developer/antognolli
 Name:         Rafael Antognolli
 Location:     Campinas, Brazil
-E-Mail:       -antognolli@profusion.mobi
-Contributing: Evas, Ecore, Edje, Epsilon
+E-Mail:       -antognolli@gmail.com
+Contributing: Evas, Ecore, Edje, Elementary, Emotion
 Group:        Libraries
-Platform:     Ubuntu (Linux)
-
+Platform:     Fedora (Linux)
