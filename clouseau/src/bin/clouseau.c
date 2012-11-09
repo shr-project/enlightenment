@@ -1681,13 +1681,104 @@ _ofl_bt_clicked(void *data,
    _show_gui(data, EINA_TRUE);
 }
 
+static void
+_control_buttons_create(gui_elements *gui, Evas_Object *win)
+{
+   Evas_Object *show_hidden_check, *show_clippers_check, *highlight_check;
+
+   gui->hbx = elm_box_add(gui->bx);
+   evas_object_size_hint_align_set(gui->hbx, 0.0, 0.5);
+   elm_box_horizontal_set(gui->hbx, EINA_TRUE);
+   elm_box_pack_end(gui->bx, gui->hbx);
+   elm_box_padding_set(gui->hbx, 10, 0);
+   evas_object_show(gui->hbx);
+
+   gui->bt_load = elm_button_add(gui->hbx);
+   evas_object_size_hint_align_set(gui->bt_load, 0.0, 0.3);
+   elm_box_pack_end(gui->hbx, gui->bt_load);
+   evas_object_show(gui->bt_load);
+
+   gui->dd_list = elm_hoversel_add(gui->hbx);
+   elm_hoversel_hover_parent_set(gui->dd_list, win);
+   elm_object_text_set(gui->dd_list, "SELECT APP");
+
+   evas_object_size_hint_align_set(gui->dd_list, 0.0, 0.3);
+   elm_box_pack_end(gui->hbx, gui->dd_list);
+   evas_object_show(gui->dd_list);
+
+   show_hidden_check = elm_check_add(gui->hbx);
+   elm_object_text_set(show_hidden_check, "Show Hidden");
+   elm_check_state_set(show_hidden_check, list_show_hidden);
+   elm_box_pack_end(gui->hbx, show_hidden_check);
+   evas_object_show(show_hidden_check);
+
+   show_clippers_check = elm_check_add(gui->hbx);
+   elm_object_text_set(show_clippers_check, "Show Clippers");
+   elm_check_state_set(show_clippers_check, list_show_clippers);
+   elm_box_pack_end(gui->hbx, show_clippers_check);
+   evas_object_show(show_clippers_check);
+
+   highlight_check = elm_check_add(gui->hbx);
+   elm_object_text_set(highlight_check , "Highlight");
+   elm_check_state_set(highlight_check , do_highlight);
+   elm_box_pack_end(gui->hbx, highlight_check);
+   evas_object_show(highlight_check);
+
+   evas_object_smart_callback_add(show_hidden_check, "changed",
+                                  _show_hidden_check_changed, gui);
+   evas_object_smart_callback_add(show_clippers_check, "changed",
+                                  _show_clippers_check_changed, gui);
+   evas_object_smart_callback_add(highlight_check, "changed",
+                                  _highlight_check_check_changed, gui);
+}
+
+static void
+_main_list_create(Evas_Object *panes)
+{
+   gui->gl = elm_genlist_add(panes);
+   elm_genlist_select_mode_set(gui->gl, ELM_OBJECT_SELECT_MODE_ALWAYS);
+   evas_object_size_hint_align_set(gui->gl,
+                                   EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_size_hint_weight_set(gui->gl,
+                                    EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+   elm_object_part_content_set(panes, "left", gui->gl);
+   evas_object_show(gui->gl);
+
+   itc.item_style = "default";
+   itc.func.text_get = item_text_get;
+   itc.func.content_get = item_icon_get;
+   itc.func.state_get = NULL;
+   itc.func.del = NULL;
+
+   evas_object_smart_callback_add(gui->gl,
+                                  "expand,request", gl_exp_req, gui->gl);
+   evas_object_smart_callback_add(gui->gl,
+                                  "contract,request", gl_con_req, gui->gl);
+   evas_object_smart_callback_add(gui->gl,
+                                  "expanded", gl_exp, gui->gl);
+   evas_object_smart_callback_add(gui->gl,
+                                  "contracted", gl_con, gui->gl);
+   evas_object_smart_callback_add(gui->gl,
+                                  "selected", _gl_selected, gui);
+}
+
+static void
+_property_list_create(Evas_Object *panes)
+{
+   Evas_Object *o= NULL;
+   gui->prop_list = o = clouseau_object_information_list_add(panes);
+   evas_object_size_hint_align_set(o, EVAS_HINT_FILL, EVAS_HINT_FILL);
+   evas_object_size_hint_weight_set(o, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+
+   elm_object_part_content_set(panes, "right", o);
+   evas_object_show(o);
+}
+
 #ifndef ELM_LIB_QUICKLAUNCH
 EAPI int
 elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 {  /* Create Client Window */
-   Evas_Object *win, *panes,
-               *show_hidden_check, *show_clippers_check, *highlight_check;
-
+   Evas_Object *win, *panes;
 
    /* For inwin popup */
    Evas_Object *lb, *bxx, *bt_bx, *bt_ok, *bt_cancel;
@@ -1706,102 +1797,15 @@ elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
    evas_object_size_hint_align_set(gui->bx, EVAS_HINT_FILL, EVAS_HINT_FILL);
    elm_win_resize_object_add(win, gui->bx);
 
-   /* Control buttons */
-     {
-        gui->hbx = elm_box_add(gui->bx);
-        evas_object_size_hint_align_set(gui->hbx, 0.0, 0.5);
-        elm_box_horizontal_set(gui->hbx, EINA_TRUE);
-        elm_box_pack_end(gui->bx, gui->hbx);
-        elm_box_padding_set(gui->hbx, 10, 0);
-        evas_object_show(gui->hbx);
-
-        gui->bt_load = elm_button_add(gui->hbx);
-        evas_object_size_hint_align_set(gui->bt_load, 0.0, 0.3);
-        elm_box_pack_end(gui->hbx, gui->bt_load);
-        evas_object_show(gui->bt_load);
-
-        gui->dd_list = elm_hoversel_add(gui->hbx);
-        elm_hoversel_hover_parent_set(gui->dd_list, win);
-        elm_object_text_set(gui->dd_list, "SELECT APP");
-
-        evas_object_size_hint_align_set(gui->dd_list, 0.0, 0.3);
-        elm_box_pack_end(gui->hbx, gui->dd_list);
-        evas_object_show(gui->dd_list);
-
-        show_hidden_check = elm_check_add(gui->hbx);
-        elm_object_text_set(show_hidden_check, "Show Hidden");
-        elm_check_state_set(show_hidden_check, list_show_hidden);
-        elm_box_pack_end(gui->hbx, show_hidden_check);
-        evas_object_show(show_hidden_check);
-
-        show_clippers_check = elm_check_add(gui->hbx);
-        elm_object_text_set(show_clippers_check, "Show Clippers");
-        elm_check_state_set(show_clippers_check, list_show_clippers);
-        elm_box_pack_end(gui->hbx, show_clippers_check);
-        evas_object_show(show_clippers_check);
-
-        highlight_check = elm_check_add(gui->hbx);
-        elm_object_text_set(highlight_check , "Highlight");
-        elm_check_state_set(highlight_check , do_highlight);
-        elm_box_pack_end(gui->hbx, highlight_check);
-        evas_object_show(highlight_check);
-     }
-
+   _control_buttons_create(gui, win);
    panes = elm_panes_add(gui->bx);
    evas_object_size_hint_weight_set(panes, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
    evas_object_size_hint_align_set(panes, EVAS_HINT_FILL, EVAS_HINT_FILL);
    elm_box_pack_end(gui->bx, panes);
    evas_object_show(panes);
 
-   /* The main list */
-     {
-        gui->gl = elm_genlist_add(panes);
-        elm_genlist_select_mode_set(gui->gl, ELM_OBJECT_SELECT_MODE_ALWAYS);
-        evas_object_size_hint_align_set(gui->gl,
-              EVAS_HINT_FILL, EVAS_HINT_FILL);
-        evas_object_size_hint_weight_set(gui->gl,
-              EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-        elm_object_part_content_set(panes, "left", gui->gl);
-        evas_object_show(gui->gl);
-
-        evas_object_smart_callback_add(show_hidden_check, "changed",
-              _show_hidden_check_changed, gui);
-        evas_object_smart_callback_add(show_clippers_check, "changed",
-              _show_clippers_check_changed, gui);
-        evas_object_smart_callback_add(highlight_check, "changed",
-              _highlight_check_check_changed, gui);
-
-        itc.item_style = "default";
-        itc.func.text_get = item_text_get;
-        itc.func.content_get = item_icon_get;
-        itc.func.state_get = NULL;
-        itc.func.del = NULL;
-
-        evas_object_smart_callback_add(gui->gl,
-              "expand,request", gl_exp_req, gui->gl);
-        evas_object_smart_callback_add(gui->gl,
-              "contract,request", gl_con_req, gui->gl);
-        evas_object_smart_callback_add(gui->gl,
-              "expanded", gl_exp, gui->gl);
-        evas_object_smart_callback_add(gui->gl,
-              "contracted", gl_con, gui->gl);
-        evas_object_smart_callback_add(gui->gl,
-              "selected", _gl_selected, gui);
-     }
-
-   /* Properties list */
-     {
-        Evas_Object *prop_list = NULL;
-        prop_list = clouseau_object_information_list_add(panes);
-        gui->prop_list = prop_list;
-        evas_object_size_hint_align_set(prop_list,
-              EVAS_HINT_FILL, EVAS_HINT_FILL);
-        evas_object_size_hint_weight_set(prop_list,
-              EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-
-        elm_object_part_content_set(panes, "right", prop_list);
-        evas_object_show(prop_list);
-     }
+   _main_list_create(panes);
+   _property_list_create(panes);
 
    /* START Add buttom panel */
    gui->panel = elm_panel_add(win);
