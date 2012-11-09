@@ -1679,7 +1679,7 @@ _ofl_bt_clicked(void *data,
 EAPI int
 elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 {  /* Create Client Window */
-   Evas_Object *win, *bg, *panes,
+   Evas_Object *win, *panes,
                *show_hidden_check, *show_clippers_check, *highlight_check;
 
 
@@ -1690,15 +1690,9 @@ elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 
    gui = calloc(1, sizeof(gui_elements));
 
-   gui->win = win = elm_win_add(NULL, "client", ELM_WIN_BASIC);
+   gui->win = win = elm_win_util_standard_add("client", CLIENT_NAME);
    elm_win_autodel_set(win, EINA_TRUE);
-
    _titlebar_string_set(gui, EINA_FALSE);
-
-   bg = elm_bg_add(win);
-   elm_win_resize_object_add(win, bg);
-   evas_object_size_hint_weight_set(bg, EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-   evas_object_show(bg);
 
    gui->bx = elm_box_add(win);
    evas_object_size_hint_weight_set(gui->bx,
