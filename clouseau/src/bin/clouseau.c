@@ -1246,8 +1246,7 @@ _connect_to_daemon(gui_elements *g)
 }
 
 static void
-_gl_selected(void *data EINA_UNUSED, Evas_Object *pobj EINA_UNUSED,
-      void *event_info)
+_gl_selected(void *data, Evas_Object *pobj EINA_UNUSED, void *event_info)
 {
    clouseau_object_information_list_clear();
    gui_elements *g = data;
