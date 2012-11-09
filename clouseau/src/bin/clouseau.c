@@ -43,6 +43,7 @@ struct _gui_elements
    Evas_Object *pb; /* Progress wheel shown when waiting for TREE_DATA */
    char *address;
    app_data_st *sel_app; /* Currently selected app data */
+   Elm_Object_Item *gl_it; /* Currently selected genlist item */
 };
 typedef struct _gui_elements gui_elements;
 
@@ -300,6 +301,7 @@ _set_selected_app(void *data, Evas_Object *pobj,
    app_data_st *st = data;
    elm_progressbar_pulse(gui->pb, EINA_FALSE);
    evas_object_hide(gui->pb);
+   gui->gl_it = NULL;
 
    if (gui->sel_app)
      _close_app_views(gui->sel_app->app->data, EINA_FALSE);
@@ -1248,7 +1250,6 @@ _connect_to_daemon(gui_elements *g)
 static void
 _gl_selected(void *data, Evas_Object *pobj EINA_UNUSED, void *event_info)
 {
-   clouseau_object_information_list_clear();
    gui_elements *g = data;
    Clouseau_Tree_Item *treeit = elm_object_item_data_get(event_info);
    const Elm_Object_Item *parent;
@@ -1257,7 +1258,11 @@ _gl_selected(void *data, Evas_Object *pobj EINA_UNUSED, void *event_info)
      return;
 
    /* Populate object information, then do highlight */
-   clouseau_object_information_list_populate(treeit, g->lb);
+   if (g->gl_it != event_info)
+     {
+        clouseau_object_information_list_populate(treeit, g->lb);
+        g->gl_it = event_info;
+     }
 
    if (!do_highlight)
      return;
@@ -1393,6 +1398,7 @@ _bt_clicked(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
    elm_object_text_set(obj, "Reload");
    _free_app_tree_data(g->sel_app->td);
    g->sel_app->td = NULL;
+   g->gl_it = NULL;
    _load_list(data);
 }
 
