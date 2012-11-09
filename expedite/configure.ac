@@ -189,10 +189,10 @@ AM_CONDITIONAL(BUILD_DIRECTFB, test "x$have_directfb" = "xyes")
 
 # Wayland
 
+have_wl="no"
+have_wl_egl="no"
 if test "x$want_wayland_egl" = "xyes" -o "x$want_wayland_shm" = "xyes"; then
     PKG_CHECK_MODULES([WAYLAND_CLIENT], [wayland-client], [have_wl="yes"], [have_wl="no"])
-    AM_CONDITIONAL(BUILD_WAYLAND, test "x$have_wl" = "xyes")
-    AM_CONDITIONAL(BUILD_WAYLAND_SHM, test "x$have_wl" = "xyes")
     if test "x$have_wl" = "xyes"; then
         AC_DEFINE(BUILD_WAYLAND, 1, [build wayland support])
         AC_DEFINE(BUILD_WAYLAND_SHM, 1, [build wayland SHM support])
@@ -200,12 +200,15 @@ if test "x$want_wayland_egl" = "xyes" -o "x$want_wayland_shm" = "xyes"; then
 
     if test "x$have_wl" = "xyes" -a "x$want_wayland_egl" = "xyes"; then
         PKG_CHECK_MODULES([WAYLAND_EGL], [wayland-egl], [have_wl_egl="yes"], [have_wl_egl="no"])
-        AM_CONDITIONAL(BUILD_WAYLAND_EGL, test "x$have_wl_egl" = "xyes")
         if test "x$have_wl_egl" = "xyes"; then
             AC_DEFINE(BUILD_WAYLAND_EGL, 1, [build wayland EGL support])
         fi
     fi
 fi
+
+AM_CONDITIONAL(BUILD_WAYLAND, test "x$have_wl" = "xyes")
+AM_CONDITIONAL(BUILD_WAYLAND_SHM, test "x$have_wl" = "xyes")
+AM_CONDITIONAL(BUILD_WAYLAND_EGL, test "x$have_wl_egl" = "xyes")
 
 ### Checks for header files
 
