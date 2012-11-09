@@ -615,21 +615,22 @@ clouseau_object_information_list_populate(Clouseau_Tree_Item *treeit, Evas_Objec
 
    /* Actually populate the genlist */
    {
-      Eina_List *itr;
+      Eina_List *itr, *expand_list = NULL, *l, *l_prev;
       Inf_Clouseau_Tree_Item *tit;
-      Eina_Bool first_it = EINA_TRUE;
+      Elm_Object_Item *expand_it = NULL;
 
       EINA_LIST_FOREACH(information_tree, itr, tit)
         {
            Elm_Object_Item *git;
            git = elm_genlist_item_append(prop_list, &itc, tit, NULL,
                                          ELM_GENLIST_ITEM_TREE, _gl_selected, NULL);
-           if (first_it)
-               {
-                  /* Start with all the base item expanded */
-                  elm_genlist_item_expanded_set(git, EINA_TRUE);
-                  first_it = EINA_FALSE;
-               }
+           expand_list = eina_list_append(expand_list, git);
+
+        }
+      EINA_LIST_REVERSE_FOREACH_SAFE(expand_list, l, l_prev, expand_it)
+        {
+           elm_genlist_item_expanded_set(expand_it, EINA_TRUE);
+           expand_list = eina_list_remove_list(expand_list, l);
         }
    }
 }
