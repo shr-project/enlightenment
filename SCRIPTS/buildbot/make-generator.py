@@ -316,7 +316,7 @@ for p in pkgs:
 %(name)s-test: %(compile_stamp)s
 \t$(V)echo "Testing (make %(target)s) %(name)s..."
 \t$(V)rm -f %(stamp)s
-\t%(env_export)smake $(MAKEOPTS) %(target)s -C %(compile_dir)s
+\t%(env_export)sdbus-launch make $(MAKEOPTS) %(target)s -C %(compile_dir)s
 \t$(V)mkdir -p %(stampsdir)s
 \ttouch %(stamp)s
 \t$(V)echo "Success testing (make %(target)s) %(name)s."

@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for win at Mon Nov  5 09:56:28 2012.
+# Generated for win at Fri Nov  9 13:09:36 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
@@ -154,7 +154,7 @@ efl-test: $(BUILDROOT)/efl/stamps/compile
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) check -C $(BUILDROOT)/efl/compile
+	dbus-launch make $(MAKEOPTS) check -C $(BUILDROOT)/efl/compile
 	$(V)mkdir -p $(BUILDROOT)/efl/stamps
 	touch $(BUILDROOT)/efl/stamps/test
 	$(V)echo "Success testing (make check) efl."
@@ -287,7 +287,7 @@ ecore-test: $(BUILDROOT)/ecore/stamps/compile
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) check -C $(BUILDROOT)/ecore/compile
+	dbus-launch make $(MAKEOPTS) check -C $(BUILDROOT)/ecore/compile
 	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
 	touch $(BUILDROOT)/ecore/stamps/test
 	$(V)echo "Success testing (make check) ecore."
@@ -523,7 +523,7 @@ edje-test: $(BUILDROOT)/edje/stamps/compile
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/edje/compile
+	dbus-launch make $(MAKEOPTS) coverage -C $(BUILDROOT)/edje/compile
 	$(V)mkdir -p $(BUILDROOT)/edje/stamps
 	touch $(BUILDROOT)/edje/stamps/test
 	$(V)echo "Success testing (make coverage) edje."
@@ -767,7 +767,7 @@ efreet-test: $(BUILDROOT)/efreet/stamps/compile
 	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
 	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) coverage -C $(BUILDROOT)/efreet/compile
+	dbus-launch make $(MAKEOPTS) coverage -C $(BUILDROOT)/efreet/compile
 	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
 	touch $(BUILDROOT)/efreet/stamps/test
 	$(V)echo "Success testing (make coverage) efreet."
