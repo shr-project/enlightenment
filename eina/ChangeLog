@@ -371,3 +371,7 @@
 
 	* Add eina_thread API.
 
+2012-11-10  Vincent Torri
+
+        * Fix build on Solaris
+
