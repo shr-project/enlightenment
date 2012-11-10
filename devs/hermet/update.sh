@@ -6,7 +6,7 @@ svn update
 
 CFLAGS="-O0 -g -Wall -j 8"
 
-for e in eina eet evas_generic_loaders evas ecore eeze efreet embryo edje e_dbus eio emotion ethumb elementary e expedite clouseau terminology ephoto
+for e in efl evas_generic_loaders evas ecore eeze efreet edje e_dbus eio emotion ethumb elementary e expedite clouseau terminology ephoto
 do 
 	if [ -e $e ] && [ -d $e ]
 	then 
@@ -16,7 +16,7 @@ do
 		make clean
 		make distclean
 		CFLAGS=${CFLGAS} ./autogen.sh
-		CFLAGS=${CFLAGS} make 2>&1 | tee ../build_"$e".log && sudo make install 2>&1 | tee ../build_"$e".log -a && sudo ldconfig
+		make 2>&1 | tee ../build_"$e".log && sudo make install && sudo ldconfig 2>&1 | tee ../build_"$e".log -a
 		cd ..
 		echo End Done
 	fi 

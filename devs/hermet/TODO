@@ -10,7 +10,6 @@ cutout_rect - static?! nowhere free it actually.
 textblock - check the size_formatted_get value when the text has the spaces
 image - image doesn't rendered when load_size_set is called again.
 event - in/out event call
-edc - check one horizontal line drawing
 
 <Elementary>
 naviframe - need to block the style set while transiton is going on
@@ -26,9 +25,11 @@ conformant - how to skip the calc the size if the window is in background.
 general - elm_policy_set/elm_policy_get Use Elm_Policy parameter.
 layout - signal_callback_add/del,call... not for common APIs?
 transit - consider mix the separate evas_map effects
+transit - have the group for image animation
 popup - scroll freeze & hold?
 popup - each item heights are not same consistently.
 win - fix size API?
+font - entry font style doesn't reset in elementary_config
 
 <Ecore>
 Ecore_X - use Ecore_X_Error_Code for ecore_x_error_code_get() (pending to Ecore 2.0)
