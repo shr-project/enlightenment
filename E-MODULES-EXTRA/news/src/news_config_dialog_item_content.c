@@ -255,7 +255,7 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    o = e_widget_list_add(evas, 0, 1);
 
-   of = e_widget_frametable_add(evas, D_("Avalaible Feeds"), 0);
+   of = e_widget_frametable_add(evas, D_("Available Feeds"), 0);
 
    ob = e_widget_ilist_add(evas, 16, 16, NULL);
    e_widget_ilist_multi_select_set(ob, 1);
