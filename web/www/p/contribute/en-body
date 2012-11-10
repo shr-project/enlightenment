@@ -173,6 +173,7 @@
    <li>libxtst dev headers</li>
    <li>libxcb dev headers</li>
    <li>libxcb-shape dev headers</li>
+   <li>libxcb-keysyms1-dev</li>
   </ul>
  </p>
  <p>
