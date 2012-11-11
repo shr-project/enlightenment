@@ -61,14 +61,6 @@ struct _ecore_list {
 				 * list of current node */
 };
 
-/* Adding functions */
-static int          _ecore_list_insert(Ecore_List * list,
-				       Ecore_List_Node * node);
-static int          _ecore_list_append_0(Ecore_List * list,
-					 Ecore_List_Node * node);
-static int          _ecore_list_prepend_0(Ecore_List * list,
-					  Ecore_List_Node * node);
-
 /* Creating and destroying list nodes */
 static Ecore_List_Node *_ecore_list_node_new(void);
 static int          _ecore_list_node_destroy(Ecore_List_Node * _e_node,
@@ -136,6 +128,13 @@ ecore_list_free_cb_set(Ecore_List * list, Ecore_Free_Cb free_func)
    return TRUE;
 }
 
+static int
+_ecore_list_empty_is(Ecore_List * list)
+{
+   return (list && list->nodes) ? FALSE : TRUE;
+}
+
+#if 0				/* Unused */
 /**
  * Checks the list for any nodes.
  * @param  list  The list to check for nodes
@@ -144,8 +143,9 @@ ecore_list_free_cb_set(Ecore_List * list, Ecore_Free_Cb free_func)
 int
 ecore_list_empty_is(Ecore_List * list)
 {
-   return (list && list->nodes) ? FALSE : TRUE;
+   return _ecore_list_empty_is(list);
 }
+#endif
 
 /**
  * Returns the number of the current node.
@@ -175,27 +175,6 @@ ecore_list_count(Ecore_List * list)
  * Functions that are used to add nodes to an Ecore_List.
  */
 
-/**
- * Append data to the list.
- * @param   list The list.
- * @param   data The data to append.
- * @return  @c FALSE if an error occurs, @c TRUE if appended successfully
- * @ingroup Ecore_Data_List_Add_Item_Group
- */
-int
-ecore_list_append(Ecore_List * list, void *data)
-{
-   int                 ret;
-   Ecore_List_Node    *node;
-
-   node = _ecore_list_node_new();
-   node->data = data;
-
-   ret = _ecore_list_append_0(list, node);
-
-   return ret;
-}
-
 /* For adding items to the end of the list */
 static int
 _ecore_list_append_0(Ecore_List * list, Ecore_List_Node * end)
@@ -221,14 +200,14 @@ _ecore_list_append_0(Ecore_List * list, Ecore_List_Node * end)
 }
 
 /**
- * Prepend data to the beginning of the list.
- * @param  list The list.
- * @param  data The data to prepend.
- * @return @c FALSE if an error occurs, @c TRUE if prepended successfully.
+ * Append data to the list.
+ * @param   list The list.
+ * @param   data The data to append.
+ * @return  @c FALSE if an error occurs, @c TRUE if appended successfully
  * @ingroup Ecore_Data_List_Add_Item_Group
  */
 int
-ecore_list_prepend(Ecore_List * list, void *data)
+ecore_list_append(Ecore_List * list, void *data)
 {
    int                 ret;
    Ecore_List_Node    *node;
@@ -236,7 +215,7 @@ ecore_list_prepend(Ecore_List * list, void *data)
    node = _ecore_list_node_new();
    node->data = data;
 
-   ret = _ecore_list_prepend_0(list, node);
+   ret = _ecore_list_append_0(list, node);
 
    return ret;
 }
@@ -261,14 +240,14 @@ _ecore_list_prepend_0(Ecore_List * list, Ecore_List_Node * start)
 }
 
 /**
- * Insert data in front of the current point in the list.
- * @param   list The list to hold the inserted @p data.
- * @param   data The data to insert into @p list.
- * @return  @c FALSE if there is an error, @c TRUE on success
+ * Prepend data to the beginning of the list.
+ * @param  list The list.
+ * @param  data The data to prepend.
+ * @return @c FALSE if an error occurs, @c TRUE if prepended successfully.
  * @ingroup Ecore_Data_List_Add_Item_Group
  */
 int
-ecore_list_insert(Ecore_List * list, void *data)
+ecore_list_prepend(Ecore_List * list, void *data)
 {
    int                 ret;
    Ecore_List_Node    *node;
@@ -276,11 +255,12 @@ ecore_list_insert(Ecore_List * list, void *data)
    node = _ecore_list_node_new();
    node->data = data;
 
-   ret = _ecore_list_insert(list, node);
+   ret = _ecore_list_prepend_0(list, node);
 
    return ret;
 }
 
+#if 0				/* Unused */
 /* For adding items in front of the current position in the list */
 static int
 _ecore_list_insert(Ecore_List * list, Ecore_List_Node * new_node)
@@ -319,6 +299,28 @@ _ecore_list_insert(Ecore_List * list, Ecore_List_Node * new_node)
 }
 
 /**
+ * Insert data in front of the current point in the list.
+ * @param   list The list to hold the inserted @p data.
+ * @param   data The data to insert into @p list.
+ * @return  @c FALSE if there is an error, @c TRUE on success
+ * @ingroup Ecore_Data_List_Add_Item_Group
+ */
+int
+ecore_list_insert(Ecore_List * list, void *data)
+{
+   int                 ret;
+   Ecore_List_Node    *node;
+
+   node = _ecore_list_node_new();
+   node->data = data;
+
+   ret = _ecore_list_insert(list, node);
+
+   return ret;
+}
+#endif
+
+/**
  * @defgroup Ecore_Data_List_Remove_Item_Group List Item Removing Functions
  *
  * Functions that remove nodes from an Ecore_List.
@@ -336,7 +338,7 @@ ecore_list_remove(Ecore_List * list)
    void               *ret;
    Ecore_List_Node    *old;
 
-   if (ecore_list_empty_is(list))
+   if (_ecore_list_empty_is(list))
       return NULL;
 
    if (!list->current)
@@ -365,6 +367,7 @@ ecore_list_remove(Ecore_List * list)
    return ret;
 }
 
+#if 0				/* Unused */
 /**
  * Remove and free the data in lists current position.
  * @param   list The list to remove and free the current item.
@@ -385,6 +388,7 @@ ecore_list_remove_destroy(Ecore_List * list)
 
    return TRUE;
 }
+#endif
 
 /**
  * Remove the first item from the list.
@@ -399,7 +403,7 @@ ecore_list_first_remove(Ecore_List * list)
    void               *ret;
    Ecore_List_Node    *old;
 
-   if (ecore_list_empty_is(list))
+   if (_ecore_list_empty_is(list))
       return NULL;
 
    old = list->first;
@@ -435,7 +439,7 @@ ecore_list_last_remove(Ecore_List * list)
    void               *ret;
    Ecore_List_Node    *old, *prev;
 
-   if (ecore_list_empty_is(list))
+   if (_ecore_list_empty_is(list))
       return NULL;
 
    old = list->last;
@@ -478,7 +482,7 @@ ecore_list_index_goto(Ecore_List * list, int indx)
 {
    int                 i;
 
-   if (ecore_list_empty_is(list))
+   if (_ecore_list_empty_is(list))
       return NULL;
 
    if (indx > ecore_list_count(list) || indx < 0)
@@ -557,6 +561,7 @@ ecore_list_first_goto(Ecore_List * list)
    return list->current->data;
 }
 
+#if 0				/* Unused */
 /**
  * Make the current item the last item in the list.
  * @param   list The list.
@@ -574,7 +579,9 @@ ecore_list_last_goto(Ecore_List * list)
 
    return list->current->data;
 }
+#endif
 
+#if 0				/* Unused */
 /**
  * Retrieve the data pointed to by the current item in @p list.
  * @param  list The list.
@@ -585,6 +592,7 @@ ecore_list_current(Ecore_List * list)
 {
    return (list && list->current) ? list->current->data : NULL;
 }
+#endif
 
 /**
  * Retrieve the data pointed to by the current item, and make the next item
@@ -613,6 +621,7 @@ ecore_list_next(Ecore_List * list)
    return data;
 }
 
+#if 0				/* Unused */
 /**
  * Remove all nodes from @p list.
  * @param  list The list.
@@ -628,6 +637,7 @@ ecore_list_clear(Ecore_List * list)
 
    return TRUE;
 }
+#endif
 
 /**
  * Execute function for each node in @p list.
