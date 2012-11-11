@@ -170,10 +170,10 @@ ecore_list_count(Ecore_List * list)
 }
 
 /**
-@defgroup Ecore_Data_List_Add_Item_Group List Item Adding Functions
-
-Functions that are used to add nodes to an Ecore_List.
-*/
+ * @defgroup Ecore_Data_List_Add_Item_Group List Item Adding Functions
+ *
+ * Functions that are used to add nodes to an Ecore_List.
+ */
 
 /**
  * Append data to the list.
@@ -319,10 +319,10 @@ _ecore_list_insert(Ecore_List * list, Ecore_List_Node * new_node)
 }
 
 /**
-@defgroup Ecore_Data_List_Remove_Item_Group List Item Removing Functions
-
-Functions that remove nodes from an Ecore_List.
-*/
+ * @defgroup Ecore_Data_List_Remove_Item_Group List Item Removing Functions
+ *
+ * Functions that remove nodes from an Ecore_List.
+ */
 
 /**
  * Remove the current item from the list.
@@ -461,10 +461,10 @@ ecore_list_last_remove(Ecore_List * list)
 }
 
 /**
-@defgroup Ecore_Data_List_Traverse_Group List Traversal Functions
-
-Functions that can be used to traverse an Ecore_List.
-*/
+ * @defgroup Ecore_Data_List_Traverse_Group List Traversal Functions
+ *
+ * Functions that can be used to traverse an Ecore_List.
+ */
 
 /**
  * Make the current item the item with the given index number.
@@ -680,11 +680,11 @@ ecore_list_find(Ecore_List * list, Ecore_Compare_Cb function,
 }
 
 /**
-@defgroup Ecore_Data_List_Node_Group List Node Functions
-
-Functions that are used in the creation, maintenance and destruction of
-Ecore_List nodes.
-*/
+ * @defgroup Ecore_Data_List_Node_Group List Node Functions
+ *
+ * Functions that are used in the creation, maintenance and destruction of
+ * Ecore_List nodes.
+ */
 
 /**
  * Allocates and initializes a new list node.
