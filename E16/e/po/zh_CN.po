@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e16\n"
 "Report-Msgid-Bugs-To: enlightenment-intl@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-22 07:40+0000\n"
+"POT-Creation-Date: 2012-10-24 18:21+0200\n"
 "PO-Revision-Date: 2010-05-09 01:20+0000\n"
 "Last-Translator: luojie-dune <Unknown>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
@@ -403,134 +403,134 @@ msgstr ""
 msgid "Enlightenment Starting..."
 msgstr "Enlightenment 启动中..."
 
-#: src/container.c:1187
+#: src/container.c:1186
 msgid "Settings..."
 msgstr "设置..."
 
-#: src/container.c:1191 src/dialog.c:703 src/pager.c:1019 config/strings.c:30
+#: src/container.c:1190 src/dialog.c:703 src/pager.c:1024 config/strings.c:30
 #: config/strings.c:122
 msgid "Close"
 msgstr "关闭"
 
-#: src/container.c:1196 config/strings.c:83
+#: src/container.c:1195 config/strings.c:83
 msgid "Create New Iconbox"
 msgstr "创建新图标架"
 
-#: src/container.c:1507 src/container.c:1583 src/menus.c:1941
+#: src/container.c:1506 src/container.c:1582 src/menus.c:1941
 #, c-format
 msgid "Icon size: %2d"
 msgstr "图标尺寸：%2d"
 
-#: src/container.c:1547
+#: src/container.c:1546
 msgid "Transparent background"
 msgstr "透明背景"
 
-#: src/container.c:1551
+#: src/container.c:1550
 msgid "Hide inner border"
 msgstr "隐藏内部边框"
 
-#: src/container.c:1555
+#: src/container.c:1554
 msgid "Draw base image behind Icons"
 msgstr "在图标后面绘制基线"
 
-#: src/container.c:1559
+#: src/container.c:1558
 msgid "Hide scrollbar when not needed"
 msgstr "不需要时隐藏滚动栏"
 
-#: src/container.c:1563
+#: src/container.c:1562
 msgid "Automatically resize to fit Icons"
 msgstr "自动调整尺寸以适应图标"
 
-#: src/container.c:1570
+#: src/container.c:1569
 msgid "Alignment of anchoring when automatically resizing:"
 msgstr "自动恢复窗口尺寸时的对齐方式"
 
-#: src/container.c:1601
+#: src/container.c:1600
 msgid "Orientation:"
 msgstr "方向："
 
-#: src/container.c:1604
+#: src/container.c:1603
 msgid "Horizontal"
 msgstr "水平"
 
-#: src/container.c:1609
+#: src/container.c:1608
 msgid "Vertical"
 msgstr "垂直"
 
-#: src/container.c:1620
+#: src/container.c:1619
 msgid "Scrollbar side:"
 msgstr "滚动条："
 
-#: src/container.c:1623
+#: src/container.c:1622
 msgid "Left / Top"
 msgstr "左侧/顶部"
 
-#: src/container.c:1628
+#: src/container.c:1627
 msgid "Right / Bottom"
 msgstr "右侧/底部"
 
-#: src/container.c:1639
+#: src/container.c:1638
 msgid "Scrollbar arrows:"
 msgstr "滚动条箭头："
 
-#: src/container.c:1642
+#: src/container.c:1641
 msgid "Start"
 msgstr "开始"
 
-#: src/container.c:1647
+#: src/container.c:1646
 msgid "Both ends"
 msgstr "两端"
 
-#: src/container.c:1652
+#: src/container.c:1651
 msgid "End"
 msgstr "结束"
 
-#: src/container.c:1657 src/focus.c:988
+#: src/container.c:1656 src/focus.c:990
 msgid "None"
 msgstr "无"
 
-#: src/container.c:1667
+#: src/container.c:1666
 msgid "Show icon names"
 msgstr "显示图标名称"
 
-#: src/container.c:1676
+#: src/container.c:1675
 msgid "Animation mode:"
 msgstr "动画模式："
 
-#: src/container.c:1679 src/desktops.c:2620
+#: src/container.c:1678 src/desktops.c:2620
 msgid "Off"
 msgstr "关闭"
 
-#: src/container.c:1684
+#: src/container.c:1683
 msgid "Whirl"
 msgstr "回旋"
 
-#: src/container.c:1689 src/settings.c:131 src/settings.c:136
+#: src/container.c:1688 src/settings.c:131 src/settings.c:136
 #: src/settings.c:437
 msgid "Box"
 msgstr "盒子"
 
-#: src/container.c:1697
+#: src/container.c:1696
 msgid "Animation speed:"
 msgstr "动画速度："
 
-#: src/container.c:1712
+#: src/container.c:1711
 msgid "Icon image display policy (if one operation fails, try the next):"
 msgstr "图标图像显示策略(如果有操作失败，则尝试下一个)："
 
-#: src/container.c:1717
+#: src/container.c:1716
 msgid "Snapshot Windows, Use application icon, Use Enlightenment Icon"
 msgstr "抓图窗口，使用应用程序图标，使用 Enlightenment 图标"
 
-#: src/container.c:1724
+#: src/container.c:1723
 msgid "Use application icon, Use Enlightenment Icon, Snapshot Window"
 msgstr "使用应用程序图标，使用 Enlightenment 图标，抓图窗口"
 
-#: src/container.c:1729
+#: src/container.c:1728
 msgid "Use Enlightenment Icon, Snapshot Window"
 msgstr "使用 Enlightenment 图标，抓图窗口"
 
-#: src/container.c:1742
+#: src/container.c:1741
 msgid ""
 "Enlightenment Iconbox\n"
 "Settings Dialog"
@@ -624,11 +624,11 @@ msgstr "顶部"
 msgid "Bottom"
 msgstr "底部"
 
-#: src/desktops.c:2454 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
+#: src/desktops.c:2454 src/pager.c:1926 src/pager.c:1951 src/pager.c:1976
 msgid "Left"
 msgstr "左键"
 
-#: src/desktops.c:2460 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
+#: src/desktops.c:2460 src/pager.c:1938 src/pager.c:1963 src/pager.c:1988
 msgid "Right"
 msgstr "右键"
 
@@ -726,116 +726,116 @@ msgstr ""
 "\n"
 "您的 Xserver 设置出错了。\n"
 
-#: src/focus.c:829
+#: src/focus.c:831
 msgid "Focus follows pointer"
 msgstr "跟随指针聚焦"
 
-#: src/focus.c:835
+#: src/focus.c:837
 msgid "Focus follows pointer sloppily"
 msgstr "跟随指针聚焦——拖沓"
 
-#: src/focus.c:841
+#: src/focus.c:843
 msgid "Focus follows mouse clicks"
 msgstr "跟随鼠标点击聚焦"
 
-#: src/focus.c:851
+#: src/focus.c:853
 msgid "Clicking in a window always raises it"
 msgstr "单击窗口时始终升起窗口"
 
-#: src/focus.c:859
+#: src/focus.c:861
 msgid "All new windows first get the focus"
 msgstr "所有新窗口先得到焦点"
 
-#: src/focus.c:866
+#: src/focus.c:868
 msgid "New windows get the focus if their window group is focused"
 msgstr ""
 
-#: src/focus.c:871
+#: src/focus.c:873
 msgid "Only new dialog windows get the focus"
 msgstr "仅新对话框窗口获得焦点"
 
-#: src/focus.c:878
+#: src/focus.c:880
 msgid "Only new dialogs whose owner is focused get the focus"
 msgstr "仅仅有用户关注的新对话框获得聚焦"
 
-#: src/focus.c:883
+#: src/focus.c:885
 msgid "Raise windows while switching focus"
 msgstr "切换焦点时升起窗口"
 
-#: src/focus.c:889
+#: src/focus.c:891
 msgid "Send mouse pointer to window while switching focus"
 msgstr "转换窗口时发送光标"
 
-#: src/focus.c:895
+#: src/focus.c:897
 msgid "Always send mouse pointer to window on focus switch"
 msgstr "聚焦转移后把光标送到新窗口。"
 
-#: src/focus.c:903
+#: src/focus.c:905
 msgid "Raise windows automatically"
 msgstr "自动提升窗口"
 
-#: src/focus.c:909
+#: src/focus.c:911
 msgid "Autoraise delay:"
 msgstr "自动提升延迟："
 
-#: src/focus.c:922
+#: src/focus.c:924
 msgid "Display and use focus list"
 msgstr "显示并使用焦点列表"
 
-#: src/focus.c:927
+#: src/focus.c:929
 msgid "Include sticky windows in focus list"
 msgstr "聚焦列表包括所有固定窗口"
 
-#: src/focus.c:932
+#: src/focus.c:934
 msgid "Include shaded windows in focus list"
 msgstr "聚焦列表包括所有卷起的窗口"
 
-#: src/focus.c:937
+#: src/focus.c:939
 msgid "Include iconified windows in focus list"
 msgstr "在聚焦列表中包含图标化窗口"
 
-#: src/focus.c:942
+#: src/focus.c:944
 msgid "Include windows on other desks in focus list"
 msgstr "聚焦列表包含位于其他桌面的窗口"
 
-#: src/focus.c:947
+#: src/focus.c:949
 msgid "Focus windows while switching"
 msgstr "切换时聚焦窗口"
 
-#: src/focus.c:952
+#: src/focus.c:954
 #, fuzzy
 msgid "Outline windows while switching"
 msgstr "切换时聚焦窗口"
 
-#: src/focus.c:957
+#: src/focus.c:959
 msgid "Raise windows after focus switch"
 msgstr "聚焦转移后提升窗口"
 
-#: src/focus.c:962
+#: src/focus.c:964
 msgid "Send mouse pointer to window after focus switch"
 msgstr "聚焦转移后发送光标到窗口"
 
-#: src/focus.c:972
+#: src/focus.c:974
 msgid "Focuslist image display policy (if one operation fails, try the next):"
 msgstr "聚焦图片显示策略（加入一个进程出错，将尝试下一个）："
 
-#: src/focus.c:976
+#: src/focus.c:978
 msgid "First E Icon, then App Icon"
 msgstr "首先E图标，然后应用程序图标"
 
-#: src/focus.c:982
+#: src/focus.c:984
 msgid "First App Icon, then E Icon"
 msgstr "首先应用程序图标，然后E图标"
 
-#: src/focus.c:996
+#: src/focus.c:998
 msgid "Focus"
 msgstr "焦点"
 
-#: src/focus.c:997
+#: src/focus.c:999
 msgid "Focus Settings"
 msgstr "焦点设置"
 
-#: src/focus.c:1000
+#: src/focus.c:1002
 msgid ""
 "Enlightenment Focus\n"
 "Settings Dialog"
@@ -1078,28 +1078,28 @@ msgstr "图标架选项"
 msgid "Iconbox Settings"
 msgstr "图标架设置"
 
-#: src/ipc.c:195 src/ipc.c:1467 src/ipc.c:1474 src/theme.c:379
+#: src/ipc.c:195 src/ipc.c:1466 src/ipc.c:1473 src/theme.c:379
 msgid "Message"
 msgstr "消息"
 
-#: src/ipc.c:1467 src/ipc.c:1474
+#: src/ipc.c:1466 src/ipc.c:1473
 #, c-format
 msgid "e16 was built without %s support"
 msgstr "e16 构建无 %s 支持"
 
-#: src/ipc.c:1468
+#: src/ipc.c:1467
 msgid "composite"
 msgstr "composite"
 
-#: src/ipc.c:1475
+#: src/ipc.c:1474
 msgid "sound"
 msgstr "声音"
 
-#: src/ipc.c:1818
+#: src/ipc.c:1817
 msgid "Enlightenment IPC Commands Help\n"
 msgstr "Enlightenment IPC 命令帮助\n"
 
-#: src/ipc.c:1822
+#: src/ipc.c:1821
 msgid ""
 "Use \"help all\" for descriptions of each command\n"
 "Use \"help <command>\" for an individual description\n"
@@ -1109,19 +1109,19 @@ msgstr ""
 "使用 \"help <command>\" 获取单个命令描述\n"
 "\n"
 
-#: src/ipc.c:1824 src/ipc.c:1844 src/ipc.c:1856
+#: src/ipc.c:1823 src/ipc.c:1843 src/ipc.c:1855
 msgid "Commands currently available:\n"
 msgstr "当前可用命令：\n"
 
-#: src/ipc.c:1842
+#: src/ipc.c:1841
 msgid "Use \"help full\" for full descriptions of each command\n"
 msgstr "使用 \"help all\" 获取所有命令描述\n"
 
-#: src/ipc.c:1843
+#: src/ipc.c:1842
 msgid "Use \"help <command>\" for an individual description\n"
 msgstr "使用 \"help <command>\" 获取描述信息\n"
 
-#: src/ipc.c:1845 src/ipc.c:1857
+#: src/ipc.c:1844 src/ipc.c:1856
 msgid "         <command>     : <description>\n"
 msgstr "         <command>     ：<description>\n"
 
@@ -1290,123 +1290,123 @@ msgstr ""
 "Enlightenment 选择性透明\n"
 "设置对话框"
 
-#: src/pager.c:1008 config/strings.c:49 config/strings.c:121
+#: src/pager.c:1013 config/strings.c:49 config/strings.c:121
 msgid "Window Options"
 msgstr "窗口选项"
 
-#: src/pager.c:1015 config/strings.c:51 config/strings.c:124
+#: src/pager.c:1020 config/strings.c:51 config/strings.c:124
 msgid "Iconify"
 msgstr "图标化"
 
-#: src/pager.c:1023 config/strings.c:123
+#: src/pager.c:1028 config/strings.c:123
 msgid "Annihilate"
 msgstr "歼灭"
 
-#: src/pager.c:1027
+#: src/pager.c:1032
 msgid "Stick / Unstick"
 msgstr "固定/解除固定"
 
-#: src/pager.c:1034
+#: src/pager.c:1039
 msgid "Desktop Options"
 msgstr "桌面选项"
 
-#: src/pager.c:1040
+#: src/pager.c:1045
 msgid "Pager Settings..."
 msgstr "分页器设置..."
 
-#: src/pager.c:1045
+#: src/pager.c:1050
 msgid "Snapshotting Off"
 msgstr "关闭实时快照"
 
-#: src/pager.c:1049
+#: src/pager.c:1054
 msgid "High Quality Off"
 msgstr "关闭高质量"
 
-#: src/pager.c:1051
+#: src/pager.c:1056
 msgid "High Quality On"
 msgstr "开启高质量"
 
-#: src/pager.c:1056
+#: src/pager.c:1061
 msgid "Snapshotting On"
 msgstr "开启实时快照"
 
-#: src/pager.c:1060
+#: src/pager.c:1065
 msgid "Zoom Off"
 msgstr "关闭缩放"
 
-#: src/pager.c:1062
+#: src/pager.c:1067
 msgid "Zoom On"
 msgstr "开启缩放"
 
-#: src/pager.c:1806 src/pager.c:1901
+#: src/pager.c:1811 src/pager.c:1906
 msgid "Pager scanning speed:"
 msgstr "分页器扫描速度："
 
-#: src/pager.c:1807 src/pager.c:1902
+#: src/pager.c:1812 src/pager.c:1907
 msgid "lines per second"
 msgstr "每秒行数"
 
-#: src/pager.c:1840
+#: src/pager.c:1845
 msgid "Enable pager display"
 msgstr "启用分页器显示"
 
-#: src/pager.c:1850
+#: src/pager.c:1855
 msgid "Pager Mode:"
 msgstr "分页器模式："
 
-#: src/pager.c:1854
+#: src/pager.c:1859
 msgid "Simple"
 msgstr "简单"
 
-#: src/pager.c:1860
+#: src/pager.c:1865
 msgid "Make miniature snapshots of the screen"
 msgstr "显示屏幕微缩快照"
 
-#: src/pager.c:1867
+#: src/pager.c:1872
 msgid "Live Update"
 msgstr "实时更新"
 
-#: src/pager.c:1878
+#: src/pager.c:1883
 msgid "Smooth high quality snapshots in snapshot mode"
 msgstr "平滑高质量快照"
 
-#: src/pager.c:1883
+#: src/pager.c:1888
 msgid "Zoom in on pager windows when mouse is over them"
 msgstr "光标接触激活分页器中窗口的缩放"
 
-#: src/pager.c:1889
+#: src/pager.c:1894
 msgid "Pop up window title when mouse is over the window"
 msgstr "光标接触窗口弹出标题"
 
-#: src/pager.c:1894
+#: src/pager.c:1899
 msgid "Continuously scan screen to update pager"
 msgstr "连续扫描屏幕更新分页器"
 
-#: src/pager.c:1917
+#: src/pager.c:1922
 msgid "Mouse button to select and drag windows:"
 msgstr "选择和拖动窗口的鼠标按钮："
 
-#: src/pager.c:1927 src/pager.c:1952 src/pager.c:1977
+#: src/pager.c:1932 src/pager.c:1957 src/pager.c:1982
 msgid "Middle"
 msgstr "中键"
 
-#: src/pager.c:1942
+#: src/pager.c:1947
 msgid "Mouse button to select desktops:"
 msgstr "选择桌面的鼠标按钮："
 
-#: src/pager.c:1967
+#: src/pager.c:1972
 msgid "Mouse button to display pager menu:"
 msgstr "显示分页器菜单的鼠标按钮："
 
-#: src/pager.c:1991
+#: src/pager.c:1996
 msgid "Pagers"
 msgstr "分页器"
 
-#: src/pager.c:1992
+#: src/pager.c:1997
 msgid "Pager Settings"
 msgstr "分页器设置"
 
-#: src/pager.c:1995
+#: src/pager.c:2000
 msgid ""
 "Enlightenment Desktop & Area\n"
 "Pager Settings Dialog"
@@ -2078,27 +2078,27 @@ msgstr ""
 "Enlightenment 主题\n"
 "设置对话框"
 
-#: src/tooltips.c:851
+#: src/tooltips.c:850
 msgid "Display Tooltips"
 msgstr "显示工具条提示"
 
-#: src/tooltips.c:856
+#: src/tooltips.c:855
 msgid "Display Root Window Tips"
 msgstr "显示根窗口提示"
 
-#: src/tooltips.c:861
+#: src/tooltips.c:860
 msgid "Tooltip Delay:"
 msgstr "工具条提示延迟："
 
-#: src/tooltips.c:872
+#: src/tooltips.c:871
 msgid "Tooltips"
 msgstr "工具条提示"
 
-#: src/tooltips.c:873
+#: src/tooltips.c:872
 msgid "Tooltip Settings"
 msgstr "工具条提示设置"
 
-#: src/tooltips.c:876
+#: src/tooltips.c:875
 msgid ""
 "Enlightenment Tooltip\n"
 "Settings Dialog"

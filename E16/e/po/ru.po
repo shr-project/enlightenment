@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e16\n"
 "Report-Msgid-Bugs-To: enlightenment-intl@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-09-22 07:40+0000\n"
+"POT-Creation-Date: 2012-10-24 18:21+0200\n"
 "PO-Revision-Date: 2010-05-09 01:23+0000\n"
 "Last-Translator: sda00 <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -418,135 +418,135 @@ msgstr ""
 msgid "Enlightenment Starting..."
 msgstr "Запуск Enlightenment..."
 
-#: src/container.c:1187
+#: src/container.c:1186
 msgid "Settings..."
 msgstr "Настройки..."
 
-#: src/container.c:1191 src/dialog.c:703 src/pager.c:1019 config/strings.c:30
+#: src/container.c:1190 src/dialog.c:703 src/pager.c:1024 config/strings.c:30
 #: config/strings.c:122
 msgid "Close"
 msgstr "Закрыть"
 
-#: src/container.c:1196 config/strings.c:83
+#: src/container.c:1195 config/strings.c:83
 msgid "Create New Iconbox"
 msgstr "Сделать новый Iconbox"
 
-#: src/container.c:1507 src/container.c:1583 src/menus.c:1941
+#: src/container.c:1506 src/container.c:1582 src/menus.c:1941
 #, c-format
 msgid "Icon size: %2d"
 msgstr "Размер пиктограммы: %2d"
 
-#: src/container.c:1547
+#: src/container.c:1546
 msgid "Transparent background"
 msgstr "Прозрачный фон"
 
-#: src/container.c:1551
+#: src/container.c:1550
 msgid "Hide inner border"
 msgstr "Показать/спрятать эту группу"
 
-#: src/container.c:1555
+#: src/container.c:1554
 msgid "Draw base image behind Icons"
 msgstr "Рисовать основной фон под пиктограммами"
 
-#: src/container.c:1559
+#: src/container.c:1558
 msgid "Hide scrollbar when not needed"
 msgstr "Прятать полосу прокрутки, когда она не нужна"
 
-#: src/container.c:1563
+#: src/container.c:1562
 msgid "Automatically resize to fit Icons"
 msgstr "Автоматически менять размер по количеству пиктограмм"
 
-#: src/container.c:1570
+#: src/container.c:1569
 msgid "Alignment of anchoring when automatically resizing:"
 msgstr "Выравнивание при автоматическом изменении размера"
 
-#: src/container.c:1601
+#: src/container.c:1600
 msgid "Orientation:"
 msgstr "Ориентация:"
 
-#: src/container.c:1604
+#: src/container.c:1603
 msgid "Horizontal"
 msgstr "Горизонтальная"
 
-#: src/container.c:1609
+#: src/container.c:1608
 msgid "Vertical"
 msgstr "Вертикальная"
 
-#: src/container.c:1620
+#: src/container.c:1619
 msgid "Scrollbar side:"
 msgstr "Полоса прокрутки:"
 
-#: src/container.c:1623
+#: src/container.c:1622
 msgid "Left / Top"
 msgstr "Слева / вверху"
 
-#: src/container.c:1628
+#: src/container.c:1627
 msgid "Right / Bottom"
 msgstr "Справа / внизу"
 
-#: src/container.c:1639
+#: src/container.c:1638
 msgid "Scrollbar arrows:"
 msgstr "Стрелки:"
 
-#: src/container.c:1642
+#: src/container.c:1641
 msgid "Start"
 msgstr "В начале"
 
-#: src/container.c:1647
+#: src/container.c:1646
 msgid "Both ends"
 msgstr "С обеих сторон"
 
-#: src/container.c:1652
+#: src/container.c:1651
 msgid "End"
 msgstr "В конце"
 
-#: src/container.c:1657 src/focus.c:988
+#: src/container.c:1656 src/focus.c:990
 msgid "None"
 msgstr "Не использовать"
 
-#: src/container.c:1667
+#: src/container.c:1666
 msgid "Show icon names"
 msgstr "Показывать имена пиктограмм"
 
-#: src/container.c:1676
+#: src/container.c:1675
 msgid "Animation mode:"
 msgstr ""
 
-#: src/container.c:1679 src/desktops.c:2620
+#: src/container.c:1678 src/desktops.c:2620
 msgid "Off"
 msgstr "Выкл."
 
-#: src/container.c:1684
+#: src/container.c:1683
 msgid "Whirl"
 msgstr ""
 
-#: src/container.c:1689 src/settings.c:131 src/settings.c:136
+#: src/container.c:1688 src/settings.c:131 src/settings.c:136
 #: src/settings.c:437
 msgid "Box"
 msgstr "Границы окна"
 
-#: src/container.c:1697
+#: src/container.c:1696
 msgid "Animation speed:"
 msgstr ""
 
-#: src/container.c:1712
+#: src/container.c:1711
 msgid "Icon image display policy (if one operation fails, try the next):"
 msgstr ""
 "Способ отображения пиктограмм (если один не работает, пробовать следующий):"
 
-#: src/container.c:1717
+#: src/container.c:1716
 msgid "Snapshot Windows, Use application icon, Use Enlightenment Icon"
 msgstr "Снимок окна, Пиктограмма приложения, Пиктограмма Enlightenment"
 
-#: src/container.c:1724
+#: src/container.c:1723
 msgid "Use application icon, Use Enlightenment Icon, Snapshot Window"
 msgstr "Пиктограмма приложения, Пиктограмма Enlightenment, Снимок окна"
 
-#: src/container.c:1729
+#: src/container.c:1728
 msgid "Use Enlightenment Icon, Snapshot Window"
 msgstr "Пиктограмма Enlightenment, Снимок окна"
 
-#: src/container.c:1742
+#: src/container.c:1741
 msgid ""
 "Enlightenment Iconbox\n"
 "Settings Dialog"
@@ -645,11 +645,11 @@ msgstr "Верхняя"
 msgid "Bottom"
 msgstr "Нижняя"
 
-#: src/desktops.c:2454 src/pager.c:1921 src/pager.c:1946 src/pager.c:1971
+#: src/desktops.c:2454 src/pager.c:1926 src/pager.c:1951 src/pager.c:1976
 msgid "Left"
 msgstr "Левая"
 
-#: src/desktops.c:2460 src/pager.c:1933 src/pager.c:1958 src/pager.c:1983
+#: src/desktops.c:2460 src/pager.c:1938 src/pager.c:1963 src/pager.c:1988
 msgid "Right"
 msgstr "Правая"
 
@@ -750,117 +750,117 @@ msgstr ""
 "\n"
 "Выходим.\n"
 
-#: src/focus.c:829
+#: src/focus.c:831
 msgid "Focus follows pointer"
 msgstr "Фокус следует за мышью"
 
-#: src/focus.c:835
+#: src/focus.c:837
 msgid "Focus follows pointer sloppily"
 msgstr "Фокус следует за мышью свободно"
 
-#: src/focus.c:841
+#: src/focus.c:843
 msgid "Focus follows mouse clicks"
 msgstr "Фокус по нажатию кнопки мыши"
 
-#: src/focus.c:851
+#: src/focus.c:853
 msgid "Clicking in a window always raises it"
 msgstr "Нажатие кнопки мыши всегда поднимает окно наверх"
 
-#: src/focus.c:859
+#: src/focus.c:861
 msgid "All new windows first get the focus"
 msgstr "Все новые окна получают фокус"
 
-#: src/focus.c:866
+#: src/focus.c:868
 msgid "New windows get the focus if their window group is focused"
 msgstr ""
 
-#: src/focus.c:871
+#: src/focus.c:873
 msgid "Only new dialog windows get the focus"
 msgstr "Только новые диалоги получают фокус"
 
-#: src/focus.c:878
+#: src/focus.c:880
 msgid "Only new dialogs whose owner is focused get the focus"
 msgstr "Только новые диалоги окон в фокусе получают фокус"
 
-#: src/focus.c:883
+#: src/focus.c:885
 msgid "Raise windows while switching focus"
 msgstr "Поднимать окна наверх после переключения фокуса"
 
-#: src/focus.c:889
+#: src/focus.c:891
 msgid "Send mouse pointer to window while switching focus"
 msgstr "Посылать курсор в окно при получении фокуса"
 
-#: src/focus.c:895
+#: src/focus.c:897
 msgid "Always send mouse pointer to window on focus switch"
 msgstr "Посылать курсор в окно при получении фокуса"
 
-#: src/focus.c:903
+#: src/focus.c:905
 msgid "Raise windows automatically"
 msgstr "Поднимать окна на передний план вручную"
 
-#: src/focus.c:909
+#: src/focus.c:911
 msgid "Autoraise delay:"
 msgstr "Задержка подъема:"
 
-#: src/focus.c:922
+#: src/focus.c:924
 msgid "Display and use focus list"
 msgstr "Отображать и использовать список окон для передачи фокуса"
 
-#: src/focus.c:927
+#: src/focus.c:929
 msgid "Include sticky windows in focus list"
 msgstr "Включать зафиксированные окна в список передачи фокуса"
 
-#: src/focus.c:932
+#: src/focus.c:934
 msgid "Include shaded windows in focus list"
 msgstr "Включать скрытые окна в список передачи фокуса"
 
-#: src/focus.c:937
+#: src/focus.c:939
 msgid "Include iconified windows in focus list"
 msgstr "Включать свёрнутые окна в список передачи фокуса"
 
-#: src/focus.c:942
+#: src/focus.c:944
 msgid "Include windows on other desks in focus list"
 msgstr "Располагать окна вручную"
 
-#: src/focus.c:947
+#: src/focus.c:949
 msgid "Focus windows while switching"
 msgstr "При переключении в другое окно передавать ему фокус"
 
-#: src/focus.c:952
+#: src/focus.c:954
 #, fuzzy
 msgid "Outline windows while switching"
 msgstr "При переключении в другое окно передавать ему фокус"
 
-#: src/focus.c:957
+#: src/focus.c:959
 msgid "Raise windows after focus switch"
 msgstr "Поднимать окна наверх после переключения фокуса"
 
-#: src/focus.c:962
+#: src/focus.c:964
 msgid "Send mouse pointer to window after focus switch"
 msgstr "Посылать курсор в окно после получении фокуса"
 
-#: src/focus.c:972
+#: src/focus.c:974
 msgid "Focuslist image display policy (if one operation fails, try the next):"
 msgstr ""
 "Способ отображения пиктограмм (если один не работает, пробовать следующий):"
 
-#: src/focus.c:976
+#: src/focus.c:978
 msgid "First E Icon, then App Icon"
 msgstr "Сперва - иконку E, потом - иконку приложения"
 
-#: src/focus.c:982
+#: src/focus.c:984
 msgid "First App Icon, then E Icon"
 msgstr "Сперва - иконку приложения, потоиииииконку E"
 
-#: src/focus.c:996
+#: src/focus.c:998
 msgid "Focus"
 msgstr "Фокус"
 
-#: src/focus.c:997
+#: src/focus.c:999
 msgid "Focus Settings"
 msgstr "Настройки фокуса"
 
-#: src/focus.c:1000
+#: src/focus.c:1002
 msgid ""
 "Enlightenment Focus\n"
 "Settings Dialog"
@@ -1140,28 +1140,28 @@ msgstr "Iconbox"
 msgid "Iconbox Settings"
 msgstr "Установки Iconbox"
 
-#: src/ipc.c:195 src/ipc.c:1467 src/ipc.c:1474 src/theme.c:379
+#: src/ipc.c:195 src/ipc.c:1466 src/ipc.c:1473 src/theme.c:379
 msgid "Message"
 msgstr "Сообщение"
 
-#: src/ipc.c:1467 src/ipc.c:1474
+#: src/ipc.c:1466 src/ipc.c:1473
 #, c-format
 msgid "e16 was built without %s support"
 msgstr "Меня собрали без поддержки %s !"
 
-#: src/ipc.c:1468
+#: src/ipc.c:1467
 msgid "composite"
 msgstr "Композит"
 
-#: src/ipc.c:1475
+#: src/ipc.c:1474
 msgid "sound"
 msgstr "Звук"
 
-#: src/ipc.c:1818
+#: src/ipc.c:1817
 msgid "Enlightenment IPC Commands Help\n"
 msgstr "Справка по командам Enlightenment IPC\n"
 
-#: src/ipc.c:1822
+#: src/ipc.c:1821
 msgid ""
 "Use \"help all\" for descriptions of each command\n"
 "Use \"help <command>\" for an individual description\n"
@@ -1171,19 +1171,19 @@ msgstr ""
 "\"help <команда>\": описание команды\n"
 "\n"
 
-#: src/ipc.c:1824 src/ipc.c:1844 src/ipc.c:1856
+#: src/ipc.c:1823 src/ipc.c:1843 src/ipc.c:1855
 msgid "Commands currently available:\n"
 msgstr "Доступные команды:\n"
 
-#: src/ipc.c:1842
+#: src/ipc.c:1841
 msgid "Use \"help full\" for full descriptions of each command\n"
 msgstr "Набери \"help full\" для получения полного справочника\n"
 
-#: src/ipc.c:1843
+#: src/ipc.c:1842
 msgid "Use \"help <command>\" for an individual description\n"
 msgstr "\"help <команда>\": описание команды\n"
 
-#: src/ipc.c:1845 src/ipc.c:1857
+#: src/ipc.c:1844 src/ipc.c:1856
 msgid "         <command>     : <description>\n"
 msgstr "         <команда> : <описание>\n"
 
@@ -1374,123 +1374,123 @@ msgstr ""
 "Диалог настройки\n"
 "прозрачности Enlightenment"
 
-#: src/pager.c:1008 config/strings.c:49 config/strings.c:121
+#: src/pager.c:1013 config/strings.c:49 config/strings.c:121
 msgid "Window Options"
 msgstr "Окно"
 
-#: src/pager.c:1015 config/strings.c:51 config/strings.c:124
+#: src/pager.c:1020 config/strings.c:51 config/strings.c:124
 msgid "Iconify"
 msgstr "Свернуть"
 
-#: src/pager.c:1023 config/strings.c:123
+#: src/pager.c:1028 config/strings.c:123
 msgid "Annihilate"
 msgstr "Уничтожить"
 
-#: src/pager.c:1027
+#: src/pager.c:1032
 msgid "Stick / Unstick"
 msgstr "Закрепить / Освободить"
 
-#: src/pager.c:1034
+#: src/pager.c:1039
 msgid "Desktop Options"
 msgstr "Рабочий стол"
 
-#: src/pager.c:1040
+#: src/pager.c:1045
 msgid "Pager Settings..."
 msgstr "Установки Pager-а..."
 
-#: src/pager.c:1045
+#: src/pager.c:1050
 msgid "Snapshotting Off"
 msgstr "Выключить отображение экрана"
 
-#: src/pager.c:1049
+#: src/pager.c:1054
 msgid "High Quality Off"
 msgstr "Низкое качество"
 
-#: src/pager.c:1051
+#: src/pager.c:1056
 msgid "High Quality On"
 msgstr "Высокое качество"
 
-#: src/pager.c:1056
+#: src/pager.c:1061
 msgid "Snapshotting On"
 msgstr "Включить отображение экрана"
 
-#: src/pager.c:1060
+#: src/pager.c:1065
 msgid "Zoom Off"
 msgstr "Выключить зум"
 
-#: src/pager.c:1062
+#: src/pager.c:1067
 msgid "Zoom On"
 msgstr "Включить зум"
 
-#: src/pager.c:1806 src/pager.c:1901
+#: src/pager.c:1811 src/pager.c:1906
 msgid "Pager scanning speed:"
 msgstr "Скорость сканирования:"
 
-#: src/pager.c:1807 src/pager.c:1902
+#: src/pager.c:1812 src/pager.c:1907
 msgid "lines per second"
 msgstr "линий в секунду"
 
-#: src/pager.c:1840
+#: src/pager.c:1845
 msgid "Enable pager display"
 msgstr "Включить Pager"
 
-#: src/pager.c:1850
+#: src/pager.c:1855
 msgid "Pager Mode:"
 msgstr "Режим пейджера"
 
-#: src/pager.c:1854
+#: src/pager.c:1859
 msgid "Simple"
 msgstr "Размер"
 
-#: src/pager.c:1860
+#: src/pager.c:1865
 msgid "Make miniature snapshots of the screen"
 msgstr "Отображать экран"
 
-#: src/pager.c:1867
+#: src/pager.c:1872
 msgid "Live Update"
 msgstr "Постоянное сканирование"
 
-#: src/pager.c:1878
+#: src/pager.c:1883
 msgid "Smooth high quality snapshots in snapshot mode"
 msgstr "Высокое качество иконок в режиме отображения экрана"
 
-#: src/pager.c:1883
+#: src/pager.c:1888
 msgid "Zoom in on pager windows when mouse is over them"
 msgstr "Увеличивать иконки окон при прохождении курсора"
 
-#: src/pager.c:1889
+#: src/pager.c:1894
 msgid "Pop up window title when mouse is over the window"
 msgstr "Показывать заголовок окна, когда курсор над иконкой"
 
-#: src/pager.c:1894
+#: src/pager.c:1899
 msgid "Continuously scan screen to update pager"
 msgstr "Непрерывно сканировать экран"
 
-#: src/pager.c:1917
+#: src/pager.c:1922
 msgid "Mouse button to select and drag windows:"
 msgstr "Кнопка для выбора и перемещения окон:"
 
-#: src/pager.c:1927 src/pager.c:1952 src/pager.c:1977
+#: src/pager.c:1932 src/pager.c:1957 src/pager.c:1982
 msgid "Middle"
 msgstr "Средняя"
 
-#: src/pager.c:1942
+#: src/pager.c:1947
 msgid "Mouse button to select desktops:"
 msgstr "Кнопка для выбора рабочих столов:"
 
-#: src/pager.c:1967
+#: src/pager.c:1972
 msgid "Mouse button to display pager menu:"
 msgstr "Кнопка для отображения меню Pager-а:"
 
-#: src/pager.c:1991
+#: src/pager.c:1996
 msgid "Pagers"
 msgstr "Настройки Pager-а"
 
-#: src/pager.c:1992
+#: src/pager.c:1997
 msgid "Pager Settings"
 msgstr "Настройки Pager-а"
 
-#: src/pager.c:1995
+#: src/pager.c:2000
 msgid ""
 "Enlightenment Desktop & Area\n"
 "Pager Settings Dialog"
@@ -2179,27 +2179,27 @@ msgstr ""
 "Диалог настройки\n"
 "Меню Enlightenment"
 
-#: src/tooltips.c:851
+#: src/tooltips.c:850
 msgid "Display Tooltips"
 msgstr "Показывать подсказки"
 
-#: src/tooltips.c:856
+#: src/tooltips.c:855
 msgid "Display Root Window Tips"
 msgstr "Показывать подсказки на \"корневом\" окне"
 
-#: src/tooltips.c:861
+#: src/tooltips.c:860
 msgid "Tooltip Delay:"
 msgstr "Задержка подсказки:"
 
-#: src/tooltips.c:872
+#: src/tooltips.c:871
 msgid "Tooltips"
 msgstr "Всплывающие подсказки"
 
-#: src/tooltips.c:873
+#: src/tooltips.c:872
 msgid "Tooltip Settings"
 msgstr "Установки подсказок"
 
-#: src/tooltips.c:876
+#: src/tooltips.c:875
 msgid ""
 "Enlightenment Tooltip\n"
 "Settings Dialog"
