@@ -166,7 +166,6 @@
    );?></p></div>
    <?php frame2();?>
    
-  <td class='main'>
    <?php frame1("width=100%");?>
    <div class="main"><p><b><a href=
      "http://trac.enlightenment.org/e/wiki/Edje">Edje</a> </b><em>
