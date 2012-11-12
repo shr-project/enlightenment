@@ -4,7 +4,7 @@ Name:         Eduardo de Barros Lima
 Location:     Campinas, Brazil
 E-Mail:       eblima@gmail.com
 WWW:          http://etrunko.blogspot.com
-Contributing: General Fixes, Python-EFL, Packaging
+Contributing: General Fixes, Python-EFL, E, Ecore and Evas (Wayland)
 Group:        Core, Libraries, Bindings
-Platform:     Ubuntu (Linux), Maemo (Linux)
+Platform:     Fedora (Linux), Maemo (Linux)
 GeoData:      -22.898711 -47.06573
