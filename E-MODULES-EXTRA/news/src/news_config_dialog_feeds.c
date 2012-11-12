@@ -298,10 +298,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    if (!news->config->feed.sort_name)
      {
-        ob = e_widget_button_add(evas, "Move", "go-up", _cb_category_up, cfdata, NULL);
+        ob = e_widget_button_add(evas, D_("Move Up"), "go-up", _cb_category_up, cfdata, NULL);
         cfdata->button_cat_up = ob;
         e_widget_frametable_object_append(of, ob, 0, 1, 3, 1, 1, 0, 1, 0);
-        ob = e_widget_button_add(evas, "Move", "go-down", _cb_category_down, cfdata, NULL);
+        ob = e_widget_button_add(evas, D_("Move Down"), "go-down", _cb_category_down, cfdata, NULL);
         cfdata->button_cat_down = ob;
         e_widget_frametable_object_append(of, ob, 3, 1, 3, 1, 1, 0, 1, 0);
      }
@@ -372,10 +372,10 @@ _basic_create_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cf
 
    if (!news->config->feed.sort_name)
      {
-        ob = e_widget_button_add(evas, "Move", "go-up", _cb_feed_up, cfdata, NULL);
+        ob = e_widget_button_add(evas, D_("Move Up"), "go-up", _cb_feed_up, cfdata, NULL);
         cfdata->button_feed_up = ob;
         e_widget_frametable_object_append(of, ob, 0, 2, 3, 1, 1, 0, 1, 0);
-        ob = e_widget_button_add(evas, "Move", "go-down", _cb_feed_down, cfdata, NULL);
+        ob = e_widget_button_add(evas, D_("Move Down"), "go-down", _cb_feed_down, cfdata, NULL);
         cfdata->button_feed_down = ob;
         e_widget_frametable_object_append(of, ob, 3, 2, 3, 1, 1, 0, 1, 0);
      }
