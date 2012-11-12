@@ -7,6 +7,7 @@ Additions:
     * Add DOCTYPE children parsing in eina_simple_xml
     * Add eina_barrier thread API
     * Add eina_thread API.
+    * Add eina_list_last_data_get
 
 Improvements:
     * Speedup Eina Rbtree Iterator by recycling memory instead of massively calling malloc/free.

@@ -375,3 +375,6 @@
 
         * Fix build on Solaris
 
+2012-11-12  Mike Blumenkrantz
+
+        * Add eina_list_last_data_get
