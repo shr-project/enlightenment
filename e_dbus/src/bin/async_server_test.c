@@ -74,7 +74,7 @@ _resp_async(void *data)
 }
 
 static DBusMessage *
-_async(E_DBus_Object *obj, DBusMessage *msg)
+_async(E_DBus_Object *obj EINA_UNUSED, DBusMessage *msg)
 {
    dbus_message_ref(msg);
    printf("received a string_len_async call\n");
@@ -84,7 +84,7 @@ _async(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static void
-_cb_dbus_request_name(void *context, DBusMessage *msg, DBusError *err)
+_cb_dbus_request_name(void *context EINA_UNUSED, DBusMessage *msg, DBusError *err)
 {
    DBusError new_err;
    dbus_uint32_t msgtype;
@@ -108,7 +108,7 @@ _cb_dbus_request_name(void *context, DBusMessage *msg, DBusError *err)
 }
 
 int
-main(int argc, char *argv[])
+main(void)
 {
    e_dbus_init();
 

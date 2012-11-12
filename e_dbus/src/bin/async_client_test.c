@@ -12,7 +12,7 @@
 static E_DBus_Connection *conn = NULL;
 
 static void
-_cb_resp(void *data, DBusMessage *msg, DBusError *error)
+_cb_resp(void *data EINA_UNUSED, DBusMessage *msg, DBusError *error)
 {
    DBusError new_error;
    int size;
@@ -37,7 +37,7 @@ _cb_resp(void *data, DBusMessage *msg, DBusError *error)
 }
 
 int
-main(int argc, char *argv[])
+main(void)
 {
    char *string = "lalala";
    DBusMessage *msg;
