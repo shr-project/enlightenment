@@ -560,6 +560,14 @@ _eina_file_escape(const char *path, int *length)
 		      ++p;
 		   }
 	    }
+        // remove '/./'
+        else if (p[2] == '/')
+          {
+             len -= p + 2 - q;
+             memmove(q, p + 2, len - (q - result));
+             result[len] = '\0';
+             p = q;
+          }
 	  else
 	    {
 	       q = p;
