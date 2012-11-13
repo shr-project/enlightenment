@@ -486,13 +486,13 @@ chat_resource_ignore_toggle(Contact *c, Evas_Object *obj __UNUSED__, Elm_Object_
 {
    Elm_Object_Item *next;
 
-   if (ev)
-     c->ignore_resource = !c->ignore_resource;
-   else
+   if (!ev)
      {
         ev = elm_menu_first_item_get(c->chat_jid_menu);
         c->ignore_resource = c->list->settings->enable_chat_noresource;
+        if (!ev) return;
      }
+   c->ignore_resource = !c->ignore_resource;
    next = elm_menu_item_next_get(ev);
    if (c->ignore_resource)
      {
