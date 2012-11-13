@@ -19,9 +19,9 @@ elm_main(int argc, char **argv)
    __log_domain = eina_log_domain_register("Edje_Viewer", EINA_COLOR_BLUE);
    if (!__log_domain)
      {
-	EINA_LOG_ERR("Could not register log domain: Edje_Viewer");
-	elm_exit();
-	return 1;
+        EINA_LOG_ERR("Could not register log domain: Edje_Viewer");
+        elm_exit();
+        return 1;
      }
 
    v = calloc(1, sizeof(Viewer));
@@ -43,26 +43,26 @@ elm_main(int argc, char **argv)
 
    if (!v->config->edje_file || !ecore_file_exists(v->config->edje_file))
      {
-	ERR("Edje file not specified\n");
-	viewer_free(v);
+        ERR("Edje file not specified\n");
+        viewer_free(v);
         elm_exit();
-	return 1;
+        return 1;
      }
 
    if (!ecore_file_can_read(v->config->edje_file))
      {
-	ERR("Could not read Edje file\n");
-	viewer_free(v);
-	elm_exit();
-	return 1;
+        ERR("Could not read Edje file\n");
+        viewer_free(v);
+        elm_exit();
+        return 1;
      }
 
    if (!ecore_file_can_read(v->config->edje_file))
      {
-	ERR("Could not read Edje file\n");
-	viewer_free(v);
-	elm_exit();
-	return 1;
+        ERR("Could not read Edje file\n");
+        viewer_free(v);
+        elm_exit();
+        return 1;
      }
 
    create_main_win(v);
@@ -163,7 +163,7 @@ static void
 config_init(Viewer *v)
 {
    Eet_Data_Descriptor_Class eddc, eddc2;
-   
+
 #define C_VAL(edd, type, member, dtype) EET_DATA_DESCRIPTOR_ADD_BASIC(edd, type, #member, member, dtype)
 #define C_LIST(edd, type, member, dtype) EET_DATA_DESCRIPTOR_ADD_LIST(edd, type, #member, member, dtype)
 
@@ -194,15 +194,15 @@ config_init(Viewer *v)
    switch (config_load(v))
      {
       case 0:
-	 v->config->show_parts = 1;
-	 v->config->show_entry = 1;
-	 v->config->show_signals = 1;
+        v->config->show_parts = 1;
+        v->config->show_entry = 1;
+        v->config->show_signals = 1;
       case -1:
-	 /* Incremental additions */
-	 v->config->config_version = CONFIG_VERSION;
-	 break;
+        /* Incremental additions */
+        v->config->config_version = CONFIG_VERSION;
+        break;
       default:
-	 return;
+        return;
      }
    config_save(v, 0);
 }
