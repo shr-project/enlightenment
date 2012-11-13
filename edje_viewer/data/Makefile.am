@@ -6,7 +6,6 @@ SUBDIRS = images
 
 EDJE_CC = edje_cc
 EDJE_FLAGS = \
--v \
 -id $(top_srcdir)/data/images
 
 filesdir = $(pkgdatadir)
