@@ -257,7 +257,7 @@ fill_group_parts_list(Viewer *v)
 
    elm_list_go(v->gui.parts_list);
 
-   edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,parts_list,show", "v");
+   elm_layout_signal_emit(v->gui.ly, "v,state,parts_list,show", "v");
 
    edje_edit_string_list_free(parts);
 }
@@ -293,7 +293,7 @@ create_signals_box(Viewer *v)
    elm_box_pack_start(bx, o);
    evas_object_show(o);
 
-   edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,signals,show", "v");
+   elm_layout_signal_emit(v->gui.ly, "v,state,signals,show", "v");
 }
 
 static void
@@ -375,7 +375,7 @@ toolbar_reconfigure(Group *grp, Eina_Bool skip_config)
 
                   if (v->config->show_signals)
                     hoversel_clear(v);
-                  edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,parts_list,hide", "v");
+                  elm_layout_signal_emit(v->gui.ly, "v,state,parts_list,hide", "v");
                }
           }
      }
@@ -400,8 +400,8 @@ typebuf_show(Viewer *v)
 {
    FREE(v->typebuf.buf);
    v->typebuf.buf = strdup("");
-   edje_object_part_text_set(elm_layout_edje_get(v->gui.ly), "v.text.typebuf_label", v->typebuf.buf);
-   edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,typebuf,start", "v");
+   elm_layout_text_set(v->gui.ly, "v.text.typebuf_label", v->typebuf.buf);
+   elm_layout_signal_emit(v->gui.ly, "v,state,typebuf,start", "v");
    v->typebuf.visible = 1;
 }
 
@@ -409,7 +409,7 @@ static void
 typebuf_hide(Viewer *v)
 {
    FREE(v->typebuf.buf);
-   edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,typebuf,stop", "v");
+   elm_layout_signal_emit(v->gui.ly, "v,state,typebuf,stop", "v");
    v->typebuf.visible = 0;
 }
 
@@ -426,7 +426,7 @@ typebuf_char_append(Viewer *v, const char *ch)
    free(v->typebuf.buf);
    v->typebuf.buf = ts;
    typebuf_match(v, 0);
-   edje_object_part_text_set(elm_layout_edje_get(v->gui.ly), "v.text.typebuf_label", v->typebuf.buf);
+   elm_layout_text_set(v->gui.ly, "v.text.typebuf_label", v->typebuf.buf);
 }
 
 static void
@@ -449,7 +449,7 @@ typebuf_char_backspace(Viewer *v)
    free(v->typebuf.buf);
    v->typebuf.buf = ts;
    typebuf_match(v, 0);
-   edje_object_part_text_set(elm_layout_edje_get(v->gui.ly), "v.text.typebuf_label", v->typebuf.buf);
+   elm_layout_text_set(v->gui.ly, "v.text.typebuf_label", v->typebuf.buf);
 }
 
 static void
@@ -685,6 +685,7 @@ group_toggle(Group *grp, Eina_Bool skip_config)
      }
    else
      {
+        // TODO: use elm_layout API
         edje_object_part_unswallow(elm_layout_edje_get(grp->v->gui.ly), grp->obj);
         evas_object_del(grp->obj);
         grp->obj = NULL;
@@ -731,7 +732,7 @@ text_entry_toggle(Viewer *v, Eina_Bool show)
         state = edje_edit_part_selected_state_get(prt->grp->obj, prt->name, &val);
         text = edje_edit_state_text_get(prt->grp->obj, prt->name, state, val);
         elm_entry_entry_set(v->gui.entry, text);
-        edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,entry,show", "v");
+        elm_layout_signal_emit(v->gui.ly, "v,state,entry,show", "v");
         evas_object_focus_set(v->gui.entry, 1);
         elm_object_focus_set(v->gui.entry, EINA_TRUE);
         v->entry_visible = 1;
@@ -741,7 +742,7 @@ text_entry_toggle(Viewer *v, Eina_Bool show)
      }
    else
      {
-        edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,entry,hide", "v");
+        elm_layout_signal_emit(v->gui.ly, "v,state,entry,hide", "v");
         evas_object_focus_set(v->gui.ly, 1);
         v->entry_visible = 0;
      }
@@ -834,6 +835,7 @@ on_toolbar_changed(void *data, Evas_Object *obj, void *event_info)
    Group *grp = data;
    Evas_Object *o;
 
+   // TODO: use elm_layout API
    o = edje_object_part_swallow_get(elm_layout_edje_get(grp->v->gui.ly), "v.swallow.main");
    if (o)
      {
@@ -900,7 +902,7 @@ on_parts_list_toggle_change(void *data, Evas_Object *obj, void *event_info)
      {
         evas_object_del(v->gui.parts_list);
         v->gui.parts_list = NULL;
-        edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,parts_list,hide", "v");
+        elm_layout_signal_emit(v->gui.ly, "v,state,parts_list,hide", "v");
      }
    config_save(v, 0);
 }
@@ -943,7 +945,7 @@ on_signals_toggle_change(void *data, Evas_Object *obj, void *event_info)
      {
         evas_object_del(v->gui.sig_box);
         v->gui.sig_box = NULL;
-        edje_object_signal_emit(elm_layout_edje_get(v->gui.ly), "v,state,signals,hide", "v");
+        elm_layout_signal_emit(v->gui.ly, "v,state,signals,hide", "v");
      }
    config_save(v, 0);
 }
