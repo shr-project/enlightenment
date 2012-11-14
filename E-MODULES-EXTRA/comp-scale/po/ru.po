@@ -1,7 +1,6 @@
 # Russian translation of Comp-Scale module
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# Copyright (C) 2012 Enlightenment development team
 # This file is distributed under the same license as the enlightenment package.
-# Black Raven, 2009.
 # Igor Murzov <e-mail@date.by>, 2012.
 #
 msgid ""
