@@ -46,7 +46,10 @@
    <div class="main">
     <center>
      <?php img("logo.png", "E"); ?>
-     <b>E17 releae coming<br>December 21, 2012</b>
+     <br>
+     <b>E17 release coming<br>
+     December 21, 2012<br>
+     Get Alphas now!</b>
      <?php blink("i/dl.png", "DOWNLOAD E", "download"); ?>
     </center>
    </div>
