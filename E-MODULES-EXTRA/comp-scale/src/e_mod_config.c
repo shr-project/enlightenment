@@ -190,7 +190,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append(of, ow);
    e_widget_table_object_append(ot, of, 0, 1, 2, 1, 1, 1, 0, 0);
 
-   e_widget_toolbook_page_append(otb, NULL, "Scale Windows", ot, 1, 1, 1, 1, 0, 0);
+   e_widget_toolbook_page_append(otb, NULL, D_("Scale Windows"), ot, 1, 1, 1, 1, 0, 0);
 
    ot = e_widget_table_add(evas, 0);
    of = e_widget_framelist_add(evas, D_("Pager Settings"), 0);
@@ -214,7 +214,7 @@ _basic_create(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data *cfdata)
    e_widget_framelist_object_append (of, ow);
    e_widget_table_object_append(ot, of, 0, 0, 1, 1, 1, 1, 1, 0);
 
-   e_widget_toolbook_page_append(otb, NULL, "Pager", ot, 1, 1, 1, 1, 1, 1);
+   e_widget_toolbook_page_append(otb, NULL, D_("Pager"), ot, 1, 1, 1, 1, 1, 1);
 
    e_widget_toolbook_page_show(otb, 0);
 

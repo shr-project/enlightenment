@@ -304,7 +304,7 @@ _dialog_create(News_Viewer *nv)
    dia->data = nv;
    e_object_del_attach_func_set(E_OBJECT(dia), _dialog_cb_del);
 
-   e_dialog_title_set(dia, "News Viewer");
+   e_dialog_title_set(dia, D_("News Viewer"));
    e_dialog_resizable_set(dia, 1);
    e_win_sticky_set(dia->win, 1);
    //e_win_layer_set(dia->win, ECORE_X_WINDOW_LAYER_ABOVE);
@@ -377,7 +377,7 @@ _dialog_content_create(News_Viewer *nv)
    nv->vfeeds.button_feed = ob;
    e_widget_frametable_object_append(of, ob, 0, 0, 1, 2, 0, 0, 0, 0);
 
-   ob = e_widget_button_add(evas, "Update", "", _vfeeds_cb_button_refresh, nv, NULL);
+   ob = e_widget_button_add(evas, D_("Update"), "", _vfeeds_cb_button_refresh, nv, NULL);
    icon = e_icon_add(evas);
    news_theme_icon_set(icon, NEWS_THEME_ICON_UPDATE);
    e_icon_fill_inside_set(icon, 1);
@@ -385,7 +385,7 @@ _dialog_content_create(News_Viewer *nv)
    nv->vfeeds.button_refresh = ob;
    e_widget_frametable_object_append(of, ob, 1, 0, 1, 1, 0, 0, 0, 0);
 
-   ob = e_widget_button_add(evas, "Set as read", "", _vfeeds_cb_button_setasread, nv, NULL);
+   ob = e_widget_button_add(evas, D_("Set as read"), "", _vfeeds_cb_button_setasread, nv, NULL);
    icon = e_icon_add(evas);
    news_theme_icon_set(icon, NEWS_THEME_ICON_SETASREAD);
    e_icon_fill_inside_set(icon, 1);
