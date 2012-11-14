@@ -51,7 +51,8 @@ libelementaryxx_la_SOURCES = \
 	localUtil.h \
 	Gen.cpp \
 	GenItem.cpp \
-	GenListItem.cpp
+	GenListItem.cpp  \
+	Theme.cpp
 
 libelementaryxx_la_LIBADD = \
 	$(EFLXX_LIBS)        \

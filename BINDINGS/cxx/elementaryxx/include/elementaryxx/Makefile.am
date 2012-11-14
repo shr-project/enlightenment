@@ -33,7 +33,8 @@ libelementaryxx_HEADERS = \
 	GenListColumnSelector.h \
 	Gen.h \
 	GenItem.h \
-	GenListItem.h
+	GenListItem.h \
+	Theme.h
 
 libelementaryxxdir = \
 	$(pkgincludedir)
