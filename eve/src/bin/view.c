@@ -3,10 +3,9 @@
 #include <math.h>
 
 #define HACK_FLUSH_EVENTS_DURING_LONG_CALCULATE 1
+
 #ifdef HACK_FLUSH_EVENTS_DURING_LONG_CALCULATE
 static const double LONG_CALCULATE_TIMEOUT = 0.6;
-#include <Ecore_X.h>
-#include <X11/Xlib.h>
 #endif
 
 /* value to consider as double/float error, differences smaller than
@@ -1096,9 +1095,7 @@ _view_smart_calculate(Evas_Object *o)
    VIEW_SD_GET_OR_RETURN(o, sd);
 
 #ifdef HACK_FLUSH_EVENTS_DURING_LONG_CALCULATE
-   Display *dpy = ecore_x_display_get();
-   double before = ecore_time_get();
-   XSync(dpy, False); /* force processing all events */
+//   ecore_x_sync();
 #endif
 
    /* call parent smart calculate and let ewk_view do all its work */
@@ -1112,15 +1109,15 @@ _view_smart_calculate(Evas_Object *o)
      }
 
 #ifdef HACK_FLUSH_EVENTS_DURING_LONG_CALCULATE
-   double now = ecore_time_get();
-   double elapsed = now - before;
-   if (elapsed > LONG_CALCULATE_TIMEOUT)
-     {
-        WRN("calculate took too long (%0.3f of %0.3f), ignoring events.",
-            elapsed, LONG_CALCULATE_TIMEOUT);
-        XSync(dpy, True); /* throw away events received during this timeout */
-     }
-
+// never throw events away. a very bad idea and leads to nasty bugs.   
+//   double now = ecore_time_get();
+//   double elapsed = now - before;
+//   if (elapsed > LONG_CALCULATE_TIMEOUT)
+//     {
+//        WRN("calculate took too long (%0.3f of %0.3f), ignoring events.",
+//            elapsed, LONG_CALCULATE_TIMEOUT);
+//        XSync(dpy, True); /* throw away events received during this timeout */
+//     }
 #endif
 }
 

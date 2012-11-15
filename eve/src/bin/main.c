@@ -16,7 +16,6 @@
 #include <Ecore_Getopt.h>
 #include <Ecore_File.h>
 #include <EDBus.h>
-#include <Ecore_X.h>
 #include <stdlib.h>
 #include "gettext.h"
 
@@ -390,7 +389,7 @@ _cb_dbus_open_url(const EDBus_Service_Interface *iface __UNUSED__,
    if ((uri = uri_sanitize(tmp_uri)))
      {
         tab_add(win, uri, NULL);
-        ecore_x_window_focus(elm_win_xwindow_get(win->win));
+        elm_win_activate(win->win);
         free(uri);
      }
 end:
