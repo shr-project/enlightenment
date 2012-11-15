@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-28 20:39+0400\n"
-"PO-Revision-Date: 2012-10-27 02:27+0400\n"
+"POT-Creation-Date: 2012-11-14 02:47+0400\n"
+"PO-Revision-Date: 2012-11-14 02:47+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -70,6 +70,7 @@ msgid "Sort lists by name (disable Move action)"
 msgstr "Сортировать списки по имени (отключает Перемещение)"
 
 #: src/news_config_dialog.c:215 src/news_config_dialog.c:323
+#: src/news_viewer.c:307
 msgid "News Viewer"
 msgstr "Просмотр новостей"
 
@@ -253,6 +254,16 @@ msgstr "Настройка новостных лент"
 msgid "Categories"
 msgstr "Категории"
 
+#: src/news_config_dialog_feeds.c:301 src/news_config_dialog_feeds.c:375
+#: src/news_config_dialog_item_content.c:283
+msgid "Move Up"
+msgstr "Вверх"
+
+#: src/news_config_dialog_feeds.c:304 src/news_config_dialog_feeds.c:378
+#: src/news_config_dialog_item_content.c:287
+msgid "Move Down"
+msgstr "Вниз"
+
 #: src/news_config_dialog_feeds.c:314 src/news_config_dialog_feeds.c:388
 msgid "Add"
 msgstr "Добавить"
@@ -283,7 +294,7 @@ msgstr "Очистить списки"
 
 #: src/news_config_dialog_feeds.c:349
 msgid "Restore default lists"
-msgstr "Восстановить списки по умолчанию"
+msgstr "Восстановить умолчания"
 
 #: src/news_config_dialog_feeds.c:686
 msgid ""
@@ -339,11 +350,11 @@ msgstr "в любимом браузере"
 
 #: src/news_config_dialog_item.c:127
 msgid "Browser opens home url"
-msgstr "Открывать в браузере домашний url"
+msgstr "Открывать в браузере домашний url вместо url ленты"
 
 #: src/news_config_dialog_item.c:129
 msgid "instead of feed url"
-msgstr "вместо url ленты"
+msgstr " "
 
 #: src/news_config_dialog_item.c:136
 msgid "Apply this to all News gadgets"
@@ -421,7 +432,7 @@ msgstr "Введённое <hilight>имя уже используется</hili
 msgid "Set all as read"
 msgstr "Отметить все как прочитанные"
 
-#: src/news_menu.c:137
+#: src/news_menu.c:137 src/news_viewer.c:380
 msgid "Update"
 msgstr "Обновить"
 
@@ -456,6 +467,10 @@ msgstr "Ошибка новостного модуля"
 #: src/news_viewer.c:372
 msgid "Feeds in this gadget"
 msgstr "Ленты в этом гаджете"
+
+#: src/news_viewer.c:388
+msgid "Set as read"
+msgstr "Прочитано"
 
 #: src/news_viewer.c:438
 msgid "Articles in selected feed"

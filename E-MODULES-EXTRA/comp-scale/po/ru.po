@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Comp-Scale\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-27 20:46+0400\n"
-"PO-Revision-Date: 2012-10-27 20:46+0400\n"
+"POT-Creation-Date: 2012-11-14 01:43+0400\n"
+"PO-Revision-Date: 2012-11-14 01:43+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -60,7 +60,7 @@ msgstr "Располагать плотнее!"
 
 #: src/e_mod_config.c:145 src/e_mod_config.c:178
 msgid "Show iconified windows"
-msgstr ""
+msgstr "Показывать уменьшенные окна"
 
 #: src/e_mod_config.c:152
 msgid "Show All Desktops"
@@ -78,6 +78,14 @@ msgstr "Прятать полки и всплывающие окна"
 msgid "Darken desktop"
 msgstr "Затемнять рабочий стол"
 
+#: src/e_mod_config.c:193 src/e_mod_main.c:277 src/e_mod_main.c:303
+#: src/e_mod_main.c:305 src/e_mod_main.c:307 src/e_mod_main.c:309
+#: src/e_mod_main.c:311 src/e_mod_main.c:313 src/e_mod_main.c:315
+#: src/e_mod_main.c:374 src/e_mod_main.c:375 src/e_mod_main.c:376
+#: src/e_mod_main.c:377 src/e_mod_main.c:378 src/e_mod_main.c:503
+msgid "Scale Windows"
+msgstr "Масштабирование окон"
+
 #: src/e_mod_config.c:196
 msgid "Pager Settings"
 msgstr "Настройки пейджера"
@@ -90,6 +98,10 @@ msgstr "Продолжительность приближения"
 msgid "Overlap Shelves"
 msgstr "Перекрывать полки"
 
+#: src/e_mod_config.c:217
+msgid "Pager"
+msgstr "Пейджер"
+
 #: src/e_mod_main.c:229
 msgid "Look"
 msgstr "Вид"
@@ -97,14 +109,6 @@ msgstr "Вид"
 #: src/e_mod_main.c:231
 msgid "Composite Scale Windows"
 msgstr "Масштабирование окон в композитном режиме"
-
-#: src/e_mod_main.c:277 src/e_mod_main.c:303 src/e_mod_main.c:305
-#: src/e_mod_main.c:307 src/e_mod_main.c:309 src/e_mod_main.c:311
-#: src/e_mod_main.c:313 src/e_mod_main.c:315 src/e_mod_main.c:374
-#: src/e_mod_main.c:375 src/e_mod_main.c:376 src/e_mod_main.c:377
-#: src/e_mod_main.c:378 src/e_mod_main.c:503
-msgid "Scale Windows"
-msgstr "Масштабирование окон"
 
 #: src/e_mod_main.c:305 src/e_mod_main.c:375
 msgid "Scale Windows (All Desktops)"
