@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: news\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@...\n"
-"POT-Creation-Date: 2012-11-13 22:27+0000\n"
-"PO-Revision-Date: 2012-11-13 22:35+0100\n"
+"POT-Creation-Date: 2012-11-14 23:05+0000\n"
+"PO-Revision-Date: 2012-11-14 23:22+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -47,7 +47,7 @@ msgstr "Notícias"
 #: src/news_config.c:100
 #, c-format
 msgid "<hilight>News module : Configuration Upgraded</hilight><br><br>Your configuration of news module<br>has been upgraded<br>Your settings were removed<br>Sorry for the inconvenience<br><br>(%d -> %d)"
-msgstr "<hilight>Módulo de notícias: configuração atualizada</hilight><br><br>A configuração do módulo de notícias foi atualizada<br>As suas definições foram removidas.<br>Desculpe qualquer inconveniente.<br><br>(%d -> %d)"
+msgstr "<hilight>Módulo de notícias: configuração atualizada</hilight><br><br>A configuração do módulo de notícias foi atualizada.<br>As suas definições foram removidas.<br>Desculpe qualquer inconveniente.<br><br>(%d -> %d)"
 
 #: src/news_config.c:112
 #, c-format
@@ -72,6 +72,7 @@ msgstr "Ordenar listas por nome (desativar \"Mover\")"
 
 #: src/news_config_dialog.c:197
 #: src/news_config_dialog.c:305
+#: src/news_viewer.c:307
 msgid "News Viewer"
 msgstr "Visualizador de notícias"
 
@@ -204,11 +205,11 @@ msgstr "Cancelar"
 
 #: src/news_config_dialog_feed.c:63
 msgid "You need to <hilight>create a category</hilight> first"
-msgstr "Antes de mais, tem que <hilight>criar uma categoria</hilight>."
+msgstr "Antes de mais, tem que <hilight>criar uma categoria</hilight>"
 
 #: src/news_config_dialog_feed.c:77
 msgid "News Feed Configuration"
-msgstr "Configuração das fontes de notícias"
+msgstr "Configuração da fonte de notícias"
 
 #: src/news_config_dialog_feed.c:329
 msgid "Basic informations"
@@ -255,7 +256,7 @@ msgstr "Informações do servidor"
 
 #: src/news_config_dialog_feed.c:407
 msgid "Do allow the server to overwrite the informations you entered ?"
-msgstr "Permite que o servidor substitua as informações que indicou?"
+msgstr "Permitir que o servidor substitua as informações que indicou?"
 
 #: src/news_config_dialog_feeds.c:82
 msgid "News Feeds Configuration"
@@ -285,7 +286,7 @@ msgstr "Adicionar"
 #: src/news_config_dialog_feeds.c:316
 #: src/news_config_dialog_feeds.c:390
 msgid "Delete"
-msgstr "Apagar"
+msgstr "Eliminar"
 
 #: src/news_config_dialog_feeds.c:319
 #: src/news_config_dialog_feeds.c:393
@@ -315,12 +316,12 @@ msgstr "Restaurar listas iniciais"
 
 #: src/news_config_dialog_feeds.c:686
 msgid "There are <hilight>feeds</hilight> in this category.<br>You have to <hilight>remove them first</hilight>"
-msgstr "Já existem <hilight>fontes</hilight> nesta categoria.<br>Antes de mais, <hilight>tem que as remover</hilight>"
+msgstr "Já existem <hilight>fontes</hilight> nesta categoria.<br>Antes de mais, <hilight>tem que as remover</hilight>."
 
 #: src/news_config_dialog_feeds.c:754
 #: src/news_config_dialog_feeds.c:779
 msgid "News Module - Are you sure ?"
-msgstr "Módulo de notícias - Tem a certeza?"
+msgstr "Tem a certeza?"
 
 #: src/news_config_dialog_item.c:40
 msgid "News Gadget Configuration"
@@ -344,7 +345,7 @@ msgstr "Mostrar fontes não lidas"
 
 #: src/news_config_dialog_item.c:113
 msgid "Show all feeds marked as important"
-msgstr "Mostrar fontes importantes"
+msgstr "Mostrar todas as fontes marcadas como importantes"
 
 #: src/news_config_dialog_item.c:115
 msgid "Show unread feeds marked as important"
@@ -368,7 +369,7 @@ msgstr "O navegador abre o url pessoal"
 
 #: src/news_config_dialog_item.c:129
 msgid "instead of feed url"
-msgstr "ao invés do url da fonte"
+msgstr "em vez do url da fonte"
 
 #: src/news_config_dialog_item.c:136
 msgid "Apply this to all News gadgets"
@@ -396,7 +397,7 @@ msgstr "Remover esta fonte"
 
 #: src/news_config_dialog_langs.c:45
 msgid "News Feeds Language Configuration"
-msgstr "Configuração do idioma das fontes de notícias"
+msgstr "Configuração de idioma das fontes"
 
 #: src/news_config_dialog_langs.c:123
 msgid "Welcome to News Module !"
@@ -412,12 +413,12 @@ msgstr "O <hilight>nome</hilight> indicado é inválido"
 
 #: src/news_feed.c:296
 msgid "The need to <hilight>select a category</hilight>."
-msgstr "Tem que selecionar uma <hilight>categoria</hilight>."
+msgstr "Tem que selecionar uma <hilight>categoria</hilight>"
 
 #: src/news_feed.c:302
 #, c-format
 msgid "A feed with the <hilight>name</hilight> %s <hilight>already exists</hilight><br>in the %s category<br><br>Its not possible to have feeds with the same name<br>in one category."
-msgstr "Já existe uma <hilight>fonte </hilight>com o nome <hilight>%s</hilight><br>na categoria %s.<br><br>Não pode ter na mesma categoria diversas fontes com o mesmo nome"
+msgstr "Já existe uma <hilight>fonte </hilight>com o nome <hilight>%s</hilight><br>na categoria %s.<br><br>Não pode ter na mesma categoria diversas fontes com o mesmo nome."
 
 #: src/news_feed.c:311
 msgid "You need to select a <hilight>language</hilight>."
@@ -429,7 +430,7 @@ msgstr "O <hilight>url</hilight> indicado é inválido."
 
 #: src/news_feed.c:880
 msgid "You need to enter a <hilight>name</hilight> !"
-msgstr "Tem que indicar um <hilight>nome</hilight>!"
+msgstr "Tem que indicar um <hilight>nome</hilight>."
 
 #: src/news_feed.c:888
 msgid "The <hilight>name</hilight> you entered is <hilight>already used</hilight><br>by another category"
@@ -440,6 +441,7 @@ msgid "Set all as read"
 msgstr "Marcar todas como lidas"
 
 #: src/news_menu.c:137
+#: src/news_viewer.c:380
 msgid "Update"
 msgstr "Atualizar"
 
@@ -475,7 +477,11 @@ msgstr "Erro no módulo de notícias"
 msgid "Feeds in this gadget"
 msgstr "Fontes neste gadget"
 
+#: src/news_viewer.c:388
+msgid "Set as read"
+msgstr "Marcar como lida"
+
 #: src/news_viewer.c:438
 msgid "Articles in selected feed"
-msgstr "Artigos na fonte selecionada"
+msgstr "Artigos da fonte selecionada"
 

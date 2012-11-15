@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: News\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-13 13:44+0100\n"
-"PO-Revision-Date: 2012-11-13 13:45+0100\n"
+"POT-Creation-Date: 2012-11-14 22:30+0100\n"
+"PO-Revision-Date: 2012-11-14 22:31+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
 "Language: \n"
@@ -77,6 +77,7 @@ msgid "Sort lists by name (disable Move action)"
 msgstr "Ordina lista per nome (disabilita spostamento)"
 
 #: src/news_config_dialog.c:197 src/news_config_dialog.c:305
+#: src/news_viewer.c:307
 msgid "News Viewer"
 msgstr "Visualizzatore di News"
 
@@ -441,7 +442,7 @@ msgstr ""
 msgid "Set all as read"
 msgstr "Segna tutti come letti"
 
-#: src/news_menu.c:137
+#: src/news_menu.c:137 src/news_viewer.c:380
 msgid "Update"
 msgstr "Aggiorna"
 
@@ -476,6 +477,10 @@ msgstr "Errore del modulo News"
 #: src/news_viewer.c:372
 msgid "Feeds in this gadget"
 msgstr "Feed in questo modulo"
+
+#: src/news_viewer.c:388
+msgid "Set as read"
+msgstr "Segna come letti"
 
 #: src/news_viewer.c:438
 msgid "Articles in selected feed"
