@@ -189,6 +189,7 @@ collections {
 #include "modules/temperature.edc"
 #include "modules/winselector.edc"
 
+#include "widgets/scrollframe.edc"
 #include "widgets/about.edc"
 #include "widgets/border.edc"
 #include "widgets/button.edc"
@@ -208,7 +209,6 @@ collections {
 #include "widgets/preview.edc"
 #include "widgets/radio.edc"
 #include "widgets/resize.edc"
-#include "widgets/scrollframe.edc"
 #include "widgets/slider.edc"
 #include "widgets/textblock.edc"
 #include "widgets/tlist.edc"
