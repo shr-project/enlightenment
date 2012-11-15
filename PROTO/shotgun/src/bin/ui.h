@@ -108,6 +108,7 @@ typedef struct Shotgun_Settings
    double chat_panes;
    int list_w;
    int list_h;
+   int browser_SETTING;
    const char *browser;
 
    void *ui;

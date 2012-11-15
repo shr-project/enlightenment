@@ -204,9 +204,11 @@ _settings_browser_change(UI_WIN *ui, Evas_Object *radio, void *ev __UNUSED__)
    switch (val)
      {
       case SETTINGS_BROWSER_BROWSER:
+        ui->settings->browser_SETTING = 0;
         eina_stringshare_replace(&ui->settings->browser, getenv("BROWSER"));
         break;
       case SETTINGS_BROWSER_OTHER:
+        ui->settings->browser_SETTING = 4;
         hv = elm_hover_add(ui->win);
         box = elm_box_add(ui->win);
         evas_object_show(box);
@@ -234,6 +236,7 @@ _settings_browser_change(UI_WIN *ui, Evas_Object *radio, void *ev __UNUSED__)
         elm_object_focus_set(ent, EINA_TRUE);
         return;
       default:
+        ui->settings->browser_SETTING = val;
         eina_stringshare_replace(&ui->settings->browser, BROWSERS[val]);
      }
    o = evas_object_data_get(ui->win, "browser-radio");
@@ -322,6 +325,7 @@ settings_new(UI_WIN *ui)
    snprintf(buf, sizeof(buf), "Other (%s)", ui->settings->browser ?: "NOT SET");
    SETTINGS_SUBRADIO(buf, OTHER, "Use user-defined browser");
    evas_object_data_set(ui->win, "browser-radio", sradio);
+   elm_radio_value_pointer_set(radio, &ui->settings->browser_SETTING);
 
 #ifdef HAVE_NOTIFY
    SETTINGS_FRAME("DBus");
