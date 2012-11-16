@@ -43,6 +43,13 @@ void Theme::delOverlay(const std::string& item)
   elm_theme_overlay_del(mTheme, item.c_str());   
 }
 
+Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getOverlayList ()
+{
+  Eina_List *list = const_cast <Eina_List*> (elm_theme_overlay_list_get(mTheme));
+  
+  return Eflxx::CountedPtr <Einaxx::List<Theme*> > (Einaxx::List<Theme*>::wrap (list));
+}  
+
 void Theme::addExtension (const std::string& item)
 {
   elm_theme_extension_add(mTheme, item.c_str());
@@ -52,6 +59,13 @@ void Theme::delExtension (const std::string& item)
 {
   elm_theme_extension_del(mTheme, item.c_str());
 }
+
+Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getExtensionList ()
+{
+  Eina_List *list = const_cast <Eina_List*> (elm_theme_extension_list_get(mTheme));
+  
+  return Eflxx::CountedPtr <Einaxx::List<Theme*> > (Einaxx::List<Theme*>::wrap (list));
+}  
 
 void Theme::setTheme (const std::string &theme)
 {

@@ -8,6 +8,9 @@
 #include <Elementary.h>
 
 /* ELFxx */
+#include "einaxx/Einaxx.h"
+
+/* local */
 #include "Object.h"
 
 namespace Elmxx {
@@ -49,6 +52,17 @@ public:
    * @ingroup Theme
    */
   void delOverlay(const std::string& item);
+
+  /**
+   * Get the list of registered overlays for the given theme
+   *
+   * @return List of theme overlays. Do not free it.
+   *
+   * @see elm_theme_overlay_add()
+   *
+   * @ingroup Theme
+   */
+  Eflxx::CountedPtr <Einaxx::List<Theme*> > getOverlayList ();
   
   /**
    * Appends a theme extension to the list of extensions.
@@ -83,6 +97,17 @@ public:
    */
   void delExtension (const std::string& item);
 
+  /**
+   * Get the list of registered extensions for the given theme
+   *
+   * @return List of theme extensions. Do not free it.
+   *
+   * @see addExtension()
+   *
+   * @ingroup Theme
+   */
+   Eflxx::CountedPtr <Einaxx::List<Theme*> > getExtensionList ();
+  
   /**
    * Set the theme search order for the given theme
    *
@@ -210,33 +235,6 @@ EAPI Elm_Theme       *elm_theme_ref_get(Elm_Theme *th);
 
 
 /**
- * Get the list of registered overlays for the given theme
- *
- * @param th The theme from which to get the overlays
- * @return List of theme overlays. Do not free it.
- *
- * @see elm_theme_overlay_add()
- *
- * @ingroup Theme
- */
-EAPI const Eina_List *elm_theme_overlay_list_get(const Elm_Theme *th);
-
-
-/**
- * Get the list of registered extensions for the given theme
- *
- * @param th The theme from which to get the extensions
- * @return List of theme extensions. Do not free it.
- *
- * @see elm_theme_extension_add()
- *
- * @ingroup Theme
- */
-EAPI const Eina_List *elm_theme_extension_list_get(const Elm_Theme *th);
-
-
-
-/**
  * Return a list of theme elements to be used in a theme.
  *
  * @param th Theme to get the list of theme elements from.
@@ -258,10 +256,6 @@ EAPI const Eina_List *elm_theme_extension_list_get(const Elm_Theme *th);
  * @ingroup Theme
  */
 EAPI const Eina_List *elm_theme_list_get(const Elm_Theme *th);
-
-
-
-
 
 /**
  * Return a list of theme elements in the theme search path
