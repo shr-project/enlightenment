@@ -87,6 +87,13 @@ std::string Theme::getItemListPath (const std::string &f, bool &in_search_path)
   return ret;
 }
 
+Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getThemeList ()
+{
+  Eina_List *list = const_cast <Eina_List*> (elm_theme_list_get(mTheme));
+  
+  return Eflxx::CountedPtr <Einaxx::List<Theme*> > (Einaxx::List<Theme*>::wrap (list));
+}  
+
 void Theme::flush ()
 {
   elm_theme_flush(mTheme);

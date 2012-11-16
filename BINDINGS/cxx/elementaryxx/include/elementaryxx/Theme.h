@@ -163,6 +163,27 @@ public:
   static std::string getItemListPath (const std::string &f, bool &in_search_path);
 
   /**
+   * Return a list of theme elements to be used in a theme.
+   *
+   * @return The internal list of theme elements
+   *
+   * This returns the internal list of theme elements (will only be valid as
+   * long as the theme is not modified by setTheme() or theme is not
+   * deleted. This is a list of strings which must not be
+   * altered as they are also internal.
+   *
+   * A theme element can consist of a full or relative path to a .edj file,
+   * or a name, without extension, for a theme to be searched in the known
+   * theme paths for Elementary.
+   *
+   * @see setTheme()
+   * @see getTHeme()
+   *
+   * @ingroup Theme
+   */
+  Eflxx::CountedPtr <Einaxx::List<Theme*> > getThemeList ();
+  
+  /**
    * Flush the current theme.
    *
    *
@@ -234,28 +255,7 @@ EAPI void             elm_theme_ref_set(Elm_Theme *th, Elm_Theme *thref);
 EAPI Elm_Theme       *elm_theme_ref_get(Elm_Theme *th);
 
 
-/**
- * Return a list of theme elements to be used in a theme.
- *
- * @param th Theme to get the list of theme elements from.
- * @return The internal list of theme elements
- *
- * This returns the internal list of theme elements (will only be valid as
- * long as the theme is not modified by elm_theme_set() or theme is not
- * freed by elm_theme_free(). This is a list of strings which must not be
- * altered as they are also internal. If @p th is NULL, then the default
- * theme element list is returned.
- *
- * A theme element can consist of a full or relative path to a .edj file,
- * or a name, without extension, for a theme to be searched in the known
- * theme paths for Elementary.
- *
- * @see elm_theme_set()
- * @see elm_theme_get()
- *
- * @ingroup Theme
- */
-EAPI const Eina_List *elm_theme_list_get(const Elm_Theme *th);
+// TODO: think about new/free sub concept for the next two functions!!!
 
 /**
  * Return a list of theme elements in the theme search path
