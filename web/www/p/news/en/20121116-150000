@@ -1,0 +1,35 @@
+New E17 <b>Release</b>: ALPHA3
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+Despite being only three days since the last alpha release,
+we've still got quite a few changes.<br>
+Here's a list of them:
+<li>Translation updates</li>
+<li>First-run wizard should now be more reliable at detecting applications</li>
+<li>Default theme now much more complete</li>
+<li>Mixer volume changing actions should no longer disappear</li>
+<li>Text file previews no longer contain trailing garbage</li>
+<li>Window geometry prior to maximization is now remembered across restarts</li>
+<li>Pulseaudio mixer should now disconnect properly when necessary</li>
+<li>Filemanager will no longer cause data to be lost when moving directories to other devices</li>
+<li>Window list menu items will now abbreviate properly</li>
+<li>Some menus (such as the Favorite Apps menu) will now place themselves more optimally</li>
+<li>Favorite Apps menu now preloads on startup to decrease time taken to display it</li>
+<li>Filemanager tab completion works again</li>
+<li>Mouse cursor will no longer be stuck in text mode when dragging out of an entry</li>
+<li>Wizard no longer attempts to set dummy keyboard layouts which can override manual layouts</li>
+<li>Wizard now sorts keyboard layouts alphabetically</li>
+<li>"Application Theme" settings panel renamed to "GTK Application Theme"</li>
+</p>
+
+<p><ul>
+
+<li>E17 ALPHA3 - 79398
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha3.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha3.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
