@@ -103,9 +103,25 @@ EAPI void eina_iterator_foreach        (Eina_Iterator *iterator,
   Iterator createIterator ();
 
   //Eina_Accessor *eina_list_accessor_new(const Eina_List *list);
+
+  /*!
+   * @brief C object wrapper factory method.
+   *
+   * For internal usage only! This return a new allocated Object that holds
+   * the wrapped Eeina_List variable. With a delete on this object the wrapped
+   * C type won't be freed.
+   *
+   * @param o The C to to be wrapped.
+   * @return The wrapped C++ type.
+   */
+  static List<T> *wrap (Eina_List *el);
   
 private:
+  List (Eina_List *el);
+  
   Eina_List *mList;
+
+  bool mFree;
 };
 
 /** Implementation **/
@@ -143,14 +159,28 @@ bool List<T>::Iterator::next (T *data)
 
 template <typename T>
 List<T>::List () :
-  mList (NULL)
+  mList (NULL),
+  mFree (true)
+{
+}
+
+template <typename T>
+List<T>::List (Eina_List *list) :
+  mList (list),
+  mFree (false)
 {
 }
 
 template <typename T>
 List<T>::~List ()
 {
-  /*Eina_List *list = eina_list_free (mList);
+  Eina_List *list = NULL;
+  
+  if (mFree)
+  {
+    list = eina_list_free (mList);
+  }
+  
   if (!list)
   {
     // good case: do nothing
@@ -158,7 +188,7 @@ List<T>::~List ()
   else
   {
     // TODO: error handling
-  }*/
+  }
 }
 
 template <typename T>
@@ -278,6 +308,12 @@ typename List<T>::Iterator List<T>::createIterator ()
   Iterator i (mList);
   
   return i;
+}
+
+template <typename T>
+List<T> *List<T>::wrap (Eina_List *list)
+{
+  return new List <T> (list);
 }
 
 } // end namespace Einaxx
