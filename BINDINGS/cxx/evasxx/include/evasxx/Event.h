@@ -3,12 +3,6 @@
 
 #include <Evas.h>
 
-/**
- * Events
- *
- * @author Michael 'Mickey' Lauer <mickey@Vanille.de>
- */
-
 namespace Evasxx {
 
 template<typename T> class ObjectEvent

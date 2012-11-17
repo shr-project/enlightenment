@@ -161,7 +161,7 @@ void Smart::setNeedRecalculate (bool value)
   evas_object_smart_need_recalculate_set (o, value);
 }
 
-bool Smart::setNeedRecalculate ()
+bool Smart::getNeedRecalculate ()
 {
   return evas_object_smart_need_recalculate_get (o);
 }
