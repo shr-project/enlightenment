@@ -3,7 +3,6 @@ EXTRA_DIST = \
 	$(evasxx_HEADERS)
 
 evasxx_HEADERS = \
-	eflpp_evas.h\
 	Canvas.h \
 	Event.h \
 	Image.h \
