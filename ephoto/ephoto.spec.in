@@ -10,8 +10,8 @@ Packager: %{?_packager:%{_packager}}%{!?_packager:Stephen Houston <Unixtitan@gma
 Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:Okra Project (http://www.stephen.3sixty8.com/)}
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 #BuildSuggests: xorg-x11-devel
-Requires: evas ecore edje eina ethumb eio
-BuildRequires: evas-devel ecore-devel edje-devel eina-devel ethumb-devel eio-devel
+Requires: efl ecore edje ethumb eio
+BuildRequires: efl-devel ecore-devel edje-devel ethumb-devel eio-devel
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 
 %description

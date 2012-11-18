@@ -16,8 +16,8 @@ Source: ftp://ftp.enlightenment.org/pub/enlightenment/expedite-%{ver}.tar.gz
 BuildRoot: /var/tmp/expedite-root
 Packager: The Rasterman <raster@rasterman.com>
 URL: http://www.enlightenment.org/
-BuildRequires: evas-devel
-Requires: evas
+BuildRequires: efl-devel
+Requires: efl
 
 %description
 
