@@ -22,3 +22,7 @@ illume-mine:
 install: default
 	rm -f ~/.e/e/themes/detourious.edj
 	cp detourious.edj ~/.e/e/themes
+
+install-dark: dark
+	rm -f ~/.e/e/themes/detourious-dark.edj
+	cp detourious-dark.edj ~/.e/e/themes
