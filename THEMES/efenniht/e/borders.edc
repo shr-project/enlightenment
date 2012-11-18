@@ -1452,4 +1452,83 @@ collections {
          }
       }
    }
+   group {
+      name: "e/widgets/border/default/move";
+      images {
+         image: "base_bg.png" COMP;
+      }
+      parts {
+         part {
+            name: "base";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               image {
+                  normal: "base_bg.png";
+                  border: 2 2 2 2;
+               }
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1.offset: 2 4;
+               rel2.offset: -4 -4;
+               color_class: "move_text";
+               text {
+                  text: "X Y";
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 0.5;
+                  min: 1 1;
+                  text_class: "move_text";
+               }
+            }
+         }
+      }
+   }
+   group {
+      name: "e/widgets/border/default/resize";
+      images {
+         image: "base_bg.png" COMP;
+      }
+      parts {
+         part {
+            name: "base";
+            mouse_events: 0;
+            description {
+               state: "default" 0.0;
+               align: 0.5 0.0;
+               image {
+                  normal: "base_bg.png";
+                  border: 2 2 2 2;
+               }
+               fill.smooth: 0;
+            }
+         }
+         part {
+            name: "e.text.label";
+            type: TEXT;
+            scale: 1;
+            description {
+               state: "default" 0.0;
+               rel1.offset: 2 4;
+               rel2.offset: -4 -4;
+               color_class: "resize_text";
+               text {
+                  text: "WxH";
+                  font: "Sans";
+                  size: 10;
+                  align: 0.5 0.5;
+                  min: 1 1;
+                  text_class: "resize_text";
+               }
+            }
+         }
+      }
+   }
 }

@@ -95,10 +95,10 @@ color_classes {
       color: 255 255 255 255;
    }
    color_class { name: "move_text";
-      color: 0 0 0 255;
+      color: 255 121 0 255;
    }
    color_class { name: "resize_text";
-      color: 0 0 0 255;
+      color: 255 121 0 255;
    }
    // Check
    color_class { name: "check_text";
