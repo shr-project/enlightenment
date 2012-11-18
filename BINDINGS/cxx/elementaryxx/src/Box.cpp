@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Box.h"
+#include "elementaryxx/Box.h"
 
 using namespace std;
 

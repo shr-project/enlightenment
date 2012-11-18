@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Scroller.h"
+#include "elementaryxx/Scroller.h"
 
 using namespace std;
 

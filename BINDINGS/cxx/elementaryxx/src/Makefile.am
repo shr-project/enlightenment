@@ -7,7 +7,8 @@ AM_CPPFLAGS = \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 	$(EFLXX_CFLAGS) \
-	$(EFL_CFLAGS)
+	$(EFL_CFLAGS) \
+	-I../include
 
 AM_CFLAGS =\
 	 -Wall\

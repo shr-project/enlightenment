@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Bubble.h"
+#include "elementaryxx/Bubble.h"
 
 using namespace std;
 

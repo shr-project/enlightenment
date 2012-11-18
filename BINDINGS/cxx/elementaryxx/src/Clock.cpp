@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Clock.h"
+#include "elementaryxx/Clock.h"
 
 using namespace std;
 

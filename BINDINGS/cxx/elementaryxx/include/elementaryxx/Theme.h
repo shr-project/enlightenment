@@ -18,6 +18,9 @@ namespace Elmxx {
 class Theme
 {
 public:
+  // Theme needs to be friend of Object to let him get access to mTheme variable for setTheme()
+  friend class Object;
+  
   Theme (bool default_theme = true);
   ~Theme ();
   Theme (const Theme &th); // specific copy constructor
@@ -220,6 +223,8 @@ public:
   std::string getData (const std::string &key); 
   
 private:
+  Theme (Elm_Theme *th);
+  
   Elm_Theme *mTheme;
 };
 
@@ -281,42 +286,6 @@ EAPI Eina_List       *elm_theme_name_available_list_new(void);
  * @ingroup Theme
  */
 EAPI void             elm_theme_name_available_list_free(Eina_List *list);
-
-/**
- * Set a specific theme to be used for this object and its children
- *
- * @param obj The object to set the theme on
- * @param th The theme to set
- *
- * This sets a specific theme that will be used for the given object and any
- * child objects it has. If @p th is NULL then the theme to be used is
- * cleared and the object will inherit its theme from its parent (which
- * ultimately will use the default theme if no specific themes are set).
- *
- * Use special themes with great care as this will annoy users and make
- * configuration difficult. Avoid any custom themes at all if it can be
- * helped.
- *
- * @ingroup Theme
- */
-EAPI void             elm_object_theme_set(Evas_Object *obj, Elm_Theme *th);
-
-/**
- * Get the specific theme to be used
- *
- * @param obj The object to get the specific theme from
- * @return The specific theme set.
- *
- * This will return a specific theme set, or NULL if no specific theme is
- * set on that object. It will not return inherited themes from parents, only
- * the specific theme set for that specific object. See elm_object_theme_set()
- * for more information.
- *
- * @ingroup Theme
- */
-EAPI Elm_Theme       *elm_object_theme_get(const Evas_Object *obj);
-
-
 
 #endif
 

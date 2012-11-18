@@ -3,11 +3,11 @@
 #endif
 
 /* Project */
-#include "../include/elementaryxx/GenList.h"
-#include "../include/elementaryxx/GenListItem.h"
-#include "../include/elementaryxx/GenItem.h"
-#include "../include/elementaryxx/GenListColumnConstructor.h"
-#include "../include/elementaryxx/GenListColumnSelector.h"
+#include "elementaryxx/GenList.h"
+#include "elementaryxx/GenListItem.h"
+#include "elementaryxx/GenItem.h"
+#include "elementaryxx/GenListColumnConstructor.h"
+#include "elementaryxx/GenListColumnSelector.h"
 #include "localUtil.h"
 
 /* STD */

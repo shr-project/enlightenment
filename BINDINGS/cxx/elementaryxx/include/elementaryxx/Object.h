@@ -12,6 +12,9 @@
 
 namespace Elmxx {
 
+/* forward declarations */ 
+class Theme;
+  
 class Object : public Evasxx::Smart
 {
 public:
@@ -99,6 +102,38 @@ public:
    */
   Eflxx::CountedPtr <Evasxx::Object> getContent ();
   Eflxx::CountedPtr <Evasxx::Object> getContent (const std::string &part);
+
+  /**
+   * Set a specific theme to be used for this object and its children
+   *
+   * @param th The theme to set
+   *
+   * This sets a specific theme that will be used for the given object and any
+   * child objects it has. If @p th is NULL then the theme to be used is
+   * cleared and the object will inherit its theme from its parent (which
+   * ultimately will use the default theme if no specific themes are set).
+   *
+   * Use special themes with great care as this will annoy users and make
+   * configuration difficult. Avoid any custom themes at all if it can be
+   * helped.
+   *
+   * @ingroup Theme
+   */
+  void setTheme(const Theme *th);
+
+  /**
+   * Get the specific theme to be used
+   *
+   * @return The specific theme set.
+   *
+   * This will return a specific theme set, or NULL if no specific theme is
+   * set on that object. It will not return inherited themes from parents, only
+   * the specific theme set for that specific object. See setTheme()
+   * for more information.
+   *
+   * @ingroup Theme
+   */
+  Eflxx::CountedPtr <Theme> getTheme();
 
   /**
    * Unset a content of an object

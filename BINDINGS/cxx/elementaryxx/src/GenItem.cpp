@@ -3,8 +3,8 @@
 #endif
 
 /* Project */
-#include "../include/elementaryxx/GenItem.h"
-#include "../include/elementaryxx/GenDataModel.h"
+#include "elementaryxx/GenItem.h"
+#include "elementaryxx/GenDataModel.h"
 
 /* STD */
 #include <iostream>

@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Separator.h"
+#include "elementaryxx/Separator.h"
 
 using namespace std;
 

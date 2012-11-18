@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Theme.h"
+#include "elementaryxx/Theme.h"
 
 using namespace std;
 
@@ -19,6 +19,9 @@ Theme::Theme (bool default_theme)
     mTheme = elm_theme_new ();
   }
 }
+
+Theme::Theme (Elm_Theme *th)
+{}
 
 Theme::~Theme ()
 {

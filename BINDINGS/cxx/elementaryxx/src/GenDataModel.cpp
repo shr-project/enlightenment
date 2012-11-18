@@ -1,8 +1,8 @@
 /* Project */
-#include "../include/elementaryxx/GenDataModel.h"
-#include "../include/elementaryxx/Icon.h"
-#include "../include/elementaryxx/Window.h"
-#include "../include/elementaryxx/GenListColumnConstructor.h"
+#include "elementaryxx/GenDataModel.h"
+#include "elementaryxx/Icon.h"
+#include "elementaryxx/Window.h"
+#include "elementaryxx/GenListColumnConstructor.h"
 
 /* STD */
 #include <iostream>

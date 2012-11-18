@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Spinner.h"
+#include "elementaryxx/Spinner.h"
 
 using namespace std;
 

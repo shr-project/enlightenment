@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Window.h"
+#include "elementaryxx/Window.h"
 
 using namespace std;
 

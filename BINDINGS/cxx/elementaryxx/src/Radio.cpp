@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Radio.h"
+#include "elementaryxx/Radio.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Layout.h"
+#include "elementaryxx/Layout.h"
 
 /* EFL */
 #include <Evas.h>

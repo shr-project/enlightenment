@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Frame.h"
+#include "elementaryxx/Frame.h"
 
 using namespace std;
 

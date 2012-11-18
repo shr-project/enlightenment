@@ -3,7 +3,7 @@
 #endif
 
 /* Project */
-#include "../include/elementaryxx/Gen.h"
+#include "elementaryxx/Gen.h"
 #include "localUtil.h"
 
 /* STD */

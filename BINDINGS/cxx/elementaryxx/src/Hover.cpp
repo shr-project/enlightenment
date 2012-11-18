@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Hover.h"
+#include "elementaryxx/Hover.h"
 
 using namespace std;
 

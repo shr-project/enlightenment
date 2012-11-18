@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Progressbar.h"
+#include "elementaryxx/Progressbar.h"
 
 using namespace std;
 

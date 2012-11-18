@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Check.h"
+#include "elementaryxx/Check.h"
 
 using namespace std;
 

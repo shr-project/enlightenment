@@ -1,5 +1,5 @@
 /* Project */
-#include "../include/elementaryxx/GenListColumnConstructor.h"
+#include "elementaryxx/GenListColumnConstructor.h"
 
 using namespace std;
 

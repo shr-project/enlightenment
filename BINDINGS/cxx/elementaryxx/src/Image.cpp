@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Image.h"
+#include "elementaryxx/Image.h"
 
 using namespace std;
 

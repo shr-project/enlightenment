@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Application.h"
+#include "elementaryxx/Application.h"
 
 /* EFL */
 #include <Elementary.h>

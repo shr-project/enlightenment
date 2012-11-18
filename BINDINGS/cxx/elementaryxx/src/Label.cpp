@@ -2,7 +2,7 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Label.h"
+#include "elementaryxx/Label.h"
 
 using namespace std;
 

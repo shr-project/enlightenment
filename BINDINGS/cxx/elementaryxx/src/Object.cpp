@@ -2,7 +2,8 @@
   #include <config.h>
 #endif
 
-#include "../include/elementaryxx/Object.h"
+#include "elementaryxx/Object.h"
+#include "elementaryxx/Theme.h"
 
 /* STD */
 #include <cassert>
@@ -29,10 +30,6 @@ void Object::destroy ()
 {
   evas_object_del (o);
   cout << "Object::destroy ()" << endl;
-
-  // do a suicide as the delete operator isn't public available
-  // the reason is that the C design below is a suicide design :-(
-  //delete (this); // TODO: why does this make problems sometimes???
 }
 
 void Object::freeSignalHandler ()
@@ -154,6 +151,22 @@ Eflxx::CountedPtr <Evasxx::Object> Object::getContent (const std::string &part)
   Evasxx::Object *ret_o = Evasxx::Object::wrap (eo);
 
   return Eflxx::CountedPtr <Evasxx::Object> (ret_o);
+}
+
+void Object::setTheme(const Theme *th)
+{
+  // calling th->mTheme is allowed because Object is a friend of Theme...
+  elm_object_theme_set(o, th->mTheme);
+}
+
+Eflxx::CountedPtr <Theme> Object::getTheme()
+{
+  Elm_Theme *theme = elm_object_theme_get(o);
+
+#warning "Not yet implemented!!"
+  Theme *ret_t = NULL;//Theme::wrap (theme);
+
+  return Eflxx::CountedPtr <Theme> (ret_t);
 }
 
 void Object::unsetContent()
