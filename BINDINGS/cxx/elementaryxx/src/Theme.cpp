@@ -46,7 +46,7 @@ void Theme::delOverlay(const std::string& item)
   elm_theme_overlay_del(mTheme, item.c_str());   
 }
 
-Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getOverlayList ()
+Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getOverlayList () const
 {
   Eina_List *list = const_cast <Eina_List*> (elm_theme_overlay_list_get(mTheme));
   
@@ -63,7 +63,7 @@ void Theme::delExtension (const std::string& item)
   elm_theme_extension_del(mTheme, item.c_str());
 }
 
-Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getExtensionList ()
+Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getExtensionList () const
 {
   Eina_List *list = const_cast <Eina_List*> (elm_theme_extension_list_get(mTheme));
   
@@ -75,7 +75,7 @@ void Theme::setTheme (const std::string &theme)
   elm_theme_set(mTheme, theme.c_str());
 }
 
-std::string Theme::getTheme ()
+std::string Theme::getTheme () const
 {
   return elm_theme_get(mTheme);
 }
@@ -90,14 +90,14 @@ std::string Theme::getItemListPath (const std::string &f, bool &in_search_path)
   return ret;
 }
 
-Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getThemeList ()
+Eflxx::CountedPtr <Einaxx::List<Theme*> > Theme::getThemeList () const
 {
   Eina_List *list = const_cast <Eina_List*> (elm_theme_list_get(mTheme));
   
   return Eflxx::CountedPtr <Einaxx::List<Theme*> > (Einaxx::List<Theme*>::wrap (list));
 }  
 
-void Theme::flush ()
+void Theme::flush () const
 {
   elm_theme_flush(mTheme);
 }
@@ -107,7 +107,7 @@ void Theme::flushFull ()
   elm_theme_full_flush();
 }
 
-std::string Theme::getData (const std::string &key)
+std::string Theme::getData (const std::string &key) const
 {
   return elm_theme_data_get(mTheme, key.c_str());
 }

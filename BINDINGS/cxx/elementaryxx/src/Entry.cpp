@@ -22,9 +22,40 @@ Entry *Entry::factory (Evasxx::Object &parent)
   return new Entry (parent);
 }
 
-void Entry::setSingleLine (bool singleLine)
+void Entry::pushUserTextStyle(const std::string &style)
 {
-  elm_entry_single_line_set (o, singleLine);
+  elm_entry_text_style_user_push(o, style.c_str());
+}
+
+void Entry::popUserTextStyle()
+{
+  elm_entry_text_style_user_pop(o);
+}
+
+std::string Entry::peekUserTextStyle()
+{
+  const char *tmp = elm_entry_text_style_user_peek(o);
+  return tmp ? tmp : string ();
+}
+
+void Entry::setScrollable(bool scroll)
+{
+  elm_entry_scrollable_set(o, scroll);
+}
+
+bool Entry::getScrollable() const
+{
+  return elm_entry_scrollable_get(o);
+}
+
+void Entry::setSingleLine (bool single_line)
+{
+  elm_entry_single_line_set (o, single_line);
+}
+
+bool Entry::getSingleLine() const
+{
+  return elm_entry_single_line_get(o);
 }
 
 void Entry::setPassword (bool password)
@@ -32,18 +63,28 @@ void Entry::setPassword (bool password)
   elm_entry_password_set (o, password);
 }
 
+bool Entry::getPassword() const
+{
+  return elm_entry_password_get(o);
+}
+
 void Entry::setText (const std::string &entry)
 {
   elm_entry_entry_set (o, entry.c_str ());
 }
 
-const std::string Entry::getText () const
+std::string Entry::getText () const
 {
   const char *tmp = elm_entry_entry_get (o);
   return tmp ? tmp : string ();
 }
 
-const std::string Entry::getSelection () const
+bool Entry::isEmpty() const
+{
+  return elm_entry_is_empty(o);
+}
+
+std::string Entry::getSelection () const
 {
   const char *tmp = elm_entry_selection_get (o);
   return tmp ? tmp : string ();
@@ -74,13 +115,13 @@ void Entry::selectAll ()
   elm_entry_select_all (o);
 }
 
-const std::string Entry::markupToUtf8 (const std::string &str)
+std::string Entry::markupToUtf8 (const std::string &str)
 {
   const char *tmp = elm_entry_markup_to_utf8 (str.c_str ());
   return tmp ? tmp : string ();
 }
 
-const std::string Entry::utf8ToMarkup (const std::string &str)
+std::string Entry::utf8ToMarkup (const std::string &str)
 {
   const char *tmp = elm_entry_utf8_to_markup (str.c_str ());
   return tmp ? tmp : string ();

@@ -65,7 +65,7 @@ public:
    *
    * @ingroup Theme
    */
-  Eflxx::CountedPtr <Einaxx::List<Theme*> > getOverlayList ();
+  Eflxx::CountedPtr <Einaxx::List<Theme*> > getOverlayList () const;
   
   /**
    * Appends a theme extension to the list of extensions.
@@ -109,7 +109,7 @@ public:
    *
    * @ingroup Theme
    */
-   Eflxx::CountedPtr <Einaxx::List<Theme*> > getExtensionList ();
+   Eflxx::CountedPtr <Einaxx::List<Theme*> > getExtensionList () const;
   
   /**
    * Set the theme search order for the given theme
@@ -143,7 +143,7 @@ public:
    *
    * @ingroup Theme
    */
-  std::string getTheme ();
+  std::string getTheme () const;
 
   /**
    * Return the full path for a theme element
@@ -184,7 +184,7 @@ public:
    *
    * @ingroup Theme
    */
-  Eflxx::CountedPtr <Einaxx::List<Theme*> > getThemeList ();
+  Eflxx::CountedPtr <Einaxx::List<Theme*> > getThemeList () const;
   
   /**
    * Flush the current theme.
@@ -197,7 +197,7 @@ public:
    *
    * @ingroup Theme
    */
-  void flush ();
+  void flush () const;
 
   /**
    * This flushes all themes (default and specific ones).
@@ -220,7 +220,7 @@ public:
    *
    * @ingroup Theme
    */
-  std::string getData (const std::string &key); 
+  std::string getData (const std::string &key) const; 
   
 private:
   Theme (Elm_Theme *th);
