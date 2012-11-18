@@ -13,8 +13,8 @@ Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project 
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 URL: http://www.enlightenment.org/
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-Requires: eina, ecore
-BuildRequires: eina-devel, ecore-devel
+Requires: efl, ecore
+BuildRequires: efl-devel, ecore-devel
 
 %description
 ETrophy is a library that manages scores, trophies and unlockables. It will

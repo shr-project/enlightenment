@@ -13,8 +13,8 @@ Vendor: %{?_vendorinfo:%{_vendorinfo}}%{!?_vendorinfo:The Enlightenment Project 
 Distribution: %{?_distribution:%{_distribution}}%{!?_distribution:%{_vendor}}
 URL: http://www.enlightenment.org/
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
-Requires: eina, evas, azy
-BuildRequires: eina-devel, evas-devel, azy-devel
+Requires: efl, azy
+BuildRequires: efl-devel, azy-devel
 
 %description
 pdf library
