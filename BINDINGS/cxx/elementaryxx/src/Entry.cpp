@@ -90,9 +90,19 @@ std::string Entry::getSelection () const
   return tmp ? tmp : string ();
 }
 
+void Entry::forceCalc()
+{
+  elm_entry_calc_force(o);
+}
+
 void Entry::insertText (const std::string &entry)
 {
   elm_entry_entry_insert (o, entry.c_str ());
+}
+
+void Entry::appendText (const std::string &entry)
+{
+  elm_entry_entry_append(o, entry.c_str ());
 }
 
 void Entry::setLineWrap (Elm_Wrap_Type wrap)
@@ -100,9 +110,19 @@ void Entry::setLineWrap (Elm_Wrap_Type wrap)
   elm_entry_line_wrap_set (o, wrap);
 }
 
+Elm_Wrap_Type Entry::getLineWrap() const
+{
+  return elm_entry_line_wrap_get(o);
+}
+
 void Entry::setEditable (bool editable)
 {
   elm_entry_editable_set (o, editable);
+}
+
+bool Entry::getEditable() const
+{
+  return elm_entry_editable_get(o);
 }
 
 void Entry::selectNone ()
@@ -115,16 +135,130 @@ void Entry::selectAll ()
   elm_entry_select_all (o);
 }
 
-std::string Entry::markupToUtf8 (const std::string &str)
+bool Entry::cursorNext()
 {
-  const char *tmp = elm_entry_markup_to_utf8 (str.c_str ());
-  return tmp ? tmp : string ();
+  return elm_entry_cursor_next(o);
+}
+    
+bool Entry::cursorPrev()
+{
+  return elm_entry_cursor_prev(o);
 }
 
-std::string Entry::utf8ToMarkup (const std::string &str)
+bool Entry::cursorUp()
+{  
+  return elm_entry_cursor_up(o);
+}
+
+bool Entry::cursorDown()
 {
-  const char *tmp = elm_entry_utf8_to_markup (str.c_str ());
-  return tmp ? tmp : string ();
+  return elm_entry_cursor_down(o);
+}
+                
+void Entry::setCursorBegin()
+{
+  elm_entry_cursor_begin_set(o);
+}
+
+void Entry::setCursorEnd()
+{
+  elm_entry_cursor_end_set(o);
+}
+
+void Entry::setCursorLineBegin()
+{
+  elm_entry_cursor_line_begin_set(o);
+}
+
+void Entry::setCursorLineEnd()
+{
+  elm_entry_cursor_line_end_set(o);
+}
+
+void Entry::beginCursorSelection()
+{
+  elm_entry_cursor_selection_begin(o);
+}
+
+void Entry::endCursorSelection()
+{
+  elm_entry_cursor_selection_end(o);
+}
+
+bool Entry::getCursorIsFormat() const
+{
+  return elm_entry_cursor_is_format_get(o);
+}
+
+bool Entry::getCursorIsVisibleFormat() const
+{
+  return elm_entry_cursor_is_visible_format_get(o);
+}
+
+void Entry::setCursorPos(int pos)
+{
+  elm_entry_cursor_pos_set(o, pos);
+}
+
+int Entry::getCursorPos() const
+{
+  return elm_entry_cursor_pos_get(o);
+}
+
+void Entry::cutSelection()
+{
+  elm_entry_selection_cut(o);
+}
+
+void Entry::copySelection()
+{
+  elm_entry_selection_copy(o);
+}
+
+void Entry::pasteSelection()
+{
+  elm_entry_selection_paste(o);
+}
+
+void Entry::clearContextMenu()
+{
+  elm_entry_context_menu_clear(o);
+}
+
+std::string Entry::markupToUtf8 (const std::string &s)
+{
+  char *tmp = elm_entry_markup_to_utf8 (s.c_str ());
+  string ret (tmp ? tmp : string ());
+  free (tmp);
+  return ret;
+}
+
+std::string Entry::utf8ToMarkup (const std::string &s)
+{
+  char *tmp = elm_entry_utf8_to_markup (s.c_str ());
+  string ret (tmp ? tmp : string ());
+  free (tmp);
+  return ret;
+}
+
+void Entry::setAnchorHoverParent(const Evasxx::Object &parent)
+{
+  elm_entry_anchor_hover_parent_set(o, parent.obj());
+}
+
+void Entry::setAnchorHoverStyle(const std::string &style)
+{
+  elm_entry_anchor_hover_style_set(o, style.c_str());
+}
+
+void Entry::setAnchorHoverDefaultStyle()
+{
+  elm_entry_anchor_hover_style_set(o, NULL);
+}
+
+void Entry::endAnchorHover()
+{
+  elm_entry_anchor_hover_end(o);
 }
 
 } // end namespace Elmxx

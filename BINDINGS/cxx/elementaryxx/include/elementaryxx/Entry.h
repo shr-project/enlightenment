@@ -134,8 +134,26 @@ public:
    */
   bool getPassword() const;
 
+  /**
+   * This sets the text displayed within the entry to @p entry.
+   *
+   * @param entry The text to be displayed
+   *
+   * @note Using this function bypasses text filters
+   *
+   * @ingroup Entry
+   */
   void setText (const std::string &entry);
   
+
+  /**
+   * This returns the text currently shown in object @p entry.
+   * See also setText().
+   *
+   * @return The currently displayed text
+   *
+   * @ingroup Entry
+   */
   std::string getText () const;
 
   /**
@@ -167,20 +185,388 @@ public:
    * @ingroup Entry
    */
   std::string getSelection () const;
-  
+
+  /**
+   * Forces calculation of the entry size and text layouting.
+   *
+   * This should be used after modifying the textblock object directly. See
+   * getTextblock() for more information.
+   *
+   *
+   * @see getTextblock()
+   *
+   * @ingroup Entry
+   */
+  void forceCalc();
+
+  /**
+   * Inserts the given text into the entry at the current cursor position.
+   *
+   * This inserts text at the cursor position as if it was typed
+   * by the user (note that this also allows markup which a user
+   * can't just "type" as it would be converted to escaped text, so this
+   * call can be used to insert things like emoticon items or bold push/pop
+   * tags, other font and color change tags etc.)
+   *
+   * If any selection exists, it will be replaced by the inserted text.
+   *
+   * The inserted text is subject to any filters set for the widget.
+   *
+   * @param entry The text to insert
+   *
+   * @see appendMarkupFilter()
+   *
+   * @ingroup Entry
+   */
   void insertText (const std::string &entry);
-  
+
+  /**
+   * Appends @p entry to the text of the entry.
+   *
+   * Adds the text in @p entry to the end of any text already present in the
+   * widget.
+   *
+   * The appended text is subject to any filters set for the widget.
+   *
+   * @param entry The text to be displayed
+   *
+   * @see appendMarkupFilter()
+   *
+   * @ingroup Entry
+   */
+  void appendText (const std::string &entry);
+  EAPI void               elm_entry_entry_append(Evas_Object *obj, const char *entry);
+
+  /**
+   * Set the line wrap type to use on multi-line entries.
+   *
+   * Sets the wrap type used by the entry to any of the specified in
+   * Elm_Wrap_Type. This tells how the text will be implicitly cut into a new
+   * line (without inserting a line break or paragraph separator) when it
+   * reaches the far edge of the widget.
+   *
+   * Note that this only makes sense for multi-line entries. A widget set
+   * to be single line will never wrap.
+   *
+   * @param wrap The wrap mode to use. See Elm_Wrap_Type for details on them
+   */
   void setLineWrap (Elm_Wrap_Type wrap);
-  
+
+  /**
+   * Gets the wrap mode the entry was set to use.
+   *
+   * @return Wrap type
+   *
+   * @see also setLineWrap()
+   *
+   * @ingroup Entry
+   */
+  Elm_Wrap_Type getLineWrap() const;
+
+  /**
+   * Sets if the entry is to be editable or not.
+   *
+   * By default, entries are editable and when focused, any text input by the
+   * user will be inserted at the current cursor position. But calling this
+   * function with @p editable as false will prevent the user from
+   * inputting text into the entry.
+   *
+   * The only way to change the text of a non-editable entry is to use
+   * setText() and other related functions.
+   *
+   * @param editable If true, user input will be inserted in the entry,
+   * if not, the entry is read-only and no user input is allowed.
+   *
+   * @ingroup Entry
+   */
   void setEditable (bool editable);
-  
+
+  /**
+   * Gets whether the entry is editable or not.
+   *
+   * @return If true, the entry is editable by the user.
+   * If false, it is not editable by the user
+   *
+   * @see setEditable()
+   *
+   * @ingroup Entry
+   */
+  bool getEditable() const;
+
+  /**
+   * This drops any existing text selection within the entry.
+   *
+   * @ingroup Entry
+   */
   void selectNone ();
-  
+
+  /**
+   * This selects all text within the entry.
+   *
+   * @ingroup Entry
+   */
   void selectAll ();
+
+  /**
+   * This moves the cursor one place to the right within the entry.
+   *
+   * @return true upon success, false upon failure
+   *
+   * @ingroup Entry
+   */
+  bool cursorNext();
+
+  /**
+   * This moves the cursor one place to the left within the entry.
+   *
+   * @return true upon success, false upon failure
+   *
+   * @ingroup Entry
+   */
+  bool cursorPrev();
+
+  /**
+   * This moves the cursor one line up within the entry.
+   *
+   * @return true upon success, false upon failure
+   *
+   * @ingroup Entry
+   */
+  bool cursorUp();
+
+  /**
+   * This moves the cursor one line down within the entry.
+   *
+   * @return true upon success, false upon failure
+   *
+   * @ingroup Entry
+   */
+  bool cursorDown();
+
+  /**
+   * This moves the cursor to the beginning of the entry.
+   *
+   * @ingroup Entry
+   */
+  void setCursorBegin();
+
+  /**
+   * This moves the cursor to the end of the entry.
+   *
+   * @ingroup Entry
+   */
+  void setCursorEnd();
+
+  /**
+   * This moves the cursor to the beginning of the current line.
+   *
+   * @ingroup Entry
+   */
+  void setCursorLineBegin();
+
+  /**
+   * This moves the cursor to the end of the current line.
+   *
+   * @ingroup Entry
+   */
+  void setCursorLineEnd();
+
+  /**
+   * This begins a selection within the entry as though
+   * the user were holding down the mouse button to make a selection.
+   *
+   * @ingroup Entry
+   */
+  void beginCursorSelection();
+
+  /**
+   * This ends a selection within the entry as though
+   * the user had just released the mouse button while making a selection.
+   *
+   * @ingroup Entry
+   */
+  void endCursorSelection();
+
+  /**
+   * Gets whether a format node exists at the current cursor position.
+   *
+   * A format node is anything that defines how the text is rendered. It can
+   * be a visible format node, such as a line break or a paragraph separator,
+   * or an invisible one, such as bold begin or end tag.
+   * This function returns whether any format node exists at the current
+   * cursor position.
+   *
+   * @return true if the current cursor position contains a format node,
+   * false otherwise.
+   *
+   * @see getCursorIsVisibleFormat()
+   *
+   * @ingroup Entry
+   */
+  bool getCursorIsFormat() const;
+
+  /**
+   * Gets if the current cursor position holds a visible format node.
+   *
+   * @return true if the current cursor is a visible format, false
+   * if it's an invisible one or no format exists.
+   *
+   * @see getCursorIsFormat()
+   *
+   * @ingroup Entry
+   */
+  bool getCursorIsVisibleFormat() const;
+
+  /**
+   * Sets the cursor position in the entry to the given value
+   *
+   * The value in @p pos is the index of the character position within the
+   * contents of the string as returned by elm_entry_cursor_pos_get().
+   *
+   * @param pos The position of the cursor
+   *
+   * @ingroup Entry
+   */
+  void setCursorPos(int pos);
+
+  /**
+   * Retrieves the current position of the cursor in the entry
+   *
+   * @return The cursor position
+   *
+   * @ingroup Entry
+   */
+  int getCursorPos() const;
+
+  /**
+   * This executes a "cut" action on the selected text in the entry.
+   *
+   * @ingroup Entry
+   */
+  void cutSelection();
+
+  /**
+   * This executes a "copy" action on the selected text in the entry.
+   *
+   * @ingroup Entry
+   */
+  void copySelection();
+
+  /**
+   * This executes a "paste" action in the entry.
+   *
+   * @ingroup Entry
+   */
+  void pasteSelection();
+
+  /**
+   * This clears and frees the items in a entry's contextual (longpress)
+   * menu.
+   *
+   * @see addContextMenuItem()
+   *
+   * @ingroup Entry
+   */
+  void clearContextMenu();
+
+  /**
+   * This converts a markup (HTML-like) string into UTF-8.
+   *
+   * @param s The string (in markup) to be converted
+   * @return The converted string (in UTF-8).
+   *
+   * @ingroup Entry
+   */
+  static std::string markupToUtf8(const std::string &s);
+
+  /**
+   * This converts a UTF-8 string into markup (HTML-like).
+   *
+   * @param s The string (in UTF-8) to be converted
+   * @return The converted string (in markup).
+   *
+   * @ingroup Entry
+   */
+  static std::string utf8ToMarkup(const std::string &s);
+
+  /**
+   * Set the parent of the hover popup
+   *
+   * Sets the parent object to use by the hover created by the entry
+   * when an anchor is clicked. See @ref Hover for more details on this.
+   *
+   * @param parent The object to use as parent for the hover
+   *
+   * @ingroup Entry
+   */
+  void setAnchorHoverParent(const Evasxx::Object &parent);
   
-  static std::string markupToUtf8 (const std::string &str);
-  
-  static std::string utf8ToMarkup (const std::string &str);
+  /**
+   * Get the parent of the hover popup
+   *
+   * Get the object used as parent for the hover created by the entry
+   * widget. See @ref Hover for more details on this.
+   * If no parent is set, the same entry object will be used.
+   *
+   * @return The object used as parent for the hover, NULL if none is set.
+   *
+   * @ingroup Entry
+   */
+  // FIXME
+  //EAPI Evas_Object                *elm_entry_anchor_hover_parent_get(const Evas_Object *obj);
+
+  /**
+   * Set the style that the hover should use
+   *
+   * When creating the popup hover, entry will request that it's
+   * themed according to @p style.
+   *
+   * Setting style no @c NULL means disabling automatic hover.
+   *
+   * @param style The style to use for the underlying hover
+   *
+   * @see setStyle()
+   *
+   * @ingroup Entry
+   */
+  void setAnchorHoverStyle(const std::string &style);
+
+  /**
+   * Set the style that the hover should use
+   *
+   * When creating the popup hover, entry will request that it's
+   * tdisabling automatic hover.
+   *
+   * @see setStyle()
+   *
+   * @ingroup Entry
+   */
+  void setAnchorHoverDefaultStyle();
+
+  /**
+   * Get the style that the hover should use
+   *
+   * Get the style, the hover created by entry will use.
+   *
+   * @return The style to use by the hover. @c NULL means the default is used.
+   *
+   * @see elm_object_style_set()
+   *
+   * @ingroup Entry
+   */
+  // FIXME
+  //EAPI const char                 *elm_entry_anchor_hover_style_get(const Evas_Object *obj);
+
+  /**
+   * Ends the hover popup in the entry
+   *
+   * When an anchor is clicked, the entry widget will create a hover
+   * object to use as a popup with user provided content. This function
+   * terminates this popup, returning the entry to its normal state.
+   *
+   * @ingroup Entry
+   */
+  void endAnchorHover();
   
 private:
   Entry (); // forbid standard constructor
@@ -190,49 +576,6 @@ private:
 };
 
 #if 0
-
-
-/**
- * This sets the text displayed within the entry to @p entry.
- *
- * @param obj The entry object
- * @param entry The text to be displayed
- *
- * @note Using this function bypasses text filters
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_entry_set(Evas_Object *obj, const char *entry);
-
-/**
- * This returns the text currently shown in object @p entry.
- * See also elm_entry_entry_set().
- *
- * @param obj The entry object
- * @return The currently displayed text or NULL on failure
- *
- * @ingroup Entry
- */
-EAPI const char        *elm_entry_entry_get(const Evas_Object *obj);
-
-/**
- * Appends @p entry to the text of the entry.
- *
- * Adds the text in @p entry to the end of any text already present in the
- * widget.
- *
- * The appended text is subject to any filters set for the widget.
- *
- * @param obj The entry object
- * @param entry The text to be displayed
- *
- * @see elm_entry_markup_filter_append()
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_entry_append(Evas_Object *obj, const char *entry);
-
-
 
 
 /**
@@ -266,248 +609,12 @@ EAPI void               elm_entry_entry_append(Evas_Object *obj, const char *ent
  */
 EAPI Evas_Object *      elm_entry_textblock_get(Evas_Object *obj);
 
-/**
- * Forces calculation of the entry size and text layouting.
- *
- * This should be used after modifying the textblock object directly. See
- * elm_entry_textblock_get() for more information.
- *
- * @param obj The entry object
- *
- * @see elm_entry_textblock_get()
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_calc_force(Evas_Object *obj);
 
-/**
- * Inserts the given text into the entry at the current cursor position.
- *
- * This inserts text at the cursor position as if it was typed
- * by the user (note that this also allows markup which a user
- * can't just "type" as it would be converted to escaped text, so this
- * call can be used to insert things like emoticon items or bold push/pop
- * tags, other font and color change tags etc.)
- *
- * If any selection exists, it will be replaced by the inserted text.
- *
- * The inserted text is subject to any filters set for the widget.
- *
- * @param obj The entry object
- * @param entry The text to insert
- *
- * @see elm_entry_markup_filter_append()
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_entry_insert(Evas_Object *obj, const char *entry);
 
-/**
- * Set the line wrap type to use on multi-line entries.
- *
- * Sets the wrap type used by the entry to any of the specified in
- * Elm_Wrap_Type. This tells how the text will be implicitly cut into a new
- * line (without inserting a line break or paragraph separator) when it
- * reaches the far edge of the widget.
- *
- * Note that this only makes sense for multi-line entries. A widget set
- * to be single line will never wrap.
- *
- * @param obj The entry object
- * @param wrap The wrap mode to use. See Elm_Wrap_Type for details on them
- */
-EAPI void               elm_entry_line_wrap_set(Evas_Object *obj, Elm_Wrap_Type wrap);
 
-/**
- * Gets the wrap mode the entry was set to use.
- *
- * @param obj The entry object
- * @return Wrap type
- *
- * @see also elm_entry_line_wrap_set()
- *
- * @ingroup Entry
- */
-EAPI Elm_Wrap_Type      elm_entry_line_wrap_get(const Evas_Object *obj);
 
-/**
- * Sets if the entry is to be editable or not.
- *
- * By default, entries are editable and when focused, any text input by the
- * user will be inserted at the current cursor position. But calling this
- * function with @p editable as EINA_FALSE will prevent the user from
- * inputting text into the entry.
- *
- * The only way to change the text of a non-editable entry is to use
- * elm_object_text_set(), elm_entry_entry_insert() and other related
- * functions.
- *
- * @param obj The entry object
- * @param editable If EINA_TRUE, user input will be inserted in the entry,
- * if not, the entry is read-only and no user input is allowed.
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_editable_set(Evas_Object *obj, Eina_Bool editable);
 
-/**
- * Gets whether the entry is editable or not.
- *
- * @param obj The entry object
- * @return If true, the entry is editable by the user.
- * If false, it is not editable by the user
- *
- * @see elm_entry_editable_set()
- *
- * @ingroup Entry
- */
-EAPI Eina_Bool          elm_entry_editable_get(const Evas_Object *obj);
 
-/**
- * This drops any existing text selection within the entry.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_select_none(Evas_Object *obj);
-
-/**
- * This selects all text within the entry.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_select_all(Evas_Object *obj);
-
-/**
- * This moves the cursor one place to the right within the entry.
- *
- * @param obj The entry object
- * @return EINA_TRUE upon success, EINA_FALSE upon failure
- *
- * @ingroup Entry
- */
-EAPI Eina_Bool          elm_entry_cursor_next(Evas_Object *obj);
-
-/**
- * This moves the cursor one place to the left within the entry.
- *
- * @param obj The entry object
- * @return EINA_TRUE upon success, EINA_FALSE upon failure
- *
- * @ingroup Entry
- */
-EAPI Eina_Bool          elm_entry_cursor_prev(Evas_Object *obj);
-
-/**
- * This moves the cursor one line up within the entry.
- *
- * @param obj The entry object
- * @return EINA_TRUE upon success, EINA_FALSE upon failure
- *
- * @ingroup Entry
- */
-EAPI Eina_Bool          elm_entry_cursor_up(Evas_Object *obj);
-
-/**
- * This moves the cursor one line down within the entry.
- *
- * @param obj The entry object
- * @return EINA_TRUE upon success, EINA_FALSE upon failure
- *
- * @ingroup Entry
- */
-EAPI Eina_Bool          elm_entry_cursor_down(Evas_Object *obj);
-
-/**
- * This moves the cursor to the beginning of the entry.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_cursor_begin_set(Evas_Object *obj);
-
-/**
- * This moves the cursor to the end of the entry.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_cursor_end_set(Evas_Object *obj);
-
-/**
- * This moves the cursor to the beginning of the current line.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_cursor_line_begin_set(Evas_Object *obj);
-
-/**
- * This moves the cursor to the end of the current line.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_cursor_line_end_set(Evas_Object *obj);
-
-/**
- * This begins a selection within the entry as though
- * the user were holding down the mouse button to make a selection.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_cursor_selection_begin(Evas_Object *obj);
-
-/**
- * This ends a selection within the entry as though
- * the user had just released the mouse button while making a selection.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_cursor_selection_end(Evas_Object *obj);
-
-/**
- * Gets whether a format node exists at the current cursor position.
- *
- * A format node is anything that defines how the text is rendered. It can
- * be a visible format node, such as a line break or a paragraph separator,
- * or an invisible one, such as bold begin or end tag.
- * This function returns whether any format node exists at the current
- * cursor position.
- *
- * @param obj The entry object
- * @return EINA_TRUE if the current cursor position contains a format node,
- * EINA_FALSE otherwise.
- *
- * @see elm_entry_cursor_is_visible_format_get()
- *
- * @ingroup Entry
- */
-EAPI Eina_Bool          elm_entry_cursor_is_format_get(const Evas_Object *obj);
-
-/**
- * Gets if the current cursor position holds a visible format node.
- *
- * @param obj The entry object
- * @return EINA_TRUE if the current cursor is a visible format, EINA_FALSE
- * if it's an invisible one or no format exists.
- *
- * @see elm_entry_cursor_is_format_get()
- *
- * @ingroup Entry
- */
-EAPI Eina_Bool          elm_entry_cursor_is_visible_format_get(const Evas_Object *obj);
 
 /**
  * Gets the character pointed by the cursor at its current position.
@@ -542,67 +649,7 @@ EAPI char              *elm_entry_cursor_content_get(const Evas_Object *obj);
  */
 EAPI Eina_Bool          elm_entry_cursor_geometry_get(const Evas_Object *obj, Evas_Coord *x, Evas_Coord *y, Evas_Coord *w, Evas_Coord *h);
 
-/**
- * Sets the cursor position in the entry to the given value
- *
- * The value in @p pos is the index of the character position within the
- * contents of the string as returned by elm_entry_cursor_pos_get().
- *
- * @param obj The entry object
- * @param pos The position of the cursor
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_cursor_pos_set(Evas_Object *obj, int pos);
 
-/**
- * Retrieves the current position of the cursor in the entry
- *
- * @param obj The entry object
- * @return The cursor position
- *
- * @ingroup Entry
- */
-EAPI int                elm_entry_cursor_pos_get(const Evas_Object *obj);
-
-/**
- * This executes a "cut" action on the selected text in the entry.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_selection_cut(Evas_Object *obj);
-
-/**
- * This executes a "copy" action on the selected text in the entry.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_selection_copy(Evas_Object *obj);
-
-/**
- * This executes a "paste" action in the entry.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_selection_paste(Evas_Object *obj);
-
-/**
- * This clears and frees the items in a entry's contextual (longpress)
- * menu.
- *
- * @param obj The entry object
- *
- * @see elm_entry_context_menu_item_add()
- *
- * @ingroup Entry
- */
-EAPI void               elm_entry_context_menu_clear(Evas_Object *obj);
 
 /**
  * This adds an item to the entry's contextual menu.
@@ -744,31 +791,7 @@ EAPI void               elm_entry_markup_filter_prepend(Evas_Object *obj, Elm_En
  */
 EAPI void               elm_entry_markup_filter_remove(Evas_Object *obj, Elm_Entry_Filter_Cb func, void *data);
 
-/**
- * This converts a markup (HTML-like) string into UTF-8.
- *
- * The returned string is a malloc'ed buffer and it should be freed when
- * not needed anymore.
- *
- * @param s The string (in markup) to be converted
- * @return The converted string (in UTF-8). It should be freed.
- *
- * @ingroup Entry
- */
-EAPI char              *elm_entry_markup_to_utf8(const char *s);
 
-/**
- * This converts a UTF-8 string into markup (HTML-like).
- *
- * The returned string is a malloc'ed buffer and it should be freed when
- * not needed anymore.
- *
- * @param s The string (in UTF-8) to be converted
- * @return The converted string (in markup). It should be freed.
- *
- * @ingroup Entry
- */
-EAPI char              *elm_entry_utf8_to_markup(const char *s);
 
 /**
  * This sets the file (and implicitly loads it) for the text to display and
@@ -1283,76 +1306,7 @@ EAPI void         elm_entry_cnp_mode_set(Evas_Object *obj, Elm_Cnp_Mode cnp_mode
  */
 EAPI Elm_Cnp_Mode elm_entry_cnp_mode_get(const Evas_Object *obj);
 
-/**
- * Set the parent of the hover popup
- *
- * Sets the parent object to use by the hover created by the entry
- * when an anchor is clicked. See @ref Hover for more details on this.
- *
- * @param obj The entry object
- * @param parent The object to use as parent for the hover
- *
- * @ingroup Entry
- */
-EAPI void                        elm_entry_anchor_hover_parent_set(Evas_Object *obj, Evas_Object *parent);
 
-/**
- * Get the parent of the hover popup
- *
- * Get the object used as parent for the hover created by the entry
- * widget. See @ref Hover for more details on this.
- * If no parent is set, the same entry object will be used.
- *
- * @param obj The entry object
- * @return The object used as parent for the hover, NULL if none is set.
- *
- * @ingroup Entry
- */
-EAPI Evas_Object                *elm_entry_anchor_hover_parent_get(const Evas_Object *obj);
-
-/**
- * Set the style that the hover should use
- *
- * When creating the popup hover, entry will request that it's
- * themed according to @p style.
- *
- * Setting style no @c NULL means disabling automatic hover.
- *
- * @param obj The entry object
- * @param style The style to use for the underlying hover
- *
- * @see elm_object_style_set()
- *
- * @ingroup Entry
- */
-EAPI void                        elm_entry_anchor_hover_style_set(Evas_Object *obj, const char *style);
-
-/**
- * Get the style that the hover should use
- *
- * Get the style, the hover created by entry will use.
- *
- * @param obj The entry object
- * @return The style to use by the hover. @c NULL means the default is used.
- *
- * @see elm_object_style_set()
- *
- * @ingroup Entry
- */
-EAPI const char                 *elm_entry_anchor_hover_style_get(const Evas_Object *obj);
-
-/**
- * Ends the hover popup in the entry
- *
- * When an anchor is clicked, the entry widget will create a hover
- * object to use as a popup with user provided content. This function
- * terminates this popup, returning the entry to its normal state.
- *
- * @param obj The entry object
- *
- * @ingroup Entry
- */
-EAPI void                        elm_entry_anchor_hover_end(Evas_Object *obj);
 #endif
 
 } // end namespace Elmxx
