@@ -25,6 +25,7 @@ namespace Elmxx {
  * "anchor,clicked" - achor called was clicked | event_info = Elm_Entry_Anchor_Info
  * "activated" - when the enter key is pressed (useful for single line)
  */
+  // TODO think about using exceptions where useful instead of returning empty string...
 class Entry : public Object
 {
 public:
@@ -50,7 +51,7 @@ public:
   /**
    * Retrieve the style on the top of user style stack.
    *
-   * @return style on the top of user style stack if exist, otherwise NULL.
+   * @return style on the top of user style stack if exist, otherwise empty string.
    
    * @see pushUserTextStyle()
    */
@@ -172,14 +173,14 @@ public:
    * Gets any selected text within the entry.
    *
    * If there's any selected text in the entry, this function returns it as
-   * a string in markup format. NULL is returned if no selection exists or
+   * a string in markup format. empty string is returned if no selection exists or
    * if an error occurred.
    *
    * The returned value points to an internal string and should not be freed
    * or modified in any way. If the @p entry object is deleted or its
    * contents are changed, the returned pointer should be considered invalid.
    *
-   * @return The selected text within the entry or NULL on failure
+   * @return The selected text within the entry or empty string on failure
    *
    * @ingroup Entry
    */
@@ -519,8 +520,6 @@ public:
    *
    * When creating the popup hover, entry will request that it's
    * themed according to @p style.
-   *
-   * Setting style no @c NULL means disabling automatic hover.
    *
    * @param style The style to use for the underlying hover
    *
