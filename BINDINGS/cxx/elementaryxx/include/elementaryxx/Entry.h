@@ -25,7 +25,6 @@ namespace Elmxx {
  * "anchor,clicked" - achor called was clicked | event_info = Elm_Entry_Anchor_Info
  * "activated" - when the enter key is pressed (useful for single line)
  */
-  // TODO: implement ScrolledEntry with elm_scrolled_entry_add()...
 class Entry : public Object
 {
 public:
