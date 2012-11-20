@@ -102,7 +102,8 @@ void Entry::insertText (const std::string &entry)
 
 void Entry::appendText (const std::string &entry)
 {
-  elm_entry_entry_append(o, entry.c_str ());
+  // FIXME: hm, this doesn't link in application. Find out why...
+  //elm_entry_entry_append(o, entry.c_str ());
 }
 
 void Entry::setLineWrap (Elm_Wrap_Type wrap)
