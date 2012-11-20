@@ -732,7 +732,7 @@ main(int argc, char *argv[])
 
    _load_to_entry(main_ec_ent, main_ec_ent->filename);
 
-   elm_object_focus_set(main_ec_ent->win, EINA_TRUE);
+   elm_object_focus_set(main_ec_ent->entry, EINA_TRUE);
 
    elm_run();
 
