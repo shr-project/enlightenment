@@ -6,5 +6,7 @@ X-Enlightenment-ModuleType=utils
 Comment=Redirects the output of a cmd to an edje textblock
 Comment[de]=Stellt die Ausgabe eines Kommandos als Edje Textblock da
 Comment[fr]=Affiche la sortie d'une commande dans un bloc de texte Edje.
+Comment[es]=Redirige la salida de un comando hacia un bloque de texto edje.
+Comment[gl]=Redirixe a saída dun comando cara a un bloque de texto edje.
 Comment[it]=Redirige l'output di un comando verso un textblock di edje
 Comment[pt]=Envia o resultado da linha de comandos para um bloco de texto edje

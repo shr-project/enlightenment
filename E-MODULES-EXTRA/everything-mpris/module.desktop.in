@@ -9,7 +9,9 @@ Icon=e-module
 Comment=Control MPRIS compatible media player from Everything.
 Comment[ru]=Контроль над MPRIS совместимыми медиа проигрывателями из Everything.
 Comment[de]=MPRIS-kompatible Mediaplayer mit Everything steuern.
+Comment[es]=Controla los reproductores multimedia compatibles con MPRIS de Everything.
 Comment[fr]=Contrôle des lecteurs multimédias compatibles MPRIS depuis Omni.
+Comment[gl]=Controla os reprodutores multimedia compatíbeis con MPRIS de Everything. 
 Comment[it]=Controlla i lettori multimediali compatibili con MPRIS da Everything.
 Comment[pt]=Controlar reprodutores multimédia compatíveis com MPRIS através do Everything
 #Several different types available here. NEED TO DOC THESE.

@@ -1,8 +1,9 @@
-
 [Desktop Entry]
 Encoding=UTF-8
 Name=Ardy
 Comment=Python-EFL-based Arduino serial controller
+Comment[es]=Controlador de la serie Arduino basado en Python-EFL
+Comment[gl]=Controlador da serie Arduino baseado en Python-EFL
 Comment[it]=Controller seriale Arduino basato su Python-EFL
 Comment[pt]=Controlador de série Arduino baseado em Python-EFL
 Exec=ardy

@@ -2,9 +2,11 @@
 Encoding=UTF-8
 Name=eve
 Comment=WebKit-EFL demo application
+Comment[es]=Aplicación demostrativa de WebKit-EFL
+Comment[fr]=Démo WebKit-EFL
+Comment[gl]=Aplicativo demostrativo de WebKit-EFL
 Comment[it]=Applicazione dimostrativa di WebKit-EFL
 Comment[pt]=Demonstração do WebKit-EFL
-Comment[fr]=Démo WebKit-EFL
 Exec=eve
 Icon=eve
 Terminal=false

@@ -2,14 +2,18 @@
 Type=Link
 Name=Everything Places
 Name[ru]=Всё - Места
+Name[es]=Everything Sitios
 Name[fr]=Omni - Raccourcis
+Name[gl]=Everyghing Lugares
 Name[it]=Everything - Risorse
 Name[pt]=Everything - Locais
 Icon=e-module
 Comment=Access folder bookmarks and mount drives
 Comment[ru]=Доступ к закладкам каталогов и монтирование дисков.
+Comment[es]=Accede a los marcadores de carpetas y monta unidades.
 Comment[fr]=Accès aux signets des dossiers et aux volumes montés.
-Comment[it]=Accede ai segnalibro delle cartelle e monta le unità.
+Comment[gl]=Accede ós marcadores dos cartafois e monta unidades.
+Comment[it]=Accede ai segnalibri delle cartelle e monta le unità.
 Comment[pt]=Aceder a diretórios e montagem de unidades
 #Several different types available here. NEED TO DOC THESE.
 X-Enlightenment-ModuleType=launcher

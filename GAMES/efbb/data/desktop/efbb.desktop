@@ -2,6 +2,9 @@
 Encoding=UTF-8
 Name=Escape From Booty Bay
 Comment=Game
+Comment[es]=Juego
+Comment[gl]=Xogo
+Comment[it]=Gioco
 Comment[pt]=Jogo
 Exec=efbb
 Icon=efbb

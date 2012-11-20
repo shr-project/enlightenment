@@ -1,9 +1,10 @@
-
 [Desktop Entry]
 Encoding=UTF-8
 Name=Elm_Indicator
 Comment=Elementary Indicator
-Comment[it]=Elementary - Indicadore
+Comment[es]=Indicador de Elementary
+Comment[gl]=Indicador de Elementary
+Comment[it]=Elementary - Indicatore
 Comment[pt]=Indicador do Elementary
 Exec=elm_indicator
 Icon=elm_indicator

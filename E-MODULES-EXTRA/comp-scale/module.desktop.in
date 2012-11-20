@@ -1,13 +1,17 @@
 [Desktop Entry]
 Type=Link
 Name=Scale Windows
+Name[es]=Ajuste de ventanas
 Name[fr]=Comp-scale
+Name[gl]=Axuste de xanelas
 Name[it]=Comp-scale
 Name[pt]=Ajuste de janelas
 Name[ru]=Масштабирование окон
 Icon=e-module-skel
 Comment=Scale windows down to see them all. Side by side.
+Comment[es]=Ajuste las ventanas y dispóngalas una al lado de la otra para poder verlas todas.
 Comment[fr]=Réduit les fenêtres côte à côte, afin de les voir toutes.
+Comment[gl]=Axuste as xanelas e dispóñaas unha ó lado doutra para poder velas todas.
 Comment[it]=Rimpicciolisce le finestre e le dispone una accanto all'altra per poterle vedere tutte.
 Comment[pt]=Ajustar janelas lado a lado para as poder ver todas
 Comment[ru]=Просмотр всех окон вместе в уменьшенном масштабе.

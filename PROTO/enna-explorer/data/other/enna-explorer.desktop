@@ -1,15 +1,21 @@
 [Desktop Entry]
 Type=Application
 Name=Enna Explorer
+Name[es]=Explorador Enna
+Name[gl]=Explorador Enna
 Name[pt]=Explorador Enna
 GenericName=File Explorer
+GenericName[es]=Explorador de arhivos
+GenericName[fr]=Explorateur de fichiers
+GenericName[gl]=Explorador de ficheiros
 GenericName[it]=Esploratore di file
 GenericName[pt]=Explorador de ficheiros
-GenericName[fr]=Explorateur de fichiers
 Comment=EFL File Explorer
+Comment[es]=Explorador de arhivos usando las EFL
+Comment[fr]=Explorateur de fichiers utilisant les EFL.
+Comment[gl]=Explorador de ficheiros empregando as EFL
 Comment[it]=Esploratore di file Enna
 Comment[pt]=Explorador de ficheiros Enna
-Comment[fr]=Explorateur de fichiers utilisant les EFL.
 Icon=enna-explorer
 TryExec=enna-explorer
 Exec=enna-explorer

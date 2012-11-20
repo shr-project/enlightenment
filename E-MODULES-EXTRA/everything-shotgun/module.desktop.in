@@ -5,7 +5,9 @@ Name[it]=Everything - Shotgun
 Name[pt]=Everything - Shotgun
 Icon=e-module
 Comment=Interface for Shotgun Instant Messanger
+Comment[es]=Interfaz para el cliente de mensajes instantáneas Shotgun
 Comment[it]=Interfaccia per il client di instant messaging Shotgun
+Comment[gl]=Interface para o cliente de mensaxes instantáneas Shotgun
 Comment[pt]=Interface para o cliente de mensagens instantâneas Shotgun
 #Several different types available here. NEED TO DOC THESE.
 X-Enlightenment-ModuleType=launcher

@@ -2,6 +2,8 @@
 Encoding=UTF-8
 Name=Elm_Quickpanel
 Comment=Elementary Quickpanel
+Comment[es]=Panel rápido de Elementary
+Comment[gl]=Panel rápido de Elementary
 Comment[it]=Elementary - Pannello rapido
 Comment[pt]=Painel rápido do Elementary
 Exec=elm_quickpanel

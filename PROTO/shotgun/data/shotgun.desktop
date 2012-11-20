@@ -1,6 +1,8 @@
 [Desktop Entry]
 Name=Shotgun
 Comment=XMPP Client
+Comment[es]=Cliente XMPP
+Comment[gl]=Cliente XMPP
 Comment[it]=Client XMPP
 Comment[pt]=Cliente XMPP
 Exec=shotgun

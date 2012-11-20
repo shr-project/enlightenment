@@ -2,6 +2,9 @@
 Encoding=UTF-8
 Name=Echo
 Comment=Game
+Comment[es]=Juego
+Comment[gl]=Xogo
+Comment[it]=Gioco
 Comment[pt]=Jogo
 Exec=e_cho
 Icon=e_cho

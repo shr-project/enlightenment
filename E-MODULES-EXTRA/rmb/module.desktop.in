@@ -1,10 +1,14 @@
 [Desktop Entry]
 Type=Link
 Name=Emulate Right Mouse Button
+Name[es]=Emula el botón derecho del ratón
+Name[gl]=Emula o botón dereito do rato
 Name[it]=Emula tasto destro
 Name[pt]=Emulação do botão direito do rato
 Icon=right
 X-Enlightenment-ModuleType=system
 Comment=A module to toggle right click, useful for touch screens.
+Comment[es]=Un módulo para alternar el botón derecho del ratón, útil para pantallas táctiles.
+Comment[gl]=Un módulo para alternar o botón dereito do rato, útil para pantallas táctiles.
 Comment[it]=Un modulo consente di passare al tasto destro, utile per i touchscreen.
 Comment[pt]=Um módulo que emula o botão direito do rato. Útil para ecrãs de toque

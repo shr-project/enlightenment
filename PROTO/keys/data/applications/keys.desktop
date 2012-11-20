@@ -2,10 +2,14 @@
 Encoding=UTF-8
 Name=Keys
 Name[eo]=Klavoj
+Name[es]=Teclas
+Name[gl]=Teclas
 Name[pt]=Teclas
 Comment=Python-EFL-based on-screen keyboard
 Comment[cs]=Klávesnice na obrazovce založená na EFL a Pythonu
 Comment[eo]=Ekrana klavaro per Pitono-EFL
+Comment[es]=Un teclado de pantalla basado en Python-EFL
+Comment[gl]=Un teclado de pantalla baseado en Python-EFL
 Comment[it]=Tastiera a schermo basata su Python-EFL
 Comment[pt]=Um teclado no ecrã baseado em Python-EFL
 Exec=efl-keys

@@ -1,11 +1,15 @@
 [Desktop Entry]
 Name=Espionnage
 GenericName=Webcam testing application
+GenericName[es]=Aplicación para probar la cámara web
 GenericName[fr]=Application de test de la Webcam
+GenericName[gl]=Aplicativo para probar a webcam
 GenericName[it]=Applicazione per il test della webcam
 GenericName[pt]=Aplicação para testar a câmara web
 Comment=A light webcam test application
+Comment[es]=Una pequeña aplicación para probar la webcam 
 Comment[fr]=Une application legere pour tester votre Webcam
+Comment[gl]=Un pequeno aplicativo para probar a webcam
 Comment[it]=Un'applicazione leggera per testare la webcam
 Comment[pt]=Uma aplicação para testar a câmara web
 Exec=@prefix@/bin/espionnage

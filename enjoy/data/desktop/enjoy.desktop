@@ -1,7 +1,9 @@
 [Desktop Entry]
 Name=Enjoy
 Comment=Music Player
+Comment[es]=Reproductor de música
 Comment[fr]=Lecteur de musique
+Comment[gl]=Reprodutor de música
 Comment[it]=Riproduttore musicale
 Comment[pt]=Reprodutor de músicas
 Exec=enjoy

@@ -1,11 +1,15 @@
 [Desktop Entry]
 Name=Excessive
 GenericName=Files Browser
+GenericName[es]=Explorador de archivos
 GenericName[fr]=Navigateur de fichiers
+GenericName[gl]=Explorador de ficheiros
 GenericName[it]=Navigatore del filesystem
 GenericName[pt]=Explorador de ficheiros
 Comment=Fast and light file browser.
+Comment[es]=Un explorador de archivos rápido y ligero.
 Comment[fr]=Gérez vos albums photo
+Comment[gl]=Un explorador de ficheiros rápido e lixeiro.
 Comment[it]=Un filemanager leggero e veloce
 Comment[pt]=Um explorador de ficheiiros rápido e leve
 Exec=@prefix@/bin/excessive
