@@ -60,7 +60,6 @@ cdef class Window:
             return 1
         else:
             raise ValueError("object already wraps an X Window.")
-            return 0
 
     def __str__(self):
         cdef int x, y, w, h, visible
