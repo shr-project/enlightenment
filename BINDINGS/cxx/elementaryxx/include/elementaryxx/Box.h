@@ -32,7 +32,7 @@ public:
 
   void setOrientation (Box::Orientation orient);
   
-  void setHomogeneous (bool homogeneous);
+  void setHomogeneous (bool homogenous);
 
   void packStart (const Evasxx::Object &subobj);
   
