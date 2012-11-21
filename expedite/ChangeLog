@@ -21,3 +21,7 @@
 2012-11-01  Eduardo Lima (Etrunko)
 
         * Added basic support for wayland engines
+
+2012-11-16  Eduardo Lima (Etrunko)
+
+        * Keyboard Support for Wayland EGL
