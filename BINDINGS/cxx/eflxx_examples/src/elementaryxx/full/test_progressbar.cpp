@@ -101,12 +101,12 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
   win->getEventSignal ("delete,request")->connect (sigc::ptr_fun (&my_progressbar_destroy));
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->show ();
 

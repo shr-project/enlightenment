@@ -137,13 +137,13 @@ void test_genlist (void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->show ();
 
   GenList *gl = GenList::factory (*win);
@@ -166,7 +166,7 @@ void test_genlist (void *data, Evas_Object *obj, void *event_info)
   over->setEventsRepeat (true);
   over->show ();
   over->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*over);
+  win->addResizeObject (*over);
 
   Button *bt_50 = Button::factory (*win);
   bt_50->setText ("Go to 50");
@@ -363,14 +363,14 @@ test_genlist2(void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setFile (searchPixmapFile ("elementaryxx/plant_01.jpg"));
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->show ();
 
   GenList *gl = GenList::factory (*win);
@@ -430,7 +430,7 @@ test_genlist2(void *data, Evas_Object *obj, void *event_info)
 
   bx2 = Box::factory (*win);
   bx2->setOrientation (Box::Horizontal);
-  bx2->setHomogenous (true);
+  bx2->setHomogeneous (true);
   bx2->setSizeHintWeight (EVAS_HINT_EXPAND, 0.0);
   bx2->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
   bx2->show ();
@@ -472,7 +472,7 @@ test_genlist2(void *data, Evas_Object *obj, void *event_info)
 
   bx2 = Box::factory (*win);
   bx2->setOrientation (Box::Horizontal);
-  bx2->setHomogenous (true);
+  bx2->setHomogeneous (true);
   bx2->setSizeHintWeight (EVAS_HINT_EXPAND, 0.0);
   bx2->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
   bx2->show ();
@@ -506,7 +506,7 @@ test_genlist2(void *data, Evas_Object *obj, void *event_info)
 
   Box *bx3 = Box::factory (*win);
   bx3->setOrientation (Box::Horizontal);
-  bx3->setHomogenous (true);
+  bx3->setHomogeneous (true);
   bx3->setSizeHintWeight (EVAS_HINT_EXPAND, 0.0);
   bx3->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
 
@@ -660,13 +660,13 @@ void test_genlist3(void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->show ();
 
   GenList *gl = GenList::factory (*win);
@@ -702,7 +702,7 @@ void test_genlist3(void *data, Evas_Object *obj, void *event_info)
 
   bx2 = Box::factory (*win);
   bx2->setOrientation (Box::Horizontal);
-  bx2->setHomogenous (true);
+  bx2->setHomogeneous (true);
   bx2->setSizeHintWeight (EVAS_HINT_EXPAND, 0.0);
   bx2->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
 
@@ -812,13 +812,13 @@ void test_genlist4 (void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
 
   GenList *gl = GenList::factory (*win);
   gl->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
@@ -850,7 +850,7 @@ void test_genlist4 (void *data, Evas_Object *obj, void *event_info)
 
   bx2 = Box::factory (*win);
   bx2->setOrientation (Box::Horizontal);
-  bx2->setHomogenous (true);
+  bx2->setHomogeneous (true);
   bx2->setSizeHintWeight (EVAS_HINT_EXPAND, 0.0);
   bx2->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
 
@@ -1008,13 +1008,13 @@ void test_genlist5 (void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->show ();
 
   GenList *gl = GenList::factory (*win);
@@ -1061,7 +1061,7 @@ void test_genlist5 (void *data, Evas_Object *obj, void *event_info)
 
   bx2 = Box::factory (*win);
   bx2->setOrientation (Box::Horizontal);
-  bx2->setHomogenous (true);
+  bx2->setHomogeneous (true);
   bx2->setSizeHintWeight (EVAS_HINT_EXPAND, 0.0);
   bx2->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
 
@@ -1193,13 +1193,13 @@ void test_genlist6(void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->show ();
 
   GenList *gl = GenList::factory (*win);
@@ -1233,7 +1233,7 @@ void test_genlist6(void *data, Evas_Object *obj, void *event_info)
 
   bx2 = Box::factory (*win);
   bx2->setOrientation (Box::Horizontal);
-  bx2->setHomogenous (true);
+  bx2->setHomogeneous (true);
   bx2->setSizeHintWeight (EVAS_HINT_EXPAND, 0.0);
   bx2->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
 

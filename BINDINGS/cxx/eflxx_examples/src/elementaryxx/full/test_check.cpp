@@ -10,12 +10,12 @@ void test_check (void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->show ();
 

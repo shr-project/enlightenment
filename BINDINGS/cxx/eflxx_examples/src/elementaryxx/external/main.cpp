@@ -128,7 +128,7 @@ int main (int argc, char **argv)
   }
 
   bg->setWeightHintSize (1.0, 1.0);
-  elmWin->addObjectResize (*bg);
+  elmWin->addResizeObject (*bg);
 
   /* set size hints. a minimum size for the bg. this should propagate back
    * to the window thus limiting its size based off the bg as the bg is one

@@ -31,13 +31,13 @@ void test_entry (void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->show ();
 
   Entry *en  = Entry::factory (*win);
@@ -110,13 +110,13 @@ void test_entry_scolled (void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bx);
+  win->addResizeObject (*bx);
   bx->show ();
 
   sc = Scroller::factory (*win);

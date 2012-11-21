@@ -11,7 +11,7 @@ void test_bg_plain (void *data, Evas_Object *obj, void *event_info)
   Background *bg = Background::factory (*win);
   /* allow bg to expand in x & y */
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->show ();
 
   /* set size hints. a minimum size for the bg. this should propagate back
@@ -38,7 +38,7 @@ void test_bg_image (void *data, Evas_Object *obj, void *event_info)
   Background *bg = Background::factory (*win);
   bg->setFile (searchPixmapFile ("elementaryxx/plant_01.jpg"));
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->show ();
 
   bg->setSizeHintMin (size160x160);

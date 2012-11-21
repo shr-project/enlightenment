@@ -17,7 +17,7 @@ void test_icon (void *data, Evas_Object *obj, void *event_info)
   Icon *ic = Icon::factory (*win);
   ic->setFile (searchPixmapFile ("elementaryxx/logo.png"));
   ic->setNoScale (true);
-  win->addObjectResize (*ic);
+  win->addResizeObject (*ic);
   ic->show ();
 
   ic->getEventSignal ("clicked")->connect (sigc::ptr_fun (&icon_clicked));

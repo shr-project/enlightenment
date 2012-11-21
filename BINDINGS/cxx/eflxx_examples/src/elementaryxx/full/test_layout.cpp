@@ -9,14 +9,14 @@ void test_layout (void *data, Evas_Object *obj, void *event_info)
   win->setAutoDel (true);
 
   Background *bg = Background::factory (*win);
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Layout *ly = Layout::factory (*win);
   ly->setFile (searchEdjeFile ("elementaryxx-test.edj"), "layout");
   ly->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  win->addObjectResize (*ly);
+  win->addResizeObject (*ly);
   ly->show ();
 
   Button *bt = Button::factory (*win);

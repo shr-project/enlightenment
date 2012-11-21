@@ -122,7 +122,7 @@ int main (int argc, char **argv)
   /* tell the window that this object is to be resized along with the window.
    * also as a result this object will be one of several objects that
    * controls the minimum/maximum size of the window */
-  win->addObjectResize (*bg);
+  win->addResizeObject (*bg);
   /* and show the background */
   bg->show ();
 
@@ -132,7 +132,7 @@ int main (int argc, char **argv)
   bx0->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   /* tell the window that the box affects window size and also will be
    * resized when the window is */
-  win->addObjectResize (*bx0);
+  win->addResizeObject (*bx0);
   bx0->show ();
 
   Frame *fr = Frame::factory (*win);
