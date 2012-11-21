@@ -13,3 +13,11 @@
 2012-08-30  Carsten Haitzler (The Rasterman)
 
         * 1.7.0 release
+
+2012-10-24  Eduardo Lima (Etrunko)
+
+        * Remove support fox software_16_x11
+
+2012-11-01  Eduardo Lima (Etrunko)
+
+        * Added basic support for wayland engines
