@@ -42,15 +42,6 @@ static const struct wl_registry_listener _registry_listener =
    NULL, /* global_remove */
 };
 
-/* Shell Surface handler */
-static void _shell_surface_handle_ping(void *data, struct wl_shell_surface *shell_surface, uint32_t serial);
-static const struct wl_shell_surface_listener _shell_surface_listener =
-{
-   _shell_surface_handle_ping,
-   NULL, /* configure */
-   NULL, /* popup_done */
-};
-
 /* Frame handler */
 static void _surface_frame_handle_complete(void *data, struct wl_callback *callback, uint32_t time __UNUSED__);
 static const struct wl_callback_listener _surface_frame_listener =
@@ -86,10 +77,7 @@ engine_wayland_shm_args(const char *engine __UNUSED__, int width, int height)
    assert(wl.shm != NULL);
 
    wl.surface = wl_compositor_create_surface(wl.compositor);
-   wl.shell_surface = wl_shell_get_shell_surface(wl.shell, wl.surface);
-   wl_shell_surface_set_title(wl.shell_surface, "Expedite Wayland SHM");
-   wl_shell_surface_add_listener(wl.shell_surface, &_shell_surface_listener, NULL);
-   wl_shell_surface_set_toplevel(wl.shell_surface);
+   wl.shell_surface = engine_wayland_create_shell_surface(wl.shell, wl.surface, "Expedite Wayland SHM");
 
    _engine_wayland_shm_create_buffer(width, height);
 
@@ -150,12 +138,6 @@ _registry_handle_global(void *data __UNUSED__, struct wl_registry *registry, uns
      wl.shm = wl_registry_bind(registry, id, &wl_shm_interface, 1);
    else if (!strcmp(interface, "wl_seat"))
      engine_wayland_register_seat(registry, id);
-}
-
-static void
-_shell_surface_handle_ping(void *data __UNUSED__, struct wl_shell_surface *shell_surface, uint32_t serial)
-{
-   wl_shell_surface_pong(shell_surface, serial);
 }
 
 static void
