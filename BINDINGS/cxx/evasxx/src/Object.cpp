@@ -110,82 +110,82 @@ void Object::setGeometry( const Rect& r )
   resize( r.size (), true );
 }
 
-const Size Object::getMinHintSize () const
+const Size Object::getSizeHintMin () const
 {
   Evas_Coord w, h;
   evas_object_size_hint_min_get (o, &w, &h);
   return Size (w, h);
 }
 
-void Object::setMinHintSize (const Size &size)
+void Object::setSizeHintMin (const Size &size)
 {
   evas_object_size_hint_min_set (o, size.width (), size.height ());
 }
 
-const Size Object::getMaxHintSize () const
+const Size Object::getSizeHintMax () const
 {
   Evas_Coord w, h;
   evas_object_size_hint_max_get (o, &w, &h);
   return Size (w, h);
 }
 
-void Object::setMaxHintSize (const Size &size)
+void Object::setSizeHintMax (const Size &size)
 {
   evas_object_size_hint_max_set (o, size.width (), size.height ());
 }
   
-const Size Object::getRequestHintSize () const
+const Size Object::getSizeHintRequest () const
 {
   Evas_Coord w, h;
   evas_object_size_hint_request_get (o, &w, &h);
   return Size (w, h);
 }
 
-void Object::setRequestHintSize (const Size &size)
+void Object::setSizeHintRequest (const Size &size)
 {
   evas_object_size_hint_request_set (o, size.width (), size.height ());
 }
   
-const Size Object::getAspectHintSize (Evas_Aspect_Control &outAspect) const
+const Size Object::getSizeHintAspect (Evas_Aspect_Control &outAspect) const
 {
   Evas_Coord w, h;
   evas_object_size_hint_aspect_get (o, &outAspect, &w, &h);
   return Size (w, h);
 }
 
-void Object::setAspectHintSize (Evas_Aspect_Control aspect, const Size &size)
+void Object::setSizeHintAspect (Evas_Aspect_Control aspect, const Size &size)
 {
   evas_object_size_hint_aspect_set (o, aspect, size.width (), size.height ());
 }
   
-void Object::getAlignHintSize (double &outX, double &outY) const
+void Object::getSizeHintAlign (double &outX, double &outY) const
 {
   evas_object_size_hint_align_get (o, &outX, &outY);
 }
 
-void Object::setAlignHintSize (double x, double y)
+void Object::setSizeHintAlign (double x, double y)
 {
   evas_object_size_hint_align_set (o, x, y);
 }
   
-void Object::getWeightHintSize (double &outX, double &outY) const
+void Object::getSizeHintWeight (double &outX, double &outY) const
 {
   evas_object_size_hint_weight_get (o, &outX, &outY);
 }
 
-void Object::setWeightHintSize (double x, double y)
+void Object::setSizeHintWeight (double x, double y)
 {
   evas_object_size_hint_weight_set (o, x, y);
 }
   
-const Padding Object::getPaddingHintSize () const
+const Padding Object::getSizeHintPadding () const
 {
   Evas_Coord l, r, t, b;
   evas_object_size_hint_padding_get (o, &l, &r, &t, &b);
   return Padding (l, r, t, b);
 }
 
-void Object::setPaddingHintSize (const Padding &border)
+void Object::setSizeHintPadding (const Padding &border)
 {
   evas_object_size_hint_padding_set (o, border.left (), border.right (), border.top (), border.bottom ());
 }

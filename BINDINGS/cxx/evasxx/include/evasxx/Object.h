@@ -104,26 +104,26 @@ public:
   virtual Eflxx::Rect getGeometry() const;
   virtual void setGeometry( const Eflxx::Rect& rect );
 
-  const Eflxx::Size getMinHintSize () const;
-  void setMinHintSize (const Eflxx::Size &size);
+  const Eflxx::Size getSizeHintMin () const;
+  void setSizeHintMin (const Eflxx::Size &size);
   
-  const Eflxx::Size getMaxHintSize () const;
-  void setMaxHintSize (const Eflxx::Size &size);
+  const Eflxx::Size getSizeHintMax () const;
+  void setSizeHintMax (const Eflxx::Size &size);
   
-  const Eflxx::Size getRequestHintSize () const;
-  void setRequestHintSize (const Eflxx::Size &size);
+  const Eflxx::Size getSizeHintRequest () const;
+  void setSizeHintRequest (const Eflxx::Size &size);
   
-  const Eflxx::Size getAspectHintSize (Evas_Aspect_Control &outAspect) const;
-  void setAspectHintSize (Evas_Aspect_Control aspect, const Eflxx::Size &size);
+  const Eflxx::Size getSizeHintAspect (Evas_Aspect_Control &outAspect) const;
+  void setSizeHintAspect (Evas_Aspect_Control aspect, const Eflxx::Size &size);
   
-  void getAlignHintSize (double &outX, double &outY) const;
-  void setAlignHintSize (double x, double y);
+  void getSizeHintAlign (double &outX, double &outY) const;
+  void setSizeHintAlign (double x, double y);
   
-  void getWeightHintSize (double &outX, double &outY) const;
-  void setWeightHintSize (double x, double y);
+  void getSizeHintWeight (double &outX, double &outY) const;
+  void setSizeHintWeight (double x, double y);
   
-  const Eflxx::Padding getPaddingHintSize () const;
-  void setPaddingHintSize (const Eflxx::Padding &border);
+  const Eflxx::Padding getSizeHintPadding () const;
+  void setSizeHintPadding (const Eflxx::Padding &border);
   
   /* Clipping */
   virtual Object* getClip() const;
