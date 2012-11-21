@@ -102,24 +102,24 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   win->addObjectResize (*bx);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->show ();
 
   pb = Progressbar::factory (*win);
-  pb->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  pb->setAlignHintSize (EVAS_HINT_FILL, 0.5);
+  pb->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  pb->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
   bx->packEnd (*pb);
   pb->show ();
   _test_progressbar.pb1 = pb;
 
   pb = Progressbar::factory (*win);
-  pb->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  pb->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  pb->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  pb->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   pb->setLabel ("Infinite bounce");
   pb->setPulse (true);
   bx->packEnd (*pb);
@@ -128,7 +128,7 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
 
   ic1 = Icon::factory (*win);
   ic1->setFile (searchPixmapFile ("elementaryxx/logo_small.png"));
-  ic1->setAspectHintSize (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
+  ic1->setSizeHintAspect (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
 
   pb = Progressbar::factory (*win);
   pb->setLabel ("Label");
@@ -136,8 +136,8 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
   pb->setInverted (true);
   pb->setUnitFormat ("%1.1f units");
   pb->setSpanSize (200);
-  pb->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  pb->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  pb->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  pb->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->packEnd (*pb);
   ic1->show ();
   pb->show ();
@@ -145,15 +145,15 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
 
   Box *hbx = Box::factory (*win);
   hbx->setOrientation (Box::Horizontal);
-  hbx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  hbx->setAlignHintSize (EVAS_HINT_FILL, EVAS_HINT_FILL);
+  hbx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  hbx->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
   bx->packEnd (*hbx);
   hbx->show ();
 
   pb = Progressbar::factory (*win);
   pb->setOrientation (Progressbar::Vertical);
-  pb->setAlignHintSize (EVAS_HINT_FILL, EVAS_HINT_FILL);
-  pb->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  pb->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
+  pb->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   hbx->packEnd (*pb);
   pb->setSpanSize (60);
   pb->setLabel ("percent");
@@ -162,8 +162,8 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
 
   pb = Progressbar::factory (*win);
   pb->setOrientation (Progressbar::Vertical);
-  pb->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  pb->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  pb->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  pb->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   pb->setSpanSize (80);
   pb->hideUnitFormat ();
   pb->setLabel ("Infinite bounce");
@@ -173,7 +173,7 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
 
   ic2 = Icon::factory (*win);
   ic2->setFile (searchPixmapFile ("elementaryxx/logo_small.png"));
-  ic2->setAspectHintSize (EVAS_ASPECT_CONTROL_HORIZONTAL, Size (1, 1));
+  ic2->setSizeHintAspect (EVAS_ASPECT_CONTROL_HORIZONTAL, Size (1, 1));
 
   pb = Progressbar::factory (*win);
   pb->setOrientation (Progressbar::Vertical);
@@ -182,8 +182,8 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
   pb->setInverted (true);
   pb->setUnitFormat ("%1.2f%%");
   pb->setSpanSize (200);
-  pb->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  pb->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  pb->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  pb->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   hbx->packEnd (*pb);
   pb->show ();
   _test_progressbar.pb6 = pb;
@@ -191,15 +191,15 @@ void test_progressbar(void *data, Evas_Object *obj, void *event_info)
   pb = Progressbar::factory (*win);
   pb->setStyle ("wheel");
   pb->setLabel ("Style: wheel");
-  pb->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  pb->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  pb->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  pb->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->packEnd (*pb);
   pb->show ();
   _test_progressbar.pb7 = pb;
 
   Box *bt_bx = Box::factory (*win);
   bt_bx->setOrientation (Box::Horizontal);
-  bt_bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bt_bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->packEnd (*bt_bx);
   bt_bx->show ();
 

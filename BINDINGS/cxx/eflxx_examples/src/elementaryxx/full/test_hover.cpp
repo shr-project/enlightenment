@@ -18,11 +18,11 @@ void test_hover (void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   bx = Box::factory (*win);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   win->addObjectResize (*bx);
   bx->show ();
 
@@ -83,8 +83,8 @@ void test_hover (void *data, Evas_Object *obj, void *event_info)
   hv->setContent ("right", *bt);
   bt->show ();
 
-  bg->setMinHintSize (size160x160);
-  bg->setMaxHintSize (size640x640);
+  bg->setSizeHintMin (size160x160);
+  bg->setSizeHintMax (size640x640);
   win->resize (size320x320);
   win->show ();
 }
@@ -100,11 +100,11 @@ void test_hover2 (void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   bx = Box::factory (*win);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   win->addObjectResize (*bx);
   bx->show ();
 
@@ -166,8 +166,8 @@ void test_hover2 (void *data, Evas_Object *obj, void *event_info)
   hv->setContent ("right", *bt);
   bt->show ();
 
-  bg->setMinHintSize (size160x160);
-  bg->setMaxHintSize (size640x640);
+  bg->setSizeHintMin (size160x160);
+  bg->setSizeHintMax (size640x640);
   win->resize (size320x320);
   win->show ();
 }

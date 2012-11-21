@@ -8,12 +8,12 @@ void test_clock (void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   win->addObjectResize (*bx);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->show ();
 
   Clock *ck = Clock::factory (*win);

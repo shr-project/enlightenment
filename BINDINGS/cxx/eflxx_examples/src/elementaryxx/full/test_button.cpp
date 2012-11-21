@@ -11,17 +11,17 @@ void test_button (void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   win->addObjectResize (*bx);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->show ();
 
   ic = Icon::factory (*win);
   ic->setFile (searchPixmapFile ("elementaryxx/logo_small.png"));
-  ic->setAspectHintSize (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
+  ic->setSizeHintAspect (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
   bt = Button::factory (*win);
   bt->setText ("Icon sized to button");
   bt->setContent (*ic);
@@ -31,7 +31,7 @@ void test_button (void *data, Evas_Object *obj, void *event_info)
 
   ic = Icon::factory (*win);
   ic->setFile (searchPixmapFile ("elementaryxx/logo_small.png"));
-  ic->setAspectHintSize (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
+  ic->setSizeHintAspect (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
   bt = Button::factory (*win);
   bt->setText ("Disabled Button");
   bt->setContent (*ic);

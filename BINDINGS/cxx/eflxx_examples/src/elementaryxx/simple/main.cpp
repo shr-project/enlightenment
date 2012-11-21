@@ -48,17 +48,17 @@ int main (int argc, char **argv)
   Entry *elmEntry = Entry::factory (*elmWin);
   Slider *elmSlider = Slider::factory (*elmWin);
 
-  bg->setWeightHintSize (1.0, 1.0);
+  bg->setSizeHintWeight (1.0, 1.0);
   elmWin->addObjectResize (*bg);
 
   /* set size hints. a minimum size for the bg. this should propagate back
    * to the window thus limiting its size based off the bg as the bg is one
    * of the window's resize objects. */
-  bg->setMinHintSize (Size (160, 160));
+  bg->setSizeHintMin (Size (160, 160));
   /* and set a maximum size. not needed very often. normally used together
    * with evas_object_size_hint_min_set() at the same size to make a
    * window not resizable */
-  bg->setMaxHintSize (Size (640, 640));
+  bg->setSizeHintMax (Size (640, 640));
 
   elmWin->resize (Size (500, 500));
   elmButton->resize (Size (100, 50));

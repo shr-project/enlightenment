@@ -118,7 +118,7 @@ int main (int argc, char **argv)
    * a lot more resources, so only use it if you need it. */
   Background *bg = Background::factory (*win);
   /* set weight to 1.0 x 1.0 == expand in both x and y direction */
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   /* tell the window that this object is to be resized along with the window.
    * also as a result this object will be one of several objects that
    * controls the minimum/maximum size of the window */
@@ -129,7 +129,7 @@ int main (int argc, char **argv)
   /* add a box layout widget to the window */
   Box *bx0 = Box::factory (*win);
   /* allow base box (bx0) to expand in x and y */
-  bx0->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx0->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   /* tell the window that the box affects window size and also will be
    * resized when the window is */
   win->addObjectResize (*bx0);
@@ -151,8 +151,8 @@ int main (int argc, char **argv)
 
   li->setSelectMode (ELM_OBJECT_SELECT_MODE_ALWAYS);
 
-  li->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  li->setAlignHintSize (EVAS_HINT_FILL, EVAS_HINT_FILL);
+  li->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  li->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
   bx0->packEnd (*li);
   li->show ();
 

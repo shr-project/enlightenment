@@ -10,11 +10,11 @@ void test_spinner(void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   win->addObjectResize (*bx);
   bx->show ();
 
@@ -23,8 +23,8 @@ void test_spinner(void *data, Evas_Object *obj, void *event_info)
   sp->setStep (1.3);
   sp->setWrap (true);
   sp->setMinMax (-50.0, 250.0);
-  sp->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  sp->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  sp->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  sp->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->packEnd (*sp);
   sp->show ();
 
@@ -34,8 +34,8 @@ void test_spinner(void *data, Evas_Object *obj, void *event_info)
   sp->setWrap (true);
   sp->setStyle ("vertical");
   sp->setMinMax (-50.0, 250.0);
-  sp->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  sp->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  sp->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  sp->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->packEnd (*sp);
   sp->show ();
 
@@ -43,8 +43,8 @@ void test_spinner(void *data, Evas_Object *obj, void *event_info)
   sp->setLabelFormat ("Disabled %.0f");
   sp->setDisabled (true);
   sp->setMinMax (-50.0, 250.0);
-  sp->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  sp->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  sp->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  sp->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->packEnd (*sp);
   sp->show ();
 

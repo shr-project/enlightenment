@@ -11,17 +11,17 @@ void test_slider (void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
   win->addObjectResize (*bx);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->show ();
 
   ic = Icon::factory (*win);
   ic->setFile (searchPixmapFile ("elementaryxx/logo_small.png"));
-  ic->setAspectHintSize (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
+  ic->setSizeHintAspect (EVAS_ASPECT_CONTROL_VERTICAL, Size (1, 1));
   ic->show ();
 
   sl = Slider::factory (*win);
@@ -29,8 +29,8 @@ void test_slider (void *data, Evas_Object *obj, void *event_info)
   sl->setContent (*ic);
   sl->setUnitFormat ("%1.1f units");
   sl->setSpanSize (120);
-  sl->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  sl->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  sl->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  sl->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bx->packEnd (*sl);
   sl->show ();
 
@@ -41,8 +41,8 @@ void test_slider (void *data, Evas_Object *obj, void *event_info)
   sl->setMinMax (50, 150);
   sl->setValue (80);
   sl->setInverted (true);
-  sl->setAlignHintSize (0.5, 0.5);
-  sl->setWeightHintSize (0.0, 0.0);
+  sl->setSizeHintAlign (0.5, 0.5);
+  sl->setSizeHintWeight (0.0, 0.0);
   bx->packEnd (*sl);
   sl->show ();
 
@@ -50,8 +50,8 @@ void test_slider (void *data, Evas_Object *obj, void *event_info)
   sl->setText ("Label 3");
   sl->setUnitFormat ("units");
   sl->setSpanSize (40);
-  sl->setAlignHintSize (EVAS_HINT_FILL, 0.5);
-  sl->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  sl->setSizeHintAlign (EVAS_HINT_FILL, 0.5);
+  sl->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   sl->setIndicatorFormat ("%3.0f");
   sl->setMinMax (50, 150);
   sl->setValue (80);
@@ -62,7 +62,7 @@ void test_slider (void *data, Evas_Object *obj, void *event_info)
 
   ic = Icon::factory (*win);
   ic->setFile (searchPixmapFile ("elementaryxx/logo_small.png"));
-  ic->setAspectHintSize (EVAS_ASPECT_CONTROL_HORIZONTAL, Size (1, 1));
+  ic->setSizeHintAspect (EVAS_ASPECT_CONTROL_HORIZONTAL, Size (1, 1));
   ic->show ();
 
   sl = Slider::factory (*win);
@@ -70,8 +70,8 @@ void test_slider (void *data, Evas_Object *obj, void *event_info)
   sl->setContent (*ic);
   sl->setUnitFormat ("units");
   sl->setSpanSize (60);
-  sl->setAlignHintSize (0.5L, EVAS_HINT_FILL);
-  sl->setWeightHintSize (0.0, EVAS_HINT_EXPAND);
+  sl->setSizeHintAlign (0.5L, EVAS_HINT_FILL);
+  sl->setSizeHintWeight (0.0, EVAS_HINT_EXPAND);
   sl->setIndicatorFormat ("%1.1f");
   sl->setValue (0.2);
   sl->setScale (1.0);

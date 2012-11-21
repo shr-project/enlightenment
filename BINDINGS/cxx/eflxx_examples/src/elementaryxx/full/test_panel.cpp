@@ -42,7 +42,7 @@ public:
     Window *win = static_cast <Window*> (&obj);
     Icon *ic = Icon::factory (*win);
     ic->setFile (searchPixmapFile ("elementaryxx/logo_small.png"));
-    ic->setAspectHintSize (EVAS_ASPECT_CONTROL_VERTICAL, Eflxx::Size (1, 1));
+    ic->setSizeHintAspect (EVAS_ASPECT_CONTROL_VERTICAL, Eflxx::Size (1, 1));
 
     /*
     if (!strcmp(source, "elm.swallow.icon"))
@@ -83,23 +83,23 @@ void test_panel (void *data, Evas_Object *obj, void *event_info)
 
   Background *bg = Background::factory (*win);
   win->addObjectResize (*bg);
-  bg->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bg->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   bg->show ();
 
   Box *bx = Box::factory (*win);
-  bx->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  bx->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
   win->addObjectResize (*bx);
   bx->show ();
 
   Panel *panel = Panel::factory (*win);
   panel->setOrientation (ELM_PANEL_ORIENT_LEFT);
-  panel->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  panel->setAlignHintSize (EVAS_HINT_FILL, EVAS_HINT_FILL);
+  panel->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  panel->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
 
   GenList *gl = GenList::factory (*win);
   gl->resize (Eflxx::Size (100, 100));
-  gl->setWeightHintSize (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
-  gl->setAlignHintSize (EVAS_HINT_FILL, EVAS_HINT_FILL);
+  gl->setSizeHintWeight (EVAS_HINT_EXPAND, EVAS_HINT_EXPAND);
+  gl->setSizeHintAlign (EVAS_HINT_FILL, EVAS_HINT_FILL);
   gl->show ();
   panel->setContent (*gl);
 
