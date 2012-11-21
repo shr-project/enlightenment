@@ -255,7 +255,7 @@ collections {
                     visible: 0;
                     color: 0 0 0 0;
                     image {
-                        normal: "toolbar_sel.png";
+                        normal: "part_border.png";
                         border: 3 3 3 3;
                         middle: 0;
                     }
