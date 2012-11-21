@@ -40,11 +40,6 @@ void Box::setHomogeneous (bool homogeneous)
   elm_box_homogeneous_set (o, homogeneous);
 }
 
-void Box::setHomogenous (bool homogenous)
-{
-  elm_box_homogeneous_set (o, homogenous);
-}
-
 void Box::packStart (const Evasxx::Object &subobj)
 {
   elm_box_pack_start (o, subobj.obj ());

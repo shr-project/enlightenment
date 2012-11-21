@@ -34,8 +34,6 @@ public:
   
   void setHomogeneous (bool homogeneous);
 
-  void setHomogenous (bool homogenous);
-  
   void packStart (const Evasxx::Object &subobj);
   
   void packEnd (const Evasxx::Object &subobj);
