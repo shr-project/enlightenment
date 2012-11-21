@@ -109,12 +109,12 @@ void Window::setSticky (bool sticky)
   elm_win_sticky_set(o, sticky);
 }
 
-void Window::addObjectResize (const Evasxx::Object &subobj)
+void Window::addResizeObject (const Evasxx::Object &subobj)
 {
   elm_win_resize_object_add (o, subobj.obj ());
 }
 
-void Window::delObjectResize (const Evasxx::Object &subobj)
+void Window::delResizeObject (const Evasxx::Object &subobj)
 {
   elm_win_resize_object_del (o, subobj.obj ());
 }

@@ -76,9 +76,9 @@ public:
   
   //void setKeyboardWin (bool isKeyboard); // FIXME: is* name?
   
-  void addObjectResize (const Evasxx::Object &subobj);
+  void addResizeObject (const Evasxx::Object &subobj);
   
-  void delObjectResize (const Evasxx::Object &subobj);
+  void delResizeObject (const Evasxx::Object &subobj);
   
 private:
   Window (); // forbid standard constructor
