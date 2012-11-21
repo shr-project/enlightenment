@@ -222,6 +222,11 @@ expedite_SOURCES += \
 engine_software_16_wince.c engine_software_16_wince.h  engine_software_16_wince.rc
 endif
 
+if BUILD_WAYLAND
+expedite_SOURCES += \
+engine_wayland_common.c engine_wayland_common.h
+endif
+
 if BUILD_WAYLAND_EGL
 expedite_SOURCES += \
 engine_wayland_egl.c engine_wayland_egl.h

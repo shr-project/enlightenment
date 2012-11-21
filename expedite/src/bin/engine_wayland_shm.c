@@ -1,9 +1,10 @@
-#include "main.h"
-
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
 #include <sys/mman.h>
+
+#include "main.h"
+#include "engine_wayland_common.h"
 
 #include <Evas_Engine_Wayland_Shm.h>
 #include <wayland-client.h>
@@ -142,17 +143,13 @@ static void
 _registry_handle_global(void *data __UNUSED__, struct wl_registry *registry, unsigned int id, const char *interface, unsigned int  version __UNUSED__)
 {
    if (!strcmp(interface, "wl_compositor"))
-     {
-        wl.compositor = wl_registry_bind(registry, id, &wl_compositor_interface, 1);
-     }
+     wl.compositor = wl_registry_bind(registry, id, &wl_compositor_interface, 1);
    else if (!strcmp(interface, "wl_shell"))
-     {
-        wl.shell = wl_registry_bind(registry, id, &wl_shell_interface, 1);
-     }
+     wl.shell = wl_registry_bind(registry, id, &wl_shell_interface, 1);
    else if (!strcmp(interface, "wl_shm"))
-     {
-        wl.shm = wl_registry_bind(registry, id, &wl_shm_interface, 1);
-     }
+     wl.shm = wl_registry_bind(registry, id, &wl_shm_interface, 1);
+   else if (!strcmp(interface, "wl_seat"))
+     engine_wayland_register_seat(registry, id);
 }
 
 static void

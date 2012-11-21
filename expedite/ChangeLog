@@ -25,3 +25,7 @@
 2012-11-16  Eduardo Lima (Etrunko)
 
         * Keyboard Support for Wayland EGL
+
+2012-11-21  Eduardo Lima (Etrunko)
+
+        * Keyboard Support for Wayland SHM
