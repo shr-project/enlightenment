@@ -11,7 +11,6 @@
 struct _engine_wayland_egl_display
 {
    struct wl_display *display;
-   struct wl_registry *registry;
    struct wl_compositor *compositor;
    struct wl_surface *surface;
    struct wl_shell *shell;
@@ -28,22 +27,25 @@ static void _registry_handle_global(void *data, struct wl_registry *registry, un
 static const struct wl_registry_listener _registry_listener =
 {
    _registry_handle_global,
+   NULL, /* global_remove */
 };
 
 /* Shell Surface handler */
 static void _shell_surface_handle_ping(void *data, struct wl_shell_surface *shell_surface, uint32_t serial);
-
 static const struct wl_shell_surface_listener _shell_surface_listener =
 {
    _shell_surface_handle_ping,
+   NULL, /* configure */
+   NULL, /* popup_done */
 };
 
 /*
  * API
  */
 Eina_Bool
-engine_wayland_egl_args(const char *engine __UNUSED__, int width, int height)
+engine_wayland_egl_args(const char *engine __UNUSED__, int width __UNUSED__, int height __UNUSED__)
 {
+   struct wl_registry *registry;
    Evas_Engine_Info_Wayland_Egl *einfo;
 
    evas_output_method_set(evas, evas_render_method_lookup("wayland_egl"));
@@ -55,8 +57,8 @@ engine_wayland_egl_args(const char *engine __UNUSED__, int width, int height)
      }
 
    wl.display = wl_display_connect(NULL);
-   wl.registry = wl_display_get_registry(wl.display);
-   wl_registry_add_listener(wl.registry, &_registry_listener, NULL);
+   registry = wl_display_get_registry(wl.display);
+   wl_registry_add_listener(registry, &_registry_listener, NULL);
    wl_display_roundtrip(wl.display);
 
    assert(wl.compositor != NULL);
@@ -101,16 +103,20 @@ engine_wayland_egl_shutdown(void)
  * Function implementation
  */
 static void
-_registry_handle_global(void *data, struct wl_registry *registry, unsigned int id, const char *interface, unsigned int  version __UNUSED__)
+_registry_handle_global(void *data __UNUSED__, struct wl_registry *registry, unsigned int id, const char *interface, unsigned int  version __UNUSED__)
 {
    if (!strcmp(interface, "wl_compositor"))
-      wl.compositor = wl_registry_bind(wl.registry, id, &wl_compositor_interface, 1);
+     {
+        wl.compositor = wl_registry_bind(registry, id, &wl_compositor_interface, 1);
+     }
    else if (!strcmp(interface, "wl_shell"))
-      wl.shell = wl_registry_bind(wl.registry, id, &wl_shell_interface, 1);
+     {
+        wl.shell = wl_registry_bind(registry, id, &wl_shell_interface, 1);
+     }
 }
 
 static void
-_shell_surface_handle_ping(void *data, struct wl_shell_surface *shell_surface, uint32_t serial)
+_shell_surface_handle_ping(void *data __UNUSED__, struct wl_shell_surface *shell_surface, uint32_t serial)
 {
    wl_shell_surface_pong(shell_surface, serial);
 }
