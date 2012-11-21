@@ -58,8 +58,8 @@ public:
    *
    * @ingroup General
    */
-  void setText (const std::string &label);
-  void setText (const std::string &part, const std::string &label);
+  virtual void setText (const std::string &label);
+  virtual void setText (const std::string &part, const std::string &label);
 
   /**
    * Get a label of an object
@@ -72,8 +72,8 @@ public:
    *
    * @ingroup General
    */
-  const std::string getText ();
-  const std::string getText (const std::string &part);
+  virtual const std::string getText ();
+  virtual const std::string getText (const std::string &part);
 
   /**
    * Set a content of an object
