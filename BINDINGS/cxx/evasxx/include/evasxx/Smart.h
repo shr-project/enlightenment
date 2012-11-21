@@ -144,7 +144,7 @@ public:
    *
    * @return if flag is set or not.
    */
-  bool setNeedRecalculate ();
+  bool getNeedRecalculate ();
   
   /*!
    * Call user provided calculate() and unset need_calculate.
