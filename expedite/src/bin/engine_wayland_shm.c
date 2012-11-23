@@ -15,6 +15,7 @@
 struct _engine_wayland_shm_display
 {
    struct wl_display *display;
+   struct wl_registry *registry;
    struct wl_compositor *compositor;
    struct wl_surface *surface;
    struct wl_callback *frame_callback;
@@ -56,7 +57,6 @@ static const struct wl_callback_listener _surface_frame_listener =
 Eina_Bool
 engine_wayland_shm_args(const char *engine __UNUSED__, int width, int height)
 {
-   struct wl_registry *registry;
    Evas_Engine_Info_Wayland_Shm *einfo;
 
    evas_output_method_set(evas, evas_render_method_lookup("wayland_shm"));
@@ -68,8 +68,8 @@ engine_wayland_shm_args(const char *engine __UNUSED__, int width, int height)
      }
 
    wl.display = wl_display_connect(NULL);
-   registry = wl_display_get_registry(wl.display);
-   wl_registry_add_listener(registry, &_registry_listener, NULL);
+   wl.registry = wl_display_get_registry(wl.display);
+   wl_registry_add_listener(wl.registry, &_registry_listener, NULL);
    wl_display_roundtrip(wl.display);
 
    assert(wl.compositor != NULL);
@@ -120,6 +120,7 @@ engine_wayland_shm_shutdown(void)
    wl_shm_destroy(wl.shm);
    wl_shell_destroy(wl.shell);
    wl_compositor_destroy(wl.compositor);
+   wl_registry_destroy(wl.registry);
    wl_display_flush(wl.display);
    wl_display_disconnect(wl.display);
 }
@@ -134,10 +135,10 @@ _registry_handle_global(void *data __UNUSED__, struct wl_registry *registry, uns
      wl.compositor = wl_registry_bind(registry, id, &wl_compositor_interface, 1);
    else if (!strcmp(interface, "wl_shell"))
      wl.shell = wl_registry_bind(registry, id, &wl_shell_interface, 1);
-   else if (!strcmp(interface, "wl_shm"))
-     wl.shm = wl_registry_bind(registry, id, &wl_shm_interface, 1);
    else if (!strcmp(interface, "wl_seat"))
      engine_wayland_register_seat(registry, id);
+   else if (!strcmp(interface, "wl_shm"))
+     wl.shm = wl_registry_bind(registry, id, &wl_shm_interface, 1);
 }
 
 static void

@@ -8,10 +8,13 @@
 #include <wayland-client.h>
 #include <wayland-egl.h>
 
-/* Global struct */
+/*
+ * Global struct
+ */
 struct _engine_wayland_egl_display
 {
    struct wl_display *display;
+   struct wl_registry *registry;
    struct wl_compositor *compositor;
    struct wl_surface *surface;
    struct wl_shell *shell;
@@ -21,7 +24,7 @@ struct _engine_wayland_egl_display
 static struct _engine_wayland_egl_display wl;
 
 /*
- * Function prototypes
+ * Function Prototypes
  */
 /* Registry handler */
 static void _registry_handle_global(void *data, struct wl_registry *registry, unsigned int id, const char *interface, unsigned int  version __UNUSED__);
@@ -37,7 +40,6 @@ static const struct wl_registry_listener _registry_listener =
 Eina_Bool
 engine_wayland_egl_args(const char *engine __UNUSED__, int width __UNUSED__, int height __UNUSED__)
 {
-   struct wl_registry *registry;
    Evas_Engine_Info_Wayland_Egl *einfo;
 
    evas_output_method_set(evas, evas_render_method_lookup("wayland_egl"));
@@ -49,8 +51,8 @@ engine_wayland_egl_args(const char *engine __UNUSED__, int width __UNUSED__, int
      }
 
    wl.display = wl_display_connect(NULL);
-   registry = wl_display_get_registry(wl.display);
-   wl_registry_add_listener(registry, &_registry_listener, NULL);
+   wl.registry = wl_display_get_registry(wl.display);
+   wl_registry_add_listener(wl.registry, &_registry_listener, NULL);
    wl_display_roundtrip(wl.display);
 
    assert(wl.compositor != NULL);
@@ -83,6 +85,7 @@ engine_wayland_egl_shutdown(void)
    wl_surface_destroy(wl.surface);
    wl_shell_destroy(wl.shell);
    wl_compositor_destroy(wl.compositor);
+   wl_registry_destroy(wl.registry);
    wl_display_flush(wl.display);
    wl_display_disconnect(wl.display);
 }
