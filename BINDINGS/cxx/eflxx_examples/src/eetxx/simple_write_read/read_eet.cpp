@@ -50,16 +50,18 @@ int main(int argc, char **argv)
   Eetxx::Document doc("writing_test.eet", EET_FILE_MODE_READ);
   Eetxx::List my_list (doc);
 
+  // read data by name
+  A *a = reinterpret_cast<A *> (my_list["A"]. get ());
 
-  //A *a = reinterpret_cast<A *> (my_list["A"]. get ());
+  cout << a->x << endl;
+  cout << a->d << endl;
+  cout << a->s << endl;
 
-  //cout << a->x << endl;
-  //cout << a->d << endl;
-  //cout << a->s << endl;
+	// read data by name
+  int *i = reinterpret_cast<int *> (my_list["B"]. get ());
+  cout << "i=" << *i << endl;
 
-  //int *i = reinterpret_cast<int *> (my_list["B"]. get ());
-  //cout << "i=" << *i << endl;
-
+  // read data in loop
   for_each (my_list.begin (),
             my_list.end (),
             display_eet_file_content());
