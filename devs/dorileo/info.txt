@@ -1,0 +1,10 @@
+Login:          dorileo
+IRC Nick:       dorileo
+Cloak:          developer/dorileo
+Name:           Leandro Dorileo
+Location:       Campinas, Brazil
+E-Mail:         dorileo@profusion.mobi
+WWW:            http://www.dorileo.org
+Contributing:   ephysics, elementary, evas, edje, emotion
+Group:          Libraries, Applications
+Platform:       Arch (Linux)
