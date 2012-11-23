@@ -1,0 +1,116 @@
+New EFL stable release and matching E17 ALPHA 5
+Luis Felipe Strano Moraes (lfelipe)
+luis.strano@gmail.com
+
+<p>
+Same week, but now we have both an alpha and a new EFL stable release.
+
+The EFL had a new minor series of updates in order to fix bugs that were
+preventing the E17 alphas from correctly building. The only packages which had
+bug fixes were Edje, Eet, Elementary and Evas, but new tarballs have been spun
+for all the EFL in order to keep their version synchronized. Please read the
+ChangeLog and NEWS in each of the specific tarballs in order to see what has
+been fixed. This release corresponds with SVN revision 79552.
+
+The new E17 ALPHA 5, based on SVN revision 79568, has the following changes:
+<li>More translation updates</li>
+<li>New default theme is more complete</li>
+<li>Entry widgets will no longer sometimes lock E when resizing</li>
+<li>First-run wizard is now smarter with regard to the signals it listens to</li>
+
+We're organizing a new Release Team in order to help out with this entire
+process, and would like to call out to everyone interested in helping out to
+please join the <a href=https://lists.sourceforge.net/lists/listinfo/enlightenment-release>
+enlightenment-release mailing list. People who are actively working on packaging
+or who have interest in it are specially welcome.
+</p>
+
+<p><ul>
+
+<li>Eina 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/eina-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eina-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eet 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/eet-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eet-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evas 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/evas-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evas-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Ecore 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/ecore-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/ecore-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Embryo 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/embryo-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/embryo-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Edje 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/edje-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/edje-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Efreet 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/efreet-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/efreet-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>E_dbus 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/e_dbus-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/e_dbus-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eeze 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/eeze-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eeze-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Expedite 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/expedite-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/expedite-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evas Generic Loaders 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/evas_generic_loaders-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evas_generic_loaders-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eio 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/eio-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eio-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Emotion 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/emotion-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/emotion-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Ethumb 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/ethumb-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/ethumb-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Elementary 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/elementary-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/elementary-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evil 1.7.2 -
+[<a href="http://download.enlightenment.org/releases/evil-1.7.2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evil-1.7.2.tar.bz2">BZ2</a>]
+</li>
+
+<li>E17 ALPHA5 - 
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha5.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha5.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
