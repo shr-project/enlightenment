@@ -10,7 +10,8 @@ libecorexx_HEADERS = \
 	EvasWindowFB.h \
 	EvasWindowGLX11.h \
 	EvasWindowSoftwareX11.h \
-	EvasWindowXRenderX11.h
+	EvasWindowXRenderX11.h \
+	Exe.h
 
 libecorexxdir = \
 	$(pkgincludedir)

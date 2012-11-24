@@ -26,7 +26,8 @@ libecorexx_la_SOURCES = \
 	EvasWindowFB.cpp \
 	EvasWindowGLX11.cpp \
 	EvasWindowSoftwareX11.cpp \
-	EvasWindowXRenderX11.cpp
+	EvasWindowXRenderX11.cpp \
+	Exe.cpp
 
 libecorexx_la_LIBADD = \
 	$(EFL_LIBS)

@@ -17,6 +17,7 @@
 #include "Timer.h"
 #include "XWindow.h"
 #include "Job.h"
+#include "Exe.h"
 
 #endif // ECOREXX_H
 
