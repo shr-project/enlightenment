@@ -10,22 +10,27 @@ cutout_rect - static?! nowhere free it actually.
 textblock - check the size_formatted_get value when the text has the spaces
 image - image doesn't rendered when load_size_set is called again.
 event - in/out event call
+evas - space partitioning for the objects tree
+evas - check framebuffer complete
 
 <Elementary>
 naviframe - need to block the style set while transiton is going on
 naviframe - more transition effect styles.
 naviframe - optimize for translation effect speed (mapbuf for content)
 naviframe - elementary_test -> naviframe_complex -> change view & push/pop
+naviframe - consider the animator to be in each items.
 hoversel - add horizontal mode style.
 genlist - need to check to prevent flickerling when theme_hook is called
 gengrid - segfault with elm_gengrid_item_sorted_insert func (#984)
 widget  - raw evas objects are not proper as the child member of the widget cause of the color.
 index - check the FIXEMEs
 conformant - how to skip the calc the size if the window is in background.
+conformant - don't make parts before state on.
 general - elm_policy_set/elm_policy_get Use Elm_Policy parameter.
 layout - signal_callback_add/del,call... not for common APIs?
 transit - consider mix the separate evas_map effects
 transit - have the group for image animation
+transit - if it applies transit multiple times to one obj, then crash happene.d
 popup - scroll freeze & hold?
 popup - each item heights are not same consistently.
 win - fix size API?
