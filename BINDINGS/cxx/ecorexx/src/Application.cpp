@@ -6,8 +6,8 @@
 #include <eflxx/Common.h>
 #include <eflxx/System.h>
 #include <eflxx/DebugInternal.h>
-#include "../include/ecorexx/Application.h"
-#include "../include/ecorexx/Timer.h"
+#include "ecorexx/Application.h"
+#include "ecorexx/Timer.h"
 
 /* STD */
 #ifdef ENABLE_EFLPP_FB // TODO: configure support!

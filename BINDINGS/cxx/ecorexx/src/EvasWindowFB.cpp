@@ -7,7 +7,7 @@
 
 /* EFLxx */
 #include <evasxx/Canvas.h>
-#include "../include/ecorexx/EvasWindowFB.h"
+#include "ecorexx/EvasWindowFB.h"
 
 namespace Ecorexx {
 

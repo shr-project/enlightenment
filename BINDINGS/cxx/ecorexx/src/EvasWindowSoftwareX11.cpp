@@ -7,8 +7,8 @@
 
 /* EFLxx */
 #include <evasxx/Canvas.h>
-#include "../include/ecorexx/EvasWindowSoftwareX11.h"
-#include "../include/ecorexx/XWindow.h"
+#include "ecorexx/EvasWindowSoftwareX11.h"
+#include "ecorexx/XWindow.h"
 
 namespace Ecorexx {
   

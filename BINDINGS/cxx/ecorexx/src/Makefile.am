@@ -6,7 +6,8 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	$(EFL_CFLAGS)
+	$(EFL_CFLAGS) \
+	-I../include
 
 AM_CFLAGS =\
 	 -Wall\

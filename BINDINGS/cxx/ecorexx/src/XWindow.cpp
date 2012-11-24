@@ -2,7 +2,7 @@
 #include <config.h>
 #endif
 
-#include "../include/ecorexx/XWindow.h"
+#include "ecorexx/XWindow.h"
 
 //===============================================================================================
 // XWindow

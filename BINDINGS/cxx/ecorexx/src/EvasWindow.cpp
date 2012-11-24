@@ -4,8 +4,8 @@
 
 /* EFLxx */
 #include <evasxx/Canvas.h>
-#include "../include/ecorexx/EvasWindow.h"
-#include "../include/ecorexx/XWindow.h"
+#include "ecorexx/EvasWindow.h"
+#include "ecorexx/XWindow.h"
 
 #include <errno.h>
 #include <assert.h>

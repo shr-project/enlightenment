@@ -3,7 +3,7 @@
 #endif
 
 /* EFLxx */
-#include "../include/ecorexx/Timer.h"
+#include "ecorexx/Timer.h"
 
 #include <cassert>
 

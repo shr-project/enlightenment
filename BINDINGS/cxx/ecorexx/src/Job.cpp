@@ -1,5 +1,5 @@
 /* Project */
-#include "../include/ecorexx/Job.h"
+#include "ecorexx/Job.h"
 
 namespace Ecorexx {
   

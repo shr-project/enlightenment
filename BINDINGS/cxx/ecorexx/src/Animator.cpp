@@ -2,7 +2,7 @@
 #include <config.h>
 #endif
 
-#include "../include/ecorexx/Animator.h"
+#include "ecorexx/Animator.h"
 #include <eflxx/Common.h>
 
 namespace Ecorexx {
