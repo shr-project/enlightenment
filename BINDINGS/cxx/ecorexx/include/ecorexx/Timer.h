@@ -1,5 +1,5 @@
-#ifndef ECORETIMER_H
-#define ECORETIMER_H
+#ifndef ECOREXX_TIMER_H
+#define ECOREXX_TIMER_H
 
 /* EFLxx */
 #include <eflxx/Common.h>
@@ -48,4 +48,4 @@ private:
 
 } // end namespace Ecorexx
 
-#endif // ECORETIMER_H
+#endif // ECOREXX_TIMER_H
