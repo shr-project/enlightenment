@@ -71,6 +71,11 @@ curious.
             <td class="archive"><a href="http://sourceforge.net/mailarchive/forum.php?forum_name=enlightenment-bugs">SourceForge</a></td>
             <td class="description">Receive notification for all bugs committed to Trac.</td>
         </tr>
+        <tr>
+            <td class="name"><a href="http://lists.sourceforge.net/lists/listinfo/enlightenment-release">Enlightenment Release Team</a></td>
+            <td class="archive"><a href="http://sourceforge.net/mailarchive/forum.php?forum_name=enlightenment-release">SourceForge</a></td>
+            <td class="description">Mailing list for Enlightenment/EFL release team.</td>
+        </tr>
     </tbody>
   </table>
 </center>
