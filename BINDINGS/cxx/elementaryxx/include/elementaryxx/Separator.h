@@ -25,12 +25,15 @@ public:
     
   void setOrientation (Separator::Orientation orient);
   Separator::Orientation getOrientation ();
+
+protected:
+  // allow only construction for child classes
+  Separator (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Separator (); // forbid direct delete -> use ElmWidget::destroy()
   
 private:
   Separator (); // forbid standard constructor
   Separator (const Separator&); // forbid copy constructor
-  Separator (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Separator (); // forbid direct delete -> use ElmWidget::destroy()
 };
 
 } // end namespace Elmxx

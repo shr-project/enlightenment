@@ -24,12 +24,15 @@ public:
   void setState (bool state);
   
   bool getState () const;
+
+protected:
+  // allow only construction for child classes
+  Check (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Check (); // forbid direct delete -> use Object::destroy()
   
 private:
   Check (); // forbid standard constructor
   Check (const Check&); // forbid copy constructor
-  Check (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Check (); // forbid direct delete -> use Object::destroy()
 };
 
 #if 0

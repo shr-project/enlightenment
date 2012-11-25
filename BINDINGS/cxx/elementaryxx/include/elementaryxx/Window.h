@@ -59,18 +59,6 @@ public:
   void setRotation (int rotation);
   
   void setSticky (bool sticky);
-
-  /*!
-   * Get the transparency state of a window.
-   */
-  bool getTransparent () const;
-
-  /*!
-   * Set the transparency state of a window.
-   * 
-   * Use setAlpha () instead.
-   */
-  void setTransparent (bool transparent);
   
   //void setKeyboardMode (Elm_Win_Keyboard_Mode mode);
   
@@ -80,14 +68,18 @@ public:
   
   void delResizeObject (const Evasxx::Object &subobj);
   
-private:
-  Window (); // forbid standard constructor
-  Window (const Window&); // forbid copy constructor
-  
+
+protected:
+  // allow only construction for child classes
   // private construction -> use factory ()
   Window (const std::string &name, Elm_Win_Type type);
   Window (Evasxx::Object &parent, const std::string &name, Elm_Win_Type type);
-  ~Window (); // forbid direct delete -> use Object::destroy()
+  virtual ~Window (); // forbid direct delete -> use Object::destroy()
+  
+private:
+  Window (); // forbid standard constructor
+  Window (const Window&); // forbid copy constructor
+
 };
 
 } // end namespace Elmxx

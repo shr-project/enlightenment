@@ -43,11 +43,14 @@ public:
 
   Elm_Object_Item *append (const std::string &label, const Evasxx::Object &icon, const Evasxx::Object &end, void (*func) (void *data, Evas_Object *obj, void *event_info), const void *data);
 
+protected:
+  // allow only construction for child classes
+  List (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~List (); // forbid direct delete -> use Object::destroy()
+  
 private:
   List (); // forbid standard constructor
   List (const List&); // forbid copy constructor
-  List (Evasxx::Object &parent); // private construction -> use factory ()
-  ~List (); // forbid direct delete -> use Object::destroy()
 };
 
 #if 0

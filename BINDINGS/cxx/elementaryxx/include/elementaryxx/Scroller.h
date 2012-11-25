@@ -38,12 +38,15 @@ public:
   const Eflxx::Size getChildSize () const;
   
   void setBounce (bool hBounce, bool vBounce); // TODO: is H=height and V=vertical?
+
+protected:
+  // allow only construction for child classes
+  Scroller (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Scroller (); // forbid direct delete -> use Object::destroy()
   
 private:
   Scroller (); // forbid standard constructor
   Scroller (const Scroller&); // forbid copy constructor
-  Scroller (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Scroller (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

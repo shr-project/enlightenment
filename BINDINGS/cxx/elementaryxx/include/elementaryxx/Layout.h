@@ -22,13 +22,15 @@ public:
   void setContent (const std::string &swallow, const Evasxx::Object &content);
 
   Eflxx::CountedPtr <Edjexx::Object> getEdje ();
-  
 
+protected:
+  // allow only construction for child classes
+  Layout (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Layout (); // forbid direct delete -> use Object::destroy()
+  
 private:
   Layout (); // forbid standard constructor
   Layout (const Layout&); // forbid copy constructor
-  Layout (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Layout (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

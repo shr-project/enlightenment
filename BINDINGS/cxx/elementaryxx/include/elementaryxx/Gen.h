@@ -15,23 +15,24 @@ namespace Elmxx {
 class Gen : public Object
 {
 public:  
-  virtual void clear ();
+  void clear ();
 
-  virtual void setAlwaysSelectMode (bool alwaysSelect);
+  void setAlwaysSelectMode (bool alwaysSelect);
   
-  virtual bool getAlwaysSelectMode ();
+  bool getAlwaysSelectMode ();
   
-  virtual void setNoSelectMode (bool noSelect);
+  void setNoSelectMode (bool noSelect);
   
-  virtual bool getNoSelectMode ();
+  bool getNoSelectMode ();
 
-  virtual void setBounce (bool hBounce, bool vBounce);
+  void setBounce (bool hBounce, bool vBounce);
   
-  virtual void getBounce (bool &hBounceOut, bool &vBounceOut);
+  void getBounce (bool &hBounceOut, bool &vBounceOut);
 
 protected:
+  // allow only construction for child classes
   Gen (); // allow only construction for child classes
-  ~Gen (); // forbid direct delete -> use Object::destroy()
+  virtual ~Gen (); // forbid direct delete -> use Object::destroy()
 
 private:
   Gen (const Gen&); // forbid copy constructor

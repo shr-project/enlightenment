@@ -26,12 +26,15 @@ public:
   void setValue (double val);
   double getValue ();
   void setWrap (bool wrap);
+
+protected:
+  // allow only construction for child classes
+  Spinner (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Spinner (); // forbid direct delete -> use ElmWidget::destroy()
   
 private:
   Spinner (); // forbid standard constructor
   Spinner (const Spinner&); // forbid copy constructor
-  Spinner (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Spinner (); // forbid direct delete -> use ElmWidget::destroy()
 };
 
 } // end namespace Elmxx

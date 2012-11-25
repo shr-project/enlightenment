@@ -17,13 +17,6 @@ class Box : public Object
 public:
   static Box *factory (Evasxx::Object &parent);
   
-private:
-  Box (); // forbid standard constructor
-  Box (const Box&); // forbid copy constructor
-  Box (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Box (); // forbid direct delete -> use Object::destroy()
-  
-public:
   enum Orientation
   {
     Horizontal,
@@ -41,6 +34,15 @@ public:
   void packBefore (const Evasxx::Object &subobj, const Evasxx::Object &before);
   
   void packAfter (const Evasxx::Object &subobj, const Evasxx::Object &after);
+
+protected:
+  // allow only construction for child classes  
+  Box (Evasxx::Object &parent); // private construction -> use factory ()  
+  virtual ~Box (); // forbid direct delete -> use Object::destroy()
+  
+private:
+  Box (); // forbid standard constructor
+  Box (const Box&); // forbid copy constructor
 };
 
 } // end namespace Elmxx

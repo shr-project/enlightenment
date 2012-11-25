@@ -20,11 +20,14 @@ public:
 
   void pack (const Evasxx::Object &subobj, const Eflxx::Rect &rect);
 
+protected:
+  // allow only construction for child classes
+  Table (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Table (); // forbid direct delete -> use Object::destroy()
+  
 private:
   Table (); // forbid standard constructor
   Table (const Table&); // forbid copy constructor
-  Table (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Table (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

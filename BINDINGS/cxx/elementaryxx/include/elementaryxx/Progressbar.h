@@ -56,12 +56,15 @@ public:
   
   void setValue (double val);
   double getValue ();
+
+protected:
+  // allow only construction for child classes
+  Progressbar (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Progressbar (); // forbid direct delete -> use ElmWidget::destroy()
   
 private:
   Progressbar (); // forbid standard constructor
   Progressbar (const Progressbar&); // forbid copy constructor
-  Progressbar (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Progressbar (); // forbid direct delete -> use ElmWidget::destroy()
 };
 
 } // end namespace Elmxx

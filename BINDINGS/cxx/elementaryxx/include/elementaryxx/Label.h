@@ -24,12 +24,16 @@ public:
   void setWrapWidth (Evas_Coord w);
 
   Evas_Coord getWrapWidth () const;
+
+protected:
+  // allow only construction for child classes
+  Label (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Label (); // forbid direct delete -> use Object::destroy()
   
 private:
   Label (); // forbid standard constructor
   Label (const Label&); // forbid copy constructor
-  Label (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Label (); // forbid direct delete -> use Object::destroy()
+
 };
 
 } // end namespace Elmxx

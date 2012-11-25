@@ -30,12 +30,15 @@ public:
   void setLabel (const std::string &label);
 
   void setContent (const Evasxx::Object &content);
+
+protected:
+  // allow only construction for child classes
+  Frame (Evasxx::Object &parent); // private construction -> use factory ()
+  ~Frame (); // forbid direct delete -> use Object::destroy()
   
 private:
   Frame (); // forbid standard constructor
   Frame (const Frame&); // forbid copy constructor
-  Frame (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Frame (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

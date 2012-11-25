@@ -46,11 +46,14 @@ public:
   
   void setInverted (bool inverted);
 
+protected:
+  // allow only construction for child classes
+  Slider (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Slider (); // forbid direct delete -> use Object::destroy()
+  
 private:
   Slider (); // forbid standard constructor
   Slider (const Slider&); // forbid copy constructor
-  Slider (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Slider (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

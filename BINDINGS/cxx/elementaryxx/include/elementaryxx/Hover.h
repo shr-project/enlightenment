@@ -28,11 +28,14 @@ public:
 
   const string getBestContentLocation (Elm_Hover_Axis prefAxis) const;
 
+protected:
+  // allow only construction for child classes
+  Hover (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Hover (); // forbid direct delete -> use Object::destroy()
+  
 private:
   Hover (); // forbid standard constructor
   Hover (const Hover&); // forbid copy constructor
-  Hover (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Hover (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

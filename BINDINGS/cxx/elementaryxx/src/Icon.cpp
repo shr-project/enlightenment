@@ -36,24 +36,36 @@ void Icon::setStandard (const std::string &name)
 {
   elm_icon_standard_set (o, name.c_str ());
 }
+
+/*std::string Icon::getStandard()
+{
+  // FIXME this doesn't link in application. Why?
+  return elm_icon_standard_get(o);
+}*/
+
 void Icon::setSmooth (bool smooth)
 {
   elm_icon_smooth_set (o, smooth);
 }
+
 void Icon::setNoScale (bool noScale)
 {
   elm_icon_no_scale_set (o, noScale);
 }
+
 void Icon::setResizable (bool scaleUp, bool scaleDown)
 {
   elm_icon_resizable_set (o, scaleUp, scaleDown);
 }
+
 void Icon::setFillOutside (bool fillOutside)
 {
   elm_icon_fill_outside_set (o, fillOutside);
 }
+
 void Icon::setPrescale (int size)
 {
   elm_icon_prescale_set (o, size);
 }
+
 } // end namespace Elmxx

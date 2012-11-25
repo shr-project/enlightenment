@@ -28,12 +28,15 @@ public:
   void setValue (int value);
   
   int getValue () const;
+
+protected:
+  // allow only construction for child classes
+  Radio (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Radio (); // forbid direct delete -> use Object::destroy()
   
 private:
   Radio (); // forbid standard constructor
   Radio (const Radio&); // forbid copy constructor
-  Radio (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Radio (); // forbid direct delete -> use Object::destroy()
 };
 
 #if 0

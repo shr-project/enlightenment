@@ -115,12 +115,16 @@ EAPI void                         elm_bg_file_get(const Evas_Object *obj, const 
    * @ingroup Background
    */
   void setLoadSize (Eflxx::Size s);
+
+protected:
+  // allow only construction for child classes
+  Background (Evasxx::Object &parent); // private construction -> use factory ()
+  
+  virtual ~Background (); // forbid direct delete -> use Object::destroy()  
   
 private:
   Background (); // forbid standard constructor
   Background (const Background&); // forbid copy constructor
-  Background (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Background (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

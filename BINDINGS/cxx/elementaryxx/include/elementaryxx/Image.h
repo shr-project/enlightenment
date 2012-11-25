@@ -35,11 +35,13 @@ public:
   
   void setOrient (Elm_Image_Orient orient);
 
+protected:
+  Image (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Image (); // forbid direct delete -> use Object::destroy()
+  
 private:
   Image (); // forbid standard constructor
   Image (const Image&); // forbid copy constructor
-  Image (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Image (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

@@ -44,12 +44,14 @@ public:
   void setShowAmPm (bool am_pm);
   
   void setShowSeconds (bool seconds);
+
+protected:
+  Clock (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Clock (); // forbid direct delete -> use Object::destroy()
   
 private:
   Clock (); // forbid standard constructor
   Clock (const Clock&); // forbid copy constructor
-  Clock (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Clock (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

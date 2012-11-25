@@ -25,12 +25,15 @@ class Button : public Object
 {
 public:  
   static Button *factory (Evasxx::Object &parent);
+
+protected:
+  // allow only construction for child classes
+  Button (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Button (); // forbid direct delete -> use Object::destroy()
   
 private:
   Button (); // forbid standard constructor
   Button (const Button&); // forbid copy constructor
-  Button (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Button (); // forbid direct delete -> use Object::destroy()
 };
 
 } // end namespace Elmxx

@@ -235,7 +235,6 @@ public:
    * @ingroup Entry
    */
   void appendText (const std::string &entry);
-  EAPI void               elm_entry_entry_append(Evas_Object *obj, const char *entry);
 
   /**
    * Set the line wrap type to use on multi-line entries.
@@ -565,12 +564,15 @@ public:
    * @ingroup Entry
    */
   void endAnchorHover();
+
+protected:
+  // allow only construction for child classes
+  Entry (Evasxx::Object &parent); // private construction -> use factory ()
+  virtual ~Entry (); // forbid direct delete -> use Object::destroy()
   
 private:
   Entry (); // forbid standard constructor
   Entry (const Entry&); // forbid copy constructor
-  Entry (Evasxx::Object &parent); // private construction -> use factory ()
-  ~Entry (); // forbid direct delete -> use Object::destroy()
 };
 
 #if 0
@@ -993,7 +995,7 @@ EAPI void                   elm_entry_input_panel_enabled_set(Evas_Object *obj, 
 EAPI Eina_Bool              elm_entry_input_panel_enabled_get(const Evas_Object *obj);
 
 /**
- * Show the input panel (virtual keyboard) based on the input panel property of entry such as layout, autocapital types, and so on.
+ * Show the input panel (keyboard) based on the input panel property of entry such as layout, autocapital types, and so on.
  *
  * Note that input panel is shown or hidden automatically according to the focus state of entry widget.
  * This API can be used in the case of manually controlling by using elm_entry_input_panel_enabled_set(en, EINA_FALSE).
@@ -1005,7 +1007,7 @@ EAPI Eina_Bool              elm_entry_input_panel_enabled_get(const Evas_Object 
 EAPI void                   elm_entry_input_panel_show(Evas_Object *obj);
 
 /**
- * Hide the input panel (virtual keyboard).
+ * Hide the input panel (keyboard).
  *
  * Note that input panel is shown or hidden automatically according to the focus state of entry widget.
  * This API can be used in the case of manually controlling by using elm_entry_input_panel_enabled_set(en, EINA_FALSE)

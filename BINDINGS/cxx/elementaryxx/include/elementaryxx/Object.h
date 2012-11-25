@@ -25,7 +25,7 @@ public:
   void setDisabled (bool disabled);
   bool getDisabled ();
   
-  virtual void focus ();
+  void focus ();
 
   /*!
    * Check if the given Evas Object is an Elementary widget.
@@ -169,7 +169,7 @@ public:
    *
    * @ingroup General
    */
-  Eflxx::CountedPtr <Evasxx::Object> findName(const std::string &name, int recurse);
+  virtual Eflxx::CountedPtr <Evasxx::Object> findName(const std::string &name, int recurse);
 
   /**
    * Set the text to read out when in accessibility mode
@@ -179,16 +179,16 @@ public:
    *
    * @ingroup General
    */
-  void setInfoAccess(const std::string &txt);
+  virtual void setInfoAccess(const std::string &txt);
 
  
-  void destroy ();
+  virtual void destroy ();
   
 protected:
   Object (); // allow only construction for child classes
   virtual ~Object (); // forbid direct delete -> use destroy()
   
-  void elmInit ();
+  virtual void elmInit ();
   
 private:
   Object (const Object&); // forbid copy constructor
