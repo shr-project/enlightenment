@@ -10,16 +10,21 @@
 
 namespace Ecorexx {
 
-Exe::Exe() :
-  mExe(NULL)
+Exe::Exe(const std::string &exe_cmd, const void *data)
 {
+  mExe = ecore_exe_run(exe_cmd.c_str(), data);
+}
+
+Exe::Exe(const std::string &exe_cmd, Ecore_Exe_Flags flags, const void *data)
+{
+  mExe = ecore_exe_pipe_run(exe_cmd.c_str(), flags, data);
 }
 
 Exe::~Exe()
 {
   if(mExe)
   {
-    assert(ecore_exe_free(mExe));
+    ecore_exe_free(mExe);
   }
 }
   
@@ -31,26 +36,6 @@ void Exe::setRunPriority(int pri)
 int Exe::getRunPriority()
 {
   return ecore_exe_run_priority_get();
-}
-
-Eflxx::CountedPtr <Exe> Exe::run(const std::string &exe_cmd, const void *data)
-{
-  Ecore_Exe *ecore_exe = ecore_exe_run(exe_cmd.c_str(), data);
-  
-  Exe *exe_obj = new Exe();
-  exe_obj->mExe = ecore_exe;
-  
-  return Eflxx::CountedPtr <Exe> (exe_obj);
-}
-
-Eflxx::CountedPtr <Exe> Exe::runPipe(const std::string &exe_cmd, Ecore_Exe_Flags flags, const void *data)
-{
-  Ecore_Exe *ecore_exe = ecore_exe_pipe_run(exe_cmd.c_str(), flags, data);
-  
-  Exe *exe_obj = new Exe();
-  exe_obj->mExe = ecore_exe;
-  
-  return Eflxx::CountedPtr <Exe> (exe_obj);
 }
 
 bool Exe::send(const void *data, int size)

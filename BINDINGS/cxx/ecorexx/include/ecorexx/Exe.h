@@ -3,7 +3,6 @@
 
 /* EFL */
 #include <Ecore.h>
-#include <eflxx/CountedPtr.h>
 
 namespace Ecorexx {
 
@@ -24,15 +23,16 @@ namespace Ecorexx {
 class Exe
 {
 public:
+  Exe(const std::string &exe_cmd, const void *data);
+
+  //ecore_exe_pipe_run
+  Exe(const std::string &exe_cmd, Ecore_Exe_Flags flags, const void *data);
+    
   virtual ~Exe();
 
   static void setRunPriority(int pri);
 
   static int getRunPriority();
-
-  static Eflxx::CountedPtr <Exe> run(const std::string &exe_cmd, const void *data); 
-
-  static Eflxx::CountedPtr <Exe> runPipe(const std::string &exe_cmd, Ecore_Exe_Flags flags, const void *data);
 
   // TODO
 //EAPI void ecore_exe_callback_pre_free_set(Ecore_Exe *exe, Ecore_Exe_Cb func);
@@ -78,11 +78,7 @@ public:
 
   void hup();
   
-private:
-  /**
-   * no constructor -> call run() or runPipe() 
-   */
-  Exe();
+private:  
   Exe(const Exe&); // forbid copy constructor
   
   Ecore_Exe *mExe;
