@@ -1,8 +1,8 @@
 /* Guidelines for a notification theme.
 
  * Groups needed :
- *  - modules/notification/logo : Logo for the module and it must contain at least one part named image.
- *  - modules/notification/main : Main theme for the popup
+ *  - e/modules/notification/logo : Logo for the module and it must contain at least one part named image.
+ *  - e/modules/notification/main : Main theme for the popup
  * The theme must contains two parts :
  *  - notification.swallow.app_icon  : Contains the notification icon
  *  - notification.textblock.message : Contains the notification message
@@ -16,8 +16,8 @@
  *  - notification,find  : Find the source application of the event
  */
 group {
-	name: "modules/notification/main/alpha";
-	alias: "modules/notification/main";
+	name: "e/modules/notification/main/alpha";
+	alias: "e/modules/notification/main";
 	data {
         item: "app_icon_max" "48 48";
         item: "shaped" "1";

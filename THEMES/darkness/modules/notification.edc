@@ -36,8 +36,8 @@ group {
       item: "app_icon_max" "48 48";
       item: "shaped" "1";
    }
-   name: "modules/notification/main/alpha";
-   alias: "modules/notification/main";
+   name: "e/modules/notification/main/alpha";
+   alias: "e/modules/notification/main";
    parts {
       /* Background */
       part {

@@ -40677,7 +40677,7 @@ group {
 }
 
 group {
-   name: "modules/notification/logo";
+   name: "e/modules/notification/logo";
    parts {
       part {
          name: "image";
@@ -40693,7 +40693,7 @@ group {
 }
 
 group {
-   name: "modules/notification/main";
+   name: "e/modules/notification/main";
    data {
      item: "app_icon_max" "48 48";
      item: "shaped" "1";
