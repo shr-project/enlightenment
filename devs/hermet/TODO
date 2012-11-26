@@ -35,6 +35,7 @@ popup - scroll freeze & hold?
 popup - each item heights are not same consistently.
 win - fix size API?
 font - entry font style doesn't reset in elementary_config
+flip - doesn't applied flip interactive options.
 
 <Ecore>
 Ecore_X - use Ecore_X_Error_Code for ecore_x_error_code_get() (pending to Ecore 2.0)
