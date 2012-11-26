@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Everything-Places\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-11-12 17:45+0400\n"
-"PO-Revision-Date: 2012-11-12 17:45+0400\n"
+"POT-Creation-Date: 2012-11-26 16:41+0400\n"
+"PO-Revision-Date: 2012-11-26 16:41+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -23,3 +23,15 @@ msgstr "Дом"
 #: src/e_mod_main.c:141
 msgid "Wallpaper"
 msgstr "Обои"
+
+#: src/e_mod_main.c:269 src/e_mod_main.c:279
+msgid "Places"
+msgstr "Места"
+
+#: src/e_mod_main.c:289
+msgid "Mount Drive"
+msgstr "Подключить диск"
+
+#: src/e_mod_main.c:294
+msgid "Unmount Drive"
+msgstr "Отключить диск"

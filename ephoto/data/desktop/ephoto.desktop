@@ -6,6 +6,7 @@ Comment[fr]=Visionneuse photo pour Enlightenment
 Comment[gl]=Visualizador de fotos de Enlightenment
 Comment[it]=Visualizzatore di foto per Enlightenment
 Comment[pt]=Visualizador de fotos do Enlightenment
+Comment[ru]=Просмотр фото
 Exec=ephoto
 Icon=ephoto
 Terminal=false
