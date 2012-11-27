@@ -1,0 +1,56 @@
+New E17 <b>Release</b>: ALPHA6
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+With a beefy changelog accompanying it, I'm pleased to post another alpha.<br>
+It should be noted that this is the first alpha worthy of receiving the praise "improved
+<b>LESS CRASHING</b> and <b>IMPROVEMENTS TO NOT CRASHING</b>".<br><br> 
+
+Changelog:
+<li>Translation updates</li>
+<li>AMD K10 temperature sensor support on OpenBSD</li>
+<li>Video file previews will now stutter less and respect tooltip boundaries more</li>
+<li>Battery module now crashes less on OpenBSD</li>
+<li>Icon resizing is now smoother</li>
+<li>Gadget menus can no longer cause crashes when the gadget is deleted</li>
+<li>Fileselector once again allows selection from directory previews</li>
+<li>Filemanager DND can no longer interfere with gadget DND to cause crashes</li>
+<li>Improved support for XDG_DESKTOP_DIR</li>
+<li>Filemanager no longer restores non-default desktop paths when desktop navigation mode is disabled</li>
+<li>Improvements/fixes to lost window warping behavior</li>
+<li>New ibar sources now copy from default source</li>
+<li>Right clicking on any part of a desktop gadget is now sufficient to disable move/resize</li>
+<li>Filemanager maximum thumbnail size config slider now more granular</li>
+<li>Module config dialog now updates when module states are externally toggled</li>
+<li>Connman wizard page now shows regardless of connman support, also disables connman module if support disabled</li>
+<li>First-run wizard now correctly updates after language changes</li>
+<li>First-run wizard button now reads "Please Wait" when it is disabled</li>
+<li>First-run wizard now has a page to (not) add a taskbar to the default shelf</li>
+<li>First-run wizard now unsets winlist pointer warping when "click" focus model is chosen</li>
+<li>First-run wizard now performs a more accurate wait when building XDG cache</li>
+<li>Edge bindings dialog can no longer crash when closed before its grab dialog</li>
+<li>Edge bindings dialog no longer allows blank bindings to be added</li>
+<li>Keybindings dialog no longer adds non-default ctrl+shift bindings when restoring default bindings</li>
+<li>Gadget popups will no longer sometimes obscure the source gadget if triggered on an offscreen gadget</li>
+<li>"Show Calendar" action renamed to "Toggle Calendar"</li>
+<li>Fileman Operations module now uses same infos as filemanager</li>
+<li>Password mode toggling in entry now works more effectively</li>
+<li><b>[THEME]</b> Desktop gadget</li>
+<li><b>[THEME]</b> RandR dialog</li>
+<li><b>[THEME]</b> Notification module</li>
+<li><b>[THEME]</b> Pixel borders fixed</li>
+<li><b>[THEME]</b> Pixel borders allow drag resizing</li>
+<li><b>[THEME]</b> Cpufreq gadget</li>
+<li><b>[THEME]</b> Analog clock</li>
+</p>
+
+<p><ul>
+
+<li>E17 ALPHA6 - 79752
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha6.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha6.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
