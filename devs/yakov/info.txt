@@ -1,0 +1,8 @@
+Login:        yakov
+IRC Nick:     ya-kov
+Name:         Yakov Goldberg
+Location:     Tel-Aviv, Israel
+E-Mail:       yakov.goldberg@gmail.com
+Contributing: ecore, elementary, language bindings
+Group:        Libraries
+Platform:     Ubuntu
