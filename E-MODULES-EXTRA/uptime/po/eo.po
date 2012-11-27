@@ -9,56 +9,52 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-01 15:38+0800\n"
-"PO-Revision-Date: 2010-01-20 21:35+0000\n"
-"Last-Translator: Michael Moroni <haikara90@gmail.com>\n"
+"POT-Creation-Date: 2012-11-26 10:03+0100\n"
+"PO-Revision-Date: 2012-11-26 09:44+0000\n"
+"Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-21 04:34+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-27 05:33+0000\n"
+"X-Generator: Launchpad (build 16309)\n"
 
-#: ../src/e_mod_config.c:52
-msgid "Uptime Configuration"
-msgstr "Agordoj de daŭro de funkciado"
-
-#: ../src/e_mod_config.c:105
+#: src/e_mod_config.c:52 src/e_mod_config.c:105
 msgid "Uptime Settings"
-msgstr "Agordo de daŭro de funkciado"
+msgstr "Agordoj pri daŭro de funkciado"
 
-#: ../src/e_mod_config.c:107
+#: src/e_mod_config.c:107
 msgid "Update Interval:"
 msgstr "Ĝisdatigi intervalon:"
 
-#: ../src/e_mod_config.c:110 ../src/e_mod_config.c:117
+#: src/e_mod_config.c:110 src/e_mod_config.c:117
 #, c-format
 msgid "%1.0f seconds"
 msgstr "%1.0f sekundoj"
 
-#: ../src/e_mod_config.c:114
+#: src/e_mod_config.c:114
 msgid "Check Interval:"
 msgstr "Kontroli intervalon:"
 
-#: ../src/e_mod_main.c:162
+#: src/e_mod_main.c:160
 msgid "Uptime"
 msgstr "Daŭro de funkciado"
 
-#: ../src/e_mod_main.c:211
-msgid "Configuration"
+#: src/e_mod_main.c:205
+msgid "Settings"
 msgstr "Agordoj"
 
-#: ../src/e_mod_main.c:568
+#: src/e_mod_main.c:550
 #, c-format
 msgid "up: %d days, %d:%02d:%02ld"
 msgstr "daŭro: %d tagoj, %d:%02d:%02ld"
 
-#: ../src/e_mod_main.c:575
+#: src/e_mod_main.c:557
 #, c-format
 msgid "la: %.2f %.2f %.2f"
 msgstr "ŝarĝo: %.2f %.2f %.2f"
 
-#: ../src/e_mod_main.c:580
+#: src/e_mod_main.c:562
 #, c-format
 msgid "users: %d"
 msgstr "uzantoj : %d"

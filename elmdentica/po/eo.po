@@ -1,0 +1,555 @@
+# Esperanto translation for enlightenment
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the enlightenment package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enlightenment\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-11-26 10:03+0100\n"
+"PO-Revision-Date: 2012-11-18 10:25+0000\n"
+"Last-Translator: Eliovir <Unknown>\n"
+"Language-Team: Esperanto <eo@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-11-27 05:35+0000\n"
+"X-Generator: Launchpad (build 16309)\n"
+
+#: src/curl.c:92 src/elmdentica.c:1393 src/elmdentica.c:1616
+msgid "Close"
+msgstr "Fermi"
+
+#: src/curl.c:319
+#, c-format
+msgid ""
+"Can't dump %s into %s:\n"
+"(%d) %s\n"
+msgstr ""
+
+#: src/curl.c:326
+#, c-format
+msgid "Can't open %s for writing: %s\n"
+msgstr "Ne povas malfermi %s por skribi: %s\n"
+
+#: src/elmdentica.c:278
+msgid "Last messages..."
+msgstr ""
+
+#: src/elmdentica.c:279
+msgid "Everyone..."
+msgstr ""
+
+#: src/elmdentica.c:280
+msgid "My favorites..."
+msgstr ""
+
+#: src/elmdentica.c:281
+msgid "Replies / mentions..."
+msgstr ""
+
+#: src/elmdentica.c:283
+msgid "My friends..."
+msgstr ""
+
+#: src/elmdentica.c:474 src/elmdentica.c:621
+msgid "Follow"
+msgstr "Sekvi"
+
+#: src/elmdentica.c:476 src/elmdentica.c:623
+msgid "Stop following"
+msgstr "Ĉesi sekvi"
+
+#: src/elmdentica.c:610
+msgid "Couldn't parse user info message..."
+msgstr "Ne povis sintakse analizi informmesaĝojn de uzantoj..."
+
+#: src/elmdentica.c:672 src/elmdentica.c:751
+#, c-format
+msgid "You are a member of group %s along with %d other people.<br>«%s»"
+msgstr ""
+
+#: src/elmdentica.c:673 src/elmdentica.c:784
+msgid "Leave"
+msgstr ""
+
+#: src/elmdentica.c:675 src/elmdentica.c:753
+#, c-format
+msgid "You are not a member of group %s but %d people are.<br>«%s»"
+msgstr ""
+
+#: src/elmdentica.c:676 src/elmdentica.c:786
+msgid "Join"
+msgstr ""
+
+#: src/elmdentica.c:840
+msgid "Check it out!"
+msgstr "Kontrolu!"
+
+#: src/elmdentica.c:1003
+#, c-format
+msgid "a few seconds ago"
+msgstr ""
+
+#: src/elmdentica.c:1005
+#, c-format
+msgid "a few minutes ago"
+msgstr ""
+
+#: src/elmdentica.c:1007
+#, c-format
+msgid "~ %d minutes ago"
+msgstr ""
+
+#: src/elmdentica.c:1010
+#, c-format
+msgid "~ %d hours ago"
+msgstr ""
+
+#: src/elmdentica.c:1012
+#, c-format
+msgid "~ 1 hour ago"
+msgstr ""
+
+#: src/elmdentica.c:1014
+#, c-format
+msgid "on %x"
+msgstr ""
+
+#: src/elmdentica.c:1017
+#, c-format
+msgid "%x %X"
+msgstr ""
+
+#: src/elmdentica.c:1018 src/elmdentica.c:1019
+#, c-format
+msgid "some-when"
+msgstr ""
+
+#: src/elmdentica.c:1097
+#, c-format
+msgid "Finished %s"
+msgstr ""
+
+#: src/elmdentica.c:1105
+msgid "Ok"
+msgstr ""
+
+#: src/elmdentica.c:1112
+msgid "Open"
+msgstr ""
+
+#: src/elmdentica.c:1158
+#, c-format
+msgid "downloading %s"
+msgstr ""
+
+#: src/elmdentica.c:1174 src/elmdentica.c:1886 src/settings.c:544
+#: src/settings.c:1277
+msgid "Cancel"
+msgstr "Nuligi"
+
+#: src/elmdentica.c:1274
+msgid "Users"
+msgstr ""
+
+#: src/elmdentica.c:1303
+msgid "Links"
+msgstr ""
+
+#: src/elmdentica.c:1322
+msgid "Tags"
+msgstr ""
+
+#: src/elmdentica.c:1340
+msgid "Groups"
+msgstr ""
+
+#: src/elmdentica.c:1358
+msgid "Attachments"
+msgstr ""
+
+#: src/elmdentica.c:1429
+msgid "Reply"
+msgstr "Respondi"
+
+#: src/elmdentica.c:1438
+msgid "Repeat"
+msgstr "Ripeti"
+
+#: src/elmdentica.c:1447 src/elmdentica.c:2154
+msgid "DM"
+msgstr ""
+
+#: src/elmdentica.c:1457
+msgid "Unmark favorite"
+msgstr "Malmarki kiel preferita"
+
+#: src/elmdentica.c:1459
+msgid "Mark favorite"
+msgstr "Marki kiel preferita"
+
+#: src/elmdentica.c:1469
+msgid "View related"
+msgstr ""
+
+#: src/elmdentica.c:1478
+msgid "Status details"
+msgstr ""
+
+#: src/elmdentica.c:1486
+msgid "Recycle status"
+msgstr ""
+
+#: src/elmdentica.c:1586
+msgid "Error"
+msgstr "Eraro"
+
+#: src/elmdentica.c:1587
+msgid "µ-blog Error"
+msgstr "Eraro de µ-blogo"
+
+#: src/elmdentica.c:1868
+msgid "Send a DM to..."
+msgstr ""
+
+#: src/elmdentica.c:1880 src/settings.c:536 src/settings.c:1268
+msgid "OK"
+msgstr "Bone"
+
+#: src/elmdentica.c:1955 src/elmdentica.c:2113
+msgid "Type your status here..."
+msgstr "Entajpu vian staton ĉi tie..."
+
+#: src/elmdentica.c:2141
+msgid "Send"
+msgstr ""
+
+#: src/elmdentica.c:2167
+msgid "Hide"
+msgstr ""
+
+#: src/elmdentica.c:2188
+msgid "Timelines"
+msgstr ""
+
+#: src/elmdentica.c:2194
+msgid "Direct Messages"
+msgstr ""
+
+#: src/elmdentica.c:2195
+msgid "Everyone"
+msgstr "Ĉiuj"
+
+#: src/elmdentica.c:2196
+msgid "Just me"
+msgstr "Nur mi"
+
+#: src/elmdentica.c:2197
+msgid "Favorites"
+msgstr "Preferaĵoj"
+
+#: src/elmdentica.c:2198
+msgid "Replies/Mentions"
+msgstr ""
+
+#: src/elmdentica.c:2199
+msgid "Friends & I"
+msgstr "Mi kaj geamikoj"
+
+#: src/elmdentica.c:2201 src/settings.c:1433
+msgid "Settings"
+msgstr "Agordoj"
+
+#: src/statusnet.c:366
+#, c-format
+msgid "Not enough memory to create a status\n"
+msgstr ""
+
+#: src/statusnet.c:418
+#, c-format
+msgid "Not enough memory to create an user\n"
+msgstr ""
+
+#: src/statusnet.c:555
+#, c-format
+msgid "Error encountered: %s\n"
+msgstr ""
+
+#: src/statusnet.c:967
+#, c-format
+msgid "Unknown timeline %d\n"
+msgstr ""
+
+#: src/statusnet.c:974
+#, c-format
+msgid "Not enough memory to construct timeline URI\n"
+msgstr ""
+
+#: src/statusnet.c:981
+#, c-format
+msgid "Not enough memory to prepare host url\n"
+msgstr ""
+
+#: src/settings.c:146
+msgid "never"
+msgstr ""
+
+#: src/settings.c:146
+msgid "0 s"
+msgstr ""
+
+#: src/settings.c:147
+msgid "1 minute"
+msgstr ""
+
+#: src/settings.c:147
+msgid "1 min"
+msgstr ""
+
+#: src/settings.c:148
+msgid "2 minutes"
+msgstr ""
+
+#: src/settings.c:148
+msgid "2 min"
+msgstr ""
+
+#: src/settings.c:149
+msgid "5 minutes"
+msgstr ""
+
+#: src/settings.c:149
+msgid "5 min"
+msgstr ""
+
+#: src/settings.c:150
+msgid "10 minutes"
+msgstr ""
+
+#: src/settings.c:150
+msgid "10 min"
+msgstr ""
+
+#: src/settings.c:151
+msgid "15 minutes"
+msgstr ""
+
+#: src/settings.c:151
+msgid "15 min"
+msgstr ""
+
+#: src/settings.c:152
+msgid "30 minutes"
+msgstr ""
+
+#: src/settings.c:152
+msgid "30 min"
+msgstr ""
+
+#: src/settings.c:153
+msgid "1 hour"
+msgstr ""
+
+#: src/settings.c:153
+msgid "1 h"
+msgstr ""
+
+#: src/settings.c:174 src/settings.c:1087
+msgid "Every: "
+msgstr ""
+
+#: src/settings.c:396
+msgid "Screen name"
+msgstr "Ekrannomo"
+
+#: src/settings.c:411
+msgid "Password"
+msgstr "Pasvorto"
+
+#: src/settings.c:435
+msgid "Type"
+msgstr "Tipo"
+
+#: src/settings.c:452
+msgid "Secure"
+msgstr "Sekura"
+
+#: src/settings.c:453
+msgid "Faster"
+msgstr "Pli rapida"
+
+#: src/settings.c:468
+msgid "Domain"
+msgstr "Domajno"
+
+#: src/settings.c:483
+msgid "Base URL"
+msgstr "Baza retadreso"
+
+#: src/settings.c:498
+msgid "Receive?"
+msgstr "Ĉu ricevi?"
+
+#: src/settings.c:510
+msgid "Send?"
+msgstr "Ĉu sendi?"
+
+#: src/settings.c:713
+msgid "Accounts..."
+msgstr "Kontoj..."
+
+#: src/settings.c:748 src/settings.c:1384
+msgid "Add"
+msgstr "Aldoni"
+
+#: src/settings.c:761 src/settings.c:1397
+msgid "Edit"
+msgstr "Redakti"
+
+#: src/settings.c:775 src/settings.c:1410
+msgid "Delete"
+msgstr "Forigi"
+
+#: src/settings.c:802 src/settings.c:825
+msgid "No posts<br>in cache."
+msgstr "Neniu afiŝo<br>en kaŝmemoro."
+
+#: src/settings.c:804
+#, c-format
+msgid "Currently remembering<br>%d posts."
+msgstr "Nun memoranta<br>%d afiŝojn."
+
+#: src/settings.c:840 src/settings.c:863
+msgid "No messages<br>in cache."
+msgstr "Neniuj mesaĝoj<br>en kaŝmemoro."
+
+#: src/settings.c:842
+#, c-format
+msgid "Currently remembering<br>%d messages."
+msgstr "Nun memoranta<br>%d mesaĝojn."
+
+#: src/settings.c:941
+msgid "Displayed messages"
+msgstr "Montrataj mesaĝoj"
+
+#: src/settings.c:1008
+msgid "Please choose a browser"
+msgstr "Bonvole elektu retumilon"
+
+#: src/settings.c:1010
+msgid "No supported browser available"
+msgstr "Neniu subtenata retumilo disponebla"
+
+#: src/settings.c:1047
+msgid "Preferred browser..."
+msgstr "Preferata retumilo..."
+
+#: src/settings.c:1055
+msgid "Online mode..."
+msgstr "Malkonektita reĝimo..."
+
+#: src/settings.c:1058
+msgid "Online"
+msgstr "Konektita"
+
+#: src/settings.c:1059
+msgid "Offline"
+msgstr "Nekonektita"
+
+#: src/settings.c:1067
+msgid "Timestamps..."
+msgstr ""
+
+#: src/settings.c:1070
+msgid "Relative"
+msgstr ""
+
+#: src/settings.c:1071
+msgid "Absolute"
+msgstr ""
+
+#: src/settings.c:1079
+msgid "Auto updates"
+msgstr ""
+
+#: src/settings.c:1248
+msgid "Pattern..."
+msgstr ""
+
+#: src/settings.c:1350
+msgid "Gag patterns..."
+msgstr ""
+
+#: src/settings.c:1434
+msgid "ElmDentica settings..."
+msgstr "Agordoj pri ElmDentiko..."
+
+#: src/settings.c:1459
+msgid "Accounts"
+msgstr "Kontoj"
+
+#: src/settings.c:1461
+msgid "Cache"
+msgstr "Kaŝmemoro"
+
+#: src/settings.c:1463
+msgid "Options"
+msgstr "Agordoj"
+
+#: src/settings.c:1465
+msgid "Gag"
+msgstr ""
+
+#: src/settings.c:1476
+#, c-format
+msgid ""
+"\n"
+"Usage:\n"
+"   -d   Debug mode (for extra yummy output, use multiple times)\n"
+"   -h   Help (what you're reading right now)\n"
+"   -m N Show N messages at a time\n"
+"\n"
+msgstr ""
+
+#: src/settings.c:1499
+#, c-format
+msgid "Can't run ecore_file_init()\n"
+msgstr "Ne povas ruli ecore_file_init()\n"
+
+#: src/settings.c:1505
+#, c-format
+msgid "Can't create preferences directories since asprintf failed\n"
+msgstr "La kreado de agordaj dosieroj malsukcesis pro asprintf\n"
+
+#: src/settings.c:1505
+#, c-format
+msgid "Can't create preferences directories since ecore_file_mkpath failed\n"
+msgstr "La kreado de agordaj dosieroj malsukcesis pro ecore_file_mkpath\n"
+
+#: src/settings.c:1513
+#, c-format
+msgid "Not enough memory to define conf.eet path"
+msgstr "Ne sufiĉe da memoro por difini la vojo de conf.eet"
+
+#: src/settings.c:1519
+#, c-format
+msgid "Couldn't run eet_init()"
+msgstr "Ne povas ruli eet_init()"
+
+#: src/settings.c:1526
+#, c-format
+msgid "Can't create %s"
+msgstr "ne povas krei %s"
+
+#: src/settings.c:1534
+#, c-format
+msgid "Can't setup settings_edd."
+msgstr "ne povas agordi settings_edd."
+
+#: src/settings.c:1552
+#, c-format
+msgid ""
+"Not enough memory for settings, no doubt for anything else either, surely..."
+msgstr "Ne sufiĉe da memoro por la agordo, aŭ por io ajn alia.."

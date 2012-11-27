@@ -7,295 +7,270 @@ msgid ""
 msgstr ""
 "Project-Id-Version: exalt 0.0.1\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-01 15:38+0800\n"
-"PO-Revision-Date: 2010-01-24 17:04+0000\n"
-"Last-Translator: Michael Moroni <haikara90@gmail.com>\n"
+"POT-Creation-Date: 2012-11-26 10:03+0100\n"
+"PO-Revision-Date: 2012-11-26 09:42+0000\n"
+"Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-25 04:49+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-27 05:34+0000\n"
+"X-Generator: Launchpad (build 16309)\n"
 
-#. create new config dialog
-#: ../src/e_mod_config.c:41
+#: src/e_mod_config.c:41
 msgid "Exalt Configuration"
-msgstr ""
+msgstr "Agordoj pri Ekzalto"
 
-#: ../src/e_mod_config.c:84
+#: src/e_mod_config.c:84
 msgid "General"
 msgstr "Ĝenerala"
 
-#: ../src/e_mod_config.c:89
+#: src/e_mod_config.c:89
 msgid "Basic mode"
 msgstr "Baza reĝimo"
 
-#: ../src/e_mod_config.c:91
+#: src/e_mod_config.c:91
 msgid "Advanced mode"
-msgstr "Spertula reĝimo"
+msgstr "Progresinta reĝimo"
 
-#: ../src/e_mod_config.c:97
+#: src/e_mod_config.c:97
 msgid "Wireless network"
 msgstr "Sendrata reto"
 
-#: ../src/e_mod_config.c:99
+#: src/e_mod_config.c:99
 msgid "Save the configuration of each wireless network"
-msgstr "Konservi la konfiguraĵojn de ĉiu sendrata reto"
+msgstr "Konservi la agordojn de ĉiuj sendrataj retoj"
 
-#: ../src/e_mod_config.c:104
+#: src/e_mod_config.c:104
 msgid "Notifications"
 msgstr "Atentigoj"
 
-#: ../src/e_mod_config.c:106
+#: src/e_mod_config.c:106
 msgid "Enable the notifications"
-msgstr "Aktivigi la atentigoj"
+msgstr "Enŝalti la atentigojn"
 
-#: ../src/e_mod_main.c:232
+#: src/e_mod_main.c:231
 msgid "Exalt Warning"
-msgstr ""
+msgstr "Averto de Ekzalto"
 
-#: ../src/e_mod_main.c:235
+#: src/e_mod_main.c:234
 msgid "Warning"
 msgstr "Averto"
 
-#: ../src/e_mod_main.c:236
+#: src/e_mod_main.c:235
 msgid "NetworkManager has been detected on your computer."
-msgstr "NetworkManager estas detektita en via komputilo."
+msgstr "NetworkManager estis trovita en via komputilo."
 
-#: ../src/e_mod_main.c:238
+#: src/e_mod_main.c:237
 msgid ""
 "Exalt can't work properly if networkManager is running, please stop "
 "NetworkManager or Exalt."
 msgstr ""
-"Exalt ne povas funkcii se networkManager funkcias, bonvolu ĉesigi "
-"NetworkManager aŭ Exalt."
+"Ekzalto ne funkcieblas se NetworkManager estas rulanta. Bonvole ĉesigu "
+"NetworkManager aŭ Ekzalton."
 
-#: ../src/e_mod_main.c:241
+#: src/e_mod_main.c:240
 msgid "Ok"
 msgstr "Bone"
 
-#: ../src/e_mod_main.c:368
+#: src/e_mod_main.c:367
 msgid "exalt"
-msgstr "Exalt"
+msgstr "Ekzalto"
 
-#: ../src/e_mod_main.c:453
+#: src/e_mod_main.c:452
 msgid "exalt Configuration Updated"
-msgstr "Agordo de Exalt ĝisdatigita"
+msgstr "Agordoj de Ekzalto ĝisdatigitaj"
 
-#: ../src/e_mod_main.c:521
-msgid "Configuration"
-msgstr "Agordo"
+#: src/e_mod_main.c:505
+msgid "Settings"
+msgstr "Agordoj"
 
-#: ../src/popup.c:43
+#: src/popup.c:43
 msgid "DNS configuration"
-msgstr ""
+msgstr "Agordoj por DNS"
 
-#: ../src/popup.c:47
+#: src/popup.c:47
 msgid "Network configuration"
-msgstr ""
+msgstr "Retaj agordoj"
 
-#: ../src/popup.c:53
+#: src/popup.c:53
 msgid "Modem dialer"
-msgstr ""
+msgstr "Modema numerumilo"
 
-#: ../src/popup.c:57
+#: src/popup.c:57
 msgid "Mobile Phone (3G)"
-msgstr ""
+msgstr "Poŝtelefono (3G)"
 
-#: ../src/popup.c:229
+#: src/popup.c:231
 msgid "No IP Address"
 msgstr "Neniu IP-adreso"
 
-#: ../src/popup.c:233 ../src/wired_dialog.c:42
+#: src/popup.c:236 src/wired_dialog.c:42
 msgid "Wired interface"
 msgstr "Drata interfaco"
 
-#: ../src/popup.c:236
+#: src/popup.c:239
 msgid "Wireless interface"
 msgstr "Sendrata interfaco"
 
-#: ../src/wired_dialog.c:36
+#: src/wired_dialog.c:36
 msgid "Wired Configuration Settings"
-msgstr ""
+msgstr "Agordoj por drataj konektoj"
 
-#: ../src/wired_dialog.c:51 ../src/network_dialog.c:54
-#: ../src/wireless_dialog.c:36
+#: src/wired_dialog.c:51 src/network_dialog.c:54 src/wireless_dialog.c:36
 msgid "Activate"
-msgstr "Ebligi"
+msgstr "Enŝalti"
 
-#: ../src/wired_dialog.c:54 ../src/network_dialog.c:57
-#: ../src/wireless_dialog.c:39
+#: src/wired_dialog.c:54 src/network_dialog.c:57 src/wireless_dialog.c:39
 msgid "Deactivate"
-msgstr "Malebligi"
+msgstr "Malŝalti"
 
-#: ../src/wired_dialog.c:58 ../src/network_dialog.c:61
+#: src/wired_dialog.c:58 src/network_dialog.c:61
 msgid "DHCP (Dynamic host configuration protocol)"
-msgstr "DHCP (Dynamic host configuration protocol)"
+msgstr "DHCP (Agordprotokolo por dinamikaj gastigaj komputiloj)"
 
-#: ../src/wired_dialog.c:63 ../src/network_dialog.c:66
+#: src/wired_dialog.c:63 src/network_dialog.c:66
 msgid "Static"
 msgstr "Fiksa"
 
-#: ../src/wired_dialog.c:68 ../src/network_dialog.c:71
+#: src/wired_dialog.c:68 src/network_dialog.c:71
 msgid "IP address: "
 msgstr "IP-adreso: "
 
-#: ../src/wired_dialog.c:73 ../src/network_dialog.c:76
+#: src/wired_dialog.c:73 src/network_dialog.c:76
 msgid "Netmask address: "
 msgstr "Subreta masko: "
 
-#: ../src/wired_dialog.c:78 ../src/network_dialog.c:81
+#: src/wired_dialog.c:78 src/network_dialog.c:81
 msgid "Gateway address: "
-msgstr "Adreso de retportego "
+msgstr "Kluza adreso: "
 
-#: ../src/wired_dialog.c:83 ../src/network_dialog.c:86
+#: src/wired_dialog.c:83 src/network_dialog.c:86
 msgid "Command: "
 msgstr "Komando: "
 
-#. 
-#. 
-#: ../src/wired_dialog.c:96 ../src/network_dialog.c:98
-#: ../src/network_dialog.c:677 ../src/network_dialog.c:723
-#: ../src/network_dialog.c:771 ../src/wireless_dialog.c:52
+#: src/wired_dialog.c:96 src/network_dialog.c:98 src/network_dialog.c:677
+#: src/network_dialog.c:723 src/network_dialog.c:771 src/wireless_dialog.c:52
 msgid "OK"
 msgstr "Bone"
 
-#: ../src/wired_dialog.c:97 ../src/network_dialog.c:99
+#: src/wired_dialog.c:97 src/network_dialog.c:99
 msgid "Apply"
 msgstr "Apliki"
 
-#: ../src/wired_dialog.c:98 ../src/network_dialog.c:100
-#: ../src/network_dialog.c:678 ../src/network_dialog.c:724
-#: ../src/network_dialog.c:772
+#: src/wired_dialog.c:98 src/network_dialog.c:100 src/network_dialog.c:678
+#: src/network_dialog.c:724 src/network_dialog.c:772
 msgid "Cancel"
-msgstr "Rezigni"
+msgstr "Nuligi"
 
-#: ../src/network_dialog.c:17
+#: src/network_dialog.c:17
 msgid "Wireless Configuration Settings"
-msgstr ""
+msgstr "Agordoj por sendrataj konektoj"
 
-#: ../src/network_dialog.c:25
+#: src/network_dialog.c:25
 msgid "Network information"
 msgstr "Informoj pri reto"
 
-#: ../src/network_dialog.c:27
+#: src/network_dialog.c:27
 msgid "Essid: "
 msgstr "Essid: "
 
-#: ../src/network_dialog.c:32
+#: src/network_dialog.c:32
 msgid "Address: "
 msgstr "Adreso: "
 
-#: ../src/network_dialog.c:37
+#: src/network_dialog.c:37
 msgid "Quality: "
 msgstr "Kvalito: "
 
-#. IFACE frame
-#: ../src/network_dialog.c:45
+#: src/network_dialog.c:45
 msgid "Wireless interface configuration"
-msgstr "Agordo de sendrata interfaco"
+msgstr "Agordoj pri sendrata interfaco"
 
-#: ../src/network_dialog.c:91
+#: src/network_dialog.c:91
 msgid "Add to favorites: "
-msgstr ""
+msgstr "Aldoni al preferoj: "
 
-#: ../src/network_dialog.c:203
+#: src/network_dialog.c:203
 msgid "WEP information"
 msgstr "Informoj pri WEP"
 
-#: ../src/network_dialog.c:205
+#: src/network_dialog.c:205
 msgid "Description: "
 msgstr "Priskribo: "
 
-#: ../src/network_dialog.c:207
+#: src/network_dialog.c:207
 msgid "WEP"
 msgstr "WEP"
 
-#: ../src/network_dialog.c:225
+#: src/network_dialog.c:225
 msgid "Hexadecimal Key"
-msgstr "Deksesume klavo"
+msgstr "Deksesuma klavo"
 
-#: ../src/network_dialog.c:229
+#: src/network_dialog.c:229
 msgid "ASCII Key"
-msgstr "ASCII klavo"
+msgstr "ASCII-klavo"
 
-#: ../src/network_dialog.c:235 ../src/network_dialog.c:313
+#: src/network_dialog.c:235 src/network_dialog.c:313
 msgid "Password: "
 msgstr "Pasvorto: "
 
-#: ../src/network_dialog.c:258
+#: src/network_dialog.c:258
 msgid "WPA information"
 msgstr "Informoj pri WPA"
 
-#: ../src/network_dialog.c:324
+#: src/network_dialog.c:324
 msgid "CA certificate: "
-msgstr ""
+msgstr "CA-atestilo: "
 
-#: ../src/network_dialog.c:336
+#: src/network_dialog.c:336
 msgid "Client certificate: "
-msgstr ""
+msgstr "Atestilo de kliento: "
 
-#: ../src/network_dialog.c:349
+#: src/network_dialog.c:349
 msgid "Private key: "
-msgstr ""
+msgstr "Privata klavo: "
 
-#: ../src/network_dialog.c:666
+#: src/network_dialog.c:666
 msgid "Select the company certificate"
-msgstr ""
+msgstr "Elektu la atestilon de eldonejo"
 
-#: ../src/network_dialog.c:712 ../src/network_dialog.c:760
+#: src/network_dialog.c:712 src/network_dialog.c:760
 msgid "Select the client certificate"
-msgstr ""
+msgstr "Elektu la atestilon de kliento"
 
-#: ../src/dns_dialog.c:20
+#: src/dns_dialog.c:20
 msgid "DNS (Domain Name Server) Settings"
-msgstr ""
+msgstr "Agordoj por DNS (domajna nomsistemo)"
 
-#: ../src/dns_dialog.c:25
+#: src/dns_dialog.c:25
 msgid "DNS (Domain Name Server) configuration"
-msgstr ""
+msgstr "Agordoj por DNS (domajna nomsistemo)"
 
-#. 
-#. buttons
-#: ../src/dns_dialog.c:45
+#: src/dns_dialog.c:45
 msgid "Add"
-msgstr ""
+msgstr "Aldoni"
 
-#: ../src/dns_dialog.c:47
+#: src/dns_dialog.c:47
 msgid "Replace"
-msgstr ""
+msgstr "Anstataŭigi"
 
-#: ../src/dns_dialog.c:49
+#: src/dns_dialog.c:49
 msgid "Delete"
-msgstr ""
+msgstr "Forigi"
 
-#: ../src/dns_dialog.c:59
+#: src/dns_dialog.c:59
 msgid "Close"
-msgstr ""
+msgstr "Fermi"
 
-#: ../src/wireless_dialog.c:21
+#: src/wireless_dialog.c:21
 msgid "Wireless Interface Settings"
-msgstr ""
+msgstr "Agordoj pri sendrata interfaco"
 
-#: ../src/wireless_dialog.c:27
+#: src/wireless_dialog.c:27
 msgid "wireless interface"
-msgstr ""
+msgstr "Sendrata interfaco"
 
-#: ../src/wireless_dialog.c:42
+#: src/wireless_dialog.c:42
 msgid "Create a new network"
-msgstr ""
-
-#~ msgid "Login: "
-#~ msgstr "Salutnomo: "
-
-#~ msgid "exalt Module"
-#~ msgstr "Modulo Exalt"
-
-#~ msgid "Use Switch 1"
-#~ msgstr "Uzi ŝalton 1"
-
-#~ msgid "Settings"
-#~ msgstr "Agordoj"
-
-#~ msgid "UTF-8 Key"
-#~ msgstr "UTF-8 Klavo"
+msgstr "Krei novan reton"

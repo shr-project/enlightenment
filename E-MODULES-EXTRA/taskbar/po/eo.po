@@ -6,32 +6,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-01 15:38+0800\n"
-"PO-Revision-Date: 2010-01-20 21:41+0000\n"
-"Last-Translator: Michael Moroni <haikara90@gmail.com>\n"
+"POT-Creation-Date: 2012-11-26 10:03+0100\n"
+"PO-Revision-Date: 2012-11-26 09:44+0000\n"
+"Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-21 04:34+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-27 05:34+0000\n"
+"X-Generator: Launchpad (build 16309)\n"
 
-#: ../src/e_mod_config.c:30
+#: src/e_mod_config.c:30
 msgid "Taskbar Configuration"
-msgstr "Agordoj de Taskobreto"
+msgstr "Agordoj pri taskopleto"
 
-#: ../src/e_mod_config.c:71
+#: src/e_mod_config.c:71
 msgid "Display"
 msgstr "Ekrano"
 
-#: ../src/e_mod_config.c:72
+#: src/e_mod_config.c:72
 msgid "Show windows from all desktops"
 msgstr "Montri fenestrojn de ĉiuj labortabloj"
 
-#: ../src/e_mod_main.c:294 ../src/e_mod_main.c:667
+#: src/e_mod_main.c:291 src/e_mod_main.c:661
 msgid "Taskbar"
-msgstr "Taskobreto"
+msgstr "Taskopleto"
 
-#: ../src/e_mod_main.c:656
-msgid "Configuration"
+#: src/e_mod_main.c:654
+msgid "Settings"
 msgstr "Agordoj"

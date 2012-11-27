@@ -7,59 +7,52 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-01 15:38+0800\n"
-"PO-Revision-Date: 2010-01-20 21:49+0000\n"
-"Last-Translator: Michael Moroni <haikara90@gmail.com>\n"
+"POT-Creation-Date: 2012-11-26 10:03+0100\n"
+"PO-Revision-Date: 2011-12-17 10:41+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-01-21 04:34+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2012-11-27 05:34+0000\n"
+"X-Generator: Launchpad (build 16309)\n"
 
-#: ../src/e_mod_config.c:39
+#: src/e_mod_config.c:39
 msgid "Tclock Settings"
-msgstr "Agordoj de Thorloĝo"
+msgstr "Agordoj pri Thorloĝo"
 
-#: ../src/e_mod_config.c:88
+#: src/e_mod_config.c:88
 msgid "Top"
 msgstr "Supre"
 
-#: ../src/e_mod_config.c:90
+#: src/e_mod_config.c:90
 msgid "Show Top Line"
 msgstr "Montri supran linion"
 
-#: ../src/e_mod_config.c:98 ../src/e_mod_config.c:113
-#: ../src/e_mod_config.c:129
+#: src/e_mod_config.c:98 src/e_mod_config.c:113 src/e_mod_config.c:129
 msgid "Consult strftime(3) for format syntax"
-msgstr "Konsulti strftime(3) por aranĝo de sintakso"
+msgstr "Konsilu strftime(3) por sintaksaranĝo"
 
-#: ../src/e_mod_config.c:102
+#: src/e_mod_config.c:102
 msgid "Bottom"
 msgstr "Malsupre"
 
-#: ../src/e_mod_config.c:104
+#: src/e_mod_config.c:104
 msgid "Show Bottom Line"
-msgstr "Vidigi malsupran linion"
+msgstr "Montri malsupran linion"
 
-#: ../src/e_mod_config.c:117
+#: src/e_mod_config.c:117
 msgid "Tool Tip"
 msgstr "Ŝpruchelpilo"
 
-#: ../src/e_mod_config.c:119
+#: src/e_mod_config.c:119
 msgid "Show Tooltip"
 msgstr "Montri ŝpruchelpilon"
 
-#: ../src/e_mod_main.c:141
+#: src/e_mod_main.c:141
 msgid "TClock"
 msgstr "THorloĝo"
 
-#: ../src/e_mod_main.c:184
+#: src/e_mod_main.c:181
 msgid "Settings"
 msgstr "Agordoj"
-
-#~ msgid "Tclock Configuration"
-#~ msgstr "Konfiguraĵo de \"TClock\""
-
-#~ msgid "Configuration"
-#~ msgstr "Konfiguraĵo"

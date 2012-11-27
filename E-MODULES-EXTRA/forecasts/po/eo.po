@@ -8,118 +8,131 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-25 17:14+0800\n"
-"PO-Revision-Date: 2009-05-11 00:13+0000\n"
-"Last-Translator: Olivier <eliovir@nospam.gmail.com>\n"
+"POT-Creation-Date: 2012-11-26 10:03+0100\n"
+"PO-Revision-Date: 2012-01-31 18:30+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 0.3\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Launchpad-Export-Date: 2012-11-27 05:32+0000\n"
+"X-Generator: Launchpad (build 16309)\n"
 
-#: ../src/e_mod_config.c:42
-msgid "Forecasts Configuration"
-msgstr "Agordo de Vetero"
+#: src/e_mod_config.c:42
+msgid "Forecasts Settings"
+msgstr ""
 
-#: ../src/e_mod_config.c:90
+#: src/e_mod_config.c:90
 msgid "Display Settings"
-msgstr "Vidigaj Agordoj"
+msgstr "Agordoj pri montrilo"
 
-#: ../src/e_mod_config.c:91
+#: src/e_mod_config.c:91
 msgid "Poll Time"
-msgstr "Ofteco de ĝisdatigo"
+msgstr "Ofto de ĝisdatigoj"
 
-#: ../src/e_mod_config.c:94
+#: src/e_mod_config.c:94
 #, c-format
 msgid "%2.0f minutes"
 msgstr "%2.0f minutoj"
 
-#: ../src/e_mod_config.c:97
+#: src/e_mod_config.c:97
 msgid "Show Description"
-msgstr "Vidigi Priskibon"
+msgstr "Montri priskibon"
 
-#: ../src/e_mod_config.c:99
+#: src/e_mod_config.c:99
 msgid "Popup on mouse over"
-msgstr "Mesaĝo"
+msgstr "Ŝprucfenestro dum muso supras"
 
-#: ../src/e_mod_config.c:103
+#: src/e_mod_config.c:103
 msgid "Unit Settings"
-msgstr "Agordoj de Unuoj"
+msgstr "Agordoj de unuoj"
 
-#: ../src/e_mod_config.c:105
+#: src/e_mod_config.c:105
 msgid "Metric"
-msgstr "Metriko"
+msgstr "Metra"
 
-#: ../src/e_mod_config.c:107
+#: src/e_mod_config.c:107
 msgid "English"
 msgstr "Angla"
 
-#: ../src/e_mod_config.c:111
-msgid "Yahoo Forecasts Code"
-msgstr "Vetera Kodo de Yahoo"
+#: src/e_mod_config.c:111
+msgid "Weather.com Forecasts Code"
+msgstr "Meteoprognozkodo de Weather.com"
 
-#: ../src/e_mod_config.c:112
-msgid "Yahoo Forecasts Code/US Zip Code"
-msgstr "Yahoo Forecasts Code/Usona Poŝtkodo"
+#: src/e_mod_config.c:112
+msgid "Forecasts Code/US Zip Code"
+msgstr "Meteoprognozkodo aŭ usona ZIP-poŝtkodo"
 
-#: ../src/e_mod_config.c:117
+#: src/e_mod_config.c:117
 msgid "To find the code for your area, go to:"
 msgstr "Por trovi la kodon por via zono, iru al:"
 
-#: ../src/e_mod_config.c:119
+#: src/e_mod_config.c:119
 #, c-format
 msgid "%s, find your area, and look at the URL"
-msgstr "%s, trovu vian zonon, kaj rigardu la URL-on"
+msgstr "%s, trovu vian zonon kaj rigardu la URL"
 
-#: ../src/e_mod_main.c:255
+#: src/e_mod_main.c:257
 msgid "Forecasts"
-msgstr "Veteroj"
+msgstr "Prognozoj"
 
-#: ../src/e_mod_main.c:300
-msgid "Configuration"
-msgstr "Konfiguraĵo"
+#: src/e_mod_main.c:299
+msgid "Settings"
+msgstr ""
 
-#: ../src/e_mod_main.c:1030
+#: src/e_mod_main.c:998
+#, c-format
+msgid "%s: Current Conditions"
+msgstr ""
+
+#: src/e_mod_main.c:1014
 msgid "Wind Chill"
-msgstr "Venta malvarmigo"
+msgstr "Malvarmigo pro vento"
 
-#: ../src/e_mod_main.c:1036
+#: src/e_mod_main.c:1020
 msgid "Wind Speed"
-msgstr "Venta Rapideco"
+msgstr "Rapido de vento"
 
-#: ../src/e_mod_main.c:1042
+#: src/e_mod_main.c:1026
 msgid "Humidity"
-msgstr "Humideco"
+msgstr "Humido"
 
-#: ../src/e_mod_main.c:1048
+#: src/e_mod_main.c:1032
 msgid "Visibility"
-msgstr "Videbleco"
+msgstr "Videblo"
 
-#: ../src/e_mod_main.c:1054
+#: src/e_mod_main.c:1038
 msgid "Pressure"
 msgstr "Aerpremo"
 
-#: ../src/e_mod_main.c:1061
+#: src/e_mod_main.c:1045
 msgid "Rising"
 msgstr "Sunleviĝo"
 
-#: ../src/e_mod_main.c:1063
+#: src/e_mod_main.c:1047
 msgid "Falling"
 msgstr "Krepusko"
 
-#: ../src/e_mod_main.c:1065
+#: src/e_mod_main.c:1049
 msgid "Steady"
 msgstr "Konstanta"
 
-#: ../src/e_mod_main.c:1069
+#: src/e_mod_main.c:1053
 msgid "Sunrise / Sunset"
 msgstr "Suna leviĝo / malleviĝo"
 
-#: ../src/e_mod_main.c:1093
+#: src/e_mod_main.c:1071
+msgid "Today"
+msgstr ""
+
+#: src/e_mod_main.c:1073
+msgid "Tomorrow"
+msgstr ""
+
+#: src/e_mod_main.c:1081
 msgid "High"
 msgstr "Alta"
 
-#: ../src/e_mod_main.c:1104
+#: src/e_mod_main.c:1092
 msgid "Low"
 msgstr "Malalta"

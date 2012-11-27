@@ -7,20 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-02-16 22:50+0100\n"
-"PO-Revision-Date: 2008-04-17 22:13+0200\n"
-"Last-Translator: Olivier M. <olivierweb@ifrance.com>\n"
+"POT-Creation-Date: 2012-11-26 10:03+0100\n"
+"PO-Revision-Date: 2012-01-31 19:12+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
-"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Launchpad-Export-Date: 2012-11-27 05:33+0000\n"
+"X-Generator: Launchpad (build 16309)\n"
 
 #: src/e_mod_main.c:52
 msgid "Config init failed"
-msgstr "Pravalorizado de agordo malsukcesis"
+msgstr "Pravalorizado de agordoj malsukcesis"
 
 #: src/e_mod_main.c:53
 msgid "Parser init failed"
@@ -36,11 +35,11 @@ msgstr "Pravalorizado de legilo malsukcesis"
 
 #: src/e_mod_main.c:56
 msgid "Popup subsystem init failed"
-msgstr "Pravalorizado de subsistemo de spruĉfenestro malsukcesis"
+msgstr "Pravalorizado de subsistemo de ŝprucfenestro malsukcesis"
 
 #: src/e_mod_main.c:219
 msgid "News"
-msgstr "Novajxoj"
+msgstr "Novaĵoj"
 
 #: src/news_config.c:100
 #, c-format
@@ -49,9 +48,9 @@ msgid ""
 "configuration of news module<br>has been upgraded<br>Your settings were "
 "removed<br>Sorry for the inconvenience<br><br>(%d -> %d)"
 msgstr ""
-"<hilight>Modulo de novaĵoj: ĝisdatigita agordo</hilight><br><br>Viaagordo de "
-"modulo de novaĵoj<br>estis ĝisdatigita<br>Viaj agordoj estis "
-"forviŝitaj<br>Pardonu por la ĝenoj<br><br>(%d -> %d)"
+"<hilight>Modulo de novaĵoj: agordoj promociitaj</hilight><br><br>Viaj "
+"agordoj pri modulo de novaĵoj<br>estis promociitaj<br>Viaj eksagordoj estis "
+"forviŝitaj<br>Bonvole pardonu pro la ĝeno<br><br>(%d → %d)"
 
 #: src/news_config.c:112
 #, c-format
@@ -60,30 +59,31 @@ msgid ""
 "configuration of News module<br>has been downgraded<br>Your settings were "
 "removed<br>Sorry for the inconvenience<br><br>(%d ->%d)"
 msgstr ""
-"<hilight>Modulo de novaĵoj: Agordo malpromociita</hilight><br><br>Via agordo "
-"de modulo de novaĵoj<br>estis malpromociita.<br>Viaj agordoj estis "
-"forviŝitaj.<br>Pardonu por la ĝenoj<br><br>(%d ->%d)"
+"<hilight>Modulo de novaĵoj: agordoj malpromociitaj</hilight><br><br>Viaj "
+"agordoj pri modulo de novaĵoj<br>estis malpromociitaj<br>Viaj eksagordoj "
+"estis forviŝitaj<br>Bonvole pardonu pro la ĝeno<br><br>(%d → %d)"
 
 #: src/news_config_dialog.c:90
 msgid "News Main Configuration"
-msgstr "Ĉefa agordo de la novaĵoj"
+msgstr "Ĉefaj agordoj de la novaĵoj"
 
 #: src/news_config_dialog.c:190 src/news_config_dialog.c:228
-#: src/news_config_dialog_feeds.c:358 src/news_menu.c:156
+#: src/news_config_dialog_feeds.c:358 src/news_menu.c:153
 msgid "Feeds"
-msgstr "Abonfluoj"
+msgstr "Fluoj"
 
 #: src/news_config_dialog.c:192 src/news_config_dialog.c:236
 msgid "Sort lists by name (disable Move action)"
-msgstr "Ordigi listojn laŭ nomo (malebligas agadon de movado)"
+msgstr "Ordigi listojn laŭ nomo (malŝalti Movi-agon)"
 
 #: src/news_config_dialog.c:197 src/news_config_dialog.c:305
+#: src/news_viewer.c:307
 msgid "News Viewer"
 msgstr "Novaĵlegilo"
 
 #: src/news_config_dialog.c:199
 msgid "Font size"
-msgstr "Tipara grado"
+msgstr "Tipargrando"
 
 #: src/news_config_dialog.c:202 src/news_config_dialog.c:316
 #, c-format
@@ -97,7 +97,7 @@ msgstr "Tiparkoloro"
 #: src/news_config_dialog.c:230 src/news_config_dialog.c:270
 #: src/news_config_dialog.c:290
 msgid "Timer"
-msgstr "Horloĝo"
+msgstr "Tempmezurilo"
 
 #: src/news_config_dialog.c:232
 #, c-format
@@ -110,11 +110,11 @@ msgstr "Retumilo"
 
 #: src/news_config_dialog.c:243
 msgid "Uses xdg-open script, from freedesktop.org"
-msgstr "Uzas la skripton xdg-open, el freedesktop.org"
+msgstr "Ĝi uzas la skripton xdg-open, el freedesktop.org"
 
 #: src/news_config_dialog.c:248
 msgid "Popup On News"
-msgstr "Spruĉfenestro post apero de novaĵoj"
+msgstr "Spruĉfenestri novaĵojn"
 
 #: src/news_config_dialog.c:251
 msgid "Never"
@@ -122,11 +122,11 @@ msgstr "Neniam"
 
 #: src/news_config_dialog.c:257
 msgid "Only on urgent feeds"
-msgstr "Nur sur urĝaj abonfluoj"
+msgstr "Nur en urĝaj abonfluoj"
 
 #: src/news_config_dialog.c:263
 msgid "On all feeds"
-msgstr "Sur ĉiuj abonfluoj"
+msgstr "En ĉiuj abonfluoj"
 
 #: src/news_config_dialog.c:272 src/news_config_dialog.c:292
 #, c-format
@@ -135,23 +135,23 @@ msgstr "%1.0f s"
 
 #: src/news_config_dialog.c:280
 msgid "Popup On Warning / Error"
-msgstr "Spruĉfenestro post averto / eraro"
+msgstr "Spruĉfenestri averton / eraron"
 
 #: src/news_config_dialog.c:285
 msgid "Show on timeout ?"
-msgstr "Vidigi post tempolimi?"
+msgstr "Ĉu montri post tempolimo?"
 
 #: src/news_config_dialog.c:307
 msgid "Unread feeds first"
-msgstr "Ne legitaj abonfluoj unue"
+msgstr "Nelegitaj abonfluoj unue"
 
 #: src/news_config_dialog.c:309
 msgid "Unread articles first"
-msgstr "Ne legitaj artikoloj unue"
+msgstr "Nelegitaj artikoloj unue"
 
 #: src/news_config_dialog.c:311
 msgid "Sort articles by date"
-msgstr "Ordigi artkilojn laŭ dato"
+msgstr "Ordigi artikolojn laŭ dato"
 
 #: src/news_config_dialog.c:314
 msgid "Font"
@@ -159,7 +159,7 @@ msgstr "Tiparo"
 
 #: src/news_config_dialog.c:324
 msgid "Font Shadow"
-msgstr "Tipara ombro"
+msgstr "Tiparombro"
 
 #: src/news_config_dialog.c:336
 msgid "Proxy"
@@ -167,7 +167,7 @@ msgstr "Prokurilo"
 
 #: src/news_config_dialog.c:338
 msgid "Enable"
-msgstr "Ebligi"
+msgstr "Enŝalti"
 
 #: src/news_config_dialog.c:340
 msgid "Host"
@@ -175,11 +175,11 @@ msgstr "Gastiga komputilo"
 
 #: src/news_config_dialog.c:344
 msgid "Port"
-msgstr "Pordo"
+msgstr "Konektejo"
 
 #: src/news_config_dialog_category.c:50
 msgid "News Category Configuration"
-msgstr "Agordo de la kategorioj de novaĵoj"
+msgstr "Agordoj pri la kategorioj de novaĵoj"
 
 #: src/news_config_dialog_category.c:135
 msgid "Icon"
@@ -191,15 +191,15 @@ msgstr "Nomo"
 
 #: src/news_config_dialog_category.c:203 src/news_config_dialog_feed.c:543
 msgid "Select an Icon"
-msgstr "Elekti piktogramon"
+msgstr "Elektu piktogramon"
 
 #: src/news_config_dialog_category.c:228 src/news_config_dialog_feed.c:568
 msgid "OK"
-msgstr "Konfirmi"
+msgstr "Bone"
 
 #: src/news_config_dialog_category.c:229 src/news_config_dialog_feed.c:569
 msgid "Cancel"
-msgstr "Rezigni"
+msgstr "Nuligi"
 
 #: src/news_config_dialog_feed.c:63
 msgid "You need to <hilight>create a category</hilight> first"
@@ -207,7 +207,7 @@ msgstr "Vi devas <hilight>krei kategorion</hilight> unue"
 
 #: src/news_config_dialog_feed.c:77
 msgid "News Feed Configuration"
-msgstr "Agordo de la abonfluo"
+msgstr "Agordoj pri la abonfluo"
 
 #: src/news_config_dialog_feed.c:329
 msgid "Basic informations"
@@ -215,7 +215,7 @@ msgstr "Bazaj informoj"
 
 #: src/news_config_dialog_feed.c:345
 msgid "Name :"
-msgstr "Nomo: "
+msgstr "Nomo:"
 
 #: src/news_config_dialog_feed.c:349
 msgid "Feed url :"
@@ -243,23 +243,33 @@ msgstr "Priskribo"
 
 #: src/news_config_dialog_feed.c:397 src/news_config_dialog_feed.c:416
 msgid "Home url"
-msgstr "Ĉefpaĝa adreso"
+msgstr "Hejma URL"
 
 #: src/news_config_dialog_feed.c:405
 msgid "Server informations"
-msgstr "Servilaj informoj"
+msgstr "Informoj pri serviloj"
 
 #: src/news_config_dialog_feed.c:407
 msgid "Do allow the server to overwrite the informations you entered ?"
-msgstr "Ĉu permesi la servilon anstataŭigi la informojn kiujn vi entajpis?"
+msgstr "Ĉu permesi la servilon anstataŭigi la informojn, kiujn vi tajpis?"
 
 #: src/news_config_dialog_feeds.c:82
 msgid "News Feeds Configuration"
-msgstr "Agordo de la abonfluoj"
+msgstr "Agordoj pri la abonfluoj"
 
 #: src/news_config_dialog_feeds.c:290
 msgid "Categories"
 msgstr "Kategorioj"
+
+#: src/news_config_dialog_feeds.c:301 src/news_config_dialog_feeds.c:375
+#: src/news_config_dialog_item_content.c:283
+msgid "Move Up"
+msgstr ""
+
+#: src/news_config_dialog_feeds.c:304 src/news_config_dialog_feeds.c:378
+#: src/news_config_dialog_item_content.c:287
+msgid "Move Down"
+msgstr ""
 
 #: src/news_config_dialog_feeds.c:314 src/news_config_dialog_feeds.c:388
 msgid "Add"
@@ -271,7 +281,7 @@ msgstr "Forigi"
 
 #: src/news_config_dialog_feeds.c:319 src/news_config_dialog_feeds.c:393
 msgid "Configure"
-msgstr "Konfiguri"
+msgstr "Agordi"
 
 #: src/news_config_dialog_feeds.c:331 src/news_config_dialog_langs.c:133
 msgid "Languages"
@@ -287,18 +297,18 @@ msgstr "Elekti"
 
 #: src/news_config_dialog_feeds.c:346
 msgid "Empty the lists"
-msgstr "Vakuigi la listojn"
+msgstr "Vakigi la listojn"
 
 #: src/news_config_dialog_feeds.c:349
 msgid "Restore default lists"
-msgstr "Restarigu la apriorajn listojn"
+msgstr "Restarigi apriorajn listojn"
 
 #: src/news_config_dialog_feeds.c:686
 msgid ""
 "There are <hilight>feeds</hilight> in this category.<br>You have to "
 "<hilight>remove them first</hilight>"
 msgstr ""
-"Ĉeestas <hilight>abonfluoj</hilight> en tiu kategorio.<br>Vi devas "
+"Ĉeestas <hilight>abonfluoj</hilight> en ĉi tiu kategorio.<br>Vi devas "
 "<hilight>forigi ilin unue</hilight>"
 
 #: src/news_config_dialog_feeds.c:754 src/news_config_dialog_feeds.c:779
@@ -307,11 +317,11 @@ msgstr "Modulo de novaĵoj - Ĉu vi certas?"
 
 #: src/news_config_dialog_item.c:40
 msgid "News Gadget Configuration"
-msgstr "Agordo de la vanaĵo de novaĵoj"
+msgstr "Agordoj pri la akcesoraĵo de novaĵoj"
 
 #: src/news_config_dialog_item.c:104
 msgid "View Mode"
-msgstr "Vidigo Modo"
+msgstr "Vida reĝimo"
 
 #: src/news_config_dialog_item.c:107
 msgid "Show one icon for all feeds"
@@ -319,23 +329,23 @@ msgstr "Vidigi unu piktogramon por ĉiuj abonfluoj"
 
 #: src/news_config_dialog_item.c:109
 msgid "Show all feeds"
-msgstr "Vidigi ĉiujn abonfluojn"
+msgstr "Montri ĉiujn abonfluojn"
 
 #: src/news_config_dialog_item.c:111
 msgid "Show unread feeds"
-msgstr "Vidigi nelegitajn abonfluojn"
+msgstr "Montri nelegitajn abonfluojn"
 
 #: src/news_config_dialog_item.c:113
 msgid "Show all feeds marked as important"
-msgstr "Vidigi ĉiujn abonfluojn indikitajn kiel gravaj"
+msgstr "Montri ĉiujn markitajn abonfluojn kiel gravaj"
 
 #: src/news_config_dialog_item.c:115
 msgid "Show unread feeds marked as important"
-msgstr "Vidigi nelegitajn abonfluojn indikitajn kiel gravaj"
+msgstr "Montri markitajn nelegitajn abonfluojn kiel gravaj"
 
 #: src/news_config_dialog_item.c:120
 msgid "Feed open in"
-msgstr "Malfermo de abonfluo per"
+msgstr "Malfermi abonfluon en"
 
 #: src/news_config_dialog_item.c:123
 msgid "the feed viewer"
@@ -343,31 +353,31 @@ msgstr "la abonfluo-legilo"
 
 #: src/news_config_dialog_item.c:125
 msgid "my favorite browser"
-msgstr "mia preferata ttt-legilo"
+msgstr "mia preferata retumilo"
 
 #: src/news_config_dialog_item.c:127
 msgid "Browser opens home url"
-msgstr "TTT-legilo malfermas la adreson de la ĉefpaĝo"
+msgstr "Retumilo malfermas la adreson de la ĉefpaĝo"
 
 #: src/news_config_dialog_item.c:129
 msgid "instead of feed url"
-msgstr "anstataŭ la abonfluan adreson"
+msgstr "anstataŭ la abonflua adreso"
 
 #: src/news_config_dialog_item.c:136
 msgid "Apply this to all News gadgets"
-msgstr "Apliki tion al ĉiuj novaĵo-vanaĵoj"
+msgstr "Apliki tion al ĉiuj novaĵo-akcesoraĵoj"
 
 #: src/news_config_dialog_item_content.c:53
 msgid "News Gadget Content Configuration"
-msgstr "Agordo de la enhavo de novaĵo-vanaĵo"
+msgstr "Agordoj pri la enhavo de novaĵo-akcesoraĵoj"
 
 #: src/news_config_dialog_item_content.c:258
-msgid "Avalaible Feeds"
-msgstr "Disponeblaj abonfluoj"
+msgid "Available Feeds"
+msgstr ""
 
 #: src/news_config_dialog_item_content.c:267
 msgid "Add this Feed"
-msgstr "Aldoni tiun abonfluon"
+msgstr "Aldoni ĉi tiun abonfluon"
 
 #: src/news_config_dialog_item_content.c:274
 msgid "Selected Feeds"
@@ -375,11 +385,11 @@ msgstr "Elektitaj abonfluoj"
 
 #: src/news_config_dialog_item_content.c:292
 msgid "Remove this Feed"
-msgstr "Forviŝi tiun abonfluon"
+msgstr "Forigi ĉi tiun abonfluon"
 
 #: src/news_config_dialog_langs.c:45
 msgid "News Feeds Language Configuration"
-msgstr "Agordo de lingvo de la abonfluoj"
+msgstr "Agordoj de la lingvo de la abonfluoj"
 
 #: src/news_config_dialog_langs.c:123
 msgid "Welcome to News Module !"
@@ -387,107 +397,91 @@ msgstr "Bonvenon en la modulo de novaĵoj!"
 
 #: src/news_config_dialog_langs.c:125
 msgid "Please select the languages that you are able to read"
-msgstr "Bonvolu elekti la lingvojn kiujn vi povas legi"
+msgstr "Bonvole elektu la lingvojn, kiujn vi scipovas"
 
 #: src/news_feed.c:291
 msgid "The <hilight>name</hilight> you entered is not correct"
-msgstr "La <hilight>nomo</hilight> kiun vi entajpis ne estas korekta"
+msgstr "La <hilight>nomo</hilight>, kiun vi tajpis, ne estas korekta"
 
 #: src/news_feed.c:296
 msgid "The need to <hilight>select a category</hilight>."
-msgstr "La bezono de <hilight>elekti kategorion</hilight>."
+msgstr "La neceso <hilight>elekti kategorion</hilight>."
 
 #: src/news_feed.c:302
 #, c-format
 msgid ""
-"A feed with the <hilight>name</hilight> %s <hilight>already exists</"
-"hilight><br>in the %s category<br><br>Its not possible to have feeds with "
-"the same name<br>in one category."
+"A feed with the <hilight>name</hilight> %s <hilight>already "
+"exists</hilight><br>in the %s category<br><br>Its not possible to have feeds "
+"with the same name<br>in one category."
 msgstr ""
-"Abonfluo kun la <hilight>nomo</hilight> %s <hilight>jam ĉeestas</"
-"hilight><br>en la kategorio %s<br><br>Ne eblas nomigi same abonfluojn<br>en "
-"unu kategorio."
+"Abonfluo <hilight>nomata</hilight> %s <hilight>jam ekzistas</hilight><br>en "
+"la kategorio %s<br><br>Ne eblas havi abonfluojn kun sama nomo<br>en sama "
+"kategorio."
 
 #: src/news_feed.c:311
 msgid "You need to select a <hilight>language</hilight>."
-msgstr "Ve devas elekti <hilight>lingvon</hilight>."
+msgstr "Vi devas elekti <hilight>lingvon</hilight>."
 
 #: src/news_feed.c:318
 msgid "The <hilight>url</hilight> you specified is not correct"
-msgstr "La <hilight>URL-adreso</hilight> kiun vi tajpis ne estas korekta"
+msgstr "La <hilight>URL-adreso</hilight>, kiun vi tajpis, ne estas korekta"
 
 #: src/news_feed.c:880
 msgid "You need to enter a <hilight>name</hilight> !"
-msgstr "Vi bezonas entajpi <hilight>nomon</hilight>!"
+msgstr "Vi devas tajpi <hilight>nomon</hilight>!"
 
 #: src/news_feed.c:888
 msgid ""
-"The <hilight>name</hilight> you entered is <hilight>already used</"
-"hilight><br>by another category"
+"The <hilight>name</hilight> you entered is <hilight>already "
+"used</hilight><br>by another category"
 msgstr ""
-"La <hilight>nomo</hilight> kiun vi tajpis <hilight>jam estis uzita</"
-"hilight><br> de alia kategorio"
+"La <hilight>nomo</hilight>, kiun vi tajpis, <hilight>jam estas "
+"uzata</hilight><br>de alia kategorio"
 
-#: src/news_menu.c:129
-#, fuzzy
+#: src/news_menu.c:131
 msgid "Set all as read"
-msgstr "Difini ĉiujn abonfluojn kiel legitaj"
+msgstr ""
 
-#: src/news_menu.c:135
+#: src/news_menu.c:137 src/news_viewer.c:380
 msgid "Update"
 msgstr ""
 
-#: src/news_menu.c:141
-#, fuzzy
-msgid "Gadget Contents"
-msgstr "Agordi la enhavon de la vanaĵo"
-
-#: src/news_menu.c:151
+#: src/news_menu.c:148
 msgid "Gadget"
 msgstr ""
 
-#: src/news_menu.c:161
+#: src/news_menu.c:158
 msgid "Main"
 msgstr ""
 
-#: src/news_menu.c:166
+#: src/news_menu.c:163
 msgid "Settings"
+msgstr ""
+
+#: src/news_menu.c:168
+msgid "Gadget Contents"
 msgstr ""
 
 #: src/news_utils.h:13
 msgid "News Module DEBUG DEBUG DEBUG DEBUG"
-msgstr "Modulo de novaĵoj DEBUG DEBUG DEBUG DEBUG"
+msgstr "Sencimiga versio de la modulo pri novaĵoj"
 
 #: src/news_utils.h:20
 msgid "News Module"
-msgstr "Modulo de novaĵoj"
+msgstr "Modulo pri novaĵoj"
 
 #: src/news_utils.h:27
 msgid "News Module Error"
-msgstr "Eraro de la modulo de novaĵoj"
+msgstr "Eraro de la modulo pri novaĵoj"
 
 #: src/news_viewer.c:372
 msgid "Feeds in this gadget"
-msgstr "Abonfluoj en tiu vanaĵo"
+msgstr "Abonfluoj en ĉi tiu akcesoraĵo"
+
+#: src/news_viewer.c:388
+msgid "Set as read"
+msgstr ""
 
 #: src/news_viewer.c:438
 msgid "Articles in selected feed"
 msgstr "Artikoloj en la elektita abonfluo"
-
-#~ msgid "Configure this feed"
-#~ msgstr "Agordi tiun abonfluon"
-
-#~ msgid "Update all feeds"
-#~ msgstr "Ĝisdatigi ĉiujn abonfluojn"
-
-#~ msgid "Configure gadget"
-#~ msgstr "Agordi la vanaĵon"
-
-#~ msgid "Main Configuration"
-#~ msgstr "Ĉefa konfiguraĵo"
-
-#~ msgid "Feeds Configuration"
-#~ msgstr "Konfiguraĵo de abonfluoj"
-
-#~ msgid "Configuration"
-#~ msgstr "Konfiguraĵo"
