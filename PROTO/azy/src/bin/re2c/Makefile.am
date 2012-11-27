@@ -8,9 +8,9 @@ re2c_SOURCES = code.cc dfa.cc main.cc actions.cc substr.cc \
 EXTRA_DIST = \
   CHANGELOG \
   re_parser.yy
-BUILT_SOURCES = re_parser.h
+BUILT_SOURCES = re_parser.hh
 
 AM_YFLAGS = -d
 
-CLEANFILES = re_parser.cc re_parser.h parser.cc y.tab.h
+CLEANFILES = re_parser.cc re_parser.hh parser.cc y.tab.h
 MAINTAINERCLEANFILES = Makefile.in
