@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Everything-websearch\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2011-11-21 21:29+0100\n"
-"PO-Revision-Date: 2011-11-21 21:32+0100\n"
+"POT-Creation-Date: 2012-11-28 18:48+0100\n"
+"PO-Revision-Date: 2012-11-28 18:58+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/e_mod_main.c:587 src/e_mod_main.c:1391
+#: src/e_mod_main.c:587 src/e_mod_main.c:1395
 msgid "Translate"
 msgstr "Traduci"
 
@@ -55,12 +56,12 @@ msgstr "Inizia download"
 msgid "Enqueue files for download"
 msgstr "Accoda file per il download"
 
-#: src/e_mod_main.c:1021 src/e_mod_main.c:1397
+#: src/e_mod_main.c:1021 src/e_mod_main.c:1401
 msgid "Youtube"
 msgstr "Youtube"
 
 #: src/e_mod_main.c:1062 src/e_mod_main.c:1067 src/e_mod_main.c:1094
-#: src/e_mod_main.c:1155
+#: src/e_mod_main.c:1155 src/e_mod_main.c:1294
 msgid "Upload Image"
 msgstr "Invia immagine"
 
@@ -77,34 +78,66 @@ msgstr "Qualcosa è andato storto :("
 msgid "Completed %1.1f%% of %s"
 msgstr "Completati %1.1f%% di %s"
 
-#: src/e_mod_main.c:1364 src/e_mod_main.c:1536 src/e_mod_main.c:1555
+#: src/e_mod_main.c:1268
+msgid "Google for it"
+msgstr "Cerca su Google"
+
+#: src/e_mod_main.c:1271
+msgid "Wikipedia Page"
+msgstr "Pagina su Wikipedia"
+
+#: src/e_mod_main.c:1274
+msgid "Feeling Lucky"
+msgstr "Mi sento fortunato"
+
+#: src/e_mod_main.c:1277
+msgid "Watch on Youtube"
+msgstr "Cerca su Youtube"
+
+#: src/e_mod_main.c:1281
+msgid "Download as Audio"
+msgstr "Scarica come audio"
+
+#: src/e_mod_main.c:1284
+msgid "Play Video"
+msgstr "Esegui video"
+
+#: src/e_mod_main.c:1287
+msgid "Download and enqueue"
+msgstr "Scarica e accoda"
+
+#: src/e_mod_main.c:1290
+msgid "Download and play"
+msgstr "Scarica ed esegui"
+
+#: src/e_mod_main.c:1368 src/e_mod_main.c:1540 src/e_mod_main.c:1559
 msgid "Everything Websearch"
 msgstr "Websearch di Everything"
 
-#: src/e_mod_main.c:1378
+#: src/e_mod_main.c:1382
 msgid "General"
 msgstr "Generale"
 
-#: src/e_mod_main.c:1381
+#: src/e_mod_main.c:1385
 msgid "Browser"
 msgstr "Browser"
 
-#: src/e_mod_main.c:1386
+#: src/e_mod_main.c:1390
 msgid "Language"
 msgstr "Lingua"
 
-#: src/e_mod_main.c:1400
+#: src/e_mod_main.c:1404
 msgid "Video player"
 msgstr "Player video"
 
-#: src/e_mod_main.c:1405
+#: src/e_mod_main.c:1409
 msgid "Download directory"
 msgstr "Directory di download"
 
-#: src/e_mod_main.c:1410
+#: src/e_mod_main.c:1414
 msgid "Download requires mplayer and mp3lame"
 msgstr "Il download richiede mplayer e mp3lame"
 
-#: src/e_mod_main.c:1533
+#: src/e_mod_main.c:1537
 msgid "Launcher"
 msgstr "Lanciatore"
