@@ -43,8 +43,9 @@ lemon_SOURCES = lemon.c
 # parser
 
 if NEED_RE2C
-$(REC):
+$(REC): lemon
 	cd re2c && $(MAKE) $(AM_MAKEFLAGS)
+
 else
 .PHONY: $(REC)
 endif
