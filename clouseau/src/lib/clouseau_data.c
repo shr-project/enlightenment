@@ -646,9 +646,10 @@ _host_to_net_blob_get(void *blob, int *blob_size)
    if (!blob)
      return blob;
 
-   /* Add extra long if needed */
-   if ((*blob_size) % sizeof(uint32_t))
-     (*blob_size)++;
+   /* Complete blob_size to sizeof(uint32_t) */
+   int mod = (*blob_size) % sizeof(uint32_t);
+   if (mod)
+     *blob_size += (sizeof(uint32_t) - mod);
 
    void *n_blob = malloc(*blob_size);
    uint32_t *src = blob;
