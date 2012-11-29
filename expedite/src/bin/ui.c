@@ -222,6 +222,7 @@ extern int win_w, win_h;
 extern const char *engine;
 extern int loops;
 extern int fullscreen;
+static int cmp_report = 0;
 
 static void
 _ui_all(void)
@@ -280,28 +281,51 @@ _ui_all(void)
         tim = localtime(&now);
         if (tim) strftime(datestr, sizeof(datestr), "%Y-%m-%d %H:%M:%S", tim);
         else snprintf(datestr, sizeof(datestr), "unknown");
-        printf("\n#####Test Result#####\n"
-               "evas fps speed: %5.2f\n"
-               "evas fps speed(weighted): %5.2f\n"
-               "testcase count: %i\n"
-               "date: %s\n"
-               "evas version: %i.%i.%i.%i\n"
-               "profile: %s\n"
-               "window size: %i, %i\n"
-               "loop count: %i\n"
-               "engine: %s\n"
-               "full screen: %i\n",
-               (fps / t_count),
-               (wfps / avgw) / t_count,
-               t_count,
-               datestr,
-               evas_version->major, evas_version->minor, evas_version->micro,
-               evas_version->revision,
-               profile,
-               win_w, win_h,
-               loops,
-               engine,
-               fullscreen);
+        //        printf("%5.2f , EVAS SPEED\n", fps / t_count);
+        if (cmp_report)
+          printf("%5.2f , EVAS SPEED (WEIGHTED), " 
+                 "tn, %i , " 
+                 "t, %s , " 
+                 "ev , %i.%i.%i.%i , " 
+                 "p , %s , " 
+                 "sz , %i , %i , " 
+                 "c , %i , " 
+                 "e , %s , " 
+                 "fs , %i\n" 
+                 , 
+                 wfps / (t_count * avgw), 
+	       //               fps / t_count,
+                 t_count, 
+                 datestr,
+                 evas_version->major, evas_version->minor, evas_version->micro, evas_version->revision,
+                 profile,
+                 win_w, win_h,
+                 loops,
+                 engine, 
+                 fullscreen);
+        else
+          printf("\n#####Test Result#####\n"
+                 "evas fps speed: %5.2f\n"
+                 "evas fps speed(weighted): %5.2f\n"
+                 "testcase count: %i\n"
+                 "date: %s\n"
+                 "evas version: %i.%i.%i.%i\n"
+                 "profile: %s\n"
+                 "window size: %i, %i\n"
+                 "loop count: %i\n"
+                 "engine: %s\n"
+                 "full screen: %i\n",
+                 (fps / t_count),
+                 (wfps / avgw) / t_count,
+                 t_count,
+                 datestr,
+                 evas_version->major, evas_version->minor, evas_version->micro,
+                 evas_version->revision,
+                 profile,
+                 win_w, win_h,
+                 loops,
+                 engine,
+                 fullscreen);
      }
 }
 
@@ -669,6 +693,10 @@ ui_args(int argc, char **argv)
         else if (!strcmp(argv[i], "-l"))
           {
              list_test = 1;
+          }
+        else if (!strcmp(argv[i], "-m"))
+          {
+             cmp_report = 1;
           }
      }
    _ui_setup();

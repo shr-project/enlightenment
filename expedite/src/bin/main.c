@@ -1236,6 +1236,7 @@ _help(void)
 	   "  -t TEST-NUM\n"
 	   "  -e ENGINE\n"
 	   "  -p PROFILE\n"
+	   "  -m (expedite-cmp compliant output)\n"
 	   "  -f use netwm fullscreen request (requires x11 + wm)\n"
 	   "\n"
 	   "Where ENGINE can be one of:\n");
