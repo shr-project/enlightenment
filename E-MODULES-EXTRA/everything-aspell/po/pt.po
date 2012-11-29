@@ -1,0 +1,61 @@
+# Portuguese translation for Everything-aspell.
+# This file is put in the public domain.
+# Sérgio Marques smarquespt@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Everything-aspell\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-11-28 18:40+0100\n"
+"PO-Revision-Date: 2012-11-29 10:16-0000\n"
+"Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
+"Language-Team: \n"
+"Language: Portuguese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: src/e_mod_main.c:391
+msgid "Spell Checker"
+msgstr "Corretor ortográfico"
+
+#: src/e_mod_main.c:449 src/e_mod_main.c:606
+msgid "Everything Aspell"
+msgstr "Everything Aspell"
+
+#: src/e_mod_main.c:463
+msgid "General"
+msgstr "Geral"
+
+#: src/e_mod_main.c:468
+msgid "Spell checker"
+msgstr "Corretor ortográfico"
+
+#: src/e_mod_main.c:471 src/e_mod_main.c:587
+msgid "Aspell"
+msgstr "Aspell"
+
+#: src/e_mod_main.c:474
+msgid "Hunspell"
+msgstr "Hunspell"
+
+#: src/e_mod_main.c:477
+msgid "Custom"
+msgstr "Personalizado"
+
+#: src/e_mod_main.c:481
+msgid "Custom Command"
+msgstr "Comando personalizado"
+
+#: src/e_mod_main.c:487
+msgid "Language"
+msgstr "Idioma"
+
+#: src/e_mod_main.c:585
+msgid "Launcher"
+msgstr "Lançador"
+
+#: src/e_mod_main.c:587
+msgid "Everything Plugin"
+msgstr "<i>Plugin</i> Everything"
