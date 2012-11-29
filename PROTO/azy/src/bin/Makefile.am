@@ -53,6 +53,7 @@ azy_parser.y: azy_parser.yre $(REC) lemon
 
 azy_parser.c: azy_parser.y lemon
 	@if test "x$(top_srcdir)" != "x$(top_builddir)"; then \
+		rm -f $(top_builddir)/src/bin/lempar.c ; \
 		cp $(top_srcdir)/src/bin/lempar.c $(top_builddir)/src/bin; \
 	fi
 	./lemon -q $<
