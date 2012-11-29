@@ -2,7 +2,7 @@
 #include <dlfcn.h>
 #include <execinfo.h>
 
-#include <Ecore_Ipc.h>
+#include <Ecore_Con_Eet.h>
 #include <Edje.h>
 #include <Evas.h>
 #include <Elementary.h>
@@ -139,157 +139,130 @@ _load_list(void)
    return tree;  /* User has to call clouseau_tree_free() */
 }
 
-static Eina_Bool
-_add(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Ipc_Event_Server_Add *ev)
+Eina_Bool
+_add(EINA_UNUSED void *data, Ecore_Con_Reply *reply,
+      EINA_UNUSED Ecore_Con_Server *conn)
 {
-   void *p;
-   int size = 0;
-
-   ecore_ipc_server_data_size_max_set(ev->server, -1);
-
+/*   ecore_con_server_data_size_max_set(conn, -1); */
    connect_st t = { getpid(), _my_app_name };
-   p = clouseau_data_packet_compose(CLOUSEAU_APP_CLIENT_CONNECT,
-         &t, sizeof(t), &size, NULL, 0);
-
-   if (p)
-     {
-        ecore_ipc_server_send(ev->server, 0,0,0,0,EINA_FALSE, p, size);
-        ecore_ipc_server_flush(ev->server);
-        free(p);
-     }
+   ecore_con_eet_send(reply, CLOUSEAU_APP_CLIENT_CONNECT_STR, &t);
 
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
-_del(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Ipc_Event_Server_Del *ev)
+Eina_Bool
+_del(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
+      Ecore_Con_Server *conn)
 {
-   if (!ev->server)
+   if (!conn)
      {
         printf("Failed to establish connection to the server.\nExiting.\n");
         ecore_main_loop_quit();
         return ECORE_CALLBACK_RENEW;
      }
 
-   printf("Lost server with ip %s!\n", ecore_ipc_server_ip_get(ev->server));
+   printf("Lost server with ip <%s>\n", ecore_con_server_ip_get(conn));
 
-   ecore_ipc_server_del(ev->server);
+   ecore_con_server_del(conn);
 
    ecore_main_loop_quit();
    return ECORE_CALLBACK_RENEW;
 }
 
-static Eina_Bool
-_data(void *data EINA_UNUSED, int type EINA_UNUSED, Ecore_Ipc_Event_Server_Data *ev)
-{
-   Variant_st *v;
+void
+_data_req_cb(EINA_UNUSED void *data, Ecore_Con_Reply *reply,
+      EINA_UNUSED const char *protocol_name, void *value)
+{  /* data req includes ptr to GUI, to tell which client asking */
+   data_req_st *req = value;
+   tree_data_st t;
+   t.gui = req->gui;  /* GUI client requesting data from daemon */
+   t.app = req->app;  /* APP client sending data to daemon */
+   t.tree = _load_list();
 
-   v = clouseau_data_packet_info_get(ev->data, ev->size);
-   switch (clouseau_data_packet_mapping_type_get(v->type))
-     {
-      case CLOUSEAU_DATA_REQ:
-        {  /* data req includes ptr to GUI, to tell which client asking */
-           int size = 0;
-           data_req_st *req = v->data;
-           tree_data_st t;
-           t.gui = req->gui;  /* GUI client requesting data from daemon */
-           t.app = req->app;  /* APP client sending data to daemon */
-           t.tree = _load_list();
-
-           if (t.tree)
-             {  /* Reply with tree data to data request */
-                void *p = clouseau_data_packet_compose(CLOUSEAU_TREE_DATA,
-                                         &t, sizeof(t), &size, NULL, 0);
-
-                if (p)
-                  {
-                     ecore_ipc_server_send(ev->server, 0,0,0,0,
-                                           EINA_FALSE, p, size);
-                     ecore_ipc_server_flush(ev->server);
-                     free(p);
-                  }
-
-                clouseau_data_tree_free(t.tree);
-             }
-        }
-        break;
-
-      case CLOUSEAU_HIGHLIGHT:
-           {  /* Highlight msg contains PTR of object to highlight */
-              highlight_st *ht = v->data;
-              Evas_Object *obj = (Evas_Object *) (uintptr_t) ht->object;
-              clouseau_data_object_highlight(obj, NULL, NULL);
-           }
-         break;
-
-      case CLOUSEAU_BMP_REQ:
-           {  /* Bitmap req msg contains PTR of Ecore Evas */
-              bmp_req_st *req = v->data;
-              Evas_Coord w, h;
-              int size = 0;
-              void *bmp = _canvas_bmp_get((Ecore_Evas *) (uintptr_t)
-                    req->object, &w, &h);
-
-              bmp_info_st t = { req->gui,
-                   req->app, req->object , req->ctr, w, h,
-                   NULL,NULL, NULL, 1.0,
-                   NULL, NULL, NULL, NULL, NULL, NULL };
-
-              void *p = clouseau_data_packet_compose(CLOUSEAU_BMP_DATA,
-                    &t, sizeof(t), &size, bmp, (w * h * sizeof(int)));
-
-              if (p)
-                {
-                   ecore_ipc_server_send(ev->server, 0,0,0,0,
-                         EINA_FALSE, p, size);
-                   ecore_ipc_server_flush(ev->server);
-                   free(p);
-                }
-
-              if (bmp)
-                free(bmp);
-           }
-         break;
-
-      default:
-         break;
+   if (t.tree)
+     {  /* Reply with tree data to data request */
+        ecore_con_eet_send(reply, CLOUSEAU_TREE_DATA_STR, &t);
+        clouseau_data_tree_free(t.tree);
      }
-
-   clouseau_data_variant_free(v);
-   return ECORE_CALLBACK_RENEW;
 }
 
-static int
+void
+_highlight_cb(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
+      EINA_UNUSED const char *protocol_name, void *value)
+{  /* Highlight msg contains PTR of object to highlight */
+   highlight_st *ht = value;
+   Evas_Object *obj = (Evas_Object *) (uintptr_t) ht->object;
+   clouseau_data_object_highlight(obj, NULL, NULL);
+}
+
+void
+_bmp_req_cb(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
+      EINA_UNUSED const char *protocol_name, void *value)
+{  /* Bitmap req msg contains PTR of Ecore Evas */
+   bmp_req_st *req = value;
+   Evas_Coord w, h;
+   unsigned int size = 0;
+   void *bmp = _canvas_bmp_get((Ecore_Evas *) (uintptr_t)
+         req->object, &w, &h);
+
+   bmp_info_st t = { req->gui,
+        req->app, req->object , req->ctr, w, h,
+        NULL,NULL, NULL, 1.0,
+        NULL, NULL, NULL, NULL, NULL, NULL };
+
+   void *p = clouseau_data_packet_compose(CLOUSEAU_BMP_DATA_STR,
+         &t, &size, bmp, (w * h * sizeof(int)));
+
+
+   if (p)
+     {
+        ecore_con_eet_raw_send(reply, CLOUSEAU_BMP_DATA_STR, "BMP", p, size);
+        free(p);
+     }
+
+   if (bmp)
+     free(bmp);
+}
+
+static Eina_Bool
 _connect_to_daemon(void)
 {
-   Ecore_Ipc_Server *svr;
+   Ecore_Con_Server *server;
    const char *address = LOCALHOST;
+   Ecore_Con_Eet *eet_svr = NULL;
 
    eina_init();
    ecore_init();
-   ecore_ipc_init();
+   ecore_con_init();
 
-   svr = ecore_ipc_server_connect(ECORE_IPC_REMOTE_SYSTEM,
+   server = ecore_con_server_connect(ECORE_CON_REMOTE_TCP,
          LOCALHOST, PORT, NULL);
 
-   if (!svr)
+   if (!server)
      {
         printf("could not connect to the server: %s, port %d.\n",
               address, PORT);
         return EINA_FALSE;
      }
 
-   ecore_ipc_server_data_size_max_set(svr, -1);
+   eet_svr = ecore_con_eet_client_new(server);
+   if (!eet_svr)
+     {
+        printf("could not create con_eet client.\n");
+        return EINA_FALSE;
+     }
 
-   /* set event handler for server connect */
-   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD,
-         (Ecore_Event_Handler_Cb)_add, NULL);
-   /* set event handler for server disconnect */
-   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL,
-         (Ecore_Event_Handler_Cb)_del, NULL);
-   /* set event handler for receiving server data */
-   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DATA,
-         (Ecore_Event_Handler_Cb)_data, NULL);
+   clouseau_register_descs(eet_svr);
+
+   /* Register callbacks for ecore_con_eet */
+   ecore_con_eet_server_connect_callback_add(eet_svr, _add, NULL);
+   ecore_con_eet_server_disconnect_callback_add(eet_svr, _del, NULL);
+   ecore_con_eet_data_callback_add(eet_svr, CLOUSEAU_DATA_REQ_STR,
+         _data_req_cb, NULL);
+   ecore_con_eet_data_callback_add(eet_svr, CLOUSEAU_HIGHLIGHT_STR,
+         _highlight_cb, NULL);
+   ecore_con_eet_data_callback_add(eet_svr, CLOUSEAU_BMP_REQ_STR,
+         _bmp_req_cb, NULL);
 
    return EINA_TRUE;
 }
@@ -324,13 +297,13 @@ ecore_main_loop_begin(void)
         _my_app_name = "clouseau";
      }
 
+   clouseau_data_init();
+
    if(!_connect_to_daemon())
      {
         printf("Failed to connect to server.\n");
         return;
      }
-
-   clouseau_data_init();
 
    _ecore_main_loop_begin();
 
