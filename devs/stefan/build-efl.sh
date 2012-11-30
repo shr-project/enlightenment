@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# Ubuntu (11.04) setup
-#
 deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	libjpeg62-dev libfreetype6-dev libx11-dev subversion git
 	libglib2.0-dev libxext-dev libxcursor-dev libudev-dev
@@ -13,16 +11,14 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	libxtst-dev graphviz libasound2-dev libpam0g-dev"
 
 defcore="efl evas_generic_loaders ecore eio edje emotion eeze e_dbus edbus
-	efreet PROTO/libeweather PROTO/emap elementary ephysics"
-defapps="ethumb terminology e ephoto rage expedite"
+	efreet PROTO/libeweather PROTO/emap elementary"
+defapps="ephysics ethumb terminology e ephoto rage expedite"
 
 defpkgs="$defcore $defapps"
 
 # fail on errors
 set -e
 #set -x
-
-#COMPILER="CC=/usr/bin/clang"
 
 export CFLAGS="-O2 -Wall -g -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections"
 export CXXFLAGS="$CFLAGS"
@@ -37,10 +33,6 @@ do_scan_build()
 	echo "Scan build for $e"
 	echo
 	case $e in
-	evas)
-               # Disable sse3 for now to allow clang building evas
-#		flags="--disable-cpu-sse3"
-		;;
 	emotion)
 #		flags="--disable-generic-vlc"
 		;;
@@ -48,8 +40,7 @@ do_scan_build()
 		flags=""
 		;;
 	esac
-#	(cd "$e" && scan-build ./configure $flags $COMPILER && scan-build -o ~/EFL/scan-build-reports/$e make $COMPILER) || exit 1
-	(cd "$e" && scan-build ./configure $flags && scan-build -o ~/EFL/scan-build-reports/$e make) || exit 1
+	(cd "$e" && scan-build -analyze-headers --use-cc=/usr/bin/clang ./configure $flags && scan-build -o ~/EFL/scan-build-reports/$e make $MAKEFLAGS) || exit 1
 }
 
 do_build_and_install()
