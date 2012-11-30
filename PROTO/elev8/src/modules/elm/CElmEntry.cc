@@ -764,7 +764,7 @@ Handle<Value> CElmEntry::markup_to_utf8(const Arguments& args)
 
 Handle<Value> CElmEntry::utf8_to_markup(const Arguments& args)
 {
-   if (!args[0]->IsString())
+   if (args[0]->IsString())
      return String::New(elm_entry_utf8_to_markup(*String::Utf8Value(args[0])));
 
    return Undefined();
