@@ -404,6 +404,14 @@ xmltojson = function(request) {
   parser.end();
 }
 
+parsejson = function(request) {
+  try {
+    request.responseJSON = JSON.parse(request.responseText);
+  } catch (e) {
+    request.responseJSON = undefined;
+  }
+};
+
 ajax = function(url, options) {
   if (url === undefined)
     return null;
@@ -430,6 +438,8 @@ ajax = function(url, options) {
 
       if (contentType === 'text/xml' || options.contentType === 'text/xml')
         xmltojson(this);
+      else if (contentType === 'application/json')
+        parsejson(this);
 
       options.onSuccess(this, status || 'success');
       module_hooks.call(this, 'onComplete', [request, options]);
