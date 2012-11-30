@@ -1,0 +1,51 @@
+New E17 <b>Release</b>: ALPHA7
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+This alpha is special because it is the alpha released the day after rasterman's birthday.<br><br>
+
+Changelog:
+<li>Translation updates</li>
+<li>DND operations in the filemanager now crash less often</li>
+<li>Notification gadget euthanized: too buggy to live</li>
+<li>Gadget for fileman_opinfo shows a red light when its window wants attention</li>
+<li>Birthday module added (Happy birthday raster!)</li>
+<li>Extremely large menus no longer align improperly</li>
+<li>Gadget popups once again position themselves correctly for left/top shelves</li>
+<li>Desktop gadgets no longer cause a crash when rotating a monitor</li>
+<li>Shelf autohide no longer causes a crash when triggered during a monitor rotation</li>
+<li>RandR dialog now reopens when left open during an E restart</li>
+<li>System action dialogs have had various text improvements</li>
+<li>Filemanager windows no longer unset custom border styles</li>
+<li>Tories rejoice, the UK flag in the first-run wizard now displays correctly</li>
+<li>List items will be more often deselected as intended in some cases</li>
+<li>Shelves may now show slightly later after startup to avoid resizing their canvases</li>
+<li>DND operations on desktop gadgets are less likely to show an ugly icon while dragging</li>
+<li>Several memory leaks plugged</li>
+<li>A number of desktop gadget DND-related crashes fixed</li>
+<li>Connman network list is now larger and refreshes more regularly</li>
+<li>Birthday module removed</li>
+<li>Mixer module no longer sometimes causes magic failures on shutdown</li>
+<li>Application menus now update themselves when the corresponding menu file is changed</li>
+<li>Mixer module no longer sets volume to zero on first load</li>
+<li>Various small dialog text improvements</li>
+<li>First-run wizard now runs shutdown routines for its pages</li>
+<li>First-run wizard's first page no longer accidentally the whole second page</li>
+<li>First-run wizard is now less likely to skip pages at random</li>
+<li>First-run wizard no longer shows the same page repeatedly in some cases</li>
+<li><b>[THEME]</b> Temperature module</li>
+<li><b>[THEME]</b> Backlight gadget</li>
+<li><b>[THEME]</b> Mixer module</li>
+<li><b>[THEME]</b> First-run wizard button no longer animates on click when disabled</li>
+</p>
+
+<p><ul>
+
+<li>E17 ALPHA7 - 79912
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha7.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha7.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
