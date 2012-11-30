@@ -529,7 +529,7 @@ BaseProfileFakeModel = EUI.Model({
     this.items.push({
       text: 'More tweets',
       tag: 'more-tweets',
-      end: 'arrow_right',
+      icon: 'arrow_right',
       group: 'Tweets'
     });
 
@@ -575,7 +575,7 @@ UserProfileFakeModel = BaseProfileFakeModel.extend({
     this.items.push({
       text: this.profile.following ? 'Unfollow' : 'Follow',
       tag: 'follow-action',
-      end: 'arrow_right',
+      icon: 'arrow_right',
       group: 'Actions'
     });
 
@@ -610,7 +610,7 @@ LoggedInUserProfileFakeModel = BaseProfileFakeModel.extend({
     this.items.push({
       text: 'Sign out',
       tag: 'sign-out',
-      end: 'arrow_right',
+      icon: 'arrow_right',
       group: 'Actions'
     });
   },
@@ -625,7 +625,8 @@ LoggedInUserProfileFakeModel = BaseProfileFakeModel.extend({
 });
 
 BaseProfileController = EUI.ListController({
-  style: 'double_label',
+  style: 'text_label',
+  mode: 'compress',
   updateView: function(indexes, hint) {
     this._super(indexes, hint);
 

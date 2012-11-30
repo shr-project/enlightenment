@@ -20,6 +20,12 @@ group { name: "elm/genlist/item_compress/text_label/default";
          tag:  "ps" "ps";
          tag:  "tab" "\t";
       }
+      style { name: "genlist_textblock_style2";
+         base: "font=Sans font_size=10 color=#fff wrap=word text_class=list_item";
+         tag:  "br" "\n";
+         tag:  "ps" "ps";
+         tag:  "tab" "\t";
+      }
    }
    parts {
       part {
@@ -185,6 +191,9 @@ group { name: "elm/genlist/item_compress/text_label/default";
             inherit: "default" 0.0;
             color: 224 224 224 255;
             color3: 0 0 0 64;
+            text {
+              style: "genlist_textblock_style2";
+            }
          }
       }
       part { name: "elm.text.sub";
