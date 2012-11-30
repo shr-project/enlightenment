@@ -491,15 +491,23 @@ main(int argc, char *argv[])
 
    HandleScope handle_scope;
 
-   if (!strcmp(argv[1], "--server"))
+   if (args.server)
      {
         daemonize();
         server_start();
      }
-   else if (!strcmp(argv[1], "--shutdown"))
+   else if (args.shutdown)
      server_shutdown();
+   else if (args.connect)
+     {
+        script_arg = 2;
+        server_spawn(script_arg, argc, argv);
+     }
    else
-     server_spawn(script_arg, argc, argv);
+     {
+       load_elev8_modules();
+       execute_elev8_script(argv[script_arg], argc, argv);
+     }
 
    ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER, flush_garbage_collector, NULL);
    ecore_main_loop_begin();

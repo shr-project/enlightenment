@@ -12,6 +12,7 @@ extern "C" {
      Eina_Bool debug;
      Eina_Bool server;
      Eina_Bool shutdown;
+     Eina_Bool connect;
      Eina_Bool quit;
   } elev8_args;
 
