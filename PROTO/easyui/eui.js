@@ -1746,7 +1746,10 @@ Container = Controller.extend({
  * @extend Container
  */
 FrameController = Container.extend({
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   willInitialize: function() {
     this.viewDescriptor = elm.Naviframe({
       title_visible: false,
@@ -1787,7 +1790,10 @@ FrameController = Container.extend({
  * @extend Container
  */
 SplitController = Container.extend({
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   willInitialize: function() {
     this.viewDescriptor = elm.Layout({
       expand: 'both',
@@ -1853,7 +1859,10 @@ SplitController = Container.extend({
  * @extend Container
  */
 ToolController = Container.extend({
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   willInitialize: function() {
     this.viewDescriptor = elm.Toolbar({
       shrink_mode: 'expand',
@@ -1920,7 +1929,10 @@ ToolController = Container.extend({
  * @extend Container
  */
 TabController = Container.extend({
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   willInitialize: function() {
     this.viewDescriptor = elm.Layout({
       expand: 'both',
@@ -1980,7 +1992,10 @@ TabController = Container.extend({
  * @extend Controller
  */
 ImageController = Controller.extend({
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   willInitialize: function() {
     this.viewDescriptor = elm.Photocam({
       expand: 'both',
@@ -2030,7 +2045,10 @@ ImageController = Controller.extend({
  * @extend Controller
  */
 VideoController = Controller.extend({
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   willInitialize: function() {
     this.viewDescriptor = elm.Box({
       expand: 'both',
@@ -2092,7 +2110,10 @@ TableController = Controller.extend({
    * @type {Array}
    */
   fields: [[]],
-  /** @inheritdoc */
+  /**
+   * @inheritdoc
+   * @event
+   */
   willInitialize: function() {
     this.viewDescriptor = elm.Table({
       expand: 'both',
