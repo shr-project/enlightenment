@@ -631,9 +631,11 @@ Model = Class.extend({
    * @param {String} hint
    */
   notifyListeners: function(indexes, hint) {
-    if (this.listeners.length)
-      for (var i = 0; i < this.listeners.length; i++)
-        this.listeners[i].didChangeModel(indexes, hint, this);
+    if (!this.listeners.length) return;
+
+    for (var i = 0; i < this.listeners.length; i++) {
+      this.listeners[i].didChangeModel(indexes, hint, this);
+    }
   },
 
   /**
@@ -806,9 +808,15 @@ ArrayModel = Model.extend({
   /**
    * Pushes data to the model.
    * @param {Mixed} data
+   * @param {Boolean} keepSelected
    */
-  pushItem: function(data) {
+  pushItem: function(data, keepSelected) {
+    var oldSelectedIndex = this.selectedIndex;
+
     this.notifyListeners(this.array.push(data) - 1, 'insert');
+
+    if (keepSelected)
+      this.selectedIndex = oldSelectedIndex;
   }
 });
 

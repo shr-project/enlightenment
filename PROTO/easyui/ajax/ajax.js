@@ -412,6 +412,28 @@ parsejson = function(request) {
   }
 };
 
+isContentType = function(request, options, value) {
+  var contentType = request.getResponseHeader('Content-Type');
+  if (contentType && contentType.indexOf(value) == 0)
+    return true;
+
+  if (options.contentType && options.contentType.indexOf(value) == 0)
+    return true;
+
+  return false;
+}
+
+flatten = function(obj) {
+  if (!obj)
+    return '';
+
+  var output = [];
+  for (var key in obj)
+    output.push(key + '=' + obj[key]);
+
+  return '?' + output.join('&');
+}
+
 ajax = function(url, options) {
   if (url === undefined)
     return null;
@@ -421,24 +443,22 @@ ajax = function(url, options) {
   var request;
 
   if (method == 'GET')
-    request = cache.fetchCachedRequest(url);
+    request = cache.fetchCachedRequest(url + flatten(data));
 
   if (!request) {
     request = new xhr.XMLHttpRequest();
 
     if (method == 'GET' && !options.disableCache)
-      cache.eagerCacheRequest(url);
+      cache.eagerCacheRequest(url + flatten(data));
   }
 
   request.open(method, url);
 
   if (typeof(options.onSuccess) === 'function') {
     request.onreadystatechange = function(options, status) {
-      var contentType = request.getResponseHeader('Content-Type');
-
-      if (contentType === 'text/xml' || options.contentType === 'text/xml')
+      if (isContentType(request, options, 'text/html'))
         xmltojson(this);
-      else if (contentType === 'application/json')
+      else if (isContentType(request, options, 'application/json'))
         parsejson(this);
 
       options.onSuccess(this, status || 'success');

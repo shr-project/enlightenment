@@ -90,12 +90,15 @@ RedditModel = EUI.Model({
    * Refresh model after finishing HTML file download
    */
   refresh: function() {
-    ajax.ajax(this.url, {
-      onSuccess: function(request) {
-        this.items = JSON.parse(request.responseText).data.children;
+    ajax.get(this.url, null,
+      function(request) {
+        if (!request.responseJSON)
+          return;
+
+        this.items = request.responseJSON.data.children;
         this.notifyListeners();
       }.bind(this)
-    });
+    );
   },
   /** @inheritdoc */
   length: function() {
@@ -109,8 +112,6 @@ RedditModel = EUI.Model({
 
 /** @extends EUI.WebController */
 WebBrowser = EUI.WebController({
-  /** @type {Array} */
-  navigationBarItems: [undefined, 'Articles'],
 });
 
 /** @extends EUI.ListController */
@@ -130,6 +131,7 @@ RedditList = EUI.ListController({
     this.title = title;
     this.icon = icon || 'emblem-generic';
     this.mode = mode || 'subscribed';
+    this.endpoint = endpoint;
   },
   /** @inheritdoc */
   itemAtIndex: function(index) {
@@ -162,11 +164,16 @@ RedditList = EUI.ListController({
     }
 
     if (item === 'Subscribe') {
-      this.mode = 'subscribed';
-      this.parent.subscribeSubReddit(this);
       this.popController();
+      this.parent.popController();
+
+      reddit_all_items.pushItem(this.clone(), true);
     }
-  }
+  },
+  /** @type{RedditList} */
+  clone: function() {
+    return new RedditList(this.endpoint, this.title, this.icon);
+  },
 });
 
 /** @extends EUI.Model */
@@ -178,7 +185,7 @@ SearchModel = EUI.Model({
   /** @inheritdoc */
   itemAtIndex: function(index) {
     if (index < this.array.length)
-      return this.array[index];
+      return this.array[index].data;
   },
   /** @inheritdoc */
   length: function() {
@@ -187,18 +194,16 @@ SearchModel = EUI.Model({
   /** @type {String} */
   filter: new Property ({
     set: function(terms) {
-      var query = terms.split(' ');
       this.array = [];
-      ajax.get(reddit_url + '/r/all/search.json?q=', query, function(request) {
-        var subr = {};
-        var temp = JSON.parse(request.responseText).data.children;
-        for (var i in temp)
-          subr[temp[i].data.subreddit] = 1;
-        this.array = Object.keys(subr);
+      ajax.get(reddit_url + 'reddits/search.json', { "q": terms }, function(request) {
+        if (!request.responseJSON)
+          return;
+
+        this.array = request.responseJSON.data.children;
         this.notifyListeners();
       }.bind(this));
     }
-  }),
+  })
 });
 
 /** @extends EUI.ListController */
@@ -210,22 +215,27 @@ RedditSearchController = EUI.ListController({
   /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
-    return item && {text: item};
+    if (!item) return;
+    return {
+      text: item.display_name
+    };
   },
   /** @inheritdoc */
   selectedItemAtIndex: function(index) {
-    subreddit = this.model.itemAtIndex(index);
-    this.pushController(new RedditList('r/'+subreddit+'/top.json', subreddit, '', 'pre-subscription'));
+    var subreddit = this.model.itemAtIndex(index);
+    this.pushController(new RedditList(subreddit.url + '/top.json',
+        subreddit.title, null, 'pre-subscription'));
   },
   /**
    * @param {String} text
    */
   search: function(text) {
-    this.model.filter = text;
-  },
-  subscribeSubReddit: function(list) {
-    reddit_all_items.pushItem(list);
-    this.popController();
+    if (this.filterSetTimeout)
+      clearTimeout(this.filterSetTimeout);
+    this.filterSetTimeout = setTimeout(function() {
+      delete this.filterSetTimeout;
+      this.model.filter = text;
+    }.bind(this), 200);
   }
 });
 
@@ -238,14 +248,6 @@ reddit_all_items = new EUI.ArrayModel([
   new RSSList('http://feeds.bbci.co.uk/news/uk/rss.xml', 'BBC')
 ]);
 
-/** @extends EUI.FilterModel */
-FilterRedditApps = new EUI.FilterModel(
-  reddit_all_items,
-  function (item) {
-    return item.group_name === 'Subreddits';
-  }
-);
-
 /** @extends EUI.ListController */
 Subscriptions = EUI.ListController({
   /** @type {String} */
@@ -253,7 +255,11 @@ Subscriptions = EUI.ListController({
   /** @type {String} */
   title: 'Subscriptions',
   /** @type {EUI.FilterModel} */
-  model: FilterRedditApps,
+  model: new EUI.FilterModel(reddit_all_items,
+    function(item) {
+      return item.group_name === 'Subreddits';
+    }
+  ),
   /** @type {Object} */
   navigationBarItems: { left: 'sidePanel', right: 'New' },
   /** @inheritdoc */
