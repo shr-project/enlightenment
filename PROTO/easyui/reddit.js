@@ -125,10 +125,11 @@ RedditList = EUI.ListController({
    * @param {String} icon
    * @event
    */
-  init: function(endpoint, title, icon) {
+  init: function(endpoint, title, icon, mode) {
     this.model = new RedditModel(endpoint);
     this.title = title;
-    this.icon = icon;
+    this.icon = icon || 'emblem-generic';
+    this.mode = mode || 'subscribed';
   },
   /** @inheritdoc */
   itemAtIndex: function(index) {
@@ -148,11 +149,23 @@ RedditList = EUI.ListController({
     this.pushController(new WebBrowser(url));
   },
   /** @type {Object} */
-  navigationBarItems: { left: 'sidePanel', right: 'Refresh' },
+  navigationBarItems: function() {
+    if (this.mode === 'subscribed')
+      return { left: 'sidePanel', right: 'Refresh' };
+    return { right: 'Subscribe' };
+  },
   /** @inheritdoc */
   selectedNavigationBarItem: function(item) {
-    if (item == 'Refresh')
+    if (item === 'Refresh') {
       this.model.refresh();
+      return;
+    }
+
+    if (item === 'Subscribe') {
+      this.mode = 'subscribed';
+      this.parent.subscribeSubReddit(this);
+      this.popController();
+    }
   }
 });
 
@@ -202,13 +215,17 @@ RedditSearchController = EUI.ListController({
   /** @inheritdoc */
   selectedItemAtIndex: function(index) {
     subreddit = this.model.itemAtIndex(index);
-    reddit_all_items.pushItem(new RedditList('r/'+subreddit+'/top.json', subreddit, ''));
+    this.pushController(new RedditList('r/'+subreddit+'/top.json', subreddit, '', 'pre-subscription'));
   },
   /**
    * @param {String} text
    */
   search: function(text) {
     this.model.filter = text;
+  },
+  subscribeSubReddit: function(list) {
+    reddit_all_items.pushItem(list);
+    this.popController();
   }
 });
 
@@ -225,8 +242,7 @@ reddit_all_items = new EUI.ArrayModel([
 FilterRedditApps = new EUI.FilterModel(
   reddit_all_items,
   function (item) {
-    if (item.group_name === 'Subreddits')
-      return item;
+    return item.group_name === 'Subreddits';
   }
 );
 
@@ -239,16 +255,18 @@ Subscriptions = EUI.ListController({
   /** @type {EUI.FilterModel} */
   model: FilterRedditApps,
   /** @type {Object} */
-  navigationBarItems: { left: 'sidePanel', right: 'Add' },
+  navigationBarItems: { left: 'sidePanel', right: 'New' },
   /** @inheritdoc */
   selectedNavigationBarItem: function(item) {
-    if (item === 'Add')
+    if (item === 'New')
       this.pushController(new RedditSearchController());
   },
   /** @inheritdoc */
   itemAtIndex: function(index) {
+    var item = this.model.itemAtIndex(index);
     return {
-      text: this.model.itemAtIndex(index).title
+      text: item.title,
+      icon: item.icon
     };
   },
 });
