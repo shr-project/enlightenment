@@ -38,6 +38,7 @@ ELEMENTARY_FONTS_DIR = \
 READMES = $(EXAMPLES:%.js=$(GUIDESDIR)/%/README.md)
 EDJE_CC_ID = $(ELEMENTARY_THEMES_DIR:%=-id %)
 EDJE_CC_FD = $(ELEMENTARY_FONTS_DIR:%=-fd %)
+EDJS = $(EDCS:%.edc=%.edj)
 
 all: docs edc
 
@@ -48,10 +49,10 @@ $(GUIDESDIR)/%/README.md: %.js
 	mkdir -p $(@D)
 	sed 's/^/\t/' < $< > $@
 
-edc: $(EDCS)
-	echo $(EDJE_CC_OPTIONS)
-	$(foreach edc, $(EDCS), \
-		edje_cc $(EDJE_CC_ID) $(EDJE_CC_FD) $(edc) ;)
+%.edj: %.edc
+	edje_cc $(EDJE_CC_ID) $(EDJE_CC_FD) $<
+
+edc: $(EDJS)
 
 clean:
 	rm -f $(READMES)
