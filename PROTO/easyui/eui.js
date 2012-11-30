@@ -2398,6 +2398,8 @@ exports.app = function(app) {
   if (!(app instanceof Controller))
     throw "First argument must be a Controller instance.";
 
+  elm.addThemeExtension('./themes/default.edj');
+
   EUI.window = elm.realise(elm.Window({
     width: 320,
     height: 480,

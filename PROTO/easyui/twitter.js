@@ -677,7 +677,8 @@ LoggedInUserProfileController = BaseProfileController.extend({
 
 TimelineController = EUI.ListController({
   icon: 'go-home',
-  style: 'double_label',
+  style: 'text_label',
+  mode: 'compress',
   init: function(model, type, title){
     this.model = model;
     this.type = type;
