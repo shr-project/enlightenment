@@ -91,11 +91,11 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
 
              if (c->info && c->info->photo.size)
                {
-                  char buf[1024];
+                  char b[1024];
 
-                  snprintf(buf, sizeof(buf), "%s/%s/img", shotgun_jid_get(c->list->account), c->base->jid);
+                  snprintf(b, sizeof(b), "%s/%s/img", shotgun_jid_get(c->list->account), c->base->jid);
                   img = evas_object_image_add(evas_object_evas_get(c->list->win));
-                  evas_object_image_file_set(img, eet_file_get(shotgun_data_get(c->list->account)), buf);
+                  evas_object_image_file_set(img, eet_file_get(shotgun_data_get(c->list->account)), b);
                }
              ui_dbus_notify(c->list, img, from, msg);
              if (img) evas_object_del(img);

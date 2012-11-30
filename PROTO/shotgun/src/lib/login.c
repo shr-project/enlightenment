@@ -226,15 +226,15 @@ shotgun_login(Shotgun_Auth *auth, Ecore_Con_Event_Server_Data *ev)
         if (!out) shotgun_disconnect(auth);
         else
           {
-             char *send;
-             send = xml_sasl_write(auth, out, &len);
+             char *send_str;
+             send_str = xml_sasl_write(auth, out, &len);
 #ifdef SHOTGUN_AUTH_VISIBLE
-             shotgun_write(ev->server, send, len);
+             shotgun_write(ev->server, send_str, len);
 #else
-             ecore_con_server_send(ev->server, send, len);
+             ecore_con_server_send(ev->server, send_str, len);
 #endif
              free(out);
-             free(send);
+             free(send_str);
              auth->state = SHOTGUN_CONNECTION_STATE_SASL;
              ecore_event_add(SHOTGUN_EVENT_CONNECTION_STATE, auth, shotgun_fake_free, NULL);
           }
