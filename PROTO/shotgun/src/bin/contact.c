@@ -224,6 +224,7 @@ do_something_with_user(Contact_List *cl, Shotgun_User *user, const char *j)
    c = calloc(1, sizeof(Contact));
    c->base = user;
    c->list = cl;
+   c->ignore_resource = cl->settings->enable_chat_noresource;
    eina_hash_add(cl->users, jid, c);
    cl->users_list = eina_list_append(cl->users_list, c);
    return c;
@@ -325,7 +326,11 @@ contact_resource_menu_setup(Contact *c, Evas_Object *menu)
    win = elm_object_top_widget_get(menu);
 
    elm_menu_item_add(menu, NULL, "dialog-information", "Request VCARD", (Evas_Smart_Cb)_contact_menu_vcard_cb, c);
-   elm_menu_item_add(menu, NULL, NULL, "Ignore Resource", (Evas_Smart_Cb)chat_resource_ignore_toggle, c);
+   obj = elm_check_add(win);
+   elm_check_state_set(obj, c->ignore_resource);
+   elm_object_text_set(obj, "Ignore Resource");
+   it = elm_menu_item_add(menu, NULL, NULL, NULL, (Evas_Smart_Cb)chat_resource_ignore_toggle, c);
+   elm_object_item_content_set(it, obj);
    it = elm_menu_item_add(menu, NULL, "menu/arrow_right", "Send to", NULL, NULL);
 
    radio = elm_radio_add(win);
