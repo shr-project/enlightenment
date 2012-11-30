@@ -46,7 +46,7 @@ RSSList = EUI.ListController({
   /** @type {String} */
   style: 'double_label',
   /** @type {String} */
-  group_name: 'Subreddits',
+  group_name: 'RSS',
   /**
    * @param {String} url
    * @param {String} title
