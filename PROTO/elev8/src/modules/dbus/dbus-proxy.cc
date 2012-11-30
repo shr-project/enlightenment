@@ -9,9 +9,160 @@ namespace dbus {
 Persistent<Function> DProxy::constructor;
 
 static Handle<Value> einaValueToValue(Eina_Value *value);
+static void append(EDBus_Message_Iter *iter, Handle<Value> val);
+
+class DProperties : ObjectWrap
+{
+public:
+  static void Init(Handle<Object> target);
+  static Handle<Value> NewInstance(DObject *obj, const char *iface, const Arguments &args);
+
+private:
+  EDBus_Signal_Handler *sh;
+  EDBus_Proxy *proxy;
+  char *iface;
+
+  DProperties(DObject *obj, const char *_iface);
+  ~DProperties();
+
+  static Persistent<Function> constructor;
+  static Handle<Value> New(const Arguments& args);
+  static Handle<Value> Getter(Local<String> prop, const AccessorInfo& info);
+  static Handle<Value> Setter(Local<String> prop, Local<Value> val, const AccessorInfo& info);
+  static void SetterCb(void *data, const EDBus_Message *msg, EDBus_Pending *pending);
+  static void OnChanged(void *data, const EDBus_Message *msg);
+  static void GetAll(void *data, const EDBus_Message *msg, EDBus_Pending *pending);
+  static bool IsErrorMessage(const EDBus_Message *msg);
+};
+
+Persistent<Function> DProperties::constructor;
+
+DProperties::DProperties(DObject *obj, const char *_iface)
+{
+   proxy = edbus_proxy_ref
+      (edbus_proxy_get(obj->GetObject(), "org.freedesktop.DBus.Properties"));
+   iface = strdup(_iface);
+   sh = edbus_proxy_signal_handler_add(proxy, "PropertiesChanged", OnChanged, this);
+   edbus_proxy_call(proxy, "GetAll", GetAll, this, -1, "s", iface);
+}
+
+DProperties::~DProperties()
+{
+  edbus_signal_handler_unref(sh);
+  edbus_proxy_unref(proxy);
+  free(iface);
+}
+
+void DProperties::Init(Handle<Object>)
+{
+   HandleScope scope;
+   Local<FunctionTemplate> tmpl = FunctionTemplate::New(New);
+   tmpl->SetClassName(String::NewSymbol("DProperties"));
+   tmpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+   tmpl->InstanceTemplate()->SetNamedPropertyHandler(Getter, Setter);
+   constructor = Persistent<Function>::New(tmpl->GetFunction());
+}
+
+Handle<Value> DProperties::New(const Arguments& args)
+{
+   HandleScope scope;
+   DObject *obj = ObjectWrap::Unwrap<DObject>(args[0]->ToObject());
+   DProperties *props = new DProperties(obj, *String::Utf8Value(args[1]));
+   props->Wrap(args.This());
+   return args.This();
+}
+
+Handle<Value> DProperties::NewInstance(DObject *obj, const char *iface, const Arguments&)
+{
+  HandleScope scope;
+  const unsigned argc = 2;
+  Handle<Value> argv[argc] = { obj->handle_, String::New(iface) };
+  return scope.Close(constructor->NewInstance(argc, argv));
+}
+
+Handle<Value> DProperties::Getter(Local<String>, const AccessorInfo&)
+{
+   return Handle<Value>();
+}
+
+bool DProperties::IsErrorMessage(const EDBus_Message *msg)
+{
+   HandleScope scope;
+   const char *errname, *errmsg;
+
+   if (!edbus_message_error_get(msg, &errname, &errmsg))
+     return false;
+
+   ThrowException(Exception::Error(String::Concat(String::New(errname),
+                  String::Concat(String::New(": "), String::New(errmsg)))));
+   return true;
+}
+
+void DProperties::SetterCb(void *, const EDBus_Message *msg, EDBus_Pending *)
+{
+   IsErrorMessage(msg);
+}
+
+Handle<Value> DProperties::Setter(Local<String> prop, Local<Value> val, const AccessorInfo& info)
+{
+   HandleScope scope;
+   DProperties *self = ObjectWrap::Unwrap<DProperties>(info.This());
+
+   EDBus_Message *msg;
+   EDBus_Message_Iter *iter;
+
+   msg = edbus_proxy_method_call_new(self->proxy, "Set");
+   iter = edbus_message_iter_get(msg);
+
+   append(iter, String::New(self->iface));
+   append(iter, prop);
+
+   Handle<Array> variant = Array::New(1);
+   variant->Set(0, val);
+   variant->Set(String::NewSymbol("signature"), String::New("v"), DontEnum);
+   append(iter, variant);
+
+   edbus_proxy_send(self->proxy, msg, SetterCb, NULL, -1);
+   edbus_message_unref(msg);
+   return val;
+}
+
+void DProperties::OnChanged(void *data, const EDBus_Message *msg)
+{
+   HandleScope scope;
+
+   if (IsErrorMessage(msg))
+     return;
+
+   Eina_Value *ev = edbus_message_to_eina_value(msg);
+   Handle<Object> changed =
+      einaValueToValue(ev)->ToObject()->Get(1)->ToObject()->Get(0)->ToObject();
+
+   DProperties *self = static_cast<DProperties *>(data);
+   self->handle_->ForceSet(changed->Get(0), changed->Get(1)->ToObject()->Get(0));
+}
+
+void DProperties::GetAll(void *data, const EDBus_Message *msg, EDBus_Pending *)
+{
+   HandleScope scope;
+
+   if (IsErrorMessage(msg))
+     return;
+
+   Eina_Value *ev = edbus_message_to_eina_value(msg);
+   Local<Array> props = Local<Array>::Cast(einaValueToValue(ev)->ToObject()->Get(0));
+   DProperties *self = static_cast<DProperties *>(data);
+
+   for (unsigned int i = 0; i < props->Length(); ++i)
+     {
+        Local<Array> prop = Local<Array>::Cast(props->Get(i));
+        self->handle_->ForceSet(prop->Get(0), prop->Get(1)->ToObject()->Get(0));
+     }
+}
 
 DProxy::DProxy(DObject *_obj, const char *_iface)
-  : proxy(edbus_proxy_get(_obj->GetObject(), _iface))
+  : proxy(edbus_proxy_ref(edbus_proxy_get(_obj->GetObject(), _iface)))
 {
    obj = _obj;
    iface = strdup(_iface);
@@ -23,9 +174,10 @@ DProxy::~DProxy()
   free(iface);
 }
 
-void DProxy::Init(Handle<Object>)
+void DProxy::Init(Handle<Object> target)
 {
   HandleScope scope;
+  DProperties::Init(target);
 
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
   tpl->SetClassName(String::NewSymbol("DProxy"));
@@ -38,6 +190,9 @@ void DProxy::Init(Handle<Object>)
      FunctionTemplate::New(RemoveSignalHandler)->GetFunction());
   proto_t->Set(String::NewSymbol("call"),
      FunctionTemplate::New(Call)->GetFunction());
+  proto_t->Set(String::NewSymbol("getProperties"),
+     FunctionTemplate::New(GetProperties)->GetFunction());
+
   proto_t->SetNamedPropertyHandler(Getter);
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
@@ -77,10 +232,10 @@ struct WrappedMessage {
 Handle<Value> DProxy::Getter(Local<String> prop, const AccessorInfo& info)
 {
    HandleScope scope;
-   Local<Value> val = info.This()->GetRealNamedPropertyInPrototypeChain(prop);
+   Handle<Value> val = info.This()->GetRealNamedPropertyInPrototypeChain(prop);
 
    if (!val.IsEmpty())
-     return Handle<Value>();
+     return scope.Close(val);
 
    Handle<Function> func = FunctionTemplate::New(Call)->GetFunction();
    func->Set(String::New("method"), prop);
@@ -97,7 +252,8 @@ void WrappedMessage::Call(Handle<Function> callback, const EDBus_Message *msg)
 
    if (edbus_message_error_get(msg, &errname, &errmsg))
      {
-        fprintf(stderr, "Error: %s %s\n", errname, errmsg);
+        ThrowException(Exception::Error(String::Concat(String::New(errname),
+                       String::Concat(String::New(": "), String::New(errmsg)))));
         return;
      }
 
@@ -228,7 +384,7 @@ static Handle<Value> einaValueToValue(Eina_Value *value)
      }
    else
      {
-        WRN("Unexpected Type.");
+        WRN("Unexpected Type: %s.", type->name);
      }
 
    return val;
@@ -439,6 +595,14 @@ Handle<Value> DProxy::Call(const Arguments& args)
    edbus_message_unref(msg);
 
    return Undefined();
+}
+
+Handle<Value> DProxy::GetProperties(const Arguments& args)
+{
+   DProxy *self = ObjectWrap::Unwrap<DProxy>(args.This());
+   if (self->properties.IsEmpty())
+      self->properties = Persistent<Value>::New(DProperties::NewInstance(self->obj, self->iface, args));
+   return self->properties;
 }
 
 }

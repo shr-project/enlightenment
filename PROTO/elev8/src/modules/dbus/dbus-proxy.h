@@ -14,6 +14,7 @@ public:
   static Handle<Value> NewInstance(DObject *obj, const Arguments &args);
 
   EDBus_Proxy *GetProxy() { return proxy; }
+  Persistent<Value> properties;
 
 private:
   DProxy(DObject *_obj, const char *_iface);
@@ -25,6 +26,7 @@ private:
   static Handle<Value> AddSignalHandler(const Arguments &args);
   static Handle<Value> RemoveSignalHandler(const Arguments &args);
   static Handle<Value> Call(const Arguments &args);
+  static Handle<Value> GetProperties(const Arguments &args);
 
   static Handle<Value> Getter(Local<String> prop, const AccessorInfo& info);
 

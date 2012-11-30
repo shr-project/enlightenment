@@ -8,7 +8,7 @@ namespace dbus {
 Persistent<Function> DObject::constructor;
 
 DObject::DObject(DConnection *connection, const char *bus, const char *path)
-  : obj(edbus_object_get(connection->GetConnection(), bus, path))
+  : obj(edbus_object_ref(edbus_object_get(connection->GetConnection(), bus, path)))
 {
 }
 

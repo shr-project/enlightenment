@@ -4,7 +4,7 @@
 namespace dbus {
 
 DConnection::DConnection(EDBus_Connection_Type type)
-  : conn(edbus_connection_get(type))
+  : conn(edbus_connection_ref(edbus_connection_get(type)))
 {
 }
 

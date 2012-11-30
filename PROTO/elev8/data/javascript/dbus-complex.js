@@ -4,35 +4,18 @@ var dbus = require('dbus');
 var conn = new dbus.Connection();
 var obj = conn.getObject('com.profusion', '/com/profusion/Test');
 var proxy = obj.getProxy('com.profusion.Test');
-var properties = obj.getProxy('org.freedesktop.DBus.Properties');
+var properties = proxy.getProperties();
+
+setInterval(function() {
+    print("\nProperties", properties, "\n");
+}, 5000);
+
+properties.Resp2 = 'lalalas';
+
 var introspect = obj.getProxy('org.freedesktop.DBus.Introspectable');
 
 introspect.call('Introspect', function() {
     print('Introspect', arguments);
-});
-
-properties.addSignalHandler('PropertiesChanged', function() {
-    print('PropertiesChanged', arguments);
-});
-
-properties.call('Get', 'com.profusion.Test', 'int32', function() {
-    print('GetAll', arguments);
-});
-
-properties.call('Get', 'com.profusion.Test', 'text', function() {
-    print('GetAll', arguments);
-});
-
-properties.call('Get', 'com.profusion.Test', 'st', function() {
-    print('GetAll', arguments);
-});
-
-properties.call('GetAll', 'com.profusion.Test', function() {
-    print('GetAll', arguments);
-});
-
-properties.call('Set', 'com.profusion.Test', 'Resp2', dbus.Variant('lalala'), function() {
-    print('Resp2', arguments);
 });
 
 proxy.call('ReceiveArray', ['aaaa', 'bbbb', 'cccc'] , function() {
