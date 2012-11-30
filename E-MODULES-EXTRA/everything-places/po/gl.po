@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: everything-places\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-30 19:32+0200\n"
-"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"POT-Creation-Date: 2012-11-30 12:07+0100\n"
+"PO-Revision-Date: 2012-11-30 12:09+0100\n"
 "Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
 "Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
 "Language: gl\n"
@@ -22,4 +22,17 @@ msgstr "Cartafol persoal"
 #: src/e_mod_main.c:141
 msgid "Wallpaper"
 msgstr "Fondo de escritorio"
+
+#: src/e_mod_main.c:269
+#: src/e_mod_main.c:279
+msgid "Places"
+msgstr "Lugares"
+
+#: src/e_mod_main.c:289
+msgid "Mount Drive"
+msgstr "Montar unidade"
+
+#: src/e_mod_main.c:294
+msgid "Unmount Drive"
+msgstr "Desmontar unidade"
 

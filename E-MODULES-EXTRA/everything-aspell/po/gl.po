@@ -6,14 +6,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: everything-aspell\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-30 19:32+0200\n"
-"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"POT-Creation-Date: 2012-11-30 12:07+0100\n"
+"PO-Revision-Date: 2012-11-30 12:11+0100\n"
 "Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
 "Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: src/e_mod_main.c:391
+msgid "Spell Checker"
+msgstr "Corrector ortográfico"
 
 #: src/e_mod_main.c:449
 #: src/e_mod_main.c:606
@@ -26,7 +30,7 @@ msgstr "Xeral"
 
 #: src/e_mod_main.c:468
 msgid "Spell checker"
-msgstr "Corrector de vocabulario"
+msgstr "Corrector ortográfico"
 
 #: src/e_mod_main.c:471
 #: src/e_mod_main.c:587

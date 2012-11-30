@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: everything-wallpaper\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-30 19:32+0200\n"
-"PO-Revision-Date: 2012-09-17 12:30+0200\n"
+"POT-Creation-Date: 2012-11-30 12:07+0100\n"
+"PO-Revision-Date: 2012-11-30 12:13+0100\n"
 "Last-Translator: Aníbal Garrido <khany@member.trisquel.info>\n"
 "Language-Team: http://trasno.net/ <proxecto@trasno.net>\n"
 "Language: gl\n"
@@ -34,6 +34,11 @@ msgstr "Dentro de"
 #: src/e_mod_main.c:138
 msgid "Fill"
 msgstr "Encher"
+
+#: src/e_mod_main.c:151
+#: src/e_mod_main.c:161
+msgid "Set as Wallpaper"
+msgstr "Establecer como fondo de escritorio"
 
 #: src/e_mod_main.c:379
 msgid "Picture Import Error"
