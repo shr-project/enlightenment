@@ -1,6 +1,6 @@
 #!/usr/local/bin/elev8
 
-var desc = elm.Window({
+new elm.Window({
     title : "Label example",
     width : 320,
     height : 200,
@@ -45,5 +45,3 @@ var desc = elm.Window({
         }),
     },
 });
-
-var win = elm.realise(desc);

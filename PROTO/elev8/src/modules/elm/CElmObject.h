@@ -49,6 +49,22 @@ protected:
 
         T *obj = new T(args.This(), parent);
 
+        if (args.IsConstructCall())
+          {
+             Local<Object> desc = args[0]->ToObject();
+             Local<Array> props = desc->GetOwnPropertyNames();
+
+             for (unsigned int i = 0; i < props->Length(); i++)
+               {
+                  Local<String> key = props->Get(i)->ToString();
+                  obj->jsObject->Set(key, desc->Get(key));
+               }
+
+             Local<String> visible = String::NewSymbol("visible");
+             if (desc->Get(visible)->IsUndefined())
+               obj->jsObject->Set(visible, Boolean::New(true));
+          }
+
         return obj->jsObject;
      }
 

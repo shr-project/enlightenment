@@ -943,17 +943,6 @@ Handle<Value> CElmObject::Realise(Handle<Value> descValue, Handle<Value> parent)
 
    Handle<Value> params[] = { desc, parent };
    Handle<Object> realised = Local<Function>::Cast(type)->NewInstance(2, params)->ToObject();
-   Local<Array> props = desc->GetOwnPropertyNames();
-
-   for (unsigned int i = 0; i < props->Length(); i++)
-     {
-        Local<String> key = props->Get(i)->ToString();
-        realised->Set(key, desc->Get(key));
-     }
-
-   Local<String> visible = String::NewSymbol("visible");
-   if (desc->Get(visible)->IsUndefined())
-     realised->Set(visible, Boolean::New(true));
 
    return scope.Close(realised);
 }
