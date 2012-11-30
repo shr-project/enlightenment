@@ -30,13 +30,15 @@ void DProxy::Init(Handle<Object>)
   Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
   tpl->SetClassName(String::NewSymbol("DProxy"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
+  Local<ObjectTemplate> proto_t = tpl->PrototypeTemplate();
 
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("addSignalHandler"),
+  proto_t->Set(String::NewSymbol("addSignalHandler"),
      FunctionTemplate::New(AddSignalHandler)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("removeSignalHandler"),
+  proto_t->Set(String::NewSymbol("removeSignalHandler"),
      FunctionTemplate::New(RemoveSignalHandler)->GetFunction());
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("call"),
+  proto_t->Set(String::NewSymbol("call"),
      FunctionTemplate::New(Call)->GetFunction());
+  proto_t->SetNamedPropertyHandler(Getter);
 
   constructor = Persistent<Function>::New(tpl->GetFunction());
 }
@@ -71,6 +73,20 @@ Handle<Value> DProxy::NewInstance(DObject *obj, const Arguments& args)
 struct WrappedMessage {
   static void Call(Handle<Function> callback, const EDBus_Message *msg);
 };
+
+Handle<Value> DProxy::Getter(Local<String> prop, const AccessorInfo& info)
+{
+   HandleScope scope;
+   Local<Value> val = info.This()->GetRealNamedPropertyInPrototypeChain(prop);
+
+   if (!val.IsEmpty())
+     return Handle<Value>();
+
+   Handle<Function> func = FunctionTemplate::New(Call)->GetFunction();
+   func->Set(String::New("method"), prop);
+
+   return scope.Close(func);
+}
 
 void WrappedMessage::Call(Handle<Function> callback, const EDBus_Message *msg)
 {
@@ -392,21 +408,34 @@ static void append(EDBus_Message_Iter *iter, Handle<Value> val)
 
 Handle<Value> DProxy::Call(const Arguments& args)
 {
+   HandleScope scope;
+
    DProxy *self = ObjectWrap::Unwrap<DProxy>(args.This());
 
    EDBus_Message *msg;
    EDBus_Message_Iter *iter;
 
-   msg = edbus_proxy_method_call_new(self->proxy, *String::Utf8Value(args[0]));
+   unsigned int args_cnt = 0;
+   unsigned int last_arg = (args.Length() - 1);
+
+   if (!args[last_arg]->IsFunction())
+     return ThrowException
+        (Exception::TypeError(String::New("Last argument must be a function")));
+
+   Local<Value> method = args.Callee()->Get(String::New("method"));
+
+   if (method->IsUndefined())
+     method = args[args_cnt++];
+
+   msg = edbus_proxy_method_call_new(self->proxy, *String::Utf8Value(method));
    iter = edbus_message_iter_get(msg);
 
-   unsigned int len = args.Length() - 1;
-
-   for (unsigned int i = 1; i < len; i++)
-     append(iter, args[i]);
+   for (; args_cnt < last_arg; args_cnt++)
+     append(iter, args[args_cnt]);
 
    edbus_proxy_send(self->proxy, msg, WrappedCallMessage::Callback,
-                    new WrappedCallMessage(args[len]), -1);
+                    new WrappedCallMessage(args[last_arg]), -1);
+
    edbus_message_unref(msg);
 
    return Undefined();

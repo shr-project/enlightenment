@@ -26,6 +26,8 @@ private:
   static Handle<Value> RemoveSignalHandler(const Arguments &args);
   static Handle<Value> Call(const Arguments &args);
 
+  static Handle<Value> Getter(Local<String> prop, const AccessorInfo& info);
+
   EDBus_Proxy *proxy;
   DObject *obj;
   char *iface;

@@ -12,7 +12,7 @@ proxy.addSignalHandler('Hello', function() {
     print('Hello', arguments);
 });
 
-proxy.call('SendBool', true, function(bool) {
+proxy.SendBool(true, function(bool) {
     print('SendBool', bool == true ? 'Ok' : 'Fail');
 });
 
@@ -40,7 +40,7 @@ proxy.call('SendDouble', dbus.Double(123.456), function(d) {
     print('SendDouble', d == 123.456 ? 'Ok' : 'Fail');
 });
 
-proxy.call('SendDouble', 100, function(d) {
+proxy.SendDouble(100, function(d) {
     print('SendDouble', d == 100 ? 'Ok' : 'Fail');
 });
 
@@ -48,7 +48,7 @@ proxy.call('SendString', dbus.String('Test'), function(s) {
     print('SendString', s == 'Test' ? 'Ok' : 'Fail');
 });
 
-proxy.call('SendString', 'Test 2', function(s) {
+proxy.SendString('Test 2', function(s) {
     print('SendString', s == 'Test 2' ? 'Ok' : 'Fail');
 });
 
