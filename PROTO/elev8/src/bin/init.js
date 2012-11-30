@@ -8,4 +8,6 @@
  * Elementary support should be enabled by default.
  */
 elm = require('elm');
+elm.init();
+
 localStorage = new LocalStorage();

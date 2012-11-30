@@ -156,6 +156,13 @@ theme_setter(Local<String>, Local<Value> value, const AccessorInfo&)
    theme = Persistent<Value>::New(value);
 }
 
+static Handle<Value>
+init(const Arguments&)
+{
+  elm_init(0, NULL);
+  return Undefined();
+}
+
 static void Initialize(Handle<Object> target)
 {
    HandleScope scope;
@@ -172,6 +179,8 @@ static void Initialize(Handle<Object> target)
                FunctionTemplate::New(addThemeOverlay)->GetFunction());
    target->Set(String::NewSymbol("delThemeOverlay"),
                FunctionTemplate::New(delThemeOverlay)->GetFunction());
+   target->Set(String::NewSymbol("init"),
+               FunctionTemplate::New(init)->GetFunction());
    target->SetAccessor(String::NewSymbol("tmpdir"),
                        tmpdir_getter, tmpdir_setter);
    target->SetAccessor(String::NewSymbol("datadir"),
@@ -193,7 +202,6 @@ void RegisterModule(Handle<Object> target)
       log_domain = EINA_LOG_DOMAIN_GLOBAL;
    }
    ELM_INF("%s log domain initialized %d", log_domain_name, log_domain);
-   elm_init(0, NULL);
 
    Initialize(target);
    CElmActionSlider::Initialize(target);

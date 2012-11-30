@@ -16,6 +16,8 @@
 #include "timer.h"
 #include "utils.h"
 #include "utils_js.h"
+#include "server.h"
+#include "main.h"
 
 using namespace v8;
 int elev8_log_domain = -1;
@@ -25,6 +27,7 @@ int elev8_log_domain = -1;
 
 static Persistent<Object> module_cache;
 static Persistent<ObjectTemplate> global;
+static Persistent<Context> context;
 
 enum ContextUseRule{
    CREATE_NEW_CONTEXT,
@@ -391,12 +394,65 @@ flush_garbage_collector(void *, int , void *)
    return ECORE_CALLBACK_DONE;
 }
 
+static void
+daemonize()
+{
+   int pID = fork();
+
+   if (pID < 0)
+     {
+        ERR("Couldn't create server daemon");
+        exit(1);
+     }
+
+   if (pID > 0)
+     exit(0); // Parent stops
+
+   // Child go on.
+   ecore_fork_reset();
+   setsid(); // Child creates a session for itself
+}
+
+void
+load_elev8_modules()
+{
+   global = Persistent<ObjectTemplate>::New(ObjectTemplate::New());
+   global->Set(String::NewSymbol("require"), FunctionTemplate::New(require));
+   global->Set(String::NewSymbol("__require__"), FunctionTemplate::New(__require__));
+   global->Set(String::NewSymbol("modules"), FunctionTemplate::New(modules));
+   global->Set(String::NewSymbol("print"), FunctionTemplate::New(print));
+   storage::RegisterModule(global);
+   timer::RegisterModule(global);
+   environment::RegisterModule(global);
+   utils::RegisterModule(global);
+
+   context = Context::New(NULL, global);
+   context->Enter();
+   module_cache = Persistent<Object>::New(Object::New());
+
+   load_module(String::NewSymbol("elm"), CREATE_NEW_CONTEXT);
+   load_module(String::NewSymbol("http"), CREATE_NEW_CONTEXT);
+}
+
+void
+execute_elev8_script(char *script, int argc, char *argv[])
+{
+   //TODO check if this is ok
+   V8::SetFlagsFromCommandLine(&argc, argv, true);
+
+   if ((!run_script(PACKAGE_LIB_DIR "/../init.js")) ||
+      (!run_script(script)))
+     ecore_main_loop_quit();
+}
+
 int
 main(int argc, char *argv[])
 {
    int script_arg = 1;
 
    eina_init();
+   ecore_con_init();
+
    elev8_log_domain = eina_log_domain_register("elev8", EINA_COLOR_ORANGE);
    if (!elev8_log_domain)
      {
@@ -406,7 +462,6 @@ main(int argc, char *argv[])
      }
    INF("elev8 Logging initialized. %d", elev8_log_domain);
 
-   V8::SetFlagsFromCommandLine(&argc, argv, true);
    V8::AddMessageListener(message, Undefined());
    V8::SetCaptureStackTraceForUncaughtExceptions(true, 10, StackTrace::kDetailed);
 
@@ -429,33 +484,27 @@ main(int argc, char *argv[])
      }
 
    HandleScope handle_scope;
-   global = Persistent<ObjectTemplate>::New(ObjectTemplate::New());
 
-   global->Set(String::NewSymbol("require"), FunctionTemplate::New(require));
-   global->Set(String::NewSymbol("__require__"), FunctionTemplate::New(__require__));
-   global->Set(String::NewSymbol("modules"), FunctionTemplate::New(modules));
-   global->Set(String::NewSymbol("print"), FunctionTemplate::New(print));
-   storage::RegisterModule(global);
-   timer::RegisterModule(global);
-   environment::RegisterModule(global);
-   utils::RegisterModule(global);
-
-   Persistent<Context> context = Context::New(NULL, global);
-   Context::Scope context_scope(context);
-
-   module_cache = Persistent<Object>::New(Object::New());
-
-   if (!run_script(PACKAGE_LIB_DIR "/../init.js"))
-     goto end;
-   if (!run_script(argv[script_arg]))
-     goto end;
+   if (!strcmp(argv[1], "--server"))
+     {
+        daemonize();
+        server_start();
+     }
+   else if (!strcmp(argv[1], "--shutdown"))
+     server_shutdown();
+   else
+     server_spawn(script_arg, argc, argv);
 
    ecore_event_handler_add(ECORE_EVENT_SIGNAL_USER, flush_garbage_collector, NULL);
    ecore_main_loop_begin();
 
-end:
+   if (Context::InContext()) context->Exit();
    context.Dispose();
    module_cache.Dispose();
    global.Dispose();
+
+   ecore_con_shutdown();
+   eina_shutdown();
+
    return 0;
 }
