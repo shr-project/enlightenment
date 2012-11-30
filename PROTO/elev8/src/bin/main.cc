@@ -11,6 +11,7 @@
 #include <elev8_common.h>
 #include <unistd.h>
 #include <v8-debug.h>
+#include "args.h"
 #include "environment.h"
 #include "storage.h"
 #include "timer.h"
@@ -449,6 +450,7 @@ int
 main(int argc, char *argv[])
 {
    int script_arg = 1;
+   elev8_args args = { };
 
    eina_init();
    ecore_con_init();
@@ -465,6 +467,8 @@ main(int argc, char *argv[])
    V8::AddMessageListener(message, Undefined());
    V8::SetCaptureStackTraceForUncaughtExceptions(true, 10, StackTrace::kDetailed);
 
+   elev8_parse_argv(&args, argc, argv);
+
    if (argc < 2)
      {
         ERR("%s: Error: no input file specified.", argv[0]);
@@ -474,7 +478,7 @@ main(int argc, char *argv[])
              argv[0], argv[0]);
         exit(-1);
      }
-   else if (argc >= 3 && !strcmp(argv[1], "--debug"))
+   else if (args.debug)
      {
         printf("Awaiting connection from debugger on port 5858.");
         fflush(stdout);
@@ -482,6 +486,8 @@ main(int argc, char *argv[])
         Debug::SetDebugMessageDispatchHandler(debug_message_handler);
         script_arg = 2;
      }
+   else if (args.quit)
+     exit(0);
 
    HandleScope handle_scope;
 

@@ -27,7 +27,8 @@ elev8_SOURCES = \
 	environment.cc \
 	utils.cc \
 	utils_js.cc \
-	server.cc
+	server.cc \
+	args.c
 
 elev8_LDADD = @EINA_LIBS@ @ECORE_LIBS@ @V8_LIBS@ @EET_LIBS@ @ECORECON_LIBS@
 
