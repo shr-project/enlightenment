@@ -698,6 +698,52 @@ Model = Class.extend({
   })
 });
 
+/** @extend Model */
+FilterModel = Model.extend({
+  /**
+   * @param {Model} proxy_model
+   * @param {function} filter_fn
+   */
+  init: function(proxy_model, filter_fn) {
+    this.proxy_model = proxy_model;
+    this.filter_fn = filter_fn;
+    this.proxy_model.addListener(this);
+  },
+  /** @inheritdoc */
+  itemAtIndex: function(index) {
+    var virtualindex = 0;
+    for (var i = 0, j = this.proxy_model.length; i < j; i++) {
+      var item = this.proxy_model.itemAtIndex(i);
+      if (this.filter_fn(item)) {
+        if (virtualindex === index)
+          return item;
+        virtualindex++;
+      }
+    }
+    return undefined;
+  },
+  /**
+   * @type {Number}
+   * @readonly
+   */
+  length: new Property({
+    get: function() {
+      var filtered_len = 0;
+      for (var i = 0, j = this.proxy_model.length; i < j; i++) {
+        if (this.filter_fn(this.proxy_model.itemAtIndex(i)))
+          filtered_len++;
+      }
+      return filtered_len;
+    }
+  }),
+  /**
+   * Fired after the model is changed.
+   */
+  didChangeModel: function(){
+    this.notifyListeners();
+  },
+});
+
 /**
  * Wraps the native array on {@link Model} interface.
  * @extend Model
@@ -2495,6 +2541,7 @@ exports.DBModel = DBModel;
 exports.FileModel = FileModel;
 
 exports.FilteredModel = FilteredModel;
+exports.FilterModel = FilterModel;
 exports.ArrayModel = ArrayModel;
 exports.Routing = Routing;
 

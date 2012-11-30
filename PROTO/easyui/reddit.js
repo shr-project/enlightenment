@@ -45,6 +45,8 @@ RSSModel = EUI.Model({
 RSSList = EUI.ListController({
   /** @type {String} */
   style: 'double_label',
+  /** @type {String} */
+  group_name: 'Subreddits',
   /**
    * @param {String} url
    * @param {String} title
@@ -115,6 +117,8 @@ WebBrowser = EUI.WebController({
 RedditList = EUI.ListController({
   /** @type {String} */
   style: 'double_label',
+  /** @type {String} */
+  group_name: 'Subreddits',
   /**
    * @param {String} endpoint
    * @param {String} title
@@ -172,7 +176,7 @@ SearchModel = EUI.Model({
     set: function(terms) {
       var query = terms.split(' ');
       this.array = [];
-      ajax.get(reddit_url + '/r/all/search.json', {q: query}, function(request) {
+      ajax.get(reddit_url + '/r/all/search.json?q=', query, function(request) {
         var subr = {};
         var temp = JSON.parse(request.responseText).data.children;
         for (var i in temp)
@@ -197,7 +201,8 @@ RedditSearchController = EUI.ListController({
   },
   /** @inheritdoc */
   selectedItemAtIndex: function(index) {
-    this.parent.onSubredditSelected(this.model.itemAtIndex(index));
+    subreddit = this.model.itemAtIndex(index);
+    reddit_all_items.pushItem(new RedditList('r/'+subreddit+'/top.json', subreddit, ''));
   },
   /**
    * @param {String} text
@@ -208,7 +213,7 @@ RedditSearchController = EUI.ListController({
 });
 
 /** @extends EUI.ArrayModel */
-RedditApps = new EUI.ArrayModel([
+reddit_all_items = new EUI.ArrayModel([
   new RedditList('top.json', 'Home', 'go-home'),
   new RedditList('r/programming/top.json', 'Proggit', 'applications-development'),
   new RedditList('r/iama/top.json', 'IAmA', 'dialog-question'),
@@ -216,16 +221,51 @@ RedditApps = new EUI.ArrayModel([
   new RSSList('http://feeds.bbci.co.uk/news/uk/rss.xml', 'BBC')
 ]);
 
+/** @extends EUI.FilterModel */
+FilterRedditApps = new EUI.FilterModel(
+  reddit_all_items,
+  function (item) {
+    if (item.group_name === 'Subreddits')
+      return item;
+  }
+);
+
+/** @extends EUI.ListController */
+Subscriptions = EUI.ListController({
+  /** @type {String} */
+  group_name: 'Management',
+  /** @type {String} */
+  title: 'Subscriptions',
+  /** @type {EUI.FilterModel} */
+  model: FilterRedditApps,
+  /** @type {Object} */
+  navigationBarItems: { left: 'sidePanel', right: 'Add' },
+  /** @inheritdoc */
+  selectedNavigationBarItem: function(item) {
+    if (item === 'Add')
+      this.pushController(new RedditSearchController());
+  },
+  /** @inheritdoc */
+  itemAtIndex: function(index) {
+    return {
+      text: this.model.itemAtIndex(index).title
+    };
+  },
+});
+
+reddit_all_items.pushItem(new Subscriptions());
+
 /** @extends EUI.ListController */
 RedditAppSwitch = new EUI.ListController({
   /** @type {EUI.ArrayModel} */
-  model: RedditApps,
+  model: reddit_all_items,
   /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
     return {
       text: item.title,
-      icon: item.icon
+      icon: item.icon,
+      group: item.group_name
     };
   },
   /** @inheritdoc */
@@ -238,7 +278,7 @@ RedditAppSwitch = new EUI.ListController({
 /** @extends EUI.FrameController */
 RedditAppTabs = new EUI.FrameController({
   /** @type {EUI.ArrayModel} */
-  model: RedditApps,
+  model: reddit_all_items,
 });
 
 /** @extends EUI.SplitController */
