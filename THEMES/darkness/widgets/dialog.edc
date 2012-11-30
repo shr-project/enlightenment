@@ -2,13 +2,16 @@
 styles {
 #define STYLE(NAME) \
    style { \
-      name: "dialog_style"NAME; \
+      name: "dialog_style_"NAME; \
       base: "font=Sans font_size=10 text_class=tb_plain align="NAME" color=#ffffff style=shadow shadow_color=#263e5780 wrap=word"; \
       \
       tag:  "br" "\n"; \
       tag:  "ps" "ps"; \
       tag:  "hilight" "+ font=Sans:style=Bold text_class=tb_light style=glow color=#fff glow2_color=#fe87 glow_color=#fa14"; \
    }
+STYLE("center")
+STYLE("left")
+STYLE("right")
 }
 
 group {
@@ -169,7 +172,7 @@ group {
                offset: -9 -9;
             }
             text {
-               style:    "dialog_style";
+               style:    "dialog_style_center";
                min:      1 1;
             }
          }
