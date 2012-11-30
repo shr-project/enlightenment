@@ -189,6 +189,16 @@ TimelineModel = BaseTwitterModel.extend({
       this.notifyListeners(0); //just the first item needs to be updated
     });
   },
+  appendTweets: function(tweets){
+      var old_length = this.items.length;
+      this.items = this.items.concat(tweets);
+      this.notifyListeners(
+        arrayBetweenBoundaries(old_length, this.items.length -1));
+  },
+  insertTweetsOnTop: function(tweets){
+    this.items = tweets.concat(this.items);
+    this.notifyListeners();
+  },
   fetchOlderTweets: function(){
     //to get twitters older than the last one that we have
     var params = this.buildUrlParameters({max_id: this.items[this.items.length - 1].id_str});
@@ -196,13 +206,8 @@ TimelineModel = BaseTwitterModel.extend({
     this.get(this.url, params, function(results) {
       this.notifyListeners(this.length + 1, 'finishSlowLoad');
       //exclude from results the first item, which is repetead
-      results = results.slice(1);
-
-      var old_length = this.items.length;
-      this.items = this.items.concat(results);
-      this.notifyListeners(
-        arrayBetweenBoundaries(old_length, this.items.length -1));
-    });
+      this.appendTweets(results.slice(1));
+   });
 
     this.notifyListeners(this.length + 1, 'beginSlowLoad');
   },
@@ -212,8 +217,7 @@ TimelineModel = BaseTwitterModel.extend({
 
     this.get(this.url, params, function(new_tweets) {
       this.notifyListeners(-1, 'finishSlowLoad');
-      this.items = new_tweets.concat(this.items);
-      this.notifyListeners();
+      this.insertTweetsOnTop(new_tweets);
     });
     this.notifyListeners(-1, 'beginSlowLoad');
   },
@@ -292,11 +296,7 @@ SearchTimelineModel = TimelineModel.extend({
       this.notifyListeners(this.length + 1, 'finishSlowLoad');
 
       //exclude from results the first item, which is repetead
-      var results = result.results.slice(1);
-
-      var old_length = this.items.length;
-      this.items = this.items.concat(results);
-      this.notifyListeners(arrayBetweenBoundaries(old_length, this.items.length -1));
+      this.appendTweets(result.results.slice(1));
     });
     this.notifyListeners(this.length + 1, 'beginSlowLoad');
   },
@@ -307,9 +307,7 @@ SearchTimelineModel = TimelineModel.extend({
     this.get(this.url, params, function(result) {
       this.notifyListeners(-1, 'finishSlowLoad');
 
-      var new_tweets = result.results;
-      this.items = new_tweets.concat(this.items);
-      this.notifyListeners();
+      this.insertTweetsOnTop(result.results);
     });
     this.notifyListeners(-1, 'beginSlowLoad');
   }
