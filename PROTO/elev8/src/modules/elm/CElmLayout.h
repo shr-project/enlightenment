@@ -56,6 +56,8 @@ public:
 
    Handle<Value> table_clear(const Arguments& args);
 
+   Handle<Value> message(const Arguments& args);
+
    friend Handle<Value> CElmObject::New<CElmLayout>(const Arguments& args);
 };
 

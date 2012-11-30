@@ -16,6 +16,7 @@ GENERATE_METHOD_CALLBACKS(CElmLayout, box_remove_all);
 GENERATE_METHOD_CALLBACKS(CElmLayout, signal_emit);
 GENERATE_METHOD_CALLBACKS(CElmLayout, data_get);
 GENERATE_METHOD_CALLBACKS(CElmLayout, table_clear);
+GENERATE_METHOD_CALLBACKS(CElmLayout, message);
 
 GENERATE_TEMPLATE_FULL(CElmContainer, CElmLayout,
                   PROPERTY(file),
@@ -28,7 +29,8 @@ GENERATE_TEMPLATE_FULL(CElmContainer, CElmLayout,
                   METHOD(box_remove_all),
                   METHOD(signal_emit),
                   METHOD(data_get),
-                  METHOD(table_clear));
+                  METHOD(table_clear),
+                  METHOD(message));
 
 CElmLayout::CElmLayout(Local<Object> _jsObject, CElmObject *_parent)
      : CElmContainer(_jsObject, elm_layout_add(_parent->GetEvasObject()))
@@ -230,6 +232,34 @@ Handle<Value> CElmLayout::table_clear(const Arguments& args)
 void CElmLayout::Initialize(Handle<Object> target)
 {
    target->Set(String::NewSymbol("Layout"), GetTemplate()->GetFunction());
+}
+
+Handle<Value> CElmLayout::message(const Arguments& args)
+{
+   Handle<Value> value = args[2];
+   String::Utf8Value type(args[0]->ToString());
+   int id = args[1]->ToInt32()->Value();
+
+   if (!strcmp(*type, "string")) {
+      Edje_Message_String msg = {
+           *String::Utf8Value(value->ToString())
+      };
+     edje_object_message_send(eo, EDJE_MESSAGE_STRING, id, &msg);
+   } else if (!strcmp(*type, "int")) {
+      Edje_Message_Int msg = {
+           value->Int32Value()
+      };
+      edje_object_message_send(eo, EDJE_MESSAGE_INT, id, &msg);
+   } else if (!strcmp(*type, "float")) {
+     Edje_Message_Float msg = {
+           (float) value->NumberValue()
+     };
+     edje_object_message_send(eo, EDJE_MESSAGE_FLOAT, id, &msg);
+   } else {
+     ELM_ERR("Unknown message type: %s", *type);
+  }
+
+   return Undefined();
 }
 
 }
