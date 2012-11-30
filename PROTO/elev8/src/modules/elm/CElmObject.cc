@@ -50,7 +50,7 @@ static Handle<Value> ContentSet(Local<String> item, Local<Value> value, const Ac
      elm_object_part_content_set(GetEvasObjectFromJavascript(parent),
                                  *String::Utf8Value(item),
                                  GetEvasObjectFromJavascript(realized));
-   else if (realized->IsString())
+   else
      elm_object_part_text_set(GetEvasObjectFromJavascript(parent),
                               *String::Utf8Value(item),
                               *String::Utf8Value(realized));
@@ -80,7 +80,7 @@ static Handle<Boolean> ContentDel(Local<String> item, const AccessorInfo& info)
                                       *String::Utf8Value(item));
         delete CElmObject::GetObjectFromJavascript(value);
      }
-   else if (value->IsString())
+   else
      {
         elm_object_part_text_set(GetEvasObjectFromJavascript(parent),
                                  *String::Utf8Value(item), "");
