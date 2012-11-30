@@ -100,7 +100,7 @@ BaseTwitterModel = EUI.Model({
       endpoint = "1/" + endpoint + ".json";
     twitterAjax[method](endpoint, params, function(req) {
       if (req.status != '200') return;
-      callback(JSON.parse(req.responseText));
+      callback(req.responseJSON);
     });
   },
   post: function(endpoint, params, callback) {
@@ -595,7 +595,7 @@ UserProfileFakeModel = BaseProfileFakeModel.extend({
     if (req.status != 200) return;
 
     //update profile
-    this.profile = JSON.parse(req.responseText);
+    this.profile = req.responseJSON;
     this.items[this.items.length - 1].text =
       this.profile.following ? 'Unfollow' : 'Follow';
     this.notifyListeners(this.items.length - 1);
