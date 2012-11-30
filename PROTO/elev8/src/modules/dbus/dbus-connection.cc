@@ -36,11 +36,11 @@ Handle<Value> DConnection::New(const Arguments& args)
   if (args[0]->IsString()) {
     String::Utf8Value v(args[0]->ToString());
 
-    if (strcmp(*v, "session"))
+    if (!strcmp(*v, "session"))
       type = EDBUS_CONNECTION_TYPE_SESSION;
-    else if (strcmp(*v, "system"))
+    else if (!strcmp(*v, "system"))
       type = EDBUS_CONNECTION_TYPE_SYSTEM;
-    else if (strcmp(*v, "starter"))
+    else if (!strcmp(*v, "starter"))
       type = EDBUS_CONNECTION_TYPE_STARTER;
     else
       THROW_EXCEPTION("Wrong connection type");
@@ -51,7 +51,7 @@ Handle<Value> DConnection::New(const Arguments& args)
   DConnection *obj = new DConnection(type);
   if (!obj->conn)
     THROW_EXCEPTION("Could not obtain DBus connection");
-  
+
   obj->Wrap(args.This());
 
   return args.This();
