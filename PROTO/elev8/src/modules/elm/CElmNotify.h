@@ -2,14 +2,14 @@
 #define C_ELM_NOTIFY_H
 
 #include "elm.h"
-#include "CElmLayout.h"
+#include "CElmContainer.h"
 #include "CElmObject.h"
 
 namespace elm {
 
 using namespace v8;
 
-class CElmNotify : public CElmLayout {
+class CElmNotify : public CElmContainer {
 private:
   static Persistent<FunctionTemplate> tmpl;
 
@@ -22,16 +22,14 @@ protected:
    } cached;
 
    static Handle<FunctionTemplate> GetTemplate();
-
-   Persistent<Value> notify_parent;
 public:
    static void  Initialize(Handle<Object> target);
 
    Handle<Value> content_get() const;
    void content_set(Handle<Value> val);
 
-   Handle<Value> orient_get() const;
-   void orient_set(Handle<Value> val);
+   Handle<Value> align_get() const;
+   void align_set(Handle<Value> val);
 
    Handle<Value> timeout_get() const;
    void timeout_set(Handle<Value> val);

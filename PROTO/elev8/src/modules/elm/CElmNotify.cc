@@ -6,29 +6,28 @@ namespace elm {
 using namespace v8;
 
 GENERATE_PROPERTY_CALLBACKS(CElmNotify, content);
-GENERATE_PROPERTY_CALLBACKS(CElmNotify, orient);
+GENERATE_PROPERTY_CALLBACKS(CElmNotify, align);
 GENERATE_PROPERTY_CALLBACKS(CElmNotify, timeout);
 GENERATE_PROPERTY_CALLBACKS(CElmNotify, allow_events);
 GENERATE_PROPERTY_CALLBACKS(CElmNotify, parent);
 
 
-GENERATE_TEMPLATE_FULL(CElmLayout, CElmNotify,
+GENERATE_TEMPLATE_FULL(CElmContainer, CElmNotify,
                   PROPERTY(content),
-                  PROPERTY(orient),
+                  PROPERTY(align),
                   PROPERTY(timeout),
                   PROPERTY(allow_events),
                   PROPERTY(parent));
 
 CElmNotify::CElmNotify(Local<Object> _jsObject, CElmObject *p)
-   : CElmLayout(_jsObject,
-		elm_notify_add(elm_object_top_widget_get(p->GetEvasObject())))
+   : CElmContainer(_jsObject,
+                   elm_notify_add(p->GetEvasObject()))
 {
 }
 
 CElmNotify::~CElmNotify()
 {
    cached.content.Dispose();
-   notify_parent.Dispose();
 }
 
 void CElmNotify::Initialize(Handle<Object> target)
@@ -48,52 +47,27 @@ void CElmNotify::content_set(Handle<Value> val)
    elm_object_content_set(eo, GetEvasObjectFromJavascript(cached.content));
 }
 
-Handle<Value> CElmNotify::orient_get() const
+Handle<Value> CElmNotify::align_get() const
 {
-   switch (elm_notify_orient_get(eo)) {
-     case ELM_NOTIFY_ORIENT_TOP: return String::New("top");
-     case ELM_NOTIFY_ORIENT_CENTER: return String::New("center");
-     case ELM_NOTIFY_ORIENT_BOTTOM: return String::New("bottom");
-     case ELM_NOTIFY_ORIENT_LEFT: return String::New("left");
-     case ELM_NOTIFY_ORIENT_RIGHT: return String::New("right");
-     case ELM_NOTIFY_ORIENT_TOP_LEFT: return String::New("top-left");
-     case ELM_NOTIFY_ORIENT_TOP_RIGHT: return String::New("top-right");
-     case ELM_NOTIFY_ORIENT_BOTTOM_LEFT: return String::New("bottom-left");
-     case ELM_NOTIFY_ORIENT_BOTTOM_RIGHT: return String::New("bottom-right");
-     default: return String::New("unknown");
-   }
+   double x, y;
+   Local<Object> obj;
+
+   elm_notify_align_get(eo, &x, &y);
+   obj->Set(String::NewSymbol("x"), Number::New(x));
+   obj->Set(String::NewSymbol("y"), Number::New(y));
+
+   return obj;
 }
 
-void CElmNotify::orient_set(Handle<Value> val)
+void CElmNotify::align_set(Handle<Value> val)
 {
-   if (val->IsNumber())
-     {
-        elm_notify_orient_set(eo, (Elm_Notify_Orient)val->Int32Value());
-        return;
-     }
-
-   if (!val->IsString())
+   if (!val->IsObject())
      return;
 
-   String::Utf8Value orient(val->ToString());
-   if (!strcmp(*orient, "top"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_TOP);
-   else if (!strcmp(*orient, "center"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_CENTER);
-   else if (!strcmp(*orient, "bottom"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_BOTTOM);
-   else if (!strcmp(*orient, "left"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_LEFT);
-   else if (!strcmp(*orient, "right"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_RIGHT);
-   else if (!strcmp(*orient, "top-left"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_TOP_LEFT);
-   else if (!strcmp(*orient, "top-right"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_TOP_RIGHT);
-   else if (!strcmp(*orient, "bottom-left"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_BOTTOM_LEFT);
-   else if (!strcmp(*orient, "bottom-right"))
-     elm_notify_orient_set(eo, ELM_NOTIFY_ORIENT_BOTTOM_RIGHT);
+   Local<Object> obj = val->ToObject();
+   double x = obj->Get(String::NewSymbol("x"))->NumberValue();
+   double y = obj->Get(String::NewSymbol("y"))->NumberValue();
+   elm_notify_align_set(eo, x, y);
 }
 
 Handle<Value> CElmNotify::timeout_get() const
@@ -119,18 +93,14 @@ void CElmNotify::allow_events_set(Handle<Value> val)
 
 Handle<Value> CElmNotify::parent_get() const
 {
-   return notify_parent;
+   void *f_parent = evas_object_data_get(elm_notify_parent_get(eo), "this");
+   return static_cast<CElmObject *>(f_parent)->GetJSObject();
 }
 
 void CElmNotify::parent_set(Handle<Value> val)
 {
    if (val->IsObject())
-     {
-       elm_notify_parent_set(eo, GetEvasObjectFromJavascript(val));
-
-       notify_parent.Dispose();
-       notify_parent = Persistent<Value>::New(val);
-     }
+     elm_notify_parent_set(eo, GetEvasObjectFromJavascript(val));
 }
 
 }

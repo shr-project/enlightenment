@@ -36,7 +36,7 @@ var win = elm.realise(elm.Window({
                 notify: elm.Notify({
                     content: entry,
                     timeout: 5,
-                    orient: 0
+                    align: { x: 0.5, y: 0.0 }
                 }),
                 icon_no_scale: elm.Button({
                     label: "Icon no scale",
