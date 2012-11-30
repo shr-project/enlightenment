@@ -275,6 +275,11 @@ Subscriptions = EUI.ListController({
       icon: item.icon
     };
   },
+  contextMenuItems: ['Unsubscribe'],
+  selectedContextMenuItem: function(menuItem, index) {
+    if(menuItem == 'Unsubscribe')
+      reddit_all_items.deleteItemAtIndex(index);
+  },
 });
 
 reddit_all_items.pushItem(new Subscriptions());
