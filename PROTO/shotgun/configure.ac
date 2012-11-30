@@ -190,3 +190,44 @@ AC_CONFIG_FILES([
   src/bin/Makefile
 ])
 AC_OUTPUT
+
+# report
+txt_strip() {
+  echo "[$]@" | sed -e 's/^[[ \t]]*\([[^ \t]]*\)[[ \t]]*$/\1/g'
+}
+
+echo
+cat << SUMMARY_EOF
+Summary:
+ * project.........: $PACKAGE $VERSION
+ * prefix..........: $(txt_strip $prefix)
+ * CFLAGS..........: $(txt_strip $CFLAGS)
+ * LDFLAGS.........: $(txt_strip $LDFLAGS)
+SUMMARY_EOF
+echo
+cat << FEATURES_EOF
+Features:
+ * dbus................: $have_edbus
+ * notify..............: $have_enotify
+ * GUI.................: $have_gui
+FEATURES_EOF
+echo
+
+cat << DOCS_EOF
+Documentation:
+ * enabled.........: ${build_doc}
+DOCS_EOF
+if test "x${build_doc}" = "xyes" ; then
+  echo " Building..........: make doc"
+fi
+echo
+
+cat << COMPILE_EOF
+Compilation........: make (or gmake)
+COMPILE_EOF
+echo
+
+cat << INSTALL_EOF
+Installation.......: make all install (as root if needed, with 'su' or 'sudo')
+INSTALL_EOF
+echo
