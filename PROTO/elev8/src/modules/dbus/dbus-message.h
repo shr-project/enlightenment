@@ -40,7 +40,7 @@ private:
   static Handle<Value> NewSignal(const Arguments& args);
 
   EDBus_Message *msg;
-  Persistent<FunctionTemplate> base_template;
+  static Persistent<FunctionTemplate> base_template;
 };
 
 }

@@ -113,7 +113,7 @@ PKG_CHECK_MODULES([ELEMENTARY], [
 	ecore-evas >= 1.0.999
 ])
 PKG_CHECK_MODULES([ECORECON], [ecore-con >= 1.0.999])
-
+PKG_CHECK_MODULES([EDBUS], [edbus2])
 PKG_CHECK_MODULES([EIO], [eio])
 
 dnl Check for libv8 and v8.h by linking a bit of code using v8
@@ -154,6 +154,7 @@ src/modules/Makefile
 src/modules/http/Makefile
 src/modules/elm/Makefile
 src/modules/fs/Makefile
+src/modules/dbus/Makefile
 data/Makefile
 data/images/Makefile
 data/desktop/Makefile

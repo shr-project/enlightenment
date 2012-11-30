@@ -16,7 +16,7 @@ public:
   EDBus_Proxy *GetProxy() { return proxy; }
 
 private:
-  DProxy(DObject *obj, const char *iface);
+  DProxy(DObject *_obj, const char *_iface);
   ~DProxy();
 
   static Persistent<Function> constructor;
@@ -25,9 +25,10 @@ private:
   static Handle<Value> AddSignalHandler(const Arguments &args);
   static Handle<Value> RemoveSignalHandler(const Arguments &args);
   static Handle<Value> Call(const Arguments &args);
-  static Handle<Value> Send(const Arguments &args);
 
   EDBus_Proxy *proxy;
+  DObject *obj;
+  char *iface;
 };
 
 }

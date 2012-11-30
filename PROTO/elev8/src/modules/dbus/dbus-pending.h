@@ -1,5 +1,5 @@
-#ifndef DBUS_CONNECTION_H
-#define DBUS_CONNECTION_H
+#ifndef DBUS_PENDING_H
+#define DBUS_PENDING_H
 
 #include "dbus-module.h"
 
@@ -7,15 +7,16 @@ using namespace v8;
 
 namespace dbus {
 
-class DConnection : public ObjectWrap {
+class DPending : public ObjectWrap {
+  EDBus_Pending *pending;
 public:
   static void Init(Handle<Object> target);
 
   EDBus_Connection *GetConnection() { return conn; }
 
 private:
-  DConnection(EDBus_Connection_Type type);
-  ~DConnection();
+  DPending(EDBus_Pending *pending_);
+  ~DPending();
 
   static Handle<Value> New(const Arguments& args);
   static Handle<Value> GetObject(const Arguments& args);

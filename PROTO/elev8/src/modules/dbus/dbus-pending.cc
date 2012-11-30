@@ -1,10 +1,11 @@
 #include "dbus-connection.h"
+#include "dbus-pending.h"
 #include "dbus-object.h"
 
 namespace dbus {
 
 DPending::DPending(EDBus_Pending *pending_)
-  : pending(pending_))
+  : pending(pending_)
 {
 }
 
@@ -13,7 +14,7 @@ DPending::~DPending()
   edbus_pending_cancel(pending);
 }
 
-void DPending::Init(Handle<Object> target)
+void DPending::Init(Handle<Object>)
 {
   HandleScope scope;
 

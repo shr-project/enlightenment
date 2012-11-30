@@ -14,4 +14,10 @@
 #define THROW_EXCEPTION(msg) \
   return ThrowException(Exception::Error(String::New(msg)))
 
+namespace dbus {
+
+extern int _log_domain;
+
+}
+
 #endif

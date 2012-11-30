@@ -21,6 +21,7 @@ private:
 
   static Persistent<Function> constructor;
   static Handle<Value> New(const Arguments& args);
+  static Handle<Value> Send(const Arguments& args);
   static Handle<Value> GetProxy(const Arguments& args);
 
   EDBus_Object *obj;

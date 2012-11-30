@@ -1,4 +1,5 @@
 #include "dbus-connection.h"
+#include "dbus-message.h"
 #include "dbus-object.h"
 #include "dbus-proxy.h"
 
@@ -69,15 +70,13 @@ Handle<Value> DObject::GetProxy(const Arguments& args)
 
 Handle<Value> DObject::Send(const Arguments& args)
 {
-  if (!DMessage::IsMessage(args[0]))
-    THROW_EXCEPTION("Expecting message");
-  if (!args[1]->IsFunction())
-    THROW_EXCEPTION("Expecting callback function");
+   if (!DMessage::IsMessage(args[0]))
+     THROW_EXCEPTION("Expecting message");
+   if (!args[1]->IsFunction())
+     THROW_EXCEPTION("Expecting callback function");
 
-  HandleScope scope;
-  return scope.Close(External::Wrap(new WrappedProxyMessage(self,
-    ObjectWrap::Unwrap<DMessage>(args[0]->ToObject()),
-    args[1], args[2])));
+   HandleScope scope;
+   return Undefined();
 }
 
 }

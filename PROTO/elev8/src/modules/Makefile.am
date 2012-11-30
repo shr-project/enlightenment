@@ -1,4 +1,4 @@
 AUTOMAKE_OPTIONS     = 1.4 foreign
 MAINTAINERCLEANFILES = Makefile.in
 
-SUBDIRS = http elm fs
+SUBDIRS = http elm fs dbus

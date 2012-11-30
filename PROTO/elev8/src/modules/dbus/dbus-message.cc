@@ -3,7 +3,7 @@
 
 namespace dbus {
 
-static Persistent<FunctionTemplate> DMessage::base_template;
+Persistent<FunctionTemplate> DMessage::base_template;
 
 DMessage::~DMessage()
 {
