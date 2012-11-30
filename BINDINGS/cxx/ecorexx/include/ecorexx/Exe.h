@@ -4,6 +4,9 @@
 /* EFL */
 #include <Ecore.h>
 
+/* SIGC */
+#include <sigc++/sigc++.h>
+
 namespace Ecorexx {
 
 /**
@@ -77,11 +80,17 @@ public:
   void signal(int num);
 
   void hup();
+
+  sigc::signal <void, Ecore_Exe_Event_Del*> signalDelete;
   
 private:  
   Exe(const Exe&); // forbid copy constructor
+
+  static Eina_Bool delhandler (void *data, int type, void *event);
   
   Ecore_Exe *mExe;
+
+  pid_t mDeathPid;
 };
 
 } // end namespace Ecorexx

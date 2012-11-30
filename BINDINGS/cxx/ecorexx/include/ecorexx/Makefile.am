@@ -11,7 +11,8 @@ libecorexx_HEADERS = \
 	EvasWindowGLX11.h \
 	EvasWindowSoftwareX11.h \
 	EvasWindowXRenderX11.h \
-	Exe.h
+	Exe.h \
+	exception/ProcessNotExistingException.h
 
 libecorexxdir = \
 	$(pkgincludedir)

@@ -27,7 +27,8 @@ libecorexx_la_SOURCES = \
 	EvasWindowGLX11.cpp \
 	EvasWindowSoftwareX11.cpp \
 	EvasWindowXRenderX11.cpp \
-	Exe.cpp
+	Exe.cpp \
+	exception/ProcessNotExistingException.cpp
 
 libecorexx_la_LIBADD = \
 	$(EFL_LIBS)

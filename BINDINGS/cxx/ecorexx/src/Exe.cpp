@@ -5,29 +5,69 @@
 /* STL */
 #include <string>
 #include <cassert>
+#include <iostream>
 
 #include "ecorexx/Exe.h"
+#include "ecorexx/exception/ProcessNotExistingException.h"
+
+using namespace std;
 
 namespace Ecorexx {
 
-Exe::Exe(const std::string &exe_cmd, const void *data)
+static Ecore_Event_Handler *gDelHandler = NULL;
+static unsigned int gExeRunning = 0;
+    
+Exe::Exe(const std::string &exe_cmd, const void *data) :
+  mDeathPid(0)
 {
-  mExe = ecore_exe_run(exe_cmd.c_str(), data);
+  if (gExeRunning == 0)
+  {
+    gDelHandler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, Exe::delhandler, this);
+  }
+  ++gExeRunning;
+  
+  mExe = ecore_exe_run(exe_cmd.c_str(), data); 		
 }
 
-Exe::Exe(const std::string &exe_cmd, Ecore_Exe_Flags flags, const void *data)
-{
+Exe::Exe(const std::string &exe_cmd, Ecore_Exe_Flags flags, const void *data) :
+  mDeathPid(0)
+{  
+  if (gExeRunning == 0)
+  {
+    gDelHandler = ecore_event_handler_add(ECORE_EXE_EVENT_DEL, Exe::delhandler, this);
+  }
+  gExeRunning++;
+  
   mExe = ecore_exe_pipe_run(exe_cmd.c_str(), flags, data);
 }
 
 Exe::~Exe()
 {
+  if (gExeRunning == 1)
+  {
+    ecore_event_handler_del(gDelHandler);
+  }
+  
   if(mExe)
   {
     ecore_exe_free(mExe);
   }
+
+  --gExeRunning;
 }
+
+Eina_Bool Exe::delhandler (void *data, int type, void *event)
+{
+  Exe *exe = static_cast<Exe*>(data);  
+  exe->mExe = NULL;
+
+  Ecore_Exe_Event_Del *delEvent = static_cast<Ecore_Exe_Event_Del*>(event);
+  exe->mDeathPid = delEvent->pid;
+  exe->signalDelete.emit (delEvent);
   
+  return true;
+}
+
 void Exe::setRunPriority(int pri)
 {
   ecore_exe_run_priority_set(pri);
@@ -40,6 +80,8 @@ int Exe::getRunPriority()
 
 bool Exe::send(const void *data, int size)
 {
+  
+    
   return ecore_exe_send(mExe, data, size);
 }
 
@@ -120,6 +162,12 @@ void Exe::terminate()
 
 void Exe::kill()
 {
+  if (!mExe)
+  {
+    assert(mDeathPid);
+    throw ProcessNotExistingException(mDeathPid);
+  }
+  
   ecore_exe_kill(mExe);
 }
 

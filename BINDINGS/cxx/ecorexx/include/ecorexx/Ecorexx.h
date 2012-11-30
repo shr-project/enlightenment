@@ -19,5 +19,8 @@
 #include "Job.h"
 #include "Exe.h"
 
+/* exceptions */
+#include "exception/ProcessNotExistingException.h"
+
 #endif // ECOREXX_H
 

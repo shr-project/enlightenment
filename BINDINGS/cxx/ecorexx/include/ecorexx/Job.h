@@ -4,6 +4,7 @@
 /* EFL */
 #include <Ecore.h>
 
+/* SIGC */
 #include <sigc++/sigc++.h>
 
 namespace Ecorexx {
