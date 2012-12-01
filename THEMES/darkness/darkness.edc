@@ -165,13 +165,10 @@ collections {
 #include "e/toolbar.edc"
 #include "e/transitions.edc"
 
-#include "modules/battery.edc"
 #include "modules/calendar.edc"
 #include "modules/clock.edc"
 #include "modules/cpu.edc"
 #include "modules/deskshow.edc"
-#include "modules/efm_nav.edc"
-#include "modules/efm_path.edc"
 #include "modules/forecasts.edc"
 #include "modules/ibar.edc"
 #include "modules/ibox.edc"
