@@ -428,7 +428,7 @@ settings_finagle(UI_WIN *ui)
    if (ss) ui->settings = ss;
    else
      {
-        int x, dash = 0;
+        int dash = 0;
 
         ss = ui->settings = calloc(1, sizeof(Shotgun_Settings));
         /* don't count --enable/disable args */
