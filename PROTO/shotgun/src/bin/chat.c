@@ -97,6 +97,18 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
                   img = evas_object_image_add(evas_object_evas_get(c->list->win));
                   evas_object_image_file_set(img, eet_file_get(shotgun_data_get(c->list->account)), b);
                }
+             else
+               {
+                  img = evas_object_image_add(evas_object_evas_get(c->list->win));
+                  evas_object_image_file_set(img, DATA_DIR "/icons/hicolor/48x48/apps/shotgun.png", NULL);
+                  if (evas_object_image_load_error_get(img))
+                    evas_object_image_file_set(img, PACKAGE_SRC_DIR "/data/shotgun.png", NULL);
+                  if (evas_object_image_load_error_get(img))
+                    {
+                       evas_object_del(img);
+                       img = NULL;
+                    }
+               }
              ui_dbus_notify(c->list, img, from, msg);
              if (img) evas_object_del(img);
           }
