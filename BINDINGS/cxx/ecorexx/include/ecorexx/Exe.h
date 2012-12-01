@@ -87,6 +87,8 @@ private:
   Exe(const Exe&); // forbid copy constructor
 
   static Eina_Bool delhandler (void *data, int type, void *event);
+
+  void exceptionCheck();
   
   Ecore_Exe *mExe;
 

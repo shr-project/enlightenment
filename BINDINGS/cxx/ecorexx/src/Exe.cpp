@@ -80,18 +80,19 @@ int Exe::getRunPriority()
 
 bool Exe::send(const void *data, int size)
 {
-  
-    
+  exceptionCheck();
   return ecore_exe_send(mExe, data, size);
 }
 
 void Exe::stdinClose()
 {
+  exceptionCheck();
   ecore_exe_close_stdin(mExe);
 }
 
 void Exe::setAutoLimits(int start_bytes, int end_bytes, int start_lines, int end_lines)
 {
+  exceptionCheck();
   ecore_exe_auto_limits_set(mExe, start_bytes, end_bytes, start_lines, end_lines);
 }
 
@@ -102,83 +103,101 @@ void Exe::freeData(Ecore_Exe_Event_Data *data)
 
 pid_t Exe::getPid()
 {
+  exceptionCheck();
   return ecore_exe_pid_get(mExe);
 }
 
 void Exe::setTag(const std::string &tag)
 {
+  exceptionCheck();
   ecore_exe_tag_set(mExe, tag.c_str());
 }
 
 std::string Exe::getTag()
 {
+  exceptionCheck();
   return ecore_exe_tag_get(mExe);
 }
 
 std::string Exe::getCmd()
 {
+  exceptionCheck();
   return ecore_exe_cmd_get(mExe);
 }
 
 void *Exe::getData()
 {
+  exceptionCheck();
   return ecore_exe_data_get(mExe);
 }
 
 void *Exe::setData(void *data)
 {
+  exceptionCheck();
   return ecore_exe_data_set(mExe, data);
 }
 
 Ecore_Exe_Flags Exe::getFlags()
 {
+  exceptionCheck();
   return ecore_exe_flags_get(mExe);
 }
 
 void Exe::pause()
 {
+  exceptionCheck();
   ecore_exe_pause(mExe);
 }
 
 void Exe::cont()
 {
+  exceptionCheck();
   ecore_exe_continue(mExe);
 }
 
 void Exe::interrupt()
 {
+  exceptionCheck();
   ecore_exe_interrupt(mExe);
 }
 
 void Exe::quit()
 {
+  exceptionCheck();
   ecore_exe_quit(mExe);
 }
 
 void Exe::terminate()
 {
+  exceptionCheck();
   ecore_exe_terminate(mExe);
 }
 
 void Exe::kill()
+{
+  exceptionCheck();
+  ecore_exe_kill(mExe);
+}
+
+void Exe::signal(int num)
+{
+  exceptionCheck();
+  ecore_exe_signal(mExe, num);
+}
+
+void Exe::hup()
+{
+  exceptionCheck();
+  ecore_exe_hup(mExe);
+}
+
+void Exe::exceptionCheck()
 {
   if (!mExe)
   {
     assert(mDeathPid);
     throw ProcessNotExistingException(mDeathPid);
   }
-  
-  ecore_exe_kill(mExe);
-}
-
-void Exe::signal(int num)
-{
-  ecore_exe_signal(mExe, num);
-}
-
-void Exe::hup()
-{
-  ecore_exe_hup(mExe);
 }
 
 } // end namespace Ecorexx
