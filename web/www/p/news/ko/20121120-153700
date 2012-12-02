@@ -1,0 +1,27 @@
+New E17 <b>Release</b>: ALPHA4
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+Another week, another alpha.
+Changelog:
+<li>Translation updates</li>
+<li>Fixed submenu positioning bug</li>
+<li>Fixes for modal dialog windows (unbreaks image import dialog)</li>
+<li>.spec file improvements</li>
+<li>OSX compatibility fixes</li>
+<li>RandR dialog presents refresh rates in right click menu</li>
+<li>Further improvements to new default theme, particularly digital clock appearance</li>
+<li>Theme info menu item is now more clear</li>
+<li>Default theme now allows file renaming on longpress</li>
+</p>
+
+<p><ul>
+
+<li>E17 ALPHA4 - 79478
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha4.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
