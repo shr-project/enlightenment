@@ -423,7 +423,7 @@ contact_presence_set(Contact *c, Shotgun_Event_Presence *cur)
    Contact_List *cl = c->list;
 
    if (!cur) return;
-   c->status = cur->status;
+   c->status = MIN(cur->status, SHOTGUN_USER_STATUS_XA);
    /* if status description exists and isn't the same as current status description */
    if (c->status_line && (c->description != cur->description))
      {

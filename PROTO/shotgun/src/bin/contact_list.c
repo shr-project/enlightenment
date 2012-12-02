@@ -1,5 +1,16 @@
 #include "ui.h"
 
+
+static const char const *Contact_Status_String[] =
+{
+   [SHOTGUN_USER_STATUS_NONE] = "Offline?", /* unavailable */
+   [SHOTGUN_USER_STATUS_NORMAL] = "Normal",
+   [SHOTGUN_USER_STATUS_AWAY] = "Away",
+   [SHOTGUN_USER_STATUS_CHAT] = "Chat",
+   [SHOTGUN_USER_STATUS_DND] = "Busy",
+   [SHOTGUN_USER_STATUS_XA] = "Very Away" /* eXtended Away */
+};
+
 static void
 _contact_list_quit_cb(Contact_List *cl, Evas_Object *obj __UNUSED__, void *ev __UNUSED__)
 {
@@ -411,30 +422,7 @@ _it_text_get_list(Contact *c, Evas_Object *obj __UNUSED__, const char *part)
         char *buf;
         const char *status;
 
-        switch(c->status)
-          {
-           case SHOTGUN_USER_STATUS_NORMAL:
-              status = "Normal";
-              break;
-           case SHOTGUN_USER_STATUS_AWAY:
-              status = "Away";
-              break;
-           case SHOTGUN_USER_STATUS_CHAT:
-              status = "Chat";
-              break;
-           case SHOTGUN_USER_STATUS_DND:
-              status = "Busy";
-              break;
-           case SHOTGUN_USER_STATUS_XA:
-              status = "Very Away";
-              break;
-           case SHOTGUN_USER_STATUS_NONE:
-              status = "Offline?";
-              break;
-           default:
-              status = "What the fuck aren't we handling?";
-          }
-
+        status = Contact_Status_String[c->status];
         if (!c->description)
           return strdup(status);
         ret = asprintf(&buf, "%s: %s", status, c->description);
@@ -754,11 +742,11 @@ _contact_list_item_tooltip_cb(Contact *c, Evas_Object *obj __UNUSED__, Evas_Obje
           {
              eina_strbuf_append_printf(buf,
                "<b><title>%s</title></b><ps>"
-               "<b><subtitle><u>%s (%i)%s</u></subtitle></b><ps>"
+               "<b><subtitle><u>%s (%i): </u></subtitle></b>%s<ps>"
                "%s<ps>"
                "<i>Idle: %u minutes</i>",
                c->base->jid,
-               c->cur->jid + strlen(c->base->jid) + 1, c->priority, desc ? ":" : "",
+               c->cur->jid + strlen(c->base->jid) + 1, c->priority, Contact_Status_String[c->status],
                desc ?: "",
                (c->cur->idle + (unsigned int)(ecore_time_unix_get() - c->cur->timestamp)) / 60 + (c->cur->idle % 60 > 30));
              timer = c->cur->idle % 60;
@@ -766,10 +754,10 @@ _contact_list_item_tooltip_cb(Contact *c, Evas_Object *obj __UNUSED__, Evas_Obje
         else
           eina_strbuf_append_printf(buf,
             "<b><title>%s</title></b><ps>"
-            "<b><subtitle><u>%s (%i)%s</u></subtitle></b><ps>"
+            "<b><subtitle><u>%s (%i): </u></subtitle></b>%s<ps>"
             "%s%s",
             c->base->jid,
-            c->cur->jid + strlen(c->base->jid) + 1, c->priority, desc ? ":" : "",
+            c->cur->jid + strlen(c->base->jid) + 1, c->priority, Contact_Status_String[c->status],
             desc ?: "", desc ? "<ps>" : "");
         free(desc);
         EINA_LIST_FOREACH(c->plist, l, p)
@@ -778,22 +766,22 @@ _contact_list_item_tooltip_cb(Contact *c, Evas_Object *obj __UNUSED__, Evas_Obje
              if (p->idle)
                {
                   eina_strbuf_append_printf(buf,
-                    "<ps><b>%s (%i)%s</b><ps>"
+                    "<ps><b>%s (%i): </b>%s%s"
                     "%s<ps>"
-                    "<i>Idle: %u minutes</i>",
-                    p->jid + strlen(c->base->jid) + 1, p->priority, p->description ? ":" : "",
+                    "<i>Idle: %u minutes</i>%s",
+                    p->jid + strlen(c->base->jid) + 1, p->priority, Contact_Status_String[c->status], desc ? "<ps>" : "",
                     desc ?: "",
-                    (p->idle + (unsigned int)(ecore_time_unix_get() - p->timestamp)) / 60 + (p->idle % 60 > 30));
+                    (p->idle + (unsigned int)(ecore_time_unix_get() - p->timestamp)) / 60 + (p->idle % 60 > 30), l->next ? "<ps>" : "");
                   t2 = p->idle % 60;
                   if (t2 > timer) timer = t2;
                }
              else
                eina_strbuf_append_printf(buf,
-                 "<ps><b>%s (%i)%s</b><ps>"
+                 "<ps><b>%s (%i): </b>%s<ps>"
                  "%s%s",
-                 p->jid + strlen(c->base->jid) + 1, p->priority, p->description ? ":" : "",
-                 desc ?: "", p->description ? "<ps>" : "");
-             if (p->description) free(desc);
+                 p->jid + strlen(c->base->jid) + 1, p->priority, Contact_Status_String[c->status],
+                 desc ?: "", l->next ? "<ps>" : "");
+             free(desc);
           }
         text = eina_stringshare_add(eina_strbuf_string_get(buf));
         eina_strbuf_free(buf);
@@ -1026,7 +1014,7 @@ contact_list_user_del(Contact *c, Shotgun_Event_Presence *ev)
         shotgun_event_presence_free(pres);
      }
 #endif
-   c->status = c->cur->status;
+   c->status = MIN(c->cur->status, SHOTGUN_USER_STATUS_XA);
    c->description = c->cur->description;
    c->list->list_item_update[c->list->mode](c->list_item);
 }
