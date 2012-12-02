@@ -1217,8 +1217,6 @@ cdef extern from "Elementary.h":
     void                     elm_entry_context_menu_clear(Evas_Object *obj)
     void                     elm_entry_context_menu_disabled_set(Evas_Object *obj, Eina_Bool disabled)
     Eina_Bool                elm_entry_context_menu_disabled_get(Evas_Object *obj)
-    void                     elm_entry_bounce_set(Evas_Object *obj, Eina_Bool h_bounce, Eina_Bool v_bounce)
-    void                     elm_entry_bounce_get(Evas_Object *obj, Eina_Bool *h_bounce, Eina_Bool *v_bounce)
     void                     elm_entry_input_panel_enabled_set(Evas_Object *obj, Eina_Bool enabled)
     Eina_Bool                elm_entry_input_panel_enabled_get(Evas_Object *obj)
     void                     elm_entry_input_panel_layout_set(Evas_Object *obj, Elm_Input_Panel_Layout layout)

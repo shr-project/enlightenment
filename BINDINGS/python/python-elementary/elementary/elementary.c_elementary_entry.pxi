@@ -1119,7 +1119,7 @@ cdef public class Entry(Object) [object PyElementaryEntry, type PyElementaryEntr
         @type v: Elm_Scroller_Policy
 
         """
-        elm_entry_scrollbar_policy_set(self.obj, h, v)
+        elm_scroller_policy_set(self.obj, h, v)
 
     property scrollbar_policy:
         """This sets the entry's scrollbar policy (i.e. enabling/disabling
@@ -1135,7 +1135,7 @@ cdef public class Entry(Object) [object PyElementaryEntry, type PyElementaryEntr
         def __set__(self, value):
             cdef Elm_Scroller_Policy h, v
             h, v = value
-            elm_entry_scrollbar_policy_set(self.obj, h, v)
+            elm_scroller_policy_set(self.obj, h, v)
 
     def bounce_set(self, h_bounce, v_bounce):
         """This enables/disables bouncing within the entry.
@@ -1149,7 +1149,7 @@ cdef public class Entry(Object) [object PyElementaryEntry, type PyElementaryEntr
         @type v_bounce: bool
 
         """
-        elm_entry_bounce_set(self.obj, h_bounce, v_bounce)
+        elm_scroller_bounce_set(self.obj, h_bounce, v_bounce)
 
     def bounce_get(self):
         """Get the bounce mode
@@ -1160,7 +1160,7 @@ cdef public class Entry(Object) [object PyElementaryEntry, type PyElementaryEntr
         """
         cdef Eina_Bool h_bounce, v_bounce
 
-        elm_entry_bounce_get(self.obj, &h_bounce, &v_bounce)
+        elm_scroller_bounce_get(self.obj, &h_bounce, &v_bounce)
         return (h_bounce, v_bounce)
 
     property bounce:
@@ -1172,13 +1172,13 @@ cdef public class Entry(Object) [object PyElementaryEntry, type PyElementaryEntr
         """
         def __get__(self):
             cdef Eina_Bool h_bounce, v_bounce
-            elm_entry_bounce_get(self.obj, &h_bounce, &v_bounce)
+            elm_scroller_bounce_get(self.obj, &h_bounce, &v_bounce)
             return (h_bounce, v_bounce)
 
         def __set__(self, value):
             cdef Eina_Bool h_bounce, v_bounce
             h_bounce, v_bounce = value
-            elm_entry_bounce_set(self.obj, h_bounce, v_bounce)
+            elm_scroller_bounce_set(self.obj, h_bounce, v_bounce)
 
     def input_panel_layout_set(self, layout):
         """Set the input panel layout of the entry
