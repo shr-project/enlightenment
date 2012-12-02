@@ -452,6 +452,7 @@ contact_presence_set(Contact *c, Shotgun_Event_Presence *cur)
         cl->list_item_update[cl->mode](c->list_item);
      }
    /* if vcard available, fetch */
+   if (c->vcard_request) return;
    if (c->cur->vcard && (((!c->info) && (!c->info_thread)) || (cur && cur->photo && c->info &&
        ((c->info->photo.sha1 != cur->photo) || (!c->info->photo.size)))))
      {

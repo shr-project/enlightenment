@@ -271,6 +271,7 @@ event_presence_cb(Contact_List *cl, int type __UNUSED__, Shotgun_Event_Presence 
                   if ((!l) || (l->data != pres))
                     c->plist = eina_list_sorted_insert(c->plist, (Eina_Compare_Cb)_list_sort_cb, pres);
                   /* if vcard available and (not retrieved || not most recent) */
+                  if (c->vcard_request) return ECORE_CALLBACK_RENEW;
                   if (ev->vcard && (((!c->info) && (!c->info_thread)) || (c->cur && c->info &&
                       ((c->info->photo.sha1 != c->cur->photo) ||
                        (c->cur->photo && (!c->info->photo.size))))))
