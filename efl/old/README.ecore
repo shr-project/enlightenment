@@ -1,0 +1,98 @@
+Ecore 1.7.99
+
+******************************************************************************
+
+ FOR ANY ISSUES PLEASE EMAIL:
+ enlightenment-devel@lists.sourceforge.net
+  
+******************************************************************************
+  
+Requirements:
+-------------
+
+Must:
+  libc
+  eina (1.1.0 or better)
+  (For windows you also need: evil)
+  
+Recommended:
+  libX11
+  libXext
+  libXcursor
+  libXprint
+  libXinerama
+  libXrandr
+  libXss
+  libXrender
+  libXcomposite
+  libXfixes
+  libXdamage
+  libXdpms
+  libXtest
+  GNUTLS or OpenSSL
+  CURL
+  evas (1.1.0 or better)
+
+Optional:
+  XCB (fully working)
+  SDL
+  DirectFB
+  glib
+  tslib
+
+Ecore is a clean and tiny event loop library with many modules to do
+lots of convenient things for a programmer, to save time and effort.
+
+It's small and lean, designed to work on embedded systems all the way
+to large and powerful multi-cpu workstations. It serialises all system
+signals, events etc. into a single event queue, that is easily
+processed without needing to worry about concurrency. A properly
+written, event-driven program using this kind of programming doesn't
+need threads, nor has to worry about concurrency. It turns a program
+into a state machine, and makes it very robust and easy to follow.
+
+Ecore gives you other handy primitives, such as timers to tick over
+for you and call specified functions at particular times so the
+programmer can use this to do things, like animate, or time out on
+connections or tasks that take too long etc.
+
+Idle handlers are provided too, as well as calls on entering an idle
+state (often a very good time to update the state of the program). All
+events that enter the system are passed to specific callback functions
+that the program sets up to handle those events. Handling them is
+simple and other Ecore modules produce more events on the queue,
+coming from other sources such as file descriptors etc.
+
+Ecore also help you work in a multi threaded environment and setup a
+thread pool that help you use the EFL on multi-cpu system. It help split
+the part that can't be called outside of the ecore main loop from the
+computation heavy function that could run on another CPU. Be aware that
+Evas and most of Ecore API is not thread safe and should only be called
+in the main loop. Eina and Eet could be used, if done carefully, in any
+heavy function on another cpu.
+
+Ecore also lets you have functions called when file descriptors become
+active for reading or writing, allowing for streamlined, non-blocking
+IO.
+
+------------------------------------------------------------------------------
+COMPILING AND INSTALLING:
+
+  ./configure
+  make
+(as root unless you are installing in your users directories):
+  make install
+      
+------------------------------------------------------------------------------
+NOTE:
+
+You can experience main loop lock (and more likely see UI lock) if libcurl
+doesn't use an asynchronous dns resolver. Since Curl 7.21.0, you can use the
+native dns resolver asynchronously by turning  --enable-threaded-resolver
+on during configure time. For older version, C-Ares is the way to solve that
+issue (see: http://c-ares.haxx.se/ ).
+
+Also the wayland support (ecore_wayland) is considered experimental as
+wayland itself is still unstable and liable to change core protocol.
+If you use this api, it is possible it will break in future, until this
+notice is removed.

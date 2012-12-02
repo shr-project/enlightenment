@@ -1,0 +1,1033 @@
+2012-10-10  Daniel Zaoui and Yaakov Goldberg
+        * Porting of Ecore to Eo
+
+2011-01-29  Carsten Haitzler (The Rasterman)
+
+        1.0.0 release
+
+2011-01-29  Mike McCormack
+
+        * Convert fd list to inlist to save allocs
+
+2011-01-29  Rui Miguel Silva Seabra
+
+        * make https not fail (that's curl's responsibility, really).
+
+2011-01-31  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore-evas CAN send "render done" messages even if not
+        waiting for sync counter when using gl engine. new semi-sync
+        mode to account for that.
+
+2011-02-01 Mike McCormack
+
+        * Remove SIGRT from ecore's signals since it's unused and broken
+
+2011-02-09  Mathieu Taillefumier
+
+	* Add xrandr backlight support to ecore_x
+
+2011-02-10 Mike Blumenkrantz
+
+        * Added some more possibly useless safety checks to ecore_con_ares
+
+        * Implement event-driven error message api for all non-curl ecore_con
+        +ECORE_CON_EVENT_CLIENT_ERROR, ECORE_CON_EVENT_SERVER_ERROR events
+        +Ecore_Con_Event_Server_Error, Ecore_Con_Event_Client_Error types
+
+        * Unify event handler code
+        * Always increment server event count for client events
+
+2011-02-11 Mike Blumenkrantz
+
+        * Added ecore_con_client_port_get
+
+2011-02-16 Sangho Park
+
+	* Added ecore_file_download_full API.
+
+2011-02-20 Vincent Torri
+
+	* Ecore_Win32: improve resize of windows and fix key up event for
+	the 'space' key.
+	* Ecore_WinCE: do not erase a window background
+
+2011-02-21 Jihoon Kim
+
+	* Add get calls in ecore_imf for ecore_imf_context_canvas_get() and
+        ecore_imf_context_window_get().
+
+2011-02-21 Raoul Hecky
+
+	* Remove 300 second timeout so large downloads work in ecore_con.
+
+2011-02-22  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore-file inotify fd would be duplicated in children
+        on fork. Have it detecti this on next monitor add and re-init the
+        inotify fd and fd handler.
+
+2011-02-24 Vincent Torri
+
+	* Ecore_File: fix compilation when ecore_con and curl are not
+	available
+
+2011-02-27 Jihoon Kim
+
+        * Add ecore_imf_context_preedit_string_with_attributes_get API.
+
+2011-03-01 Raoul Hecky
+
+	* Add ecore_con_url_ssl_verify_peer_set API.
+
+2011-03-01 Guillaume Friloux
+
+	* Fix detection of complete file write in ecore_file inotify.
+
+2011-03-16 Cedric Bail
+
+	* Add ecore_thread_reschedule.
+
+2011-03-19 Mike Blumenkrantz
+
+        * Fix crash in ecore_con_ssl related to attempted connections on a dead socket
+
+2011-03-23  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore-evas interceptor didn't handle override-redirect
+        windows correctly, expecting a feed-back event from x, which it didn't
+        get.
+
+2011-03-23  Elixirious
+
+	* Fix ecore_con_url_ftp_upload upload the file until the end.
+
+2011-03-29  PnB
+
+	* Add ecore_con_url_ssl_ca_set to manually set a certificate authority.
+
+2011-03-30  Carsten Haitzler (The Rasterman)
+
+        * Ecore_X gains some more x sync counter controls and Ecore_Evas
+        now uses the netwm sync protocol to get wm's to only configure
+        as fast as it can keep drawing.
+
+2011-04-01  Leif Middelschulte
+
+       * Add ecore_x_randr_edid_* data extraction and validation functions
+       for EDID structures.
+
+2011-04-01  Cedric Bail
+
+	* Add ecore_con_url_pipeline_set and ecore_con_url_pipeline_get for
+	HTTP 1.1 pipelining support.
+
+2011-04-05  Cedric Bail
+
+	* Remove Ecore_Evas Cocoa backend that use depreacted Evas Quartz
+	backend.
+
+2011-04-11  Hannes Janetzek
+
+	* Fix removal of windows from ignore_list with ecore_x_window_ignore_set
+
+2011-04-13  Doyun Kang
+
+	* Ecore_X + Ecore_Evas: Add more support for shape input setting
+
+2011-04-15  Carsten Haitzler (The Rasterman)
+
+        * Fix bug in Ecore_Evas setting modifiers for
+        sub-buffer-canvas. They never got set. Now they do.
+
+2011-04-19 Mike Blumenkrantz
+
+        * Add ecore_exe_data_set
+
+2011-04-20  Carsten Haitzler (The Rasterman)
+
+        * Added ecore animator timeline, where animator runs for a
+        specified time (in seconds) and then stops, but it also passes
+        the position in the timeline (as a 0.0 to 1.0 value) to the
+        callback which it can then use the new pos map call to map to
+        some ease in/out, bounce, spring or whatever position.
+
+2011-04-28  Eduardo Felipe Castegnaro
+
+        * Add a monotonic clock implementation for Mac OS X to fix warning.
+        Mac OS X does not provide an implementation of clock_gettime()
+        even though it's POSIX, but it does provide a fast high-resolution
+        monotonic clock through mach specific APIs that are perfectly suited
+        for usage in ecore_timer.
+
+2011-04-20  Jihoon Kim
+
+        * Ecore_IMF: Added support for auto-capitalization and prediction
+        control API's
+
+2011-05-03  Carsten Haitzler (The Rasterman)
+
+        * Fixed null pointer dereference in selection notification
+        handling in Ecore_X.
+
+2011-05-12  Carsten Haitzler (The Rasterman)
+
+        * Add a custom Ecore Animator source and tick ability to be able
+        to plug in external animator tick sources like vblank interrupts
+        and so on.
+
+2011-05-14  Cedric Bail
+
+	* Sync GNUTLS threads activation with Eina.
+
+2011-05-14  Vincent Torri
+
+	* Make ecore_con work on Windows (only the local connections
+	need a port)
+	* Make ecore_ipc compile on Windows
+
+2011-05-17  Cedric Bail
+
+	* Add ecore_timer_dump.
+
+2011-05-19  Carsten Haitzler (The Rasterman)
+
+        * Fix Ecore_X shadow tree search handling to respect shape and
+        shape input of windows.
+
+2011-05-20  Daniel Juyung Seo (SeoZ)
+
+        * Ecore ecore_main.c: Fixed ecore_main_loop
+        (_ecore_main_loop_iterate_internal). This fixes fd handler pending
+        issue when ecore_idler callback adds ecore_job/event.
+        * Ecore ecore_main.c: Refactoring _ecore_main_loop_iterate_internal().
+
+2011-05-27  Gustavo Sverzut Barbieri (k-s)
+
+	* Ecore_X: introduce ecore_x_screen_size_get()
+	* Ecore_Evas: be safer when returning Ecore_Evas* from
+	  ecore_evas_ecore_evas_get()
+	* Ecore_Evas: introduce ecore_evas_screen_geometry_get()
+
+2011-05-30  Cedric Bail
+
+	* Add ecore_pipe_freeze/thaw to suspend and restart watching the pipe
+	inside the main loop.
+
+2011-06-09  Cedric Bail
+
+	* Add ecore_pipe_wait (should only called from outside of the main loop).
+
+2011-06-15  Mike Blumenkrantz
+
+        * Add ecore_con_ssl_client/server_upgrade to begin asynchronously upgrading an
+        existing connection to SSL/TLS, emitting ECORE_CON_CLIENT/SERVER_UPGRADE event
+        upon completion.
+
+2011-06-16  Cedric Bail
+
+	* Fix ecore_x_selection_convert not taking selection length into account.
+
+2011-06-17  Mike Blumenkrantz
+
+        * ecore_con_server_timeout_get/set now applies to client-type servers
+
+2011-06-20  Ulrich Eckhardt
+
+        * Removed support for evas xrender engine from ecore-evas as
+        it is not a deprecated engine in evas and no longer needs support.
+
+2011-06-20  Jihoon Kim
+
+        * Ecore_IMF: Added ecore_imf_context_input_panel_enabled_set/get API
+
+2011-06-25  Mike Blumenkrantz
+
+        * Fix security hole in openssl certificate verification
+        * Fix gnutls server-client certificate verification
+        * New function: ecore_con_ssl_server_verify_basic for only verifying
+            certificates against a server's Common Name (CN) or its
+            Subject Alternative Name (if available)
+
+2011-06-28  Carsten Haitzler (The Rasterman)
+
+        * Add ecore_throttle mechanism to voluntarily do powersaving to
+        avoid wakeups and excess animation etc. when in the background
+        or another "powersave" state.
+
+2011-07-01  Carsten Haitzler (The Rasterman)
+
+        * Fix epoll delete fd handling in child process - #796
+
+2011-07-07  Jihoon Kim
+
+        * Ecore_IMF: Added ecore_imf_context_cursor_location_set API
+
+2011-07-22  Mike Blumenkrantz
+
+        * Added ecore_con_url_url_get
+
+2011-07-26  Carsten Haitzler (The Rasterman)
+
+        * Fix timer precision handling for grouping timer ticks so
+        they actually do tick off together
+
+2011-07-28  Cedric Bail
+
+	* Add ecore_main_loop_thread_safe_call_async.
+
+2011-07-26  Carsten Haitzler (The Rasterman)
+
+        * Make ecore-evas give more errors on stderr when engines are
+        not found.
+
+2011-08-16  Cedric Bail
+
+	* Add ecore_main_loop_thread_safe_call_sync.
+
+2011-08-17  Cedric Bail
+
+	* Add ecore_thread_main_loop_begin and ecore_thread_main_loop_end.
+	Usefull to protect EFL call from another thread.
+
+2011-09-12  Mike Blumenkrantz
+
+        * Add ecore_con_server_fd_get, ecore_con_client_fd_get for manipulating
+          server file descriptors.
+
+2011-09-13  Mike Blumenkrantz
+
+        * Add ECORE_CON_EVENT_CLIENT_WRITE, ECORE_CON_EVENT_SERVER_WRITE for
+          obtaining progress of socket writes
+
+2011-09-18  Carsten Haitzler (The Rasterman)
+
+        * Fix bug in Ecore_X generic event handling for extended event
+          sizes when freeing (and allocating) the data.
+
+2011-09-29  Youness Alaoui (KaKaRoTo)
+
+        * Port ecore-con to work on systems without IPv6 support
+        * Use inet_ntop instead of getnameinfo for ecore_con_client_get_ip
+        * Added ecore-con unit test
+
+2011-10-28  Jiyoun Park
+
+        * Fix bug in Ecore_X using geometry value instead of
+          recently requested geometry value
+
+2011-10-28 Rafael Antognolli
+
+        * Make the framebuffer engine input use ecore_input_evas instead
+        of feeding evas input events directly.
+
+2011-11-02 Nicolas Aguirre
+
+	* Add support ecore_cocoa_evas engine.
+	* Fix ecore_cocoa code to correctly handle cocoa window.
+
+2011-11-02 Bluezery
+
+	* Fix return error handling in ecore_file_download when
+        ecore_con_url_get() fails.
+
+2011-11-20 Vincent Torri
+
+	* Ecore_Win32, Ecore_WinCE: fix Shift, Control and Alt keys
+	detection
+	* Ecore_Win32: fix "mouse-down inside and mouse-up outside" issue
+
+2011-11-2  Carsten Haitzler (The Rasterman)
+
+        * Fix bug ecore-evas for fb, buffer, sdl back-ends to ensure
+        mouse is in on init (as events wont always give this) and focus
+        is set on show if appropriate if no focus in/out events come
+        from the back-end later
+        * Fix setting override state to only hide if it should be
+        visible at that point in x back end support
+
+2011-11-24 Rafael Antognolli
+
+        * Add ecore_fb_input_device_window_set().
+
+2011-11-27 Vincent Torri
+
+        * Fix and improve key management on Windows XP
+
+2011-11-29 Vincent Torri
+
+        * Discard left Ctrl when AltGr is pressed (Windows XP)
+	* Fix the string value for the Delete key (Windows XP)
+	* Fix the key release values for non keystroke keys (Windows XP)
+
+2011-11-29 Mike McCormack
+
+	* Allow quitting before entering the glib version of the main loop
+
+2011-12-02 Carsten Haitzler (The Rasterman)
+
+        1.1.0 release
+
+2011-12-02 Mike Blumenkrantz
+
+        * Use mempools for allocations
+
+2011-12-02 Term <term@twistedpath.org>
+
+        * added ecore_x_randr_output_backlight_available()
+
+2011-12-03 Vincent Torri
+
+	* Fix the modifiers value (Windows XP)
+
+2011-12-04 Mike Blumenkrantz
+
+        * added ecore_timer_reset()
+
+2011-12-05 Mike Blumenkrantz
+
+        * added ecore_con_socks api
+
+2011-12-07 Mike Blumenkrantz
+
+        * Allow SSL certificates to be loaded for STARTTLS
+        * Added functions to set/get the hostname used for SSL certificate verification
+        * ecore_con_ssl_server_cafile_add() now accepts directories
+
+2011-12-10 Mike Blumenkrantz
+
+        * Fix case where SSL certificates would not be used
+        * Added ECORE_CON_REMOTE_CORK for applying TCP_CORK to sends
+
+2011-12-12 Carsten Haitzler (The Rasterman)
+
+        * Fix bug where an animator that just keeps adding another
+        animator keeps the animator handler in an infinite loop. Do
+        the same as timers and mark them as "just added" to skip in
+        this run of animators
+
+2011-12-13  Doyun Kang
+
+	* Add ability to get resource id of last x error in ecore_x.
+
+2011-12-16 Carsten Haitzler (The Rasterman)
+
+        * Clean up some ecore-evas-buffer code
+        * Add Ecore-evas extn (external) plug and socket canvas wrappers
+        allowing for any ecore-evas to contain an image object that is
+        a "socket" for other processes to plug into with "plugs" and
+        thus provide image content via a canvas remotely (from another
+        process) as well as the socket process passing in events to the
+        plug process to it can see key, mouse, multi etc. events.
+
+
+2011-12-16 Mike Blumenkrantz
+
+        * Fix possible 0 byte allocation in ecore-x
+
+2011-12-20 Carsten Haitzler (The Rasterman)
+
+        * Fix probable leak for g_static_mutex's on some architectures
+
+2011-12-20 Jihoon Kim
+
+	* Add XIM attribute support to Ecore_IMF
+
+2011-12-21 Tae-Hwan Kim (Bluezery)
+
+	* Add proxy set and timeout set functions in ecore_con.
+
+2011-12-26 Tae-Hwan Kim (Bluezery)
+
+	* Add proxy username/password set functions in ecore_con.
+
+2011-12-26  Christopher Michael (devilhorns)
+
+        * Add Ecore_Wayland (backend to support Wayland).
+        * Add Shm and Egl engines for ecore_evas to draw in Wayland.
+
+2011-12-27 Carsten Haitzler (The Rasterman)
+
+        * Fix mouse down grab counts going bad by missing events.
+
+2011-12-29 Carsten Haitzler (The Rasterman)
+
+        * Fix massive post data problem in ecore-con that would cause
+        post data to be corrupted (as it was never copied into the
+        ecore con url struct) or could cause crashes if the memory
+        pointed to became invalid.
+
+2012-01-04 Carsten Haitzler (The Rasterman)
+
+        * Add HEX, TERMINAL and PASSWORD layouts to ecore-imf
+
+2011-01-05 Jiyoun Park (Jypark)
+
+        * Fix Ecore-evas extn (external) for multi client model.
+        "Socket" creates canvas and other process can show that canvas 
+        using "Plug" image object. Before only one to one communication 
+        is possible, but now many "plug"s can show socket's canvas.
+
+2011-12-26  Christopher Michael (devilhorns)
+
+        * Add Ecore_X function to return the keycode from a given keyname.
+
+2012-02-06  Jihoon Kim (jihoon)
+
+        * Set ECORE_IMF_INPUT_PANEL_LAYOUT_NORMAL as default layout in ecore_imf_context_add.
+        * Add Ecore_IMF function to set or get the input panel-specific data.
+
+2012-02-07  Jihoon Kim (jihoon)
+
+        * Support ecore_imf_context_input_panel_show/hide in XIM and SCIM module.
+
+2012-02-08 Carsten Haitzler (The Rasterman)
+
+        * Add ecore_con_url_http_version_set() to set url request version
+
+2012-02-09  Jihoon Kim (jihoon)
+
+        * Provide compose, string in key down/up event in case of scim-input-pad.
+
+2012-02-10  Christopher Michael (devilhorns)
+
+        * Add Ecore_Evas function to allow setting a mouse pointer from efl/elm wayland clients.
+
+2012-02-15  Jihoon Kim (jihoon)
+
+        * Add ecore_imf APIs to set return key type, disable return key.
+
+2012-02-16  Leif Middelschulte (T_UNIX)
+
+        * Add ecore_x_randr_mode_add to add a mode to a display
+        * Add ecore_x_randr_mode_del to remove a mode from the display
+        * Add ecore_x_randr_output_mode_add to add a mode to an output
+        * Add ecore_x_randr_output_mode_del to remove a mode from an output
+
+2012-02-10  Jérémy Zurcher
+
+        * Improve callbacks in ecore_evas to use typedefs for readability.
+
+2012-02-20  Cedric Bail
+
+	* Rewrite internal of Ecore_Thread to use Eina_Lock and ecore_main_loop_thread_safe_call_async.
+
+2012-02-23  Cedric Bail
+
+	* Move to Evas buffer engine for Ecore_Evas SDL software backend.
+
+2012-02-23  Leif Middelschulte (T_UNIX)
+
+        * Add ecore_x_randr_window_crtcs_get to get the crtcs that display a
+		window.
+        * Deprecate ecore_x_randr_current_output_get. Use
+		ecore_x_randr_window_crtcs_get instead.
+
+2012-02-24  Doyun Kang
+
+	* Add indicator controls to ecore_x
+
+2012-02-26 Carsten Haitzler (The Rasterman)
+
+        * Fix ecore_file_download to not limit downloads to 30sec.
+
+2012-02-28 Carsten Haitzler (The Rasterman)
+
+        * Add ecore_x_netwm_icons_set()
+        * Add ecore_evas_window_group_set() ecore_evas_window_group_get()
+          ecore_evas_aspect_set() ecore_evas_aspect_get()
+          ecore_evas_urgent_set() ecore_evas_urgent_get()
+          ecore_evas_modal_set() ecore_evas_modal_get()
+          ecore_evas_demand_attention_set()
+          ecore_evas_demand_attention_get()
+          ecore_evas_focus_skip_set() ecore_evas_focus_skip_get()
+          ecore_evas_callback_state_change_set()
+
+2012-02-28 Christopher Michael (devilhorns)
+
+        * Refactor Ecore_Wayland code to improve running EFL
+          applications as Wayland Clients.
+        * Refactor Ecore_Evas Wayland code to match changes in 
+          Ecore_Wayland
+
+2012-02-29  Jihoon Kim (jihoon)
+
+        * Add ecore_imf_context_input_panel_caps_lock_mode_set/get to set the caps lock mode on the input panel
+
+2012-03-07  ChunEon Park (Hermet)
+
+        * Add ecore_x_illume_clipboard_state_set()
+              ecore_x_illume_clipboard_state_get()
+              ecore_x_illume_clipboard_geometry_set()
+              ecore_x_illume_clipboard_geometry_get()
+
+2012-03-07  Carsten Haitzler (The Rasterman)
+
+        * Add atoms and api for rotation and indicator transparency in
+          ecore_x/ecore_evas
+
+2012-03-07  Mike Blumenkrantz (discomfitor/zmike)
+
+        * Add ecore_con_url_status_code_get() to check return code at any time
+
+2012-03-09  Carsten Haitzler (The Rasterman)
+
+	* Fix ecore_thread_feedback_run to work as the documentation and logic tell us.
+
+2012-03-10  Cedric Bail
+
+	* Fix double free at end of execution of Ecore_Thread with feedback.
+
+2012-03-13  Leif Middelschulte (T_UNIX)
+
+        * Fix ecore_x_randr_modes_info_get to not cut off the trailing '\0'
+		anymore
+
+2012-03-20  Vincent Torri
+
+        * Rename ecore_win32_window_focus_set() to ecore_win32_window_focus()
+	to match ecore_x API.
+	* Add ecore_wince_window_focus(), ecore_wince_window_focus_get()
+	and ecore_win32_window_focus_get().
+
+2012-03-26  Shinwoo Kim
+
+        * Do not autorepeat Ctrl, Shift, Alt and Win keys on Windows
+
+2012-03-26 Christopher Michael (devilhorns)
+
+	Ecore_Wayland:
+	* Add ecore_wl_dpi_get
+	* Implement functions for input grab/ungrab
+	* Implement setting surface input & opaque regions
+	* Implement popup windows
+	* Implement ecore_wl_window_transparent_set function
+	* Implement function to allow setting Ecore_Wl_Window type.
+
+2012-03-26  Jihoon Kim (jihoon)
+
+        * scim-immodule: fix bug candidate window covers the preedit string when preedit string appears in 2 line.
+
+2012-03-29 Carsten Haitzler (The Rasterman)
+
+        * Fix range of issues with ecore_fb and even ecore_evas where
+        it didn't work right on the fb. (timestamps wrong, focus
+        handling etc.). This makes it work fully again.
+
+2012-04-13 Gustavo Sverzut Barbieri (k-s)
+
+	* remove EAPI from _ecore_event_signal_user_new(). It should never
+	be exported outside of libecore.so
+	* stop leaking every system signal event.
+
+2012-04-16  Shinwoo Kim
+
+	* Check control charater and convert into printing character on Windows
+
+2012-04-20  Vincent Torri
+
+	* Add override_set() support in ecore_evas_win32.
+
+2012-04-26 Carsten Haitzler (The Rasterman)
+
+        1.2.0 release
+
+2012-05-08  Cedric Bail
+
+	* Don't over allocate Ecore_Pipe during ecore_init/ecore_shutdown.
+
+2012-05-10  Cedric Bail
+
+	* Reduce rounding error in ecore_animator_pos_map.
+
+2012-05-10  Jiyoun Park
+
+	* Send mouse move event before mouse down event in ecore_extn
+
+2012-05-13  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore-x randr issues with memory access when building
+        output arrays which are memory segv bugs waiting to crash.
+
+2012-05-17  Vincent Torri
+
+        * Add transparent support in ecore_evas on Windows (GDI engine only)
+
+2012-05-22  Cedric Bail
+
+	* Reduce race condition on Ecore_Thread shutdown.
+
+2012-05-22  Carsten Haitzler (The Rasterman)
+
+        * Add ecore_x_mouse_in_send() and ecore_x_mouse_out_send()
+        * Add ecore_x illume access control/action atoms+api's
+
+2012-05-24  Doyoun Kang
+
+        * Add Ecore_X_Error_Code enumeration in ecore_x
+
+2012-05-24  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore-thread scheduling issue where re-scheduled threads
+        will hold a loop busy and not allow feedback workers to run,
+        so now have fairer scheduling.
+        * Allow 16 * cpu num for worker threads (default still cpu num)
+
+2012-05-25  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore mainloop issue if you begin the mainloop, keep a
+        timer around, quit mainloop, then start it again expecting the timer
+        to keep ticking off. also happens to be an issue with
+        iterating the mainloop.
+
+2012-05-25  Rob Bradford
+
+        * Make ecore_{software_x11, software_x11_8, software_x11_16, wayland,
+        directfb}_window_get return 0 if the Ecore_Evas was not created with
+        the appropriate constructor.
+
+2012-05-29 Rob Bradford
+
+        * Initial cursor support for Wayland:
+        * Add api to the ecore_wl_input_ namespace to allow setting the buffer
+        to use for the pointer and for loading a named cursor from a cursor
+        theme. Under the Wayland protocol the cursor is associated with the
+        input device.
+        * Add helper functions to ecore_wl_window to set the cursor based on
+        the active pointer input device for the window.
+        * Load the cursor theme when the SHM interface is ready and provide an
+        API call to provide a wl_cursor for a given name.
+        * Add API to restore to the default cursor and then use that when the
+        pointer enters the surface to ensure compliance with the Wayland
+        protocol.
+
+2012-05-30  Cedric Bail
+
+	* Force cancel of all running Ecore_Thread on shutdown.
+	* Make Ecore_Thread work reliabily when main loop isn't running.
+
+2012-05-30  Mariusz Grzegorczyk
+
+	* Small fix to ecore-evas buffer engine on resize to make the
+        right kind of buffer cavas (ARGB32 vs RGB32).
+
+2012-05-30 Leif Middelschulte (T_UNIX)
+
+        * Add ECORE_X_RANDR_OUTPUT_POLICY_ASK
+
+2012-06-04 Mike Blumenkrantz
+
+        * ECORE_{CON,IPC}_NO_PROXY now available for disabling proxying on certain connections
+        * Added new resolver method: dns.c -- This is used by default now when ipv6 is enabled
+          and c-ares support is disabled.
+
+2012-06-06 Rob Bradford
+
+        * Ecore_Wayland: Enhance the keyboard input handling
+        * Associate the keymap with the input device rather than the display
+        since you could could have different keymaps associated with different
+        devices.
+        * Increase the size of character arrays used for the string
+        representations of the keyname, keysym and for the string
+        representing the key.
+        * Re-enable the code that converts the keysym to a printable definition
+        - this is required where the keysym is not the same as the printable
+        definition
+
+2012-06-06 Rob Bradford
+
+	* Ecore_Wayland: Update to protocol change - axis events are now fixed point numbers
+
+2012-06-11 Rob Bradford
+
+	* Ecore_Wayland: Add missing null pointer checks on input device
+	deletion (ticket #1031). Not all devices are keyboards.
+
+2012-06-11  Jihoon Kim (jihoon)
+
+        * ibus-immodule: Add immodule for supporting ibus.
+
+2012-06-12  Mike Blumenkrantz
+
+        * Fixed bug in ecore-file monitoring with inotify where watching a file
+          that was deleted broke the world.
+
+2012-06-15 Rob Bradford
+
+	* Ecore_Wayland: Port to latest Wayland protocol. The cursor for a
+	pointer is now a surface rather than a buffer.
+
+2012-06-15 Rob Bradford
+
+	* Ecore_Wayland: Drop unused timestamp from configure event. Rationale:
+	- timestamp isn't used by the handler for this event
+	- configure event we receive from the compositor doesn't have a timestamp
+	- ecore_wl_window_maximized_set and ecore_wl_window_fullscreen_set had
+	  an implicit requirement that the window had keyboard focus to retrieve
+	  a timestamp that wasn't used. This removes that requirement and fixes
+	  ticket #1030.
+
+2012-06-22 Vincent Torri
+
+	* ecore_exe: fix compilation on fedora 18.
+
+2012-06-23  Carsten Haitzler (The Rasterman)
+
+        * Fix small problem with xim module and if xim input context is
+        destroyed. causes crashes next focus. track ic and set to NULL.
+
+2012-06-27 Sebastian Dransfeld
+
+	* Fix xim module to pass of Windows key as Mod4, not Mod5
+	* Add support for AltGr key in X
+
+2012-06-28  Carsten Haitzler (The Rasterman)
+
+        * Add compose sequence handling to ecore_input to be able to
+        query a sequence of keysyms for a final compose string (utf8)
+        that you free if you get it.
+
+2012-07-02  Mike Blumenkrantz
+
+        * Fix crash which occurred in ecore-con when dns resolution failed
+          immediately due to lack of connectivity
+
+2012-07-03  Cedric Bail
+
+	* Fix unitialized use of Ecore_X_Atom.
+
+2012-07-03 Christopher Michael
+
+	* Merge Tizen EFL changes to upsteam.
+	* Add ecore_evas functions to get/set profiles
+	* Fix GL buffer. some GL drivers are doing buffer copy in a separate thread.
+		we need to check whether GL driver sends SYNC_DRAW_DONE msg afger copying
+		that are required in order to exactly render. - added by gl77.lee
+	* Add Ecore_X atoms for Illume Rotate Window
+	* Add event callbacks for Ecore_Imf Input Panel
+	* Add functions to retrieve input panel geometry & state from Ecore_Imf.
+
+2012-07-05  Carsten Haitzler (The Rasterman)
+
+        * Add ecore_evas_screen_dpi_get()
+        * Fix ecore_evas_screen_geometry_get(0 for x11 to return zone
+          pos/size as it should.
+        * Fix ecore-fb to use key repeat like x so apps dont break in fb
+        * Fix ecore-fb string lookup table to include ctrl+keys
+        * Fix ecore-fb to trap sigint (ctrl+c) so it doesnt exit your fb app
+        * Fix ecore-fb mouse to swap button 2 and 3 ro work right.
+
+2012-07-13  Jiyoun Park
+
+        * Fix bug in Ecore_extn to call pre/post render function
+
+2012-07-16  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore-x selection handling to fall back to getting
+          selection directly if getting targets fails. This fixes e17 to
+          elm cnp.
+
+2012-08-01  Mike Blumenkrantz
+
+        * Add ecore_main_fd_handler_file_add() for integrating file descriptors
+          from regular files into the main loop
+
+2012-08-01  Rob Bradford
+
+	* Support setting fullscreen on Ecore_Evas's under the Wayland engine
+	before they are visible. The fullscreening will then be applied when
+	they become visible.
+
+2012-08-01  Rob Bradford
+
+	* Use libxkbcommon function to map keysym to unicode characters in the
+	Wayland backend. Removing the need to have our own function to do this
+	and increasing the range of supported keysms. Fixes #1105.
+
+2012-08-03  Rob Bradford
+
+	* In the Wayland backend handle the case that events can be received
+	for surfaces that have been since destroyed - the client side
+	marshaller changes the pointer to NULL to when the object is destroyed
+	on the client side. Fixes #1258.
+
+2012-08-09  Cedric Bail
+
+	* Correctly shutdown Ecore_Thread.
+	* Add a way to reset Ecore_Thread internal pipe after a fork via ecore_fork_reset.
+
+2012-08-13  Carsten Haitzler (The Rasterman)
+
+        * Fix ecore fork reset function to allow for callbacks to be
+          attached so ecore-evas can reset evas async fd on fork.
+
+2012-08-13  Vincent Torri
+
+        * Fix segmentation fault when fd_set pointers are NULL on Windows
+
+2012-08-18  Carsten Haitzler (The Rasterman)
+
+        * Add xkb change events patch from trac.
+
+2012-08-27  Carsten Haitzler (The Rasterman)
+
+        * Add ecore_x custom blanker screensaver enable/disable - cant
+          do e17 properly without so add in even in freeze.
+
+2012-08-27  Vincent Torri
+
+        * Fix segmentation fault in ecore_thread on Windows as PHS
+	  was returning a wrong value.
+
+2012-08-29  Cedric Bail
+
+	* Always call evas_render_update_free to prevent leak in Ecore_Evas X backend.
+
+2012-08-29  Mike Blumenkrantz
+
+        * Fix leak in ecore_ipc servers
+
+2012-08-29  Christopher Michael
+
+        * Add Copy-N-Paste support for Ecore_Wayland.
+
+2012-08-30  Carsten Haitzler (The Rasterman)
+
+        1.7.0 release
+
+2012-08-31  Cedric Bail
+
+	* Add Ecore_Con_Eet API to help using Eet_Data with Ecore_Con
+
+2012-09-03  Shinwoo Kim (kimcinoo)
+
+       * Add ecore_x illume access messages:
+         ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_UP
+         ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_DOWN
+
+2012-09-04  Jihoon Kim (jihoon)
+
+       * Add ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN
+
+2012-09-05  Mike Blumenkrantz
+
+       * Fix crash that could occur in ecore_con_ssl with privkeys and certificates on failure
+
+2012-09-06  Mike Blumenkrantz
+
+       * Fix race condition in ecore-con where events could sometimes be sent for freed clients
+       * Fix ssl servers using openssl
+       * Fix ssl connections overall
+
+2012-09-07  Christopher Michael
+
+       * Fix ecore_x_randr to actually return outputs properly.
+
+2012-09-08  Vincent Torri
+
+       * Fix readlink usage in ecore_file.
+
+2012-09-12  Jihoon Kim (jihoon)
+
+       * Add ECORE_IMF_PREEDIT_TYPE_SUB4~7 style.
+
+2012-09-10  Christopher Michael
+
+       * Fix ecore_x_randr to actually return crtcs properly.
+
+2012-09-11  Christopher Michael
+
+       * Fix ecore_x_randr to actually return crtcs possible outputs properly.
+       * Fix ecore_x_randr to actually return crtcs outputs properly.
+
+2012-09-13  Mike Blumenkrantz
+
+       * Return -1 for ecore_con_server_fd_get() in the case that the server has already been deleted
+
+2012-09-13  Carsten Haitzler (The Rasterman)
+
+       * Fix ecore-evas rotation handling for canvases that shows up
+       only on some drivers and GL implementations.
+
+2012-09-14  Doyoun Kang
+
+       * Add string to atom_items for ECORE_X_ATOM_E_ILLUME_WINDOW_STATE, 
+       ECORE_X_ATOM_E_ILLUME_WINDOW_STATE_NORMAL, ECORE_X_ATOM_E_ILLUME_WINDOW_STATE_FLOATING
+
+2012-09-18  Patryk Kaczmarek
+
+       * Fix escaping in ecore_file_escape_name() to handle tab and
+       newline right.
+
+2012-09-21  Carsten Haitzler (The Rasterman)
+
+       * Fix ecore_x_image_is_argb32_get() to return correctly on
+       endianess.
+
+2012-09-21  Christopher Michael
+
+       * Fix ecore_x_randr to properly return output modes from
+       ecore_x_randr_output_modes_get().
+
+2012-09-27  Carsten Haitzler (The Rasterman)
+
+       * Fix ecore_imf buf in the ibus module where it may segv
+       accessing a wrong context handle.
+
+2012-10-02  Daniel Willmann
+
+       * Fix memory allocation size in ecore_thread_feedback()
+
+2012-10-03  Daniel Wilmann
+       * Fix memory allocation size in ecore_x xcb randr function
+
+2012-10-04  Cedric Bail
+
+	* Add ecore_x_input_raw_select and ECORE_X_RAW_*.
+
+2012-10-04  Sebastian Dransfeld
+
+	* Expose ecore_x_selection_converter_text
+
+2012-10-05  Cedric Bail
+
+	* Properly reschedule call to curl.
+
+2012-10-05  Eduardo Lima (Etrunko)
+
+       * Wayland SHM now features a mechanism to synchronize rendering with
+       the compositor, removing tearing effect in animations when using that
+       engine.
+       
+2012-10-10 Michal Pakula vel Rutka
+
+       * Fix: Send ECORE_X_EVENT_SELECTION_NOTIFY even if there is no data.
+
+2012-10-15  Carsten Haitzler (The Rasterman)
+
+       * Since evas has 16bit engines removed, remove support from ecore-evas.
+
+2012-10-16  Carsten Haitzler (The Rasterman)
+
+       * Since evas has 8bit engines removed, remove support from ecore-evas.
+
+2012-10-16  Christopher Michael
+
+       * Update Ecore_Wayland to build & work with newest wayland (0.99) from git
+
+2012-10-19  Cedric Bail
+
+       * Use Eina_Thread for Ecore_Thread.
+
+2012-11-23  Eduardo Lima (Etrunko)
+
+       * Fix leak of strcut wl_registry in Ecore Wayland
+
+2012-11-23  Sebastian Dransfeld
+
+	* Correctly define alloca
+	* Fix ieeefp.h inclusion on Solaris
+
+2012-11-27  Alexey Yakovenko
+
+	* Fix ecore_evas_sdl window resize bug.

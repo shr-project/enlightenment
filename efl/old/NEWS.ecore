@@ -1,0 +1,337 @@
+Ecore 1.8.0
+
+Changes since Ecore 1.7.0:
+--------------------------
+
+Additions:
+    * ecore:
+     - porting to Eo
+    * ecore_con:
+     - Add Ecore_Con_Eet API to help using Eet_Data with Ecore_Con.
+    * ecore_x:
+     - ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_UP.
+     - ECORE_X_ATOM_E_ILLUME_ACCESS_ACTION_DOWN.
+     - ecore_x_input_raw_select.
+     - +ecore_x_selection_converter_text.
+     - ECORE_X_RAW_MOTION, ECORE_X_RAW_BUTTON_PRESS and ECORE_X_RAW_BUTTON_RELEASE.
+    * ecore_imf:
+     - ECORE_IMF_INPUT_PANEL_RETURN_KEY_TYPE_SIGNIN.
+     - ECORE_IMF_PREEDIT_TYPE_SUB4~7 style.
+    * ecore_evas:
+     - Wayland SHM engine now features a mechanism to synchronize rendering with
+       the compositor, removing the tearing effect in animations when using that
+       engine.
+
+Fixes:
+    * ecore_con_url:
+     - Timeouts are handled correctly now (passing HTTP status 408 to
+       completion callback).
+     - properly reschedule call to curl.
+    * ecore_evas rotation handling on some driver implementations
+    * ecore_file_escape_name() escape taba nd newline right.
+    * ecore_imf ibus module potential segv fixed.
+    * ecore_thread_feedback() memory allocation and corruption fixed.
+    * ecore_x:
+     - ecore_x_image_is_argb32_get() returns correctly given endianness.
+     - ecore_x_randr to actually return outputs properly.
+     - ecore_x_randr to actually return crtcs properly.
+     - ecore_x_randr to actually return crtcs possible outputs properly.
+     - ecore_x_randr to actually return crtcs outputs properly.
+     - send ECORE_X_EVENT_SELECTION_NOTIFY even if there is no data.
+    * ecore_wayland:
+     - Update to work with latest wayland (0.99) from git.
+     - Fix leak of struct wl_registry
+
+Removal:
+    * 16bpp evas engine support removed (API still there, but inactive).
+    * 8bpp evas engine support removed (API still there, but inactive).
+    
+Improvements:
+    * Use Eina_Thread for Ecore_Thread.
+
+Ecore 1.7.0
+
+Changes since Ecore 1.2.0:
+--------------------------
+
+Additions:
+    * ecore:
+     - Add ecore_main_fd_handler_file_add()
+     - Add ecore_fork_reset()
+    * ecore_evas:
+     - Add transparency support on Windows (GDI engine only)
+     - Add API functions to get/set an Ecore_Evas's profile.
+    * ecore_x:
+     - Add Ecore_X_Error_Code enumeration
+     - ECORE_X_RANDR_OUTPUT_POLICY_ASK
+     - Add API functions to get/set an Ecore_X window's profile
+    * ecore_con:
+     - ECORE_{CON,IPC}_NO_PROXY now available for disabling proxying on certain connections
+     - New dns.c resolver backend for faster dns lookups
+    * immodule:
+     - Add immodule for supporing ibus
+
+Fixes:
+    * ecore
+     - Prevent running out of fd when cycling ecore_init/ecore_shutdown.
+     - Reduce rounding error in ecore_animator_pos_map.
+     - Send mouse move event before mouse down event in ecore_extn
+     - Reduce race condition on shutdown of Ecore_Thread.
+     - Force cancel of all running Ecore_Thread on shutdown.
+     - Make Ecore_Thread work reliably when called without a running main loop.
+     - Correctly shutdown Ecore_Thread.
+     - Fix usage of FD_SET and al. when fd_set pointers are NULL (Windows)
+     - Fix ecore_thread seg fault on Windows where PHS() was returning a wrong value
+     - Always call evas_render_update_free to prevent leak in Ecore_Evas X bakcend.
+
+    * ecore_x
+     - Fix unitialized Ecore_X_Atom use.
+
+
+Ecore 1.2.0
+
+Changes since Ecore 1.1.0:
+--------------------------
+
+Additions:
+    * ecore
+     - ecore_timer_reset()
+    * ecore_con
+     - ecore_con_socks api
+     - ecore_con_ssl_server_verify_name_set/get
+     - ecore_con_ssl_server_cafile_add() now accepts directories
+     - ECORE_CON_REMOTE_CORK
+     - ecore_con_url_proxy_set()
+     - ecore_con_url_timeout_set()
+     - ecore_con_url_proxy_username_set()
+     - ecore_con_url_proxy_password_set()
+     - ecore_con_url_http_version_set()
+     - ecore_con_url_status_code_get()
+    * ecore_x:
+     - ecore_x_randr_output_backlight_available()
+     - ecore_x_randr_window_crtcs_get()
+     - Add ability to get resource id of last x error
+     - get keycode from keyname
+     - ecore_x_randr_mode_add()
+     - ecore_x_randr_mode_del()
+     - ecore_x_randr_output_mode_add()
+     - ecore_x_randr_output_mode_del()
+     - Add indicator controls
+     - ecore_x_netwm_icons_set()
+     - ecore_x_illume_clipboard_state_set()
+     - ecore_x_illume_clipboard_state_get()
+     - ecore_x_illume_clipboard_geometry_set()
+     - ecore_x_illume_clipboard_geometry_get()
+     - Add indicator rotation and transparency controls
+    * ecore_evas:
+     - Add Shm and Egl engines for ecore_evas to draw in Wayland.
+     - Add Socket and Plug to draw other process area.
+     - Ability to set pointer for wayland support
+     - Add override_set support on Windows XP
+     - ecore_evas_window_group_set()
+     - ecore_evas_window_group_get()
+     - ecore_evas_aspect_set()
+     - ecore_evas_aspect_get()
+     - ecore_evas_urgent_set()
+     - ecore_evas_urgent_get()
+     - ecore_evas_modal_set()
+     - ecore_evas_modal_get()
+     - ecore_evas_demand_attention_set()
+     - ecore_evas_demand_attention_get()
+     - ecore_evas_focus_skip_set()
+     - ecore_evas_focus_skip_get()
+     - ecore_evas_callback_state_change_set()
+    * ecore_wayland
+     - Add Ecore_Wayland (backend to support Wayland).
+    * ecore_imf
+     - ecore_imf_context_event_callback_add()
+     - ecore_imf_context_event_callback_del()
+     - ecore_imf_context_event_callback_call()
+     - ecore_imf_context_input_panel_imdata_set()
+     - ecore_imf_context_input_panel_imdata_get()
+     - ecore_imf_context_input_panel_return_key_type_set()
+     - ecore_imf_context_input_panel_return_key_type_get()
+     - ecore_imf_context_input_panel_return_key_disabled_set()
+     - ecore_imf_context_input_panel_return_key_disabled_get()
+     - ecore_imf_context_input_panel_caps_lock_mode_set()
+     - ecore_imf_context_input_panel_caps_lock_mode_get()
+     - add XIM attribute support
+     - add HEX, TERMINAL and PASSWORD layouts
+     - panel-specific data set/get
+     - panel show/hide
+     - set return key type or disable return on panel
+    * ecore_win32:
+     - ecore_win32_focus()
+     - ecore_win32_focus_get()
+     - ecore_win32_window_focus()
+     - ecore_win32_window_focus_get()
+    * ecore_wince:
+     - ecore_wince_focus()
+     - ecore_wince_focus_get()
+     - ecore_wince_window_focus()
+     - ecore_wince_window_focus_get()
+    * ecore_wayland:
+     - Add wayland support to ecore
+
+Fixes:
+    * ecore:
+     - animator adding another animator that adds another animator ... loop.
+     - possible leak related to g_static_mutex's on some architectures.
+     - stop leaking signal events
+    * ecore_thread:
+     - ecore_thread_feedback_run now handle try_no_queue the way it logically should.
+     - prevent double free that could cause crash when an Ecore_Thread stop.
+    * ecore_x:
+     - ecore_x_randr_modes_info_get does not cut off the trailing '\0' anymore.
+     - possible 0 byte allocation.
+    * ecore_win32/wince:
+     - do not autorepeat Ctrl, Shift, Alt and Win keys.
+     - Check control charater and convert into printing character
+    * ecore_con:
+     - fix case where SSL certificates not being used.
+     - post data corruption due to it not being copied to the con struct.
+    * ecore_evas:
+     - mouse down count handling when grabs happen.
+     - ecore_evas_fb support works again now with keyboard input
+    * ecore_file:
+     - do not limit downloads to 30sec with ecore_file_download().
+    * ecore_fb:
+     - bring ecore_fb back to a working state
+
+Improvements:
+    * ecore:
+     - most allocations moved to mempools
+     - ecore_thread rewrite to use eina_lock and other ecore infra
+    * ecore_con:
+     - certificates can now be added for STARTTTLS
+    * ecore_win32:
+     - fix modifiers value on Windows XP
+    * ecore_thread:
+     - use eina_lock
+     - use Ecore thread safe async call
+    * ecore_evas:
+     - use Evas buffer backend for SDL software engine
+     - clean up ecore-evas-buffer code somewhat
+
+Deprecations:
+    * ecore_x:
+     - ecore_x_randr_crtc_current_get()
+
+Removal:
+    * ecore_win32:
+     - ecore_win32_focus_set()
+
+Ecore 1.1.0
+
+Changes since Ecore 1.0.0:
+--------------------------
+
+Additions:
+
+    * ecore:
+     - ecore_thread_reschedule()
+     - ecore_exe_data_set()
+     - ecore_animator_timeline_add()
+     - ecore_timer_dump()
+     - custom ecore animator tick mode and support
+     - ecore_pipe_freeze/thaw()
+     - ecore_pipe_wait()
+     - ecore_throttle()
+     - ecore_main_loop_thread_safe_call_async()
+     - ecore_main_loop_thread_safe_call_sync()
+     - ecore_thread_main_loop_begin()
+     - ecore_thread_main_loop_end()
+
+    * ecore_con:
+     - ECORE_CON_EVENT_CLIENT_ERROR, ECORE_CON_EVENT_SERVER_ERROR events
+     - Ecore_Con_Event_Server_Error, Ecore_Con_Event_Client_Error types
+     - ecore_con_client_port_get()
+     - ecore_con_url_ssl_verify_peer_set()
+     - ecore_con_url_ssl_ca_set()
+     - ecore_con_url_pipeline_set()
+     - ecore_con_url_pipeline_get()
+     - ecore_con_ssl_client/server_upgrade()
+     - ECORE_CON_CLIENT/SERVER_UPGRADE events
+     - ecore_con_server_timeout_get/set()
+     - ecore_con_ssl_server_verify_basic()
+     - ecore_con_url_url_get()
+     - ecore_con_server_fd_get()
+     - ecore_con_client_fd_get()
+     - ECORE_CON_EVENT_CLIENT_WRITE, ECORE_CON_EVENT_SERVER_WRITE events
+
+    * ecore_evas:
+     - ecore_evas_screen_geometry_get()
+     - ecore_cocoa_evas support
+
+    * ecore_file:
+     - ecore_file_download_full()
+
+    * ecore_imf:
+     - ecore_imf_context_canvas_get()
+     - ecore_imf_context_window_get()
+     - ecore_imf_context_preedit_string_with_attributes_get()
+     - added controls for auto-capitalization and prediction controls
+     - ecore_imf_context_input_panel_enabled_set/get()
+     - ecore_imf_context_cursor_location_set()
+
+    * ecore_x:
+     - ecore_x_randr_edid_*()
+     - ecore_x_randr_screen_backlight_*()
+     - more ecore_x_sync api controls to support ecore_evas
+     - shape input setting support added
+     - ecore_x_screen_size_get()
+
+Fixes:
+
+    * https failing via curl
+    * removed SIGRT handling as it was broken anyway and unused
+    * space key handling in ecore_wince/ecore_win32 support
+    * wince background erasing
+    * 300 second timeout to handle slow or large downloads in ecore_con
+    * ecore_file inotify fd's to not be inherited by forked children
+    * ecore_file compilation if ecore_con and curl disabled
+    * crash in ecore_con_ssl when attempting connections on dead socket
+    * ecore-evas interceptor not handling override-redirect
+    * ecore_con_url_ftp_upload to complete uploads always
+    * window removal from ignore_list in ecore_x
+    * bug in ecore_evas when setting modifiers for sub buffer canvases
+    * NULL pointer dereference in ecore_x selection notification code
+    * sync GNUTLS thread activation with eina changes
+    * ecore_ipc compilation on Windows
+    * fix Shift, Control, Alt and AltGr keys detection on Windows XP
+    * "mouse-down inside and mouse-up outside" issue on Windows
+    * ecore_x shadow tree search fixed to respect shape input of windows
+    * fd handlers fixed when idler callbacks add jobs or events
+    * ecore_x_selection_convert takes length into account
+    * security issue in openssl certificate verification
+    * gnutls server client certificate verification
+    * epoll delete of fd handling in forked child
+    * grouping of timers that go off very close to each other go off together
+    * generic event buffer handling in ecore_x fixed
+    * use current size not requested size when getting geom in ecore-evas
+    * ecore_cocoa now handles windows correctly
+    * ecore_file_download error handling when ecore_con_url_get fails
+    * focus and mouse-in initial state on some ecore-evas back-ends
+
+Improvements:
+
+    * reduced memory needed for list of fd's in ecore by using inlist
+    * ecore_evas now is able to send render-done even if not syncing to comp
+    * more safety checks in ecore_con are support
+    * ecore timer monotonic clock now supported on OSX
+    * make ecore_con work on Windows
+    * improve resize/move on Windows
+    * improve keyboard management on Windows XP
+    * refactored _ecore_main_loop_iterate_internal
+    * better safety with ecore_evas_ecore_evas_get
+    * ecore-evas produces more errors on stderr when errors happen now
+    * ecore-con works on IPv6 now
+    * inet_ntop instead of getnameinfo for ecore_con_client_get_ip
+    * ecore-con unit tests added
+    * ecore-evas fb uses ecore_input_evas now instead of going direct
+    * fix ecore-evas x changing of override support if window not shown yet
+
+Removals:
+
+    * xrender evas engine support removed from ecore_evas (api still there)
+
