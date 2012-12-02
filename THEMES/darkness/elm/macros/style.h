@@ -13,9 +13,9 @@ style { \
    tag: "/right" "- \n"; \
    tag: "link" "+ color=#8888AA underline=on underline_color=#8888AA"; \
    tag: "em" "+ font=Sans:style=Oblique"; \
-   tag: "b" "+ font="fb; \
+   tag: "b" "+ font_weight=Bold font="fb; \
    tag: "i" "+ font="fi; \
-   tag: "bi" "+ font="fbi; \
+   tag: "bi" "+ font_weight=Bold font="fbi; \
    tag: "mono" "+ font="fm; \
    tag: "title" "+ "title; \
    tag: "subtitle" "+ "subtitle; \
@@ -36,9 +36,9 @@ style { \
    tag: "/right" "- \n"; \
    tag: "link" "+ color=#8888AA underline=on underline_color=#8888AA"; \
    tag: "em" "+ font=Sans:style=Oblique"; \
-   tag: "b" "+ font="fb; \
+   tag: "b" "+ font_weight=Bold font="fb; \
    tag: "i" "+ font="fi; \
-   tag: "bi" "+ font="fbi; \
+   tag: "bi" "+ font_weight=Bold font="fbi; \
    tag: "mono" "+ font="fm; \
    tag: "title" "+ "title; \
    tag: "subtitle" "+ "subtitle; \
@@ -59,9 +59,32 @@ style { \
    tag: "/right" "- \n"; \
    tag: "link" "+ color=#8888AA underline=on underline_color=#8888AA"; \
    tag: "em" "+ font=Sans:style=Oblique"; \
-   tag: "b" "+ font="fb; \
+   tag: "b" "+ font_weight=Bold font="fb; \
    tag: "i" "+ font="fi; \
-   tag: "bi" "+ font="fbi; \
+   tag: "bi" "+ font_weight=Bold  font="fbi; \
+   tag: "mono" "+ font="fm; \
+   tag: "title" "+ "title; \
+   tag: "subtitle" "+ "subtitle; \
+   tag: "hilight" "+ "hilight; \
+   tag: "description" "+ "description; \
+} \
+style { \
+   name: style_class"-word"; \
+   base: "font="fn" font_size="size" text_class="style_class" align=left wrap=word "normal_style; \
+   tag: "br" "\n"; \
+   tag: "ps" "ps"; \
+   tag: "tab" "\t"; \
+   tag: "left" "+ align=left"; \
+   tag: "/left" "-\n"; \
+   tag: "center" "+ align=center"; \
+   tag: "/center" "- \n"; \
+   tag: "right" "+ align=right"; \
+   tag: "/right" "- \n"; \
+   tag: "link" "+ color=#8888AA underline=on underline_color=#8888AA"; \
+   tag: "em" "+ font=Sans:style=Oblique"; \
+   tag: "b" "+ font_weight=Bold font="fb; \
+   tag: "i" "+ font="fi; \
+   tag: "bi" "+ font_weight=Bold  font="fbi; \
    tag: "mono" "+ font="fm; \
    tag: "title" "+ "title; \
    tag: "subtitle" "+ "subtitle; \
@@ -82,9 +105,9 @@ style { \
    tag: "/right" "- \n"; \
    tag: "link" "+ color=#8888AA underline=on underline_color=#8888AA"; \
    tag: "em" "+ font=Sans:style=Oblique"; \
-   tag: "b" "+ font="fb; \
+   tag: "b" "+ font_weight=Bold font="fb; \
    tag: "i" "+ font="fi; \
-   tag: "bi" "+ font="fbi; \
+   tag: "bi" "+ font_weight=Bold font="fbi; \
    tag: "mono" "+ font="fm; \
    tag: "title" "+ "title; \
    tag: "subtitle" "+ "subtitle; \
