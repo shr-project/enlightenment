@@ -31,4 +31,27 @@ collections
    ICON("arrows_pending_right", 16, 0, 5, -6);
    ICON("arrows_rejected", 16, 0, 5, -6);
 
+   group { name: "elm/shotgun/tooltip/contact";
+      parts {
+         part { name: "base";
+            type: RECT;
+            description {
+               state: "default";
+               visible: 0;
+            }
+         }
+         part { name: "shotgun.content.swallow";
+            type: SWALLOW;
+            description {
+               state: "default";
+               rel1.to: "base";
+               rel1.offset: 4 4;
+               rel2.to: "base";
+               rel2.offset: -4 -4;
+            }
+         }
+      }
+      
+   }
+
 }

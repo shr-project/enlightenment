@@ -725,7 +725,7 @@ _contact_list_item_tooltip_update_cb(Contact *c)
 static Evas_Object *
 _contact_list_item_tooltip_cb(Contact *c, Evas_Object *obj __UNUSED__, Evas_Object *tt, void *it __UNUSED__)
 {
-   Evas_Object *label;
+   Evas_Object *label, *o;
    const char *text;
    char *desc;
    Eina_Strbuf *buf;
@@ -802,12 +802,15 @@ _contact_list_item_tooltip_cb(Contact *c, Evas_Object *obj __UNUSED__, Evas_Obje
    eina_stringshare_del(c->tooltip_label);
    c->tooltip_label = text;
 out:
+   o = elm_layout_add(tt);
    label = elm_label_add(tt);
    elm_label_line_wrap_set(label, ELM_WRAP_NONE);
    elm_object_text_set(label, c->tooltip_label);
-   EXPAND(label);
-   FILL(label);
-   return label;
+   EXPAND(o);
+   FILL(o);
+   elm_layout_theme_set(o, "shotgun", "tooltip", "contact");
+   elm_object_part_content_set(o, "shotgun.content.swallow", label);
+   return o;
 }
 
 static void
