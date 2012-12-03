@@ -1,6 +1,9 @@
 #ifndef ECOREXX_EXE_H
 #define ECOREXX_EXE_H
 
+/* STD */
+#include <map>
+
 /* EFL */
 #include <Ecore.h>
 
@@ -32,6 +35,8 @@ public:
   Exe(const std::string &exe_cmd, Ecore_Exe_Flags flags, const void *data);
     
   virtual ~Exe();
+
+  void free();
 
   static void setRunPriority(int pri);
 
@@ -81,18 +86,10 @@ public:
 
   void hup();
 
-  sigc::signal <void, Ecore_Exe_Event_Del*> signalDelete;
-  
 private:  
   Exe(const Exe&); // forbid copy constructor
 
-  static Eina_Bool delhandler (void *data, int type, void *event);
-
-  void exceptionCheck();
-  
   Ecore_Exe *mExe;
-
-  pid_t mDeathPid;
 };
 
 } // end namespace Ecorexx

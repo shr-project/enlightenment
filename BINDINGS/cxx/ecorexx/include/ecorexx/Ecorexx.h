@@ -18,6 +18,7 @@
 #include "XWindow.h"
 #include "Job.h"
 #include "Exe.h"
+#include "Event.h"
 
 /* exceptions */
 #include "exception/ProcessNotExistingException.h"
