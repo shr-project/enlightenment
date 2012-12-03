@@ -7,6 +7,7 @@ static Eio_File *eio_file = NULL;
 Mod *mod = NULL;
 Config *sos_config = NULL;
 
+static Eina_List *handlers = NULL;
 
 static void _action_entry_prev_cb(E_Object *obj, const char *params);
 static void _action_entry_next_cb(E_Object *obj, const char *params);
@@ -558,6 +559,18 @@ _eio_open_cb(void *d EINA_UNUSED, Eio_File *f EINA_UNUSED, Eet_File *ef)
    eio_file = NULL;
 }
 
+static Eina_Bool
+_desklock_cb(void *d EINA_UNUSED, int type EINA_UNUSED, E_Event_Desklock *ev)
+{
+   if (ev->on && mod->popup && mod->popup->visible)
+     {
+        e_grabinput_release(0, mod->popup->evas_win); // this shouldn't be necessary
+        e_popup_hide(mod->popup);
+     }
+     
+   return ECORE_CALLBACK_RENEW;
+}
+
 EAPI void *
 e_modapi_init(E_Module *m)
 {
@@ -630,6 +643,8 @@ e_modapi_init(E_Module *m)
    
    mod->contacts = eina_hash_string_superfast_new((Eina_Free_Cb)mod_contact_free);
 
+   E_LIST_HANDLER_APPEND(handlers, E_EVENT_DESKLOCK, _desklock_cb, NULL);
+
    return m;
 }
 
@@ -652,6 +667,7 @@ e_modapi_shutdown(E_Module *m EINA_UNUSED)
    E_FREE(mod);
    E_FN_DEL(eio_file_cancel, eio_file);
    edbus_shutdown();
+   E_FREE_LIST(handlers, ecore_event_handler_del);
    return 1;
 }
 
