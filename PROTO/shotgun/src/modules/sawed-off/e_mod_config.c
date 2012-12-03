@@ -5,6 +5,7 @@ struct _E_Config_Dialog_Data
    int position;
    int ignore_self_links;
    int set_last_active;
+   int close_on_send;
    int fill_side;
 };
 
@@ -14,6 +15,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->position = sos_config->position;
    cfdata->ignore_self_links = sos_config->ignore_self_links;
    cfdata->set_last_active = sos_config->set_last_active;
+   cfdata->close_on_send = sos_config->close_on_send;
    cfdata->fill_side = sos_config->fill_side;
 }
 
@@ -45,6 +47,7 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    CHECK(position);
    CHECK(ignore_self_links);
    CHECK(set_last_active);
+   CHECK(close_on_send);
    CHECK(fill_side);
 
 #undef CHECK
@@ -75,10 +78,13 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
 
    ol = e_widget_list_add(evas, 0, 0);
 
-   ob = e_widget_check_add(evas, D_("Ignore Self Links"), &cfdata->ignore_self_links);
+   ob = e_widget_check_add(evas, D_("Ignore self links"), &cfdata->ignore_self_links);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
-   ob = e_widget_check_add(evas, D_("Set Last Message As Active"), &cfdata->set_last_active);
+   ob = e_widget_check_add(evas, D_("Set last message as active"), &cfdata->set_last_active);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+
+   ob = e_widget_check_add(evas, D_("Close on send"), &cfdata->close_on_send);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_check_add(evas, D_("Fill side"), &cfdata->fill_side);
@@ -157,6 +163,7 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
    if ((cfdata->fill_side != sos_config->fill_side) ||
        (cfdata->ignore_self_links != sos_config->ignore_self_links) ||
        (cfdata->set_last_active != sos_config->set_last_active) ||
+       (cfdata->close_on_send != (int)sos_config->close_on_send) ||
        (cfdata->position != (int)sos_config->position)
       )
      {
@@ -164,6 +171,7 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
         SET(position);
         SET(fill_side);
         SET(ignore_self_links);
+        SET(close_on_send);
         SET(set_last_active);
      }
    e_config_save_queue();

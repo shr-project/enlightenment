@@ -104,6 +104,7 @@ _e_mod_sos_config_load(void)
    E_CONFIG_VAL(D, T, position, UINT);
    E_CONFIG_VAL(D, T, ignore_self_links, UCHAR);
    E_CONFIG_VAL(D, T, set_last_active, UCHAR);
+   E_CONFIG_VAL(D, T, close_on_send, UCHAR);
    E_CONFIG_VAL(D, T, fill_side, UCHAR);
 
    sos_config = e_config_domain_load("module.sawed-off_shotgun", conf_edd);
@@ -307,6 +308,9 @@ _sawedoff_key_cb(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj, 
         edbus_proxy_call(mod->proxy_contact, "send_echo", NULL, NULL, -1, "ssu",
           mod->contact_active->jid, e_entry_text_get(obj), 0);
         e_entry_clear(mod->popup_entry);
+        if (!sos_config->close_on_send) return;
+        e_grabinput_release(0, mod->popup->evas_win);
+        e_popup_hide(mod->popup);
         return;
      }
    if (evas_key_modifier_is_set(ev->modifiers, "Alt") && evas_key_modifier_is_set(ev->modifiers, "Control"))
