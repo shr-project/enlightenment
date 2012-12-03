@@ -47,6 +47,8 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
    char *buf, *s;
    Evas_Object *e = c->chat_buffer;
    const char *color;
+   Eina_List *l, *ll;
+   Image *i;
 
    len = strftime(timebuf, sizeof(timebuf), "[%H:%M:%S]",
             localtime((time_t[]){ ecore_time_unix_get() }));
@@ -114,7 +116,13 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
           }
      }
 #endif
+   l = eina_list_last(c->list->image_list);
    elm_entry_entry_append(e, buf);
+   EINA_LIST_REVERSE_FOREACH(c->list->image_list, ll, i)
+     {
+        if (ll == l) break;
+        ui_dbus_signal_link(c->list, i->addr, me);
+     }
    if (c->log)
      {
         /* switch <ps> for \n to be more readable */
@@ -176,14 +184,7 @@ _chat_window_send_cb(Chat_Window *cw)
 
    s = elm_entry_markup_to_utf8(txt);
 
-   if (c->ignore_resource)
-     jid = c->base->jid;
-   else if (c->force_resource)
-     jid = c->force_resource;
-   else if (c->cur)
-     jid = c->cur->jid;
-   else
-     jid = c->base->jid;
+   jid = contact_jid_send_get(c);
    shotgun_message_send(c->base->account, jid, s, SHOTGUN_MESSAGE_STATUS_ACTIVE, c->xhtml_im);
    chat_message_insert(c, "me", s, EINA_TRUE);
 #ifdef HAVE_DBUS

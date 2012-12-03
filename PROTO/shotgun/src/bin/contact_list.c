@@ -1020,6 +1020,7 @@ contact_list_user_del(Contact *c, Shotgun_Event_Presence *ev)
    c->status = MIN(c->cur->status, SHOTGUN_USER_STATUS_XA);
    c->description = c->cur->description;
    c->list->list_item_update[c->list->mode](c->list_item);
+   ui_dbus_signal_status(c, c->cur);
 }
 
 Contact_List *

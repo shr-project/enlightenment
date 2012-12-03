@@ -18,7 +18,8 @@ void *alloca (size_t);
 #endif
 #endif
 
-#include <Shotgun.h>
+#include "Shotgun.h"
+#ifndef MODULE_BUILD
 #include <Ecore.h>
 #include <Ecore_Con.h>
 #include <Elementary.h>
@@ -29,7 +30,7 @@ void *alloca (size_t);
 #ifdef HAVE_AZY
 # include <Azy.h>
 #endif
-
+#endif
 #ifndef __UNUSED__
 # define __UNUSED__ __attribute__((unused))
 #endif
@@ -42,11 +43,13 @@ void *alloca (size_t);
 # define strndupa(str, len) strncpy(alloca(len + 1), str, len)
 #endif
 
+#ifndef MODULE_BUILD
 #define DBG(...)            EINA_LOG_DOM_DBG(ui_log_dom, __VA_ARGS__)
 #define INF(...)            EINA_LOG_DOM_INFO(ui_log_dom, __VA_ARGS__)
 #define WRN(...)            EINA_LOG_DOM_WARN(ui_log_dom, __VA_ARGS__)
 #define ERR(...)            EINA_LOG_DOM_ERR(ui_log_dom, __VA_ARGS__)
 #define CRI(...)            EINA_LOG_DOM_CRIT(ui_log_dom, __VA_ARGS__)
+#endif
 
 #define WEIGHT evas_object_size_hint_weight_set
 #define ALIGN evas_object_size_hint_align_set
@@ -74,7 +77,9 @@ extern Eina_Bool ssl_verify;
 typedef struct Login_Window Login_Window;
 typedef struct Contact_List Contact_List;
 typedef struct Contact Contact;
+typedef struct Image Image;
 
+#ifndef MODULE_BUILD
 typedef void (*Contact_List_Item_Tooltip_Cb)(void *item, Elm_Tooltip_Item_Content_Cb func, const void *data, Evas_Smart_Cb del_cb);
 typedef Eina_Bool (*Contact_List_Item_Tooltip_Resize_Cb)(void *item, Eina_Bool set);
 typedef void *(*Contact_List_At_XY_Item_Get)(void *list, Evas_Coord x, Evas_Coord y, int *ret);
@@ -191,6 +196,7 @@ struct Contact_List
    E_DBus_Connection *dbus;
    E_DBus_Object *dbus_object;
 #endif
+   Image *dbus_image;
 
    Ecore_Idler *image_cleaner;
    Ecore_Timer *logs_refresh;
@@ -282,7 +288,7 @@ struct Contact
    Eina_Bool dead : 1; /* if deletion attempt during thread */
 };
 
-typedef struct
+struct Image
 {
    Ecore_Con_Url *url;
    Eina_Binbuf *buf;
@@ -290,7 +296,7 @@ typedef struct
    unsigned long long timestamp;
    Contact_List *cl;
    unsigned int tries;
-} Image;
+};
 
 Contact_List *contact_list_init(UI_WIN *ui, Shotgun_Auth *auth);
 void contact_list_user_add(Contact_List *cl, Contact *c);
@@ -309,7 +315,7 @@ void chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Boo
 void chat_image_add(Contact_List *cl, const char *url);
 void chat_image_free(Image *i);
 void chat_image_cleanup(Contact_List *cl);
-void chat_conv_image_show(Contact *c, Evas_Object *obj, Elm_Entry_Anchor_Info *ev);
+void chat_conv_image_show(void *data, Evas_Object *obj, Elm_Entry_Anchor_Info *ev);
 void chat_conv_image_hide(Contact *c, Evas_Object *obj, Elm_Entry_Anchor_Info *ev);
 Eina_Bool chat_image_data(void *d __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Url_Data *ev);
 Eina_Bool chat_image_complete(void *d __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Url_Complete *ev);
@@ -331,6 +337,7 @@ void contact_chat_window_animator_del(Contact *c);
 void contact_chat_window_close(Contact *c);
 void contact_subscription_set(Contact *c, Shotgun_Presence_Type type, Shotgun_User_Subscription sub);
 void contact_chat_window_typing(Contact *c, Evas_Object *obj, void *event_info);
+const char *contact_jid_send_get(Contact *c);
 
 Eina_Bool ui_eet_init(Shotgun_Auth *auth);
 void ui_eet_dummy_add(const char *url);
@@ -353,7 +360,9 @@ Eina_Bool ui_eet_presence_get(Shotgun_Auth *auth);
 #ifdef HAVE_DBUS
 void ui_dbus_signal_message_self(Contact_List *cl, const char *jid, const char *s);
 void ui_dbus_signal_message(Contact_List *cl, Contact *c, Shotgun_Event_Message *msg);
+void ui_dbus_signal_status(Contact *c, Shotgun_Event_Presence *pres);
 void ui_dbus_signal_status_self(Contact_List *cl);
+void ui_dbus_signal_link(Contact_List *cl, const char *link, Eina_Bool self);
 void ui_dbus_init(Contact_List *cl);
 # ifdef HAVE_NOTIFY
 void ui_dbus_notify(Contact_List *cl, Evas_Object *img, const char *from, const char *msg);
@@ -391,5 +400,104 @@ void login_fill(Login_Window *lw);
 
 void ui_win_init(UI_WIN *ui);
 void ui_key_grab_set(UI_WIN *ui, const char *key, Eina_Bool enable);
+#endif
+#define SHOTGUN_DBUS_INTERFACE "org.shotgun"
+#define SHOTGUN_DBUS_PATH "/org/shotgun/remote"
+#define SHOTGUN_DBUS_METHOD_BASE "org.shotgun"
+/**
+ * DBUS API:
+ *
+ * @brief Disconnect Shotgun
+ * void org.shotgun.core.quit(void)
+ *
+ * @brief Retrieve the string array of online contact JIDs (username@server.com)
+ * @return An array of strings containing all online contacts from the user's contact list
+ * Array<String> org.shotgun.list.get(void)
+ *
+ * @brief Retrieve the string array of all contact JIDs (username@server.com)
+ * @return An array of strings containing all contacts from the user's contact list
+ * Array<String> org.shotgun.list.get_all(void)
+ *
+ * @brief Retrieve the full status of a contact's current presence (based on priority)
+ * @return The contact's status message (if set)
+ * @param JID The contact's JID
+ * @param st The contact's status on return
+ * @param priority The contact's priority on return
+ * String org.shotgun.contact.status(String JID, Shotgun_User_Status *st, int *priority)
+ *
+ * @brief Retrieve the display name, icon, and full status of a contact's current presence (based on priority)
+ * @return The contact's display name
+ * @param JID The contact's JID
+ * @param icon The contact's user avatar (if set) on return
+ * @param st The contact's status on return
+ * @param priority The contact's priority on return
+ * String org.shotgun.contact.info(String JID, const char **icon, Shotgun_User_Status *st, int *priority)
+ *
+ * @brief Retrieve the contact's icon's eet key
+ * @return The key to use for retrieving the eet key of the icon belonging to contact represented
+ * by @p JID
+ * @param JID The contact's JID
+ * String org.shotgun.contact.icon(String JID)
+ *
+ * @brief Send a message and message status to a contact
+ * @return TRUE on successful send, else FALSE
+ * @param JID The contact's JID
+ * @param msg The message to send
+ * @param st The (optional) #Shotgun_Message_Status to set along with the message
+ * Bool org.shotgun.contact.send(String JID, String msg, Shotgun_Message_Status st)
+ *
+ * @brief Send a message and message status to a contact, echoing the message to
+ * the contact's chat window
+ * @return TRUE on successful send, else FALSE
+ * @param JID The contact's JID
+ * @param msg The message to send
+ * @param st The (optional) #Shotgun_Message_Status to set along with the message
+ * Bool org.shotgun.contact.send_echo(String JID, String msg, Shotgun_Message_Status st)
+ *
+ * @brief Show/hide an image tooltip
+ * @param LINK The URL to show a tooltip for a previously-fetched image
+ * @note If LINK = "", the current image tooltip will be hidden
+ * void org.shotgun.link.show(String LINK)
+ * ---------------------------------------------------------------------------------------------
+ * SIGNALS
+ *
+ * @brief Signal for new message
+ * @return JID The jid of the message's sender
+ * @return msg The message on return
+ * "ss" org.shotgun.core.new_msg() String JID, String msg
+ *
+ * @brief Signal for new message sent by user (DOES NOT INCLUDE DBUS-SENT MESSAGES)
+ * @return JID The full jid of the message's recipient
+ * @return msg The message on return
+ * "ss" org.shotgun.core.new_msg_self(): String JID, String msg
+ *
+ * @brief Signal for when a contact changes their status
+ * @return JID The base jid of the contact
+ * @return resource The contact's presence's resource
+ * @return desc The status message (if set)
+ * @return st The message on return
+ * @return type The type of presence
+ * @return priority The user's priority on return
+ * "sssui" org.shotgun.core.status(): String JID, String resource, String desc, Shotgun_User_Status st, Shotgun_Presence_Type type, int priority
+ *
+ * @brief Signal for when the user changes his own status
+ * @return desc The status message (if set)
+ * @return st The message on return
+ * @return priority The user's priority on return
+ * "sui" org.shotgun.core.status_self(): String desc, Shotgun_User_Status st, int priority
+ *
+ * @brief Signal for when a new link is detected in chat
+ * @return LINK The URL of the link
+ * "s" org.shotgun.core.link(): String LINK
+ *
+ * @brief Signal for when a new link is detected in chat as sent by user (DOES INCLUDE DBUS-SENT MESSAGE)
+ * @return LINK The URL of the link
+ * "s" org.shotgun.core.link_self(): String LINK
+ *
+ * @brief Signal for connection state of the UI
+ * @return STATE 1 if connected, 0 if disconnected
+ * "s" org.shotgun.core.connected(): Bool STATE
+*/
+
 
 #endif /* __UI_H */

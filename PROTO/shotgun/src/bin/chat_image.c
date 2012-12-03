@@ -18,7 +18,7 @@ _chat_conv_image_provider(Image *i, Evas_Object *obj __UNUSED__, Evas_Object *tt
      {
         /* an unloadable image is a useless image! */
         i->cl->image_list = eina_list_remove(i->cl->image_list, i);
-        eina_hash_del_by_key(i->cl->images, ecore_con_url_url_get(i->url));
+        eina_hash_del_by_key(i->cl->images, i->addr);
         evas_object_del(ic);
         goto error;
      }
@@ -29,7 +29,7 @@ _chat_conv_image_provider(Image *i, Evas_Object *obj __UNUSED__, Evas_Object *tt
    FILL(ret);
 
    lbl = elm_label_add(tt);
-   elm_object_text_set(lbl, ecore_con_url_url_get(i->url));
+   elm_object_text_set(lbl, i->addr);
    elm_box_pack_end(ret, lbl);
    evas_object_show(lbl);
 
@@ -75,7 +75,7 @@ error:
    evas_object_show(ret);
    ret = elm_label_add(tt);
    {
-      len = strlen(ecore_con_url_url_get(i->url)) + (i->cl->settings->browser ? strlen(i->cl->settings->browser) : 0) + 64;
+      len = strlen(i->addr) + (i->cl->settings->browser ? strlen(i->cl->settings->browser) : 0) + 64;
       if (len > 32000)
         buf = malloc(len);
       else
@@ -83,7 +83,7 @@ error:
       snprintf(buf, len, "%s<ps>"
                "%s%s%s"
                "Right click link to copy to clipboard",
-               ecore_con_url_url_get(i->url),
+               i->addr,
                i->cl->settings->browser ? "Left click link to open with \"" : "",
                i->cl->settings->browser ?: "",
                i->cl->settings->browser ? "\"<ps>" : "");
@@ -104,13 +104,30 @@ _chat_image_sort_cb(Image *a, Image *b)
 }
 
 void
-chat_conv_image_show(Contact *c, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
+chat_conv_image_show(void *data, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
 {
    Image *i = NULL;
+   Contact *c = data;
+   Contact_List *cl = data;
+   const char *url;
 
-   if (!c) return;
+   if (obj)
+     {
+        if (!c) return;
+        cl = c->list;
+     }
+   else
+     obj = cl->win;
+
+   if (cl->dbus_image)
+     {
+        url = ev->name;
+        ev->name = cl->dbus_image->addr;
+        chat_conv_image_hide(NULL, cl->win, ev);
+        ev->name = url;
+     }
    DBG("anchor in: '%s' (%i, %i)", ev->name, ev->x, ev->y);
-   i = eina_hash_find(c->list->images, ev->name);
+   i = eina_hash_find(cl->images, ev->name);
    if (i)
      elm_object_tooltip_content_cb_set(obj, (Elm_Tooltip_Content_Cb)_chat_conv_image_provider, i, NULL);
    else
@@ -118,7 +135,7 @@ chat_conv_image_show(Contact *c, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
         char *buf;
         size_t len;
 
-        len = strlen(ev->name) + (c->list->settings->browser ? strlen(c->list->settings->browser) : 0) + 64;
+        len = strlen(ev->name) + (cl->settings->browser ? strlen(cl->settings->browser) : 0) + 64;
         if (len > 32000)
           buf = malloc(len);
         else
@@ -127,9 +144,9 @@ chat_conv_image_show(Contact *c, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
                  "%s%s%s"
                  "Right click link to copy to clipboard",
                  ev->name,
-                 c->list->settings->browser ? "Left click link to open with \"" : "",
-                 c->list->settings->browser ?: "",
-                 c->list->settings->browser ? "\"<ps>" : "");
+                 cl->settings->browser ? "Left click link to open with \"" : "",
+                 cl->settings->browser ?: "",
+                 cl->settings->browser ? "\"<ps>" : "");
         elm_object_tooltip_text_set(obj, buf);
         if (len > 32000) free(buf);
      }
@@ -138,10 +155,9 @@ chat_conv_image_show(Contact *c, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
 }
 
 void
-chat_conv_image_hide(Contact *c, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
+chat_conv_image_hide(Contact *c EINA_UNUSED, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
 {
-   if (!c) return;
-   DBG("anchor out: '%s' (%i, %i)", ev->name, ev->x, ev->y);
+   if (ev) DBG("anchor out: '%s' (%i, %i)", ev->name, ev->x, ev->y);
    elm_object_tooltip_unset(obj);
 }
 
@@ -193,6 +209,11 @@ void
 chat_image_free(Image *i)
 {
    if (!i) return;
+   if (i->cl->dbus_image == i)
+     {
+        chat_conv_image_hide(NULL, i->cl->win, NULL);
+        i->cl->dbus_image = NULL;
+     }
    if (i->url) ecore_con_url_free(i->url);
    if (i->buf) eina_binbuf_free(i->buf);
    eina_stringshare_del(i->addr);
@@ -248,7 +269,17 @@ chat_image_complete(void *d __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Url
    i->timestamp = (unsigned long long)ecore_time_unix_get();
    if (ui_eet_image_add(i->addr, i->buf, i->timestamp) == 1)
      i->cl->image_size += eina_binbuf_length_get(i->buf);
+   if (i->url) ecore_con_url_free(i->url);
+   i->url = NULL;
    chat_image_cleanup(i->cl);
+   if (i->cl->dbus_image == i)
+     {
+        Elm_Entry_Anchor_Info e;
+
+        memset(&e, 0, sizeof(Elm_Entry_Anchor_Info));
+        e.name = i->addr;
+        chat_conv_image_show(i->cl, NULL, &e);
+     }
    return ECORE_CALLBACK_RENEW;
 }
 

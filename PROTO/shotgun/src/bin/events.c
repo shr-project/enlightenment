@@ -176,6 +176,7 @@ event_presence_cb(Contact_List *cl, int type __UNUSED__, Shotgun_Event_Presence 
         return ECORE_CALLBACK_RENEW;
      }
 
+   ui_dbus_signal_status(c, ev);
    if (!ev->status)
      {
         contact_list_user_del(c, ev);

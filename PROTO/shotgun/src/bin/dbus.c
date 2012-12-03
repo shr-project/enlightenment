@@ -14,6 +14,44 @@ _dbus_quit_cb(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
+_dbus_link_show_cb(E_DBus_Object *obj, DBusMessage *msg)
+{
+   Contact_List *cl = e_dbus_object_data_get(obj);
+   const char *url;
+   DBusError error;
+   Image *i;
+   Elm_Entry_Anchor_Info ev;
+
+   memset(&ev, 0, sizeof(Elm_Entry_Anchor_Info));
+   ev.name = "";
+   chat_conv_image_hide(NULL, cl->win, &ev);
+   cl->dbus_image = NULL;
+   memset(&error, 0, sizeof(DBusError));
+   dbus_message_get_args(msg, &error,
+     's', &url,
+     DBUS_TYPE_INVALID);
+   while (url)
+     {
+        if (!url[0]) break;
+        i = eina_hash_find(cl->images, url);
+        if (!i) break; // not gonna let people use us as wget
+        //if (!i) url = eina_stringshare_add(url);
+        chat_image_add(cl, url); // update timestamp
+        //i = eina_hash_find(cl->images, url);
+        if (i->url)
+          {
+             cl->dbus_image = i;
+             break;
+          }
+        ev.name = url;
+        chat_conv_image_show(cl, NULL, &ev);
+        cl->dbus_image = i;
+        break;
+     }
+   return dbus_message_new_method_return(msg);
+}
+
+static DBusMessage *
 _dbus_list_get_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
    Contact_List *cl = e_dbus_object_data_get(obj);
@@ -109,7 +147,7 @@ _dbus_contact_send_cb(E_DBus_Object *obj, DBusMessage *msg)
    if (p) name = strndupa(name, p - name);
    c = eina_hash_find(cl->users, name);
    if (!c) goto error;
-   ret = shotgun_message_send(c->base->account, c->cur ? c->cur->jid : c->base->jid, s, st, c->xhtml_im);
+   ret = shotgun_message_send(c->base->account, contact_jid_send_get(c), s, st, c->xhtml_im);
 error:
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_BOOLEAN, &ret);
    return reply;
@@ -141,8 +179,9 @@ _dbus_contact_send_echo_cb(E_DBus_Object *obj, DBusMessage *msg)
    c = eina_hash_find(cl->users, name);
    if (!c) goto error;
 
-   ret = shotgun_message_send(c->base->account, name, s, st, c->xhtml_im);
-   chat_message_insert(c, "me", s, EINA_TRUE);
+   ret = shotgun_message_send(c->base->account, contact_jid_send_get(c), s, st, c->xhtml_im);
+   if (ret)
+     chat_message_insert(c, "me", s, EINA_TRUE);
 error:
    dbus_message_iter_append_basic(&iter, DBUS_TYPE_BOOLEAN, &ret);
    return reply;
@@ -228,7 +267,7 @@ ui_dbus_signal_message_self(Contact_List *cl, const char *jid, const char *s)
 {
    DBusMessage *sig;
 
-   sig = dbus_message_new_signal("/org/shotgun/remote", "org.shotgun.core", "new_msg_self");
+   sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "new_msg_self");
    dbus_message_append_args(sig,
      's', &jid,
      's', &s,
@@ -242,12 +281,33 @@ ui_dbus_signal_message(Contact_List *cl, Contact *c, Shotgun_Event_Message *msg)
 {
    DBusMessage *sig;
 
-   sig = dbus_message_new_signal("/org/shotgun/remote", "org.shotgun.core", "new_msg");
+   sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "new_msg");
    dbus_message_append_args(sig,
      's', &c->base->jid,
      's', &msg->msg,
      DBUS_TYPE_INVALID);
    e_dbus_message_send(cl->dbus, sig, NULL, -1, NULL);
+   dbus_message_unref(sig);
+}
+
+void
+ui_dbus_signal_status(Contact *c, Shotgun_Event_Presence *pres)
+{
+   DBusMessage *sig;
+   const char *res, *desc;
+
+   res = strrchr(pres->jid, '/') + 1;
+   desc = pres->description ?: "";
+   sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "status");
+   dbus_message_append_args(sig,
+     's', &c->base->jid,
+     's', &res,
+     's', &desc,
+     'u', &pres->status,
+     'u', &pres->type,
+     'i', &pres->priority,
+     DBUS_TYPE_INVALID);
+   e_dbus_message_send(c->list->dbus, sig, NULL, -1, NULL);
    dbus_message_unref(sig);
 }
 
@@ -258,9 +318,11 @@ ui_dbus_signal_status_self(Contact_List *cl)
    const char *desc;
    Shotgun_User_Status st;
    int priority;
-   desc = shotgun_presence_get(cl->account, &st, &priority);
 
-   sig = dbus_message_new_signal("/org/shotgun/remote", "org.shotgun.core", "status_self");
+   desc = shotgun_presence_get(cl->account, &st, &priority);
+   desc = desc ?: "";
+
+   sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "status_self");
    dbus_message_append_args(sig,
      's', &desc,
      'u', &st,
@@ -271,25 +333,83 @@ ui_dbus_signal_status_self(Contact_List *cl)
 }
 
 void
+ui_dbus_signal_connect_state(Contact_List *cl)
+{
+   DBusMessage *sig;
+   Eina_Bool state;
+
+   state = (shotgun_connection_state_get(cl->account) == SHOTGUN_CONNECTION_STATE_CONNECTED);
+
+   sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "connected");
+   dbus_message_append_args(sig,
+     'b', &state,
+     DBUS_TYPE_INVALID);
+   e_dbus_message_send(cl->dbus, sig, NULL, -1, NULL);
+   dbus_message_unref(sig);
+}
+
+void
+ui_dbus_signal_link(Contact_List *cl, const char *url, Eina_Bool self)
+{
+   DBusMessage *sig;
+
+   if (self)
+     sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "link_self");
+   else
+     sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "link");
+   dbus_message_append_args(sig,
+     's', &url,
+     DBUS_TYPE_INVALID);
+   e_dbus_message_send(cl->dbus, sig, NULL, -1, NULL);
+   dbus_message_unref(sig);
+}
+
+static void
+_dbus_request_name_cb(void *data __UNUSED__, DBusMessage *msg, DBusError *err __UNUSED__)
+{
+   DBusError error;
+   unsigned int ret;
+
+   memset(&error, 0, sizeof(DBusError));
+
+   dbus_message_get_args(msg, &error,
+			 'u', &ret,
+			 DBUS_TYPE_INVALID);
+   INF("RequestName: %u", ret);
+}
+
+void
 ui_dbus_init(Contact_List *cl)
 {
    E_DBus_Interface *iface;
+
+   if (cl->dbus) return;
 
    e_dbus_init();
 #ifdef HAVE_NOTIFY
    e_notification_init();
 #endif
    cl->dbus = e_dbus_bus_get(DBUS_BUS_SESSION);
-   e_dbus_request_name(cl->dbus, "org.shotgun", 0, NULL, NULL);
+   e_dbus_request_name(cl->dbus, "org.shotgun", 0, _dbus_request_name_cb, NULL);
    cl->dbus_object = e_dbus_object_add(cl->dbus, "/org/shotgun/remote", cl);
    iface = e_dbus_interface_new("org.shotgun.core");
    e_dbus_object_interface_attach(cl->dbus_object, iface);
    e_dbus_interface_signal_add(iface, "new_msg", "ss");
    e_dbus_interface_signal_add(iface, "new_msg_self", "ss");
+   e_dbus_interface_signal_add(iface, "status", "sssuui");
    e_dbus_interface_signal_add(iface, "status_self", "sui");
+   e_dbus_interface_signal_add(iface, "link", "s");
+   e_dbus_interface_signal_add(iface, "link_self", "s");
+   e_dbus_interface_signal_add(iface, "connected", "b");
    e_dbus_interface_unref(iface);
 
    e_dbus_interface_method_add(iface, "quit", "", "", _dbus_quit_cb);
+
+   iface = e_dbus_interface_new("org.shotgun.link");
+   e_dbus_object_interface_attach(cl->dbus_object, iface);
+   e_dbus_interface_unref(iface);
+
+   e_dbus_interface_method_add(iface, "show", "s", "", _dbus_link_show_cb);
 
    iface = e_dbus_interface_new("org.shotgun.list");
    e_dbus_object_interface_attach(cl->dbus_object, iface);

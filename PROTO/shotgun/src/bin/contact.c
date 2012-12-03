@@ -538,3 +538,16 @@ contact_vcard_request(Contact *c)
    INF("New vcard request for %s", c->base->jid);
    return c->vcard_request;
 }
+
+const char *
+contact_jid_send_get(Contact *c)
+{
+   if (!c) return NULL;
+   if (c->ignore_resource)
+     return c->base->jid;
+   else if (c->force_resource)
+     return c->force_resource;
+   else if (c->cur)
+     return c->cur->jid;
+   return c->base->jid;
+}
