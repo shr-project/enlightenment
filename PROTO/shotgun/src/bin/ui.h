@@ -104,6 +104,7 @@ typedef struct Shotgun_Settings
    Eina_Bool disable_list_status;
    Eina_Bool enable_list_sort_alpha;
    Eina_Bool enable_list_offlines;
+   Eina_Bool disable_window_on_message;
    Eina_Bool enable_global_otr;
    Eina_Bool enable_mail_notifications;
    unsigned int allowed_image_age;

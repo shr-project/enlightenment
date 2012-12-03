@@ -366,6 +366,7 @@ settings_new(UI_WIN *ui)
 
    SETTINGS_FRAME("Messages");
    elm_frame_collapse_set(fr, EINA_TRUE);
+   SETTINGS_CHECK("Don't open window on message", disable_window_on_message, "Do not open a chat window when receiving a message if a window is not already open");
    SETTINGS_CHECK("Send keyboard events", enable_chat_typing, "Send additional notifications to contacts when you start or stop typing to them");
    SETTINGS_CHECK_CALLBACK(_settings_chat_typing_change);
    SETTINGS_CHECK("Disable chat status message display", disable_chat_status_entry, "Disable the text showing the contact's status in the chat window");

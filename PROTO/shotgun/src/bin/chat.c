@@ -81,8 +81,8 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
    if (!me)
      {
         Eina_Bool notify = EINA_FALSE;
-        //if (!contact_chat_window_current(c))
-        if (!elm_win_focus_get(c->chat_window->win)) notify = EINA_TRUE;
+        if ((!c->chat_window) && (c->list->settings->disable_window_on_message)) notify = EINA_TRUE;
+        else if (!elm_win_focus_get(c->chat_window->win)) notify = EINA_TRUE;
         else
           {
              if (!contact_chat_window_current(c)) notify = EINA_TRUE;
@@ -117,7 +117,17 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
      }
 #endif
    l = eina_list_last(c->list->image_list);
-   elm_entry_entry_append(e, buf);
+   if (e)
+     elm_entry_entry_append(e, buf);
+   else
+     {
+        const char *str;
+
+        /* this sucks. a lot. */
+        str = eina_stringshare_printf("%s%s", c->last_conv, buf);
+        eina_stringshare_del(c->last_conv);
+        c->last_conv = str;
+     }
    EINA_LIST_REVERSE_FOREACH(c->list->image_list, ll, i)
      {
         if (ll == l) break;
@@ -131,8 +141,8 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
         fwrite(buf, sizeof(char), len, c->log);
         fwrite("\n", sizeof(char), 1, c->log);
      }
-   elm_entry_cursor_end_set(e);
-   if (c->list->settings->enable_chat_focus)
+   if (e) elm_entry_cursor_end_set(e);
+   if (c->chat_window && c->list->settings->enable_chat_focus)
      elm_win_activate(c->chat_window->win);
    if (c->list_item && c->list->settings->enable_chat_promote)
      /* FIXME: gengrid doesn't have item promote */
