@@ -347,6 +347,7 @@ _sawedoff_activate(Mod_Contact *mc)
         e_popup_edje_bg_object_set(mod->popup, o);
 
         mod->popup_entry = entry = e_entry_add(mod->popup->evas);
+        e_entry_nomenu(entry);
         edje_extern_object_min_size_set(entry, 80 * e_scale, 16 * e_scale);
         edje_object_part_swallow(o, "shotgun.swallow.entry", entry);
         evas_object_event_callback_add(entry, EVAS_CALLBACK_KEY_DOWN, (Evas_Object_Event_Cb)_sawedoff_key_cb, NULL);
