@@ -46,37 +46,30 @@ Package(
             ],
         },
     )
-
-Package(
-    name="ecore",
-    test_target="check",
-    doc_target="doc",
-    dependencies={
-        "common": ["efl"],
-        },
-    configure_flags={
-        "common": [
-            "--enable-tests",
-            "--enable-doc",
-            "--enable-thread-safety",
-            "--enable-ecore-evas",
-            "--enable-ecore-evas-software-buffer",
-            "--enable-ecore-imf",
-            "--enable-ecore-imf-evas",
-            "--enable-ecore-input",
-            "--enable-ecore-input-evas",
-            ],
-        "linux": [
-            "--enable-ecore-evas-software-x11",
-            "--enable-ecore-evas-opengl-x11",
-            ],
-        },
-    )
+# Do we need any of this old ecore configure flags for efl now?
+#    configure_flags={
+#        "common": [
+#            "--enable-tests",
+#            "--enable-doc",
+#            "--enable-thread-safety",
+#            "--enable-ecore-evas",
+#            "--enable-ecore-evas-software-buffer",
+#            "--enable-ecore-imf",
+#            "--enable-ecore-imf-evas",
+#            "--enable-ecore-input",
+#            "--enable-ecore-input-evas",
+#            ],
+#        "linux": [
+#            "--enable-ecore-evas-software-x11",
+#            "--enable-ecore-evas-opengl-x11",
+#            ],
+#        },
+#    )
 
 Package(
     name="eio",
     dependencies={
-        "common": ["efl", "ecore"],
+        "common": ["efl"],
         },
     )
 
@@ -85,7 +78,7 @@ Package(
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "ecore", "eio"],
+        "common": ["efl", "eio"],
         },
     configure_flags={
         "common": [
@@ -101,7 +94,7 @@ Package(
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "ecore", "edbus"],
+        "common": ["efl", "edbus"],
         },
     configure_flags={
         "common": [
@@ -117,7 +110,7 @@ Package(
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={
-        "common": ["efl", "ecore"],
+        "common": ["efl"],
         },
     configure_flags={
         "common": [
@@ -133,7 +126,7 @@ Package(
     name="emotion",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "ecore", "eeze", "eio", "edje"],
+        "common": ["efl", "eeze", "eio", "edje"],
         },
     )
 
@@ -141,7 +134,7 @@ Package(
     name="efx",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "ecore"],
+        "common": ["efl"],
         },
     )
 
@@ -150,7 +143,7 @@ Package(
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={
-        "common": ["efl", "ecore"],
+        "common": ["efl"],
         },
     configure_flags={
         "common": [
@@ -169,21 +162,21 @@ Package(
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={
-        "common": ["efl", "ecore"],
+        "common": ["efl"],
         },
     )
 
 Package(
     name="elementary",
     dependencies={
-        "common": ["efl", "ecore", "edje", "e_dbus", "efreet", "emotion", "eio"],
+        "common": ["efl", "edje", "e_dbus", "efreet", "emotion", "eio"],
         },
     )
 
 Package(
     name="clouseau",
     dependencies={
-        "common": ["efl", "ecore", "edje", "elementary"],
+        "common": ["efl", "edje", "elementary"],
         },
     )
 
@@ -194,7 +187,6 @@ Package(
     dependencies={
         "common": [
             "efl",
-            "ecore",
             "edje",
             "efreet",
             "eeze",
@@ -260,7 +252,7 @@ Package(
 Package(
     name="terminology",
     dependencies={
-        "common": ["efl", "ecore", "edje", "emotion", "efreet", "elementary"],
+        "common": ["efl", "edje", "emotion", "efreet", "elementary"],
         },
     )
 
@@ -275,7 +267,7 @@ Package(
 Package(
     name="python-ecore",
     srcdir="BINDINGS/python/python-ecore",
-    dependencies={"common": ["ecore", "python-evas"]},
+    dependencies={"common": ["efl", "python-evas"]},
     # generated code sucks, no way to change it:
     env={"common": {"CFLAGS": "-Wno-unused-parameter -Wno-unused-but-set-variable -Wno-shadow -Wno-strict-aliasing"}},
     configure_flags={

@@ -1,12 +1,11 @@
 # -*- mode: makefile -*-
-# Generated for win at Fri Nov  9 13:09:36 2012.
+# Generated for win at Mon Dec  3 09:13:16 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
 #
 # Packages used:
 #   - efl
-#   - ecore
 #   - eio
 #   - edje
 #   - emotion
@@ -14,10 +13,10 @@
 #   - elementary
 #   - terminology
 #   - clouseau
-#   - efx
 #   - python-evas
 #   - python-edje
 #   - python-ecore
+#   - efx
 
 SRCROOT = $(shell pwd)
 BUILDROOT = $(shell pwd)/build
@@ -26,7 +25,7 @@ MAKEOPTS = --print-directory -j6
 V=@
 
 .DEFAULT: missing-target
-.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile ecore-compile ecore-clean ecore-dependencies ecore-install ecore-test ecore-doc ecore-distcheck ecore-all-users-compile ecore-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile clouseau-compile clouseau-clean clouseau-dependencies clouseau-install clouseau-test clouseau-doc clouseau-distcheck clouseau-all-users-compile clouseau-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile
+.PHONY: missing-target help all clean efl-compile efl-clean efl-dependencies efl-install efl-test efl-doc efl-distcheck efl-all-users-compile efl-direct-users-compile eio-compile eio-clean eio-dependencies eio-install eio-test eio-doc eio-distcheck eio-all-users-compile eio-direct-users-compile edje-compile edje-clean edje-dependencies edje-install edje-test edje-doc edje-distcheck edje-all-users-compile edje-direct-users-compile emotion-compile emotion-clean emotion-dependencies emotion-install emotion-test emotion-doc emotion-distcheck emotion-all-users-compile emotion-direct-users-compile efreet-compile efreet-clean efreet-dependencies efreet-install efreet-test efreet-doc efreet-distcheck efreet-all-users-compile efreet-direct-users-compile elementary-compile elementary-clean elementary-dependencies elementary-install elementary-test elementary-doc elementary-distcheck elementary-all-users-compile elementary-direct-users-compile terminology-compile terminology-clean terminology-dependencies terminology-install terminology-test terminology-doc terminology-distcheck terminology-all-users-compile terminology-direct-users-compile clouseau-compile clouseau-clean clouseau-dependencies clouseau-install clouseau-test clouseau-doc clouseau-distcheck clouseau-all-users-compile clouseau-direct-users-compile python-evas-compile python-evas-clean python-evas-dependencies python-evas-install python-evas-test python-evas-doc python-evas-distcheck python-evas-all-users-compile python-evas-direct-users-compile python-edje-compile python-edje-clean python-edje-dependencies python-edje-install python-edje-test python-edje-doc python-edje-distcheck python-edje-all-users-compile python-edje-direct-users-compile python-ecore-compile python-ecore-clean python-ecore-dependencies python-ecore-install python-ecore-test python-ecore-doc python-ecore-distcheck python-ecore-all-users-compile python-ecore-direct-users-compile efx-compile efx-clean efx-dependencies efx-install efx-test efx-doc efx-distcheck efx-all-users-compile efx-direct-users-compile
 
 missing-target:
 	@echo "Missing target."
@@ -57,14 +56,14 @@ help:
 	@echo "   PACKAGE-direct-users-compile compile all direct users of package."
 	@echo ""
 	@echo "Known packages:"
-	@echo "   efl ecore eio edje emotion efreet elementary terminology clouseau efx python-evas python-edje python-ecore"
+	@echo "   efl eio edje emotion efreet elementary terminology clouseau python-evas python-edje python-ecore efx"
 	@echo ""
 
-all: efl-compile ecore-compile eio-compile edje-compile emotion-compile efreet-compile elementary-compile terminology-compile clouseau-compile efx-compile python-evas-compile python-edje-compile python-ecore-compile
-clean: efl-clean ecore-clean eio-clean edje-clean emotion-clean efreet-clean elementary-clean terminology-clean clouseau-clean efx-clean python-evas-clean python-edje-clean python-ecore-clean
-test: efl-test ecore-test eio-test edje-test emotion-test efreet-test elementary-test terminology-test clouseau-test efx-test python-evas-test python-edje-test python-ecore-test
-doc: efl-doc ecore-doc eio-doc edje-doc emotion-doc efreet-doc elementary-doc terminology-doc clouseau-doc efx-doc python-evas-doc python-edje-doc python-ecore-doc
-distcheck: efl-distcheck ecore-distcheck eio-distcheck edje-distcheck emotion-distcheck efreet-distcheck elementary-distcheck terminology-distcheck clouseau-distcheck efx-distcheck python-evas-distcheck python-edje-distcheck python-ecore-distcheck
+all: efl-compile eio-compile edje-compile emotion-compile efreet-compile elementary-compile terminology-compile clouseau-compile python-evas-compile python-edje-compile python-ecore-compile efx-compile
+clean: efl-clean eio-clean edje-clean emotion-clean efreet-clean elementary-clean terminology-clean clouseau-clean python-evas-clean python-edje-clean python-ecore-clean efx-clean
+test: efl-test eio-test edje-test emotion-test efreet-test elementary-test terminology-test clouseau-test python-evas-test python-edje-test python-ecore-test efx-test
+doc: efl-doc eio-doc edje-doc emotion-doc efreet-doc elementary-doc terminology-doc clouseau-doc python-evas-doc python-edje-doc python-ecore-doc efx-doc
+distcheck: efl-distcheck eio-distcheck edje-distcheck emotion-distcheck efreet-distcheck elementary-distcheck terminology-distcheck clouseau-distcheck python-evas-distcheck python-edje-distcheck python-ecore-distcheck efx-distcheck
 
 ########################################################################
 # efl rules
@@ -187,147 +186,14 @@ efl-distcheck: $(BUILDROOT)/efl/stamps/compile
 	touch $(BUILDROOT)/efl/stamps/distcheck
 	$(V)echo "Success checking distribution efl."
 
-efl-direct-users-compile: edje-compile emotion-compile efx-compile python-evas-compile efreet-compile eio-compile elementary-compile ecore-compile clouseau-compile terminology-compile
+efl-direct-users-compile: edje-compile emotion-compile efx-compile python-evas-compile efreet-compile eio-compile elementary-compile python-ecore-compile clouseau-compile terminology-compile
 
-efl-all-users-compile: edje-compile emotion-compile efx-compile python-evas-compile python-edje-compile efreet-compile eio-compile ecore-compile elementary-compile python-ecore-compile clouseau-compile terminology-compile
-
-########################################################################
-# ecore rules
-ecore-dependencies: $(BUILDROOT)/ecore/stamps/dependencies efl-install
-$(BUILDROOT)/ecore/stamps/dependencies: $(BUILDROOT)/efl/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
-	touch $(BUILDROOT)/ecore/stamps/dependencies
-
-ecore-clean:
-	if test -d $(BUILDROOT)/ecore/compile; then chmod -R u+w $(BUILDROOT)/ecore/compile; fi
-	rm -fr $(BUILDROOT)/ecore/compile
-	rm -fr $(BUILDROOT)/ecore/stamps
-
-$(BUILDROOT)/ecore/stamps/autogen: $(SRCROOT)/ecore/autogen.sh $(SRCROOT)/ecore/configure.ac
-	$(V)echo "Running 'autogen.sh' for ecore..."
-	$(V)rm -f $(BUILDROOT)/ecore/stamps/autogen
-	cd $(SRCROOT)/ecore && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
-	touch $(BUILDROOT)/ecore/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for ecore."
-
-$(BUILDROOT)/ecore/stamps/configure: $(BUILDROOT)/ecore/stamps/autogen $(BUILDROOT)/ecore/stamps/dependencies
-	$(V)echo "Configuring ecore..."
-	$(V)rm -f $(BUILDROOT)/ecore/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/ecore/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	cd $(BUILDROOT)/ecore/compile && \
-	$(SRCROOT)/ecore/configure --prefix=$(INSTALLROOT) --enable-tests \
-		--enable-doc \
-		--enable-thread-safety \
-		--enable-ecore-evas \
-		--enable-ecore-evas-software-buffer \
-		--enable-ecore-imf \
-		--enable-ecore-imf-evas \
-		--enable-ecore-input \
-		--enable-ecore-input-evas
-	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
-	touch $(BUILDROOT)/ecore/stamps/configure
-	$(V)echo "Success configuring ecore."
-
-$(BUILDROOT)/ecore/stamps/compile: $(BUILDROOT)/ecore/stamps/configure ecore-compile
-ecore-compile: $(BUILDROOT)/ecore/stamps/configure
-	$(V)echo "Compiling ecore..."
-	$(V)rm -f $(BUILDROOT)/ecore/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/ecore/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/ecore/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/ecore/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/ecore/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/ecore/compile;\
-	else\
-		echo "ecore is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/ecore/stamps/compile -o -f $(BUILDROOT)/ecore/stamps/compile-updated; then\
-		touch $(BUILDROOT)/ecore/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling ecore."
-
-$(BUILDROOT)/ecore/stamps/install: $(BUILDROOT)/ecore/stamps/compile ecore-install
-ecore-install: $(BUILDROOT)/ecore/stamps/compile
-	$(V)echo "Installing ecore..."
-	$(V)if test ! -f $(BUILDROOT)/ecore/stamps/install -o $(BUILDROOT)/ecore/stamps/compile -nt $(BUILDROOT)/ecore/stamps/install; then\
-		rm -f $(BUILDROOT)/ecore/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/ecore/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/ecore/compile;\
-		mkdir -p $(BUILDROOT)/ecore/stamps;\
-		touch $(BUILDROOT)/ecore/stamps/install;\
-	else\
-		echo "ecore did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing ecore."
-
-$(BUILDROOT)/ecore/stamps/test: $(BUILDROOT)/ecore/stamps/compile ecore-test
-ecore-test: $(BUILDROOT)/ecore/stamps/compile
-	$(V)echo "Testing (make check) ecore..."
-	$(V)rm -f $(BUILDROOT)/ecore/stamps/test
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	dbus-launch make $(MAKEOPTS) check -C $(BUILDROOT)/ecore/compile
-	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
-	touch $(BUILDROOT)/ecore/stamps/test
-	$(V)echo "Success testing (make check) ecore."
-
-$(BUILDROOT)/ecore/stamps/doc: $(BUILDROOT)/ecore/stamps/compile ecore-doc
-ecore-doc: $(BUILDROOT)/ecore/stamps/compile
-	$(V)echo "Generating documentation (make doc) ecore..."
-	$(V)rm -f $(BUILDROOT)/ecore/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/ecore/compile
-	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
-	touch $(BUILDROOT)/ecore/stamps/doc
-	$(V)echo "Success generating documentation (make doc) ecore."
-
-$(BUILDROOT)/ecore/stamps/distcheck: $(BUILDROOT)/ecore/stamps/compile ecore-distcheck
-ecore-distcheck: $(BUILDROOT)/ecore/stamps/compile
-	$(V)echo "Checking distribution ecore..."
-	$(V)rm -f $(BUILDROOT)/ecore/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/ecore/compile
-	$(V)mkdir -p $(BUILDROOT)/ecore/stamps
-	touch $(BUILDROOT)/ecore/stamps/distcheck
-	$(V)echo "Success checking distribution ecore."
-
-ecore-direct-users-compile: edje-compile emotion-compile efx-compile efreet-compile eio-compile elementary-compile python-ecore-compile clouseau-compile terminology-compile
-
-ecore-all-users-compile: edje-compile emotion-compile efx-compile python-edje-compile efreet-compile eio-compile elementary-compile python-ecore-compile clouseau-compile terminology-compile
+efl-all-users-compile: edje-compile emotion-compile efx-compile python-evas-compile python-edje-compile efreet-compile eio-compile elementary-compile python-ecore-compile clouseau-compile terminology-compile
 
 ########################################################################
 # eio rules
-eio-dependencies: $(BUILDROOT)/eio/stamps/dependencies ecore-install efl-install
-$(BUILDROOT)/eio/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
+eio-dependencies: $(BUILDROOT)/eio/stamps/dependencies efl-install
+$(BUILDROOT)/eio/stamps/dependencies: $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/eio/stamps
 	touch $(BUILDROOT)/eio/stamps/dependencies
 
@@ -435,8 +301,8 @@ eio-all-users-compile: edje-compile emotion-compile python-edje-compile elementa
 
 ########################################################################
 # edje rules
-edje-dependencies: $(BUILDROOT)/edje/stamps/dependencies ecore-install efl-install eio-install
-$(BUILDROOT)/edje/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/eio/stamps/install
+edje-dependencies: $(BUILDROOT)/edje/stamps/dependencies efl-install eio-install
+$(BUILDROOT)/edje/stamps/dependencies: $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/eio/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/edje/stamps
 	touch $(BUILDROOT)/edje/stamps/dependencies
 
@@ -562,8 +428,8 @@ edje-all-users-compile: emotion-compile elementary-compile clouseau-compile pyth
 
 ########################################################################
 # emotion rules
-emotion-dependencies: $(BUILDROOT)/emotion/stamps/dependencies edje-install ecore-install efl-install eeze-install eio-install
-$(BUILDROOT)/emotion/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/eeze/stamps/install $(BUILDROOT)/eio/stamps/install
+emotion-dependencies: $(BUILDROOT)/emotion/stamps/dependencies edje-install efl-install eeze-install eio-install
+$(BUILDROOT)/emotion/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/eeze/stamps/install $(BUILDROOT)/eio/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/emotion/stamps
 	touch $(BUILDROOT)/emotion/stamps/dependencies
 
@@ -679,8 +545,8 @@ emotion-all-users-compile: elementary-compile clouseau-compile terminology-compi
 
 ########################################################################
 # efreet rules
-efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies ecore-install edbus-install efl-install
-$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/edbus/stamps/install $(BUILDROOT)/efl/stamps/install
+efreet-dependencies: $(BUILDROOT)/efreet/stamps/dependencies edbus-install efl-install
+$(BUILDROOT)/efreet/stamps/dependencies: $(BUILDROOT)/edbus/stamps/install $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/efreet/stamps
 	touch $(BUILDROOT)/efreet/stamps/dependencies
 
@@ -806,8 +672,8 @@ efreet-all-users-compile: elementary-compile clouseau-compile terminology-compil
 
 ########################################################################
 # elementary rules
-elementary-dependencies: $(BUILDROOT)/elementary/stamps/dependencies edje-install emotion-install efreet-install efl-install e_dbus-install ecore-install eio-install
-$(BUILDROOT)/elementary/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/emotion/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/e_dbus/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/eio/stamps/install
+elementary-dependencies: $(BUILDROOT)/elementary/stamps/dependencies edje-install emotion-install efreet-install efl-install e_dbus-install eio-install
+$(BUILDROOT)/elementary/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/emotion/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/e_dbus/stamps/install $(BUILDROOT)/eio/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/elementary/stamps
 	touch $(BUILDROOT)/elementary/stamps/dependencies
 
@@ -915,8 +781,8 @@ elementary-all-users-compile: clouseau-compile terminology-compile
 
 ########################################################################
 # terminology rules
-terminology-dependencies: $(BUILDROOT)/terminology/stamps/dependencies edje-install emotion-install efreet-install efl-install elementary-install ecore-install
-$(BUILDROOT)/terminology/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/emotion/stamps/install $(BUILDROOT)/efreet/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/ecore/stamps/install
+terminology-dependencies: $(BUILDROOT)/terminology/stamps/dependencies edje-install emotion-install efl-install elementary-install efreet-install
+$(BUILDROOT)/terminology/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/emotion/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/efreet/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/terminology/stamps
 	touch $(BUILDROOT)/terminology/stamps/dependencies
 
@@ -1024,8 +890,8 @@ terminology-all-users-compile:
 
 ########################################################################
 # clouseau rules
-clouseau-dependencies: $(BUILDROOT)/clouseau/stamps/dependencies edje-install ecore-install efl-install elementary-install
-$(BUILDROOT)/clouseau/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install $(BUILDROOT)/elementary/stamps/install
+clouseau-dependencies: $(BUILDROOT)/clouseau/stamps/dependencies edje-install elementary-install efl-install
+$(BUILDROOT)/clouseau/stamps/dependencies: $(BUILDROOT)/edje/stamps/install $(BUILDROOT)/elementary/stamps/install $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/clouseau/stamps
 	touch $(BUILDROOT)/clouseau/stamps/dependencies
 
@@ -1130,123 +996,6 @@ clouseau-distcheck: $(BUILDROOT)/clouseau/stamps/compile
 clouseau-direct-users-compile:
 
 clouseau-all-users-compile:
-
-########################################################################
-# efx rules
-efx-dependencies: $(BUILDROOT)/efx/stamps/dependencies ecore-install efl-install
-$(BUILDROOT)/efx/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/efl/stamps/install
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/dependencies
-
-efx-clean:
-	if test -d $(BUILDROOT)/efx/compile; then chmod -R u+w $(BUILDROOT)/efx/compile; fi
-	rm -fr $(BUILDROOT)/efx/compile
-	rm -fr $(BUILDROOT)/efx/stamps
-
-$(BUILDROOT)/efx/stamps/autogen: $(SRCROOT)/efx/autogen.sh $(SRCROOT)/efx/configure.ac
-	$(V)echo "Running 'autogen.sh' for efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/autogen
-	cd $(SRCROOT)/efx && NOCONFIGURE=1 ./autogen.sh
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/autogen
-	$(V)echo "Success running 'autogen.sh' for efx."
-
-$(BUILDROOT)/efx/stamps/configure: $(BUILDROOT)/efx/stamps/autogen $(BUILDROOT)/efx/stamps/dependencies
-	$(V)echo "Configuring efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/configure
-	$(V)mkdir -p $(BUILDROOT)/efx/compile
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	cd $(BUILDROOT)/efx/compile && \
-	$(SRCROOT)/efx/configure --prefix=$(INSTALLROOT) 
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/configure
-	$(V)echo "Success configuring efx."
-
-$(BUILDROOT)/efx/stamps/compile: $(BUILDROOT)/efx/stamps/configure efx-compile
-efx-compile: $(BUILDROOT)/efx/stamps/configure
-	$(V)echo "Compiling efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/compile-updated
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
-		touch $(BUILDROOT)/efx/stamps/compile-updated;\
-	fi
-	$(V)if test -f $(BUILDROOT)/efx/stamps/compile-updated; then\
-		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile;\
-	else\
-		echo "efx is up to date.";\
-	fi
-	$(V)if test ! -f $(BUILDROOT)/efx/stamps/compile -o -f $(BUILDROOT)/efx/stamps/compile-updated; then\
-		touch $(BUILDROOT)/efx/stamps/compile;\
-		echo "Compile updated, needs reinstall.";\
-	fi
-	$(V)echo "Success compiling efx."
-
-$(BUILDROOT)/efx/stamps/install: $(BUILDROOT)/efx/stamps/compile efx-install
-efx-install: $(BUILDROOT)/efx/stamps/compile
-	$(V)echo "Installing efx..."
-	$(V)if test ! -f $(BUILDROOT)/efx/stamps/install -o $(BUILDROOT)/efx/stamps/compile -nt $(BUILDROOT)/efx/stamps/install; then\
-		rm -f $(BUILDROOT)/efx/stamps/install;\
-		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile";\
-		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile;\
-		mkdir -p $(BUILDROOT)/efx/stamps;\
-		touch $(BUILDROOT)/efx/stamps/install;\
-	else\
-		echo "efx did not change, not need to reinstall.";\
-	fi
-	$(V)echo "Success installing efx."
-
-$(BUILDROOT)/efx/stamps/test: $(BUILDROOT)/efx/stamps/compile efx-test
-efx-test: $(BUILDROOT)/efx/stamps/compile
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/test
-	$(V)echo 'No test target defined for efx'
-
-$(BUILDROOT)/efx/stamps/doc: $(BUILDROOT)/efx/stamps/compile efx-doc
-efx-doc: $(BUILDROOT)/efx/stamps/compile
-	$(V)echo "Generating documentation (make doc) efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/doc
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) doc -C $(BUILDROOT)/efx/compile
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/doc
-	$(V)echo "Success generating documentation (make doc) efx."
-
-$(BUILDROOT)/efx/stamps/distcheck: $(BUILDROOT)/efx/stamps/compile efx-distcheck
-efx-distcheck: $(BUILDROOT)/efx/stamps/compile
-	$(V)echo "Checking distribution efx..."
-	$(V)rm -f $(BUILDROOT)/efx/stamps/distcheck
-	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
-	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
-	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
-	export LDFLAGS="$${LDFLAGS}";\
-	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/efx/compile
-	$(V)mkdir -p $(BUILDROOT)/efx/stamps
-	touch $(BUILDROOT)/efx/stamps/distcheck
-	$(V)echo "Success checking distribution efx."
-
-efx-direct-users-compile:
-
-efx-all-users-compile:
 
 ########################################################################
 # python-evas rules
@@ -1468,8 +1217,8 @@ python-edje-all-users-compile:
 
 ########################################################################
 # python-ecore rules
-python-ecore-dependencies: $(BUILDROOT)/python-ecore/stamps/dependencies ecore-install python-evas-install
-$(BUILDROOT)/python-ecore/stamps/dependencies: $(BUILDROOT)/ecore/stamps/install $(BUILDROOT)/python-evas/stamps/install
+python-ecore-dependencies: $(BUILDROOT)/python-ecore/stamps/dependencies python-evas-install efl-install
+$(BUILDROOT)/python-ecore/stamps/dependencies: $(BUILDROOT)/python-evas/stamps/install $(BUILDROOT)/efl/stamps/install
 	$(V)mkdir -p $(BUILDROOT)/python-ecore/stamps
 	touch $(BUILDROOT)/python-ecore/stamps/dependencies
 
@@ -1576,3 +1325,120 @@ python-ecore-distcheck: $(BUILDROOT)/python-ecore/stamps/compile
 python-ecore-direct-users-compile:
 
 python-ecore-all-users-compile:
+
+########################################################################
+# efx rules
+efx-dependencies: $(BUILDROOT)/efx/stamps/dependencies efl-install
+$(BUILDROOT)/efx/stamps/dependencies: $(BUILDROOT)/efl/stamps/install
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/dependencies
+
+efx-clean:
+	if test -d $(BUILDROOT)/efx/compile; then chmod -R u+w $(BUILDROOT)/efx/compile; fi
+	rm -fr $(BUILDROOT)/efx/compile
+	rm -fr $(BUILDROOT)/efx/stamps
+
+$(BUILDROOT)/efx/stamps/autogen: $(SRCROOT)/efx/autogen.sh $(SRCROOT)/efx/configure.ac
+	$(V)echo "Running 'autogen.sh' for efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/autogen
+	cd $(SRCROOT)/efx && NOCONFIGURE=1 ./autogen.sh
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/autogen
+	$(V)echo "Success running 'autogen.sh' for efx."
+
+$(BUILDROOT)/efx/stamps/configure: $(BUILDROOT)/efx/stamps/autogen $(BUILDROOT)/efx/stamps/dependencies
+	$(V)echo "Configuring efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/configure
+	$(V)mkdir -p $(BUILDROOT)/efx/compile
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export LDFLAGS="$${LDFLAGS}";\
+	cd $(BUILDROOT)/efx/compile && \
+	$(SRCROOT)/efx/configure --prefix=$(INSTALLROOT) 
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/configure
+	$(V)echo "Success configuring efx."
+
+$(BUILDROOT)/efx/stamps/compile: $(BUILDROOT)/efx/stamps/configure efx-compile
+efx-compile: $(BUILDROOT)/efx/stamps/configure
+	$(V)echo "Compiling efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/compile-updated
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	$(V)if make --dry-run $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile 2>/dev/null | grep -e 'libtool ' >/dev/null 2>/dev/null; then\
+		touch $(BUILDROOT)/efx/stamps/compile-updated;\
+	fi
+	$(V)if test -f $(BUILDROOT)/efx/stamps/compile-updated; then\
+		echo "make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export LDFLAGS="$${LDFLAGS}";\
+	make $(MAKEOPTS) all -C $(BUILDROOT)/efx/compile;\
+	else\
+		echo "efx is up to date.";\
+	fi
+	$(V)if test ! -f $(BUILDROOT)/efx/stamps/compile -o -f $(BUILDROOT)/efx/stamps/compile-updated; then\
+		touch $(BUILDROOT)/efx/stamps/compile;\
+		echo "Compile updated, needs reinstall.";\
+	fi
+	$(V)echo "Success compiling efx."
+
+$(BUILDROOT)/efx/stamps/install: $(BUILDROOT)/efx/stamps/compile efx-install
+efx-install: $(BUILDROOT)/efx/stamps/compile
+	$(V)echo "Installing efx..."
+	$(V)if test ! -f $(BUILDROOT)/efx/stamps/install -o $(BUILDROOT)/efx/stamps/compile -nt $(BUILDROOT)/efx/stamps/install; then\
+		rm -f $(BUILDROOT)/efx/stamps/install;\
+		echo "make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile";\
+		export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export LDFLAGS="$${LDFLAGS}";\
+	make $(MAKEOPTS) install -C $(BUILDROOT)/efx/compile;\
+		mkdir -p $(BUILDROOT)/efx/stamps;\
+		touch $(BUILDROOT)/efx/stamps/install;\
+	else\
+		echo "efx did not change, not need to reinstall.";\
+	fi
+	$(V)echo "Success installing efx."
+
+$(BUILDROOT)/efx/stamps/test: $(BUILDROOT)/efx/stamps/compile efx-test
+efx-test: $(BUILDROOT)/efx/stamps/compile
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/test
+	$(V)echo 'No test target defined for efx'
+
+$(BUILDROOT)/efx/stamps/doc: $(BUILDROOT)/efx/stamps/compile efx-doc
+efx-doc: $(BUILDROOT)/efx/stamps/compile
+	$(V)echo "Generating documentation (make doc) efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/doc
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export LDFLAGS="$${LDFLAGS}";\
+	make $(MAKEOPTS) doc -C $(BUILDROOT)/efx/compile
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/doc
+	$(V)echo "Success generating documentation (make doc) efx."
+
+$(BUILDROOT)/efx/stamps/distcheck: $(BUILDROOT)/efx/stamps/compile efx-distcheck
+efx-distcheck: $(BUILDROOT)/efx/stamps/compile
+	$(V)echo "Checking distribution efx..."
+	$(V)rm -f $(BUILDROOT)/efx/stamps/distcheck
+	export PATH="$(INSTALLROOT)/bin:$${PATH}";\
+	export PKG_CONFIG_PATH="$(INSTALLROOT)/lib/pkgconfig";\
+	export CXXFLAGS="$${CXXFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export CFLAGS="$${CFLAGS} -O2 -Wall -Wextra -Wshadow";\
+	export LDFLAGS="$${LDFLAGS}";\
+	make $(MAKEOPTS) distcheck -C $(BUILDROOT)/efx/compile
+	$(V)mkdir -p $(BUILDROOT)/efx/stamps
+	touch $(BUILDROOT)/efx/stamps/distcheck
+	$(V)echo "Success checking distribution efx."
+
+efx-direct-users-compile:
+
+efx-all-users-compile:
