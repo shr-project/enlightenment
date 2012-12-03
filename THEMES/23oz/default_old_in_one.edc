@@ -14859,7 +14859,7 @@ images {
 }
 
 group {
-   name: "e/widgets/entry";
+   name: "e/widgets/entry/scrollframe";
    // min: 18 18;
    min: 120 12;
    // max: 999999 18;
@@ -14930,7 +14930,7 @@ group {
                  }
           }
           part {
-                 name: "e.swallow.text";
+                 name: "e.swallow.content";
                  type: SWALLOW;
                  description {
                         state: "default" 0.0;
@@ -14975,37 +14975,62 @@ group {
 group {
    name: "e/widgets/entry/text";
    parts {
-          part {
-                 name: "e.text.text";
-         type: TEXT;
+      part {
+         name: "e.text.text";
+         type: TEXTBLOCK;
          scale: 1;
-         mouse_events: 0;
+         entry_mode: EDITABLE;
+         select_mode: DEFAULT;
+         cursor_mode: BEFORE;
+         multiline: 0;
+         source: "e/widgets/entry/selection";
+         source4: "e/widgets/entry/cursor";
          description {
-                state: "default" 0.0;
-                color: 0 0 0 255;
-                color_class: "entry_text";
-                        rel1 {
-                                offset:   3  0;
-                                }
-                        rel2 {
-                                offset:   -5 0;
-                                }
-                text {
-                   text: "Entry";
-                   font: "Edje-Vera";
-                   size: 10;
-                   min: 1 1;
-                   align: 0.0 0.0;
-                           text_class: "entry";
-                }
+            state: "default" 0.0;
+            color: 0 0 0 255;
+            color_class: "entry_text";
+            rel1.offset:   3  0;
+            rel2.offset:   -5 0;
+            text {
+               text: "Entry";
+               style: "textblock_style";
+               min: 1 1;
+               align: 0.0 0.5;
+               text_class: "entry";
+            }
+         }
+         description { state: "disabled" 0.0;
+            inherit: "default" 0.0;
+            color: 100 100 100 200;
          }
 //         description {
 //                state: "selected" 0.0;
 //                 inherit: "default" 0.0;
 //                color: 255 255 255 255;
 //         }
-          }
+      }
    }
+
+   programs {
+      program { name: "focus";
+         signal: "load";
+         source: "";
+         action: FOCUS_SET;
+         target: "e.text.text";
+      }
+      program {
+         signal: "e,state,disabled"; source: "e";
+         action: STATE_SET "disabled" 0.0;
+         target: "e.text.text";
+      }
+      program {
+         signal: "e,state,enabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.text.text";
+      }
+   }
+
+
 //   programs   {
 //           program {
 //                        name:    "select_entry_text";
@@ -15023,6 +15048,19 @@ group {
 //           }
 //   }
 }
+
+group { name: "e/widgets/entry/password";
+   inherit: "e/widgets/entry/text";
+   parts {
+      part { name: "e.text.text";
+         entry_mode: PASSWORD;
+         description { state: "default" 0.0;
+            text.repch: "*";
+         }
+      }
+   }
+}
+
 
 group {
    name: "e/widgets/entry/cursor";
@@ -15099,12 +15137,10 @@ group {
 
 group {
    name: "e/widgets/entry/selection";
-   data {
-          item: "on_foreground" "1";
-   }
    parts {
           part {
                  name: "selection";
+                 mouse_events: 0;
                  // type: RECT;
                  description {
                         state: "default" 0.0;
@@ -16545,8 +16581,145 @@ group { name: "e/fileman/default/window/main";
             state: "default" 0.0;
          }
       }
+
+      part { name: "e.swallow.toolbar"; 
+         type: SWALLOW;
+         description { state: "default" 0.0;
+         }
+         description { state: "tb_top" 0.0;
+            align: 0.5 0.0;
+            rel1.offset: 0 0;
+            rel2.offset: -1 0;
+            rel2.relative: 1.0 0.0;
+            fixed: 0 1;
+         }
+         description { state: "tb_bottom" 0.0;
+            align: 0.5 1.0;
+            rel1.offset: 0 0;
+            rel1.relative: 0.0 1.0;
+            rel2.offset: -1 0;
+            fixed: 0 1;
+         }
+      }
+      part { name: "e.swallow.favorites";
+         type: SWALLOW;
+         description { state: "default" 0.0;
+            align: 0.0 1.0;
+            rel1.offset: 0 0;
+            rel1.to: "region";
+            rel2.offset: 0 -1;
+            rel2.relative: 0.0 1.0;
+            rel2.to: "region";
+            fixed: 1 0;
+         }
+      }
+
+      part { name: "e.swallow.content"; 
+         type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.offset: 0 0;
+            rel1.to: "region";
+            rel2.offset: -1 -1;
+            rel2.to: "region";
+            align: 1.0 1.0;
+         }
+         description { state: "fav" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "e.swallow.favorites";
+         }
+      }
+      part { name: "region"; 
+         type: SPACER;
+         description { state: "default" 0.0;
+         }
+         description { state: "tb_top" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 0.0 1.0;
+            rel1.to_y: "e.swallow.toolbar";
+         }
+         description { state: "tb_bottom" 0.0;
+            inherit: "default" 0.0;
+            rel2.relative: 1.0 0.0;
+            rel2.to_y: "e.swallow.toolbar";
+         }
+         description { state: "tb_left" 0.0;
+            inherit: "default" 0.0;
+            rel1.relative: 1.0 0.0;
+            rel1.to_x: "e.swallow.toolbar";
+         }
+         description { state: "tb_right" 0.0;
+            inherit: "default" 0.0;
+            rel2.relative: 0.0 1.0;
+            rel2.to_x: "e.swallow.toolbar";
+         }
+      }
+	}
+   programs {
+      program {
+         signal: "e,favorites,enabled"; source: "e";
+         action: STATE_SET "fav" 0.0;
+         target: "e.swallow.content";
+      }
+      program {
+         signal: "e,favorites,disabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.swallow.content";
+      }
+      program {
+         signal: "e,toolbar,left"; source: "e";
+         action: STATE_SET "tb_left" 0.0;
+         target: "e.swallow.toolbar";
+         target: "region";
+      }
+      program {
+         signal: "e,toolbar,right"; source: "e";
+         action: STATE_SET "tb_right" 0.0;
+         target: "e.swallow.toolbar";
+         target: "region";
+      }
+      program {
+         signal: "e,toolbar,top"; source: "e";
+         action: STATE_SET "tb_top" 0.0;
+         target: "e.swallow.toolbar";
+         target: "region";
+      }
+      program {
+         signal: "e,toolbar,bottom"; source: "e";
+         action: STATE_SET "tb_bottom" 0.0;
+         target: "e.swallow.toolbar";
+         target: "region";
+      }
+      program {
+         signal: "e,toolbar,disabled"; source: "e";
+         action: STATE_SET "default" 0.0;
+         target: "e.swallow.toolbar";
+         target: "region";
+      }
    }
 }
+
+group { name: "e/fileman/toolbar/default/base";
+   parts {
+      part { name: "base";
+         type: RECT;
+         description { state: "default" 0.0;
+            color: 0 0 0 0;
+         }
+      }
+      part { name: "e.swallow.event"; type: SWALLOW;
+         description { state: "default" 0.0;
+            rel1.to: "e.swallow.content";
+            rel2.to: "e.swallow.content";
+         }
+      }
+      part { name: "e.swallow.content"; type: SWALLOW;
+         description { state: "default" 0.0;
+         }
+      }
+   }
+}
+
 
 images {
    image: "e17_ibar_over_v.png" COMP;
