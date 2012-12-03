@@ -20,8 +20,5 @@
 #include "Exe.h"
 #include "Event.h"
 
-/* exceptions */
-#include "exception/ProcessNotExistingException.h"
-
 #endif // ECOREXX_H
 
