@@ -4,6 +4,7 @@ struct _E_Config_Dialog_Data
 {
    int position;
    int ignore_self_links;
+   int set_last_active;
    int fill_side;
 };
 
@@ -12,6 +13,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
 {
    cfdata->position = sos_config->position;
    cfdata->ignore_self_links = sos_config->ignore_self_links;
+   cfdata->set_last_active = sos_config->set_last_active;
    cfdata->fill_side = sos_config->fill_side;
 }
 
@@ -38,10 +40,11 @@ static int
 _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfdata)
 {
 #define CHECK(X) \
-   if (cfdata->X != sos_config->X) return 1
+   if (cfdata->X != (int)sos_config->X) return 1
 
    CHECK(position);
    CHECK(ignore_self_links);
+   CHECK(set_last_active);
    CHECK(fill_side);
 
 #undef CHECK
@@ -73,6 +76,9 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
    ol = e_widget_list_add(evas, 0, 0);
 
    ob = e_widget_check_add(evas, D_("Ignore Self Links"), &cfdata->ignore_self_links);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+
+   ob = e_widget_check_add(evas, D_("Set Last Message As Active"), &cfdata->set_last_active);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
    ob = e_widget_check_add(evas, D_("Fill side"), &cfdata->fill_side);
@@ -150,13 +156,15 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 {
    if ((cfdata->fill_side != sos_config->fill_side) ||
        (cfdata->ignore_self_links != sos_config->ignore_self_links) ||
-       (cfdata->position != sos_config->position)
+       (cfdata->set_last_active != sos_config->set_last_active) ||
+       (cfdata->position != (int)sos_config->position)
       )
      {
 #define SET(X) sos_config->X = cfdata->X
         SET(position);
         SET(fill_side);
         SET(ignore_self_links);
+        SET(set_last_active);
      }
    e_config_save_queue();
    return 1;

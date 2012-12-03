@@ -15,7 +15,7 @@
 #endif
 
 #define MOD_CONFIG_FILE_EPOCH 0x0001
-#define MOD_CONFIG_FILE_GENERATION 0x01
+#define MOD_CONFIG_FILE_GENERATION 0x02
 #define MOD_CONFIG_FILE_VERSION \
    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
@@ -56,8 +56,9 @@ typedef struct Mod
 typedef struct Config
 {
    unsigned int config_version;
-   int position;
+   E_Gadcon_Orient position;
    Eina_Bool ignore_self_links;
+   Eina_Bool set_last_active;
    Eina_Bool fill_side;
 } Config;
 

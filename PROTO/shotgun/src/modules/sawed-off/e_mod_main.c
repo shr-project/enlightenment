@@ -7,6 +7,10 @@ static Eio_File *eio_file = NULL;
 Mod *mod = NULL;
 Config *sos_config = NULL;
 
+
+static void _action_entry_prev_cb(E_Object *obj, const char *params);
+static void _action_entry_next_cb(E_Object *obj, const char *params);
+
 const char _action_entry_toggle[] = "shotgun_entry_toggle";
 const char _action_entry_next[] = "shotgun_entry_next";
 const char _action_entry_prev[] = "shotgun_entry_prev";
@@ -43,6 +47,7 @@ mod_contact_free(Mod_Contact *mc)
    if (mod->contact_active == mc)
      {
         E_FN_DEL(e_object_del, mod->popup);
+        mod->popup_bg = mod->popup_entry = mod->popup_img = NULL;
         mod->contact_active = NULL;
      }
    free(mc);
@@ -75,6 +80,7 @@ _set_active(Eina_Bool active)
    if (!active)
      {
         E_FN_DEL(e_object_del, mod->popup);
+        mod->popup_bg = mod->popup_entry = mod->popup_img = NULL;
         mod->contact_active = NULL;
         return;
      }
@@ -95,6 +101,10 @@ _e_mod_sos_config_load(void)
    #define T Config
    #define D conf_edd
    E_CONFIG_VAL(D, T, config_version, UINT);
+   E_CONFIG_VAL(D, T, position, UINT);
+   E_CONFIG_VAL(D, T, ignore_self_links, UCHAR);
+   E_CONFIG_VAL(D, T, set_last_active, UCHAR);
+   E_CONFIG_VAL(D, T, fill_side, UCHAR);
 
    sos_config = e_config_domain_load("module.sawed-off_shotgun", conf_edd);
    if (sos_config)
@@ -103,10 +113,19 @@ _e_mod_sos_config_load(void)
           _e_mod_sos_config_free();
      }
 
-   if (sos_config) return;
+   if (sos_config)
+     {
+#define IFMODCFG(v) \
+  if ((sos_config->config_version & 0xffff) < (v))
+
+        IFMODCFG(0x02)
+        sos_config->set_last_active = 1;
+        return;
+     }
    sos_config = E_NEW(Config, 1);
    sos_config->config_version = (MOD_CONFIG_FILE_EPOCH << 16);
-   sos_config->position = E_GADCON_ORIENT_CORNER_RB;
+   sos_config->position = E_GADCON_ORIENT_FLOAT;
+   sos_config->set_last_active = 1;
 }
 
 static void
@@ -150,8 +169,10 @@ _contact_info_cb(void *d, const EDBus_Message *msg, EDBus_Pending *pending EINA_
      }
    else
      mc = mod_contact_new(jid, NULL, NULL, st, 0, priority);
-   eina_stringshare_replace(&mc->name, name);
-   eina_stringshare_replace(&mc->icon, icon);
+   if (name && name[0])
+     eina_stringshare_replace(&mc->name, name);
+   if (icon && icon[0])
+     eina_stringshare_replace(&mc->icon, icon);
    eina_stringshare_del(jid);
 }
 
@@ -191,8 +212,13 @@ _contacts_list_cb(void *d EINA_UNUSED, const EDBus_Message *msg, EDBus_Pending *
 {
    EDBus_Message_Iter *array = NULL;
    char *txt = NULL;
+   const char *name, *error;
 
-   if (edbus_message_error_get(msg, NULL, NULL)) return;
+   if (edbus_message_error_get(msg, &name, &error))
+     {
+        ERR("%s: %s", name, error);
+        return;
+     }
    if (!edbus_message_arguments_get(msg, "as", &array)) return;
 
    while (edbus_message_iter_get_and_next(array, 's', &txt))
@@ -213,7 +239,7 @@ _connected_cb(void *d EINA_UNUSED, const EDBus_Message *msg)
         return;
      }
    if (mod->contacts_list) return;
-   edbus_proxy_call(mod->proxy_link, "get", _contacts_list_cb, NULL, -1, "");
+   edbus_proxy_call(mod->proxy_list, "get", _contacts_list_cb, NULL, -1, "");
 }
 
 static void
@@ -226,13 +252,24 @@ _new_msg_cb(void *d EINA_UNUSED, const EDBus_Message *msg)
    mc = eina_hash_find(mod->contacts, jid);
    if (!mc) return; // should be impossible
    mod->contacts_list = eina_inlist_promote(mod->contacts_list, EINA_INLIST_GET(mc));
+   if (sos_config->set_last_active && ((!mod->popup) || (!mod->popup->visible)))
+     {
+        if (mod->popup_entry)
+          e_entry_clear(mod->popup_entry);
+        mod->contact_active = mc;
+     }
 }
 
 static void
 _name_owner_change(void *d EINA_UNUSED, const char *bus EINA_UNUSED, const char *old EINA_UNUSED, const char *new)
 {
    mod->nameowned = (new && new[0]);
-   if (mod->nameowned) mod->connected = 1;
+   if (mod->nameowned)
+     {
+        mod->connected = 1;
+        if (!mod->contacts_list)
+          edbus_proxy_call(mod->proxy_list, "get", _contacts_list_cb, NULL, -1, "");
+     }
    _set_active((mod->nameowned && mod->connected));
    if (!mod->nameowned) E_FREE_LIST(mod->images, eina_stringshare_del);
 }
@@ -257,12 +294,28 @@ _link_activate(unsigned int num)
 }
 
 static void
-_sawedoff_activate_send(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj, Evas_Event_Key_Down *ev)
+_sawedoff_key_cb(void *data EINA_UNUSED, Evas *e EINA_UNUSED, Evas_Object *obj, Evas_Event_Key_Down *ev)
 {
-   if (strcmp(ev->keyname, "Return") && strcmp(ev->keyname, "KP_Enter")) return;
-   edbus_proxy_call(mod->proxy_contact, "send_echo", NULL, NULL, -1, "ssu",
-     mod->contact_active->jid, e_entry_text_get(obj), 0);
-   e_entry_clear(mod->popup_entry);
+   if (!strcmp(ev->keyname, "Escape"))
+     {
+        e_grabinput_release(0, mod->popup->evas_win);
+        e_popup_hide(mod->popup);
+        return;
+     }
+   if ((!strcmp(ev->keyname, "Return")) || (!strcmp(ev->keyname, "KP_Enter")))
+     { 
+        edbus_proxy_call(mod->proxy_contact, "send_echo", NULL, NULL, -1, "ssu",
+          mod->contact_active->jid, e_entry_text_get(obj), 0);
+        e_entry_clear(mod->popup_entry);
+        return;
+     }
+   if (evas_key_modifier_is_set(ev->modifiers, "Alt") && evas_key_modifier_is_set(ev->modifiers, "Control"))
+     {
+        if ((!strcmp(ev->keyname, "Right")) || (!strcmp(ev->keyname, "Down")))
+          _action_entry_next_cb(NULL, NULL);
+        else if ((!strcmp(ev->keyname, "Left")) || (!strcmp(ev->keyname, "Up")))
+          _action_entry_prev_cb(NULL, NULL);
+     }
 }
 
 static void
@@ -272,12 +325,17 @@ _sawedoff_activate(Mod_Contact *mc)
    int x, y, mw, mh;
    E_Zone *zone;
 
-   mod->contact_active = mc;
    zone = e_util_zone_current_get(e_manager_current_get());
    if (mod->popup)
      {
         o = mod->popup_bg, entry = mod->popup_entry, img = mod->popup_img;
-        e_entry_clear(entry);
+        if (mc != mod->contact_active)
+          {
+             evas_object_del(mod->popup_img);
+             edje_object_part_text_set(o, "shotgun.text", "");
+             mod->popup_img = img = e_icon_add(mod->popup->evas);
+             e_entry_clear(entry);
+          }
      }
    else
      {
@@ -289,19 +347,20 @@ _sawedoff_activate(Mod_Contact *mc)
         e_popup_edje_bg_object_set(mod->popup, o);
 
         mod->popup_entry = entry = e_entry_add(mod->popup->evas);
+        edje_extern_object_min_size_set(entry, 80 * e_scale, 16 * e_scale);
         edje_object_part_swallow(o, "shotgun.swallow.entry", entry);
-        1 | evas_object_key_grab(entry, "Return", 0, 0, EINA_TRUE);
-        1 | evas_object_key_grab(entry, "KP_Enter", 0, 0, EINA_TRUE);
-        evas_object_event_callback_add(entry, EVAS_CALLBACK_KEY_DOWN, (Evas_Object_Event_Cb)_sawedoff_activate_send, NULL);
+        evas_object_event_callback_add(entry, EVAS_CALLBACK_KEY_DOWN, (Evas_Object_Event_Cb)_sawedoff_key_cb, NULL);
 
         mod->popup_img = img = e_icon_add(mod->popup->evas);
      }
+   mod->contact_active = mc;
    e_entry_focus(entry);
    edje_object_part_text_set(o, "shotgun.text", mc->name);
    if (mc->icon)
-     e_icon_file_key_set(img, mod->edj, mc->icon);
+     e_icon_file_key_set(img, eet_file_get(mod->ef), mc->icon);
    else
-     e_icon_fdo_icon_set(img, "shotgun");
+     e_util_icon_theme_set(img, "shotgun");
+   edje_extern_object_min_size_set(img, 48 * e_scale, 48 * e_scale);
    edje_object_part_swallow(o, "shotgun.swallow.icon", img);
 
    edje_object_size_min_calc(o, &mw, &mh);
@@ -392,6 +451,7 @@ _sawedoff_activate(Mod_Contact *mc)
    e_popup_move_resize(mod->popup, x, y, mw, mh);
    evas_object_resize(o, mw, mh);
    e_popup_show(mod->popup);
+   e_grabinput_get(0, 0, mod->popup->evas_win);
 }
 
 static void
@@ -406,7 +466,7 @@ _action_entry_next_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
         if (EINA_INLIST_GET(mod->contact_active)->next)
           mc = EINA_INLIST_CONTAINER_GET(EINA_INLIST_GET(mod->contact_active)->next, Mod_Contact);
         else
-          mc = EINA_INLIST_CONTAINER_GET(EINA_INLIST_GET(mod->contact_active), Mod_Contact);
+          mc = EINA_INLIST_CONTAINER_GET(mod->contacts_list, Mod_Contact);
      }
    else
      mc = EINA_INLIST_CONTAINER_GET(mod->contacts_list, Mod_Contact);
@@ -425,7 +485,7 @@ _action_entry_prev_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
         if (EINA_INLIST_GET(mod->contact_active)->prev)
           mc = EINA_INLIST_CONTAINER_GET(EINA_INLIST_GET(mod->contact_active)->prev, Mod_Contact);
         else
-          mc = EINA_INLIST_CONTAINER_GET(EINA_INLIST_GET(mod->contact_active)->last, Mod_Contact);
+          mc = EINA_INLIST_CONTAINER_GET(mod->contacts_list->last, Mod_Contact);
      }
    else
      mc = EINA_INLIST_CONTAINER_GET(mod->contacts_list->last, Mod_Contact);
@@ -437,7 +497,13 @@ _action_entry_toggle_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSE
 {
    if (mod->popup)
      {
-        e_popup_hide(mod->popup);
+        if (mod->popup->visible)
+          {
+             e_grabinput_release(0, mod->popup->evas_win);
+             e_popup_hide(mod->popup);
+          }
+        else
+          _sawedoff_activate(mod->contact_active);
         return;
      }
    if (!mod->active) return;
