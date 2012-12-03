@@ -1,0 +1,65 @@
+collections {
+   group { name: "e/shotgun/module/sawedoff";
+      parts {
+         part { name: "base";
+            type: RECT;
+            description {
+               state: "default";
+               visible: 1;
+               color: 0 0 0 255;
+            }
+         }
+         part { name: "shotgun.swallow.icon";
+            type: SWALLOW;
+            description {
+               state: "default";
+               min: 36 36;
+               align: 0 0;
+            }
+         }
+         part { name: "shotgun.swallow.entry";
+            type: SWALLOW;
+            description {
+               state: "default";
+               align: 0.5 0.5;
+               min: 80 16;
+               rel1 {
+                  relative: 1.0 1.0;
+                  offset: 2 1;
+                  to: "shotgun.swallow.icon";
+               }
+               rel2.offset: -2 -2;
+            }
+         }
+         part { name: "shotgun.text";
+            type: TEXT;
+            effect: OUTLINE_SOFT_SHADOW;
+            scale: 1;
+            mouse_events: 0;
+            description {  
+               state: "default";
+               align: 0.5 0.0;
+               rel1 {
+                  relative: 1.0 0.0;
+                  offset: 2 1;
+                  to: "shotgun.swallow.icon";
+               }  
+               rel2 {
+                  relative: 0.0 0.0;
+                  offset: -2 -2;
+                  to: "shotgun.swallow.entry";
+               }
+               color:  255 255 255 255;
+               color3: 52 82 109 170;
+               text {
+                  text:  "";
+                  font:  "Sans:style=Bold";
+                  size:  10;
+                  min:   1 1;
+                  align: 0.0 0.0;
+               }
+            }
+         }
+      }
+   }
+}

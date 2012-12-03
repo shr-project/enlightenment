@@ -74,9 +74,8 @@ else
 fi
 AC_SUBST([pkgconfig_requires_private])
 
-
-PKG_CHECK_MODULES([SHOTGUN], [eina >= 1.0.999 ecore >= 1.0.999 ecore-con >= 1.0.999])
-requirements_pc_shotgun="eina >= 1.0.999 ecore >= 1.0.999 ecore-con >= 1.0.999"
+PKG_CHECK_MODULES([SHOTGUN], [eina >= 1.7 ecore >= 1.7 ecore-con >= 1.7])
+requirements_pc_shotgun="eina >= 1.7 ecore >= 1.7 ecore-con >= 1.7"
 
 have_gui="no"
 want_gui="yes"
@@ -86,11 +85,8 @@ AC_ARG_ENABLE([gui],
 
 if test "x$want_gui" != "xno"; then
    PKG_CHECK_MODULES([GUI],
-      [eet >= 1.4.0 evas >= 1.0.999 ecore-file >= 1.0.999 ecore-imf >= 1.0.999 edje >= 1.0.999 elementary efx],
-      [
-       have_gui="yes"
-       requirements_pc_shotgun+="eet >= 1.4.0 evas >= 1.0.999 ecore-file >= 1.0.999 ecore-imf >= 1.0.999 edje >= 1.0.999 elementary efx"
-      ],
+      [eet >= 1.4.0 evas >= 1.7 ecore-file >= 1.7 ecore-imf >= 1.7 edje >= 1.7 elementary efx],
+      [have_gui="yes"],
       [have_gui="no"]
    )
 else
@@ -119,7 +115,6 @@ if test "x$want_azy" != "xno"; then
       [
        AC_DEFINE(HAVE_AZY, 1, [Azy support])
        have_azy="yes"
-       requirements_pc_shotgun+=" azy >= 1.0.0"
       ],
       [have_azy="no"]
    )
@@ -142,7 +137,6 @@ if test "x$want_edbus" != "xno"; then
       [
        AC_DEFINE(HAVE_DBUS, 1, [DBUS support])
        have_edbus="yes"
-       requirements_pc_shotgun+=" edbus >= 1.0.0"
       ],
       [have_edbus="no"]
    )
@@ -165,7 +159,6 @@ if test "x$want_enotify" != "xno"; then
       [
        AC_DEFINE(HAVE_NOTIFY, 1, [DBUS Notification support])
        have_enotify="yes"
-       requirements_pc_shotgun+=" enotify >= 1.0.0"
       ],
       [have_enotify="no"]
    )
@@ -175,6 +168,29 @@ fi
 if test "x$want_enotify" = "xyes" -a "x$have_enotify" = "xno"; then
     AC_MSG_ERROR([enotify support requested, but not found by pkg-config.])
 fi
+
+have_sawedoff="no"
+want_sawedoff="yes"
+AC_ARG_ENABLE([sawedoff],
+   [AC_HELP_STRING([--disable-sawedoff], [disable sawed-off module. @<:@default=detect@:>@])],
+   [want_sawedoff=$enableval], [])
+
+if test "x$want_sawedoff" != "xno"; then
+   PKG_CHECK_MODULES([E], [enlightenment edbus2], [have_sawedoff="yes"], [have_sawedoff="no"])
+   MODULE_DIR=$(pkg-config --variable=modules enlightenment)
+   release=$(pkg-config --variable=release enlightenment)
+   MODULE_ARCH="$host_os-$host_cpu-$release"
+   AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
+fi
+AC_SUBST(MODULE_ARCH)
+AM_CONDITIONAL([SAWEDOFF], [test "x$have_sawedoff" = "xyes"])
+
+AC_ARG_ENABLE(homedir-install,
+  AS_HELP_STRING([--enable-homedir-install], [Install modules in homedir]),
+  [ MODULE_DIR="${HOME}/.e/e/modules" ]
+)
+
+AC_SUBST(MODULE_DIR)
 
 AC_SUBST([requirements_pc_shotgun])
 
@@ -188,6 +204,8 @@ AC_CONFIG_FILES([
   src/Makefile
   src/lib/Makefile
   src/bin/Makefile
+  src/modules/sawed-off/Makefile
+  src/modules/sawed-off/module.desktop
 ])
 AC_OUTPUT
 
@@ -213,13 +231,10 @@ Features:
 FEATURES_EOF
 echo
 
-cat << DOCS_EOF
-Documentation:
- * enabled.........: ${build_doc}
-DOCS_EOF
-if test "x${build_doc}" = "xyes" ; then
-  echo " Building..........: make doc"
-fi
+cat << MODULES_EOF
+Modules:
+ * sawed-off...........: $have_sawedoff
+MODULES_EOF
 echo
 
 cat << COMPILE_EOF
