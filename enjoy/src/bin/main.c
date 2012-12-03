@@ -8,7 +8,7 @@
 
 #include <Ecore_Getopt.h>
 #include <Ecore_File.h>
-#include <E_DBus.h>
+#include <EDBus.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gettext.h"
@@ -387,38 +387,6 @@ _cb_started(void *data __UNUSED__, int type __UNUSED__, void *event __UNUSED__)
 
    return ECORE_CALLBACK_PASS_ON;
 }
-
-/* not used
- * 
-static DBusMessage *
-_cb_dbus_quit(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
-{
-   enjoy_quit();
-   return dbus_message_new_method_return(msg);
-}
-
-static DBusMessage *
-_cb_dbus_version(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
-{
-   DBusMessage *reply = dbus_message_new_method_return(msg);
-   DBusMessageIter iter, siter;
-   dbus_message_iter_init_append(reply, &iter);
-   dbus_message_iter_open_container(&iter, DBUS_TYPE_STRUCT, NULL, &siter);
-
-#define APPEND_UINT16(val)                                              \
-   do {                                                                 \
-      unsigned short _tmp_val = val;                                    \
-      dbus_message_iter_append_basic(&siter, DBUS_TYPE_UINT16, &_tmp_val); \
-   } while (0)
-   APPEND_UINT16(VMAJ);
-   APPEND_UINT16(VMIN);
-   APPEND_UINT16(VMIC);
-#undef APPEND_UINT16
-
-   dbus_message_iter_close_container(&iter, &siter);
-   return reply;
-}
-*/
 
 EAPI int
 elm_main(int argc, char **argv)

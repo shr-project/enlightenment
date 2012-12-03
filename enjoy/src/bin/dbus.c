@@ -3,133 +3,105 @@
 #endif
 
 #include "private.h"
-#include <E_DBus.h>
+#include <EDBus.h>
 
 #define DBUS_NAME "org.enlightenment.enjoy"
 #define DBUS_IFACE "org.enlightenment.enjoy.Control"
 #define DBUS_PATH "/org/enlightenment/enjoy/Control"
 
-static E_DBus_Connection *conn = NULL;
-static E_DBus_Object *dbus_obj = NULL;
-static E_DBus_Interface *dbus_iface = NULL;
+static EDBus_Connection *conn;
+static EDBus_Service_Interface *control;
 
-typedef struct _Enjoy_DBus_Method Enjoy_DBus_Method;
-struct _Enjoy_DBus_Method {
-   const char *name;
-   const char *par;
-   const char *ret;
-   E_DBus_Method_Cb cb;
-};
-
-static DBusMessage *
-_cb_dbus_quit(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
+static EDBus_Message *
+_cb_dbus_quit(const EDBus_Service_Interface *iface __UNUSED__, const EDBus_Message *msg)
 {
    enjoy_quit();
-   return dbus_message_new_method_return(msg);
+   return edbus_message_method_return_new(msg);
 }
 
-static DBusMessage *
-_cb_dbus_version(E_DBus_Object *obj __UNUSED__, DBusMessage *msg)
+static EDBus_Message *
+_cb_dbus_version(const EDBus_Service_Interface *iface __UNUSED__, const EDBus_Message *msg)
 {
-   DBusMessage *reply = dbus_message_new_method_return(msg);
-   DBusMessageIter iter, siter;
-   dbus_message_iter_init_append(reply, &iter);
-   dbus_message_iter_open_container(&iter, DBUS_TYPE_STRUCT, NULL, &siter);
-
-#define APPEND_UINT16(val)                                              \
-   do {                                                                 \
-      unsigned short _tmp_val = val;                                    \
-      dbus_message_iter_append_basic(&siter, DBUS_TYPE_UINT16, &_tmp_val); \
-   } while (0)
-   APPEND_UINT16(VMAJ);
-   APPEND_UINT16(VMIN);
-   APPEND_UINT16(VMIC);
-#undef APPEND_UINT16
-
-   dbus_message_iter_close_container(&iter, &siter);
+   EDBus_Message *reply = edbus_message_method_return_new(msg);
+   uint16_t aj = VMAJ, in = VMIN, ic = VMIC;
+   edbus_message_arguments_set(reply, "qqq", aj, in, ic);
    return reply;
 }
 
 /* Avoid duplicating MPRIS -- see src/plugins/mpris */
-static const Enjoy_DBus_Method control_methods[] = {
-  {"Quit", "", "", _cb_dbus_quit},
-  {"Version", "", "(qqq)", _cb_dbus_version},
-  /* TODO: DB management */
-  {NULL, NULL, NULL, NULL}
+static const EDBus_Method control_methods[] = {
+   { "Quit", NULL, NULL, _cb_dbus_quit, 0 },
+   {
+    "Version", NULL, EDBUS_ARGS({"q", ""}, {"q", ""}, {"q", ""}),
+    _cb_dbus_version, 0
+   },
+   /* TODO: DB management */
+   { }
+};
+
+static const EDBus_Service_Interface_Desc desc = {
+   DBUS_IFACE, control_methods
 };
 
 static void
-_dbus_methods_add(E_DBus_Interface *iface, const Enjoy_DBus_Method desc[])
+_cb_dbus_request_name(void *data __UNUSED__, const EDBus_Message *msg, EDBus_Pending *pending__UNUSED__)
 {
-   const Enjoy_DBus_Method *itr = desc;
-   for (; itr->name; itr++)
-     e_dbus_interface_method_add(iface, itr->name, itr->par, itr->ret, itr->cb);
-}
+   const char *error_name, *error_txt;
+   unsigned flag;
 
-static void
-_cb_dbus_request_name(void *data __UNUSED__, DBusMessage *msg, DBusError *err)
-{
-   DBusError new_err;
-   dbus_uint32_t msgtype;
-
-   if (dbus_error_is_set(err))
+   if (edbus_message_error_get(msg, &error_name, &error_txt))
      {
-        ERR("Could not get DBus name: %s", err->message);
-        goto error;
+        ERR("Error %s %s", error_name, error_txt);
+        goto end;
      }
 
-   dbus_error_init(&new_err);
-   dbus_message_get_args
-     (msg, &new_err, DBUS_TYPE_UINT32, &msgtype, DBUS_TYPE_INVALID);
-   if (msgtype != DBUS_REQUEST_NAME_REPLY_PRIMARY_OWNER)
+   if (!edbus_message_arguments_get(msg, "u", &flag))
      {
-        ERR("Could not get the DBus name: reply=%d", msgtype);
-        goto error;
+        ERR("Error getting arguments.");
+        goto end;
+     }
+
+   if (flag != EDBUS_NAME_REQUEST_REPLY_PRIMARY_OWNER)
+     {
+        ERR("Bus name in use by another application.");
+        goto end;
      }
 
    INF("Got DBus name - unique instance running.");
-
-   dbus_obj = e_dbus_object_add(conn, DBUS_PATH, NULL);
-   if (!dbus_obj)
-     {
-        ERR("Could not create Control DBus object.");
-        goto error;
-     }
-   dbus_iface = e_dbus_interface_new(DBUS_IFACE);
-   e_dbus_object_interface_attach(dbus_obj, dbus_iface);
-   _dbus_methods_add(dbus_iface, control_methods);
+   edbus_service_interface_register(conn, DBUS_PATH, &desc);
 
    /* will run after other events run, in the main loop */
    ecore_event_add(ENJOY_EVENT_STARTED, NULL, NULL, NULL);
    return;
 
- error:
+end:
    ecore_main_loop_quit();
-   return;
 }
 
 Eina_Bool
 enjoy_dbus_init(void)
 {
-   e_dbus_init();
-   conn = e_dbus_bus_get(DBUS_BUS_SESSION);
+   edbus_init();
+   conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
    if (!conn)
      {
         ERR("Could not get DBus session bus");
         return EINA_FALSE;
      }
 
-   e_dbus_request_name
-     (conn, DBUS_NAME, DBUS_NAME_FLAG_DO_NOT_QUEUE,
-      _cb_dbus_request_name, NULL);
+   edbus_name_request(conn, DBUS_NAME, EDBUS_NAME_REQUEST_FLAG_DO_NOT_QUEUE,
+                      _cb_dbus_request_name, NULL);
    return EINA_TRUE;
 }
 
 void
 enjoy_dbus_shutdown(void)
 {
-   if (dbus_obj) e_dbus_object_free(dbus_obj);
-   if (dbus_iface) e_dbus_interface_unref(dbus_iface);
+   if (control)
+     edbus_service_interface_unregister(control);
+   if (conn)
+     edbus_connection_unref(conn);
+   edbus_shutdown();
    conn = NULL;
-   e_dbus_shutdown();
+   control = NULL;
 }

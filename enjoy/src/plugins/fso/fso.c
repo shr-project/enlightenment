@@ -1,5 +1,5 @@
 #include <Eina.h>
-#include <E_DBus.h>
+#include <EDBus.h>
 #include <Ecore.h>
 #include "plugin.h"
 
@@ -31,7 +31,8 @@ static int _fso_log_domain = -1;
 #define FSO_OUSAGED_OBJECT_PATH "/org/freesmartphone/Usage"
 #define FSO_OUSAGED_INTERFACE "org.freesmartphone.Usage"
 
-static E_DBus_Connection *conn = NULL;
+static EDBus_Connection *conn = NULL;
+static EDBus_Proxy *proxy = NULL;
 
 typedef struct _FSO_Cb_Data
 {
@@ -40,17 +41,17 @@ typedef struct _FSO_Cb_Data
 } FSO_Cb_Data;
 
 static void
-fso_request_resource_cb(void *data, DBusMessage *replymsg __UNUSED__, DBusError *error)
+fso_request_resource_cb(void *data, const EDBus_Message *msg, EDBus_Pending *pending)
 {
    FSO_Cb_Data *d = data;
    Eina_Bool e = EINA_FALSE;
+   const char *error_name, *error_txt;
 
    DBG("Request sent to fsousaged to enable resource.");
 
-   if (error && dbus_error_is_set(error))
+   if (edbus_message_error_get(msg, &error_name, &error_txt))
      {
-        ERR("Error requesting FSO resource: %s - %s",
-            error->name, error->message);
+        ERR("Error requesting FSO resource: %s - %s", error_name, error_txt);
         e = EINA_TRUE;
      }
 
@@ -60,17 +61,17 @@ fso_request_resource_cb(void *data, DBusMessage *replymsg __UNUSED__, DBusError 
 }
 
 static void
-fso_release_resource_cb(void *data, DBusMessage *replymsg __UNUSED__, DBusError *error)
+fso_release_resource_cb(void *data, const EDBus_Message *msg, EDBus_Pending *pending)
 {
    FSO_Cb_Data *d = data;
    Eina_Bool e = EINA_FALSE;
+   const char *error_name, *error_txt;
 
    DBG("Request sent to fsousaged to disable resource.");
 
-   if (error && dbus_error_is_set(error))
+   if (edbus_message_error_get(msg, &error_name, &error_txt))
      {
-        ERR("Error releasing FSO resource: %s - %s",
-            error->name, error->message);
+        ERR("Error releasing FSO resource: %s - %s", error_name, error_txt);
         e = EINA_TRUE;
      }
 
@@ -83,11 +84,7 @@ static void
 fso_request_resource(const char *resource, void (*func)(void *data, Eina_Bool error), const void *data)
 {
    FSO_Cb_Data *d = NULL;
-   DBusMessage *msg = dbus_message_new_method_call
-     (FSO_OUSAGED_SERVICE, FSO_OUSAGED_OBJECT_PATH, FSO_OUSAGED_INTERFACE,
-      "RequestResource");
-   dbus_message_append_args
-     (msg, DBUS_TYPE_STRING, &resource, DBUS_TYPE_INVALID);
+   EINA_SAFETY_ON_NULL_RETURN(proxy);
 
    if (func)
      {
@@ -98,9 +95,8 @@ fso_request_resource(const char *resource, void (*func)(void *data, Eina_Bool er
              d->data = (void *)data;
           }
      }
-
-   e_dbus_message_send(conn, msg, fso_request_resource_cb, -1, d);
-   dbus_message_unref(msg);
+   edbus_proxy_call(proxy, "RequestResource", fso_request_resource_cb, d, -1,
+                    "s", resource);
 }
 
 
@@ -108,11 +104,7 @@ static void
 fso_release_resource(const char *resource, void (*func)(void *data, Eina_Bool error), const void *data)
 {
    FSO_Cb_Data *d = NULL;
-   DBusMessage *msg = dbus_message_new_method_call
-     (FSO_OUSAGED_SERVICE, FSO_OUSAGED_OBJECT_PATH, FSO_OUSAGED_INTERFACE,
-      "ReleaseResource");
-   dbus_message_append_args
-     (msg, DBUS_TYPE_STRING, &resource, DBUS_TYPE_INVALID);
+   EINA_SAFETY_ON_NULL_RETURN(proxy);
 
    if (func)
      {
@@ -123,9 +115,8 @@ fso_release_resource(const char *resource, void (*func)(void *data, Eina_Bool er
              d->data = (void *)data;
           }
      }
-
-   e_dbus_message_send(conn, msg, fso_release_resource_cb, -1, d);
-   dbus_message_unref(msg);
+   edbus_proxy_call(proxy, "RequestResource", fso_release_resource_cb, d, -1,
+                    "s", resource);
 }
 
 static Eina_Bool
@@ -158,6 +149,7 @@ static const Enjoy_Plugin_Api api = {
 static Eina_Bool
 fso_init(void)
 {
+   EDBus_Object *obj;
    if (_fso_log_domain < 0)
      {
         _fso_log_domain = eina_log_domain_register
@@ -178,13 +170,15 @@ fso_init(void)
 
    if (conn) return EINA_TRUE;
 
-   e_dbus_init();
-   conn = e_dbus_bus_get(DBUS_BUS_SYSTEM);
+   edbus_init();
+   conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SYSTEM);
    if (!conn)
      {
         ERR("Could not get DBus session bus");
         goto error;
      }
+   obj = edbus_object_get(conn, FSO_OUSAGED_SERVICE, FSO_OUSAGED_OBJECT_PATH);
+   proxy = edbus_proxy_get(obj, FSO_OUSAGED_INTERFACE);
 
    enjoy_plugin_register("sys/fso", &api, ENJOY_PLUGIN_PRIORITY_NORMAL);
 
@@ -201,7 +195,10 @@ fso_shutdown(void)
 {
    if (!conn) return;
 
-   e_dbus_shutdown();
+   edbus_object_unref(edbus_proxy_object_get(proxy));
+   proxy = NULL;
+   edbus_connection_unref(conn);
+   edbus_shutdown();
    conn = NULL;
    if (_fso_log_domain >= 0)
      {
