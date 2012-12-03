@@ -1,7 +1,6 @@
 #ifndef EET_DATA_H
 #define EET_DATA_H
 #include "Clouseau.h"
-#include <Ecore_Con_Eet.h>
 /*  Global constants  */
 #define BMP_FIELD "bmp"
 
@@ -10,21 +9,33 @@
 #define LOCALHOST      "127.0.0.1"
 #define LISTEN_IP      "0.0.0.0" /* Avail all, no mask */
 
-#define CLOUSEAU_GUI_CLIENT_CONNECT_STR "CLOUSEAU_GUI_CLIENT_CONNECT"
-#define CLOUSEAU_APP_CLIENT_CONNECT_STR "CLOUSEAU_APP_CLIENT_CONNECT"
-#define CLOUSEAU_APP_ADD_STR "CLOUSEAU_APP_ADD"
-#define CLOUSEAU_DATA_REQ_STR "CLOUSEAU_DATA_REQ"
-#define CLOUSEAU_TREE_DATA_STR "CLOUSEAU_TREE_DATA"
-#define CLOUSEAU_APP_CLOSED_STR "CLOUSEAU_APP_CLOSED"
-#define CLOUSEAU_HIGHLIGHT_STR "CLOUSEAU_HIGHLIGHT"
-#define CLOUSEAU_BMP_REQ_STR "CLOUSEAU_BMP_REQ"
-#define CLOUSEAU_BMP_DATA_STR "CLOUSEAU_BMP_DATA"
+/* Define packet types, used by packet encode / decode */
+#define VARIANT_PACKET 0
+#define BMP_RAW_DATA   1
 
-/* Private function */
-#define CLOUSEAU_APP_ADD_ENTRY   "clouseau/app"
-#define CLOUSEAU_TREE_DATA_ENTRY "clouseau/app/tree"
-#define CLOUSEAU_BMP_LIST_ENTRY  "clouseau/app/shot_list"
-#define CLOUSEAU_BMP_DATA_ENTRY  "clouseau/app/screenshot"
+enum _Clouseau_Message_Type
+{  /*  Add any supported types of packets here */
+   CLOUSEAU_UNKNOWN = 0,
+   CLOUSEAU_GUI_CLIENT_CONNECT = 1, /* client PID, name */
+   CLOUSEAU_APP_CLIENT_CONNECT = 2, /* client PID, name */
+   CLOUSEAU_APP_ADD = 3,   /* client PTR, name, PID fwd to GUI client */
+   CLOUSEAU_DATA_REQ = 4,  /* GUI client PTR (NULL for all),APP client PTR (NULL for all) */
+   CLOUSEAU_TREE_DATA = 5, /* GUI client PTR (NULL for all),APP client PTR, Tree Data */
+   CLOUSEAU_APP_CLOSED = 6,/* APP client PTR from DAEMON to GUI */
+   CLOUSEAU_HIGHLIGHT = 7, /* APP client PTR, object PTR */
+   CLOUSEAU_BMP_REQ = 8,   /* APP client PTR, object PTR */
+   CLOUSEAU_BMP_DATA = 9   /* bmp_info_st header + BMP raw data */
+};
+typedef enum _Clouseau_Message_Type Clouseau_Message_Type;
+
+/* This is used for composing message and encoding/decoding with EET */
+struct _Variant_st
+{
+   const char *type;
+
+   void *data;
+};
+typedef struct _Variant_st Variant_st;
 
 struct _connect_st
 {  /* This will be used for APP, GUI client connect */
@@ -39,7 +50,7 @@ struct _app_info_st
    char *name;
    char *file;          /* Valid only if was read from file in offline mode */
    unsigned long long ptr; /* (void *) client ptr of app as saved by daemon */
-   Eina_List *view;        /* Screen views pointers of (bmp_info_st *)      */
+   Eina_List *view;       /* Screen views view->data is (bmp_info_st *) ptr */
    unsigned int refresh_ctr;      /* Counter of how many times down refresh */
 };
 typedef struct _app_info_st app_info_st;
@@ -126,8 +137,17 @@ struct _data_desc
    Eet_Data_Descriptor *highlight;
    Eet_Data_Descriptor *tree;
    Eet_Data_Descriptor *obj_info;
+   Eet_Data_Descriptor *_variant_descriptor;
+   Eet_Data_Descriptor *_variant_unified_descriptor;
 };
 typedef struct _data_desc data_desc;
+
+/* Private function */
+#define CLOUSEAU_APP_ADD_ENTRY   "clouseau/app"
+#define CLOUSEAU_TREE_DATA_ENTRY "clouseau/app/tree"
+#define CLOUSEAU_BMP_LIST_ENTRY  "clouseau/app/shot_list"
+#define CLOUSEAU_BMP_DATA_ENTRY  "clouseau/app/screenshot"
+
 
 /* Exported From Object information */
 EAPI void clouseau_object_information_free(Clouseau_Object *oinfo);
@@ -135,12 +155,15 @@ EAPI Clouseau_Object * clouseau_object_information_get(Clouseau_Tree_Item *treei
 
 /* Exported function */
 EAPI void clouseau_data_tree_free(Eina_List *tree);
-EAPI void *clouseau_data_packet_compose(const char *p_type, void *data, unsigned int *size, void *blob, int blob_size);
-EAPI void *clouseau_data_packet_info_get(const char *p_type, void *data, size_t size);
+EAPI Clouseau_Message_Type clouseau_data_packet_mapping_type_get(const char *name);
+EAPI void clouseau_data_variant_free(Variant_st *v);
+EAPI Variant_st *clouseau_data_variant_alloc(Clouseau_Message_Type t, size_t size, void *info);
+EAPI void * clouseau_data_packet_compose(Clouseau_Message_Type t, void *data, int data_size, int *size, void *blob, int blob_size);
+EAPI Variant_st *
+clouseau_data_packet_info_get(void *data, int size);
 EAPI void clouseau_data_object_highlight(Evas_Object *obj, Clouseau_Evas_Props *props, bmp_info_st *view);
 EAPI Eina_Bool clouseau_data_eet_info_save(const char *filename, app_info_st *a, tree_data_st *ftd, Eina_List *ck_list);
 EAPI Eina_Bool clouseau_data_eet_info_read(const char *filename, app_info_st **a, tree_data_st **ftd);
 EAPI int clouseau_data_init(void);
-EAPI int clouseau_register_descs(Ecore_Con_Eet *eet_svr);
 EAPI int clouseau_data_shutdown(void);
 #endif  /*  EET_DATA_H  */

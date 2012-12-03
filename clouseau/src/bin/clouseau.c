@@ -1,6 +1,6 @@
 #include <Elementary_Cursor.h>
 #include "Clouseau.h"
-#include <Ecore_Con_Eet.h>
+#include <Ecore_Ipc.h>
 
 #include "clouseau_private.h"
 
@@ -12,8 +12,8 @@
 
 struct _app_data_st
 {
-   app_info_st *app;
-   tree_data_st *td;
+   Variant_st *app;  /* app->data is (app_info_st *)   */
+   Variant_st *td;   /* tree->data is (tree_data_st *) */
 };
 typedef struct _app_data_st app_data_st;
 
@@ -59,7 +59,7 @@ static Eina_List *bmp_req = NULL; /* List of (bmp_node *)     */
 static Elm_Genlist_Item_Class itc;
 static Eina_Bool list_show_clippers = EINA_TRUE, list_show_hidden = EINA_TRUE;
 static Eina_Bool do_highlight = EINA_TRUE;
-static Ecore_Con_Reply *eet_svr = NULL;
+static Ecore_Ipc_Server *svr = NULL;
 static Eina_Bool _add_callback_called = EINA_FALSE;
 static void _cancel_bt_clicked(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED);
 static void _ofl_bt_clicked(void *data, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED);
@@ -76,7 +76,7 @@ _titlebar_string_set(gui_elements *g, Eina_Bool online)
      }
    else
      {
-        char *str = malloc(strlen(CLIENT_NAME) + strlen(" - Offline") + 32);
+        char *str = malloc(strlen(CLIENT_NAME) + 32);
         sprintf(str, "%s - Offline", CLIENT_NAME);
         elm_win_title_set(g->win, str);
         free(str);
@@ -84,15 +84,30 @@ _titlebar_string_set(gui_elements *g, Eina_Bool online)
 }
 
 Eina_Bool
-_add(EINA_UNUSED void *data, Ecore_Con_Reply *reply,
-      EINA_UNUSED Ecore_Con_Server *conn)
+_add(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
-   _add_callback_called = EINA_TRUE;
+   Ecore_Ipc_Event_Server_Add *ev = event;
+   void *p;
+   int size = 0;
 
-   eet_svr = reply;
-   connect_st t = { getpid(), __FILE__ };
-   ecore_con_eet_send(reply, CLOUSEAU_GUI_CLIENT_CONNECT_STR, &t);
-   _titlebar_string_set(gui, EINA_TRUE);
+   _add_callback_called = EINA_TRUE;
+   ecore_ipc_server_data_size_max_set(ev->server, -1);
+
+   if (svr)
+     {
+        connect_st t = { getpid(), __FILE__ };
+        p = clouseau_data_packet_compose(CLOUSEAU_GUI_CLIENT_CONNECT,
+              &t, sizeof(t), &size, NULL, 0);
+
+        if (p)
+          {
+             ecore_ipc_server_send(ev->server, 0,0,0,0,EINA_FALSE, p, size);
+             ecore_ipc_server_flush(ev->server);
+             free(p);
+          }
+
+        _titlebar_string_set(gui, EINA_TRUE);
+     }
 
    return ECORE_CALLBACK_RENEW;
 }
@@ -161,21 +176,22 @@ _work_offline_popup(void)
 }
 
 Eina_Bool
-_del(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
-      Ecore_Con_Server *conn)
+_del(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
 {
-   if ((!_add_callback_called) || (!eet_svr))
+   Ecore_Ipc_Event_Server_Del *ev = event;
+
+   if ((!_add_callback_called) || (!ev->server))
      {  /* if initial connection with daemon failed - exit */
-        ecore_con_server_del(conn);
-        eet_svr = NULL; /* Global svr var */
+        ecore_ipc_server_del(ev->server);
+        svr = NULL; /* Global svr var */
         _work_offline_popup();
         return ECORE_CALLBACK_RENEW;
      }
 
-   printf("Lost server with ip <%s>!\n", ecore_con_server_ip_get(conn));
+   printf("Lost server with ip %s!\n", ecore_ipc_server_ip_get(ev->server));
 
-   ecore_con_server_del(conn);
-   eet_svr = NULL; /* Global svr var */
+   ecore_ipc_server_del(ev->server);
+   svr = NULL; /* Global svr var */
    _show_gui(gui, EINA_TRUE);
 
    return ECORE_CALLBACK_RENEW;
@@ -253,24 +269,25 @@ static void
 _close_app_views(app_info_st *app, Eina_Bool clr)
 {  /* Close any open-views if this app */
    Eina_List *l;
-   bmp_info_st *view;
+   Variant_st *view;
    EINA_LIST_FOREACH(app->view, l, view)
      {
-        if (view->win)
-          evas_object_del(view->win);
+        bmp_info_st *b = view->data;
+        if (b->win)
+          evas_object_del(b->win);
 
-        if (view->bt)
-          elm_object_disabled_set(view->bt, EINA_FALSE);
+        if (b->bt)
+          elm_object_disabled_set(b->bt, EINA_FALSE);
 
-        view->win = view->bt = NULL;
+        b->win = b->bt = NULL;
      }
 
    if (clr)
      {  /* These are cleared when app data is reloaded */
         EINA_LIST_FREE(app->view, view)
           {  /* Free memory allocated to show any app screens */
-             clouseau_bmp_blob_free(view);
-             free(view);
+             clouseau_bmp_blob_free(view->data);
+             clouseau_data_variant_free(view);
           }
 
         app->view = NULL;
@@ -287,14 +304,14 @@ _set_selected_app(void *data, Evas_Object *pobj,
    gui->gl_it = NULL;
 
    if (gui->sel_app)
-     _close_app_views(gui->sel_app->app, EINA_FALSE);
+     _close_app_views(gui->sel_app->app->data, EINA_FALSE);
 
    if (st)
      {
-        if (!eet_svr)
+        if (!svr)
           {  /* Got TREE_DATA from file, update this immidately */
               gui->sel_app = st;
-             char *str = _app_name_get(st->app);
+             char *str = _app_name_get(st->app->data);
              elm_object_text_set(pobj, str);
              free(str);
              _load_list(gui);
@@ -304,7 +321,7 @@ _set_selected_app(void *data, Evas_Object *pobj,
         if (gui->sel_app != st)
           {  /* Reload only of selected some other app */
              gui->sel_app = st;
-             char *str = _app_name_get(st->app);
+             char *str = _app_name_get(st->app->data);
              elm_object_text_set(pobj, str);
              free(str);
 
@@ -321,7 +338,7 @@ _set_selected_app(void *data, Evas_Object *pobj,
         gui->sel_app = NULL;
      }
 
-   if (eet_svr)
+   if (svr)
      {  /* Enable/Disable buttons only if we are online */
         elm_object_disabled_set(gui->bt_load, (gui->sel_app == NULL));
         elm_object_disabled_set(gui->bt_save, (gui->sel_app == NULL));
@@ -332,7 +349,7 @@ static int
 _app_ptr_cmp(const void *d1, const void *d2)
 {
    const app_data_st *info = d1;
-   app_info_st *app = info->app;
+   app_info_st *app = info->app->data;
 
    return ((app->ptr) - (unsigned long long) (uintptr_t) d2);
 }
@@ -340,7 +357,7 @@ _app_ptr_cmp(const void *d1, const void *d2)
 static void
 _add_app_to_dd_list(Evas_Object *dd_list, app_data_st *st)
 {  /* Add app to Drop Down List */
-   char *str = _app_name_get(st->app);
+   char *str = _app_name_get(st->app->data);
    elm_hoversel_item_add(dd_list, str, NULL, ELM_ICON_NONE,
          _set_selected_app, st);
 
@@ -350,48 +367,53 @@ _add_app_to_dd_list(Evas_Object *dd_list, app_data_st *st)
 static int
 _bmp_object_ptr_cmp(const void *d1, const void *d2)
 {  /* Comparison according to Evas ptr of BMP struct */
-   const bmp_info_st *bmp = d1;
+   const Variant_st *info = d1;
+   bmp_info_st *bmp = info->data;
+
    return ((bmp->object) - (unsigned long long) (uintptr_t) d2);
 }
 
 static int
 _bmp_app_ptr_cmp(const void *d1, const void *d2)
 {  /* Comparison according to app ptr of BMP struct */
-   const bmp_info_st *bmp = d1;
+   const Variant_st *info = d1;
+   bmp_info_st *bmp = info->data;
+
    return ((bmp->app) - (unsigned long long) (uintptr_t) d2);
 }
 
 static Eina_List *
 _remove_bmp(Eina_List *view, void *ptr)
 {  /* Remove app bitmap from bitmaps list */
-   bmp_info_st *st = (bmp_info_st *)
+   Variant_st *v = (Variant_st *)
       eina_list_search_unsorted(view, _bmp_app_ptr_cmp,
             (void *) (uintptr_t) ptr);
 
-   if (st)
+   if (v)
      {
+        bmp_info_st *st = v->data;
         if (st->win)
           evas_object_del(st->win);
 
         if (st->bmp)
           free(st->bmp);
 
-        free(st);
-        return eina_list_remove(view, st);
+        clouseau_data_variant_free(v);
+        return eina_list_remove(view, v);
      }
 
    return view;
 }
 
 static app_data_st *
-_add_app(gui_elements *g, app_info_st *app)
+_add_app(gui_elements *g, Variant_st *v)
 {
    app_data_st *st;
 
    st = malloc(sizeof(app_data_st));
    if (!st) return NULL;
 
-   st->app = app;
+   st->app = v;
    st->td = NULL; /* Will get this on TREE_DATA message */
    apps = eina_list_append(apps, st);
 
@@ -401,43 +423,48 @@ _add_app(gui_elements *g, app_info_st *app)
 }
 
 static void
-_free_app_tree_data(tree_data_st *ftd)
+_free_app_tree_data(Variant_st *td)
 {
+   tree_data_st *ftd;
 
-   if (!ftd) return;
+   if (!td) return ;
 
+   ftd = td->data;
    clouseau_data_tree_free(ftd->tree);
-   free(ftd);
+   clouseau_data_variant_free(td);
 }
 
 static void
 _free_app(app_data_st *st)
 {
-   bmp_info_st *view;
-   app_info_st *app = st->app;
+   Variant_st *view;
+   app_info_st *app = st->app->data;
    if (app->file)
      free(app->file);
 
    EINA_LIST_FREE(app->view, view)
      {  /* Free memory allocated to show any app screens */
-        if (view->win)
-          evas_object_del(view->win);
+        bmp_info_st *b = view->data;
+        if (b->win)
+          evas_object_del(b->win);
 
-        if (view->bmp)
-          free(view->bmp);
+        if (b->bmp)
+          free(b->bmp);
 
-        free(view);
+        clouseau_data_variant_free(view);
      }
 
+   clouseau_data_variant_free(st->app);
    _free_app_tree_data(st->td);
-   free(app);
    free(st);
 }
 
 static void
-_remove_app(gui_elements *g, app_closed_st *app)
-{  /* Handle the case that NO app is selected, set sel_app to NULL */
-   app_info_st *sel_app = (g->sel_app) ? g->sel_app->app: NULL;
+_remove_app(gui_elements *g, Variant_st *v)
+{
+   app_closed_st *app = v->data;
+   /* Handle the case that NO app is selected, set sel_app to NULL */
+   app_info_st *sel_app = (g->sel_app) ? g->sel_app->app->data : NULL;
    app_data_st *st = (app_data_st *)
       eina_list_search_unsorted(apps, _app_ptr_cmp,
             (void *) (uintptr_t) app->ptr);
@@ -447,7 +474,7 @@ _remove_app(gui_elements *g, app_closed_st *app)
      _set_selected_app(NULL, g->dd_list, NULL);
 
    if (st)
-     {  /* Remove from list and free all app info */
+     {  /* Remove from list and free all variants */
         Eina_List *l;
         apps = eina_list_remove(apps, st);
         _free_app(st);
@@ -459,13 +486,44 @@ _remove_app(gui_elements *g, app_closed_st *app)
         EINA_LIST_FOREACH(apps, l , st)
            _add_app_to_dd_list(g->dd_list, st);
      }
+
+   clouseau_data_variant_free(v);
 }
 
 static void
-_update_tree_offline(gui_elements *g, tree_data_st *td)
+_update_tree_offline(gui_elements *g, Variant_st *v)
 {
+   tree_data_st *td = v->data;
    elm_genlist_clear(g->gl);
    _load_gui_with_list(g, td->tree);
+}
+
+static void
+_update_tree(gui_elements *g, Variant_st *v)
+{  /* Update Tree for app, then update GUI if its displayed */
+   tree_data_st *td = v->data;
+   app_info_st *selected = g->sel_app->app->data;
+
+   /* Update only if tree is from APP on our list */
+   app_data_st *st = (app_data_st *)
+      eina_list_search_unsorted(apps, _app_ptr_cmp,
+            (void *) (uintptr_t) td->app);
+
+   if (st)
+     {  /* Free app TREE_DATA then set ptr to new data */
+        _free_app_tree_data(st->td);
+        st->td = v;
+
+        if (selected->ptr == td->app)
+          {  /* Update GUI only if TREE_DATA is from SELECTED app */
+             elm_genlist_clear(g->gl);
+             _load_gui_with_list(g, td->tree);
+          }
+     }
+   else
+     {  /* Happens when TREE_DATA of app that already closed has arrived */
+        _free_app_tree_data(v);                   /* Dispose unused info */
+     }
 }
 
 static int
@@ -506,6 +564,66 @@ _get_bmp_node(bmp_info_st *st, app_info_st *app)
    while(req_list);
 
    return NULL;
+}
+
+static void
+_add_bmp(gui_elements *g EINA_UNUSED, Variant_st *v)
+{  /* Remove bmp if exists (according to obj-ptr), then add the new one */
+   bmp_info_st *st = v->data;
+   st->zoom_val = 1.0; /* Init zoom value */
+
+   app_data_st *app = (app_data_st *)
+      eina_list_search_unsorted(apps, _app_ptr_cmp,
+            (void *) (uintptr_t) st->app);
+
+   /* Check for relevant bmp req in the bmp_req list */
+   bmp_node *nd = _get_bmp_node(st, app->app->data);
+
+   if (!st->bmp)
+     {  /* We consider a case out request will be answered with empty bmp
+           this may happen if we have a sub-window of app
+           (like checks in elementary test)
+           if the user closed it just as we send our BMP_REQ
+           this Evas is no longer valid and we get NULL ptr for BMP.
+           This code ignores this case. */
+        elm_progressbar_pulse(g->pb, EINA_FALSE);
+        evas_object_hide(g->pb);
+        clouseau_data_variant_free(v);
+
+        /* Make refresh button display: screenshot NOT available */
+        if (nd)
+          _set_button(g->win, nd->bt,
+                SCREENSHOT_MISSING,
+                "Screenshot not available", EINA_TRUE);
+        return;
+     }
+
+   if (app && nd)
+     {  /* Remove app bmp data if exists, then update */
+        elm_progressbar_pulse(g->pb, EINA_FALSE);
+        evas_object_hide(g->pb);
+
+        app_info_st *info = app->app->data;
+        info->view = _remove_bmp(info->view,
+              (void *) (uintptr_t) (st->object));
+        info->view = eina_list_append(info->view, v);
+
+        /* Now we need to update refresh button, make it open-window */
+        _set_button(g->win, nd->bt,
+              SHOW_SCREENSHOT,
+              "Show App Screenshot", EINA_FALSE);
+
+        bmp_req = eina_list_remove(bmp_req, nd);
+        free(nd);
+     }
+   else
+     {  /* Dispose bmp info if app no longer in the list of apps */
+        /* or the bmp_info is no longer relevant */
+        if (st->bmp)
+          free(st->bmp);
+
+        clouseau_data_variant_free(v);
+     }
 }
 
 static void
@@ -601,7 +719,6 @@ _app_win_del(void *data,
       Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
 {  /* when closeing view, set view ptr to NULL, and enable open button */
    bmp_info_st *st = data;
-   clouseau_lines_free(st);
    elm_object_disabled_set(st->bt, EINA_FALSE);
    evas_object_event_callback_del(st->o, EVAS_CALLBACK_MOUSE_MOVE,
          _mouse_move);
@@ -701,7 +818,6 @@ _open_app_window(bmp_info_st *st, Evas_Object *bt, Clouseau_Tree_Item *treeit)
 
    char s_bar[128];
    char *win_name = malloc(strlen(treeit->name) + strlen(SHOT_HEADER) + 1);
-   st->zoom_val = 1.0; /* Init zoom value */
    st->bt = bt;
    st->win = elm_win_add(NULL, "win", ELM_WIN_BASIC);
    sprintf(win_name, "%s%s", treeit->name, SHOT_HEADER);
@@ -822,33 +938,44 @@ _open_app_window(bmp_info_st *st, Evas_Object *bt, Clouseau_Tree_Item *treeit)
 static void
 _show_app_window(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
 {  /* Open window with currnent bmp, or download it if missing   */
-   app_info_st *st = gui->sel_app->app;
+   app_info_st *st = gui->sel_app->app->data;
    Clouseau_Tree_Item *treeit = data;
 
    /* First search app->view list if already have the window bmp */
-   bmp_info_st *bmp = (bmp_info_st *)
+   Variant_st *v = (Variant_st *)
       eina_list_search_unsorted(st->view, _bmp_object_ptr_cmp,
             (void *) (uintptr_t) treeit->ptr);
-   if (bmp)
-     return _open_app_window(bmp, obj, data);
+   if (v)
+     return _open_app_window(v->data, obj, data);
 
    /* Need to issue BMP_REQ */
-   if (eet_svr)
+   if (svr)
      {
+        int size = 0;
         bmp_req_st t = { (unsigned long long) (uintptr_t) NULL,
              (unsigned long long) (uintptr_t) st->ptr,
              (unsigned long long) (uintptr_t) treeit->ptr, st->refresh_ctr };
 
-        ecore_con_eet_send(eet_svr, CLOUSEAU_BMP_REQ_STR, &t);
-        elm_object_disabled_set(obj, EINA_TRUE);
-        elm_progressbar_pulse(gui->pb, EINA_TRUE);
-        evas_object_show(gui->pb);
+        void *p = clouseau_data_packet_compose(CLOUSEAU_BMP_REQ,
+              &t, sizeof(t), &size, NULL, 0);
 
-        bmp_node *b_node = malloc(sizeof(*b_node));
-        b_node->ctr = st->refresh_ctr;
-        b_node->object = (unsigned long long) (uintptr_t) treeit->ptr;
-        b_node->bt = obj;       /* Button of BMP_REQ */
-        bmp_req = eina_list_append(bmp_req, b_node);
+        if (p)
+          {
+             ecore_ipc_server_send(svr,
+                   0,0,0,0,EINA_FALSE, p, size);
+             ecore_ipc_server_flush(svr);
+             free(p);
+
+             elm_object_disabled_set(obj, EINA_TRUE);
+             elm_progressbar_pulse(gui->pb, EINA_TRUE);
+             evas_object_show(gui->pb);
+
+             bmp_node *b_node = malloc(sizeof(*b_node));
+             b_node->ctr = st->refresh_ctr;
+             b_node->object = (unsigned long long) (uintptr_t) treeit->ptr;
+             b_node->bt = obj;       /* Button of BMP_REQ */
+             bmp_req = eina_list_append(bmp_req, b_node);
+          }
      }
    else  /* Disable button if we lost server */
      _set_button(gui->win, obj,
@@ -856,112 +983,42 @@ _show_app_window(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
            "Screenshot not available", EINA_TRUE);
 }
 
-/* START - Callbacks to handle messages from daemon */
-void
-_app_closed_cb(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
-      EINA_UNUSED const char *protocol_name, void *value)
+Eina_Bool
+_data(void *data, int type EINA_UNUSED, void *event)
 {
-   _remove_app(gui, value);
-}
+   Ecore_Ipc_Event_Server_Data *ev = event;
+   Variant_st *v;
 
-void
-_app_add_cb(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
-      EINA_UNUSED const char *protocol_name, void *value)
-{
-   _add_app(gui, value);
-}
+   v = clouseau_data_packet_info_get(ev->data, ev->size);
+   if (!v) return ECORE_CALLBACK_RENEW;
 
-void
-_tree_data_cb(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
-      EINA_UNUSED const char *protocol_name, void *value)
-{  /* Update Tree for app, then update GUI if its displayed */
-   tree_data_st *td = value;
-   app_info_st *selected = gui->sel_app->app;
+   switch (clouseau_data_packet_mapping_type_get(v->type))
+     {
+      case CLOUSEAU_APP_ADD:            /* Add info to list of APPs  */
+         _add_app(data, v);    /* v->data is (app_info_st *) */
+         break;
 
-   /* Update only if tree is from APP on our list */
-   app_data_st *st = (app_data_st *)
-      eina_list_search_unsorted(apps, _app_ptr_cmp,
-            (void *) (uintptr_t) td->app);
+      case CLOUSEAU_APP_CLOSED:         /* Remove and free APP info */
+         _remove_app(data, v); /* v->data is (app_closed_st *) */
+         break;
 
-   if (st)
-     {  /* Free app TREE_DATA then set ptr to new data */
-        _free_app_tree_data(st->td);
-        st->td = value;
+      case CLOUSEAU_TREE_DATA:           /* Update genlist with APP TREE info */
+         _update_tree(data, v); /* data is the gui pointer */
+         break;                 /* v->data is (tree_data_st *) */
 
-        if (selected->ptr == td->app)
-          {  /* Update GUI only if TREE_DATA is from SELECTED app */
-             elm_genlist_clear(gui->gl);
-             _load_gui_with_list(gui, td->tree);
-          }
-     }
-   else
-     {  /* Happens when TREE_DATA of app that already closed has arrived */
-        _free_app_tree_data(value);
-     }
-}
+      case CLOUSEAU_BMP_DATA:         /* Contains a snapshot of canvas window */
+        {                 /* v->data is (bmp_info_st *) */
+           _add_bmp(data, v);  /* data is the gui pointer */
+        }
+        break;
 
-void
-_bmp_data_cb(EINA_UNUSED void *data, EINA_UNUSED Ecore_Con_Reply *reply,
-      const char *protocol_name, EINA_UNUSED const char *section,
-      void *value, size_t length)
-{  /* Remove bmp if exists (according to obj-ptr), then add the new one */
-   bmp_info_st *st = clouseau_data_packet_info_get(protocol_name,
-         value, length);
-
-   st->zoom_val = 1.0; /* Init zoom value */
-
-   app_data_st *app = (app_data_st *)
-      eina_list_search_unsorted(apps, _app_ptr_cmp,
-            (void *) (uintptr_t) st->app);
-
-   /* Check for relevant bmp req in the bmp_req list */
-   bmp_node *nd = _get_bmp_node(st, app->app);
-
-   if (!st->bmp)
-     {  /* We consider a case out request will be answered with empty bmp
-           this may happen if we have a sub-window of app
-           (like checks in elementary test)
-           if the user closed it just as we send our BMP_REQ
-           this Evas is no longer valid and we get NULL ptr for BMP.
-           This code ignores this case. */
-        elm_progressbar_pulse(gui->pb, EINA_FALSE);
-        evas_object_hide(gui->pb);
-        free(st);
-
-        /* Make refresh button display: screenshot NOT available */
-        if (nd)
-          _set_button(gui->win, nd->bt,
-                SCREENSHOT_MISSING,
-                "Screenshot not available", EINA_TRUE);
-        return;
+      default:
+         break;
      }
 
-   if (app && nd)
-     {  /* Remove app bmp data if exists, then update */
-        elm_progressbar_pulse(gui->pb, EINA_FALSE);
-        evas_object_hide(gui->pb);
+   /* variant_free(v) - freed when removed from app list */
 
-        app_info_st *info = app->app;
-        info->view = _remove_bmp(info->view,
-              (void *) (uintptr_t) (st->object));
-        info->view = eina_list_append(info->view, st);
-
-        /* Now we need to update refresh button, make it open-window */
-        _set_button(gui->win, nd->bt,
-              SHOW_SCREENSHOT,
-              "Show App Screenshot", EINA_FALSE);
-
-        bmp_req = eina_list_remove(bmp_req, nd);
-        free(nd);
-     }
-   else
-     {  /* Dispose bmp info if app no longer in the list of apps */
-        /* or the bmp_info is no longer relevant */
-        if (st->bmp)
-          free(st->bmp);
-
-        free(st);
-     }
+   return ECORE_CALLBACK_RENEW;
 }
 
 static void
@@ -1007,6 +1064,8 @@ gl_con_req(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_inf
    elm_genlist_item_expanded_set(glit, EINA_FALSE);
 }
 
+
+
 static Evas_Object *
 item_icon_get(void *data, Evas_Object *parent, const char *part)
 {
@@ -1020,15 +1079,15 @@ item_icon_get(void *data, Evas_Object *parent, const char *part)
              Evas_Object *bt = elm_button_add(parent);
              app_info_st *app = NULL;
              if (gui->sel_app)
-               app = gui->sel_app->app;
+               app = gui->sel_app->app->data;
 
              if (app)
                {  /* match ptr with bmp->object ptr to find view */
-                  bmp_info_st *bmp = (bmp_info_st *)
+                  Variant_st *v = (Variant_st *)
                      eina_list_search_unsorted(app->view, _bmp_object_ptr_cmp,
                            (void *) (uintptr_t) treeit->ptr);
 
-                  if (bmp)
+                  if (v)
                     {  /* Set to "show view" if view exists */
                        _set_button(parent, bt,
                              SHOW_SCREENSHOT,
@@ -1036,7 +1095,7 @@ item_icon_get(void *data, Evas_Object *parent, const char *part)
                     }
                   else
                     {  /* Set to Download or not available if offline */
-                       if (eet_svr)
+                       if (svr)
                          {
                             _set_button(parent, bt,
                                   TAKE_SCREENSHOT,
@@ -1141,17 +1200,15 @@ client_win_del(void *data EINA_UNUSED,
    elm_exit(); /* exit the program's main loop that runs in elm_run() */
 }
 
-static Eina_Bool
+static Ecore_Ipc_Server *
 _connect_to_daemon(gui_elements *g)
 {
-   if (eet_svr)
-     return EINA_TRUE;
+   if (svr && ecore_ipc_server_connected_get(svr))
+     return svr;  /* Already connected */
 
    int port = PORT;
    char *address = LOCALHOST;
    char *p_colon = NULL;
-   Ecore_Con_Server *server;
-   Ecore_Con_Eet *ece = NULL;
 
    if (g->address && strlen(g->address))
      {
@@ -1166,44 +1223,28 @@ _connect_to_daemon(gui_elements *g)
           port = atoi(p_colon+1);
      }
 
-   server = ecore_con_server_connect(ECORE_CON_REMOTE_TCP,
+   svr = ecore_ipc_server_connect(ECORE_IPC_REMOTE_SYSTEM,
          address, port, NULL);
 
    if (p_colon)
      *p_colon = ':';
 
-   if (!server)
+   if (!svr)
      {
         printf("could not connect to the server: %s\n", g->address);
-        return EINA_FALSE;
+        return NULL;
      }
 
-   /* TODO: ecore_con_server_data_size_max_set(server, -1); */
+   ecore_ipc_server_data_size_max_set(svr, -1);
 
-   ece = ecore_con_eet_client_new(server);
-   if (!ece)
-     {
-        printf("could not connect to the server: %s\n", g->address);
-        return EINA_FALSE;
-     }
+   /* set event handler for server connect */
+   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_ADD, _add, g);
+   /* set event handler for server disconnect */
+   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DEL, _del, g);
+   /* set event handler for receiving server data */
+   ecore_event_handler_add(ECORE_IPC_EVENT_SERVER_DATA, _data, g);
 
-   clouseau_register_descs(ece);
-
-   /* Register callbacks for ecore_con_eet */
-   ecore_con_eet_server_connect_callback_add(ece, _add, NULL);
-   ecore_con_eet_server_disconnect_callback_add(ece, _del, NULL);
-   ecore_con_eet_data_callback_add(ece, CLOUSEAU_APP_CLOSED_STR,
-         _app_closed_cb, NULL);
-   ecore_con_eet_data_callback_add(ece, CLOUSEAU_APP_ADD_STR,
-         _app_add_cb, NULL);
-   ecore_con_eet_data_callback_add(ece, CLOUSEAU_TREE_DATA_STR,
-         _tree_data_cb, NULL);
-
-   /* At the moment our only raw-data packet is BMP info */
-   ecore_con_eet_raw_data_callback_add(ece, CLOUSEAU_BMP_DATA_STR,
-         _bmp_data_cb, NULL);
-
-   return EINA_TRUE;
+   return svr;
 }
 
 static void
@@ -1227,13 +1268,23 @@ _gl_selected(void *data, Evas_Object *pobj EINA_UNUSED, void *event_info)
      return;
 
    /* START - replacing libclouseau_highlight(obj); */
-   app_info_st *app = g->sel_app->app;
+   int size;
+   app_info_st *app = g->sel_app->app->data;
    highlight_st st = { (unsigned long long) (uintptr_t) app->ptr,
                        treeit->ptr };
 
-   if (eet_svr)
+   if (svr)
      {
-        ecore_con_eet_send(eet_svr, CLOUSEAU_HIGHLIGHT_STR, &st);
+        void *p = clouseau_data_packet_compose(CLOUSEAU_HIGHLIGHT,
+              &st, sizeof(st), &size, NULL, 0);
+
+        if (p)
+          {
+             ecore_ipc_server_send(svr,
+                   0,0,0,0,EINA_FALSE, p, size);
+             ecore_ipc_server_flush(svr);
+             free(p);
+          }
      }
 
    /* We also like to HIGHLIGHT on any app views that open (for offline) */
@@ -1245,14 +1296,14 @@ _gl_selected(void *data, Evas_Object *pobj EINA_UNUSED, void *event_info)
    while (prt);
 
    Clouseau_Tree_Item *t = elm_object_item_data_get(parent);
-   bmp_info_st *bmp = eina_list_search_unsorted(app->view,
+   Variant_st *v = eina_list_search_unsorted(app->view,
                                              _bmp_object_ptr_cmp,
                                              (void*) (uintptr_t) t->ptr);
 
-   if (bmp && bmp->win)
+   if (v)
      {  /* Third param gives evas surface when running offline */
         clouseau_data_object_highlight((void*) (uintptr_t) treeit->ptr,
-                                  &treeit->info->evas_props, bmp);
+                                  &treeit->info->evas_props, v->data);
      }
    /* END   - replacing clouseau_object_highlight(obj); */
 }
@@ -1267,8 +1318,8 @@ _load_list(gui_elements *g)
      {
         elm_genlist_clear(g->gl);
         elm_genlist_clear(g->prop_list);
-        app_info_st *st = g->sel_app->app;
-        tree_data_st *td = (g->sel_app->td) ? g->sel_app->td : NULL;
+        app_info_st *st = g->sel_app->app->data;
+        tree_data_st *td = (g->sel_app->td) ? g->sel_app->td->data: NULL;
 
         if (td)
           {  /* Just show currnet tree we got */
@@ -1276,7 +1327,7 @@ _load_list(gui_elements *g)
           }
         else
           {  /* Ask for app info only if was not fetched */
-             if (!eet_svr)
+             if (!svr)
                {
                   _update_tree_offline(g, g->sel_app->td);
                   return 0;
@@ -1285,12 +1336,22 @@ _load_list(gui_elements *g)
              if (eina_list_search_unsorted(apps, _app_ptr_cmp,
                       (void *) (uintptr_t) st->ptr))
                {  /* do it only if app selected AND found in apps list */
+                  int size;
                   data_req_st t = { (unsigned long long) (uintptr_t) NULL,
                        (unsigned long long) (uintptr_t) st->ptr };
 
-                  ecore_con_eet_send(eet_svr, CLOUSEAU_DATA_REQ_STR, &t);
-                  elm_progressbar_pulse(g->pb, EINA_TRUE);
-                  evas_object_show(g->pb);
+                  void *p = clouseau_data_packet_compose(CLOUSEAU_DATA_REQ,
+                        &t, sizeof(t), &size, NULL, 0);
+
+                  if (p)
+                    {
+                       elm_progressbar_pulse(g->pb, EINA_TRUE);
+                       evas_object_show(g->pb);
+                       ecore_ipc_server_send(svr,
+                             0,0,0,0,EINA_FALSE, p, size);
+                       ecore_ipc_server_flush(svr);
+                       free(p);
+                    }
                }
           }
      }
@@ -1329,7 +1390,7 @@ _bt_clicked(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
    /* Close all app-bmp-view windows here and clear mem */
    if (g->sel_app)
      {
-        app_info_st *st = g->sel_app->app;
+        app_info_st *st = g->sel_app->app->data;
         _close_app_views(st, EINA_TRUE);
         st->refresh_ctr++;
      }
@@ -1345,16 +1406,18 @@ static void
 _bt_load_file(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 {
    gui_elements *g = data;
-   app_info_st *app = calloc(1, sizeof(*app));
-   tree_data_st *td =  calloc(1, sizeof(*td));
+   Variant_st *app = calloc(1, sizeof(Variant_st));
+   Variant_st *td =  calloc(1, sizeof(Variant_st));
+   /* app_info_st *app = NULL; */
    if (event_info)
      {
         Eina_Bool s = clouseau_data_eet_info_read(event_info,
-              (app_info_st **) &app, (tree_data_st **) &td);
+              (app_info_st **) &app->data,
+              (tree_data_st **) &td->data);
 
         if (s)
           {  /* Add the app to list of apps, then set this as selected app */
-             app->file = strdup(event_info);
+              ((app_info_st *) app->data)->file = strdup(event_info);
              app_data_st *st = _add_app(g, app);
              st->td = td;  /* This is the same as we got TREE_DATA message */
              _set_selected_app(st, g->dd_list, NULL);
@@ -1374,8 +1437,8 @@ _dismiss_save_dialog(void *data,
 static void
 _bt_save_file(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 {
-   app_info_st *app = gui->sel_app->app;
-   tree_data_st *ftd = gui->sel_app->td;
+   app_info_st *app = gui->sel_app->app->data;
+   tree_data_st *ftd = gui->sel_app->td->data;
    if (event_info)
      {
         /* FIXME: Handle failure. */
@@ -1441,15 +1504,18 @@ _save_file_dialog(void *data,
    ck_bx = elm_box_add(g->save_inwin);
 
    Eina_List *l;
-   app_info_st *a = g->sel_app->app;
-   tree_data_st *td = g->sel_app->td;
+   app_info_st *a = g->sel_app->app->data;
+   tree_data_st *td = g->sel_app->td->data;
+   bmp_info_st *bmp;
    Clouseau_Tree_Item *treeit;
    char buf[256];
    EINA_LIST_FOREACH(td->tree, l, treeit)
      {  /* First search app->view list if already have the window bmp */
-        bmp_info_st *bmp = (bmp_info_st *)
+        Variant_st *v = (Variant_st *)
            eina_list_search_unsorted(a->view, _bmp_object_ptr_cmp,
                  (void *) (uintptr_t) treeit->ptr);
+
+        bmp = (v) ? v->data : NULL;
 
         ck = elm_check_add(ck_bx);
         evas_object_size_hint_weight_set(ck, EVAS_HINT_EXPAND, 1.0);
@@ -1520,14 +1586,19 @@ _remove_apps_with_no_tree_data(gui_elements *g)
    Eina_List *l, *l_next;
    app_data_st *st;
    app_closed_st t;
+   Variant_st *v;
    EINA_LIST_FOREACH_SAFE(apps, l, l_next, st)
      {
         if (!st->td)
           {  /* We actually fake APP_CLOSED message, for app NO tree */
              t.ptr = (unsigned long long) (uintptr_t)
-                (((app_info_st *) st->app)->ptr);
+                (((app_info_st *) st->app->data)->ptr);
 
-             _remove_app(g, &t);
+             /* v is freed by _remove_app */
+             v = clouseau_data_variant_alloc(CLOUSEAU_APP_CLOSED,
+                   sizeof(t), &t);
+
+             _remove_app(g, v); /* v->data is (app_closed_st *) */
           }
      }
 }
@@ -1574,7 +1645,8 @@ _show_gui(gui_elements *g, Eina_Bool work_offline)
         elm_object_disabled_set(g->bt_save, (g->sel_app == NULL));
         evas_object_show(g->bt_save);
 
-        if (!_connect_to_daemon(g))
+        svr = _connect_to_daemon(g);
+        if(!svr)
           {
              printf("Failed to connect to server.\n");
              elm_exit(); /* exit the program's main loop,runs in elm_run() */
@@ -1610,54 +1682,54 @@ _ofl_bt_clicked(void *data,
 }
 
 static void
-_control_buttons_create(gui_elements *g, Evas_Object *win)
+_control_buttons_create(gui_elements *gui, Evas_Object *win)
 {
    Evas_Object *show_hidden_check, *show_clippers_check, *highlight_check;
 
-   g->hbx = elm_box_add(g->bx);
-   evas_object_size_hint_align_set(g->hbx, 0.0, 0.5);
-   elm_box_horizontal_set(g->hbx, EINA_TRUE);
-   elm_box_pack_end(g->bx, g->hbx);
-   elm_box_padding_set(g->hbx, 10, 0);
-   evas_object_show(g->hbx);
+   gui->hbx = elm_box_add(gui->bx);
+   evas_object_size_hint_align_set(gui->hbx, 0.0, 0.5);
+   elm_box_horizontal_set(gui->hbx, EINA_TRUE);
+   elm_box_pack_end(gui->bx, gui->hbx);
+   elm_box_padding_set(gui->hbx, 10, 0);
+   evas_object_show(gui->hbx);
 
-   g->bt_load = elm_button_add(g->hbx);
-   evas_object_size_hint_align_set(g->bt_load, 0.0, 0.3);
-   elm_box_pack_end(g->hbx, g->bt_load);
-   evas_object_show(g->bt_load);
+   gui->bt_load = elm_button_add(gui->hbx);
+   evas_object_size_hint_align_set(gui->bt_load, 0.0, 0.3);
+   elm_box_pack_end(gui->hbx, gui->bt_load);
+   evas_object_show(gui->bt_load);
 
-   g->dd_list = elm_hoversel_add(g->hbx);
-   elm_hoversel_hover_parent_set(g->dd_list, win);
-   elm_object_text_set(g->dd_list, "SELECT APP");
+   gui->dd_list = elm_hoversel_add(gui->hbx);
+   elm_hoversel_hover_parent_set(gui->dd_list, win);
+   elm_object_text_set(gui->dd_list, "SELECT APP");
 
-   evas_object_size_hint_align_set(g->dd_list, 0.0, 0.3);
-   elm_box_pack_end(g->hbx, g->dd_list);
-   evas_object_show(g->dd_list);
+   evas_object_size_hint_align_set(gui->dd_list, 0.0, 0.3);
+   elm_box_pack_end(gui->hbx, gui->dd_list);
+   evas_object_show(gui->dd_list);
 
-   show_hidden_check = elm_check_add(g->hbx);
+   show_hidden_check = elm_check_add(gui->hbx);
    elm_object_text_set(show_hidden_check, "Show Hidden");
    elm_check_state_set(show_hidden_check, list_show_hidden);
-   elm_box_pack_end(g->hbx, show_hidden_check);
+   elm_box_pack_end(gui->hbx, show_hidden_check);
    evas_object_show(show_hidden_check);
 
-   show_clippers_check = elm_check_add(g->hbx);
+   show_clippers_check = elm_check_add(gui->hbx);
    elm_object_text_set(show_clippers_check, "Show Clippers");
    elm_check_state_set(show_clippers_check, list_show_clippers);
-   elm_box_pack_end(g->hbx, show_clippers_check);
+   elm_box_pack_end(gui->hbx, show_clippers_check);
    evas_object_show(show_clippers_check);
 
-   highlight_check = elm_check_add(g->hbx);
+   highlight_check = elm_check_add(gui->hbx);
    elm_object_text_set(highlight_check , "Highlight");
    elm_check_state_set(highlight_check , do_highlight);
-   elm_box_pack_end(g->hbx, highlight_check);
+   elm_box_pack_end(gui->hbx, highlight_check);
    evas_object_show(highlight_check);
 
    evas_object_smart_callback_add(show_hidden_check, "changed",
-                                  _show_hidden_check_changed, g);
+                                  _show_hidden_check_changed, gui);
    evas_object_smart_callback_add(show_clippers_check, "changed",
-                                  _show_clippers_check_changed, g);
+                                  _show_clippers_check_changed, gui);
    evas_object_smart_callback_add(highlight_check, "changed",
-                                  _highlight_check_check_changed, g);
+                                  _highlight_check_check_changed, gui);
 }
 
 static void
@@ -1770,7 +1842,7 @@ elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 
    eina_init();
    ecore_init();
-   ecore_con_init();
+   ecore_ipc_init();
    clouseau_data_init();
 
    /* START - Popup to get IP, PORT from user */
