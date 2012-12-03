@@ -1,4 +1,32 @@
 shotgun is an xmpp client/library which uses EFL. it requires core EFL.
 the GUI requires elementary and efx
 
+shotgun:sawed-off is a module for E17. it depends on edbus2.
+
+on loading the sawed-off module, the first thing (and only thing) you'll need 
+to do is create (key)bindings for the actions. the important ones are "Toggle 
+Reply Entry" and "Toggle First Link".
+
+"Toggle Reply Entry" - this action shows, at a position of your choosing from 
+the associated config dialog, a small popup. this popup contains a contact 
+name, their icon, and a text entry. while open, pressing enter will send the 
+current entry text to the named contact as though you were typing in their chat 
+window (meaning it lets the gui do all the heavy lifting when it comes to 
+determining which presences to send to). 
+when open, the popup will grab keyboard focus. this can be disrupted if an e 
+menu is opened. simply activate the binding again to hide it. the following 
+keys are reserved when the entry is shown:
+* Escape - hide the popup
+* Return/KP_Enter - send current text to displayed contact
+* ctrl+alt+{left,right} - cycle through online contacts in order of message 
+frequency (clears entry text)
+
+"Toggle First Link" - this action shows, at a position relatively close to 
+(hopefully, depending on your elm version) the position of the shotgun contact 
+list, the tooltip for the last link sent. this behavior can be modified to 
+ignore links that you have sent in the config dialog. adding a method to open 
+links in web browser is also planned, but not currently implemented.
+no keys are reserved when a tooltip is shown; activate the binding again to 
+hide it.
+
 see #shotgun on FreeNODE irc for support
