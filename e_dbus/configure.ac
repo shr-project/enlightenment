@@ -193,96 +193,76 @@ AM_CONDITIONAL([BUILD_EUKIT],    [test "x${enable_eukit}"    = "xyes"])
 
 # Dependencies for the binaries
 
-EFL_ENABLE_BIN([edbus-test], ["yes"])
-EFL_ENABLE_BIN([edbus-test-client], ["yes"])
-EFL_ENABLE_BIN([edbus-bluez-test], [${enable_ebluez}])
-EFL_ENABLE_BIN([edbus-connman0_7x-test], [${enable_econnman0_7x}])
-EFL_ENABLE_BIN([edbus-notification-daemon-test], [${enable_enotify}])
-EFL_ENABLE_BIN([edbus-notify-send], [${enable_enotify}])
-EFL_ENABLE_BIN([edbus-notify-test], [${enable_enotify}])
-EFL_ENABLE_BIN([edbus-ofono-test], [${enable_eofono}])
-EFL_ENABLE_BIN([edbus-ukit-test], [${enable_eukit}])
-EFL_ENABLE_BIN([edbus-performance-test], ["no"])
-EFL_ENABLE_BIN([edbus-async-test], ["yes"])
+have_edbus_test="yes"
+have_edbus_test_client="yes"
+have_edbus_bluez_test="${enable_ebluez}"
+have_edbus_connman0_7x_test="${enable_econnman0_7x}"
+have_edbus_notification_daemon_test="${enable_enotify}"
+have_edbus_notify_send="${enable_enotify}"
+have_edbus_notify_test="${enable_enotify}"
+have_edbus_ofono_test="${enable_eofono}"
+have_edbus_ukit_test="${enable_eukit}"
+have_edbus_performance_test="no"
+have_edbus_async_test="yes"
 
-if test "x${have_edbus_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_TEST],
-      [ecore >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_test="yes"],
-      [have_edbus_test="no"])
-fi
+PKG_CHECK_MODULES([EDBUS_TEST],
+    [ecore >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_test="yes"],
+    [have_edbus_test="no"])
+PKG_CHECK_MODULES([EDBUS_TEST_CLIENT],
+    [ecore >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_test_client="yes"],
+    [have_edbus_test_client="no"])
+PKG_CHECK_MODULES([EDBUS_BLUEZ_TEST],
+    [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_bluez_test="yes"],
+    [have_edbus_bluez_test="no"])
+PKG_CHECK_MODULES([EDBUS_CONNMAN0_7X_TEST],
+    [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_connman0_7x_test="yes"],
+    [have_edbus_connman0_7x_test="no"])
+PKG_CHECK_MODULES([EDBUS_NOTIFICATION_DAEMON_TEST],
+    [ecore >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_notification_daemon_test="yes"],
+    [have_edbus_notification_daemon_test="no"])
+PKG_CHECK_MODULES([EDBUS_NOTIFY_SEND],
+    [ecore >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_notify_send="yes"],
+    [have_edbus_notify_send="no"])
+PKG_CHECK_MODULES([EDBUS_NOTIFY_TEST],
+    [ecore >= 1.6.99 ecore-evas >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_notify_test="yes"],
+    [have_edbus_notify_test="no"])
+PKG_CHECK_MODULES([EDBUS_OFONO_TEST],
+    [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_ofono_test="yes"],
+    [have_edbus_ofono_test="no"])
+PKG_CHECK_MODULES([EDBUS_PERFORMANCE_TEST],
+    [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62 ecore-evas >= 1.6.99 elementary >= 1.6.99 evas >= 1.6.99],
+    [have_edbus_performance_test="yes"],
+    [have_edbus_performance_test="no"])
+PKG_CHECK_MODULES([EDBUS_UKIT_TEST],
+    [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_ukit_test="yes"],
+    [have_edbus_ukit_test="no"])
+PKG_CHECK_MODULES([EDBUS_ASYNC_TEST],
+    [ecore >= 1.6.99 dbus-1 >= 0.62],
+    [have_edbus_async_test="yes"],
+    [have_edbus_async_test="no"])
 
-if test "x${have_edbus_test_client}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_TEST_CLIENT],
-      [ecore >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_test_client="yes"],
-      [have_edbus_test_client="no"])
-fi
-
-if test "x${have_edbus_bluez_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_BLUEZ_TEST],
-      [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_bluez_test="yes"],
-      [have_edbus_bluez_test="no"])
-fi
-
-if test "x${have_edbus_connman0_7x_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_CONNMAN0_7X_TEST],
-      [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_connman0_7x_test="yes"],
-      [have_edbus_connman0_7x_test="no"])
-fi
-
-if test "x${have_edbus_notification_daemon_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_NOTIFICATION_DAEMON_TEST],
-      [ecore >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_notification_daemon_test="yes"],
-      [have_edbus_notification_daemon_test="no"])
-fi
-
-if test "x${have_edbus_notify_send}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_NOTIFY_SEND],
-      [ecore >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_notify_send="yes"],
-      [have_edbus_notify_send="no"])
-fi
-
-if test "x${have_edbus_notify_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_NOTIFY_TEST],
-      [ecore >= 1.6.99 ecore-evas >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_notify_test="yes"],
-      [have_edbus_notify_test="no"])
-fi
-
-if test "x${have_edbus_ofono_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_OFONO_TEST],
-      [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_ofono_test="yes"],
-      [have_edbus_ofono_test="no"])
-fi
-
-if test "x${have_edbus_ukit_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_UKIT_TEST],
-      [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_ukit_test="yes"],
-      [have_edbus_ukit_test="no"])
-fi
-
-if test "x${have_edbus_performance_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_PERFORMANCE_TEST],
-      [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62 ecore-evas >= 1.6.99 elementary >= 1.6.99 evas >= 1.6.99],
-      [have_edbus_performance_test="yes"],
-      [have_edbus_performance_test="no"])
-fi
+EFL_ENABLE_BIN([edbus-test], [${have_edbus_test}])
+EFL_ENABLE_BIN([edbus-test-client], [${have_edbus_test_client}])
+EFL_ENABLE_BIN([edbus-bluez-test], [${have_edbus_bluez_test}])
+EFL_ENABLE_BIN([edbus-connman0_7x-test], [${have_edbus_connman0_7x_test}])
+EFL_ENABLE_BIN([edbus-notification-daemon-test], [${have_edbus_notification_daemon_test}])
+EFL_ENABLE_BIN([edbus-notify-send], [${have_edbus_notify_send}])
+EFL_ENABLE_BIN([edbus-notify-test], [${have_edbus_notify_test}])
+EFL_ENABLE_BIN([edbus-ofono-test], [${have_edbus_ofono_test}])
+EFL_ENABLE_BIN([edbus-ukit-test], [${have_edbus_ukit_test}])
+EFL_ENABLE_BIN([edbus-performance-test], [${have_edbus_performance_test}])
+EFL_ENABLE_BIN([edbus-async-test], [${have_edbus_async_test}])
 
 AM_CONDITIONAL([BUILD_EDBUS_PERFORMANCE_TEST], [test "x${have_edbus_performance_test}" = "xyes"])
-
-if test "x${have_edbus_async_test}" = "xyes" ; then
-   PKG_CHECK_MODULES([EDBUS_ASYNC_TEST],
-      [ecore >= 1.6.99 dbus-1 >= 0.62],
-      [have_edbus_async_test="yes"],
-      [have_edbus_async_test="no"])
-fi
 
 ### Checks for header files
 
