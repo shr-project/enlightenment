@@ -1,5 +1,7 @@
 #include "ui.h"
 
+static void _chat_conv_filter(Contact_List *cl, Evas_Object *obj __UNUSED__, char **str);
+
 static void
 _chat_conv_anchor_click(Contact *c, Evas_Object *obj __UNUSED__, Elm_Entry_Anchor_Info *ev)
 {
@@ -121,12 +123,15 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
      elm_entry_entry_append(e, buf);
    else
      {
-        const char *str;
-
         /* this sucks. a lot. */
-        str = eina_stringshare_printf("%s%s", c->last_conv, buf);
+        e = elm_entry_add(c->list->win);
+        elm_entry_markup_filter_append(e, (Elm_Entry_Filter_Cb)_chat_conv_filter, c->list);
+        if (c->last_conv) elm_entry_entry_set(e, c->last_conv);
+        elm_entry_entry_append(e, buf);
         eina_stringshare_del(c->last_conv);
-        c->last_conv = str;
+        c->last_conv = eina_stringshare_ref(elm_entry_entry_get(e));
+        evas_object_del(e);
+        e = NULL;
      }
    EINA_LIST_REVERSE_FOREACH(c->list->image_list, ll, i)
      {
