@@ -14,6 +14,24 @@ _dbus_quit_cb(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
+_dbus_link_list_cb(E_DBus_Object *obj, DBusMessage *msg)
+{
+   Contact_List *cl = e_dbus_object_data_get(obj);
+   Image *i;
+   DBusMessage *ret;
+   DBusMessageIter iter, arr;
+
+   ret = dbus_message_new_method_return(msg);
+   dbus_message_iter_init_append(ret, &iter);
+   dbus_message_iter_open_container(&iter, DBUS_TYPE_ARRAY, "s", &arr);
+
+   EINA_INLIST_FOREACH(cl->image_list, i)
+     dbus_message_iter_append_basic(&arr, DBUS_TYPE_STRING, &i->addr);
+   dbus_message_iter_close_container(&iter, &arr);
+   return ret;
+}
+
+static DBusMessage *
 _dbus_link_show_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
    Contact_List *cl = e_dbus_object_data_get(obj);
@@ -409,6 +427,7 @@ ui_dbus_init(Contact_List *cl)
    e_dbus_object_interface_attach(cl->dbus_object, iface);
    e_dbus_interface_unref(iface);
 
+   e_dbus_interface_method_add(iface, "list", "", "as", _dbus_link_list_cb);
    e_dbus_interface_method_add(iface, "show", "s", "", _dbus_link_show_cb);
 
    iface = e_dbus_interface_new("org.shotgun.list");

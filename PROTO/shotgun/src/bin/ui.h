@@ -410,43 +410,43 @@ void ui_key_grab_set(UI_WIN *ui, const char *key, Eina_Bool enable);
  * DBUS API:
  *
  * @brief Disconnect Shotgun
- * void org.shotgun.core.quit(void)
+ * "" org.shotgun.core.quit(): Void
  *
  * @brief Retrieve the string array of online contact JIDs (username@server.com)
  * @return An array of strings containing all online contacts from the user's contact list
- * Array<String> org.shotgun.list.get(void)
+ * "as" org.shotgun.list.get()
  *
  * @brief Retrieve the string array of all contact JIDs (username@server.com)
  * @return An array of strings containing all contacts from the user's contact list
- * Array<String> org.shotgun.list.get_all(void)
+ * "as" org.shotgun.list.get_all()
  *
  * @brief Retrieve the full status of a contact's current presence (based on priority)
- * @return The contact's status message (if set)
  * @param JID The contact's JID
- * @param st The contact's status on return
- * @param priority The contact's priority on return
- * String org.shotgun.contact.status(String JID, Shotgun_User_Status *st, int *priority)
+ * @return The contact's status message (if set)
+ * @return The contact's status
+ * @return The contact's priority
+ * "sui" org.shotgun.contact.status(String JID)
  *
  * @brief Retrieve the display name, icon, and full status of a contact's current presence (based on priority)
- * @return The contact's display name
  * @param JID The contact's JID
- * @param icon The contact's user avatar (if set) on return
- * @param st The contact's status on return
- * @param priority The contact's priority on return
- * String org.shotgun.contact.info(String JID, const char **icon, Shotgun_User_Status *st, int *priority)
+ * @return The contact's display name
+ * @return The contact's user icon eet key (if set)
+ * @return The contact's status
+ * @return The contact's priority
+ * "ssui" org.shotgun.contact.info(String JID)
  *
  * @brief Retrieve the contact's icon's eet key
+ * @param JID The contact's JID
  * @return The key to use for retrieving the eet key of the icon belonging to contact represented
  * by @p JID
- * @param JID The contact's JID
- * String org.shotgun.contact.icon(String JID)
+ * "s" org.shotgun.contact.icon(String JID)
  *
  * @brief Send a message and message status to a contact
  * @return TRUE on successful send, else FALSE
  * @param JID The contact's JID
  * @param msg The message to send
  * @param st The (optional) #Shotgun_Message_Status to set along with the message
- * Bool org.shotgun.contact.send(String JID, String msg, Shotgun_Message_Status st)
+ * "b" org.shotgun.contact.send(String JID, String msg, Shotgun_Message_Status st)
  *
  * @brief Send a message and message status to a contact, echoing the message to
  * the contact's chat window
@@ -454,38 +454,42 @@ void ui_key_grab_set(UI_WIN *ui, const char *key, Eina_Bool enable);
  * @param JID The contact's JID
  * @param msg The message to send
  * @param st The (optional) #Shotgun_Message_Status to set along with the message
- * Bool org.shotgun.contact.send_echo(String JID, String msg, Shotgun_Message_Status st)
+ * "b" org.shotgun.contact.send_echo(String JID, String msg, Shotgun_Message_Status st)
  *
  * @brief Show/hide an image tooltip
  * @param LINK The URL to show a tooltip for a previously-fetched image
  * @note If LINK = "", the current image tooltip will be hidden
- * void org.shotgun.link.show(String LINK)
+ * "" org.shotgun.link.show(String LINK)
+ *
+ * @brief Retrieve the string array of currently cached links
+ * @return An array of strings containing all currently cached link URLs
+ * "as" org.shotgun.list.get()
  * ---------------------------------------------------------------------------------------------
  * SIGNALS
  *
  * @brief Signal for new message
  * @return JID The jid of the message's sender
- * @return msg The message on return
+ * @return msg The message
  * "ss" org.shotgun.core.new_msg() String JID, String msg
  *
  * @brief Signal for new message sent by user (DOES NOT INCLUDE DBUS-SENT MESSAGES)
  * @return JID The full jid of the message's recipient
- * @return msg The message on return
+ * @return msg The message
  * "ss" org.shotgun.core.new_msg_self(): String JID, String msg
  *
  * @brief Signal for when a contact changes their status
  * @return JID The base jid of the contact
  * @return resource The contact's presence's resource
  * @return desc The status message (if set)
- * @return st The message on return
+ * @return st The message
  * @return type The type of presence
- * @return priority The user's priority on return
+ * @return priority The user's priority
  * "sssui" org.shotgun.core.status(): String JID, String resource, String desc, Shotgun_User_Status st, Shotgun_Presence_Type type, int priority
  *
  * @brief Signal for when the user changes his own status
  * @return desc The status message (if set)
- * @return st The message on return
- * @return priority The user's priority on return
+ * @return st The message
+ * @return priority The user's priority
  * "sui" org.shotgun.core.status_self(): String desc, Shotgun_User_Status st, int priority
  *
  * @brief Signal for when a new link is detected in chat
