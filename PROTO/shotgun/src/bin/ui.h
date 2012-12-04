@@ -314,6 +314,8 @@ void chat_resource_ignore_toggle(Contact *c, Evas_Object *obj __UNUSED__, Elm_Ob
 void chat_status_entry_toggle(Contact *c);
 void chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me);
 
+void chat_link_open(Contact_List *cl, const char *url);
+void chat_link_copy(Contact_List *c, const char *url);
 void chat_image_add(Contact_List *cl, const char *url);
 void chat_image_free(Image *i);
 void chat_image_cleanup(Contact_List *cl);
@@ -460,6 +462,10 @@ void ui_key_grab_set(UI_WIN *ui, const char *key, Eina_Bool enable);
  * @param LINK The URL to show a tooltip for a previously-fetched image
  * @note If LINK = "", the current image tooltip will be hidden
  * "" org.shotgun.link.show(String LINK)
+ * 
+ * @brief Open a URL
+ * @param LINK The URL to open
+ * "" org.shotgun.link.open(String LINK)
  *
  * @brief Retrieve the string array of currently cached links
  * @return An array of strings containing all currently cached link URLs

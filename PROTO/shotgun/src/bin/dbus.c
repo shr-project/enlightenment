@@ -32,6 +32,21 @@ _dbus_link_list_cb(E_DBus_Object *obj, DBusMessage *msg)
 }
 
 static DBusMessage *
+_dbus_link_open_cb(E_DBus_Object *obj, DBusMessage *msg)
+{
+   Contact_List *cl = e_dbus_object_data_get(obj);
+   const char *url;
+   DBusError error;
+
+   memset(&error, 0, sizeof(DBusError));
+   dbus_message_get_args(msg, &error,
+     's', &url,
+     DBUS_TYPE_INVALID);
+   if (url && url[0]) chat_link_open(cl, url);
+   return dbus_message_new_method_return(msg);
+}
+
+static DBusMessage *
 _dbus_link_show_cb(E_DBus_Object *obj, DBusMessage *msg)
 {
    Contact_List *cl = e_dbus_object_data_get(obj);
@@ -429,6 +444,7 @@ ui_dbus_init(Contact_List *cl)
 
    e_dbus_interface_method_add(iface, "list", "", "as", _dbus_link_list_cb);
    e_dbus_interface_method_add(iface, "show", "s", "", _dbus_link_show_cb);
+   e_dbus_interface_method_add(iface, "open", "s", "", _dbus_link_open_cb);
 
    iface = e_dbus_interface_new("org.shotgun.list");
    e_dbus_object_interface_attach(cl->dbus_object, iface);

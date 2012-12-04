@@ -2,6 +2,38 @@
 
 static void _chat_conv_filter(Contact_List *cl, Evas_Object *obj __UNUSED__, char **str);
 
+void
+chat_link_open(Contact_List *cl, const char *url)
+{
+   char *cmd;
+   size_t size;
+
+   if (!cl->settings->browser)
+     {
+        DBG("BROWSER set to NULL; not opening link");
+        return;
+     }
+   size = sizeof(char) * (strlen(url) + strlen(cl->settings->browser) + 3) + 1;
+   if (size > 32000)
+     cmd = malloc(size);
+   else
+     cmd = alloca(size);
+   snprintf(cmd, size, "%s '%s'", cl->settings->browser, url);
+   DBG("Running BROWSER command: %s", cmd);
+   ecore_exe_run(cmd, NULL);
+   if (size > 32000) free(cmd);
+}
+
+void
+chat_link_copy(Contact_List *cl, const char *url)
+{
+   size_t len;
+
+   len = strlen(url);
+   if (len == sizeof(int)) len++; /* workaround for stupid elm cnp bug which breaks the universe */
+   elm_cnp_selection_set(cl->win, ELM_SEL_TYPE_CLIPBOARD, ELM_SEL_FORMAT_TEXT, url, len);
+}
+
 static void
 _chat_conv_anchor_click(Contact *c, Evas_Object *obj __UNUSED__, Elm_Entry_Anchor_Info *ev)
 {
@@ -9,33 +41,10 @@ _chat_conv_anchor_click(Contact *c, Evas_Object *obj __UNUSED__, Elm_Entry_Ancho
    switch (ev->button)
      {
       case 1:
-        {
-           char *cmd;
-           size_t size;
-
-           if (!c->list->settings->browser)
-             {
-                DBG("BROWSER set to NULL; not opening link");
-                return;
-             }
-           size = sizeof(char) * (strlen(ev->name) + strlen(c->list->settings->browser) + 3) + 1;
-           if (size > 32000)
-             cmd = malloc(size);
-           else
-             cmd = alloca(size);
-           snprintf(cmd, size, "%s '%s'", c->list->settings->browser, ev->name);
-           DBG("Running BROWSER command: %s", cmd);
-           ecore_exe_run(cmd, NULL);
-           if (size > 32000) free(cmd);
-           return;
-        }
+        chat_link_open(c->list, ev->name);
+        break;
       case 3:
-        {
-           size_t len;
-           len = strlen(ev->name);
-           if (len == sizeof(int)) len++; /* workaround for stupid elm cnp bug which breaks the universe */
-           elm_cnp_selection_set(c->chat_window->win, ELM_SEL_TYPE_CLIPBOARD, ELM_SEL_FORMAT_TEXT, ev->name, len);
-        }
+        chat_link_copy(c->list, ev->name);
       default:
         break;
      }
