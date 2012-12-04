@@ -29,10 +29,6 @@
 # include <Evas_Engine_GL_X11.h>
 #endif
 
-#ifdef BUILD_ECORE_EVAS_FB
-# include <Evas_Engine_FB.h>
-#endif
-
 #ifdef BUILD_ECORE_EVAS_DIRECTFB
 # include <Evas_Engine_DirectFB.h>
 # include "Ecore_DirectFB.h"
@@ -114,6 +110,8 @@ typedef void   (*Ecore_Evas_Event_Cb) (Ecore_Evas *ee);
 
 typedef struct _Ecore_Evas_Engine Ecore_Evas_Engine;
 typedef struct _Ecore_Evas_Engine_Func Ecore_Evas_Engine_Func;
+typedef struct _Ecore_Evas_Interface Ecore_Evas_Interface;
+
 
 struct _Ecore_Evas_Engine_Func
 {
@@ -177,102 +175,24 @@ struct _Ecore_Evas_Engine_Func
    void (*fn_screen_dpi_get) (const Ecore_Evas *ee, int *xdpi, int *ydpi);
 };
 
+struct _Ecore_Evas_Interface
+{
+    const char *name;
+    unsigned int version;
+};
+
 struct _Ecore_Evas_Engine
 {
    Ecore_Evas_Engine_Func *func;
+   void *data;
+   Eina_List *ifaces;
+   Ecore_Timer *idle_flush_timer;
 
-/* TODO: UGLY! This should be an union or inheritance! */
-#ifdef BUILD_ECORE_EVAS_X11
-   struct 
-     {
-      Ecore_X_Window win_root;
-      Eina_List     *win_extra;
-      Ecore_X_Pixmap pmap;
-      Ecore_X_Pixmap mask;
-      Ecore_X_GC     gc;
-      Ecore_X_XRegion *damages;
-      Ecore_X_Sync_Counter sync_counter;
-      Ecore_X_Window leader;
-      Ecore_X_Sync_Counter netwm_sync_counter;
-      int            netwm_sync_val_hi;
-      unsigned int   netwm_sync_val_lo;
-      int            sync_val; // bigger! this will screw up at 2 billion frames (414 days of continual rendering @ 60fps)
-      int            screen_num;
-      int            px, py, pw, ph;
-      unsigned char  direct_resize : 1;
-      unsigned char  using_bg_pixmap : 1;
-      unsigned char  managed : 1;
-      unsigned char  sync_began : 1;
-      unsigned char  sync_cancel : 1;
-      unsigned char  netwm_sync_set : 1;
-      unsigned char  configure_coming : 1;
-      struct {
-	   unsigned char modal : 1;
-	   unsigned char sticky : 1;
-	   unsigned char maximized_v : 1;
-	   unsigned char maximized_h : 1;
-	   unsigned char shaded : 1;
-	   unsigned char skip_taskbar : 1;
-	   unsigned char skip_pager : 1;
-	   unsigned char fullscreen : 1;
-	   unsigned char above : 1;
-	   unsigned char below : 1;
-      } state;
-      Ecore_X_Window win_shaped_input;
-   } x;
-#endif
-#ifdef BUILD_ECORE_EVAS_FB
-   struct {
-      int real_w;
-      int real_h;
-   } fb;
-#endif
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_BUFFER
-   struct {
-      void *pixels;
-      Evas_Object *image;
-      void  (*free_func) (void *data, void *pix);
-      void *(*alloc_func) (void *data, int size);
-      void *data;
-   } buffer;
-#endif
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
-   struct {
-      Ecore_DirectFB_Window *window;
-   } directfb;
-#endif
-#ifdef BUILD_ECORE_EVAS_WIN32
-   struct {
-      Ecore_Win32_Window *parent;
-      struct {
-         unsigned char region     : 1;
-         unsigned char fullscreen : 1;
-      } state;
-   } win32;
-#endif
 #ifdef BUILD_ECORE_EVAS_EWS
    struct {
       Evas_Object *image;
    } ews;
 #endif
-
-#if defined(BUILD_ECORE_EVAS_WAYLAND_SHM) || defined(BUILD_ECORE_EVAS_WAYLAND_EGL)
-   struct 
-     {
-        Ecore_Wl_Window *parent, *win;
-        Evas_Object *frame;
-
-# if defined(BUILD_ECORE_EVAS_WAYLAND_SHM)
-        struct wl_shm_pool *pool;
-        size_t pool_size;
-        void *pool_data;
-        struct wl_buffer *buffer;
-# endif
-
-     } wl;
-#endif
-
-   Ecore_Timer *idle_flush_timer;
 };
 
 struct _Ecore_Evas
@@ -386,9 +306,6 @@ void _ecore_evas_unref(Ecore_Evas *ee);
 #ifdef BUILD_ECORE_EVAS_X11
 int _ecore_evas_x_shutdown(void);
 #endif
-#ifdef BUILD_ECORE_EVAS_FB
-int _ecore_evas_fb_shutdown(void);
-#endif
 #ifdef BUILD_ECORE_EVAS_SOFTWARE_BUFFER
 int _ecore_evas_buffer_shutdown(void);
 int _ecore_evas_buffer_render(Ecore_Evas *ee);
@@ -492,3 +409,4 @@ void _ecore_evas_engine_init();
 void _ecore_evas_engine_shutdown();
 
 #endif
+

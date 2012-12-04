@@ -519,7 +519,6 @@ _ecore_evas_constructor_directfb(int x, int y, int w, int h, const char *extra_o
 }
 #endif
 
-#ifdef BUILD_ECORE_EVAS_FB
 static Ecore_Evas *
 _ecore_evas_constructor_fb(int x EINA_UNUSED, int y EINA_UNUSED, int w, int h, const char *extra_options)
 {
@@ -535,7 +534,6 @@ _ecore_evas_constructor_fb(int x EINA_UNUSED, int y EINA_UNUSED, int w, int h, c
 
    return ee;
 }
-#endif
 
 
 #ifdef BUILD_ECORE_EVAS_PSL1GHT
@@ -2398,6 +2396,8 @@ _ecore_evas_unref(Ecore_Evas *ee)
 void
 _ecore_evas_free(Ecore_Evas *ee)
 {
+   Ecore_Evas_Interface *iface;
+
    ee->deleted = EINA_TRUE;
    if (ee->refcount > 0) return;
 
@@ -2430,6 +2430,11 @@ _ecore_evas_free(Ecore_Evas *ee)
         ecore_evases = (Ecore_Evas *)eina_inlist_remove
           (EINA_INLIST_GET(ecore_evases), EINA_INLIST_GET(ee));
      }
+
+   EINA_LIST_FREE(ee->engine.ifaces, iface)
+     free(iface);
+
+   ee->engine.ifaces = NULL;
    free(ee);
 }
 
@@ -2762,3 +2767,26 @@ ecore_evas_wayland_pointer_set(Ecore_Evas *ee EINA_UNUSED, int hot_x EINA_UNUSED
 }
 
 #endif
+
+/**
+ * @brief Create Ecore_Evas using fb backend.
+ * @param disp_name The name of the display to be used.
+ * @param rotation The rotation to be used.
+ * @param w The width of the Ecore_Evas to be created.
+ * @param h The height of the Ecore_Evas to be created.
+ * @return The new Ecore_Evas.
+ */
+EAPI Ecore_Evas *
+ecore_evas_fb_new(const char *disp_name, int rotation, int w, int h)
+{
+   Ecore_Evas *(*new)(const char *, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("fb");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_fb_new_internal");
+   if (new)
+     return new(disp_name, rotation, w, h);
+
+   return NULL;
+}

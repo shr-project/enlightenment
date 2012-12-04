@@ -1994,6 +1994,17 @@ src/lib/ecore_con/Makefile
 src/lib/ecore_config/Makefile
 src/lib/ecore_directfb/Makefile
 src/lib/ecore_evas/Makefile
+src/lib/ecore_evas/engines/Makefile
+src/lib/ecore_evas/engines/buffer/Makefile
+src/lib/ecore_evas/engines/cocoa/Makefile
+src/lib/ecore_evas/engines/directfb/Makefile
+src/lib/ecore_evas/engines/fb/Makefile
+src/lib/ecore_evas/engines/psl1ght/Makefile
+src/lib/ecore_evas/engines/sdl/Makefile
+src/lib/ecore_evas/engines/wayland/Makefile
+src/lib/ecore_evas/engines/win32/Makefile
+src/lib/ecore_evas/engines/wince/Makefile
+src/lib/ecore_evas/engines/x/Makefile
 src/lib/ecore_fb/Makefile
 src/lib/ecore_file/Makefile
 src/lib/ecore_cocoa/Makefile

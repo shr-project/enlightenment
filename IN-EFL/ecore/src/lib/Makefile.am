@@ -22,6 +22,10 @@ if BUILD_ECORE_CON
 SUBDIRS += ecore_con
 endif
 
+if BUILD_ECORE_FILE
+SUBDIRS += ecore_file
+endif
+
 if BUILD_ECORE_X
 SUBDIRS += ecore_x
 endif
@@ -60,10 +64,6 @@ endif
 
 if BUILD_ECORE_CONFIG
 SUBDIRS += ecore_config
-endif
-
-if BUILD_ECORE_FILE
-SUBDIRS += ecore_file
 endif
 
 if BUILD_ECORE_IMF
