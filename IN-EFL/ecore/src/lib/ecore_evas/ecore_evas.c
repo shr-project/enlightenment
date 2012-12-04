@@ -3454,3 +3454,50 @@ ecore_evas_object_image_new(Ecore_Evas *ee_target)
 
    return NULL;
 }
+
+EAPI Ecore_Evas *
+ecore_evas_sdl_new(const char* name, int w, int h, int fullscreen,
+		   int hwsurface, int noframe, int alpha)
+{
+   Ecore_Evas *(*new)(const char *, int, int, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("sdl");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_sdl_new_internal");
+   if (new)
+     return new(name, w, h, fullscreen, hwsurface, noframe, alpha);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_sdl16_new(const char* name, int w, int h, int fullscreen,
+		     int hwsurface, int noframe, int alpha)
+{
+   Ecore_Evas *(*new)(const char *, int, int, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("sdl");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_sdl16_new_internal");
+   if (new)
+     return new(name, w, h, fullscreen, hwsurface, noframe, alpha);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_gl_sdl_new(const char* name, int w, int h, int fullscreen, int noframe)
+{
+   Ecore_Evas *(*new)(const char *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("sdl");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_gl_sdl_new_internal");
+   if (new)
+     return new(name, w, h, fullscreen, noframe);
+
+   return NULL;
+}
