@@ -15,7 +15,7 @@
 #endif
 
 #define MOD_CONFIG_FILE_EPOCH 0x0001
-#define MOD_CONFIG_FILE_GENERATION 0x03
+#define MOD_CONFIG_FILE_GENERATION 0x04
 #define MOD_CONFIG_FILE_VERSION \
    ((MOD_CONFIG_FILE_EPOCH << 16) | MOD_CONFIG_FILE_GENERATION)
 
@@ -61,6 +61,7 @@ typedef struct Config
    Eina_Bool set_last_active;
    Eina_Bool close_on_send;
    Eina_Bool fill_side;
+   Eina_Bool fetch_past_links;
 } Config;
 
 extern Mod *mod;

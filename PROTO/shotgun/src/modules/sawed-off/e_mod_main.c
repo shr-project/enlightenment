@@ -80,6 +80,7 @@ _set_active(Eina_Bool active)
    mod->active = !!active;
    if (!active)
      {
+        e_grabinput_release(0, mod->popup->evas_win);
         E_FN_DEL(e_object_del, mod->popup);
         mod->popup_bg = mod->popup_entry = mod->popup_img = NULL;
         mod->contact_active = NULL;
@@ -122,12 +123,15 @@ _e_mod_sos_config_load(void)
 
         IFMODCFG(0x02)
         sos_config->set_last_active = 1;
+        IFMODCFG(0x04)
+        sos_config->fetch_past_links = 1;
         return;
      }
    sos_config = E_NEW(Config, 1);
    sos_config->config_version = (MOD_CONFIG_FILE_EPOCH << 16);
    sos_config->position = E_GADCON_ORIENT_FLOAT;
    sos_config->set_last_active = 1;
+   sos_config->fetch_past_links = 1;
 }
 
 static void
@@ -223,6 +227,24 @@ _status_cb(void *d EINA_UNUSED, const EDBus_Message *msg)
 }
 
 static void
+_link_list_cb(void *d EINA_UNUSED, const EDBus_Message *msg, EDBus_Pending *pending EINA_UNUSED)
+{
+   EDBus_Message_Iter *array = NULL;
+   char *txt = NULL;
+   const char *name, *error;
+
+   if (edbus_message_error_get(msg, &name, &error))
+     {
+        ERR("%s: %s", name, error);
+        return;
+     }
+   if (!edbus_message_arguments_get(msg, "as", &array)) return;
+
+   while (edbus_message_iter_get_and_next(array, 's', &txt))
+     mod->images = eina_list_append(mod->images, eina_stringshare_add(txt));
+}
+
+static void
 _contacts_list_cb(void *d EINA_UNUSED, const EDBus_Message *msg, EDBus_Pending *pending EINA_UNUSED)
 {
    EDBus_Message_Iter *array = NULL;
@@ -284,6 +306,8 @@ _name_owner_change(void *d EINA_UNUSED, const char *bus EINA_UNUSED, const char 
         mod->connected = 1;
         if (!mod->contacts_list)
           edbus_proxy_call(mod->proxy_list, "get", _contacts_list_cb, NULL, -1, "");
+        if (sos_config->fetch_past_links && (!mod->images))
+          edbus_proxy_call(mod->proxy_link, "list", _link_list_cb, NULL, -1, "");
      }
    _set_active((mod->nameowned && mod->connected));
    if (!mod->nameowned) E_FREE_LIST(mod->images, eina_stringshare_del);

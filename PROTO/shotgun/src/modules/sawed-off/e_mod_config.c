@@ -7,6 +7,7 @@ struct _E_Config_Dialog_Data
    int set_last_active;
    int close_on_send;
    int fill_side;
+   int fetch_past_links;
 };
 
 static void
@@ -17,6 +18,7 @@ _fill_data(E_Config_Dialog_Data *cfdata)
    cfdata->set_last_active = sos_config->set_last_active;
    cfdata->close_on_send = sos_config->close_on_send;
    cfdata->fill_side = sos_config->fill_side;
+   cfdata->fetch_past_links = sos_config->fetch_past_links;
 }
 
 static void *
@@ -49,18 +51,10 @@ _basic_check_changed(E_Config_Dialog *cfd __UNUSED__, E_Config_Dialog_Data *cfda
    CHECK(set_last_active);
    CHECK(close_on_send);
    CHECK(fill_side);
+   CHECK(fetch_past_links);
 
 #undef CHECK
    return 0;
-}
-
-static void
-_radio_cb(void *data, Evas_Object *obj EINA_UNUSED)
-{
-   E_Config_Dialog_Data *cfdata = data;
-
-   if (cfdata->fill_side != sos_config->fill_side)
-     e_config_dialog_changed_set(mod->cfd, 1);
 }
 
 static Evas_Object *
@@ -90,61 +84,51 @@ _basic_create_widgets(E_Config_Dialog *cfd EINA_UNUSED, Evas *evas, E_Config_Dia
    ob = e_widget_check_add(evas, D_("Fill side"), &cfdata->fill_side);
    e_widget_list_object_append(ol, ob, 1, 0, 0.5);
 
+   ob = e_widget_check_add(evas, D_("Fetch current cache"), &cfdata->fetch_past_links);
+   e_widget_list_object_append(ol, ob, 1, 0, 0.5);
+
    e_widget_toolbook_page_append(otb, NULL, D_("General"), ol, 1, 1, 1, 1, 0.5, 0.5);
 
    ot = e_widget_table_add(evas, 1);
    rg = e_widget_radio_group_new(&cfdata->position);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left",
                                 24, 24, E_GADCON_ORIENT_LEFT, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 0, 2, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right",
                                 24, 24, E_GADCON_ORIENT_RIGHT, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 2, 2, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top",
                                 24, 24, E_GADCON_ORIENT_TOP, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 1, 0, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom",
                                 24, 24, E_GADCON_ORIENT_BOTTOM, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 1, 4, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-left",
                                 24, 24, E_GADCON_ORIENT_CORNER_TL, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 0, 0, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-top-right",
                                 24, 24, E_GADCON_ORIENT_CORNER_TR, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 2, 0, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-left",
                                 24, 24, E_GADCON_ORIENT_CORNER_BL, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 0, 4, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-bottom-right",
                                 24, 24, E_GADCON_ORIENT_CORNER_BR, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 2, 4, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-top",
                                 24, 24, E_GADCON_ORIENT_CORNER_LT, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 0, 1, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-top",
                                 24, 24, E_GADCON_ORIENT_CORNER_RT, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 2, 1, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-left-bottom",
                                 24, 24, E_GADCON_ORIENT_CORNER_LB, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 0, 3, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, "preferences-position-right-bottom",
                                 24, 24, E_GADCON_ORIENT_CORNER_RB, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 2, 3, 1, 1, 1, 1, 1, 1);
    ow = e_widget_radio_icon_add(evas, NULL, NULL, //FIXME
                                 24, 24, E_GADCON_ORIENT_FLOAT, rg);
-   e_widget_on_change_hook_set(ow, _radio_cb, cfdata);
    e_widget_table_object_append(ot, ow, 1, 2, 1, 1, 1, 1, 1, 1);
 
    e_widget_toolbook_page_append(otb, NULL, D_("Position"), ot, 1, 1, 1, 1, 0.5, 0.5);
@@ -162,6 +146,7 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 {
    if ((cfdata->fill_side != sos_config->fill_side) ||
        (cfdata->ignore_self_links != sos_config->ignore_self_links) ||
+       (cfdata->fetch_past_links != (int)sos_config->fetch_past_links) ||
        (cfdata->set_last_active != sos_config->set_last_active) ||
        (cfdata->close_on_send != (int)sos_config->close_on_send) ||
        (cfdata->position != (int)sos_config->position)
@@ -170,6 +155,7 @@ _basic_apply_data(E_Config_Dialog *cfd  __UNUSED__,
 #define SET(X) sos_config->X = cfdata->X
         SET(position);
         SET(fill_side);
+        SET(fetch_past_links);
         SET(ignore_self_links);
         SET(close_on_send);
         SET(set_last_active);
