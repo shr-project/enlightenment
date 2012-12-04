@@ -262,6 +262,7 @@ ecore_evas_init(void)
 #endif
 
    _ecore_evas_extn_init();
+   _ecore_evas_engine_init();
 
    if (getenv("ECORE_EVAS_COMP_NOSYNC"))
       _ecore_evas_app_comp_sync = 0;
@@ -289,25 +290,7 @@ ecore_evas_shutdown(void)
    ecore_idle_enterer_del(ecore_evas_idle_enterer);
    ecore_evas_idle_enterer = NULL;
 
-#ifdef BUILD_ECORE_EVAS_X11
-   while (_ecore_evas_x_shutdown());
-#endif
-#ifdef BUILD_ECORE_EVAS_WIN32
-   while (_ecore_evas_win32_shutdown());
-#endif
-#ifdef BUILD_ECORE_EVAS_FB
-   while (_ecore_evas_fb_shutdown());
-#endif
-#ifdef BUILD_ECORE_EVAS_EWS
-   while (_ecore_evas_ews_shutdown());
-#endif
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_BUFFER
-   while (_ecore_evas_buffer_shutdown());
-#endif
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
-   while (_ecore_evas_directfb_shutdown());
-#endif
-
+   _ecore_evas_engine_shutdown();
    if (_ecore_evas_async_events_fd)
      ecore_main_fd_handler_del(_ecore_evas_async_events_fd);
    

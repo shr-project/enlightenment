@@ -487,4 +487,8 @@ extern Eina_Bool _ecore_evas_app_comp_sync;
 void _ecore_evas_extn_init(void);
 void _ecore_evas_extn_shutdown(void);
 
+Eina_Module *_ecore_evas_engine_load(const char *engine);
+void _ecore_evas_engine_init();
+void _ecore_evas_engine_shutdown();
+
 #endif

@@ -87,6 +87,7 @@ endif
 AM_CPPFLAGS = \
 -I$(top_srcdir)/src/lib/ecore \
 -I$(top_srcdir)/src/lib/ecore_evas \
+-I$(top_srcdir)/src/lib/ecore_file \
 -I$(top_srcdir)/src/lib/ecore_input \
 -I$(top_srcdir)/src/lib/ecore_input_evas \
 -I$(top_builddir)/src/lib/ecore \
@@ -94,6 +95,8 @@ AM_CPPFLAGS = \
 -I$(top_builddir)/src/lib/ecore_input \
 -I$(top_builddir)/src/lib/ecore_input_evas \
 -DEFL_ECORE_EVAS_BUILD \
+-DPACKAGE_LIB_DIR=\"$(libdir)\" \
+@EFL_ECORE_EVAS_BUILD@ \
 $(ECORE_X_INC) \
 $(ECORE_FB_INC) \
 $(ECORE_DIRECTFB_INC) \
@@ -114,6 +117,7 @@ includes_HEADERS = Ecore_Evas.h
 includesdir = $(includedir)/ecore-@VMAJ@
 
 libecore_evas_la_SOURCES = \
+ecore_evas_module.c \
 ecore_evas.c \
 ecore_evas_util.c \
 ecore_evas_x.c \
@@ -149,6 +153,7 @@ $(ECORE_IPC_LIB) \
 $(ECORE_PSL1GHT_LIB) \
 $(ECORE_WAYLAND_LIB) \
 $(ECORE_WAYLAND_LIBADD) \
+$(top_builddir)/src/lib/ecore_file/libecore_file.la \
 $(top_builddir)/src/lib/ecore_input/libecore_input.la \
 $(top_builddir)/src/lib/ecore_input_evas/libecore_input_evas.la \
 $(top_builddir)/src/lib/ecore/libecore.la \
