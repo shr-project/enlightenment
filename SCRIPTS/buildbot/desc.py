@@ -43,6 +43,7 @@ Package(
     configure_flags={
         "common": [
             "--enable-doc",
+            "--disable-directfb",
             ],
         },
     )
