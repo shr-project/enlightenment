@@ -105,10 +105,9 @@ private:
         {
            String::Utf8Value part(name);
 
-           if (value->IsString())
-             elm_object_item_part_text_set(Unwrap(info)->object_item,
-                                           strcmp(*part, "title") ? *part : NULL,
-                                           *String::Utf8Value(value));
+           elm_object_item_part_text_set(Unwrap(info)->object_item,
+                                         strcmp(*part, "title") ? *part : NULL,
+                                         *String::Utf8Value(value));
         }
 
       static Handle<Value> GetContent(Local<String> name, const AccessorInfo &info)
