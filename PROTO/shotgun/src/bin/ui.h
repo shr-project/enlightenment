@@ -366,7 +366,7 @@ void ui_dbus_signal_message_self(Contact_List *cl, const char *jid, const char *
 void ui_dbus_signal_message(Contact_List *cl, Contact *c, Shotgun_Event_Message *msg);
 void ui_dbus_signal_status(Contact *c, Shotgun_Event_Presence *pres);
 void ui_dbus_signal_status_self(Contact_List *cl);
-void ui_dbus_signal_link(Contact_List *cl, const char *link, Eina_Bool self);
+void ui_dbus_signal_link(Contact_List *cl, const char *link, Eina_Bool del, Eina_Bool self);
 void ui_dbus_init(Contact_List *cl);
 # ifdef HAVE_NOTIFY
 void ui_dbus_notify(Contact_List *cl, Evas_Object *img, const char *from, const char *msg);
@@ -497,6 +497,10 @@ void ui_key_grab_set(UI_WIN *ui, const char *key, Eina_Bool enable);
  * @return st The message
  * @return priority The user's priority
  * "sui" org.shotgun.core.status_self(): String desc, Shotgun_User_Status st, int priority
+ *
+ * @brief Signal for when a link is deleted from the cache
+ * @return LINK The URL of the link
+ * "s" org.shotgun.core.link_del(): String LINK
  *
  * @brief Signal for when a new link is detected in chat
  * @return LINK The URL of the link

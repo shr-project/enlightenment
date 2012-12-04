@@ -218,6 +218,7 @@ chat_image_free(Image *i)
      }
    if (i->url) ecore_con_url_free(i->url);
    if (i->buf) eina_binbuf_free(i->buf);
+   ui_dbus_signal_link(i->cl, i->addr, EINA_TRUE, EINA_FALSE);
    eina_stringshare_del(i->addr);
    free(i);
 }

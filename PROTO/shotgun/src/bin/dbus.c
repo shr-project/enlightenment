@@ -382,11 +382,13 @@ ui_dbus_signal_connect_state(Contact_List *cl)
 }
 
 void
-ui_dbus_signal_link(Contact_List *cl, const char *url, Eina_Bool self)
+ui_dbus_signal_link(Contact_List *cl, const char *url, Eina_Bool del, Eina_Bool self)
 {
    DBusMessage *sig;
 
-   if (self)
+   if (del)
+     sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "link_del");
+   else if (self)
      sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "link_self");
    else
      sig = dbus_message_new_signal(SHOTGUN_DBUS_PATH, SHOTGUN_DBUS_METHOD_BASE ".core", "link");
@@ -432,6 +434,7 @@ ui_dbus_init(Contact_List *cl)
    e_dbus_interface_signal_add(iface, "status", "sssuui");
    e_dbus_interface_signal_add(iface, "status_self", "sui");
    e_dbus_interface_signal_add(iface, "link", "s");
+   e_dbus_interface_signal_add(iface, "link_del", "s");
    e_dbus_interface_signal_add(iface, "link_self", "s");
    e_dbus_interface_signal_add(iface, "connected", "b");
    e_dbus_interface_unref(iface);

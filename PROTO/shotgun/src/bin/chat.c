@@ -143,7 +143,7 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
         e = NULL;
      }
    EINA_INLIST_FOREACH(l, i)
-     ui_dbus_signal_link(c->list, i->addr, me);
+     ui_dbus_signal_link(c->list, i->addr, EINA_FALSE, me);
    if (c->log)
      {
         /* switch <ps> for \n to be more readable */
