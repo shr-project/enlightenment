@@ -3745,3 +3745,18 @@ ecore_evas_directfb_window_get(const Ecore_Evas *ee)
    if (!iface) return NULL;
    return iface->window_get(ee);
 }
+
+EAPI Ecore_Evas *
+ecore_evas_psl1ght_new(const char* name, int w, int h)
+{
+   Ecore_Evas *(*new)(const char*, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("psl1ght");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_psl1ght_new_internal");
+   if (new)
+     return new(name, w, h);
+
+   return NULL;
+}
