@@ -7,15 +7,15 @@ taffy = require('taffy').taffy;
 themes = {
   'default': {
     'app': {
-      name: 'eui.edj',
+      name: 'themes/eui.edj',
       group: 'app'
     },
     'list': {
-      name: 'eui.edj',
+      name: 'themes/eui.edj',
       group: 'list'
     },
     'split': {
-      name: 'eui.edj',
+      name: 'themes/eui.edj',
       group: 'split'
     }
   }

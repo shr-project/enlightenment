@@ -25,12 +25,14 @@ EXAMPLES = \
 	video.js
 
 EDCS = \
+	themes/eui.edc \
 	themes/default.edc \
 	themes/dict.edc
 
 GUIDESDIR = jsduck/guides
 ELEMENTARY_THEMES_DIR = \
-	../e/trunk/elementary/data/themes \
+	../e/elementary/data/themes/images \
+	../e/trunk/elementary/data/themes/images \
 	themes/
 ELEMENTARY_FONTS_DIR = \
 	themes/fonts
