@@ -97,6 +97,17 @@ AC_ARG_WITH(internal-maximum-log-level,
 AC_CANONICAL_BUILD
 AC_CANONICAL_HOST
 
+case "$host_os" in
+   mingw32ce*)
+      MODULE_ARCH="$host_os-$host_cpu"
+      ;;
+   *)
+      MODULE_ARCH="$host_os-$host_cpu-v_maj.v_min.v_mic"
+      ;;
+esac
+AC_SUBST(MODULE_ARCH)
+AC_DEFINE_UNQUOTED(MODULE_ARCH, "$MODULE_ARCH", "Module architecture")
+
 # dependencies and options
 want_curl="no"
 want_local_sockets="yes"

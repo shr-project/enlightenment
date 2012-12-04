@@ -17,11 +17,11 @@ $(ECORE_IPC_INC) \
 @EVAS_CFLAGS@ \
 @EINA_CFLAGS@
 
-pkgdir = $(libdir)/ecore_evas/engines
-pkg_LTLIBRARIES = x.la
-x_la_SOURCES = ecore_evas_x.c
+pkgdir = $(libdir)/ecore_evas/engines/x/$(MODULE_ARCH)
+pkg_LTLIBRARIES = module.la
+module_la_SOURCES = ecore_evas_x.c
 
-x_la_LIBADD = \
+module_la_LIBADD = \
 $(ECORE_IPC_LIB) \
 $(top_builddir)/src/lib/ecore_x/libecore_x.la \
 $(top_builddir)/src/lib/ecore_file/libecore_file.la \
@@ -33,5 +33,5 @@ $(top_builddir)/src/lib/ecore_evas/libecore_evas.la \
 @EINA_LIBS@ \
 @EFL_SHM_OPEN_LIBS@
 
-x_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
-x_la_LIBTOOLFLAGS = --tag=disable-static
+module_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
+module_la_LIBTOOLFLAGS = --tag=disable-static

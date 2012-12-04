@@ -20,11 +20,11 @@ $(ECORE_IPC_INC) \
 @WAYLAND_CFLAGS@ \
 @WAYLAND_EGL_CFLAGS@
 
-pkgdir = $(libdir)/ecore_evas/engines
-pkg_LTLIBRARIES = wayland.la
-wayland_la_SOURCES =  ecore_evas_wayland_common.c ecore_evas_wayland_egl.c ecore_evas_wayland_shm.c
+pkgdir = $(libdir)/ecore_evas/engines/wayland/$(MODULE_ARCH)
+pkg_LTLIBRARIES = module.la
+module_la_SOURCES =  ecore_evas_wayland_common.c ecore_evas_wayland_egl.c ecore_evas_wayland_shm.c
 
-wayland_la_LIBADD = \
+module_la_LIBADD = \
 $(ECORE_IPC_LIB) \
 $(top_builddir)/src/lib/ecore_file/libecore_file.la \
 $(top_builddir)/src/lib/ecore_input/libecore_input.la \
@@ -36,8 +36,8 @@ $(top_builddir)/src/lib/ecore/libecore.la \
 @WAYLAND_LIBS@ \
 @EFL_SHM_OPEN_LIBS@
 
-wayland_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
-wayland_la_LIBTOOLFLAGS = --tag=disable-static
+module_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
+module_la_LIBTOOLFLAGS = --tag=disable-static
 
 EXTRA_DIST = \
 ecore_evas_wayland_private.h

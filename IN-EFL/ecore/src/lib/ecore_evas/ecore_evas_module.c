@@ -1,3 +1,7 @@
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "Ecore_Evas.h"
 #include "ecore_evas_private.h"
 
@@ -5,9 +9,9 @@ Eina_Hash *_registered_engines = NULL;
 Eina_List *_engines_paths = NULL;
 
 #if defined(__CEGCC__) || defined(__MINGW32CE__) || defined(_WIN32)
-# define ECORE_EVAS_ENGINE_NAME "%s.dll"
+# define ECORE_EVAS_ENGINE_NAME "module.dll"
 #else
-# define ECORE_EVAS_ENGINE_NAME "%s.so"
+# define ECORE_EVAS_ENGINE_NAME "module.so"
 #endif
 
 
@@ -27,7 +31,7 @@ _ecore_evas_engine_load(const char *engine)
      {
         char tmp[PATH_MAX];
 
-        snprintf(tmp, sizeof (tmp), "%s/"ECORE_EVAS_ENGINE_NAME, path, engine);
+        snprintf(tmp, sizeof (tmp), "%s/%s/%s/"ECORE_EVAS_ENGINE_NAME, path, engine, MODULE_ARCH);
         em = eina_module_new(tmp);
         if (!em) continue;
 

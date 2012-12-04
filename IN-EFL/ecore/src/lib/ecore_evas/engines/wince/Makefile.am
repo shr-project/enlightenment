@@ -19,11 +19,11 @@ $(ECORE_IPC_INC) \
 @EINA_CFLAGS@ \
 @EVIL_CFLAGS@
 
-pkgdir = $(libdir)/ecore_evas/engines
-pkg_LTLIBRARIES = wince.la
-wince_la_SOURCES = ecore_evas_wince.c
+pkgdir = $(libdir)/ecore_evas/engines/wince/$(MODULE_ARCH)
+pkg_LTLIBRARIES = module.la
+module_la_SOURCES = ecore_evas_wince.c
 
-wince_la_LIBADD = \
+module_la_LIBADD = \
 $(ECORE_IPC_LIB) \
 $(top_builddir)/src/lib/ecore_file/libecore_file.la \
 $(top_builddir)/src/lib/ecore_input/libecore_input.la \
@@ -35,5 +35,5 @@ $(top_builddir)/src/lib/ecore/libecore.la \
 @EVIL_LIBS@ \
 @EFL_SHM_OPEN_LIBS@
 
-wince_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
-wince_la_LIBTOOLFLAGS = --tag=disable-static
+module_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
+module_la_LIBTOOLFLAGS = --tag=disable-static

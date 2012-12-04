@@ -8,6 +8,7 @@ AM_CPPFLAGS = \
 -I$(top_srcdir)/src/lib/ecore_input \
 -I$(top_srcdir)/src/lib/ecore_input_evas \
 -I$(top_builddir)/src/lib/ecore \
+-I$(top_builddir)/src/lib/ecore_fb \
 -I$(top_builddir)/src/lib/ecore_evas \
 -I$(top_builddir)/src/lib/ecore_input \
 -I$(top_builddir)/src/lib/ecore_input_evas \
@@ -17,11 +18,11 @@ $(ECORE_IPC_INC) \
 @EVAS_CFLAGS@ \
 @EINA_CFLAGS@
 
-pkgdir = $(libdir)/ecore_evas/engines
-pkg_LTLIBRARIES = fb.la
-fb_la_SOURCES = ecore_evas_fb.c
+pkgdir = $(libdir)/ecore_evas/engines/fb/$(MODULE_ARCH)
+pkg_LTLIBRARIES = module.la
+module_la_SOURCES = ecore_evas_fb.c
 
-fb_la_LIBADD = \
+module_la_LIBADD = \
 $(ECORE_IPC_LIB) \
 $(top_builddir)/src/lib/ecore_fb/libecore_fb.la \
 $(top_builddir)/src/lib/ecore_evas/libecore_evas.la \
@@ -33,6 +34,6 @@ $(top_builddir)/src/lib/ecore/libecore.la \
 @EINA_LIBS@ \
 @EFL_SHM_OPEN_LIBS@
 
-fb_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
-fb_la_LIBTOOLFLAGS = --tag=disable-static
+module_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
+module_la_LIBTOOLFLAGS = --tag=disable-static
 

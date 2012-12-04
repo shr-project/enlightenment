@@ -18,11 +18,11 @@ $(ECORE_IPC_INC) \
 @EVAS_CFLAGS@ \
 @EINA_CFLAGS@
 
-pkgdir = $(libdir)/ecore_evas/engines
-pkg_LTLIBRARIES = psl1ght.la
-psl1ght_la_SOURCES = ecore_evas_psl1ght.c
+pkgdir = $(libdir)/ecore_evas/engines/psl1ght/$(MODULE_ARCH)
+pkg_LTLIBRARIES = module.la
+module_la_SOURCES = ecore_evas_psl1ght.c
 
-psl1ght_la_LIBADD = \
+module_la_LIBADD = \
 $(ECORE_IPC_LIB) \
 $(top_builddir)/src/lib/ecore_file/libecore_file.la \
 $(top_builddir)/src/lib/ecore_evas/libecore_evas.la \
@@ -34,5 +34,5 @@ $(top_builddir)/src/lib/ecore/libecore.la \
 @EINA_LIBS@ \
 @EFL_SHM_OPEN_LIBS@
 
-psl1ght_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
-psl1ght_la_LIBTOOLFLAGS = --tag=disable-static
+module_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
+module_la_LIBTOOLFLAGS = --tag=disable-static
