@@ -4,7 +4,7 @@ var EUI = require('eui');
 var conn = new dbus.Connection('system');
 var obj = conn.getObject('net.connman', '/');
 var manager = obj.getProxy('net.connman.Manager');
-var services = null;
+var image_dir = './themes/easy-connman/images/';
 
 var arrayDictToDict = function(array){
   var dict = {};
@@ -54,6 +54,8 @@ ServicesModel = EUI.Model({
     return this.services.length;
   },
   itemAtIndex: function(index) {
+    if (!this.services[index]) return;
+
     var item = arrayDictToDict(this.services[index][1]);
     item.id = this.services[index][0].replace('/net/connman/service/', '');
 
@@ -115,12 +117,12 @@ ServicesModel = EUI.Model({
 
 ServicesController = EUI.ListController({
   title: 'Available networks',
-  image_dir: './themes/easy-connman/images/',
   init: function() {
     this.model = new ServicesModel();
   },
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
+    if (!item) return;
     return {
       text: item.Name || item.id,
       icon: this.chooseIcon(item),
@@ -128,26 +130,26 @@ ServicesController = EUI.ListController({
     }
   },
   chooseEnd: function(service){
-    if (service.State != 'idle' && service.State != 'failure')
-      return this.image_dir + 'connman-connected.png';
+    if ((service.State != 'idle') && (service.State != 'failure'))
+      return image_dir + 'connman-connected.png';
 
-    if (service.Security && service.Security[0] != 'none' && service.Favorite)
-      return this.image_dir + 'connman-favorite.png';
+    if (service.Security && (service.Security[0] != 'none') && service.Favorite)
+      return image_dir + 'connman-favorite.png';
 
-    if (service.Security && service.Security[0] != 'none')
-      return this.image_dir + 'connman-lock.png';
+    if (service.Security && (service.Security[0] != 'none'))
+      return image_dir + 'connman-lock.png';
   },
   chooseIcon: function(service) {
     if (service.Type == 'wifi') {
       if (service.Strength >= 65)
-        return this.image_dir + 'connman-wifi-good.png';
+        return image_dir + 'connman-wifi-good.png';
       if (service.Strength >= 35)
-        return this.image_dir + 'connman-wifi-medium.png';
+        return image_dir + 'connman-wifi-medium.png';
 
-      return this.image_dir + 'connman-wifi-bad.png'
+      return image_dir + 'connman-wifi-bad.png'
     }
     if (service.Type)
-      return this.image_dir + 'connman-' + service.Type + '.png';
+      return image_dir + 'connman-' + service.Type + '.png';
   },
   selectedItemAtIndex: function(index) {
     var service = this.model.itemAtIndex(index);
@@ -155,13 +157,15 @@ ServicesController = EUI.ListController({
   },
   navigationBarItems: function() {
     var state = this.model.offlineMode ? 'Offline' : 'Online';
-    return {left: state};
+    return {left: state, right: 'Technologies'};
   },
   selectedNavigationBarItem: function(item) {
     if (item == 'Online')
       this.goOnline(false);
-    else
+    else if (item == 'Offline')
       this.goOnline(true);
+    else
+      this.pushController(new TechnologiesController());
   },
   goOnline: function(on) {
     manager.SetProperty('OfflineMode', dbus.Variant(!on), function() {
@@ -219,7 +223,7 @@ ServiceDetailsModel = EUI.Model({
     return this.items.length;
   },
   isOnline: function() {
-    return this.service.State != 'idle' && this.service.State != 'failure';
+    return (this.service.State != 'idle') && (this.service.State != 'failure');
   },
   path: function() {
     return '/net/connman/service/' + this.service.id;
@@ -319,9 +323,9 @@ EditableServiceDetailsModel = EUI.Model({
                              });
     } else {
       var willUpdate = false;
-      willUpdate = willUpdate || before['IPv4.Address'] != after['IPv4.Address'];
-      willUpdate = willUpdate || before['IPv4.Netmask'] != after['IPv4.Netmask'];
-      willUpdate = willUpdate || before['IPv4.Gateway'] != after['IPv4.Gateway'];
+      willUpdate = willUpdate || (before['IPv4.Address'] != after['IPv4.Address']);
+      willUpdate = willUpdate || (before['IPv4.Netmask'] != after['IPv4.Netmask']);
+      willUpdate = willUpdate || (before['IPv4.Gateway'] != after['IPv4.Gateway']);
 
       if (!willUpdate) return;
 
@@ -371,6 +375,155 @@ EditServiceDetails = EUI.TableController({
     else
       this.model.updateItemAtIndex(this.index, this.getValues());
       this.popController();
+  }
+});
+
+TechnologiesModel = EUI.Model({
+  init: function() {
+    this.technologies = [];
+
+    manager.GetTechnologies(function(technologies) {
+      this.technologies = technologies;
+      this.notifyListeners();
+      this.addTechnologiesChangedListener();
+    }.bind(this));
+
+    manager.addSignalHandler('TechnologyAdded',
+                             this.technologyAdded.bind(this));
+    manager.addSignalHandler('TechnologyRemoved',
+                             this.technologyRemoved.bind(this));
+  },
+  length: function() {
+    return this.technologies.length;
+  },
+  itemAtIndex: function(index) {
+    if (!this.technologies[index]) return;
+
+    var item = arrayDictToDict(this.technologies[index][1]);
+    item.path = this.technologies[index][0];
+    return item;
+  },
+  technologyAdded: function(path, properties) {
+    this.technologies.push([path, properties]);
+    this.notifyListeners();
+    this.addTechnologiesChangedListener();
+  },
+  technologyRemoved: function(path) {
+    for (var i in this.technologies) {
+      if (this.technologies[i][0] == path) {
+        this.technologies.splice(i, 1);
+        break;
+      }
+    }
+    this.notifyListeners();
+  },
+  addTechnologiesChangedListener: function() {
+    for (var i in this.technologies) {
+      if (!this.technologies[i][2]) {
+        var obj = conn.getObject('net.connman', this.technologies[i][0]);
+        this.technologies[i][2] = obj.getProxy('net.connman.Technology');
+        this.technologies[i][2].addSignalHandler('PropertyChanged',
+          function(service, name, value) {
+            for  (var i in service) {
+              if (service[i][0] == name)
+               service[i][1] = value;
+            }
+            this.notifyListeners();
+          }.bind(this, this.technologies[i][1]));
+      }
+    }
+  },
+});
+
+TechnologiesController = EUI.ListController({
+  init: function() {
+    this.title = 'Technologies';
+    this.model = new TechnologiesModel();
+  },
+  itemAtIndex: function(index) {
+    var item = this.model.itemAtIndex(index);
+    if (!item) return;
+
+    var state = 'offline';
+    if (item.Connected)
+      state = 'connected';
+    else if (item.Powered)
+      state = 'powered';
+
+    return {
+      text: item.Name,
+      icon: image_dir + 'connman-tech-' + state + '.png',
+      end: 'arrow_right'
+    };
+  },
+  selectedItemAtIndex: function(index) {
+    var technology = this.model.itemAtIndex(index);
+    this.pushController(new TechnologyDetailsController(technology));
+  }
+});
+
+TechnologyDetailsModel = EUI.Model({
+  init: function(technology) {
+    this.technology = technology;
+    this.items = [];
+
+    var obj = conn.getObject('net.connman', technology.path);
+    this.dbus_proxy = obj.getProxy('net.connman.Technology');
+    this.dbus_proxy.addSignalHandler('PropertyChanged',
+                                     this.propertyChanged.bind(this));
+
+    this.recreateItems();
+  },
+  recreateItems: function() {
+    this.items[0] = this.technology.Connected ? 'Connected' : 'Not connected';
+    this.items[1] = this.technology.Powered ? 'Powered on' : 'Powered off ';
+    this.notifyListeners();
+  },
+  powered: function() {
+    return this.technology.Powered;
+  },
+  propertyChanged: function(name, value) {
+    this.technology[name] = value[0];
+    this.recreateItems();
+  },
+  length: function() {
+    return this.items.length;
+  },
+  itemAtIndex: function(index) {
+    return this.items[index];
+  },
+  powerOn: function(on) {
+    this.dbus_proxy.SetProperty('Powered', dbus.Variant(on), function() {
+      print('Power on/off');
+    });
+  },
+  scan: function() {
+    this.dbus_proxy.Scan(function() {
+      print('Scan');
+    });
+  }
+});
+
+TechnologyDetailsController = EUI.ListController({
+  init: function(technology) {
+    this.title = technology.Name;
+    this.model = new TechnologyDetailsModel(technology);
+  },
+  itemAtIndex: function(index) {
+    var item = this.model.itemAtIndex(index);
+    return {
+      text: item
+    }
+  },
+  navigationBarItems: function() {
+    var powered = this.model.powered() ? 'Power off' : 'Power on';
+    return {right: [powered, 'Scan']};
+  },
+  selectedNavigationBarItem: function(item) {
+    if (item == 'Scan')
+      this.model.scan();
+    else
+      this.model.powerOn(item == 'Power on');
   }
 });
 
