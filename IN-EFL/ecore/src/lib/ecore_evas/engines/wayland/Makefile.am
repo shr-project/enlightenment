@@ -36,7 +36,7 @@ $(top_builddir)/src/lib/ecore/libecore.la \
 @WAYLAND_LIBS@ \
 @EFL_SHM_OPEN_LIBS@
 
-module_la_LDFLAGS = -module -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
+module_la_LDFLAGS = -module -no-undefined -version-info @version_info@ @release_info@
 module_la_LIBTOOLFLAGS = --tag=disable-static
 
 EXTRA_DIST = \

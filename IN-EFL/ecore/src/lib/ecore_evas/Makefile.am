@@ -47,7 +47,7 @@ $(top_builddir)/src/lib/ecore/libecore.la \
 @EVIL_LIBS@ \
 @EFL_SHM_OPEN_LIBS@
 
-libecore_evas_la_LDFLAGS = -no-undefined @lt_enable_auto_import@ -version-info @version_info@ @release_info@
+libecore_evas_la_LDFLAGS = -no-undefined -version-info @version_info@ @release_info@
 
 EXTRA_DIST = \
 ecore_evas_private.h
