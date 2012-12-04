@@ -78,6 +78,7 @@ typedef struct _Ecore_Evas_Interface_Xrender_X11 Ecore_Evas_Interface_Xrender_X1
 typedef struct _Ecore_Evas_Interface_Gl_X11 Ecore_Evas_Interface_Gl_X11;
 typedef struct _Ecore_Evas_Interface_Wayland Ecore_Evas_Interface_Wayland;
 typedef struct _Ecore_Evas_Interface_Win32 Ecore_Evas_Interface_Win32;
+typedef struct _Ecore_Evas_Interface_WinCE Ecore_Evas_Interface_WinCE;
 
 
 struct _Ecore_Evas_Engine_Func
@@ -239,6 +240,12 @@ struct _Ecore_Evas_Interface_Win32 {
    Ecore_Evas_Interface base;
 
    Ecore_Win32_Window* (*window_get)(const Ecore_Evas *ee);
+};
+
+struct _Ecore_Evas_Interface_WinCE {
+   Ecore_Evas_Interface base;
+
+   Ecore_WinCE_Window* (*window_get)(const Ecore_Evas *ee);
 };
 
 struct _Ecore_Evas_Engine

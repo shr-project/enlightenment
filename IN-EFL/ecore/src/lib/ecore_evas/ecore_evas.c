@@ -3600,3 +3600,109 @@ ecore_evas_win32_window_get(const Ecore_Evas *ee)
    if (!iface) return NULL;
    return iface->window_get(ee);
 }
+
+EAPI Ecore_Evas *
+ecore_evas_software_wince_new(Ecore_WinCE_Window *parent,
+			      int                 x,
+			      int                 y,
+			      int                 width,
+			      int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("wince");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_wince_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_wince_fb_new(Ecore_WinCE_Window *parent,
+				 int                 x,
+				 int                 y,
+				 int                 width,
+				 int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("wince");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_wince_fb_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_wince_gapi_new(Ecore_WinCE_Window *parent,
+				   int                 x,
+				   int                 y,
+				   int                 width,
+				   int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("wince");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_wince_gapi_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_wince_ddraw_new(Ecore_WinCE_Window *parent,
+				    int                 x,
+				    int                 y,
+				    int                 width,
+				    int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("wince");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_wince_ddraw_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_wince_gdi_new(Ecore_WinCE_Window *parent,
+				  int                 x,
+				  int                 y,
+				  int                 width,
+				  int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("wince");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_wince_gdi_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_WinCE_Window *
+ecore_evas_software_wince_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_WinCE *iface;
+   iface = (Ecore_Evas_Interface_WinCE *)_ecore_evas_interface_get(ee, "wince");
+
+   if (!iface) return NULL;
+   return iface->window_get(ee);
+}
+
