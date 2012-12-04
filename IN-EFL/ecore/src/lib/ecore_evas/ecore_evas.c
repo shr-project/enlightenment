@@ -2713,94 +2713,6 @@ ecore_evas_input_event_unregister(Ecore_Evas *ee)
    ecore_event_window_unregister((Ecore_Window)ee);
 }
 
-#if defined(BUILD_ECORE_EVAS_WAYLAND_SHM) || defined (BUILD_ECORE_EVAS_WAYLAND_EGL)
-EAPI void
-ecore_evas_wayland_resize(Ecore_Evas *ee, int location)
-{
-   if (!ee) return;
-   if (!strcmp(ee->driver, "wayland_shm"))
-     {
-#ifdef BUILD_ECORE_EVAS_WAYLAND_SHM
-        _ecore_evas_wayland_shm_resize(ee, location);
-#endif
-     }
-   else if (!strcmp(ee->driver, "wayland_egl"))
-     {
-#ifdef BUILD_ECORE_EVAS_WAYLAND_EGL
-        _ecore_evas_wayland_egl_resize(ee, location);
-#endif
-     }
-}
-
-EAPI void 
-ecore_evas_wayland_move(Ecore_Evas *ee, int x, int y)
-{
-   if (!ee) return;
-   if (!strncmp(ee->driver, "wayland", 7))
-     {
-        if (ee->engine.wl.win)
-          {
-             ee->engine.wl.win->moving = EINA_TRUE;
-             ecore_wl_window_move(ee->engine.wl.win, x, y);
-          }
-     }
-}
-
-EAPI void
-ecore_evas_wayland_type_set(Ecore_Evas *ee, int type)
-{
-   if (!ee) return;
-   ecore_wl_window_type_set(ee->engine.wl.win, type);
-}
-
-EAPI Ecore_Wl_Window *
-ecore_evas_wayland_window_get(const Ecore_Evas *ee)
-{
-   if (!(!strncmp(ee->driver, "wayland", 7)))
-     return NULL;
-
-   return ee->engine.wl.win;
-}
-
-EAPI void
-ecore_evas_wayland_pointer_set(Ecore_Evas *ee EINA_UNUSED, int hot_x EINA_UNUSED, int hot_y EINA_UNUSED)
-{
-
-}
-
-#else
-EAPI void
-ecore_evas_wayland_resize(Ecore_Evas *ee EINA_UNUSED, int location EINA_UNUSED)
-{
-
-}
-
-EAPI void 
-ecore_evas_wayland_move(Ecore_Evas *ee EINA_UNUSED, int x EINA_UNUSED, int y EINA_UNUSED)
-{
-
-}
-
-EAPI void
-ecore_evas_wayland_type_set(Ecore_Evas *ee EINA_UNUSED, int type EINA_UNUSED)
-{
-
-}
-
-EAPI Ecore_Wl_Window *
-ecore_evas_wayland_window_get(const Ecore_Evas *ee EINA_UNUSED)
-{
-   return NULL;
-}
-
-EAPI void
-ecore_evas_wayland_pointer_set(Ecore_Evas *ee EINA_UNUSED, int hot_x EINA_UNUSED, int hot_y EINA_UNUSED)
-{
-
-}
-
-#endif
-
 /**
  * @brief Create Ecore_Evas using fb backend.
  * @param disp_name The name of the display to be used.
@@ -3500,4 +3412,86 @@ ecore_evas_gl_sdl_new(const char* name, int w, int h, int fullscreen, int nofram
      return new(name, w, h, fullscreen, noframe);
 
    return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_wayland_shm_new(const char *disp_name, unsigned int parent,
+			   int x, int y, int w, int h, Eina_Bool frame)
+{
+   Ecore_Evas *(*new)(const char *, unsigned int, int, int, int, int, Eina_Bool);
+   Eina_Module *m = _ecore_evas_engine_load("wayland");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_wayland_shm_new_internal");
+   if (new)
+     return new(disp_name, parent, x, y, w, h, frame);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_wayland_egl_new(const char *disp_name, unsigned int parent,
+			   int x, int y, int w, int h, Eina_Bool frame)
+{
+   Ecore_Evas *(*new)(const char *, unsigned int, int, int, int, int, Eina_Bool);
+   Eina_Module *m = _ecore_evas_engine_load("wayland");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_wayland_egl_new_internal");
+   if (new)
+     return new(disp_name, parent, x, y, w, h, frame);
+
+   return NULL;
+}
+
+EAPI void
+ecore_evas_wayland_resize(Ecore_Evas *ee, int location)
+{
+   Ecore_Evas_Interface_Wayland *iface;
+   iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+
+   if (iface)
+       iface->resize(ee, location);
+}
+
+EAPI void
+ecore_evas_wayland_move(Ecore_Evas *ee, int x, int y)
+{
+   Ecore_Evas_Interface_Wayland *iface;
+   iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+
+   if (iface)
+       iface->move(ee, x, y);
+}
+
+EAPI void
+ecore_evas_wayland_pointer_set(Ecore_Evas *ee, int hot_x, int hot_y)
+{
+   Ecore_Evas_Interface_Wayland *iface;
+   iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+
+   if (iface)
+       iface->pointer_set(ee, hot_x, hot_y);
+}
+
+EAPI void
+ecore_evas_wayland_type_set(Ecore_Evas *ee, int type)
+{
+   Ecore_Evas_Interface_Wayland *iface;
+   iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+
+   if (iface)
+       iface->type_set(ee, type);
+}
+
+EAPI Ecore_Wl_Window *
+ecore_evas_wayland_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Wayland *iface;
+   iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+
+   if (!iface) return NULL;
+   return iface->window_get(ee);
 }
