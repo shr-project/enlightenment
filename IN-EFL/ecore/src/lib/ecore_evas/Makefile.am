@@ -27,7 +27,7 @@ $(ECORE_IPC_INC) \
 @EVIL_CFLAGS@
 
 lib_LTLIBRARIES = libecore_evas.la
-includes_HEADERS = Ecore_Evas.h
+includes_HEADERS = Ecore_Evas.h Ecore_Evas_Types.h
 includesdir = $(includedir)/ecore-@VMAJ@
 
 libecore_evas_la_SOURCES = \

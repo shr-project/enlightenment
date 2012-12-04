@@ -7,6 +7,8 @@
 #include <Ecore_Input.h>
 #include <Ecore_Input_Evas.h>
 
+#include "Ecore_Evas_Types.h"
+
 #define ECORE_MAGIC_EVAS 0x76543211
 
 #ifdef BUILD_ECORE_EVAS_X11
