@@ -1,0 +1,37 @@
+Eio 1.8.0
+
+Changes since Eio 1.7.0:
+-------------------------
+
+Additions:
+
+Fixes:
+	- fix monitor shutdown when mainloop did never run.
+	- fix build with xattr and without splice.
+	- don't stop on limited access right.
+	- Fix memory corruption by allocating enough memory in eio_eet_data_read_cipher().
+
+Improvements:
+
+Removal:
+
+Eio 1.7.0
+
+Changes since Eio 1.0.0:
+-------------------------
+
+Additions:
+
+Fixes:
+	- build out of tree.
+	- detect when requesting to monitor a different file with the same name.
+	- memory leak when shutting down fallback monitor.
+	- properly shutdown monitor.
+        - Fix segfault when shutting down the Windows monitor.
+	- Fix memory leak when using file_associate.
+
+Improvements:
+	- Add log debugging macros.
+	- path monitoring on Windows.
+
+Removal:

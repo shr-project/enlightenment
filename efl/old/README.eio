@@ -1,0 +1,27 @@
+EIO 1.7.99
+
+******************************************************************************
+
+ FOR ANY ISSUES PLEASE EMAIL:
+ enlightenment-devel@lists.sourceforge.net
+
+******************************************************************************
+
+Enlightenment Input Output Library
+==================================
+
+This library is intended to provide non blocking IO by using thread for all
+operations that may block. It depends only on eina, eet and ecore right now.
+It should integrate all the features/functions of Ecore_File that could block.
+
+It is part of what we call the EFL and can be a dependence of E17. Feel free
+to contribute, help is always appreciated !
+
+------------------------------------------------------------------------------
+COMPILING AND INSTALLING:
+
+  ./configure
+  make
+(do this as root unless you are installing in your users directories):
+  make install
+
