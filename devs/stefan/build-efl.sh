@@ -6,9 +6,8 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	libcurl4-gnutls-dev libc-ares-dev liblua5.1-0-dev libpng12-dev
 	libtiff4-dev libfontconfig1-dev libxcb-shape0-dev
 	libxrender-dev libgif-dev libglu1-mesa-dev mesa-common-dev
-	librsvg2-dev libfribidi-dev libpixman-1-dev
-	libxss-dev libxp-dev
-	libxtst-dev graphviz libasound2-dev libpam0g-dev"
+	librsvg2-dev libfribidi-dev libpixman-1-dev libxss-dev
+	libxp-dev libxtst-dev graphviz libasound2-dev libpam0g-dev"
 
 defcore="efl evas_generic_loaders eio edje emotion eeze e_dbus edbus
 	efreet PROTO/libeweather PROTO/emap elementary"
@@ -33,9 +32,6 @@ do_scan_build()
 	echo "Scan build for $e"
 	echo
 	case $e in
-	emotion)
-#		flags="--disable-generic-vlc"
-		;;
 	*)
 		flags=""
 		;;
@@ -54,13 +50,6 @@ do_build_and_install()
 	case $e in
 	efl)
 		flags="--enable-tests"
-		;;
-	evas)
-		flags="--enable-tests"
-#		flags="--enable-gl-x11 --enable-gl-xlib --enable-software-xcb"
-		;;
-	ecore)
-#		flags="--enable-ecore-evas-opengl-x11 --enable-ecore-x-xcb"
 		;;
 	emotion)
 		flags="--disable-generic-vlc"
