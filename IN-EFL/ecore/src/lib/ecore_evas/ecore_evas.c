@@ -3720,3 +3720,28 @@ ecore_evas_cocoa_new(Ecore_Cocoa_Window *parent, int x, int y, int w, int h)
 
    return NULL;
 }
+
+EAPI Ecore_Evas *
+ecore_evas_directfb_new(const char *disp_name, int windowed, int x, int y, int w, int h)
+{
+   Ecore_Evas *(*new)(const char*, int, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("directfb");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_directfb_new_internal");
+   if (new)
+     return new(disp_name, windowed, x, y, w, h);
+
+   return NULL;
+}
+
+EAPI Ecore_DirectFB_Window *
+ecore_evas_directfb_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_DirectFB *iface;
+   iface = (Ecore_Evas_Interface_DirectFB *)_ecore_evas_interface_get(ee, "directfb");
+
+   if (!iface) return NULL;
+   return iface->window_get(ee);
+}

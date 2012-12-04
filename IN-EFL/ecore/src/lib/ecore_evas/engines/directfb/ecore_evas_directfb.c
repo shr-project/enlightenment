@@ -2,22 +2,33 @@
 # include <config.h>
 #endif
 
+#include "ecore_evas_private.h"
+#include "Ecore_Evas.h"
+
 #include <string.h>
 
 #include <Ecore.h>
 #include "ecore_private.h"
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
+#include <Evas_Engine_DirectFB.h>
 #include <Ecore_DirectFB.h>
-#endif
 
-#include "ecore_evas_private.h"
-#include "Ecore_Evas.h"
 
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
 static int _ecore_evas_init_count = 0;
 static Ecore_Event_Handler *ecore_evas_event_handlers[13];
 
 static Eina_Hash *ecore_evases_hash = NULL;
+
+static const char *interface_directfb_name = "directfb";
+static const int   interface_directfb_version = 1;
+
+typedef struct _Ecore_Evas_Engine_Data_DirectFB Ecore_Evas_Engine_Data_DirectFB;
+
+struct _Ecore_Evas_Engine_Data_DirectFB
+{
+   Ecore_DirectFB_Window *window;
+};
+
+static Ecore_Evas_Interface_DirectFB *_ecore_evas_directfb_interface_new(void);
 
 static int
 _ecore_evas_directfb_render(Ecore_Evas *ee)
@@ -271,8 +282,10 @@ _ecore_evas_directfb_init(void)
 static void
 _ecore_evas_directfb_free(Ecore_Evas *ee)
 {
-   eina_hash_del(ecore_evases_hash, _ecore_evas_directfb_winid_str_get(ee->engine.directfb.window->id), ee);
-   ecore_directfb_window_free(ee->engine.directfb.window);
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
+   eina_hash_del(ecore_evases_hash, _ecore_evas_directfb_winid_str_get(ddata->window->id), ee);
+   ecore_directfb_window_free(ddata->window);
+   free(ddata);
    _ecore_evas_directfb_shutdown();
    ecore_directfb_shutdown();
 }
@@ -280,16 +293,20 @@ _ecore_evas_directfb_free(Ecore_Evas *ee)
 static void
 _ecore_evas_directfb_move(Ecore_Evas *ee, int x, int y)
 {
-   ecore_directfb_window_move(ee->engine.directfb.window, x, y);
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
+
+   ecore_directfb_window_move(ddata->window, x, y);
 }
 
 static void
 _ecore_evas_directfb_resize(Ecore_Evas *ee, int w, int h)
 {
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
+
    ee->req.w = w;
    ee->req.h = h;
    if ((w == ee->w) && (h == ee->h)) return;
-   ecore_directfb_window_resize(ee->engine.directfb.window, w, h);
+   ecore_directfb_window_resize(ddata->window, w, h);
    ee->w = w;
    ee->h = h;
    if ((ee->rotation == 90) || (ee->rotation == 270))
@@ -307,33 +324,37 @@ _ecore_evas_directfb_resize(Ecore_Evas *ee, int w, int h)
 static void
 _ecore_evas_directfb_focus_set(Ecore_Evas *ee, int on EINA_UNUSED)
 {
-   ecore_directfb_window_focus(ee->engine.directfb.window);
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
+   ecore_directfb_window_focus(ddata->window);
 }
 
 static void
 _ecore_evas_directfb_hide(Ecore_Evas *ee)
 {
-   ecore_directfb_window_hide(ee->engine.directfb.window);
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
+   ecore_directfb_window_hide(ddata->window);
    ee->should_be_visible = 0;
 }
 
 static void
 _ecore_evas_directfb_show(Ecore_Evas *ee)
 {
-   ecore_directfb_window_show(ee->engine.directfb.window);
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
+   ecore_directfb_window_show(ddata->window);
    ee->should_be_visible = 1;
 }
 
 static void
 _ecore_evas_directfb_shaped_set(Ecore_Evas *ee, int shaped)
 {
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
    if (((ee->shaped) && (shaped)) || ((!ee->shaped) && (!shaped)))
      return;
    ee->shaped = shaped;
    if(ee->shaped)
-     ecore_directfb_window_shaped_set(ee->engine.directfb.window, 1);
+     ecore_directfb_window_shaped_set(ddata->window, 1);
    else
-     ecore_directfb_window_shaped_set(ee->engine.directfb.window, 0);
+     ecore_directfb_window_shaped_set(ddata->window, 0);
 
 }
 
@@ -350,6 +371,7 @@ _ecore_evas_object_cursor_del(void *data, Evas *e EINA_UNUSED, Evas_Object *obj 
 static void
 _ecore_evas_directfb_object_cursor_set(Ecore_Evas *ee, Evas_Object *obj, int layer, int hot_x, int hot_y)
 {
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
    int x, y;
 
    if (ee->prop.cursor.object) evas_object_del(ee->prop.cursor.object);
@@ -360,7 +382,7 @@ _ecore_evas_directfb_object_cursor_set(Ecore_Evas *ee, Evas_Object *obj, int lay
         ee->prop.cursor.layer = 0;
         ee->prop.cursor.hot.x = 0;
         ee->prop.cursor.hot.y = 0;
-        ecore_directfb_window_cursor_show(ee->engine.directfb.window, 1);
+        ecore_directfb_window_cursor_show(ddata->window, 1);
         return;
 
      }
@@ -370,7 +392,7 @@ _ecore_evas_directfb_object_cursor_set(Ecore_Evas *ee, Evas_Object *obj, int lay
    ee->prop.cursor.hot.x = hot_x;
    ee->prop.cursor.hot.y = hot_y;
 
-   ecore_directfb_window_cursor_show(ee->engine.directfb.window, 0);
+   ecore_directfb_window_cursor_show(ddata->window, 0);
 
    evas_pointer_output_xy_get(ee->evas, &x, &y);
    evas_object_layer_set(ee->prop.cursor.object, ee->prop.cursor.layer);
@@ -386,6 +408,7 @@ static void
 _ecore_evas_directfb_fullscreen_set(Ecore_Evas *ee, int on)
 {
    Evas_Engine_Info_DirectFB *einfo;
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
    int w;
    int h;
    int resized = 0;
@@ -394,11 +417,11 @@ _ecore_evas_directfb_fullscreen_set(Ecore_Evas *ee, int on)
      return;
 
    if (on)
-     ecore_directfb_window_fullscreen_set(ee->engine.directfb.window, 1);
+     ecore_directfb_window_fullscreen_set(ddata->window, 1);
    else
-     ecore_directfb_window_fullscreen_set(ee->engine.directfb.window, 0);
+     ecore_directfb_window_fullscreen_set(ddata->window, 0);
    /* set the new size of the evas */
-   ecore_directfb_window_size_get(ee->engine.directfb.window, &w, &h);
+   ecore_directfb_window_size_get(ddata->window, &w, &h);
    if( (ee->w != w) || (ee->h != h))
      {
         resized = 1;
@@ -420,7 +443,7 @@ _ecore_evas_directfb_fullscreen_set(Ecore_Evas *ee, int on)
    einfo = (Evas_Engine_Info_DirectFB *)evas_engine_info_get(ee->evas);
    if (einfo)
      {
-        einfo->info.surface = ee->engine.directfb.window->surface;
+        einfo->info.surface = ddata->window->surface;
         if (!evas_engine_info_set(ee->evas, (Evas_Engine_Info *)einfo))
           {
              ERR("evas_engine_info_set() for engine '%s' failed.", ee->driver);
@@ -434,13 +457,12 @@ _ecore_evas_directfb_fullscreen_set(Ecore_Evas *ee, int on)
 }
 
 static void *
-_ecore_evas_directfb_window_get(const Ecore_Evas *ee)
+_ecore_evas_directfb_window_get_internal(const Ecore_Evas *ee)
 {
-   return ee->engine.directfb.window;
+   Ecore_Evas_Engine_Data_DirectFB *ddata = ee->engine.data;
+   return ddata->window;
 }
-#endif
 
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
 static Ecore_Evas_Engine_Func _ecore_directfb_engine_func =
 {
    _ecore_evas_directfb_free,        /* free an ecore_evas */
@@ -502,18 +524,18 @@ static Ecore_Evas_Engine_Func _ecore_directfb_engine_func =
      NULL, // screen_geometry_get
      NULL  // screen_dpi_get
 };
-#endif
 
 /* api */
 /*******/
 
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
 EAPI Ecore_Evas *
-ecore_evas_directfb_new(const char *disp_name, int windowed, int x, int y, int w, int h)
+ecore_evas_directfb_new_internal(const char *disp_name, int windowed, int x, int y, int w, int h)
 {
    Evas_Engine_Info_DirectFB *einfo;
    Ecore_Evas *ee;
    Ecore_DirectFB_Window *window;
+   Ecore_Evas_Engine_Data_DirectFB *ddata;
+   Ecore_Evas_Interface_DirectFB *iface;
    int rmethod;
 
    rmethod = evas_render_method_lookup("directfb");
@@ -521,10 +543,20 @@ ecore_evas_directfb_new(const char *disp_name, int windowed, int x, int y, int w
    if (!ecore_directfb_init(disp_name)) return NULL;
    ee = calloc(1, sizeof(Ecore_Evas));
    if (!ee) return NULL;
+   ddata = calloc(1, sizeof(Ecore_Evas_Engine_Data_DirectFB));
+   if (!data)
+     {
+	free(ee);
+	return NULL;
+     }
 
    ECORE_MAGIC_SET(ee, ECORE_MAGIC_EVAS);
    _ecore_evas_directfb_init();
    ee->engine.func = (Ecore_Evas_Engine_Func *)&_ecore_directfb_engine_func;
+   ee->engine.data = ddata;
+
+   iface = _ecore_evas_directfb_interface_new();
+   ee->engine.ifaces = eina_list_append(ee->engine.ifaces, iface);
 
    ee->driver = "directfb";
    if (disp_name) ee->name = strdup(disp_name);
@@ -554,7 +586,7 @@ ecore_evas_directfb_new(const char *disp_name, int windowed, int x, int y, int w
    einfo = (Evas_Engine_Info_DirectFB *)evas_engine_info_get(ee->evas);
 
    window = ecore_directfb_window_new(x,y,w,h);
-   ee->engine.directfb.window = window;
+   ddata->window = window;
    if (einfo)
      {
         einfo->info.dfb = ecore_directfb_interface_get();
@@ -578,29 +610,30 @@ ecore_evas_directfb_new(const char *disp_name, int windowed, int x, int y, int w
 
    if (!ecore_evases_hash)
      ecore_evases_hash = eina_hash_string_superfast_new(NULL);
-   eina_hash_add(ecore_evases_hash, _ecore_evas_directfb_winid_str_get(ee->engine.directfb.window->id), ee);
+   eina_hash_add(ecore_evases_hash, _ecore_evas_directfb_winid_str_get(ddata->window->id), ee);
 
    return ee;
 }
-#else
-EAPI Ecore_Evas *
-ecore_evas_directfb_new(const char *disp_name EINA_UNUSED, int windowed EINA_UNUSED, int x EINA_UNUSED, int y EINA_UNUSED, int w EINA_UNUSED, int h EINA_UNUSED)
-{
-   return NULL;
-}
-#endif
 
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
-EAPI Ecore_DirectFB_Window *
-ecore_evas_directfb_window_get(const Ecore_Evas *ee)
+static Ecore_DirectFB_Window *
+_ecore_evas_directfb_window_get(const Ecore_Evas *ee)
 {
    if (!(!strcmp(ee->driver, "directfb"))) return 0;
-   return (Ecore_DirectFB_Window *) _ecore_evas_directfb_window_get(ee);
+   return (Ecore_DirectFB_Window *) _ecore_evas_directfb_window_get_internal(ee);
 }
-#else
-EAPI Ecore_DirectFB_Window *
-ecore_evas_directfb_window_get(const Ecore_Evas *ee EINA_UNUSED)
+
+static Ecore_Evas_Interface_DirectFB *
+_ecore_evas_directfb_interface_new(void)
 {
-  return NULL;
+   Ecore_Evas_Interface_DirectFB *iface;
+
+   iface = calloc(1, sizeof(Ecore_Evas_Interface_DirectFB));
+   if (!iface) return NULL;
+
+   iface->base.name = interface_directfb_name;
+   iface->base.version = interface_directfb_version;
+
+   iface->window_get = _ecore_evas_directfb_window_get;
+
+   return iface;
 }
-#endif

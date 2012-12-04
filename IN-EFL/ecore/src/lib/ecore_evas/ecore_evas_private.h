@@ -11,16 +11,9 @@
 
 #define ECORE_MAGIC_EVAS 0x76543211
 
-
-#ifdef BUILD_ECORE_EVAS_DIRECTFB
-# include <Evas_Engine_DirectFB.h>
-# include "Ecore_DirectFB.h"
-#endif
-
 #if defined(BUILD_ECORE_EVAS_SOFTWARE_BUFFER) || defined(BUILD_ECORE_EVAS_EWS)
 # include <Evas_Engine_Buffer.h>
 #endif
-
 
 /** Log domain macros and variables **/
 
@@ -75,6 +68,7 @@ typedef struct _Ecore_Evas_Interface_Gl_X11 Ecore_Evas_Interface_Gl_X11;
 typedef struct _Ecore_Evas_Interface_Wayland Ecore_Evas_Interface_Wayland;
 typedef struct _Ecore_Evas_Interface_Win32 Ecore_Evas_Interface_Win32;
 typedef struct _Ecore_Evas_Interface_WinCE Ecore_Evas_Interface_WinCE;
+typedef struct _Ecore_Evas_Interface_DirectFB Ecore_Evas_Interface_DirectFB;
 
 
 struct _Ecore_Evas_Engine_Func
@@ -242,6 +236,12 @@ struct _Ecore_Evas_Interface_WinCE {
    Ecore_Evas_Interface base;
 
    Ecore_WinCE_Window* (*window_get)(const Ecore_Evas *ee);
+};
+
+struct _Ecore_Evas_Interface_DirectFB {
+   Ecore_Evas_Interface base;
+
+   Ecore_DirectFB_Window* (*window_get)(const Ecore_Evas *ee);
 };
 
 struct _Ecore_Evas_Engine
