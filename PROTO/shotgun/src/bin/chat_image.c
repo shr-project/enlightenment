@@ -128,7 +128,7 @@ chat_conv_image_show(void *data, Evas_Object *obj, Elm_Entry_Anchor_Info *ev)
      }
    DBG("anchor in: '%s' (%i, %i)", ev->name, ev->x, ev->y);
    i = eina_hash_find(cl->images, ev->name);
-   if (i)
+   if (i && i->buf)
      elm_object_tooltip_content_cb_set(obj, (Elm_Tooltip_Content_Cb)_chat_conv_image_provider, i, NULL);
    else
      {
@@ -259,9 +259,12 @@ chat_image_complete(void *d __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Url
 
         if (!strncasecmp(h, "image/", 6)) break;
         ui_eet_dummy_add(ecore_con_url_url_get(ev->url_con));
-        i->cl->image_list = eina_inlist_remove(i->cl->image_list, EINA_INLIST_GET(i));
-        eina_hash_del_by_key(i->cl->images, ecore_con_url_url_get(ev->url_con));
-        return ECORE_CALLBACK_RENEW;
+        i->dummy = EINA_TRUE;
+        if (i->buf) eina_binbuf_free(i->buf);
+        i->buf = NULL;
+        if (i->url) ecore_con_url_free(i->url);
+        i->url = NULL;
+        break;
      }
    if (ev->status != 200)
      {
@@ -270,11 +273,14 @@ chat_image_complete(void *d __UNUSED__, int type __UNUSED__, Ecore_Con_Event_Url
         return ECORE_CALLBACK_RENEW;
      }
    i->timestamp = (unsigned long long)ecore_time_unix_get();
-   if (ui_eet_image_add(i->addr, i->buf, i->timestamp) == 1)
-     i->cl->image_size += eina_binbuf_length_get(i->buf);
-   if (i->url) ecore_con_url_free(i->url);
-   i->url = NULL;
-   chat_image_cleanup(i->cl);
+   if (!i->dummy)
+     {
+        if (ui_eet_image_add(i->addr, i->buf, i->timestamp) == 1)
+          i->cl->image_size += eina_binbuf_length_get(i->buf);
+        if (i->url) ecore_con_url_free(i->url);
+        i->url = NULL;
+        chat_image_cleanup(i->cl);
+     }
    if (i->cl->dbus_image == i)
      {
         Elm_Entry_Anchor_Info e;

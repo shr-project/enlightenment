@@ -68,9 +68,7 @@ _dbus_link_show_cb(E_DBus_Object *obj, DBusMessage *msg)
         if (!url[0]) break;
         i = eina_hash_find(cl->images, url);
         if (!i) break; // not gonna let people use us as wget
-        //if (!i) url = eina_stringshare_add(url);
-        chat_image_add(cl, url); // update timestamp
-        //i = eina_hash_find(cl->images, url);
+        if (!i->dummy) chat_image_add(cl, url); // update timestamp
         if (i->url)
           {
              cl->dbus_image = i;

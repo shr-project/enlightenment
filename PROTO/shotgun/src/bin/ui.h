@@ -298,6 +298,7 @@ struct Image
    unsigned long long timestamp;
    Contact_List *cl;
    unsigned int tries;
+   Eina_Bool dummy : 1;
 };
 
 Contact_List *contact_list_init(UI_WIN *ui, Shotgun_Auth *auth);
