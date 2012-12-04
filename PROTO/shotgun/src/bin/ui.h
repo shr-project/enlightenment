@@ -186,7 +186,7 @@ struct Contact_List
    Eina_List *chat_wins; /* list of all chat windows */
    Eina_Hash *users; /* hash of jid<->Contact */
    Eina_Hash *images; /* hash of img_url<->Image */
-   Eina_List *image_list; /* list of Images sorted by timestamp */
+   Eina_Inlist *image_list; /* list of Images sorted by timestamp */
    size_t image_size; /* current total size of images in memory (in bytes) */
 
    int alert_colors[3]; /* array of r/g/b for contact->animator */
@@ -291,6 +291,7 @@ struct Contact
 
 struct Image
 {
+   EINA_INLIST;
    Ecore_Con_Url *url;
    Eina_Binbuf *buf;
    const char *addr;

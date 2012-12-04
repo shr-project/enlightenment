@@ -38,7 +38,6 @@ _contact_list_free_cb(Contact_List *cl, Evas *e __UNUSED__, Evas_Object *obj, vo
 
    if (cl->users) eina_hash_free(cl->users);
    if (cl->images) eina_hash_free(cl->images);
-   if (cl->image_list) eina_list_free(cl->image_list);
    EINA_LIST_FREE(cl->users_list, c)
      contact_free(c);
 

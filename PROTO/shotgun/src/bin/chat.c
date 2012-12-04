@@ -49,7 +49,7 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
    char *buf, *s;
    Evas_Object *e = c->chat_buffer;
    const char *color;
-   Eina_List *l, *ll;
+   Eina_Inlist *l;
    Image *i;
 
    len = strftime(timebuf, sizeof(timebuf), "[%H:%M:%S]",
@@ -118,7 +118,7 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
           }
      }
 #endif
-   l = eina_list_last(c->list->image_list);
+   l = c->list->image_list->last;
    if (e)
      elm_entry_entry_append(e, buf);
    else
@@ -133,11 +133,8 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
         evas_object_del(e);
         e = NULL;
      }
-   EINA_LIST_REVERSE_FOREACH(c->list->image_list, ll, i)
-     {
-        if (ll == l) break;
-        ui_dbus_signal_link(c->list, i->addr, me);
-     }
+   EINA_INLIST_FOREACH(l, i)
+     ui_dbus_signal_link(c->list, i->addr, me);
    if (c->log)
      {
         /* switch <ps> for \n to be more readable */
