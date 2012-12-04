@@ -58,7 +58,7 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
    char *buf, *s;
    Evas_Object *e = c->chat_buffer;
    const char *color;
-   Eina_Inlist *l;
+   Eina_Inlist *l = NULL;
    Image *i;
 
    len = strftime(timebuf, sizeof(timebuf), "[%H:%M:%S]",
@@ -127,7 +127,7 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
           }
      }
 #endif
-   l = c->list->image_list->last;
+   if (c->list->image_list) l = c->list->image_list->last;
    if (e)
      elm_entry_entry_append(e, buf);
    else
