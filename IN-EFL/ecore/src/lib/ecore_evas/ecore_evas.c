@@ -2726,14 +2726,12 @@ ecore_evas_fb_new(const char *disp_name, int rotation, int w, int h)
 {
    Ecore_Evas *(*new)(const char *, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("fb");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_fb_new_internal");
-   if (new)
-     return new(disp_name, rotation, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, rotation, w, h);
 }
 
 /**
@@ -2752,14 +2750,12 @@ ecore_evas_software_x11_new(const char *disp_name, Ecore_X_Window parent, int x,
 {
    Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("x");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_x11_new_internal");
-   if (new)
-       return new(disp_name, parent, x, y, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h);
 }
 
 /**
@@ -2774,10 +2770,9 @@ EAPI Ecore_X_Window
 ecore_evas_software_x11_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Software_X11 *iface;
-
    iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->window_get(ee);
 }
 
@@ -2792,9 +2787,9 @@ ecore_evas_software_x11_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
 {
    Ecore_Evas_Interface_Software_X11 *iface;
    iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->resize_set(ee, on);
+   iface->resize_set(ee, on);
 }
 
 /**
@@ -2808,8 +2803,8 @@ ecore_evas_software_x11_direct_resize_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Software_X11 *iface;
    iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, EINA_FALSE);
 
-   if (!iface) return EINA_FALSE;
    return iface->resize_get(ee);
 }
 
@@ -2824,9 +2819,9 @@ ecore_evas_software_x11_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window wi
 {
    Ecore_Evas_Interface_Software_X11 *iface;
    iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->extra_event_window_add(ee, win);
+   iface->extra_event_window_add(ee, win);
 }
 
 /**
@@ -2845,14 +2840,12 @@ ecore_evas_gl_x11_new(const char *disp_name, Ecore_X_Window parent, int x, int y
 {
    Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("x");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_gl_x11_new_internal");
-   if (new)
-     return new(disp_name, parent, x, y, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h);
 }
 
 EAPI Ecore_Evas *
@@ -2860,14 +2853,12 @@ ecore_evas_gl_x11_options_new(const char *disp_name, Ecore_X_Window parent, int 
 {
    Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int, const int*);
    Eina_Module *m = _ecore_evas_engine_load("x");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_gl_x11_options_new_internal");
-   if (new)
-     return new(disp_name, parent, x, y, w, h, opt);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h, opt);
 }
 
 /**
@@ -2882,10 +2873,9 @@ EAPI Ecore_X_Window
 ecore_evas_gl_x11_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Gl_X11 *iface;
-
    iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->window_get(ee);
 }
 
@@ -2900,9 +2890,9 @@ ecore_evas_gl_x11_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
 {
    Ecore_Evas_Interface_Gl_X11 *iface;
    iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->resize_set(ee, on);
+   iface->resize_set(ee, on);
 }
 
 /**
@@ -2916,8 +2906,8 @@ ecore_evas_gl_x11_direct_resize_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Gl_X11 *iface;
    iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, EINA_FALSE);
 
-   if (!iface) return EINA_FALSE;
    return iface->resize_get(ee);
 }
 
@@ -2932,9 +2922,9 @@ ecore_evas_gl_x11_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window win)
 {
    Ecore_Evas_Interface_Gl_X11 *iface;
    iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->extra_event_window_add(ee, win);
+   iface->extra_event_window_add(ee, win);
 }
 
 /**
@@ -2950,9 +2940,9 @@ ecore_evas_gl_x11_pre_post_swap_callback_set(const Ecore_Evas *ee, void *data, v
 {
    Ecore_Evas_Interface_Gl_X11 *iface;
    iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->pre_post_swap_callback_set(ee, data, pre_cb, post_cb);
+   iface->pre_post_swap_callback_set(ee, data, pre_cb, post_cb);
 }
 
 EAPI Ecore_Evas *
@@ -2960,14 +2950,12 @@ ecore_evas_xrender_x11_new(const char *disp_name, Ecore_X_Window parent, int x, 
 {
    Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("x");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_xrender_x11_new_internal");
-   if (new)
-     return new(disp_name, parent, x, y, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h);
 }
 
 EAPI Ecore_X_Window
@@ -2975,8 +2963,8 @@ ecore_evas_xrender_x11_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Xrender_X11 *iface;
    iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->window_get(ee);
 }
 
@@ -2985,9 +2973,9 @@ ecore_evas_xrender_x11_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
 {
    Ecore_Evas_Interface_Xrender_X11 *iface;
    iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->resize_set(ee, on);
+   iface->resize_set(ee, on);
 }
 
 EAPI Eina_Bool
@@ -2995,8 +2983,8 @@ ecore_evas_xrender_x11_direct_resize_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Xrender_X11 *iface;
    iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, EINA_FALSE);
 
-   if (!iface) return EINA_FALSE;
    return iface->resize_get(ee);
 }
 
@@ -3005,9 +2993,9 @@ ecore_evas_xrender_x11_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window win
 {
    Ecore_Evas_Interface_Xrender_X11 *iface;
    iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->extra_event_window_add(ee, win);
+   iface->extra_event_window_add(ee, win);
 }
 
 EAPI Ecore_Evas *
@@ -3015,14 +3003,12 @@ ecore_evas_software_x11_8_new(const char *disp_name, Ecore_X_Window parent, int 
 {
    Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("x");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_x11_8_new_internal");
-   if (new)
-     return new(disp_name, parent, x, y, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h);
 }
 
 EAPI Ecore_X_Window
@@ -3030,8 +3016,8 @@ ecore_evas_software_x11_8_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Software_X11_8 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->window_get(ee);
 }
 
@@ -3040,8 +3026,8 @@ ecore_evas_software_x11_8_subwindow_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Software_X11_8 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->subwindow_get(ee);
 }
 
@@ -3050,9 +3036,9 @@ ecore_evas_software_x11_8_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
 {
    Ecore_Evas_Interface_Software_X11_8 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->resize_set(ee, on);
+   iface->resize_set(ee, on);
 }
 
 EAPI Eina_Bool
@@ -3060,8 +3046,8 @@ ecore_evas_software_x11_8_direct_resize_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Software_X11_8 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, EINA_FALSE);
 
-   if (!iface) return EINA_FALSE;
    return iface->resize_get(ee);
 }
 
@@ -3070,9 +3056,9 @@ ecore_evas_software_x11_8_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window 
 {
    Ecore_Evas_Interface_Software_X11_8 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->extra_event_window_add(ee, win);
+   iface->extra_event_window_add(ee, win);
 }
 
 EAPI Ecore_Evas *
@@ -3080,14 +3066,12 @@ ecore_evas_software_x11_16_new(const char *disp_name, Ecore_X_Window parent, int
 {
    Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("x");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_x11_16_new_internal");
-   if (new)
-     return new(disp_name, parent, x, y, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h);
 }
 
 EAPI Ecore_X_Window
@@ -3095,8 +3079,8 @@ ecore_evas_software_x11_16_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Software_X11_16 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->window_get(ee);
 }
 
@@ -3105,9 +3089,9 @@ ecore_evas_software_x11_16_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
 {
    Ecore_Evas_Interface_Software_X11_16 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->resize_set(ee, on);
+   iface->resize_set(ee, on);
 }
 
 EAPI Eina_Bool
@@ -3115,8 +3099,8 @@ ecore_evas_software_x11_16_direct_resize_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Software_X11_16 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, EINA_FALSE);
 
-   if (!iface) return EINA_FALSE;
    return iface->resize_get(ee);
 }
 
@@ -3125,9 +3109,9 @@ ecore_evas_software_x11_16_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window
 {
    Ecore_Evas_Interface_Software_X11_16 *iface;
    iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->extra_event_window_add(ee, win);
+   iface->extra_event_window_add(ee, win);
 }
 
 EAPI void
@@ -3135,9 +3119,9 @@ ecore_evas_x11_leader_set(Ecore_Evas *ee, Ecore_X_Window win)
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->leader_set(ee, win);
+   iface->leader_set(ee, win);
 }
 
 EAPI Ecore_X_Window
@@ -3145,8 +3129,8 @@ ecore_evas_x11_leader_get(Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->leader_get(ee);
 }
 
@@ -3155,9 +3139,9 @@ ecore_evas_x11_leader_default_set(Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->leader_default_set(ee);
+   iface->leader_default_set(ee);
 }
 
 EAPI void
@@ -3165,9 +3149,9 @@ ecore_evas_x11_shape_input_rectangle_set(Ecore_Evas *ee, int x, int y, int w, in
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->shape_input_rectangle_set(ee, x, y, w, h);
+   iface->shape_input_rectangle_set(ee, x, y, w, h);
 }
 
 EAPI void
@@ -3175,9 +3159,9 @@ ecore_evas_x11_shape_input_rectangle_add(Ecore_Evas *ee, int x, int y, int w, in
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->shape_input_rectangle_add(ee, x, y, w, h);
+   iface->shape_input_rectangle_add(ee, x, y, w, h);
 }
 
 EAPI void
@@ -3185,9 +3169,9 @@ ecore_evas_x11_shape_input_rectangle_subtract(Ecore_Evas *ee, int x, int y, int 
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->shape_input_rectangle_subtract(ee, x, y, w, h);
+   iface->shape_input_rectangle_subtract(ee, x, y, w, h);
 }
 
 EAPI void
@@ -3195,9 +3179,9 @@ ecore_evas_x11_shape_input_empty(Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->shape_input_empty(ee);
+   iface->shape_input_empty(ee);
 }
 
 EAPI void
@@ -3205,9 +3189,9 @@ ecore_evas_x11_shape_input_reset(Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->shape_input_reset(ee);
+   iface->shape_input_reset(ee);
 }
 
 EAPI void
@@ -3215,9 +3199,9 @@ ecore_evas_x11_shape_input_apply(Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_X11 *iface;
    iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->shape_input_apply(ee);
+   iface->shape_input_apply(ee);
 }
 
 EAPI Ecore_Evas *
@@ -3225,14 +3209,12 @@ ecore_evas_buffer_new(int w, int h)
 {
    Ecore_Evas *(*new)(int, int);
    Eina_Module *m = _ecore_evas_engine_load("buffer");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_buffer_new_internal");
-   if (new)
-     return new(w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(w, h);
 }
 
 EAPI const void *
@@ -3240,8 +3222,8 @@ ecore_evas_buffer_pixels_get(Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Buffer *iface;
    iface = (Ecore_Evas_Interface_Buffer *)_ecore_evas_interface_get(ee, "buffer");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, NULL);
 
-   if (!iface) return NULL;
    return iface->pixels_get(ee);
 }
 
@@ -3253,14 +3235,12 @@ ecore_evas_buffer_allocfunc_new(int w, int h,
 {
    Ecore_Evas *(*new)(int, int, void*(*)(void *, int), void(*)(void *, void *), const void *);
    Eina_Module *m = _ecore_evas_engine_load("buffer");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_buffer_allocfunc_new_internal");
-   if (new)
-     return new(w, h, alloc_func, free_func, data);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(w, h, alloc_func, free_func, data);
 }
 
 int
@@ -3268,8 +3248,8 @@ ecore_evas_buffer_render(Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Buffer *iface;
    iface = (Ecore_Evas_Interface_Buffer *)_ecore_evas_interface_get(ee, "buffer");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, 0);
 
-   if (!iface) return 0;
    return iface->render(ee);
 }
 
@@ -3278,14 +3258,12 @@ ecore_evas_extn_socket_new(int w, int h)
 {
    Ecore_Evas *(*new)(int, int);
    Eina_Module *m = _ecore_evas_engine_load("buffer");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_extn_socket_new_internal");
-   if (new)
-     return new(w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(w, h);
 }
 
 EAPI Eina_Bool
@@ -3293,8 +3271,8 @@ ecore_evas_extn_socket_listen(Ecore_Evas *ee, const char *svcname, int svcnum, E
 {
    Ecore_Evas_Interface_Extn *iface;
    iface = (Ecore_Evas_Interface_Extn *)_ecore_evas_interface_get(ee, "extn");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, EINA_FALSE);
 
-   if (!iface) return EINA_FALSE;
    return iface->listen(ee, svcname, svcnum, svcsys);
 }
 
@@ -3306,9 +3284,9 @@ ecore_evas_extn_plug_object_data_lock(Evas_Object *obj)
 
    ee = ecore_evas_object_ecore_evas_get(obj);
    iface = (Ecore_Evas_Interface_Extn *)_ecore_evas_interface_get(ee, "extn");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->data_lock(ee);
+   iface->data_lock(ee);
 }
 
 EAPI void
@@ -3319,9 +3297,9 @@ ecore_evas_extn_plug_object_data_unlock(Evas_Object *obj)
 
    ee = ecore_evas_object_ecore_evas_get(obj);
    iface = (Ecore_Evas_Interface_Extn *)_ecore_evas_interface_get(ee, "extn");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-     iface->data_unlock(ee);
+   iface->data_unlock(ee);
 }
 
 EAPI Evas_Object *
@@ -3329,14 +3307,12 @@ ecore_evas_extn_plug_new(Ecore_Evas *ee_target)
 {
    Evas_Object *(*new)(Ecore_Evas *);
    Eina_Module *m = _ecore_evas_engine_load("buffer");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_extn_plug_new_internal");
-   if (new)
-     return new(ee_target);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(ee_target);
 }
 
 EAPI Eina_Bool
@@ -3357,14 +3333,12 @@ ecore_evas_object_image_new(Ecore_Evas *ee_target)
 {
    Evas_Object *(*new)(Ecore_Evas *ee_target);
    Eina_Module *m = _ecore_evas_engine_load("buffer");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_object_image_new_internal");
-   if (new)
-     return new(ee_target);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(ee_target);
 }
 
 EAPI Ecore_Evas *
@@ -3373,14 +3347,12 @@ ecore_evas_sdl_new(const char* name, int w, int h, int fullscreen,
 {
    Ecore_Evas *(*new)(const char *, int, int, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("sdl");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_sdl_new_internal");
-   if (new)
-     return new(name, w, h, fullscreen, hwsurface, noframe, alpha);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(name, w, h, fullscreen, hwsurface, noframe, alpha);
 }
 
 EAPI Ecore_Evas *
@@ -3389,14 +3361,12 @@ ecore_evas_sdl16_new(const char* name, int w, int h, int fullscreen,
 {
    Ecore_Evas *(*new)(const char *, int, int, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("sdl");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_sdl16_new_internal");
-   if (new)
-     return new(name, w, h, fullscreen, hwsurface, noframe, alpha);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(name, w, h, fullscreen, hwsurface, noframe, alpha);
 }
 
 EAPI Ecore_Evas *
@@ -3404,14 +3374,12 @@ ecore_evas_gl_sdl_new(const char* name, int w, int h, int fullscreen, int nofram
 {
    Ecore_Evas *(*new)(const char *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("sdl");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_gl_sdl_new_internal");
-   if (new)
-     return new(name, w, h, fullscreen, noframe);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(name, w, h, fullscreen, noframe);
 }
 
 EAPI Ecore_Evas *
@@ -3420,14 +3388,12 @@ ecore_evas_wayland_shm_new(const char *disp_name, unsigned int parent,
 {
    Ecore_Evas *(*new)(const char *, unsigned int, int, int, int, int, Eina_Bool);
    Eina_Module *m = _ecore_evas_engine_load("wayland");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_wayland_shm_new_internal");
-   if (new)
-     return new(disp_name, parent, x, y, w, h, frame);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h, frame);
 }
 
 EAPI Ecore_Evas *
@@ -3436,14 +3402,12 @@ ecore_evas_wayland_egl_new(const char *disp_name, unsigned int parent,
 {
    Ecore_Evas *(*new)(const char *, unsigned int, int, int, int, int, Eina_Bool);
    Eina_Module *m = _ecore_evas_engine_load("wayland");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_wayland_egl_new_internal");
-   if (new)
-     return new(disp_name, parent, x, y, w, h, frame);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, parent, x, y, w, h, frame);
 }
 
 EAPI void
@@ -3451,9 +3415,9 @@ ecore_evas_wayland_resize(Ecore_Evas *ee, int location)
 {
    Ecore_Evas_Interface_Wayland *iface;
    iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-       iface->resize(ee, location);
+   iface->resize(ee, location);
 }
 
 EAPI void
@@ -3461,9 +3425,9 @@ ecore_evas_wayland_move(Ecore_Evas *ee, int x, int y)
 {
    Ecore_Evas_Interface_Wayland *iface;
    iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-       iface->move(ee, x, y);
+   iface->move(ee, x, y);
 }
 
 EAPI void
@@ -3471,9 +3435,9 @@ ecore_evas_wayland_pointer_set(Ecore_Evas *ee, int hot_x, int hot_y)
 {
    Ecore_Evas_Interface_Wayland *iface;
    iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-       iface->pointer_set(ee, hot_x, hot_y);
+   iface->pointer_set(ee, hot_x, hot_y);
 }
 
 EAPI void
@@ -3481,9 +3445,9 @@ ecore_evas_wayland_type_set(Ecore_Evas *ee, int type)
 {
    Ecore_Evas_Interface_Wayland *iface;
    iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+   EINA_SAFETY_ON_NULL_RETURN(iface);
 
-   if (iface)
-       iface->type_set(ee, type);
+   iface->type_set(ee, type);
 }
 
 EAPI Ecore_Wl_Window *
@@ -3491,8 +3455,8 @@ ecore_evas_wayland_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Wayland *iface;
    iface = (Ecore_Evas_Interface_Wayland *)_ecore_evas_interface_get(ee, "wayland");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, NULL);
 
-   if (!iface) return NULL;
    return iface->window_get(ee);
 }
 
@@ -3505,14 +3469,12 @@ ecore_evas_software_gdi_new(Ecore_Win32_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("win32");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_gdi_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3524,14 +3486,12 @@ ecore_evas_software_ddraw_new(Ecore_Win32_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("win32");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_ddraw_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3543,14 +3503,12 @@ ecore_evas_software_16_ddraw_new(Ecore_Win32_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("win32");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_16_ddraw_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3562,14 +3520,12 @@ ecore_evas_direct3d_new(Ecore_Win32_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("win32");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_direct3d_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3581,14 +3537,12 @@ ecore_evas_gl_glew_new(Ecore_Win32_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("win32");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_gl_glew_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Win32_Window *
@@ -3596,8 +3550,8 @@ ecore_evas_win32_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_Win32 *iface;
    iface = (Ecore_Evas_Interface_Win32 *)_ecore_evas_interface_get(ee, "win32");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, NULL);
 
-   if (!iface) return NULL;
    return iface->window_get(ee);
 }
 
@@ -3610,14 +3564,12 @@ ecore_evas_software_wince_new(Ecore_WinCE_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("wince");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_wince_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3629,14 +3581,12 @@ ecore_evas_software_wince_fb_new(Ecore_WinCE_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("wince");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_wince_fb_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3648,14 +3598,12 @@ ecore_evas_software_wince_gapi_new(Ecore_WinCE_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("wince");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_wince_gapi_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3667,14 +3615,12 @@ ecore_evas_software_wince_ddraw_new(Ecore_WinCE_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("wince");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_wince_ddraw_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_Evas *
@@ -3686,14 +3632,12 @@ ecore_evas_software_wince_gdi_new(Ecore_WinCE_Window *parent,
 {
    Ecore_Evas *(*new)(Ecore_WinCE_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("wince");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_software_wince_gdi_new_internal");
-   if (new)
-     return new(parent, x, y, width, height);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, width, height);
 }
 
 EAPI Ecore_WinCE_Window *
@@ -3701,8 +3645,8 @@ ecore_evas_software_wince_window_get(const Ecore_Evas *ee)
 {
    Ecore_Evas_Interface_WinCE *iface;
    iface = (Ecore_Evas_Interface_WinCE *)_ecore_evas_interface_get(ee, "wince");
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, NULL);
 
-   if (!iface) return NULL;
    return iface->window_get(ee);
 }
 
@@ -3711,14 +3655,12 @@ ecore_evas_cocoa_new(Ecore_Cocoa_Window *parent, int x, int y, int w, int h)
 {
    Ecore_Evas *(*new)(Ecore_Cocoa_Window *, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("cocoa");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_cocoa_new_internal");
-   if (new)
-     return new(parent, x, y, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(parent, x, y, w, h);
 }
 
 EAPI Ecore_Evas *
@@ -3726,14 +3668,12 @@ ecore_evas_directfb_new(const char *disp_name, int windowed, int x, int y, int w
 {
    Ecore_Evas *(*new)(const char*, int, int, int, int, int);
    Eina_Module *m = _ecore_evas_engine_load("directfb");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_directfb_new_internal");
-   if (new)
-     return new(disp_name, windowed, x, y, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(disp_name, windowed, x, y, w, h);
 }
 
 EAPI Ecore_DirectFB_Window *
@@ -3742,7 +3682,8 @@ ecore_evas_directfb_window_get(const Ecore_Evas *ee)
    Ecore_Evas_Interface_DirectFB *iface;
    iface = (Ecore_Evas_Interface_DirectFB *)_ecore_evas_interface_get(ee, "directfb");
 
-   if (!iface) return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(iface, NULL);
+
    return iface->window_get(ee);
 }
 
@@ -3751,12 +3692,10 @@ ecore_evas_psl1ght_new(const char* name, int w, int h)
 {
    Ecore_Evas *(*new)(const char*, int, int);
    Eina_Module *m = _ecore_evas_engine_load("psl1ght");
-   if (!m)
-     return NULL;
+   EINA_SAFETY_ON_NULL_RETURN_VAL(m, NULL);
 
    new = eina_module_symbol_get(m, "ecore_evas_psl1ght_new_internal");
-   if (new)
-     return new(name, w, h);
+   EINA_SAFETY_ON_NULL_RETURN_VAL(new, NULL);
 
-   return NULL;
+   return new(name, w, h);
 }
