@@ -19,7 +19,6 @@ static Eet_Data_Descriptor *clouseau_tree_edd = NULL;
 static Eet_Data_Descriptor *clouseau_app_closed_edd = NULL;
 static Eet_Data_Descriptor *clouseau_highlight_edd = NULL;
 static Eet_Data_Descriptor *clouseau_bmp_req_edd = NULL;
-static Eet_Data_Descriptor *clouseau_variant_edd = NULL;
 static Eet_Data_Descriptor *clouseau_protocol_edd = NULL;
 static Eet_Data_Descriptor *clouseau_map_point_props_edd = NULL;
 
@@ -43,97 +42,6 @@ clouseau_data_tree_free(Eina_List *tree)
 
    EINA_LIST_FREE(tree, treeit)
      _clouseau_tree_item_free(treeit);
-}
-
-static const struct {
-   Clouseau_Message_Type t;
-   const char *name;
-} eet_mapping[] = {
-   { CLOUSEAU_GUI_CLIENT_CONNECT, "GUI_CONNECT" },
-   { CLOUSEAU_APP_CLIENT_CONNECT, "APP_CONNECT" },
-   { CLOUSEAU_APP_ADD, "APP_ADD" },
-   { CLOUSEAU_DATA_REQ, "DATA_REQ" },
-   { CLOUSEAU_TREE_DATA, "TREE_DATA" },
-   { CLOUSEAU_APP_CLOSED, "APP_CLOSED" },
-   { CLOUSEAU_HIGHLIGHT, "HIGHLIGHT" },
-   { CLOUSEAU_BMP_REQ, "BMP_REQ" },
-   { CLOUSEAU_BMP_DATA, "BMP_DATA" },
-   { CLOUSEAU_UNKNOWN, NULL }
-};
-
-EAPI Clouseau_Message_Type
-clouseau_data_packet_mapping_type_get(const char *name)
-{
-   int i;
-   if (!name)
-     return CLOUSEAU_UNKNOWN;
-
-   for (i = 0; eet_mapping[i].name != NULL; ++i)
-     if (strcmp(name, eet_mapping[i].name) == 0)
-       return eet_mapping[i].t;
-
-   return CLOUSEAU_UNKNOWN;
-}
-
-static const char *
-_clouseau_packet_mapping_type_str_get(Clouseau_Message_Type t)
-{
-   int i;
-   for (i = 0; eet_mapping[i].name != NULL; ++i)
-     if (t == eet_mapping[i].t)
-       return eet_mapping[i].name;
-
-   return NULL;
-}
-
-static const char *
-_clouseau_variant_type_get(const void *data, Eina_Bool *unknow EINA_UNUSED)
-{
-   const char * const *type = data;
-   int i;
-
-   for (i = 0; eet_mapping[i].name != NULL; ++i)
-     if (strcmp(*type, eet_mapping[i].name) == 0)
-       return eet_mapping[i].name;
-
-   return NULL;
-}
-
-static Eina_Bool
-_clouseau_variant_type_set(const char *type,
-                           void       *data,
-                           Eina_Bool   unknow EINA_UNUSED)
-{
-   const char **t = data;
-
-   *t = type;
-   return EINA_TRUE;
-}
-
-EAPI void
-clouseau_data_variant_free(Variant_st *v)
-{
-   if (v->data)
-     free(v->data);
-
-   free(v);
-}
-
-EAPI Variant_st *
-clouseau_data_variant_alloc(Clouseau_Message_Type t, size_t size, void *info)
-{
-   Variant_st *v;
-
-   if (t == CLOUSEAU_UNKNOWN) return NULL;
-
-   /* This will allocate variant and message struct */
-   v =  malloc(sizeof(Variant_st));
-   v->data = malloc(size);
-   _clouseau_variant_type_set(_clouseau_packet_mapping_type_str_get(t),
-                              &v->type, EINA_FALSE);
-   memcpy(v->data, info, size);
-
-   return v;
 }
 
 static void
@@ -571,8 +479,6 @@ _clouseau_object_desc_make(void)
 static void
 clouseau_data_descriptors_init(void)
 {
-   Eet_Data_Descriptor_Class eddc;
-
    _clouseau_bmp_req_desc_make();
    _clouseau_bmp_info_desc_make();
    _clouseau_shot_list_desc_make();
@@ -584,36 +490,6 @@ clouseau_data_descriptors_init(void)
    _clouseau_tree_data_desc_make();
    _clouseau_app_closed_desc_make();
    _clouseau_highlight_desc_make();
-
-   /* for variant */
-   EET_EINA_FILE_DATA_DESCRIPTOR_CLASS_SET(&eddc, Variant_st);
-   clouseau_protocol_edd = eet_data_descriptor_file_new(&eddc);
-
-   eddc.version = EET_DATA_DESCRIPTOR_CLASS_VERSION;
-   eddc.func.type_get = _clouseau_variant_type_get;
-   eddc.func.type_set = _clouseau_variant_type_set;
-   clouseau_variant_edd = eet_data_descriptor_stream_new(&eddc);
-
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "GUI_CONNECT", clouseau_connect_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "APP_CONNECT", clouseau_connect_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "APP_ADD" , clouseau_app_add_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "DATA_REQ", clouseau_data_req_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "TREE_DATA", clouseau_tree_data_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "APP_CLOSED", clouseau_app_closed_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "HIGHLIGHT", clouseau_highlight_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "BMP_REQ", clouseau_bmp_req_edd);
-   EET_DATA_DESCRIPTOR_ADD_MAPPING(clouseau_variant_edd,
-                                   "BMP_DATA", clouseau_bmp_info_edd);
-   EET_DATA_DESCRIPTOR_ADD_VARIANT(clouseau_protocol_edd, Variant_st,
-                                   "data", data, type, clouseau_variant_edd);
 }
 
 static void
@@ -626,7 +502,6 @@ clouseau_data_descriptors_shutdown(void)
    eet_data_descriptor_free(clouseau_app_closed_edd);
    eet_data_descriptor_free(clouseau_highlight_edd);
    eet_data_descriptor_free(clouseau_object_edd);
-   eet_data_descriptor_free(clouseau_variant_edd);
    eet_data_descriptor_free(clouseau_bmp_req_edd);
    eet_data_descriptor_free(clouseau_bmp_info_edd);
    eet_data_descriptor_free(clouseau_shot_list_edd);
@@ -689,124 +564,110 @@ _net_to_host_blob_get(void *blob, int blob_size)
 }
 
 EAPI void *
-clouseau_data_packet_compose(Clouseau_Message_Type t, void *data,
-               int data_size, int *size,
-               void *blob, int blob_size)
-{
-   /* Returns packet BLOB and size in size param, NULL on failure */
-   /* Packet is composed of packet type BYTE + packet data.       */
-   void *p = NULL;
-   void *pb = NULL;
-   unsigned char p_type = VARIANT_PACKET;
-   Variant_st *v;
+clouseau_data_packet_compose(const char *p_type, void *data,
+      unsigned int *size, void *blob, int blob_size)
+{  /* Returns packet BLOB and size in size param, NULL on failure */
+   /* User has to free returned buffer                            */
+   /* Packet is composed of Message Type + packet data.           */
+   void *net_blob = NULL;
 
-   switch (t)
-     {
-      case CLOUSEAU_BMP_DATA:
-        {  /* Builed Bitmap data as follows:
-              First we have encoding size of bmp_info_st
-              (Done Network Byte Order)
-              The next to come will be the encoded bmp_info_st itself
-              folloed by the Bitmap raw data.                          */
+   if (!strcmp(p_type, CLOUSEAU_BMP_DATA_STR))
+     {  /* Builed Bitmap data as follows:
+           First uint32_t is encoding size of bmp_info_st
+           The next to come will be the encoded bmp_info_st itself
+           Then we have blob_size param (specifiying bmp-blob-size)
+           folloed by the Bitmap raw data.                          */
 
-           /* First, we like to encode bmp_info_st from data  */
-           int e_size;
-           uint32_t enc_size;
-           void *net_blob;
-           char *b;
+        int t_size; /* total size */
+        int e_size;
+        uint32_t e_size32;
+        uint32_t tmp;
+        void *p;
+        char *b;
+        char *ptr;
 
-           v = clouseau_data_variant_alloc(t, data_size, data);
-           p = eet_data_descriptor_encode(clouseau_protocol_edd, v, &e_size);
-           clouseau_data_variant_free(v);
+        /* First, we like to encode bmp_info_st from data  */
+        p = eet_data_descriptor_encode(clouseau_bmp_info_edd, data, &e_size);
+        e_size32 = (uint32_t) e_size;
 
-           /* Save encoded size in network format */
-           enc_size = htonl((uint32_t) e_size);
-           net_blob = _host_to_net_blob_get(blob, &blob_size);
+        /* Allocate buffer to hold whole packet data */
+        t_size = sizeof(e_size32) + /* encoding size of bmp_info_st */
+           + e_size                 /* Encoded bmp_info_st */
+           + sizeof(e_size32)       /* bmp-blob-size       */
+           + blob_size;             /* The BMP blob data   */
 
-           /* Update size to the buffer size we about to return */
-           *size = (e_size + blob_size + sizeof(enc_size));
-           b = malloc(*size);
+        ptr = b = malloc(t_size);
 
-           /* Copy encoded-size first, followd by encoded data */
-           memcpy(b, &enc_size, sizeof(enc_size));
-           memcpy(b + sizeof(enc_size), p, e_size);
-           free(p);
+        /* START - Build BMP_RAW_DATA packet data */
+        /* Size of encoded bmp_info_st comes next in uint32 format */
+        memcpy(ptr, &e_size32, sizeof(e_size32));
+        ptr += sizeof(e_size32);
 
-           if (net_blob)    /* Copy BMP info */
-             {
-                memcpy(b + sizeof(enc_size) + e_size, net_blob, blob_size);
-                free(net_blob);
-             }
+        /* Encoded bmp_info_st comes next */
+        memcpy(ptr, p, e_size);
+        ptr += e_size;
 
-           p_type = BMP_RAW_DATA;
-           p = b;
-        }
-        break;
+        /* Size of BMP blob comes next */
+        tmp = (uint32_t) blob_size;
+        memcpy(ptr, &tmp, sizeof(uint32_t));
+        ptr += sizeof(uint32_t);
 
-      default:
-        {
-           /* All others are variant packets with EET encoding  */
-           /* Variant is composed of message type + ptr to data */
-           v = clouseau_data_variant_alloc(t, data_size, data);
-           p = eet_data_descriptor_encode(clouseau_protocol_edd, v, size);
-           clouseau_data_variant_free(v);
-        }
+        if (blob && blob_size)
+          {  /* BMP blob info comes right after BMP blob_size */
+             memcpy(ptr, blob, blob_size);
+          }
+
+        /* Save encoded size in network format */
+        net_blob = _host_to_net_blob_get(b, &t_size);
+        *size = t_size;  /* Update packet size */
+
+        /*  All info now in net_blob, free allocated mem */
+        free(b);
+        free(p);
+        /* END   - Build BMP_RAW_DATA packet data */
      }
 
-   pb = malloc((*size) + 1);
-   *((unsigned char *) pb) = p_type;
-   memcpy(((char *) pb) + 1, p, *size);
-   *size = (*size) + 1;  /* Add space for packet type */
-   free(p);
-
-   return pb;  /* User has to free(pb) */
+   return net_blob;
 }
 
-EAPI Variant_st *
-clouseau_data_packet_info_get(void *data, int size)
+EAPI void *
+clouseau_data_packet_info_get(const char *p_type, void *data, size_t size)
 {
-   /* user has to use variant_free() to free return struct */
-   char *ch = data;
-   Variant_st *v;
+   bmp_info_st *st = NULL;
+   void *host_blob = _net_to_host_blob_get(data, size);
+   char *ptr = host_blob;
 
    if (size <= 0)
       return NULL;
 
-   switch (*ch)
+   if (!strcmp(p_type, CLOUSEAU_BMP_DATA_STR))
      {
-      case BMP_RAW_DATA:
-        {
-           void *bmp = NULL;
-           bmp_info_st *st;
-           char *b;
-           uint32_t enc_size;
-           int blob_size;
+        uint32_t *e_size32 = (uint32_t *) ptr;
+        int e_size = (int) (*e_size32); /* First Encoded bmp_info_st size */
+        ptr += sizeof(uint32_t);
 
-           b = (char *) (ch + 1);
-           enc_size = ntohl(*(uint32_t *) b);
-           /* blob_size is total size minus 1st byte and enc_size size */
-           blob_size = size - (enc_size + 1 + sizeof(enc_size));
-           if (blob_size)
-             {
-                /* Allocate BMP only if was included in packet */
-                bmp = _net_to_host_blob_get(b + sizeof(enc_size) + enc_size,
-                                            blob_size);
-             }
+        /* Get the encoded bmp_info_st */
+        st = eet_data_descriptor_decode(clouseau_bmp_info_edd
+              ,ptr, e_size);
+        ptr += e_size;
 
-           /* User have to free both: variant_free(rt), free(t->bmp) */
-           v = eet_data_descriptor_decode(clouseau_protocol_edd,
-                                          b + sizeof(enc_size), enc_size);
+        st->bmp = NULL;
 
-           st = v->data;
-           st->bmp = bmp;
-           return v;
-        }
-        break;
+        /* Next Get bmp-blob-size */
+        e_size32 = (uint32_t *) ptr;
+        e_size = (int) (*e_size32); /* Get bmp-blob size */
+        ptr += sizeof(uint32_t);
 
-      default:
-         return eet_data_descriptor_decode(clouseau_protocol_edd,
-                                           ch + 1, size - 1);
-     }
+        /* Now we need to get the bmp data */
+        if (e_size)
+          {  /* BMP data available, allocate and copy    */
+             st->bmp = malloc(e_size);  /* Freed by user */
+             memcpy(st->bmp, ptr, e_size);
+          }
+     }  /* User has to free st, st->bmp */
+
+   free(host_blob);
+   return st;
 }
 
 /* HIGHLIGHT code. */
@@ -1022,7 +883,6 @@ clouseau_data_eet_info_read(const char *filename,
 
    EINA_LIST_FREE(t->view, st)
      {
-        Variant_st *v;
         char buf[1024];
         int alpha;
         int compress;
@@ -1036,8 +896,7 @@ clouseau_data_eet_info_read(const char *filename,
                                       &alpha, &compress, &quality, &lossy);
 
         /* Add the bitmaps to the actuall app data struct */
-        v = clouseau_data_variant_alloc(CLOUSEAU_BMP_DATA, sizeof(*st), st);
-        (*a)->view = eina_list_append((*a)->view, v);
+        (*a)->view = eina_list_append((*a)->view, st);
      }
 
    free(t);
@@ -1057,6 +916,34 @@ clouseau_data_init(void)
    ecore_init();
 
    clouseau_data_descriptors_init();
+
+   return clouseau_init_count;
+}
+
+EAPI int
+clouseau_register_descs(Ecore_Con_Eet *eet_svr)
+{  /* Register descriptors for ecore_con_eet */
+   if (clouseau_init_count)
+     {  /* MUST be called after clouseau_data_init */
+        ecore_con_eet_register(eet_svr, CLOUSEAU_GUI_CLIENT_CONNECT_STR,
+              clouseau_connect_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_APP_CLIENT_CONNECT_STR,
+              clouseau_connect_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_APP_ADD_STR,
+              clouseau_app_add_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_DATA_REQ_STR,
+              clouseau_data_req_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_TREE_DATA_STR,
+              clouseau_tree_data_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_APP_CLOSED_STR,
+              clouseau_app_closed_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_HIGHLIGHT_STR,
+              clouseau_highlight_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_BMP_REQ_STR,
+              clouseau_bmp_req_edd);
+        ecore_con_eet_register(eet_svr, CLOUSEAU_BMP_DATA_STR,
+              clouseau_bmp_info_edd);
+     }
 
    return clouseau_init_count;
 }
