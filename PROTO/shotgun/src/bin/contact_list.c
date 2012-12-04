@@ -921,12 +921,16 @@ contact_list_user_add(Contact_List *cl, Contact *c)
           }
         else if (c->after)
           {
+             unsigned int x = 0;
              after = eina_hash_find(cl->users, c->after);
              /* find the next previous contact which has an item */
              while (after && after->after && (!after->list_item) && (after != c))
                {
                   //DBG("Found c->after %s", after->base->jid);
                   after = eina_hash_find(cl->users, after->after);
+                  if (++x != 5) continue;
+                  after = NULL;
+                  break;
                }
              if (after && after->list_item)
                {
