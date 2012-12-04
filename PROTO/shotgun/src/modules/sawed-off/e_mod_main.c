@@ -15,6 +15,7 @@ static void _action_entry_next_cb(E_Object *obj, const char *params);
 const char _action_entry_toggle[] = "shotgun_entry_toggle";
 const char _action_entry_next[] = "shotgun_entry_next";
 const char _action_entry_prev[] = "shotgun_entry_prev";
+const char _action_link_open[] = "shotgun_link_open";
 const char _action_link_show_1[] = "shotgun_link_toggle_1";
 const char _action_link_show_next[] = "shotgun_link_toggle_next";
 const char _action_link_show_prev[] = "shotgun_link_toggle_prev";
@@ -554,6 +555,13 @@ _action_entry_toggle_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSE
 }
 
 static void
+_action_link_open_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
+{
+   if (!mod->images) return;
+   edbus_proxy_call(mod->proxy_link, "open", NULL, NULL, -1, "s", eina_list_data_get(mod->images));
+}
+
+static void
 _action_link_show_1_cb(E_Object *obj EINA_UNUSED, const char *params EINA_UNUSED)
 {
    _link_activate(0);
@@ -664,6 +672,11 @@ e_modapi_init(E_Module *m)
    act = e_action_add(_action_entry_prev);
    act->func.go = _action_entry_prev_cb;
    e_action_predef_name_set("Shotgun : Sawed-Off", "Toggle Reply Entry", _action_entry_prev, NULL, NULL, 0);
+   mod->actions = eina_list_append(mod->actions, act);
+
+   act = e_action_add(_action_link_open);
+   act->func.go = _action_link_open_cb;
+   e_action_predef_name_set("Shotgun : Sawed-Off", "Open First Link", _action_link_open, NULL, NULL, 0);
    mod->actions = eina_list_append(mod->actions, act);
 
    act = e_action_add(_action_link_show_1);
