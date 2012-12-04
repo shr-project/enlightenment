@@ -127,7 +127,7 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
           }
      }
 #endif
-   if (c->list->image_list) l = c->list->image_list->last;
+   l = c->list->image_list;
    if (e)
      elm_entry_entry_append(e, buf);
    else
@@ -142,8 +142,16 @@ chat_message_insert(Contact *c, const char *from, const char *msg, Eina_Bool me)
         evas_object_del(e);
         e = NULL;
      }
-   EINA_INLIST_FOREACH(l, i)
-     ui_dbus_signal_link(c->list, i->addr, EINA_FALSE, me);
+   if (l)
+     {
+        for (l = l->prev, i = EINA_INLIST_CONTAINER_GET(l, Image); l; l = l->prev, i = EINA_INLIST_CONTAINER_GET(l, Image))
+          ui_dbus_signal_link(c->list, i->addr, EINA_FALSE, me);
+     }
+   else
+     {
+        EINA_INLIST_FOREACH(c->list->image_list, i)
+          ui_dbus_signal_link(c->list, i->addr, EINA_FALSE, me);
+     }
    if (c->log)
      {
         /* switch <ps> for \n to be more readable */
