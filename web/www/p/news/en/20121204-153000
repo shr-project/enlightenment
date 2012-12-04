@@ -1,0 +1,52 @@
+New E17 <b>Release</b>: ALPHA8
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+I have no comments to add to this release other than to say it's a good one.
+And that it reminds me of March.
+<br><br>
+
+Changelog:
+<li>Translation updates</li>
+<li>Language changes now always trigger a restart</li>
+<li>XDG paths should no longer contain duplicate entries</li>
+<li>Fileselector no longer fails to open some files</li>
+<li>First-run wizard no longer waits unnecessarily long on subsequent runs</li>
+<li>FreeBSD warning fixes</li>
+<li>Disabling tiling module now restores original border geometry</li>
+<li>Composite module now uses black as its client fill color</li>
+<li>Desktop gadgets no longer cause crashes when immediately deleted from the config dialog</li>
+<li>Connman network list now sizes based on a percentage of screen size</li>
+<li>Various memory leaks plugged</li>
+<li>Filemanager once again is able to open symlinks to directories using in-place opening</li>
+<li>Most config dialogs have been made non-resizable</li>
+<li>Everything will now hide on desklock</li>
+<li>enlightenment_start no longer ptraces while valgrinding</li>
+<li>More wallpapers added (Provided by Nicolas Beaumont http://www.nicolas-beaumont.fr/)</li>
+<li>Compile fixes for various E17 utilities</li>
+<li>Crash reduction in Everything launcher</li>
+<li>Keybindings config dialog no longer randomly changes bindings when scrolling quickly through list</li>
+<li>Filemanager windows no longer appear outside screen limits</li>
+<li>"Focus" option in window switcher config dialog now functions correctly</li>
+<li>Cut/Copy/Paste now function more correctly in certain text entries</li>
+<li>Menus are now limited to screen size</li>
+<li>Filemanager sidebar scrollbars no longer appear unnecessarily</li>
+<li>Mixer can now set volume to 100%</li>
+<li>Closing applications started by E17 no longer sometimes triggers a crash</li>
+<li>Pointer slide (to/from new windows) is now more reliable</li>
+<li>Revert focus now works correctly for mouse focus</li>
+<li>Pointer slide no longer sets focus during slide</li>
+<li><b>[THEME]</b> Battery</li>
+<li><b>[THEME]</b> Everything</li>
+</p>
+
+<p><ul>
+
+<li>E17 ALPHA8 - 80174
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha8.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha8.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
