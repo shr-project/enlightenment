@@ -53,37 +53,28 @@ _ecore_evas_mouse_move_process_fb(Ecore_Evas *ee, int x, int y)
      }
 }
 
-static Ecore_Evas *fb_ee = NULL;
-
-static Ecore_Evas *
-_ecore_evas_fb_match(void)
-{
-   return fb_ee;
-}
-
 static void
-_ecore_evas_fb_lose(void *data EINA_UNUSED)
+_ecore_evas_fb_lose(void *data)
 {
+   Ecore_Evas *ee = data;
    Eina_List *ll;
    Ecore_Fb_Input_Device *dev;
 
-   if (fb_ee) fb_ee->visible = 0;
+   if (ee) ee->visible = 0;
 
    EINA_LIST_FOREACH(ecore_evas_input_devices, ll, dev)
      ecore_fb_input_device_listen(dev, 0);
 }
 
 static void
-_ecore_evas_fb_gain(void *data EINA_UNUSED)
+_ecore_evas_fb_gain(void *data)
 {
-   Ecore_Evas *ee;
+   Ecore_Evas *ee = data;
    Eina_List *ll;
    Ecore_Fb_Input_Device *dev;
 
-   if (fb_ee)
+   if (ee)
      {
-        ee = fb_ee;
-
         ee->visible = 1;
         if ((ee->rotation == 90) || (ee->rotation == 270))
           evas_damage_rectangle_add(ee->evas, 0, 0, ee->h, ee->w);
@@ -96,52 +87,48 @@ _ecore_evas_fb_gain(void *data EINA_UNUSED)
 }
 
 static Eina_Bool
-_ecore_evas_event_mouse_button_down(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_ecore_evas_event_mouse_button_down(void *data, int type EINA_UNUSED, void *event)
 {
-   Ecore_Evas *ee;
+   Ecore_Evas *ee = data;
    Ecore_Event_Mouse_Button *e;
 
    e = event;
-   ee = _ecore_evas_fb_match();
    if (!ee) return ECORE_CALLBACK_PASS_ON;
    _ecore_evas_mouse_move_process_fb(ee, e->x, e->y);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_ecore_evas_event_mouse_button_up(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_ecore_evas_event_mouse_button_up(void *data, int type EINA_UNUSED, void *event)
 {
-   Ecore_Evas *ee;
+   Ecore_Evas *ee = data;
    Ecore_Event_Mouse_Button *e;
 
    e = event;
-   ee = _ecore_evas_fb_match();
    if (!ee) return ECORE_CALLBACK_PASS_ON;
    _ecore_evas_mouse_move_process_fb(ee, e->x, e->y);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_ecore_evas_event_mouse_move(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_ecore_evas_event_mouse_move(void *data, int type EINA_UNUSED, void *event)
 {
-   Ecore_Evas *ee;
+   Ecore_Evas *ee = data;
    Ecore_Event_Mouse_Move *e;
 
    e = event;
-   ee = _ecore_evas_fb_match();
    if (!ee) return ECORE_CALLBACK_PASS_ON;
    _ecore_evas_mouse_move_process_fb(ee, e->x, e->y);
    return ECORE_CALLBACK_PASS_ON;
 }
 
 static Eina_Bool
-_ecore_evas_event_mouse_wheel(void *data EINA_UNUSED, int type EINA_UNUSED, void *event)
+_ecore_evas_event_mouse_wheel(void *data, int type EINA_UNUSED, void *event)
 {
-   Ecore_Evas *ee;
+   Ecore_Evas *ee = data;
    Ecore_Event_Mouse_Wheel *e;
 
    e = event;
-   ee = _ecore_evas_fb_match();
    if (!ee) return ECORE_CALLBACK_PASS_ON;
    _ecore_evas_mouse_move_process_fb(ee, e->x, e->y);
    return ECORE_CALLBACK_PASS_ON;
@@ -222,10 +209,10 @@ _ecore_evas_fb_init(Ecore_Evas *ee, int w, int h)
              ecore_evas_input_devices = eina_list_append(ecore_evas_input_devices, device);
              if (!mouse_handled)
                {
-                  ecore_evas_event_handlers[0]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _ecore_evas_event_mouse_button_down, NULL);
-                  ecore_evas_event_handlers[1]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _ecore_evas_event_mouse_button_up, NULL);
-                  ecore_evas_event_handlers[2]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _ecore_evas_event_mouse_move, NULL);
-                  ecore_evas_event_handlers[3]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, _ecore_evas_event_mouse_wheel, NULL);
+                  ecore_evas_event_handlers[0]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _ecore_evas_event_mouse_button_down, ee);
+                  ecore_evas_event_handlers[1]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _ecore_evas_event_mouse_button_up, ee);
+                  ecore_evas_event_handlers[2]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _ecore_evas_event_mouse_move, ee);
+                  ecore_evas_event_handlers[3]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_WHEEL, _ecore_evas_event_mouse_wheel, ee);
                   mouse_handled = 1;
                }
           }
@@ -243,9 +230,9 @@ _ecore_evas_fb_init(Ecore_Evas *ee, int w, int h)
         if (ecore_fb_ts_init())
           {
              ecore_fb_ts_event_window_set(ee);
-             ecore_evas_event_handlers[0]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _ecore_evas_event_mouse_button_down, NULL);
-             ecore_evas_event_handlers[1]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _ecore_evas_event_mouse_button_up, NULL);
-             ecore_evas_event_handlers[2]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _ecore_evas_event_mouse_move, NULL);
+             ecore_evas_event_handlers[0]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_DOWN, _ecore_evas_event_mouse_button_down, ee);
+             ecore_evas_event_handlers[1]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_BUTTON_UP, _ecore_evas_event_mouse_button_up, ee);
+             ecore_evas_event_handlers[2]  = ecore_event_handler_add(ECORE_EVENT_MOUSE_MOVE, _ecore_evas_event_mouse_move, ee);
              mouse_handled = 1;
           }
      }
@@ -256,7 +243,6 @@ static void
 _ecore_evas_fb_free(Ecore_Evas *ee)
 {
    ecore_evas_input_event_unregister(ee);
-   if (fb_ee == ee) fb_ee = NULL;
    _ecore_evas_fb_shutdown();
    ecore_fb_shutdown();
 }
@@ -598,6 +584,8 @@ ecore_evas_fb_new(const char *disp_name, int rotation, int w, int h)
    ECORE_MAGIC_SET(ee, ECORE_MAGIC_EVAS);
 
    _ecore_evas_fb_init(ee, w, h);
+   ecore_fb_callback_gain_set(_ecore_evas_fb_gain, ee);
+   ecore_fb_callback_lose_set(_ecore_evas_fb_lose, ee);
 
    ee->engine.func = (Ecore_Evas_Engine_Func *)&_ecore_fb_engine_func;
 
