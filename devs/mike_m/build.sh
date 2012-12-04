@@ -13,7 +13,7 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	libxtst-dev graphviz libasound2-dev libpam0g-dev libdbus-1-dev
 	libxcb-keysyms1-dev"
 
-defpkgs="efl ecore eio eeze edje e_dbus edbus efreet PROTO/libeweather elementary e emotion terminology"
+defpkgs="efl eio eeze edje e_dbus edbus efreet PROTO/libeweather elementary e emotion terminology"
 #
 # Evas fails to build on x86-64 due to this bug.
 # https://bugs.launchpad.net/ubuntu/+source/libgcrypt11/+bug/751142
@@ -33,20 +33,6 @@ do_build_and_install()
 	echo
 	echo "Building $e"
 	echo
-	case $e in
-	eina)
-		flags="--enable-debug-threads"
-		;;
-	evas)
-		flags="--enable-gl-x11"
-		;;
-	ecore)
-		flags="--enable-g-main-loop --enable-thread-safety"
-		;;
-	*)
-		flags=""
-		;;
-	esac
 	[ $no_autogen = 1 ] || (cd "$e" && rm -f config.cache && ./autogen.sh $flags) || exit 1
 	(cd "$e" && make "$MAKEFLAGS" && sudo make install && sudo ldconfig) || exit 1
 	echo
