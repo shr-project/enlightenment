@@ -280,7 +280,6 @@ ecore_evas_init(void)
    _ecore_evas_ews_events_init();
 #endif
 
-   _ecore_evas_extn_init();
    _ecore_evas_engine_init();
 
    if (getenv("ECORE_EVAS_COMP_NOSYNC"))
@@ -302,8 +301,6 @@ ecore_evas_shutdown(void)
      return _ecore_evas_init_count;
 
    while (ecore_evases) _ecore_evas_free(ecore_evases);
-
-   _ecore_evas_extn_shutdown();
 
    if (_ecore_evas_fps_debug) _ecore_evas_fps_debug_shutdown();
    ecore_idle_enterer_del(ecore_evas_idle_enterer);
@@ -863,6 +860,23 @@ ecore_evas_data_set(Ecore_Evas *ee, const char *key, const void *data)
          ee->data = eina_hash_string_superfast_new(NULL);
        eina_hash_add(ee->data, key, data);
      }
+}
+
+EAPI Evas *
+ecore_evas_object_evas_get(Evas_Object *obj)
+{
+   Ecore_Evas *ee;
+
+   ee = evas_object_data_get(obj, "Ecore_Evas");
+   if (!ee) return NULL;
+
+   return ecore_evas_get(ee);
+}
+
+EAPI Ecore_Evas *
+ecore_evas_object_ecore_evas_get(Evas_Object *obj)
+{
+   return evas_object_data_get(obj, "Ecore_Evas");
 }
 
 #define IFC(_ee, _fn)  if (_ee->engine.func->_fn) {_ee->engine.func->_fn
@@ -3292,4 +3306,151 @@ ecore_evas_x11_shape_input_apply(Ecore_Evas *ee)
 
    if (iface)
      iface->shape_input_apply(ee);
+}
+
+EAPI Ecore_Evas *
+ecore_evas_buffer_new(int w, int h)
+{
+   Ecore_Evas *(*new)(int, int);
+   Eina_Module *m = _ecore_evas_engine_load("buffer");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_buffer_new_internal");
+   if (new)
+     return new(w, h);
+
+   return NULL;
+}
+
+EAPI const void *
+ecore_evas_buffer_pixels_get(Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Buffer *iface;
+   iface = (Ecore_Evas_Interface_Buffer *)_ecore_evas_interface_get(ee, "buffer");
+
+   if (!iface) return NULL;
+   return iface->pixels_get(ee);
+}
+
+EAPI Ecore_Evas *
+ecore_evas_buffer_allocfunc_new(int w, int h,
+				void *(*alloc_func) (void *data, int size),
+				void (*free_func) (void *data, void *pix),
+				const void *data)
+{
+   Ecore_Evas *(*new)(int, int, void*(*)(void *, int), void(*)(void *, void *), const void *);
+   Eina_Module *m = _ecore_evas_engine_load("buffer");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_buffer_allocfunc_new_internal");
+   if (new)
+     return new(w, h, alloc_func, free_func, data);
+
+   return NULL;
+}
+
+int
+ecore_evas_buffer_render(Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Buffer *iface;
+   iface = (Ecore_Evas_Interface_Buffer *)_ecore_evas_interface_get(ee, "buffer");
+
+   if (!iface) return 0;
+   return iface->render(ee);
+}
+
+EAPI Ecore_Evas *
+ecore_evas_extn_socket_new(int w, int h)
+{
+   Ecore_Evas *(*new)(int, int);
+   Eina_Module *m = _ecore_evas_engine_load("buffer");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_extn_socket_new_internal");
+   if (new)
+     return new(w, h);
+
+   return NULL;
+}
+
+EAPI Eina_Bool
+ecore_evas_extn_socket_listen(Ecore_Evas *ee, const char *svcname, int svcnum, Eina_Bool svcsys)
+{
+   Ecore_Evas_Interface_Extn *iface;
+   iface = (Ecore_Evas_Interface_Extn *)_ecore_evas_interface_get(ee, "extn");
+
+   if (!iface) return EINA_FALSE;
+   return iface->listen(ee, svcname, svcnum, svcsys);
+}
+
+EAPI void
+ecore_evas_extn_plug_object_data_lock(Evas_Object *obj)
+{
+   Ecore_Evas_Interface_Extn *iface;
+   Ecore_Evas *ee;
+
+   ee = ecore_evas_object_ecore_evas_get(obj);
+   iface = (Ecore_Evas_Interface_Extn *)_ecore_evas_interface_get(ee, "extn");
+
+   if (iface)
+     iface->data_lock(ee);
+}
+
+EAPI void
+ecore_evas_extn_plug_object_data_unlock(Evas_Object *obj)
+{
+   Ecore_Evas_Interface_Extn *iface;
+   Ecore_Evas *ee;
+
+   ee = ecore_evas_object_ecore_evas_get(obj);
+   iface = (Ecore_Evas_Interface_Extn *)_ecore_evas_interface_get(ee, "extn");
+
+   if (iface)
+     iface->data_unlock(ee);
+}
+
+EAPI Evas_Object *
+ecore_evas_extn_plug_new(Ecore_Evas *ee_target)
+{
+   Evas_Object *(*new)(Ecore_Evas *);
+   Eina_Module *m = _ecore_evas_engine_load("buffer");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_extn_plug_new_internal");
+   if (new)
+     return new(ee_target);
+
+   return NULL;
+}
+
+EAPI Eina_Bool
+ecore_evas_extn_plug_connect(Evas_Object *obj, const char *svcname, int svcnum, Eina_Bool svcsys)
+{
+   Ecore_Evas_Interface_Extn *iface;
+   Ecore_Evas *ee;
+
+   ee = ecore_evas_object_ecore_evas_get(obj);
+   iface = (Ecore_Evas_Interface_Extn *)_ecore_evas_interface_get(ee, "extn");
+
+   if (!iface) return EINA_FALSE;
+   return iface->connect(ee, svcname, svcnum, svcsys);
+}
+
+EAPI Evas_Object *
+ecore_evas_object_image_new(Ecore_Evas *ee_target)
+{
+   Evas_Object *(*new)(Ecore_Evas *ee_target);
+   Eina_Module *m = _ecore_evas_engine_load("buffer");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_object_image_new_internal");
+   if (new)
+     return new(ee_target);
+
+   return NULL;
 }

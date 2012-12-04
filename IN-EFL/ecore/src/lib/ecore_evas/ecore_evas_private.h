@@ -96,6 +96,8 @@ typedef struct _Ecore_Evas_Engine_Func Ecore_Evas_Engine_Func;
 typedef struct _Ecore_Evas_Interface Ecore_Evas_Interface;
 
 /* Engines interfaces */
+typedef struct _Ecore_Evas_Interface_Buffer Ecore_Evas_Interface_Buffer;
+typedef struct _Ecore_Evas_Interface_Extn Ecore_Evas_Interface_Extn;
 typedef struct _Ecore_Evas_Interface_X11 Ecore_Evas_Interface_X11;
 typedef struct _Ecore_Evas_Interface_Software_X11 Ecore_Evas_Interface_Software_X11;
 typedef struct _Ecore_Evas_Interface_Software_X11_8 Ecore_Evas_Interface_Software_X11_8;
@@ -172,6 +174,13 @@ struct _Ecore_Evas_Interface
     unsigned int version;
 };
 
+struct _Ecore_Evas_Interface_Buffer {
+   Ecore_Evas_Interface base;
+
+   const void*    (*pixels_get)(Ecore_Evas *ee);
+   int            (*render)(Ecore_Evas *ee);
+};
+
 struct _Ecore_Evas_Interface_X11 {
    Ecore_Evas_Interface base;
 
@@ -231,6 +240,15 @@ struct _Ecore_Evas_Interface_Gl_X11 {
    Eina_Bool       (*resize_get)(const Ecore_Evas *ee);
    void            (*extra_event_window_add)(Ecore_Evas *ee, Ecore_X_Window win);
    void            (*pre_post_swap_callback_set)(const Ecore_Evas *ee, void *data, void (*pre_cb) (void *data, Evas *e), void (*post_cb) (void *data, Evas *e));
+};
+
+struct _Ecore_Evas_Interface_Extn {
+   Ecore_Evas_Interface base;
+
+    void            (*data_lock)(Ecore_Evas *ee);
+    void            (*data_unlock)(Ecore_Evas *ee);
+    Eina_Bool       (*connect)(Ecore_Evas *ee, const char *svcname, int svcnum, Eina_Bool svcsys);
+    Eina_Bool       (*listen)(Ecore_Evas *ee, const char *svcname, int svcnum, Eina_Bool svcsys);
 };
 
 struct _Ecore_Evas_Engine
@@ -354,11 +372,8 @@ struct _Ecore_Evas
 
 void _ecore_evas_ref(Ecore_Evas *ee);
 void _ecore_evas_unref(Ecore_Evas *ee);
+int ecore_evas_buffer_render(Ecore_Evas *ee);
 
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_BUFFER
-int _ecore_evas_buffer_shutdown(void);
-int _ecore_evas_buffer_render(Ecore_Evas *ee);
-#endif
 #ifdef BUILD_ECORE_EVAS_DIRECTFB
 int _ecore_evas_directfb_shutdown(void);
 #endif
@@ -450,8 +465,6 @@ void _ecore_evas_mouse_multi_up_process(Ecore_Evas *ee, int device,
 
 extern Eina_Bool _ecore_evas_app_comp_sync;
 
-void _ecore_evas_extn_init(void);
-void _ecore_evas_extn_shutdown(void);
 
 Eina_Module *_ecore_evas_engine_load(const char *engine);
 void _ecore_evas_engine_init();

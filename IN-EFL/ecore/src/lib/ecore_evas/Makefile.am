@@ -34,7 +34,6 @@ libecore_evas_la_SOURCES = \
 ecore_evas_module.c \
 ecore_evas_ews.c \
 ecore_evas.c \
-ecore_evas_extn.c \
 ecore_evas_util.c
 
 libecore_evas_la_LIBADD = \

@@ -1713,6 +1713,8 @@ ECORE_EVAS_CHECK_MODULE([software-buffer],
    [Software Buffer],
    [yes])
 
+AM_CONDITIONAL([BUILD_ECORE_BUFFER], [test "x${have_ecore_evas_software_buffer}" = "xyes"])
+
 # ecore_evas_x11
 
 # ecore_evas_software_x11
@@ -1877,6 +1879,7 @@ if test "x${want_ecore_evas_extn}" = "xyes" && \
    test "x${have_ecore_evas}" = "xyes"; then
    AC_DEFINE([BUILD_ECORE_EVAS_EXTN], [1], [Support for Extn Engine in Ecore_Evas])
    have_ecore_evas_extn="yes"
+   AM_CONDITIONAL([BUILD_ECORE_EVAS_EXTN], [test "x${have_ecore_evas_extn}" = "xyes"])
 fi
 
 # ecore_evas_psl1ght
