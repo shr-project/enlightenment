@@ -68,6 +68,23 @@ _ecore_evas_idle_enter(void *data EINA_UNUSED)
    return ECORE_CALLBACK_RENEW;
 }
 
+Ecore_Evas_Interface *
+_ecore_evas_interface_get(const Ecore_Evas *ee, const char *iname)
+{
+   Eina_List *l;
+   Ecore_Evas_Interface *i;
+
+   if (!ee || !iname) return NULL;
+
+   EINA_LIST_FOREACH(ee->engine.ifaces, l, i)
+     {
+	if (!strcmp(i->name, iname))
+	  return i;
+     }
+
+   return NULL;
+}
+
 /**
  * Query if a particular rendering engine target has support
  * @param  engine The engine to check support for
@@ -79,6 +96,8 @@ _ecore_evas_idle_enter(void *data EINA_UNUSED)
 EAPI int
 ecore_evas_engine_type_supported_get(Ecore_Evas_Engine_Type engine)
 {
+   /* It should be done reading the availables engines */
+
    switch (engine)
      {
       case ECORE_EVAS_ENGINE_SOFTWARE_BUFFER:
@@ -2789,4 +2808,488 @@ ecore_evas_fb_new(const char *disp_name, int rotation, int w, int h)
      return new(disp_name, rotation, w, h);
 
    return NULL;
+}
+
+/**
+ * @brief Create Ecore_Evas using software x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done and NULL is returned.
+ * @param disp_name The name of the Ecore_Evas to be created.
+ * @param parent The parent of the Ecore_Evas to be created.
+ * @param x The X coordinate to be used.
+ * @param y The Y coordinate to be used.
+ * @param w The width of the Ecore_Evas to be created.
+ * @param h The height of the Ecore_Evas to be created.
+ * @return A handle to the created Ecore_Evas.
+ */
+EAPI Ecore_Evas *
+ecore_evas_software_x11_new(const char *disp_name, Ecore_X_Window parent, int x, int y, int w, int h)
+{
+   Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("x");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_x11_new_internal");
+   if (new)
+       return new(disp_name, parent, x, y, w, h);
+
+   return NULL;
+}
+
+/**
+ * @brief Get the window from Ecore_Evas using software x11.
+ * @note If ecore is not compiled with support for x11 or if @p ee was not
+ * created with ecore_evas_software_x11_new() then nothing is done and
+ * 0 is returned.
+ * @param ee The Ecore_Evas from which to get the window.
+ * @return The window of type Ecore_X_Window.
+ */
+EAPI Ecore_X_Window
+ecore_evas_software_x11_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Software_X11 *iface;
+
+   iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+
+   if (!iface) return 0;
+   return iface->window_get(ee);
+}
+
+/**
+ * @brief Set the direct_resize of Ecore_Evas using software x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done.
+ * @param ee The Ecore_Evas in which to set direct resize.
+ * @param on Enables the resize of Ecore_Evas if equals EINA_TRUE, disables if equals EINA_FALSE.
+ */
+EAPI void
+ecore_evas_software_x11_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
+{
+   Ecore_Evas_Interface_Software_X11 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+
+   if (iface)
+     iface->resize_set(ee, on);
+}
+
+/**
+ * @brief Gets if the Ecore_Evas is being directly resized using software x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done and EINA_FALSE is returned.
+ * @param ee The Ecore_Evas from which to get direct resize.
+ * @return EINA_TRUE if the resize was managed directly, otherwise return EINA_FALSE.
+ */
+EAPI Eina_Bool
+ecore_evas_software_x11_direct_resize_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Software_X11 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+
+   if (!iface) return EINA_FALSE;
+   return iface->resize_get(ee);
+}
+
+/**
+ * @brief Add extra window on Ecore_Evas using software x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done.
+ * @param ee The Ecore_Evas on which to add the window.
+ * @param win The window to be added at the Ecore_Evas.
+ */
+EAPI void
+ecore_evas_software_x11_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window win)
+{
+   Ecore_Evas_Interface_Software_X11 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11 *)_ecore_evas_interface_get(ee, "software_x11");
+
+   if (iface)
+     iface->extra_event_window_add(ee, win);
+}
+
+/**
+ * @brief Create Ecore_Evas using opengl x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done and NULL is returned.
+ * @param disp_name The name of the display of the Ecore_Evas to be created.
+ * @param parent The parent of the Ecore_Evas to be created.
+ * @param x The X coordinate to be used.
+ * @param y The Y coordinate to be used.
+ * @param w The width of the Ecore_Evas to be created.
+ * @param h The height of the Ecore_Evas to be created.
+ * @return The new Ecore_Evas.
+ */
+EAPI Ecore_Evas *
+ecore_evas_gl_x11_new(const char *disp_name, Ecore_X_Window parent, int x, int y, int w, int h)
+{
+   Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("x");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_gl_x11_new_internal");
+   if (new)
+     return new(disp_name, parent, x, y, w, h);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_gl_x11_options_new(const char *disp_name, Ecore_X_Window parent, int x, int y, int w, int h, const int *opt)
+{
+   Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int, const int*);
+   Eina_Module *m = _ecore_evas_engine_load("x");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_gl_x11_options_new_internal");
+   if (new)
+     return new(disp_name, parent, x, y, w, h, opt);
+
+   return NULL;
+}
+
+/**
+ * @brief Get the window from Ecore_Evas using opengl x11.
+ * @note If ecore is not compiled with support for x11 or if @p ee was not
+ * created with ecore_evas_gl_x11_new() then nothing is done and
+ * 0 is returned.
+ * @param ee The Ecore_Evas from which to get the window.
+ * @return The window of type Ecore_X_Window of Ecore_Evas.
+ */
+EAPI Ecore_X_Window
+ecore_evas_gl_x11_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Gl_X11 *iface;
+
+   iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+
+   if (!iface) return 0;
+   return iface->window_get(ee);
+}
+
+/**
+ * @brief Set direct_resize for Ecore_Evas using opengl x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done.
+ * @param ee The Ecore_Evas in which to set direct resize.
+ * @param on Enables the resize of Ecore_Evas if equals EINA_TRUE, disables if equals EINA_FALSE.
+ */
+EAPI void
+ecore_evas_gl_x11_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
+{
+   Ecore_Evas_Interface_Gl_X11 *iface;
+   iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+
+   if (iface)
+     iface->resize_set(ee, on);
+}
+
+/**
+ * @brief Gets if the Ecore_Evas is being directly resized using opengl x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done and EINA_FALSE is returned.
+ * @param ee The Ecore_Evas from which to get direct resize.
+ * @return EINA_TRUE if the resize was managed directly, otherwise return EINA_FALSE.
+ */
+EAPI Eina_Bool
+ecore_evas_gl_x11_direct_resize_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Gl_X11 *iface;
+   iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+
+   if (!iface) return EINA_FALSE;
+   return iface->resize_get(ee);
+}
+
+/**
+ * @brief Add extra window on Ecore_Evas using opengl x11.
+ * @note If ecore is not compiled with support to x11 then nothing is done.
+ * @param ee The Ecore_Evas for which to add the window.
+ * @param win The window to be added at the Ecore_Evas.
+ */
+EAPI void
+ecore_evas_gl_x11_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window win)
+{
+   Ecore_Evas_Interface_Gl_X11 *iface;
+   iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+
+   if (iface)
+     iface->extra_event_window_add(ee, win);
+}
+
+/**
+ * @brief Set the functions to be used before and after the swap callback.
+ * @note If ecore is not compiled with support to x11 then nothing is done and the function is returned.
+ * @param ee The Ecore_Evas for which to set the swap callback.
+ * @param data The data for which to set the swap callback.
+ * @param pre_cb The function to be called before the callback.
+ * @param post_cb The function to be called after the callback.
+ */
+EAPI void
+ecore_evas_gl_x11_pre_post_swap_callback_set(const Ecore_Evas *ee, void *data, void (*pre_cb) (void *data, Evas *e), void (*post_cb) (void *data, Evas *e))
+{
+   Ecore_Evas_Interface_Gl_X11 *iface;
+   iface = (Ecore_Evas_Interface_Gl_X11 *)_ecore_evas_interface_get(ee, "gl_x11");
+
+   if (iface)
+     iface->pre_post_swap_callback_set(ee, data, pre_cb, post_cb);
+}
+
+EAPI Ecore_Evas *
+ecore_evas_xrender_x11_new(const char *disp_name, Ecore_X_Window parent, int x, int y, int w, int h)
+{
+   Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("x");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_xrender_x11_new_internal");
+   if (new)
+     return new(disp_name, parent, x, y, w, h);
+
+   return NULL;
+}
+
+EAPI Ecore_X_Window
+ecore_evas_xrender_x11_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Xrender_X11 *iface;
+   iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+
+   if (!iface) return 0;
+   return iface->window_get(ee);
+}
+
+EAPI void
+ecore_evas_xrender_x11_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
+{
+   Ecore_Evas_Interface_Xrender_X11 *iface;
+   iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+
+   if (iface)
+     iface->resize_set(ee, on);
+}
+
+EAPI Eina_Bool
+ecore_evas_xrender_x11_direct_resize_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Xrender_X11 *iface;
+   iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+
+   if (!iface) return EINA_FALSE;
+   return iface->resize_get(ee);
+}
+
+EAPI void
+ecore_evas_xrender_x11_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window win)
+{
+   Ecore_Evas_Interface_Xrender_X11 *iface;
+   iface = (Ecore_Evas_Interface_Xrender_X11 *)_ecore_evas_interface_get(ee, "xrender_x11");
+
+   if (iface)
+     iface->extra_event_window_add(ee, win);
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_x11_8_new(const char *disp_name, Ecore_X_Window parent, int x, int y, int w, int h)
+{
+   Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("x");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_x11_8_new_internal");
+   if (new)
+     return new(disp_name, parent, x, y, w, h);
+
+   return NULL;
+}
+
+EAPI Ecore_X_Window
+ecore_evas_software_x11_8_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Software_X11_8 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+
+   if (!iface) return 0;
+   return iface->window_get(ee);
+}
+
+EAPI Ecore_X_Window
+ecore_evas_software_x11_8_subwindow_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Software_X11_8 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+
+   if (!iface) return 0;
+   return iface->subwindow_get(ee);
+}
+
+EAPI void
+ecore_evas_software_x11_8_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
+{
+   Ecore_Evas_Interface_Software_X11_8 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+
+   if (iface)
+     iface->resize_set(ee, on);
+}
+
+EAPI Eina_Bool
+ecore_evas_software_x11_8_direct_resize_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Software_X11_8 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+
+   if (!iface) return EINA_FALSE;
+   return iface->resize_get(ee);
+}
+
+EAPI void
+ecore_evas_software_x11_8_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window win)
+{
+   Ecore_Evas_Interface_Software_X11_8 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_8 *)_ecore_evas_interface_get(ee, "software_x11_8");
+
+   if (iface)
+     iface->extra_event_window_add(ee, win);
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_x11_16_new(const char *disp_name, Ecore_X_Window parent, int x, int y, int w, int h)
+{
+   Ecore_Evas *(*new)(const char *, Ecore_X_Window, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("x");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_x11_16_new_internal");
+   if (new)
+     return new(disp_name, parent, x, y, w, h);
+
+   return NULL;
+}
+
+EAPI Ecore_X_Window
+ecore_evas_software_x11_16_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Software_X11_16 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+
+   if (!iface) return 0;
+   return iface->window_get(ee);
+}
+
+EAPI void
+ecore_evas_software_x11_16_direct_resize_set(Ecore_Evas *ee, Eina_Bool on)
+{
+   Ecore_Evas_Interface_Software_X11_16 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+
+   if (iface)
+     iface->resize_set(ee, on);
+}
+
+EAPI Eina_Bool
+ecore_evas_software_x11_16_direct_resize_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Software_X11_16 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+
+   if (!iface) return EINA_FALSE;
+   return iface->resize_get(ee);
+}
+
+EAPI void
+ecore_evas_software_x11_16_extra_event_window_add(Ecore_Evas *ee, Ecore_X_Window win)
+{
+   Ecore_Evas_Interface_Software_X11_16 *iface;
+   iface = (Ecore_Evas_Interface_Software_X11_16 *)_ecore_evas_interface_get(ee, "software_x11_16");
+
+   if (iface)
+     iface->extra_event_window_add(ee, win);
+}
+
+EAPI void
+ecore_evas_x11_leader_set(Ecore_Evas *ee, Ecore_X_Window win)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->leader_set(ee, win);
+}
+
+EAPI Ecore_X_Window
+ecore_evas_x11_leader_get(Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (!iface) return 0;
+   return iface->leader_get(ee);
+}
+
+EAPI void
+ecore_evas_x11_leader_default_set(Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->leader_default_set(ee);
+}
+
+EAPI void
+ecore_evas_x11_shape_input_rectangle_set(Ecore_Evas *ee, int x, int y, int w, int h)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->shape_input_rectangle_set(ee, x, y, w, h);
+}
+
+EAPI void
+ecore_evas_x11_shape_input_rectangle_add(Ecore_Evas *ee, int x, int y, int w, int h)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->shape_input_rectangle_add(ee, x, y, w, h);
+}
+
+EAPI void
+ecore_evas_x11_shape_input_rectangle_subtract(Ecore_Evas *ee, int x, int y, int w, int h)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->shape_input_rectangle_subtract(ee, x, y, w, h);
+}
+
+EAPI void
+ecore_evas_x11_shape_input_empty(Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->shape_input_empty(ee);
+}
+
+EAPI void
+ecore_evas_x11_shape_input_reset(Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->shape_input_reset(ee);
+}
+
+EAPI void
+ecore_evas_x11_shape_input_apply(Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_X11 *iface;
+   iface = (Ecore_Evas_Interface_X11 *)_ecore_evas_interface_get(ee, "x11");
+
+   if (iface)
+     iface->shape_input_apply(ee);
 }

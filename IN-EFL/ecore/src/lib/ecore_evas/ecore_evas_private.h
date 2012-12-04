@@ -11,25 +11,6 @@
 
 #define ECORE_MAGIC_EVAS 0x76543211
 
-#ifdef BUILD_ECORE_EVAS_X11
-# include <Ecore_X.h>
-# include <Ecore_X_Atoms.h>
-# ifdef HAVE_ECORE_X_XCB
-#  include <xcb/xcb.h>
-# endif
-# ifdef HAVE_ECORE_X_XLIB
-#  include <X11/Xlib.h>
-#  include <X11/Xutil.h>
-# endif
-#endif
-
-#ifdef BUILD_ECORE_EVAS_SOFTWARE_X11
-# include <Evas_Engine_Software_X11.h>
-#endif
-
-#ifdef BUILD_ECORE_EVAS_OPENGL_X11
-# include <Evas_Engine_GL_X11.h>
-#endif
 
 #ifdef BUILD_ECORE_EVAS_DIRECTFB
 # include <Evas_Engine_DirectFB.h>
@@ -114,6 +95,14 @@ typedef struct _Ecore_Evas_Engine Ecore_Evas_Engine;
 typedef struct _Ecore_Evas_Engine_Func Ecore_Evas_Engine_Func;
 typedef struct _Ecore_Evas_Interface Ecore_Evas_Interface;
 
+/* Engines interfaces */
+typedef struct _Ecore_Evas_Interface_X11 Ecore_Evas_Interface_X11;
+typedef struct _Ecore_Evas_Interface_Software_X11 Ecore_Evas_Interface_Software_X11;
+typedef struct _Ecore_Evas_Interface_Software_X11_8 Ecore_Evas_Interface_Software_X11_8;
+typedef struct _Ecore_Evas_Interface_Software_X11_16 Ecore_Evas_Interface_Software_X11_16;
+typedef struct _Ecore_Evas_Interface_Xrender_X11 Ecore_Evas_Interface_Xrender_X11;
+typedef struct _Ecore_Evas_Interface_Gl_X11 Ecore_Evas_Interface_Gl_X11;
+
 
 struct _Ecore_Evas_Engine_Func
 {
@@ -181,6 +170,67 @@ struct _Ecore_Evas_Interface
 {
     const char *name;
     unsigned int version;
+};
+
+struct _Ecore_Evas_Interface_X11 {
+   Ecore_Evas_Interface base;
+
+   void           (*leader_set)(Ecore_Evas *ee, Ecore_X_Window win);
+   Ecore_X_Window (*leader_get)(Ecore_Evas *ee);
+   void           (*leader_default_set)(Ecore_Evas *ee);
+   void           (*shape_input_rectangle_set)(Ecore_Evas *ee, int x, int y, int w, int h);
+   void           (*shape_input_rectangle_add)(Ecore_Evas *ee, int x, int y, int w, int h);
+   void           (*shape_input_rectangle_subtract)(Ecore_Evas *ee, int x, int y, int w, int h);
+   void           (*shape_input_empty)(Ecore_Evas *ee);
+   void           (*shape_input_reset)(Ecore_Evas *ee);
+   void           (*shape_input_apply)(Ecore_Evas *ee);
+};
+
+struct _Ecore_Evas_Interface_Software_X11 {
+   Ecore_Evas_Interface base;
+
+   Ecore_X_Window (*window_get)(const Ecore_Evas *ee);
+   void           (*resize_set)(Ecore_Evas *ee, Eina_Bool on);
+   Eina_Bool      (*resize_get)(const Ecore_Evas *ee);
+   void           (*extra_event_window_add)(Ecore_Evas *ee, Ecore_X_Window win);
+};
+
+struct _Ecore_Evas_Interface_Software_X11_8 {
+   Ecore_Evas_Interface base;
+
+   Ecore_X_Window (*window_get)(const Ecore_Evas *ee);
+   Ecore_X_Window (*subwindow_get)(const Ecore_Evas *ee);
+   void           (*resize_set)(Ecore_Evas *ee, Eina_Bool on);
+   Eina_Bool      (*resize_get)(const Ecore_Evas *ee);
+   void           (*extra_event_window_add)(Ecore_Evas *ee, Ecore_X_Window win);
+};
+
+struct _Ecore_Evas_Interface_Software_X11_16 {
+   Ecore_Evas_Interface base;
+
+   Ecore_X_Window (*window_get)(const Ecore_Evas *ee);
+   void           (*resize_set)(Ecore_Evas *ee, Eina_Bool on);
+   Eina_Bool      (*resize_get)(const Ecore_Evas *ee);
+   void           (*extra_event_window_add)(Ecore_Evas *ee, Ecore_X_Window win);
+};
+
+struct _Ecore_Evas_Interface_Xrender_X11 {
+   Ecore_Evas_Interface base;
+
+   Ecore_X_Window (*window_get)(const Ecore_Evas *ee);
+   void           (*resize_set)(Ecore_Evas *ee, Eina_Bool on);
+   Eina_Bool      (*resize_get)(const Ecore_Evas *ee);
+   void           (*extra_event_window_add)(Ecore_Evas *ee, Ecore_X_Window win);
+};
+
+struct _Ecore_Evas_Interface_Gl_X11 {
+   Ecore_Evas_Interface base;
+
+   Ecore_X_Window  (*window_get)(const Ecore_Evas *ee);
+   void            (*resize_set)(Ecore_Evas *ee, Eina_Bool on);
+   Eina_Bool       (*resize_get)(const Ecore_Evas *ee);
+   void            (*extra_event_window_add)(Ecore_Evas *ee, Ecore_X_Window win);
+   void            (*pre_post_swap_callback_set)(const Ecore_Evas *ee, void *data, void (*pre_cb) (void *data, Evas *e), void (*post_cb) (void *data, Evas *e));
 };
 
 struct _Ecore_Evas_Engine
@@ -305,9 +355,6 @@ struct _Ecore_Evas
 void _ecore_evas_ref(Ecore_Evas *ee);
 void _ecore_evas_unref(Ecore_Evas *ee);
 
-#ifdef BUILD_ECORE_EVAS_X11
-int _ecore_evas_x_shutdown(void);
-#endif
 #ifdef BUILD_ECORE_EVAS_SOFTWARE_BUFFER
 int _ecore_evas_buffer_shutdown(void);
 int _ecore_evas_buffer_render(Ecore_Evas *ee);
@@ -409,6 +456,8 @@ void _ecore_evas_extn_shutdown(void);
 Eina_Module *_ecore_evas_engine_load(const char *engine);
 void _ecore_evas_engine_init();
 void _ecore_evas_engine_shutdown();
+
+Ecore_Evas_Interface *_ecore_evas_interface_get(const Ecore_Evas *ee, const char *iname);
 
 #endif
 
