@@ -131,6 +131,19 @@ _e_mod_sos_config_load(void)
 }
 
 static void
+_link_del_cb(void *d EINA_UNUSED, const EDBus_Message *msg)
+{
+   char *url;
+   const char *lnk;
+
+   if (!mod->images) return;
+   if (!edbus_message_arguments_get(msg, "s", &url)) return;
+   lnk = eina_stringshare_add(url);
+   mod->images = eina_list_remove(mod->images, lnk);
+   eina_stringshare_del(lnk);
+}
+
+static void
 _link_cb(void *d EINA_UNUSED, const EDBus_Message *msg)
 {
    char *url;
@@ -600,6 +613,7 @@ e_modapi_init(E_Module *m)
 
    edbus_proxy_signal_handler_add(proxy, "link", _link_cb, NULL);
    edbus_proxy_signal_handler_add(proxy, "link_self", _link_self_cb, NULL);
+   edbus_proxy_signal_handler_add(proxy, "link_del", _link_del_cb, NULL);
    edbus_proxy_signal_handler_add(proxy, "new_msg", _new_msg_cb, NULL);
    edbus_proxy_signal_handler_add(proxy, "status", _status_cb, NULL);
    edbus_proxy_signal_handler_add(proxy, "connected", _connected_cb, NULL);
