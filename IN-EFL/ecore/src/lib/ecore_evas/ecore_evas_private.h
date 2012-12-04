@@ -21,10 +21,6 @@
 # include <Evas_Engine_Buffer.h>
 #endif
 
-#ifdef BUILD_ECORE_EVAS_GL_COCOA
-# include "Ecore_Cocoa.h"
-# include <Evas_Engine_Gl_Cocoa.h>
-#endif
 
 /** Log domain macros and variables **/
 

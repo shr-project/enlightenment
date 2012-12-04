@@ -3706,3 +3706,17 @@ ecore_evas_software_wince_window_get(const Ecore_Evas *ee)
    return iface->window_get(ee);
 }
 
+EAPI Ecore_Evas *
+ecore_evas_cocoa_new(Ecore_Cocoa_Window *parent, int x, int y, int w, int h)
+{
+   Ecore_Evas *(*new)(Ecore_Cocoa_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("cocoa");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_cocoa_new_internal");
+   if (new)
+     return new(parent, x, y, w, h);
+
+   return NULL;
+}

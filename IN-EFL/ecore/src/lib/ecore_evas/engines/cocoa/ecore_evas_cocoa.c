@@ -8,15 +8,10 @@
 #include "Ecore_Input_Evas.h"
 
 #ifdef BUILD_ECORE_EVAS_OPENGL_COCOA
-#include <Ecore_Cocoa.h>
-#include <Evas_Engine_GL_Cocoa.h>
+# include <Ecore_Cocoa.h>
+# include <Evas_Engine_GL_Cocoa.h>
 #endif
 
-#include "ecore_evas_private.h"
-#include "Ecore_Evas.h"
-
-
-#ifdef BUILD_ECORE_EVAS_OPENGL_COCOA
 
 // FIXME: this engine has lots of problems. only 1 window at a time, drawRect looks wrong, doesnt handle resizes and more
 
@@ -476,12 +471,10 @@ static Ecore_Evas_Engine_Func _ecore_cocoa_engine_func =
      NULL,
      NULL  // screen_dpi_get
   };
-#endif
 
 EAPI Ecore_Evas *
-ecore_evas_cocoa_new(Ecore_Cocoa_Window *parent, int x, int y, int w, int h)
+ecore_evas_cocoa_new_internal(Ecore_Cocoa_Window *parent, int x, int y, int w, int h)
 {
-#ifdef BUILD_ECORE_EVAS_OPENGL_COCOA
   Evas_Engine_Info_GL_Cocoa *einfo;
   Ecore_Evas           *ee;
   int                  rmethod;
@@ -575,10 +568,4 @@ ecore_evas_cocoa_new(Ecore_Cocoa_Window *parent, int x, int y, int w, int h)
   ecore_cocoa_shutdown();
   
   return NULL;
-#else
-  ERR("Cocoa support in ecore-evas not enabled");
-  return NULL;
-  (void) parent;
-  (void) x; (void) y; (void) w; (void) h;
-#endif
 }
