@@ -6,10 +6,12 @@ enum
    SETTINGS_BROWSER_CHROME,
    SETTINGS_BROWSER_FIREFOX,
    SETTINGS_BROWSER_OPERA,
-   SETTINGS_BROWSER_OTHER
+   SETTINGS_BROWSER_OTHER,
+   SETTINGS_BROWSER_XDG,
+   SETTINGS_BROWSER_EOPEN
 };
 
-static char *BROWSERS[] = { NULL, "chrome", "firefox", "opera", NULL };
+static char *BROWSERS[] = { NULL, "chrome", "firefox", "opera", NULL, "xdg-open", "enlightenment_open" };
 
 #define SETTINGS_FRAME(LABEL) do { \
    fr = elm_frame_add(ui->win); \
@@ -319,6 +321,8 @@ settings_new(UI_WIN *ui)
    SETTINGS_FRAME("Browser");
    elm_frame_collapse_set(fr, EINA_TRUE);
    radio = SETTINGS_RADIO("BROWSER", BROWSER, "Use BROWSER environment variable");
+   SETTINGS_SUBRADIO("XDG-Open", XDG, "Use xdg-open");
+   SETTINGS_SUBRADIO("E_Open", EOPEN, "Use enlightenment_open");
    SETTINGS_SUBRADIO("Chrome", CHROME, "Use Chrome browser");
    SETTINGS_SUBRADIO("Firefox", FIREFOX, "Use Firefox browser");
    SETTINGS_SUBRADIO("Opera", OPERA, "Use Opera browser");
