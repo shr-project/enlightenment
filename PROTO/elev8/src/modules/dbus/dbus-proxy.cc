@@ -94,8 +94,7 @@ bool DProperties::IsErrorMessage(const EDBus_Message *msg)
    if (!edbus_message_error_get(msg, &errname, &errmsg))
      return false;
 
-   ThrowException(Exception::Error(String::Concat(String::New(errname),
-                  String::Concat(String::New(": "), String::New(errmsg)))));
+   ERR("%s: %s\n", errname, errmsg);
    return true;
 }
 
@@ -252,8 +251,7 @@ void WrappedMessage::Call(Handle<Function> callback, const EDBus_Message *msg)
 
    if (edbus_message_error_get(msg, &errname, &errmsg))
      {
-        ThrowException(Exception::Error(String::Concat(String::New(errname),
-                       String::Concat(String::New(": "), String::New(errmsg)))));
+        ERR("%s: %s", errname, errmsg);
         return;
      }
 
@@ -457,6 +455,8 @@ static char getSigID(Handle<Value> val)
           c = 's';
         else if (val->IsArray())
           c = 'a';
+        else if (val->IsObject())
+          c = 'e';
         else
           WRN("Unexpected type.");
      }
@@ -481,6 +481,19 @@ static Local<String> getSignature(Local<String> signature, Handle<Value> val)
         for (unsigned int i = 0; i < len; i++)
           signature = getSignature(signature, obj->Get(props->Get(i)));
         signature = String::Concat(signature, String::New(")"));
+     }
+   else if ('e' == sig[0])
+     {
+        Local<Object> obj = val->ToObject();
+        Local<Array> props = obj->GetOwnPropertyNames();
+
+        signature = String::Concat(signature, String::New("a{s"));
+        signature = getSignature(signature, obj->Get(props->Get(0)));
+        signature = String::Concat(signature, String::New("}"));
+     }
+   else if ('v' == sig[0])
+     {
+        signature = String::Concat(signature, String::New(sig));
      }
    else
      {
@@ -530,7 +543,46 @@ static void append(EDBus_Message_Iter *iter, Handle<Value> val)
       case 'd':
          edbus_message_iter_basic_append(iter, sig, val->NumberValue());
          break;
+      case 'e':
+           {
+              EDBus_Message_Iter *dict;
+              Local<Object> obj = val->ToObject();
+              Local<Array> props = obj->GetOwnPropertyNames();
+
+              char *s = strdup(*String::Utf8Value(getSignature(val)));
+
+              edbus_message_iter_arguments_set(iter, s, &dict);
+
+              for (unsigned int i = 0, len = props->Length(); i < len; i++)
+                {
+                   EDBus_Message_Iter *entry;
+                   Local<Value> key = props->Get(i);
+                   edbus_message_iter_arguments_set(dict, &s[1], &entry);
+
+                   append(entry, key);
+                   append(entry, obj->Get(key));
+
+                   edbus_message_iter_container_close(dict, entry);
+                }
+
+              edbus_message_iter_container_close(iter, dict);
+              free(s);
+              break;
+           }
       case 'v':
+           {
+              Local<Object> obj = val->ToObject();
+              Local<Array> props = obj->GetOwnPropertyNames();
+              Local<Value> v = obj->Get(props->Get(0));
+
+              EDBus_Message_Iter *sub_iter = edbus_message_iter_container_new
+                 (iter, sig, *String::Utf8Value(getSignature(v)));
+
+              append(sub_iter, v);
+
+              edbus_message_iter_container_close(iter, sub_iter);
+              break;
+           }
       case 'a':
            {
               Local<Object> obj = val->ToObject();
@@ -538,11 +590,11 @@ static void append(EDBus_Message_Iter *iter, Handle<Value> val)
               EDBus_Message_Iter *sub_iter = edbus_message_iter_container_new
                  (iter, sig, &(*String::Utf8Value(getSignature(val)))[1]);
 
-             for (unsigned int i = 0, len = props->Length(); i < len; i++)
-               append(sub_iter, obj->Get(props->Get(i)));
+              for (unsigned int i = 0, len = props->Length(); i < len; i++)
+                append(sub_iter, obj->Get(props->Get(i)));
 
-             edbus_message_iter_container_close(iter, sub_iter);
-             break;
+              edbus_message_iter_container_close(iter, sub_iter);
+              break;
            }
       case 'r':
            {
