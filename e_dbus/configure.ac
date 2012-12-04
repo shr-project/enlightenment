@@ -207,47 +207,47 @@ have_edbus_async_test="yes"
 
 PKG_CHECK_MODULES([EDBUS_TEST],
     [ecore >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_test="yes"],
+    [have_edbus_test="${have_edbus_test}"],
     [have_edbus_test="no"])
 PKG_CHECK_MODULES([EDBUS_TEST_CLIENT],
     [ecore >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_test_client="yes"],
+    [have_edbus_test_client="${have_edbus_test_client}"],
     [have_edbus_test_client="no"])
 PKG_CHECK_MODULES([EDBUS_BLUEZ_TEST],
     [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_bluez_test="yes"],
+    [have_edbus_bluez_test="${have_edbus_bluez_test}"],
     [have_edbus_bluez_test="no"])
 PKG_CHECK_MODULES([EDBUS_CONNMAN0_7X_TEST],
     [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_connman0_7x_test="yes"],
+    [have_edbus_connman0_7x_test="${have_edbus_connman0_7x_test}"],
     [have_edbus_connman0_7x_test="no"])
 PKG_CHECK_MODULES([EDBUS_NOTIFICATION_DAEMON_TEST],
     [ecore >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_notification_daemon_test="yes"],
+    [have_edbus_notification_daemon_test="${have_edbus_notification_daemon_test}"],
     [have_edbus_notification_daemon_test="no"])
 PKG_CHECK_MODULES([EDBUS_NOTIFY_SEND],
     [ecore >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_notify_send="yes"],
+    [have_edbus_notify_send="${have_edbus_notify_send}"],
     [have_edbus_notify_send="no"])
 PKG_CHECK_MODULES([EDBUS_NOTIFY_TEST],
     [ecore >= 1.6.99 ecore-evas >= 1.6.99 evas >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_notify_test="yes"],
+    [have_edbus_notify_test="${have_edbus_notify_test}"],
     [have_edbus_notify_test="no"])
 PKG_CHECK_MODULES([EDBUS_OFONO_TEST],
     [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_ofono_test="yes"],
+    [have_edbus_ofono_test="${have_edbus_ofono_test}"],
     [have_edbus_ofono_test="no"])
 PKG_CHECK_MODULES([EDBUS_PERFORMANCE_TEST],
     [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62 ecore-evas >= 1.6.99 elementary >= 1.6.99 evas >= 1.6.99],
-    [have_edbus_performance_test="yes"],
+    [have_edbus_performance_test="${have_edbus_performance_test}"],
     [have_edbus_performance_test="no"])
 PKG_CHECK_MODULES([EDBUS_UKIT_TEST],
     [ecore >= 1.6.99 eina >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_ukit_test="yes"],
+    [have_edbus_ukit_test="${have_edbus_ukit_test}"],
     [have_edbus_ukit_test="no"])
 PKG_CHECK_MODULES([EDBUS_ASYNC_TEST],
     [ecore >= 1.6.99 dbus-1 >= 0.62],
-    [have_edbus_async_test="yes"],
+    [have_edbus_async_test="${have_edbus_async_test}"],
     [have_edbus_async_test="no"])
 
 EFL_ENABLE_BIN([edbus-test], [${have_edbus_test}])
