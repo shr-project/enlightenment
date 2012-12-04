@@ -3495,3 +3495,108 @@ ecore_evas_wayland_window_get(const Ecore_Evas *ee)
    if (!iface) return NULL;
    return iface->window_get(ee);
 }
+
+EAPI Ecore_Evas *
+ecore_evas_software_gdi_new(Ecore_Win32_Window *parent,
+			    int                 x,
+			    int                 y,
+			    int                 width,
+			    int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("win32");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_gdi_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_ddraw_new(Ecore_Win32_Window *parent,
+			      int                 x,
+			      int                 y,
+			      int                 width,
+			      int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("win32");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_ddraw_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_software_16_ddraw_new(Ecore_Win32_Window *parent,
+				 int                 x,
+				 int                 y,
+				 int                 width,
+				 int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("win32");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_software_16_ddraw_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_direct3d_new(Ecore_Win32_Window *parent,
+			int                 x,
+			int                 y,
+			int                 width,
+			int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("win32");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_direct3d_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Evas *
+ecore_evas_gl_glew_new(Ecore_Win32_Window *parent,
+		       int                 x,
+		       int                 y,
+		       int                 width,
+		       int                 height)
+{
+   Ecore_Evas *(*new)(Ecore_Win32_Window *, int, int, int, int);
+   Eina_Module *m = _ecore_evas_engine_load("win32");
+   if (!m)
+     return NULL;
+
+   new = eina_module_symbol_get(m, "ecore_evas_gl_glew_new_internal");
+   if (new)
+     return new(parent, x, y, width, height);
+
+   return NULL;
+}
+
+EAPI Ecore_Win32_Window *
+ecore_evas_win32_window_get(const Ecore_Evas *ee)
+{
+   Ecore_Evas_Interface_Win32 *iface;
+   iface = (Ecore_Evas_Interface_Win32 *)_ecore_evas_interface_get(ee, "win32");
+
+   if (!iface) return NULL;
+   return iface->window_get(ee);
+}

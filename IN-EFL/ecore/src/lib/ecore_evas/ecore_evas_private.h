@@ -21,22 +21,6 @@
 # include <Evas_Engine_Buffer.h>
 #endif
 
-#ifdef BUILD_ECORE_EVAS_WIN32
-# include "Ecore_Win32.h"
-# ifdef BUILD_ECORE_EVAS_SOFTWARE_GDI
-#  include <Evas_Engine_Software_Gdi.h>
-# endif
-# ifdef BUILD_ECORE_EVAS_SOFTWARE_DDRAW
-#  include <Evas_Engine_Software_DDraw.h>
-# endif
-# ifdef BUILD_ECORE_EVAS_DIRECT3D
-#  include <Evas_Engine_Direct3D.h>
-# endif
-# ifdef BUILD_ECORE_EVAS_OPENGL_GLEW
-#  include <Evas_Engine_GL_Glew.h>
-# endif
-#endif
-
 #ifdef BUILD_ECORE_EVAS_GL_COCOA
 # include "Ecore_Cocoa.h"
 # include <Evas_Engine_Gl_Cocoa.h>
@@ -93,6 +77,7 @@ typedef struct _Ecore_Evas_Interface_Software_X11_16 Ecore_Evas_Interface_Softwa
 typedef struct _Ecore_Evas_Interface_Xrender_X11 Ecore_Evas_Interface_Xrender_X11;
 typedef struct _Ecore_Evas_Interface_Gl_X11 Ecore_Evas_Interface_Gl_X11;
 typedef struct _Ecore_Evas_Interface_Wayland Ecore_Evas_Interface_Wayland;
+typedef struct _Ecore_Evas_Interface_Win32 Ecore_Evas_Interface_Win32;
 
 
 struct _Ecore_Evas_Engine_Func
@@ -248,6 +233,12 @@ struct _Ecore_Evas_Interface_Wayland {
     void             (*pointer_set)(Ecore_Evas *ee, int hot_x, int hot_y);
     void             (*type_set)(Ecore_Evas *ee, int type);
     Ecore_Wl_Window* (*window_get)(const Ecore_Evas *ee);
+};
+
+struct _Ecore_Evas_Interface_Win32 {
+   Ecore_Evas_Interface base;
+
+   Ecore_Win32_Window* (*window_get)(const Ecore_Evas *ee);
 };
 
 struct _Ecore_Evas_Engine
