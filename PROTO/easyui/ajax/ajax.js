@@ -471,7 +471,7 @@ ajax = function(url, options) {
         queues.thaw(this.queue_index);
 
       if (method == 'GET' && !(request.fromCache || options.disableCache))
-        cache.cacheRequest(url, request);
+        cache.cacheRequest(url + flatten(data), request);
     }.bind(request, options);
   }
 
