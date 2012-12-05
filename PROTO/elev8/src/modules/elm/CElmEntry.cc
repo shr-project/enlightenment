@@ -756,18 +756,12 @@ Handle<Value> CElmEntry::context_menu_clear(const Arguments&)
 
 Handle<Value> CElmEntry::markup_to_utf8(const Arguments& args)
 {
-   if (args[0]->IsString())
-     return String::New(elm_entry_markup_to_utf8(*String::Utf8Value(args[0])));
-
-   return Undefined();
+   return String::New(elm_entry_markup_to_utf8(*String::Utf8Value(args[0])));
 }
 
 Handle<Value> CElmEntry::utf8_to_markup(const Arguments& args)
 {
-   if (args[0]->IsString())
-     return String::New(elm_entry_utf8_to_markup(*String::Utf8Value(args[0])));
-
-   return Undefined();
+   return String::New(elm_entry_utf8_to_markup(*String::Utf8Value(args[0])));
 }
 
 Handle<Value> CElmEntry::input_panel_show(const Arguments&)
