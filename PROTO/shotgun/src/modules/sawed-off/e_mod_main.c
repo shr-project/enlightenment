@@ -81,7 +81,11 @@ _set_active(Eina_Bool active)
    mod->active = !!active;
    if (!active)
      {
-        if (mod->popup) e_grabinput_release(0, mod->popup->evas_win);
+        if (mod->popup)
+          {
+             e_grabinput_release(0, mod->popup->evas_win);
+             e_popup_hide(mod->popup);
+          }
         E_FN_DEL(e_object_del, mod->popup);
         mod->popup_bg = mod->popup_entry = mod->popup_img = NULL;
         mod->contact_active = NULL;
@@ -707,6 +711,12 @@ e_modapi_shutdown(E_Module *m EINA_UNUSED)
    e_configure_registry_category_del("extensions");
 
    E_FN_DEL(e_object_del, mod->cfd);
+   if (mod->popup)
+     {
+        e_grabinput_release(0, mod->popup->evas_win);
+        e_popup_hide(mod->popup);
+     }
+   E_FN_DEL(e_object_del, mod->popup);
    e_config_domain_save("module.sawed-off_shotgun", conf_edd, sos_config);
    _e_mod_sos_config_free();
    E_CONFIG_DD_FREE(conf_edd);
