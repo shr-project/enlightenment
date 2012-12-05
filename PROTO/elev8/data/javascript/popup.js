@@ -2,8 +2,11 @@ elm = require('elm');
 
 w = elm.realise(elm.Window({
   title: 'Popup test',
+  width: 480,
+  height: 800,
   elements: {
     bg: elm.Background({
+      weight: { x: 1.0, y: 1.0 },
       resize: true
     }),
     popup: elm.Popup({
@@ -13,18 +16,18 @@ w = elm.realise(elm.Window({
           w.elements.popup.message({
             content: elm.Button({
               label: 'This text will be changed as soon as this button is realized',
-              icon: elm.Icon({ file: 'starred' })
+              icon: elm.Icon({ image: 'starred' })
             })
           });
         } else if (label === 'Items') {
           w.elements.popup.message({
             items: [
-              { text: 'Available', icon: elm.Icon({ file: 'user-available'}) },
-              { text: 'Away', icon: elm.Icon({ file: 'user-away'}) },
-              { text: 'Busy', icon: elm.Icon({ file: 'user-busy'}) },
-              { text: 'Idle', icon: elm.Icon({ file: 'user-idle'}) },
-              { text: 'Invisible', icon: elm.Icon({ file: 'user-invisible'}) },
-              { text: 'Offline', icon: elm.Icon({ file: 'user-offline'}) },
+              { text: 'Available', icon: elm.Icon({ image: 'user-available'}) },
+              { text: 'Away', icon: elm.Icon({ image: 'user-away'}) },
+              { text: 'Busy', icon: elm.Icon({ image: 'user-busy'}) },
+              { text: 'Idle', icon: elm.Icon({ image: 'user-idle'}) },
+              { text: 'Invisible', icon: elm.Icon({ image: 'user-invisible'}) },
+              { text: 'Offline', icon: elm.Icon({ image: 'user-offline'}) },
               'Only text',
               { text: 'Only text in an object' }
             ],

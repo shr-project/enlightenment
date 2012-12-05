@@ -24,7 +24,7 @@ var my_window =  elm.realise(elm.Window({
             },
             content : {
                 'elm.text.title' : 'Title',
-                'elm.swallow.content' : elm.Icon({file: 'home'})
+                'elm.swallow.content' : elm.Icon({image: 'home'})
             }
         })
     }
