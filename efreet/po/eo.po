@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-12-04 12:53+0000\n"
+"PO-Revision-Date: 2012-12-04 13:07+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,18 +17,34 @@ msgstr ""
 "X-Launchpad-Export-Date: 2012-12-05 05:31+0000\n"
 "X-Generator: Launchpad (build 16335)\n"
 
-#: src/e_mod_main.c:618
-msgid "Pidgin"
-msgstr "Piĝin"
+#: src/lib/efreet_base.c:131
+msgid "Desktop"
+msgstr "Labortablo"
 
-#: src/e_mod_main.c:623
-msgid "Chat"
-msgstr "Babilejo"
+#: src/lib/efreet_base.c:139
+msgid "Downloads"
+msgstr "Elŝutoj"
 
-#: src/e_mod_main.c:626
-msgid "Send File"
-msgstr "Sendi dosieron"
+#: src/lib/efreet_base.c:148
+msgid "Templates"
+msgstr "Ŝablonoj"
 
-#: src/e_mod_main.c:629
-msgid "Write Message"
-msgstr "Skribi mesaĝon"
+#: src/lib/efreet_base.c:157
+msgid "Public"
+msgstr "Publikaj"
+
+#: src/lib/efreet_base.c:166
+msgid "Documents"
+msgstr "Dokumentoj"
+
+#: src/lib/efreet_base.c:174
+msgid "Music"
+msgstr "Muziko"
+
+#: src/lib/efreet_base.c:182
+msgid "Pictures"
+msgstr "Bildoj"
+
+#: src/lib/efreet_base.c:190
+msgid "Videos"
+msgstr "Videoj"
