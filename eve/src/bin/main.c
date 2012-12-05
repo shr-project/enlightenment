@@ -402,7 +402,7 @@ static const EDBus_Method methods[] = {
 };
 
 static const EDBus_Service_Interface_Desc desc = {
-   "mobi.profusion.eve", methods
+   "org.enlightenment.eve", methods
 };
 
 static void
@@ -423,7 +423,7 @@ _cb_dbus_request_name(void *data, const EDBus_Message *msg,
    case EDBUS_NAME_REQUEST_REPLY_ALREADY_OWNER:
       {
          edbus_service_interface_register(response->conn,
-                                          "/mobi/profusion/eve", &desc);
+                                          "/org/enlightenment/eve", &desc);
       }
       break;
    case EDBUS_NAME_REQUEST_REPLY_IN_QUEUE:
@@ -433,9 +433,9 @@ _cb_dbus_request_name(void *data, const EDBus_Message *msg,
 
 	 ERR("eve is already running. Opening %s there and exiting",
              response->url);
-         open_url = edbus_message_method_call_new("mobi.profusion.eve",
-                                                  "/mobi/profusion/eve",
-                                                  "mobi.profusion.eve",
+         open_url = edbus_message_method_call_new("org.enlightenment.eve",
+                                                  "/org/enlightenment/eve",
+                                                  "org.enlightenment.eve",
                                                   "open_url");
          edbus_message_arguments_set(open_url, "s", response->url);
          edbus_connection_send(response->conn, open_url, NULL, NULL, -1);
@@ -882,7 +882,7 @@ elm_main(int argc, char **argv)
         response->conn = conn;
         response->url = url;
 
-        edbus_name_request(conn, "mobi.profusion.eve", 0,
+        edbus_name_request(conn, "org.enlightenment.eve", 0,
                            _cb_dbus_request_name, response);
      }
 
