@@ -49,8 +49,6 @@ Package(
 # Do we need any of this old ecore configure flags for efl now?
 #    configure_flags={
 #        "common": [
-#            "--enable-tests",
-#            "--enable-doc",
 #            "--enable-thread-safety",
 #            "--enable-ecore-evas",
 #            "--enable-ecore-evas-software-buffer",
@@ -67,18 +65,11 @@ Package(
 #    )
 
 Package(
-    name="eio",
-    dependencies={
-        "common": ["efl"],
-        },
-    )
-
-Package(
     name="edje",
     test_target="coverage",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "eio"],
+        "common": ["efl"],
         },
     configure_flags={
         "common": [
@@ -126,7 +117,7 @@ Package(
     name="emotion",
     doc_target="doc",
     dependencies={
-        "common": ["efl", "eeze", "eio", "edje"],
+        "common": ["efl", "eeze", "edje"],
         },
     )
 
@@ -169,7 +160,7 @@ Package(
 Package(
     name="elementary",
     dependencies={
-        "common": ["efl", "edje", "e_dbus", "efreet", "emotion", "eio"],
+        "common": ["efl", "edje", "e_dbus", "efreet", "emotion"],
         },
     )
 
