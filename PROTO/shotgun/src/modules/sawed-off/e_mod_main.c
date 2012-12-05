@@ -81,7 +81,7 @@ _set_active(Eina_Bool active)
    mod->active = !!active;
    if (!active)
      {
-        e_grabinput_release(0, mod->popup->evas_win);
+        if (mod->popup) e_grabinput_release(0, mod->popup->evas_win);
         E_FN_DEL(e_object_del, mod->popup);
         mod->popup_bg = mod->popup_entry = mod->popup_img = NULL;
         mod->contact_active = NULL;
