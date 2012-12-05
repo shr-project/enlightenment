@@ -25,8 +25,10 @@ private:
 
   static Handle<Value> AddSignalHandler(const Arguments &args);
   static Handle<Value> RemoveSignalHandler(const Arguments &args);
-  static Handle<Value> Call(const Arguments &args);
+  static Handle<Value> Send(const Arguments &args);
   static Handle<Value> GetProperties(const Arguments &args);
+
+  static void Send_Cb(void *data, const EDBus_Message *msg, EDBus_Pending *pending);
 
   static Handle<Value> Getter(Local<String> prop, const AccessorInfo& info);
 

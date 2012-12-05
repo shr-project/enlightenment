@@ -14,35 +14,30 @@ properties.Resp2 = 'lalalas';
 
 var introspect = obj.getProxy('org.freedesktop.DBus.Introspectable');
 
-introspect.call('Introspect', function() {
-    print('Introspect', arguments);
-});
+introspect.send('Introspect')
+    .onComplete(function() { print('Introspect', arguments); });
 
-proxy.call('ReceiveArray', ['aaaa', 'bbbb', 'cccc'] , function() {
-    print('ReceiveArray', arguments);
-});
+proxy.send('ReceiveArray', ['aaaa', 'bbbb', 'cccc'])
+    .onComplete(function() { print('ReceiveArray', arguments); });
 
-proxy.call('SendArray', function() {
-    print('SendArray', arguments);
-});
+proxy.send('SendArray')
+    .onComplete(function() { print('SendArray', arguments); });
 
-proxy.call('SendArrayInt', function() {
-    print('SendArrayInt', arguments);
-});
+proxy.send('SendArrayInt')
+    .onComplete(function() { print('SendArrayInt', arguments); });
 
-proxy.call('PlusOne', dbus.Int32(1), function() {
-    print('PlusOne', arguments);
-});
+proxy.send('PlusOne', dbus.Int32(1))
+    .onComplete(function() { print('PlusOne', arguments); });
 
-proxy.call('ReceiveArrayOfStringIntWithSize', dbus.Int32(5), [
+proxy.send('ReceiveArrayOfStringIntWithSize', dbus.Int32(5), [
     dbus.Struct('struct 10', dbus.Int32(11)),
     dbus.Struct('struct 20', dbus.Int32(22)),
     dbus.Struct('struct 30', dbus.Int32(33)),
     dbus.Struct('struct 40', dbus.Int32(44)),
     dbus.Struct('struct 50', dbus.Int32(55)),
-], function () { print('ReceiveArrayOfStringIntWithSize', arguments); });
+]).onComplete(function () { print('ReceiveArrayOfStringIntWithSize', arguments); });
 
-proxy.call('DoubleContainner', [
+proxy.send('DoubleContainner', [
     dbus.Struct(dbus.Int32(11), dbus.Int32(12)),
     dbus.Struct(dbus.Int32(13), dbus.Int32(14)),
     dbus.Struct(dbus.Int32(15), dbus.Int32(16)),
@@ -54,5 +49,5 @@ proxy.call('DoubleContainner', [
     dbus.Struct(dbus.Int32(25), dbus.Int32(26)),
     dbus.Struct(dbus.Int32(27), dbus.Int32(28)),
     dbus.Struct(dbus.Int32(29), dbus.Int32(20)),
-], function () { print('DoubleContainner', arguments); });
+]).onComplete(function () { print('DoubleContainner', arguments); });
 

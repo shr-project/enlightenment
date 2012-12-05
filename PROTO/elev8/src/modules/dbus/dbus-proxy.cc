@@ -187,8 +187,8 @@ void DProxy::Init(Handle<Object> target)
      FunctionTemplate::New(AddSignalHandler)->GetFunction());
   proto_t->Set(String::NewSymbol("removeSignalHandler"),
      FunctionTemplate::New(RemoveSignalHandler)->GetFunction());
-  proto_t->Set(String::NewSymbol("call"),
-     FunctionTemplate::New(Call)->GetFunction());
+  proto_t->Set(String::NewSymbol("send"),
+     FunctionTemplate::New(Send)->GetFunction());
   proto_t->Set(String::NewSymbol("getProperties"),
      FunctionTemplate::New(GetProperties)->GetFunction());
 
@@ -236,7 +236,7 @@ Handle<Value> DProxy::Getter(Local<String> prop, const AccessorInfo& info)
    if (!val.IsEmpty())
      return scope.Close(val);
 
-   Handle<Function> func = FunctionTemplate::New(Call)->GetFunction();
+   Handle<Function> func = FunctionTemplate::New(Send)->GetFunction();
    func->Set(String::New("method"), prop);
 
    return scope.Close(func);
@@ -420,21 +420,6 @@ Handle<Value> DProxy::RemoveSignalHandler(const Arguments& args)
   delete static_cast<WrappedSignalHandler *>(External::Unwrap(args[0]));
   return Undefined();
 }
-struct WrappedCallMessage : WrappedMessage {
-public:
-   WrappedCallMessage(Handle<Value> _callback)
-      : cb(Persistent<Value>::New(_callback)) {}
-   Persistent<Value> cb;
-   static void Callback(void *data, const EDBus_Message *msg, EDBus_Pending *pending);
-};
-
-void WrappedCallMessage::Callback(void *data, const EDBus_Message *msg, EDBus_Pending *)
-{
-   HandleScope scope;
-   WrappedCallMessage *self = static_cast<WrappedCallMessage *>(data);
-   Handle<Function> callback(Function::Cast(*self->cb));
-   Call(callback, msg);
-}
 
 static char getSigID(Handle<Value> val)
 {
@@ -614,23 +599,68 @@ static void append(EDBus_Message_Iter *iter, Handle<Value> val)
      }
 }
 
-Handle<Value> DProxy::Call(const Arguments& args)
+void DProxy::Send_Cb(void *, const EDBus_Message *msg, EDBus_Pending *pending)
+{
+   HandleScope scope;
+
+   const char *errname, *errmsg;
+   Handle<Object> obj = DPending::ToObject(pending);
+
+   if (edbus_message_error_get(msg, &errname, &errmsg))
+     {
+        Local<Value> on_error = obj->GetHiddenValue(String::New("onError"));
+        if (on_error.IsEmpty())
+          {
+             ERR("%s: %s", errname, errmsg);
+             return;
+          }
+
+        Handle<Value> argv[] = { String::New(errname), String::New(errmsg) };
+        Handle<Function> callback(Function::Cast(*on_error));
+        callback->Call(Context::GetCurrent()->Global(), 2, argv);
+        return;
+     }
+
+   Local<Value> on_complete = obj->GetHiddenValue(String::New("onComplete"));
+   if (on_complete.IsEmpty())
+     return;
+
+   Eina_Value *ev = NULL;
+   Eina_Value_Struct st;
+   unsigned int argc = 0;
+
+   if (strlen(edbus_message_signature_get(msg)) > 0)
+     {
+        ev = edbus_message_to_eina_value(msg);
+        eina_value_pget(ev, &st);
+        argc = st.desc->member_count;
+     }
+
+   Handle<Value> argv[argc];
+
+   for (unsigned int i = 0; i < argc; i++)
+     {
+        Eina_Value value;
+        eina_value_struct_value_get(ev, st.desc->members[i].name, &value);
+        argv[i] = einaValueToValue(&value);
+     }
+
+   Handle<Function> callback(Function::Cast(*on_complete));
+   callback->Call(Context::GetCurrent()->Global(), argc, argv);
+}
+
+Handle<Value> DProxy::Send(const Arguments& args)
 {
    HandleScope scope;
 
    DProxy *self = ObjectWrap::Unwrap<DProxy>(args.This());
 
    EDBus_Message *msg;
+   EDBus_Pending *pending;
    EDBus_Message_Iter *iter;
 
-   unsigned int args_cnt = 0;
-   unsigned int last_arg = (args.Length() - 1);
-
-   if (!args[last_arg]->IsFunction())
-     return ThrowException
-        (Exception::TypeError(String::New("Last argument must be a function")));
-
    Local<Value> method = args.Callee()->Get(String::New("method"));
+   unsigned int args_cnt = 0;
 
    if (method->IsUndefined())
      method = args[args_cnt++];
@@ -638,15 +668,14 @@ Handle<Value> DProxy::Call(const Arguments& args)
    msg = edbus_proxy_method_call_new(self->proxy, *String::Utf8Value(method));
    iter = edbus_message_iter_get(msg);
 
-   for (; args_cnt < last_arg; args_cnt++)
+   for (unsigned int len = args.Length(); args_cnt < len; args_cnt++)
      append(iter, args[args_cnt]);
 
-   edbus_proxy_send(self->proxy, msg, WrappedCallMessage::Callback,
-                    new WrappedCallMessage(args[last_arg]), -1);
+   pending = edbus_proxy_send(self->proxy, msg, Send_Cb, NULL, -1);
 
    edbus_message_unref(msg);
 
-   return Undefined();
+   return scope.Close(DPending::NewInstance(pending));
 }
 
 Handle<Value> DProxy::GetProperties(const Arguments& args)
