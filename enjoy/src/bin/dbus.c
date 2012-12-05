@@ -68,7 +68,7 @@ _cb_dbus_request_name(void *data __UNUSED__, const EDBus_Message *msg, EDBus_Pen
      }
 
    INF("Got DBus name - unique instance running.");
-   edbus_service_interface_register(conn, DBUS_PATH, &desc);
+   control = edbus_service_interface_register(conn, DBUS_PATH, &desc);
 
    /* will run after other events run, in the main loop */
    ecore_event_add(ENJOY_EVENT_STARTED, NULL, NULL, NULL);
