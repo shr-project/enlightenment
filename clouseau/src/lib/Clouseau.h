@@ -77,9 +77,9 @@ struct _Clouseau_Evas_Props
 struct _Clouseau_Evas_Text_Props
 {
    const char *font;
-   int size;
    const char *source;
    const char *text;
+   int size;
 };
 
 struct _Clouseau_Evas_Image_Props

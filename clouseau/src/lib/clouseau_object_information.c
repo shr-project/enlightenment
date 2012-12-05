@@ -159,6 +159,8 @@ clouseau_object_information_free(Clouseau_Object *oinfo)
       case CLOUSEAU_OBJ_TYPE_UNKNOWN:
       case CLOUSEAU_OBJ_TYPE_OTHER:
          break;
+      default:
+         break;
      }
 
    free(oinfo);

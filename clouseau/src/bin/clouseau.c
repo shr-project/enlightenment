@@ -1344,11 +1344,11 @@ _bt_clicked(void *data, Evas_Object *obj, void *event_info EINA_UNUSED)
 static void
 _bt_load_file(void *data, Evas_Object *obj EINA_UNUSED, void *event_info)
 {
-   gui_elements *g = data;
-   app_info_st *app = calloc(1, sizeof(*app));
-   tree_data_st *td =  calloc(1, sizeof(*td));
    if (event_info)
      {
+        gui_elements *g = data;
+        app_info_st *app = calloc(1, sizeof(*app));
+        tree_data_st *td =  calloc(1, sizeof(*td));
         Eina_Bool s = clouseau_data_eet_info_read(event_info,
               (app_info_st **) &app, (tree_data_st **) &td);
 

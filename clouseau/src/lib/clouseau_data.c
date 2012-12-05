@@ -634,11 +634,14 @@ EAPI void *
 clouseau_data_packet_info_get(const char *p_type, void *data, size_t size)
 {
    bmp_info_st *st = NULL;
-   void *host_blob = _net_to_host_blob_get(data, size);
-   char *ptr = host_blob;
+   void *host_blob = NULL;
+   char *ptr = NULL;
 
    if (size <= 0)
       return NULL;
+
+   host_blob = _net_to_host_blob_get(data, size);
+   ptr = host_blob;
 
    if (!strcmp(p_type, CLOUSEAU_BMP_DATA_STR))
      {
