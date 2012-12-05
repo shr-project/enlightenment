@@ -46,7 +46,7 @@ shelm_about_dialog()
 			"<b>Carsten Haitzler (raster)</> "
 			"for Enlightenment DR17, great Elementary toolkit and help with developenment<br>"
 			"<b>Christopher Michael (devilhorns)</> "
-			"for help with developenment<br>"));
+			"for help with development<br>"));
   elm_object_content_set(scroller, textinfo);
   evas_object_show(textinfo);
 
