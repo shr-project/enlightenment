@@ -9,7 +9,7 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	librsvg2-dev libfribidi-dev libpixman-1-dev libxss-dev
 	libxp-dev libxtst-dev graphviz libasound2-dev libpam0g-dev"
 
-defcore="efl evas_generic_loaders eio edje emotion eeze e_dbus edbus
+defcore="efl evas_generic_loaders edje emotion eeze e_dbus edbus
 	efreet PROTO/libeweather PROTO/emap elementary"
 defapps="ephysics ethumb terminology e ephoto rage expedite"
 
