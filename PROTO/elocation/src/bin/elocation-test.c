@@ -89,7 +89,7 @@ position_changed(void *data, int ev_type, void *event)
 }
 
 int
-main()
+main(void)
 {
    Elocation_Address *address, *addr_geocode;
    Elocation_Position *position, *pos_geocode;

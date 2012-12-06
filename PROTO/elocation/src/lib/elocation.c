@@ -1070,7 +1070,7 @@ elocation_status_get(int *status_shadow)
 }
 
 EAPI Elocation_Position *
-elocation_position_new()
+elocation_position_new(void)
 {
    /* Malloc the global struct we operate on here in this lib. This shadows the
     * updated data we are giving to the application */
@@ -1084,7 +1084,7 @@ elocation_position_new()
 }
 
 EAPI Elocation_Address *
-elocation_address_new()
+elocation_address_new(void)
 {
    /* Malloc the global struct we operate on here in this lib. This shadows the
     * updated data we are giving to the application */
@@ -1124,7 +1124,7 @@ elocation_address_free(Elocation_Address *address_shadow)
 }
 
 EAPI Eina_Bool
-elocation_init()
+elocation_init(void)
 {
    EDBus_Message *msg;
    EDBus_Object *obj_master = NULL;
@@ -1260,7 +1260,7 @@ elocation_init()
 }
 
 EAPI void
-elocation_shutdown()
+elocation_shutdown(void)
 {
    /* To allow geoclue freeing unused providers we free our reference on it here */
    if (!edbus_proxy_call(meta_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, ""))

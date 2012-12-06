@@ -221,7 +221,7 @@ typedef struct _Elocation_Requirements
  * @ingroup Location
  * @since 1.8
  */
-EAPI Elocation_Address *elocation_address_new();
+EAPI Elocation_Address *elocation_address_new(void);
 
 /**
  * @brief Free an address object
@@ -246,7 +246,7 @@ EAPI void elocation_address_free(Elocation_Address *address);
  * @ingroup Location
  * @since 1.8
  */
-EAPI Elocation_Position *elocation_position_new();
+EAPI Elocation_Position *elocation_position_new(void);
 
 /**
  * @brief Free an position object
@@ -345,6 +345,6 @@ EAPI Eina_Bool elocation_address_to_position(Elocation_Address *address_shadow, 
  */
 EAPI Eina_Bool elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow);
 
-EAPI Eina_Bool elocation_init();
-EAPI void elocation_shutdown();
+EAPI Eina_Bool elocation_init(void);
+EAPI void elocation_shutdown(void);
 #endif
