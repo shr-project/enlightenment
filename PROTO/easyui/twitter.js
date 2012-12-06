@@ -4,6 +4,18 @@ OAuth = require('oauth.js').OAuth;
 ajax = require('ajax.js');
 
 var XMLHttpRequest = require('http').XMLHttpRequest;
+
+/* --- About twitter keys ---
+ * In order to an application access twitter, on behalf of the user,
+ * the application need to get some keys, part of the OAuth process
+ * used by twitter. To get these keys (consumerKey and consumerSecret),
+ * visit http://dev.twitter.com, sign in, create an app and get the keys.
+ * Then, assign them to the next two global variables.
+ * Remember that consumerSecret must be kept secret.
+ * */
+var gConsumerKey; //<- Put consumer key here!
+var gConsumerSecret; //<- Put consumer secret here!
+
 var gToken = null;
 var gTokenSecret = null;
 var gCallbackUrl = "http://www.enlightenment.org/"
@@ -41,8 +53,8 @@ twitterAjax = {
     return url;
   },
   _oauthAccessor: function(token, tokenSecret) {
-    var accessor = {consumerKey: 'HRlpe96oNRNksZOuW64KcA',
-                  consumerSecret: 'G46XTOYqVXpcKbJ8dMEXDs9pQ8B1bM6Trkyjqe3I'}
+    var accessor = {consumerKey: gConsumerKey,
+                  consumerSecret: gConsumerSecret}
 
     if (token) {
       accessor.token = token;
@@ -822,5 +834,11 @@ Gralha = EUI.TabController({
   titleVisible: false,
   tabPosition: 'bottom'
 });
+
+if (!gConsumerKey || !gConsumerSecret) {
+  print('No application keys! It will not be possible sign in on twitter!\n' +
+        'Get application keys on http://dev.twitter.com and read the\n'+
+        'instructions at the begining of this code.');
+}
 
 EUI.app(new Gralha());
