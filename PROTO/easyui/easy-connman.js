@@ -31,21 +31,29 @@ var joinArray = function(array) {
   return '';
 };
 
+var genericErrorHandler = function(name, message){
+  print('Error: ', name, ':', message);
+};
+
 ServicesModel = EUI.Model({
   init: function() {
     this.services = [];
 
-    manager.GetServices(function(services) {
-      this.services = services;
-      this.notifyListeners();
-      this.addServicesChangedListener();
-    }.bind(this));
+    manager.GetServices()
+      .onComplete(function(services) {
+        this.services = services;
+        this.notifyListeners();
+        this.addServicesChangedListener();
+      }.bind(this))
+      .onError(genericErrorHandler);
 
-    manager.GetProperties(function(){
-      var properties = arrayDictToDict(arguments[0]);
-      this.offlineMode = properties.OfflineMode;
-      this.notifyListeners();
-    }.bind(this));
+    manager.GetProperties()
+      .onComplete(function(){
+        var properties = arrayDictToDict(arguments[0]);
+        this.offlineMode = properties.OfflineMode;
+        this.notifyListeners();
+      }.bind(this))
+      .onError(genericErrorHandler);
 
     manager.addSignalHandler('ServicesChanged', this.servicesChanged.bind(this));
     manager.addSignalHandler('PropertyChanged', this.propertyChanged.bind(this));
@@ -168,9 +176,8 @@ ServicesController = EUI.ListController({
       this.pushController(new TechnologiesController());
   },
   goOnline: function(on) {
-    manager.SetProperty('OfflineMode', dbus.Variant(!on), function() {
-      print('OfflineMode');
-    })
+    manager.SetProperty('OfflineMode', dbus.Variant(!on))
+      .onError(genericErrorHandler);
   }
 });
 
@@ -232,14 +239,10 @@ ServiceDetailsModel = EUI.Model({
     return this.service.id;
   },
   disconnect: function() {
-    this.service_dbus.Disconnect(function() {
-      print('Disconnect');
-    });
+    this.service_dbus.Disconnect().onError(genericErrorHandler);
   },
   connect: function() {
-    this.service_dbus.Connect(function() {
-      print('Connect', arguments);
-    });
+    this.service_dbus.Connect().onError(genericErrorHandler);
   },
   serviceDict: function() {
     return this.service;
@@ -309,18 +312,17 @@ EditableServiceDetailsModel = EUI.Model({
   updateArrayProp: function(prop, before, after) {
     if (before[prop] == after[prop]) return;
 
-    this.service_dbus.SetProperty(prop+'.Configuration',
-                           dbus.Variant(after[prop].replace(/ /g, '').split(',')),
-                           function() {
-                             print('Setting');
-                           });
+    this.service_dbus
+      .SetProperty(prop+'.Configuration',
+                   dbus.Variant(after[prop].replace(/ /g, '').split(',')))
+      .onError(genericErrorHandler);
   },
   updateIPv4Props: function(before, after, auto) {
     if (auto) {
-      this.service_dbus.SetProperty('IPv4.Configuration',
-                             dbus.Variant({Method: dbus.Variant('dhcp')}), function() {
-                               print('IPv4 DHCP');
-                             });
+      this.service_dbus
+        .SetProperty('IPv4.Configuration',
+                     dbus.Variant({Method: dbus.Variant('dhcp')}))
+        .onError(genericErrorHandler);
     } else {
       var willUpdate = false;
       willUpdate = willUpdate || (before['IPv4.Address'] != after['IPv4.Address']);
@@ -336,10 +338,9 @@ EditableServiceDetailsModel = EUI.Model({
         Gateway: dbus.Variant(after['IPv4.Gateway'])
       }
 
-      this.service_dbus.SetProperty('IPv4.Configuration', dbus.Variant(config),
-                                    function() {
-                                      print('IPv4 Manual');
-                                    })
+      this.service_dbus
+        .SetProperty('IPv4.Configuration', dbus.Variant(config))
+        .onError(genericErrorHandler);
     }
   }
 });
@@ -382,11 +383,13 @@ TechnologiesModel = EUI.Model({
   init: function() {
     this.technologies = [];
 
-    manager.GetTechnologies(function(technologies) {
-      this.technologies = technologies;
-      this.notifyListeners();
-      this.addTechnologiesChangedListener();
-    }.bind(this));
+    manager.GetTechnologies()
+      .onComplete(function(technologies) {
+        this.technologies = technologies;
+        this.notifyListeners();
+        this.addTechnologiesChangedListener();
+      }.bind(this))
+      .onError(genericErrorHandler);
 
     manager.addSignalHandler('TechnologyAdded',
                              this.technologyAdded.bind(this));
@@ -493,14 +496,11 @@ TechnologyDetailsModel = EUI.Model({
     return this.items[index];
   },
   powerOn: function(on) {
-    this.dbus_proxy.SetProperty('Powered', dbus.Variant(on), function() {
-      print('Power on/off');
-    });
+    this.dbus_proxy.SetProperty('Powered', dbus.Variant(on))
+      .onError(genericErrorHandler);
   },
   scan: function() {
-    this.dbus_proxy.Scan(function() {
-      print('Scan');
-    });
+    this.dbus_proxy.Scan().onError(genericErrorHandler);
   }
 });
 
