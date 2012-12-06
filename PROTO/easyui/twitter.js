@@ -156,6 +156,7 @@ TimelineModel = BaseTwitterModel.extend({
   },
   itemAtIndex: function(index){
     var item = this.items[index];
+    if (!item) return;
 
     var url_image;
     if (item.retweeted_status)
@@ -186,7 +187,7 @@ TimelineModel = BaseTwitterModel.extend({
 
     this.post('statuses/update', params, function(item) {
       this.items.unshift(item);
-      this.notifyListeners(0); //just the first item needs to be updated
+      this.notifyListeners();
     });
   },
   appendTweets: function(tweets){
@@ -232,14 +233,18 @@ TimelineModel = BaseTwitterModel.extend({
 
 TweetController = EUI.TableController({
   editable: true,
-  init: function(model, replying_tweet){
+  init: function(timeline_model, replying_tweet){
     this.title = 'What\'s happening?';
+    this.timeline_model = timeline_model;
     this.replying_tweet = replying_tweet;
     var text = ''
     if (this.replying_tweet)
       text = '@' + this.replying_tweet.user.screen_name + ' ';
 
-    this.model = model;
+    //this is just a dummy model, to allow editing this controller, and setting
+    //reply default text. The model that really tweets is the timeline model.
+    this.model = new EUI.ArrayModel([{text: text}]);
+    this.index = 0;
     this.fields = [
       [EUI.widgets.Entry({scrollabe: true, field: 'text', text: text})]
     ]
@@ -251,7 +256,7 @@ TweetController = EUI.TableController({
 
     var tweet = this.getValues().text;
     if (tweet.length > 0)
-      this.model.tweet(tweet, this.replying_tweet);
+      this.timeline_model.tweet(tweet, this.replying_tweet);
     this.popController();
   },
   didChangeEntry: function(){
@@ -259,7 +264,7 @@ TweetController = EUI.TableController({
     if (chars_left == 140)
       this.title = "What's happening?";
     else
-      this.title = chars_left;
+      this.title = '' + chars_left;
   }
 });
 
@@ -468,8 +473,7 @@ BaseProfileFakeModel = EUI.Model({
     this.model = new ProfileDataModel(user_id);
     this.model.addListener(this);
 
-    this.model.getUserProfile();
-    this.model.getUserTweets();
+    this.refresh();
 
     this.readyToShow = false;
   },
@@ -546,6 +550,8 @@ BaseProfileFakeModel = EUI.Model({
   },
   itemAtIndex: function(index) {
     var item = this.items[index];
+    if (!item) return;
+
     if (index == 0 && !item.icon)
       this.getProfileImage();
 
@@ -564,6 +570,10 @@ BaseProfileFakeModel = EUI.Model({
       item.icon = req.responseText;
       this.notifyListeners();
     }.bind(this));
+  },
+  refresh: function() {
+    this.model.getUserProfile();
+    this.model.getUserTweets();
   }
 });
 
@@ -641,6 +651,11 @@ BaseProfileController = EUI.ListController({
         this.pushController(new TimelineController(
            new TimelineModel(this.model.profile.id_str),
            'tweets', this.model.profile.screen_name));
+  },
+  navigationBarItems: {left: 'Refresh'},
+  selectedNavigationBarItem: function(item) {
+    if (item == 'Refresh')
+      this.model.refresh();
   }
 });
 
