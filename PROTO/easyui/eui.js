@@ -1582,13 +1582,13 @@ var WebController = Controller.extend({
     var progress = elm.Notify({
       content: elm.ProgressBar({ value: 0.0 }),
       visible: false,
-      orient: 'top-right'
+      align: {x: 1.0, y: 0.0} //top-right
     });
 
     var link_hover_notify = elm.Notify({
       content: elm.Label({}),
       visible: false,
-      orient: 'bottom-left'
+      align: {x: 0.0, y: 1.0} //bottom-left
     });
 
     var web = elm.Web({
@@ -2491,7 +2491,7 @@ exports.app = function(app) {
       }),
       'notify': elm.Notify({
         visible: false,
-        orient: 'center',
+        align: {x: 0.5, y: 0.5}, //center
         expand: 'both',
         fill: 'both',
         content: elm.ProgressBar({
