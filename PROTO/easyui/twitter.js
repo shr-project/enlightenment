@@ -62,7 +62,8 @@ twitterAjax = {
 
     return OAuth.getAuthorizationHeader('', message.parameters);
   },
-  _request: function(endpoint, parameters, success, method, token, tokenSecret) {
+  _request: function(endpoint, parameters, success, method, token, tokenSecret,
+                     contentType) {
     return ajax.ajax(this._getTwitterAPIUrl(endpoint), {
       //the 'oauth_callback' parameter must NOT be sent in the http body, but in
       //the Authorization field in the header
@@ -70,6 +71,7 @@ twitterAjax = {
       blockUI: true,
       onSuccess: success,
       type: method,
+      contentType: contentType,
       beforeSend: function (request, options) {
         var oauth_header = this._oauthHeader(method, endpoint, parameters,
                                             token, tokenSecret);
@@ -77,11 +79,13 @@ twitterAjax = {
       }.bind(this)
     });
   },
-  get: function(endpoint, parameters, success) {
-    return this._request(endpoint, parameters, success, 'GET');
+  get: function(endpoint, parameters, success, contentType) {
+    return this._request(endpoint, parameters, success, 'GET', null, null,
+                         contentType);
   },
-  post: function(endpoint, parameters, success, token, tokenSecret) {
-    return this._request(endpoint, parameters, success, 'POST', token, tokenSecret);
+  post: function(endpoint, parameters, success, token, tokenSecret, contentType) {
+    return this._request(endpoint, parameters, success, 'POST', token,
+                         tokenSecret, contentType);
   }
 }
 
@@ -409,7 +413,7 @@ AuthController = EUI.TableController({
       localStorage.setItem('gUserID', gUserID);
 
       this.popController();
-    }.bind(this), this.token, this.tokenSecret);
+    }.bind(this), this.token, this.tokenSecret, 'text/plain');
   }
 });
 
@@ -715,7 +719,7 @@ TimelineController = EUI.ListController({
         var tokenSecret = parsedResponse.oauth_token_secret;
 
         this.pushController(new AuthController(token, tokenSecret));
-      }.bind(this));
+      }.bind(this), null, null, 'text/plain');
     else
       this.model.refresh();
   },

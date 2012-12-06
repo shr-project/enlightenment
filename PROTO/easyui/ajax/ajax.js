@@ -413,11 +413,11 @@ parsejson = function(request) {
 };
 
 isContentType = function(request, options, value) {
+  if (options.contentType)
+   return (options.contentType.indexOf(value) == 0)
+
   var contentType = request.getResponseHeader('Content-Type');
   if (contentType && contentType.indexOf(value) == 0)
-    return true;
-
-  if (options.contentType && options.contentType.indexOf(value) == 0)
     return true;
 
   return false;
