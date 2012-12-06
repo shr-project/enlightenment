@@ -9,6 +9,10 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	librsvg2-dev libfribidi-dev libpixman-1-dev libxss-dev
 	libxp-dev libxtst-dev graphviz libasound2-dev libpam0g-dev"
 
+# Used whenever cedric pokes me again to do the scan build for the current stable branch
+#defcore="ecore-1.7 eet-1.7 eina-1.7 eio-1.7 embryo-1.7 evas-1.7
+#         evas_generic_loaders-1.7 edje-1.7 emotion-1.7 eeze-1.7
+#         e_dbus-1.7 efreet-1.7 elementary-1.7"
 defcore="efl evas_generic_loaders ephysics edje emotion eeze e_dbus edbus
 	efreet PROTO/libeweather PROTO/emap elementary"
 defapps="ethumb terminology e ephoto rage expedite"
@@ -19,6 +23,7 @@ defpkgs="$defcore $defapps"
 set -e
 #set -x
 
+# Add -std=gnu99 when having problems with clang and dns.c in ecore_con
 export CFLAGS="-O2 -Wall -g -Wextra -Wshadow -fvisibility=hidden -fdata-sections -ffunction-sections"
 export CXXFLAGS="$CFLAGS"
 export LDFLAGS="-fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed"
