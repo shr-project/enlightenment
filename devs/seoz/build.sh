@@ -24,10 +24,9 @@ export CFLAGS="-O2 -march=native -ffast-math -g3 -W -Wall -Wextra" # -Wshadow"
 export CC="ccache gcc"
 alias make='make -j6'
 
-export BUILD_E_OPTION="eeze ephysics"
 export BUILD_ETHUMB_OPTION="PROTO/epdf"
 export BUILD_ELM_OPTION="PROTO/emap"
-export BUILD_CORE_EFL="eio edje e_dbus edbus efreet expedite "$BUILD_ETHUMB_OPTION" emotion ethumb "$BUILD_ELM_OPTION" elementary "$BUILD_E_OPTION" e"
+export BUILD_CORE_EFL="eio ephysics edje e_dbus edbus efreet expedite "$BUILD_ETHUMB_OPTION" emotion ethumb "$BUILD_ELM_OPTION" elementary eeze e"
 export BUILD_PYTHON_BINDINGS="BINDINGS/python/python-evas BINDINGS/python/python-ecore BINDINGS/python/python-elementary BINDINGS/python/python-edje BINDINGS/python/python-emotion BINDINGS/python/python-e_dbus"
 export BUILD_CPP_BINDINGS="BINDINGS/cxx/eflxx BINDINGS/cxx/einaxx BINDINGS/cxx/evasxx BINDINGS/cxx/ecorexx BINDINGS/cxx/edjexx BINDINGS/cxx/elementaryxx"
 export BUILD_BINDINGS=$BUILD_PYTHON_BINDINGS" "$BUILD_CPP_BINDINGS" "
