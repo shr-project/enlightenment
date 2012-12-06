@@ -21,7 +21,8 @@ private:
   static Persistent<Function> constructor;
 
   DPending(EDBus_Pending *pending_);
-  ~DPending();
+
+  static void FreeCb(void *data, const void *deadptr);
 
   static Handle<Value> New(const Arguments& args);
   static Handle<Value> Cancel(const Arguments &args);

@@ -9,13 +9,15 @@ Persistent<Function> DPending::constructor;
 DPending::DPending(EDBus_Pending *pending_)
   : pending(pending_)
 {
+   edbus_pending_cb_free_add(pending, FreeCb, this);
    edbus_pending_data_set(pending, "this", this);
 }
 
-DPending::~DPending()
+void DPending::FreeCb(void *data, const void *)
 {
-   edbus_pending_data_del(pending, "this");
-   edbus_pending_cancel(pending);
+   DPending *self = static_cast<DPending *>(data);
+   self->pending = NULL;
+   self->Unref();
 }
 
 void DPending::Init(Handle<Object>)
@@ -49,6 +51,7 @@ Handle<Value> DPending::New(const Arguments& args)
   EDBus_Pending *wrapped = static_cast<EDBus_Pending *>(External::Unwrap(args[0]));
   DPending *pending = new DPending(wrapped);
   pending->Wrap(args.This());
+  pending->Ref();
 
   return args.This();
 }
