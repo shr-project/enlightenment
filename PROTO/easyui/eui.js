@@ -165,7 +165,6 @@ Controller = Class.extend({
       expand: 'both',
       fill: 'both',
       resize: true,
-      title_visible: false,
       elements: [
         {
           'content': this._getViewDescriptor(),
