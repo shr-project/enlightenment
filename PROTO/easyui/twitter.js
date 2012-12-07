@@ -185,7 +185,8 @@ TimelineModel = BaseTwitterModel.extend({
     return item;
   },
   retweet: function(tweet){
-    this.post('statuses/retweet/' + tweet.id_str, null, function(retweet) {
+    var params = {include_entities: true};
+    this.post('statuses/retweet/' + tweet.id_str, params, function(retweet) {
       //search and update tweet
       for (var i in this.items){
         if (this.items[i].id_str == retweet.retweeted_status.id_str){
@@ -197,7 +198,7 @@ TimelineModel = BaseTwitterModel.extend({
     });
   },
   tweet: function(text, replying_tweet){
-    var params = {status: text};
+    var params = {status: text, include_entities: true};
     if (replying_tweet)
       params.in_reply_to_status_id = replying_tweet.id_str;
 
