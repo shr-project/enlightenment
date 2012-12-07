@@ -142,7 +142,7 @@ Definition = EUI.TableController({
     this.index = 0;
     this.bookmark = (bookmarks.indexOf(item) > -1);
   },
-  fields: [[EUI.widgets.Entry({text: '', scrollable: true, field: 'entry', style: 'no_border'})]],
+           fields: [[EUI.widgets.Entry({text: '', scrollable: true, field: 'entry', style: 'no_border', acceptMarkup: true})]],
   navigationBarStyle: 'dict',
   navigationBarItems: function() {
     return {

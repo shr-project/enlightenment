@@ -1121,7 +1121,7 @@ GenController = Controller.extend({
       horizontal: false,
       file: EUI.defaults._theme['list'],
       content: {
-        search: elm.Entry({
+        search: EUI.widgets.Entry({
           before: "list",
           scrollable: true, single_line: true,
           icon_visible: !!this.searchBarItems && this.searchBarItems.left,
@@ -1131,7 +1131,7 @@ GenController = Controller.extend({
             'end': this.searchBarItems && this.searchBarItems.right
           },
           on_change: function () {
-            this.search(this.view.content.search.text);
+            this.search(this.view.content.search.getValue());
           }.bind(this)
         }),
         list: _type({
@@ -2649,9 +2649,11 @@ Widgets.Entry = wrapElm(elm.Entry, {
   setValue: function (value) {
     value = (value !== undefined) ? value : '';
     if (this.text != value)
-      this.text = this.utf8_to_markup(value);
+      this.text = this.acceptMarkup ? value : this.utf8_to_markup(value);
   },
-  getValue: function() { return this.markup_to_utf8(this.text) }
+  getValue: function() {
+    return this.acceptMarkup ? this.text : this.markup_to_utf8(this.text)
+  }
 });
 
 /** @method */
