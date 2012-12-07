@@ -22,10 +22,6 @@
 #ifndef _ELOCATION_H
 #define _ELOCATION_H
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #ifdef EAPI
 # undef EAPI
 #endif
