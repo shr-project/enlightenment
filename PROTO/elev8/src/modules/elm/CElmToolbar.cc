@@ -155,7 +155,12 @@ void CElmToolbar::Item::SetIcon(Local<String> key, Local<Value> value, const Acc
      {
         Item *item = Unwrap(info);
         item->ToObject()->SetHiddenValue(key, value);
-        elm_toolbar_item_icon_set(item->object_item, *String::Utf8Value(value));
+        String::Utf8Value name(value);
+
+        if (ecore_file_exists(*name))
+          elm_toolbar_item_icon_file_set(item->object_item, *name, NULL);
+        else
+          elm_toolbar_item_icon_set(item->object_item, *name);
      }
 }
 
