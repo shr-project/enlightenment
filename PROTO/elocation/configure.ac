@@ -69,6 +69,9 @@ AC_CANONICAL_HOST
 
 AC_PROG_CC
 
+AC_SUBST([requirements_elocation])
+requirements_elocation="edbus2 ecore"
+
 # pkg-config
 PKG_PROG_PKG_CONFIG
 
