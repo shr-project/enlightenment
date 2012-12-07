@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: e16\n"
 "Report-Msgid-Bugs-To: enlightenment-intl@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-10-24 18:21+0200\n"
-"PO-Revision-Date: 2011-10-06 18:08+0200\n"
+"POT-Creation-Date: 2012-12-07 19:49+0100\n"
+"PO-Revision-Date: 2012-12-07 19:51+0100\n"
 "Last-Translator: Massimo Maiurana <Unknown>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1893,11 +1893,11 @@ msgstr ""
 
 #: src/setup.c:171
 msgid "Cannot select root window button press events"
-msgstr ""
+msgstr "Impossibile selezionare l'evento bottone nella finestra principale"
 
 #: src/setup.c:173
 msgid "Root window button actions will not work.\n"
-msgstr ""
+msgstr "Le azioni per il bottone sulla finestra principale non funzioneranno.\n"
 
 #: src/setup.c:179
 msgid "X server version error"

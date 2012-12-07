@@ -5,6 +5,7 @@ Comment[es]=Cliente XMPP
 Comment[gl]=Cliente XMPP
 Comment[it]=Client XMPP
 Comment[pt]=Cliente XMPP
+Comment[ru]=XMPP-клиент
 Exec=shotgun
 Icon=shotgun
 Terminal=false

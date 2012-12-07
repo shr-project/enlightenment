@@ -6,6 +6,7 @@ Comment[es]=Un simple editor de texto
 Comment[gl]=Un simple editor de texto
 Comment[it]=Semplice editor di testo
 Comment[pt]=Editor de texto
+Comment[ru]=Простой текстовый редактор
 Exec=ecrire %f
 Icon=ecrire
 Terminal=false
