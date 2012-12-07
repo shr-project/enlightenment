@@ -476,6 +476,9 @@ ProfileDataModel = BaseTwitterModel.extend({
 
       this.notifyListeners('profile');
     });
+  },
+  setUserID: function(user_id) {
+    this.user_id = user_id;
   }
 });
 
@@ -588,6 +591,7 @@ BaseProfileFakeModel = EUI.Model({
     }.bind(this));
   },
   refresh: function() {
+    this.model.setUserID(this.user_id);
     this.model.getUserProfile();
     this.model.getUserTweets();
   }
@@ -647,6 +651,10 @@ LoggedInUserProfileFakeModel = BaseProfileFakeModel.extend({
     localStorage.removeItem('gTokenSecret');
     localStorage.removeItem('gScreenName');
     localStorage.removeItem('gUserID');
+  },
+  refresh: function() {
+    this.user_id = gUserID;
+    this._super();
   }
 });
 
@@ -656,7 +664,7 @@ BaseProfileController = EUI.ListController({
   updateView: function(indexes, hint) {
     this._super(indexes, hint);
 
-    if (this.model.title)
+    if (this.model.title && !this.title)
       this.title = this.model.title;
   },
   itemAtIndex: function(index) {
