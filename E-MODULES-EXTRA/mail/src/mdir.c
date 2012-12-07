@@ -21,10 +21,11 @@ _mail_mdir_add_mailbox (void *data, void *data2)
   mc = E_NEW (MdirClient, 1);
   mc->config = cb;
   mc->data = data;
-  mc->config->num_new = 0;
-  mc->config->num_total = 0;
+  mc->config->num_new = _mail_mdir_get_files (mc->config->new_path);
+  mc->config->num_total = _mail_mdir_get_files (mc->config->cur_path);
   mc->monitor =
     ecore_file_monitor_add (cb->new_path, _mail_mdir_check_mail, mc);
+  _mail_set_text (mc->data);
 
   mdirs = eina_list_append (mdirs, mc);
 }
