@@ -1,0 +1,48 @@
+New E17 <b>Release</b>: BETA
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+After over a decade of development, E17 has finally reached beta status.
+Big thanks to everyone who helped it to get this far.
+<br><br>
+
+Changelog:
+<li>Translation updates</li>
+<li>Solaris build fixes</li>
+<li>Improved performance during secure deletion</li>
+<li>Various small memory leaks plugged</li>
+<li>Keyboard config now supports "evdev" as a model</li>
+<li>Pointer slide once again properly sets focus</li>
+<li>Various config dialogs once again resizable</li>
+<li>Icons no longer disappear after dragging them into external applications</li>
+<li>Navigate menu slightly reorganized, now also navigates relative to clicked icons</li>
+<li>Double clicking icons in filemanager with single click activation enabled no longer performs two opens</li>
+<li>Shelf autohide now functions properly in multi-monitor environments</li>
+<li>Shelf autohide more accurate when moving mouse from shelf into external application</li>
+<li>Resizing from bottom border now functional on applications which set aspect ratio (mplayer)</li>
+<li>Pager no longer sometimes loses windows with default theme</li>
+<li>Pager once again works as a desktop gadget with default theme</li>
+<li>Tiling module improvements when using Show Desktop action</li>
+<li>Xmodmap/Xresources/Xdefaults now loaded on restarts</li>
+<li>Fullscreening a maximized window no longer causes window's previous geometry to be lost</li>
+<li>Mixer much more reliable when using pulseaudio</li>
+<li>Various fds will no longer be passed to child processes</li>
+<li>Quickaccess module no longer crashes on windows which have no ICCCM name/class set</li>
+<li>Quickaccess module now functions correctly with windows which do not accept focus</li>
+<li>Illume no longer breaks executable tracking</li>
+<li>Wizard no longer hangs on first-run if efreet is not detected</li>
+<li>Systray icons now scale with shelf size</li>
+<li><b>[THEME]</b> Illume</li>
+<li><b>[THEME]</b> Temperature gadget text now readable</li>
+</p>
+
+<p><ul>
+
+<li>E17 BETA - 80465
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-beta.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-beta.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->

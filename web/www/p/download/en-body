@@ -161,10 +161,10 @@
    <?php frame1("width=100%");?>
    <div class="main"><p><b><a href=
      "http://trac.enlightenment.org/e/wiki/User_Guide">Enlightenment</a> </b><em>
-     0.17.0-alpha8</em></p><p>
+     0.17.0-beta</em></p><p>
      The Window Manager and Desktop Shell. </p><p align=right><?php blinkdl("i/dl.png", 
      "DOWNLOAD ENLIGHTENMENT", 
-     "http://download.enlightenment.org/releases/enlightenment-0.17.0-alpha8.tar.gz"
+     "http://download.enlightenment.org/releases/enlightenment-0.17.0-beta.tar.gz"
    );?></p></div>
    <?php frame2();?>
    
