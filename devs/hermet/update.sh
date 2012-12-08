@@ -4,7 +4,7 @@ echo Updating EFL Packages
 
 svn update
 
-for e in efl evas_generic_loaders evas ecore eeze efreet edje e_dbus eio emotion ethumb elementary e expedite clouseau terminology ephoto
+for e in efl evas_generic_loaders eeze efreet edje e_dbus eio emotion ethumb elementary e expedite clouseau terminology ephoto
 do 
 	if [ -e $e ] && [ -d $e ]
 	then 

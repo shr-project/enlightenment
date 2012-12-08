@@ -6,10 +6,8 @@ line - width_set API?
 event - need to handle after pointer mode changed.
 antialiasing - support the edge for all every angle on s/w backend.
 filter - let's start
-cutout_rect - static?! nowhere free it actually.
 textblock - check the size_formatted_get value when the text has the spaces
 image - image doesn't rendered when load_size_set is called again.
-event - in/out event call
 evas - space partitioning for the objects tree
 evas - check framebuffer complete
 
@@ -18,7 +16,6 @@ naviframe - need to block the style set while transiton is going on
 naviframe - more transition effect styles.
 naviframe - optimize for translation effect speed (mapbuf for content)
 naviframe - elementary_test -> naviframe_complex -> change view & push/pop
-naviframe - consider the animator to be in each items.
 hoversel - add horizontal mode style.
 genlist - need to check to prevent flickerling when theme_hook is called
 gengrid - segfault with elm_gengrid_item_sorted_insert func (#984)
