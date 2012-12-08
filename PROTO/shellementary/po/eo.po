@@ -1,0 +1,108 @@
+# Esperanto translation for enlightenment
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the enlightenment package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enlightenment\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-07 09:59+0100\n"
+"PO-Revision-Date: 2012-12-05 11:13+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
+"Language-Team: Esperanto <eo@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-12-08 05:09+0000\n"
+"X-Generator: Launchpad (build 16341)\n"
+
+#: src/bin/shelm.c:197
+msgid "Error!"
+msgstr "Eraro!"
+
+#: src/bin/shelm.c:202
+msgid "Warning!"
+msgstr "Atento!"
+
+#: src/bin/shelm.c:207
+msgid "Information"
+msgstr "Informo"
+
+#: src/bin/shelm_about.c:9
+msgid "About Shellementary"
+msgstr "Pri Ŝelementario"
+
+#: src/bin/shelm_about.c:34
+msgid ""
+"<b>Display dialogs from shell scripts</><br>Written as a zenity replacement, "
+"supports the same "
+"arguments<br><b>http://svn.enlightenment.org/svn/e/trunk/PROTO/shellementary<"
+"/><br>Based on great Elementary toolkit by <b>raster</> and C programming "
+"language.<br><b>License:</> MIT"
+msgstr ""
+"<b>Ĝi montras dialogojn inter skripton de ŝelojn</><br>Skribita kiel "
+"anstataŭigo por zenity, ĝi rekonas la samajn "
+"argumentojn<br><b>http://svn.enlightenment.org/svn/e/trunk/PROTO/shellementar"
+"y</><br>Baziĝita sur la granda ilaro de Elementary, <b>raster</>, kaj la "
+"programlingvo C.<br><b>Permesilo:</> MIT"
+
+#: src/bin/shelm_about.c:43
+msgid ""
+"<b>Author:</> quaker "
+"(quaker66@gmail.com)<br><br><b>Credits:</><br><b>Carsten Haitzler "
+"(raster)</> for Enlightenment DR17, great Elementary toolkit and help with "
+"developenment<br><b>Christopher Michael (devilhorns)</> for help with "
+"development<br>"
+msgstr ""
+
+#: src/bin/shelm_about.c:58
+msgid "Close"
+msgstr "Fermi"
+
+#: src/bin/shelm_dlg_entry.c:12
+msgid "Enter something here"
+msgstr "Tajpu ion ĉi tie"
+
+#: src/bin/shelm_dlg_entry.c:47 src/bin/shelm_dlg_list.c:56
+#: src/bin/shelm_dlg_scale.c:43 src/bin/shelm_dlg_textinfo.c:80
+msgid "Cancel"
+msgstr "Nuligi"
+
+#: src/bin/shelm_dlg_entry.c:53 src/bin/shelm_dlg_simpleicon.c:44
+#: src/bin/shelm_dlg_list.c:62 src/bin/shelm_dlg_scale.c:49
+#: src/bin/shelm_dlg_textinfo.c:86
+msgid "OK"
+msgstr "Bone"
+
+#: src/bin/shelm_dlg_list.c:12
+msgid "Select an item"
+msgstr "Elektu eron"
+
+#: src/bin/shelm_dlg_question.c:12
+msgid "Question"
+msgstr "Demando"
+
+#: src/bin/shelm_dlg_question.c:48
+msgid "No"
+msgstr "Ne"
+
+#: src/bin/shelm_dlg_question.c:54
+msgid "Yes"
+msgstr "Jes"
+
+#: src/bin/shelm_dlg_scale.c:12
+msgid "Adjust the value"
+msgstr "Ĝustigi la valoron"
+
+#: src/bin/shelm_dlg_textinfo.c:12
+msgid "Text Information"
+msgstr "Tekstaj informoj"
+
+#: src/bin/shelm_callbacks.c:76
+msgid "fd error, exit."
+msgstr "Eraro de fd. Elirado."
+
+#: src/bin/shelm_callbacks.c:81
+msgid "nothing to read?"
+msgstr "ĉu nenio legenda?"

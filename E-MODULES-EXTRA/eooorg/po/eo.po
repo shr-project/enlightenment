@@ -1,25 +1,25 @@
-# Esperanto translations for skel package.
-# Copyright (C) 2009 Enlightenment development team
-# This file is distributed under the same license as the skel package.
+# Esperanto translation for enlightenment
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the enlightenment package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
 #
-# Olivier <eliovir@nospam.gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: skel 0.0.1\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"Project-Id-Version: enlightenment\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-12-05 10:25+0000\n"
+"PO-Revision-Date: 2012-12-05 10:24+0000\n"
 "Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
-"Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
+"Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-12-06 04:41+0000\n"
 "X-Generator: Launchpad (build 16341)\n"
 
-#: src/e_mod_config.c:44
-msgid "Skeleton Module"
-msgstr "Modulo pri skeleto"
+#: src/e_mod_config.c:44 src/e_mod_main.c:305
+msgid "OpenOffice.org Quickstart"
+msgstr "Rapida startigo de OpenOffice.org"
 
 #: src/e_mod_config.c:84
 msgid "General"
@@ -29,17 +29,9 @@ msgstr "Ĝenerala"
 msgid "Use Switch 1"
 msgstr "Uzi ŝalton 1"
 
-#: src/e_mod_main.c:78
-msgid "Advanced"
-msgstr "Progresita"
-
-#: src/e_mod_main.c:81
-msgid "Skel"
-msgstr "Skeleto"
-
-#: src/e_mod_main.c:112
+#: src/e_mod_main.c:113
 msgid ""
-"Skeleton Module Configuration data needed upgrading. Your old "
+"eOOorg Module Configuration data needed upgrading. Your old "
 "configuration<br> has been wiped and a new set of defaults initialized. "
 "This<br>will happen regularly during development, so don't report a<br>bug. "
 "This simply means the module needs new configuration<br>data by default for "
@@ -47,7 +39,7 @@ msgid ""
 "set of defaults will fix<br>that by adding it in. You can re-configure "
 "things now to your<br>liking. Sorry for the inconvenience.<br>"
 msgstr ""
-"La datumoj por la agordoj de la modulo Skeleto postulas ĝisdatigojn. Viaj "
+"La datumoj por la agordoj de la modulo eOOorg postulas ĝisdatigojn. Viaj "
 "malnovaj agordoj<br> estis viŝitaj kaj nova aro da aprioroj estis "
 "pravalorizitaj. Tio okazos ofte dum<br> la programado, do ne raportu cimon. "
 "Tio simple signifas, ke la modulo<br> postulas novajn datumojn de agordoj "
@@ -55,28 +47,24 @@ msgstr ""
 "da aprioroj korektos tion, aldonante ĝin.<br> Vi povas laŭvole agordi denove "
 "nun. Pardonu pro la ĝeno.<br>"
 
-#: src/e_mod_main.c:132
+#: src/e_mod_main.c:133
 msgid ""
-"Your Skeleton Module configuration is NEWER than the module version. This is "
+"Your eOOorg Module configuration is NEWER than the module version. This is "
 "very<br>strange. This should not happen unless you downgraded<br>the module "
 "or copied the configuration from a place where<br>a newer version of the "
 "module was running. This is bad and<br>as a precaution your configuration "
 "has been now restored to<br>defaults. Sorry for the inconvenience.<br>"
 msgstr ""
-"Viaj agordoj de la modulo Skeleto estas PLI NOVAJ ol la modulo mem. Tio "
-"estas ege<br> strange. Tio ne devus okazi krom se vi malpromociis la modulon "
-"aŭ kopiis la agordojn<br> el loko, kie nova versio de la modulo funkciis. "
-"Tio estas malbone kaj viaj<br> agordoj estis restaŭritaj al aprioroj, kiel "
+"Viaj agordoj de la modulo eOOorg estas PLI NOVAJ ol la modulo mem. Tio estas "
+"ege<br> strange. Tio ne devus okazi krom se vi malpromociis la modulon aŭ "
+"kopiis la agordojn<br> el loko, kie nova versio de la modulo funkciis. Tio "
+"estas malbone kaj viaj<br> agordoj estis restaŭritaj al aprioroj, kiel "
 "antaŭzorgo. Pardonu pro la ĝeno.<br>"
 
-#: src/e_mod_main.c:299
-msgid "Skeleton"
-msgstr "Skeleto"
+#: src/e_mod_main.c:390
+msgid "OpenOffice.org Quickstart Configuration Updated"
+msgstr "La agordoj de rapida startigo de OpenOffice.org estas ĝisdatigitaj"
 
-#: src/e_mod_main.c:384
-msgid "Skeleton Configuration Updated"
-msgstr "La agordoj pri Skeleto estas ĝisdatigitaj"
-
-#: src/e_mod_main.c:426
+#: src/e_mod_main.c:432
 msgid "Settings"
 msgstr "Agordoj"

@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: exalt 0.0.1\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-11-26 09:42+0000\n"
-"Last-Translator: Eliovir <Unknown>\n"
+"PO-Revision-Date: 2012-12-05 16:54+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-05 05:30+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2012-12-06 04:41+0000\n"
+"X-Generator: Launchpad (build 16341)\n"
 
 #: src/e_mod_config.c:41
 msgid "Exalt Configuration"
@@ -59,7 +59,7 @@ msgstr "Averto"
 
 #: src/e_mod_main.c:235
 msgid "NetworkManager has been detected on your computer."
-msgstr "NetworkManager estis trovita en via komputilo."
+msgstr "NetworkManager estis detektita en via komputilo."
 
 #: src/e_mod_main.c:237
 msgid ""
@@ -79,7 +79,7 @@ msgstr "Ekzalto"
 
 #: src/e_mod_main.c:452
 msgid "exalt Configuration Updated"
-msgstr "Agordoj de Ekzalto ĝisdatigitaj"
+msgstr "La agordoj de Ekzalto estas ĝisdatigitaj"
 
 #: src/e_mod_main.c:505
 msgid "Settings"

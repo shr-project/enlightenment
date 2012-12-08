@@ -1,0 +1,170 @@
+# Esperanto translation for enlightenment
+# Copyright (c) 2012 Rosetta Contributors and Canonical Ltd 2012
+# This file is distributed under the same license as the enlightenment package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: enlightenment\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-12-04 13:32+0100\n"
+"PO-Revision-Date: 2012-12-05 14:17+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
+"Language-Team: Esperanto <eo@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2012-12-06 04:41+0000\n"
+"X-Generator: Launchpad (build 16341)\n"
+
+#: src/e_mod_config.c:57
+msgid "Scale Windows Module"
+msgstr "Modulo pri skalo de fenestroj"
+
+#: src/e_mod_config.c:119
+msgid "Current Desktop"
+msgstr "Aktuala labortablo"
+
+#: src/e_mod_config.c:120 src/e_mod_config.c:153
+msgid "Minimum space between windows"
+msgstr "Minimuma spaco inter fenestroj"
+
+#: src/e_mod_config.c:122 src/e_mod_config.c:155
+#, c-format
+msgid "%1.0f"
+msgstr "%1.0f"
+
+#: src/e_mod_config.c:126 src/e_mod_config.c:159
+msgid "Scale duration"
+msgstr "Daŭro de skalo"
+
+#: src/e_mod_config.c:128 src/e_mod_config.c:161 src/e_mod_config.c:200
+#, c-format
+msgid "%1.2f"
+msgstr "%1.2f"
+
+#: src/e_mod_config.c:133 src/e_mod_config.c:165
+msgid "Slotted Layout"
+msgstr ""
+
+#: src/e_mod_config.c:135 src/e_mod_config.c:167
+msgid "Natural Layout"
+msgstr ""
+
+#: src/e_mod_config.c:139 src/e_mod_config.c:169
+msgid "Grow more!"
+msgstr "Kreski pli!"
+
+#: src/e_mod_config.c:142 src/e_mod_config.c:172
+msgid "Keep it tight!"
+msgstr "Manteni ĝin strikta!"
+
+#: src/e_mod_config.c:145 src/e_mod_config.c:178
+msgid "Show iconified windows"
+msgstr "Montri piktogramitajn fenestrojn"
+
+#: src/e_mod_config.c:152
+msgid "Show All Desktops"
+msgstr "Montri ĉiujn labortablojn"
+
+#: src/e_mod_config.c:175 src/e_mod_config.c:206
+msgid "Fade in windows"
+msgstr "Maldissolvi fenestrojn"
+
+#: src/e_mod_config.c:185 src/e_mod_config.c:209
+msgid "Fade out shelves and popups"
+msgstr "Fordissolvi bretojn kaj ŝprucfenestrojn"
+
+#: src/e_mod_config.c:188 src/e_mod_config.c:212
+msgid "Darken desktop"
+msgstr "Malheligi labortablon"
+
+#: src/e_mod_config.c:193 src/e_mod_main.c:277 src/e_mod_main.c:303
+#: src/e_mod_main.c:305 src/e_mod_main.c:307 src/e_mod_main.c:309
+#: src/e_mod_main.c:311 src/e_mod_main.c:313 src/e_mod_main.c:315
+#: src/e_mod_main.c:374 src/e_mod_main.c:375 src/e_mod_main.c:376
+#: src/e_mod_main.c:377 src/e_mod_main.c:378 src/e_mod_main.c:503
+msgid "Scale Windows"
+msgstr "Skali fenestrojn"
+
+#: src/e_mod_config.c:196
+msgid "Pager Settings"
+msgstr "Agordoj pri paĝilo"
+
+#: src/e_mod_config.c:198
+msgid "Zoom duration"
+msgstr "Daŭro de pligrandigo"
+
+#: src/e_mod_config.c:203
+msgid "Overlap Shelves"
+msgstr "Kovri parte bretojn"
+
+#: src/e_mod_config.c:217
+msgid "Pager"
+msgstr "Paĝilo"
+
+#: src/e_mod_main.c:229
+msgid "Look"
+msgstr "Aspekto"
+
+#: src/e_mod_main.c:231
+msgid "Composite Scale Windows"
+msgstr ""
+
+#: src/e_mod_main.c:305 src/e_mod_main.c:375
+msgid "Scale Windows (All Desktops)"
+msgstr "Skali fenestrojn (ĉiuj labortabloj)"
+
+#: src/e_mod_main.c:307 src/e_mod_main.c:376
+msgid "Scale Windows (By Class)"
+msgstr "Skali fenestrojn (laŭ klaso)"
+
+#: src/e_mod_main.c:309 src/e_mod_main.c:320 src/e_mod_main.c:377
+#: src/e_mod_main.c:381
+msgid "Select Next"
+msgstr "Elekti sekvan"
+
+#: src/e_mod_main.c:311 src/e_mod_main.c:322 src/e_mod_main.c:378
+#: src/e_mod_main.c:382
+msgid "Select Previous"
+msgstr "Elekti antaŭan"
+
+#: src/e_mod_main.c:313
+msgid "Select Next (All)"
+msgstr "Elekti ĉiuj sekvan"
+
+#: src/e_mod_main.c:315
+msgid "Select Previous (All)"
+msgstr "Elekti ĉiuj antaŭan"
+
+#: src/e_mod_main.c:318 src/e_mod_main.c:320 src/e_mod_main.c:322
+#: src/e_mod_main.c:324 src/e_mod_main.c:326 src/e_mod_main.c:328
+#: src/e_mod_main.c:330 src/e_mod_main.c:380 src/e_mod_main.c:381
+#: src/e_mod_main.c:382 src/e_mod_main.c:383 src/e_mod_main.c:384
+#: src/e_mod_main.c:385 src/e_mod_main.c:386 src/e_mod_main.c:515
+msgid "Scale Pager"
+msgstr "Skali paĝilon"
+
+#: src/e_mod_main.c:324 src/e_mod_main.c:383
+msgid "Select Left"
+msgstr "Elekti maldekstran"
+
+#: src/e_mod_main.c:326 src/e_mod_main.c:384
+msgid "Select Right"
+msgstr "Elekti dekstran"
+
+#: src/e_mod_main.c:328 src/e_mod_main.c:385
+msgid "Select Up"
+msgstr "Elekti supran"
+
+#: src/e_mod_main.c:330 src/e_mod_main.c:386
+msgid "Select Down"
+msgstr "Elekti malsupran"
+
+#: src/e_mod_main.c:509
+msgid "Scale all Windows"
+msgstr "Skali ĉiujn fenestrojn"
+
+#: src/e_mod_main.c:614
+msgid "Settings"
+msgstr "Agordoj"

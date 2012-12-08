@@ -6,16 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"Report-Msgid-Bugs-To: $MSGID_BUGS_ADDRESS\n"
 "POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-11-18 10:25+0000\n"
+"PO-Revision-Date: 2012-12-07 23:48+0000\n"
 "Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-05 05:30+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2012-12-08 05:09+0000\n"
+"X-Generator: Launchpad (build 16341)\n"
+"Language: eo\n"
 
 #: src/curl.c:92 src/elmdentica.c:1393 src/elmdentica.c:1616
 msgid "Close"
@@ -51,7 +52,7 @@ msgstr ""
 
 #: src/elmdentica.c:283
 msgid "My friends..."
-msgstr ""
+msgstr "Miaj amikoj..."
 
 #: src/elmdentica.c:474 src/elmdentica.c:621
 msgid "Follow"
@@ -72,7 +73,7 @@ msgstr ""
 
 #: src/elmdentica.c:673 src/elmdentica.c:784
 msgid "Leave"
-msgstr ""
+msgstr "Forlasi"
 
 #: src/elmdentica.c:675 src/elmdentica.c:753
 #, c-format
@@ -81,7 +82,7 @@ msgstr ""
 
 #: src/elmdentica.c:676 src/elmdentica.c:786
 msgid "Join"
-msgstr ""
+msgstr "Aliĝi"
 
 #: src/elmdentica.c:840
 msgid "Check it out!"
@@ -134,16 +135,16 @@ msgstr ""
 
 #: src/elmdentica.c:1105
 msgid "Ok"
-msgstr ""
+msgstr "Bone"
 
 #: src/elmdentica.c:1112
 msgid "Open"
-msgstr ""
+msgstr "Malfermi"
 
 #: src/elmdentica.c:1158
 #, c-format
 msgid "downloading %s"
-msgstr ""
+msgstr "elŝutante %s"
 
 #: src/elmdentica.c:1174 src/elmdentica.c:1886 src/settings.c:544
 #: src/settings.c:1277
@@ -152,23 +153,23 @@ msgstr "Nuligi"
 
 #: src/elmdentica.c:1274
 msgid "Users"
-msgstr ""
+msgstr "Uzantoj"
 
 #: src/elmdentica.c:1303
 msgid "Links"
-msgstr ""
+msgstr "Ligiloj"
 
 #: src/elmdentica.c:1322
 msgid "Tags"
-msgstr ""
+msgstr "Etikedoj"
 
 #: src/elmdentica.c:1340
 msgid "Groups"
-msgstr ""
+msgstr "Grupoj"
 
 #: src/elmdentica.c:1358
 msgid "Attachments"
-msgstr ""
+msgstr "Kunsendaĵoj"
 
 #: src/elmdentica.c:1429
 msgid "Reply"
@@ -224,11 +225,11 @@ msgstr "Entajpu vian staton ĉi tie..."
 
 #: src/elmdentica.c:2141
 msgid "Send"
-msgstr ""
+msgstr "Sendi"
 
 #: src/elmdentica.c:2167
 msgid "Hide"
-msgstr ""
+msgstr "Kaŝi"
 
 #: src/elmdentica.c:2188
 msgid "Timelines"
@@ -294,7 +295,7 @@ msgstr ""
 
 #: src/settings.c:146
 msgid "never"
-msgstr ""
+msgstr "neniam"
 
 #: src/settings.c:146
 msgid "0 s"
@@ -302,23 +303,23 @@ msgstr ""
 
 #: src/settings.c:147
 msgid "1 minute"
-msgstr ""
+msgstr "1 minuto"
 
 #: src/settings.c:147
 msgid "1 min"
-msgstr ""
+msgstr "1 min."
 
 #: src/settings.c:148
 msgid "2 minutes"
-msgstr ""
+msgstr "2 minutoj"
 
 #: src/settings.c:148
 msgid "2 min"
-msgstr ""
+msgstr "2 min."
 
 #: src/settings.c:149
 msgid "5 minutes"
-msgstr ""
+msgstr "5 minutoj"
 
 #: src/settings.c:149
 msgid "5 min"

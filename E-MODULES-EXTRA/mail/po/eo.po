@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Mail\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-11-26 09:49+0000\n"
-"Last-Translator: Eliovir <Unknown>\n"
+"PO-Revision-Date: 2012-12-05 16:51+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <translation-team-eo@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-05 05:28+0000\n"
-"X-Generator: Launchpad (build 16335)\n"
+"X-Launchpad-Export-Date: 2012-12-06 04:41+0000\n"
+"X-Generator: Launchpad (build 16341)\n"
 
 #: src/e_mod_config_box.c:68
 msgid "Mailbox Configuration"
@@ -59,7 +59,7 @@ msgstr "Daŭre atentigi la Mbox-dosieron"
 
 #: src/e_mod_config_box.c:210
 msgid "Port Settings"
-msgstr "Agordoj pri pordoj"
+msgstr "Agordoj pri konektejo"
 
 #: src/e_mod_config_box.c:212
 msgid "Use SSL:"
@@ -75,7 +75,7 @@ msgstr "v3"
 
 #: src/e_mod_config_box.c:226
 msgid "Port:"
-msgstr "Pordo:"
+msgstr "Konektejo:"
 
 #: src/e_mod_config_box.c:232
 msgid "Local:"
@@ -115,7 +115,7 @@ msgstr "Enirkesto"
 
 #: src/e_mod_config.c:53
 msgid "Mail Settings"
-msgstr "Agordoj de Retpoŝo"
+msgstr "Agordoj pri retpoŝto"
 
 #: src/e_mod_config.c:96
 msgid "Always Show Labels"
@@ -131,7 +131,7 @@ msgstr "Montri ĉiujn kestojn en spruĉfenestro"
 
 #: src/e_mod_config.c:104
 msgid "Check Interval"
-msgstr "Intervalo de inspekto"
+msgstr "Intervalo de kontrolo"
 
 #: src/e_mod_config.c:107
 #, c-format

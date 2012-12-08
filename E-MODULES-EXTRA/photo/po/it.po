@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Photo\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2010-09-10 12:29+0200\n"
-"PO-Revision-Date: 2010-09-10 12:50+0200\n"
+"POT-Creation-Date: 2012-12-07 20:34+0100\n"
+"PO-Revision-Date: 2012-12-07 20:46+0100\n"
 "Last-Translator: Massimo Maiurana <maiurana@gmail.com>\n"
 "Language-Team: none\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -138,7 +139,7 @@ msgstr "Centrale"
 
 #: src/photo_config_dialog.c:279 src/photo_config_dialog_item.c:142
 msgid "No"
-msgstr "No"
+msgstr "Nessuna"
 
 #: src/photo_config_dialog.c:318
 msgid "Popups"
@@ -150,7 +151,7 @@ msgstr "Popup caricamento immagine"
 
 #: src/photo_config_dialog.c:323
 msgid "Never"
-msgstr "Mai"
+msgstr "Nessuno"
 
 #: src/photo_config_dialog.c:325
 msgid "Summary"
@@ -197,11 +198,11 @@ msgstr "Mostra etichetta"
 msgid "Show informations"
 msgstr "Mostra informazioni"
 
-#: src/photo_config_dialog.h:40 src/photo_menu.c:45
+#: src/photo_config_dialog.h:40 src/photo_menu.c:72
 msgid "Previous picture"
 msgstr "Immagine precedente"
 
-#: src/photo_config_dialog.h:42 src/photo_menu.c:41
+#: src/photo_config_dialog.h:42 src/photo_menu.c:68
 msgid "Next picture"
 msgstr "Immagine successiva"
 
@@ -209,7 +210,7 @@ msgstr "Immagine successiva"
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/photo_config_dialog.h:46 src/photo_menu.c:59
+#: src/photo_config_dialog.h:46 src/photo_menu.c:92
 msgid "Set as background"
 msgstr "Imposta come sfondo"
 
@@ -283,16 +284,16 @@ msgstr "Impostazioni predefinite"
 msgid "Mouse actions"
 msgstr "Azioni del mouse"
 
-#: src/photo_item.c:389
+#: src/photo_item.c:389 src/photo_item.c:452
 #, c-format
 msgid ""
-"<hilight>File %s doesnt exists.</hilight><br><br>This file is in Photo "
-"module picture list, but it seems you removed it from the disk<br>It cant be "
-"set as background, sorry."
+"<hilight>File %s doesn't exist.</hilight><br><br>This file is in the picture "
+"list, but it seems you removed<br>it from disk. It can't be set as "
+"background, sorry."
 msgstr ""
 "<hilight>Il file %s non esiste.</hilight><br><br>Questo file è nell'elenco "
-"immagini del modulo Photo,<br>ma sembra che sia stato rimosso dal disco."
-"<br>Impossibile impostarlo come sfondo."
+"delle immagini,<br>ma sembra che sia stato rimosso dal disco.<br>Impossibile "
+"impostarlo come sfondo, spiacenti."
 
 #: src/photo_item.c:392 src/photo_item.c:417 src/photo_item.c:455
 #: src/photo_item.c:475 src/photo_picture_local.c:259
@@ -304,61 +305,50 @@ msgstr "Errore modulo Photo"
 msgid ""
 "<hilight>e17setroot needed</hilight><br><br>%s is not an edje file !"
 "<br>Photo module needs e17setroot util from e_utils package to set you're "
-"picture as backgroundPlease install it and try again"
+"picture as backgroundPlease install it and try again."
 msgstr ""
 "<hilight>E' necessario e17setroot</hilight><br><br>%s non è un file edje!"
 "<br>Il modulo Photo ha bisogno dell'utilità e17setroot del<br>pacchetto "
 "e_utils per impostare la vostra immagine come<br>sfondo. Si prega di "
 "installarlo e riprovare."
 
-#: src/photo_item.c:452
-#, c-format
-msgid ""
-"<hilight>File %s doesnt exists !</hilight><br><br>This file is in Photo's "
-"module picture list, but it seems you removed it from the disk.<br>It cant "
-"be set opened in a viewer, sorry."
-msgstr ""
-"<hilight>Il file %s non esiste.</hilight><br><br>Questo file è nell'elenco "
-"immagini del modulo Photo,<br>ma sembra che sia stato rimosso dal disco."
-"<br>Impossibile aprirlo in un visualizzatore."
-
 #: src/photo_item.c:472
 #, c-format
 msgid ""
 "<hilight>Viewer %s not found !</hilight><br><br>You can change the viewer "
-"for images in Photo module configuration panel (Advanced view)"
+"for images in the Photo module configuration panel (Advanced view)"
 msgstr ""
 "<hilight>Visualizzatore %s non trovato!</hilight><br><br>Si può cambiare il "
-"visualizzatore per le immagini dal<br>pannello di configurazione del modulo "
-"Photo (modo avanzato)."
+"visualizzatore per le immagini dal<br>pannello di configurazione (modalità "
+"avanzata)."
 
-#: src/photo_menu.c:31
-msgid "Pause slideshow"
-msgstr "Pausa presentazione"
-
-#: src/photo_menu.c:36
-msgid "Resume slideshow"
-msgstr "Continua presentazione"
-
-#: src/photo_menu.c:55
-msgid "Picture informations"
-msgstr "Informazioni immagine"
-
-#: src/photo_menu.c:63
-msgid "Open in"
-msgstr "Apri con"
-
-#: src/photo_menu.c:71
+#: src/photo_menu.c:41
 msgid "Module Settings"
 msgstr "Impostazioni di Photo"
 
-#: src/photo_menu.c:77
+#: src/photo_menu.c:47
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: src/photo_picture_histo.c:121
+#: src/photo_menu.c:58
+msgid "Pause slideshow"
+msgstr "Pausa presentazione"
+
+#: src/photo_menu.c:63
+msgid "Resume slideshow"
+msgstr "Continua presentazione"
+
+#: src/photo_menu.c:78
 msgid "Historic"
 msgstr "Storico"
+
+#: src/photo_menu.c:88
+msgid "Picture informations"
+msgstr "Informazioni immagine"
+
+#: src/photo_menu.c:96
+msgid "Open in"
+msgstr "Apri con"
 
 #: src/photo_picture_local.c:253
 #, c-format
