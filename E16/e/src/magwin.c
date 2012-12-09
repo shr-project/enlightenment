@@ -21,6 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "cursors.h"
 #include "ecompmgr.h"
 #include "eimage.h"
@@ -31,7 +32,6 @@
 #include "grabs.h"
 #include "hints.h"
 #include "tclass.h"
-#include "timers.h"
 #include "util.h"
 
 #include <math.h>
@@ -193,10 +193,6 @@ _MagwinUpdate(MagWindow * mw)
    if (mw != MagWin)
       return 0;
 
-   /* Validate ewin */
-   if (!EwinFindByPtr(mw->ewin))
-      return 0;
-
    /* When switching CM off do a delayed repaint. This will catch up on
     * at least some clients having processed expose events. */
    if (Mode.events.damage_count == 0 && mw->damage_count != 0)
@@ -221,11 +217,9 @@ _MagwinUpdate(MagWindow * mw)
 }
 
 static int
-_MagwinAnimator(void *data)
+_MagwinAnimator(EObj * eobj, int remaining __UNUSED__, void *state __UNUSED__)
 {
-   MagWindow          *mw = (MagWindow *) data;
-
-   return _MagwinUpdate(mw);
+   return _MagwinUpdate((MagWindow *) ((EWin *) eobj)->data);
 }
 
 static void
@@ -408,7 +402,8 @@ MagwinEvent(Win win __UNUSED__, XEvent * ev, void *prm)
 	   break;
 	mw->configured = 1;
 	_MagwinGrabSet(mw);
-	AnimatorAdd(_MagwinAnimator, mw);
+	AnimatorAdd(EoObj(mw->ewin), ANIM_LAZY_MAGWIN, _MagwinAnimator,
+		    -1, 0, 0, NULL);
 	break;
      }
 

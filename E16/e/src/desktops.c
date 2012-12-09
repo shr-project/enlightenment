@@ -23,6 +23,7 @@
  */
 #include "E.h"
 #include "aclass.h"
+#include "animation.h"
 #include "backgrounds.h"
 #include "buttons.h"
 #include "desktops.h"
@@ -64,6 +65,7 @@ typedef struct {
    unsigned int        order[ENLIGHTENMENT_CONF_NUM_DESKTOPS];
    int                 drag_x0, drag_y0;
    unsigned int        prev_num;
+   Animator           *anim_slide;
 } Desktops;
 
 static void         DeskRaise(unsigned int num);
@@ -1187,12 +1189,9 @@ DeskSwitchDone(void)
    FocusNewDesk();
 }
 
-void
-DeskGoto(Desk * dsk)
+static void
+_DeskGotoStart(Desk * dsk)
 {
-   if (!dsk || dsk == desks.previous)
-      return;
-
    if (EDebug(EDBUG_TYPE_DESKS))
       Eprintf("DeskGoto %d\n", dsk->num);
 
@@ -1200,13 +1199,57 @@ DeskGoto(Desk * dsk)
 
    MoveResizeSuspend();
    DeskSwitchStart();
+}
+
+static void
+_DeskGotoEnd(Desk * dsk)
+{
+   DeskSwitchDone();
+   MoveResizeResume();
+
+   ModulesSignal(ESIGNAL_DESK_SWITCH_DONE, NULL);
+
+   if (EDebug(EDBUG_TYPE_DESKS))
+      Eprintf("DeskGoto %d done\n", dsk->num);
+}
+
+static int
+_DeskGotoRun(EObj * eo, int run, void *state)
+{
+   int                *xy = (int *)state;
+   int                 x, y;
+   Desk               *dsk = (Desk *) eo;
+
+   x = (run * xy[0]) >> 10;
+   y = (run * xy[1]) >> 10;
+
+   EobjMove(eo, x, y);
+
+   if (run == 0)
+     {
+	if (xy[2])
+	   DeskEnter(dsk);
+	DeskMove(dsk, 0, 0);
+	_DeskGotoEnd(dsk);
+	EventsBlock(0);
+     }
+
+   return 0;
+}
+
+void
+DeskGoto(Desk * dsk)
+{
+   if (!dsk || dsk == desks.previous)
+      return;
+
+   _DeskGotoStart(dsk);
 
    if (dsk->num > 0)
      {
 	if (Conf.desks.slidein)
 	  {
-	     EObj               *eo = &dsk->o;
-
+	     EventsBlock(1);
 	     if (!dsk->viewable)
 	       {
 		  int                 x, y;
@@ -1232,15 +1275,20 @@ DeskGoto(Desk * dsk)
 		       break;
 		    }
 		  DeskMove(dsk, x, y);
+		  int                 xy[3] = { x, y, 0 };
 		  DeskEnter(dsk);
-		  EobjsSlideBy(&eo, 1, -x, -y, Conf.desks.slidespeed);
+		  AnimatorAdd(EoObj(dsk), ANIM_SLIDE, _DeskGotoRun,
+			      1000000 / Conf.desks.slidespeed,
+			      0, sizeof(xy), xy);
 	       }
 	     else
 	       {
-		  EobjsSlideBy(&eo, 1, -EoGetX(dsk), -EoGetY(dsk),
-			       Conf.desks.slidespeed);
-		  DeskEnter(dsk);
+		  int                 xy[3] = { EoGetX(dsk), EoGetY(dsk), 1 };
+		  AnimatorAdd(EoObj(dsk), ANIM_SLIDE, _DeskGotoRun,
+			      1000000 / Conf.desks.slidespeed,
+			      0, sizeof(xy), xy);
 	       }
+	     return;
 	  }
 	else
 	  {
@@ -1253,13 +1301,7 @@ DeskGoto(Desk * dsk)
 	DeskEnter(dsk);
      }
 
-   DeskSwitchDone();
-   MoveResizeResume();
-
-   ModulesSignal(ESIGNAL_DESK_SWITCH_DONE, NULL);
-
-   if (EDebug(EDBUG_TYPE_DESKS))
-      Eprintf("DeskGoto %d done\n", dsk->num);
+   _DeskGotoEnd(dsk);
 }
 
 static void
@@ -1646,40 +1688,21 @@ DeskAreaSwitchDone(void)
    FocusNewDesk();
 }
 
-void
-DeskCurrentGotoArea(int ax, int ay)
+static void
+_DeskCurrentGotoAreaStart(int pax, int pay, int ax, int ay)
 {
-   EWin               *const *lst, *ewin;
-   int                 i, num, dx, dy, pax, pay;
-
-   if ((Mode.mode == MODE_RESIZE) || (Mode.mode == MODE_RESIZE_H)
-       || (Mode.mode == MODE_RESIZE_V))
-      return;
-
-   if (_DeskAreaSwitchCheckEwins())
-      return;
-
-   DesksFixArea(&ax, &ay);
-   DeskCurrentGetArea(&pax, &pay);
-
-   if (ax == pax && ay == pay)
-      return;
-
    if (EDebug(EDBUG_TYPE_DESKS))
-      Eprintf("%s %d,%d\n", __func__, ax, ay);
+      Eprintf("DeskCurrentGotoArea %d,%d\n", ax, ay);
 
    ModulesSignal(ESIGNAL_AREA_SWITCH_START, NULL);
 
-   dx = WinGetW(VROOT) * (ax - pax);
-   dy = WinGetH(VROOT) * (ay - pay);
-
-   if (dx < 0)
+   if (ax < pax)
       SoundPlay(SOUND_MOVE_AREA_LEFT);
-   else if (dx > 0)
+   else if (ax > pax)
       SoundPlay(SOUND_MOVE_AREA_RIGHT);
-   else if (dy < 0)
+   else if (ay < pay)
       SoundPlay(SOUND_MOVE_AREA_UP);
-   else if (dy > 0)
+   else if (ay > pay)
       SoundPlay(SOUND_MOVE_AREA_DOWN);
 
    MoveResizeSuspend();
@@ -1688,39 +1711,27 @@ DeskCurrentGotoArea(int ax, int ay)
 
    /* set the current area up in out data structs */
    DeskCurrentSetArea(ax, ay);
+}
 
-   /* move all the windows around */
-   lst = EwinListGetAll(&num);
-   if (Conf.desks.slidein)
-     {
-	int                 wnum = 0;
-	EObj              **wl = NULL;
+typedef struct {
+   EWin               *const *ewins_desk;
+   EWin               *const *ewins_slide;
+   int                 n_ewins_desk, n_ewins_slide;
+   int                 slide_dx, slide_dy;
+} slide_area_data_t;
 
-	/* create the list of windwos to move */
-	for (i = 0; i < num; i++)
-	  {
-	     ewin = lst[i];
-	     if (EoIsSticky(ewin) || ewin->state.iconified)
-		continue;
-	     if (EoGetDesk(ewin) != DesksGetCurrent() && !EoIsFloating(ewin))
-		continue;
+static void
+_DeskCurrentGotoAreaEnd(slide_area_data_t * sad)
+{
+   EWin               *const *lst, *ewin;
+   int                 i, num, dx, dy;
 
-	     if (EoIsFloating(ewin) && Conf.movres.mode_move == MR_OPAQUE)
-		continue;
+   desks.anim_slide = NULL;
 
-	     wnum++;
-	     wl = EREALLOC(EObj *, wl, wnum);
-	     wl[wnum - 1] = &ewin->o;
-	  }
-
-	/* slide them */
-	if (wl)
-	  {
-	     EobjsSlideBy(wl, wnum, -dx, -dy, Conf.desks.slidespeed);
-	     Efree(wl);
-	     EobjsRepaint();
-	  }
-     }
+   lst = sad->ewins_desk;
+   num = sad->n_ewins_desk;
+   dx = sad->slide_dx;
+   dy = sad->slide_dy;
 
    /* move all windows to their final positions */
    for (i = 0; i < num; i++)
@@ -1755,6 +1766,105 @@ DeskCurrentGotoArea(int ax, int ay)
 
    /* update which "edge flip resistance" detector windows are visible */
    EdgeWindowsShow();
+}
+
+static int
+_DeskCurrentGotoAreaRun(EObj * eo __UNUSED__, int run, void *state)
+{
+   slide_area_data_t  *sad = (slide_area_data_t *) state;
+   EWin               *ewin;
+   int                 i, dx, dy;
+
+   dx = (run * sad->slide_dx) >> 10;
+   dy = (run * sad->slide_dy) >> 10;
+
+   for (i = 0; i < sad->n_ewins_slide; i++)
+     {
+	ewin = sad->ewins_slide[i];
+	EoMove(ewin, ewin->trg_x + dx, ewin->trg_y + dy);
+     }
+
+   if (run == 0)
+     {
+	_DeskCurrentGotoAreaEnd(sad);
+	EventsBlock(0);
+     }
+
+   return 0;
+}
+
+void
+DeskCurrentGotoArea(int ax, int ay)
+{
+   slide_area_data_t   _sad, *sad = &_sad;
+   EWin               *const *lst, *ewin;
+   int                 i, num, dx, dy, pax, pay;
+
+   if (desks.anim_slide)
+      return;
+
+   if ((Mode.mode == MODE_RESIZE) || (Mode.mode == MODE_RESIZE_H)
+       || (Mode.mode == MODE_RESIZE_V))
+      return;
+
+   if (_DeskAreaSwitchCheckEwins())
+      return;
+
+   DesksFixArea(&ax, &ay);
+   DeskCurrentGetArea(&pax, &pay);
+
+   if (ax == pax && ay == pay)
+      return;
+
+   _DeskCurrentGotoAreaStart(pax, pay, ax, ay);
+
+   /* move all the windows around */
+   dx = WinGetW(VROOT) * (ax - pax);
+   dy = WinGetH(VROOT) * (ay - pay);
+   lst = EwinListGetAll(&num);
+   sad->ewins_desk = lst;
+   sad->n_ewins_desk = num;
+   sad->slide_dx = dx;
+   sad->slide_dy = dy;
+
+   if (Conf.desks.slidein && Conf.desks.slidespeed > 10)
+     {
+	int                 wnum = 0;
+	EWin              **wl = NULL;
+
+	/* create the list of windwos to move */
+	for (i = 0; i < num; i++)
+	  {
+	     ewin = lst[i];
+	     if (EoIsSticky(ewin) || ewin->state.iconified)
+		continue;
+	     if (EoGetDesk(ewin) != DesksGetCurrent() && !EoIsFloating(ewin))
+		continue;
+
+	     if (EoIsFloating(ewin) && Conf.movres.mode_move == MR_OPAQUE)
+		continue;
+
+	     wnum++;
+	     wl = EREALLOC(EWin *, wl, wnum);
+	     wl[wnum - 1] = ewin;
+	     ewin->trg_x = EoGetX(ewin) - dx;
+	     ewin->trg_y = EoGetY(ewin) - dy;
+	  }
+	sad->ewins_slide = wl;
+	sad->n_ewins_slide = wnum;
+
+	/* slide them */
+	if (wl)
+	  {
+	     desks.anim_slide =
+		AnimatorAdd(NULL, ANIM_SLIDE, _DeskCurrentGotoAreaRun,
+			    1000000 / Conf.desks.slidespeed,
+			    0, sizeof(slide_area_data_t), sad);
+	     EventsBlock(1);
+	     return;
+	  }
+     }
+   _DeskCurrentGotoAreaEnd(sad);
 }
 
 void

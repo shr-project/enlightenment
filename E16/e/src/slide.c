@@ -21,6 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "eobj.h"
 #include "ewins.h"
 #include "focus.h"
@@ -31,172 +32,168 @@
  * EObj sliding functions
  */
 
-void
-EobjsSlideBy(EObj ** peo, int num, int dx, int dy, int speed)
+typedef struct {
+   int                 fx, fy, fw, fh;
+   int                 tx, ty, tw, th;
+} eobj_slide_params;
+
+static int
+_EobjSlideSizeTo(EObj * eo, int remaining, void *state)
 {
-   int                 i, k, x, y;
-   struct _xy {
-      int                 x, y;
-   }                  *xy;
+   eobj_slide_params  *params = (eobj_slide_params *) state;
+   int                 k = 1024 - remaining, x, y, w, h;
 
-   if (num <= 0)
-      return;
+   x = ((params->fx * (1024 - k)) + (params->tx * k)) >> 10;
+   y = ((params->fy * (1024 - k)) + (params->ty * k)) >> 10;
+   w = ((params->fw * (1024 - k)) + (params->tw * k)) >> 10;
+   h = ((params->fh * (1024 - k)) + (params->th * k)) >> 10;
+   EobjMoveResize(eo, x, y, w, h);
 
-   xy = EMALLOC(struct _xy, num);
-   if (!xy)
-      return;
-
-   for (i = 0; i < num; i++)
-     {
-	xy[i].x = EobjGetX(peo[i]);
-	xy[i].y = EobjGetY(peo[i]);
-     }
-
-   ETimedLoopInit(0, 1024, speed);
-   for (k = 0; k <= 1024;)
-     {
-	for (i = 0; i < num; i++)
-	  {
-	     x = ((xy[i].x * (1024 - k)) + ((xy[i].x + dx) * k)) >> 10;
-	     y = ((xy[i].y * (1024 - k)) + ((xy[i].y + dy) * k)) >> 10;
-	     EobjMove(peo[i], x, y);
-	  }
-
-	k = ETimedLoopNext();
-     }
-
-   for (i = 0; i < num; i++)
-      EobjMove(peo[i], xy[i].x + dx, xy[i].y + dy);
-
-   Efree(xy);
+   return 0;
 }
 
 void
 EobjSlideSizeTo(EObj * eo, int fx, int fy, int tx, int ty, int fw, int fh,
 		int tw, int th, int speed)
 {
-   int                 k, x, y, w, h;
+   eobj_slide_params   params;
+   int                 duration;
 
-   ETimedLoopInit(0, 1024, speed);
-   for (k = 0; k <= 1024;)
-     {
-	x = ((fx * (1024 - k)) + (tx * k)) >> 10;
-	y = ((fy * (1024 - k)) + (ty * k)) >> 10;
-	w = ((fw * (1024 - k)) + (tw * k)) >> 10;
-	h = ((fh * (1024 - k)) + (th * k)) >> 10;
-	EobjMoveResize(eo, x, y, w, h);
+   params.fx = fx;
+   params.fy = fy;
+   params.fw = fw;
+   params.fh = fh;
+   params.tx = tx;
+   params.ty = ty;
+   params.tw = tw;
+   params.th = th;
 
-	k = ETimedLoopNext();
-     }
-   EobjMoveResize(eo, tx, ty, tw, th);
+   if (speed <= 10)
+      speed = 10;
+   duration = 1000000 / speed;
+
+   AnimatorAdd(eo, ANIM_SLIDE, _EobjSlideSizeTo, duration, 1,
+	       sizeof(params), &params);
 }
 
 /*
  * EWin sliding functions
  */
 
-void
-EwinSlideSizeTo(EWin * ewin, int tx, int ty, int tw, int th,
-		int speed, int mode __UNUSED__, int flags __UNUSED__)
+typedef struct {
+   int                 fx, fy, fw, fh;
+   int                 tx, ty, tw, th;
+   int                 mode;
+   char                mouse_warp;
+   char                give_focus;
+   int                 mouse_x;
+   int                 mouse_y;
+} ewin_slide_params;
+
+static int
+_EwinSlideSizeTo(EObj * eo, int remaining, void *state)
 {
-   int                 k, x, y, w, h;
-   int                 fx, fy, fw, fh, warp;
+   ewin_slide_params  *params = (ewin_slide_params *) state;
+   EWin               *ewin = (EWin *) eo;
+   int                 k = 1024 - remaining, x, y, w, h;
 
-   warp = (ewin == GetEwinPointerInClient());
+   x = ((params->fx * (1024 - k)) + (params->tx * k)) >> 10;
+   y = ((params->fy * (1024 - k)) + (params->ty * k)) >> 10;
+   w = ((params->fw * (1024 - k)) + (params->tw * k)) >> 10;
+   h = ((params->fh * (1024 - k)) + (params->th * k)) >> 10;
 
-   if (Conf.movres.maximize_animate)
-     {
-	fx = EoGetX(ewin);
-	fy = EoGetY(ewin);
-	fw = ewin->client.w;
-	fh = ewin->client.h;
+   EwinMoveResize(ewin, x, y, w, h, MRF_KEEP_MAXIMIZED);
+   EwinShapeSet(ewin);
 
-	ETimedLoopInit(0, 1024, speed);
-	for (k = 0; k <= 1024;)
-	  {
-	     x = ((fx * (1024 - k)) + (tx * k)) >> 10;
-	     y = ((fy * (1024 - k)) + (ty * k)) >> 10;
-	     w = ((fw * (1024 - k)) + (tw * k)) >> 10;
-	     h = ((fh * (1024 - k)) + (th * k)) >> 10;
-	     EwinMoveResize(ewin, x, y, w, h, MRF_KEEP_MAXIMIZED);
-
-	     k = ETimedLoopNext();
-	  }
-     }
-
-   EwinMoveResize(ewin, tx, ty, tw, th, MRF_KEEP_MAXIMIZED);
-
-   if (warp && ewin != GetEwinPointerInClient())
+   if (params->mouse_warp)
      {
 	EwinWarpTo(ewin, 1);
-	FocusToEWin(ewin, FOCUS_SET);
+	EWarpPointer(EoGetWin(ewin), params->mouse_x, params->mouse_y);
      }
+
+   if (!remaining)
+     {
+	ewin->state.sliding = 0;
+	if (params->give_focus)
+	  {
+	     FocusToEWin(ewin, FOCUS_SET);
+	  }
+     }
+
+   return 0;
 }
 
-void
-EwinSlideTo(EWin * ewin, int fx, int fy, int tx, int ty,
+Animator           *
+EwinSlideSizeTo(EWin * ewin, int tx, int ty, int tw, int th,
+		int speed, int mode, int flags)
+{
+   Animator           *an;
+   ewin_slide_params   params;
+   int                 duration;
+   esound_e            start_sound = SOUND_NONE;
+   esound_e            end_sound = SOUND_NONE;
+
+   ewin->state.sliding = 1;
+
+   params.fx = EoGetX(ewin);
+   params.fy = EoGetY(ewin);
+   params.fw = ewin->client.w;
+   params.fh = ewin->client.h;
+   params.tx = tx;
+   params.ty = ty;
+   params.tw = tw;
+   params.th = th;
+   params.mode = mode;
+   params.give_focus = (flags & SLIDE_FOCUS) != 0;
+   params.mouse_warp = ((flags & SLIDE_WARP) != 0) &&
+      ((params.fx != params.tx) || (params.fy != params.ty)) &&
+      (ewin == GetEwinPointerInClient());
+   EQueryPointer(EoGetWin(ewin), &params.mouse_x, &params.mouse_y, NULL, NULL);
+
+   if (params.mouse_x > tw)
+      params.mouse_x = tw / 2;
+   if (params.mouse_y > th)
+      params.mouse_y = th / 2;
+
+   if (flags & SLIDE_SOUND)
+     {
+	start_sound = SOUND_WINDOW_SLIDE;
+	end_sound = SOUND_WINDOW_SLIDE_END;
+     }
+
+   if (speed <= 10)
+      speed = 10;
+   duration = 1000000 / speed;
+
+   an = AnimatorAdd((EObj *) ewin, ANIM_SLIDE, _EwinSlideSizeTo, duration, 0,
+		    sizeof(params), &params);
+   AnimatorSetSound(an, start_sound, end_sound);
+
+   return an;
+}
+
+Animator           *
+EwinSlideTo(EWin * ewin, int fx __UNUSED__, int fy __UNUSED__, int tx, int ty,
 	    int speed, int mode, int flags)
 {
-   EwinsSlideTo(&ewin, &fx, &fy, &tx, &ty, 1, speed, mode, flags);
+// EwinMove(ewin, fx, fy, 0);   // FIXME - WHY?
+   return EwinSlideSizeTo(ewin, tx, ty, ewin->client.w, ewin->client.h,
+			  speed, mode, flags);
 }
 
-void
+Animator           *
 EwinsSlideTo(EWin ** ewin, int *fx, int *fy, int *tx, int *ty, int num_wins,
-	     int speed, int mode, int flags __UNUSED__)
+	     int speed, int mode, int flags)
 {
-   int                 k, x, y, w, h, i;
-   char                firstlast, grab_server;
-
-   if (num_wins <= 0)
-      return;
-
-   firstlast = 0;
-   FocusEnable(0);
-   SoundPlay(SOUND_WINDOW_SLIDE);
-
-   grab_server = DrawEwinShapeNeedsGrab(mode);
-   if (grab_server)
-      EGrabServer();
-
-   ETimedLoopInit(0, 1024, speed);
-   for (k = 0; k <= 1024;)
-     {
-	for (i = 0; i < num_wins; i++)
-	  {
-	     if (!ewin[i])
-		continue;
-
-	     x = ((fx[i] * (1024 - k)) + (tx[i] * k)) >> 10;
-	     y = ((fy[i] * (1024 - k)) + (ty[i] * k)) >> 10;
-	     w = ewin[i]->client.w;
-	     h = ewin[i]->client.h;
-	     if (mode == 0)
-		EoMove(ewin[i], x, y);
-	     else
-		DrawEwinShape(ewin[i], mode, x, y, w, h, firstlast, i);
-	     firstlast = 1;
-	  }
-	/* We may loop faster here than originally intended */
-	k = ETimedLoopNext();
-     }
+   Animator           *an = NULL;
+   int                 i;
 
    for (i = 0; i < num_wins; i++)
      {
-	if (!ewin[i])
-	   continue;
-
-	ewin[i]->state.animated = 0;
-
-	if (mode > 0)
-	   DrawEwinShape(ewin[i], mode, tx[i], ty[i], ewin[i]->client.w,
-			 ewin[i]->client.h, 2, i);
-	EwinMove(ewin[i], tx[i], ty[i], MRF_NOCHECK_ONSCREEN);
+	an =
+	   EwinSlideTo(ewin[i], fx[i], fy[i], tx[i], ty[i], speed, mode, flags);
+	flags |= SLIDE_SOUND;
      }
 
-   FocusEnable(1);
-
-   if (grab_server)
-      EUngrabServer();
-
-   SoundPlay(SOUND_WINDOW_SLIDE_END);
+   return an;
 }

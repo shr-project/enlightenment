@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2000-2007 Carsten Haitzler, Geoff Harrison and various contributors
- * Copyright (C) 2004-2009 Kim Woelders
+ * Copyright (C) 2004-2012 Kim Woelders
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -22,10 +22,10 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "backgrounds.h"
 #include "eobj.h"
 #include "iclass.h"
-#include "timers.h"
 #include "xwin.h"
 
 static EObj        *init_win1 = NULL;
@@ -122,12 +122,12 @@ StartupBackgroundsDestroy(void)
 }
 
 static int
-doStartupWindowsOpen(void *data __UNUSED__)
+doStartupWindowsOpen(EObj * eobj __UNUSED__, int remaining,
+		     void *state __UNUSED__)
 {
-   static int          kk = 0;
    int                 k, x, y, xOffset, yOffset;
 
-   k = kk;
+   k = 1024 - remaining;
 
    if (bg_sideways)
      {				/* so we can have two different slide methods */
@@ -147,12 +147,8 @@ doStartupWindowsOpen(void *data __UNUSED__)
    EobjMove(init_win1, -x - xOffset, -y - yOffset);
    EobjMove(init_win2, x + xOffset, y + yOffset);
 
-   k = (int)(1e-3 * Conf.animation.step * Conf.desks.slidespeed / 2);
-   if (k <= 0)
-      k = 1;
-   kk += k;
-   if (kk < 1024)
-      return 1;
+   if (remaining > 0)
+      return 0;
 
    Mode.place.enable_features++;
    EobjWindowDestroy(init_win1);
@@ -160,16 +156,22 @@ doStartupWindowsOpen(void *data __UNUSED__)
    init_win1 = NULL;
    init_win2 = NULL;
 
-   return 0;
+   return ANIM_RET_CANCEL_ANIM;
 }
 
 void
 StartupWindowsOpen(void)
 {
+   int                 speed, duration;
+
    if (!init_win1 || !init_win2)
       return;
 
    Mode.place.enable_features--;
    ESync(ESYNC_STARTUP);
-   AnimatorAdd(doStartupWindowsOpen, NULL);
+
+   speed = Conf.desks.slidespeed > 0 ? Conf.desks.slidespeed : 500;
+   duration = 2000000 / speed;
+
+   AnimatorAdd(NULL, ANIM_STARTUP, doStartupWindowsOpen, duration, 0, 0, NULL);
 }

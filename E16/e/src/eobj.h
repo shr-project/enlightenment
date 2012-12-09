@@ -60,6 +60,7 @@ struct _eobj {
 #if USE_GLX
    struct _glhook     *glhook;
 #endif
+   Animator           *animations;	/* list of pending animations */
 };
 
 #define EOBJ_TYPE_EWIN      0

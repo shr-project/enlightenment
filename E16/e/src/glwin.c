@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007-2011 Kim Woelders
+ * Copyright (C) 2007-2012 Kim Woelders
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,6 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "cursors.h"
 #include "desktops.h"
 #include "eimage.h"
@@ -30,7 +31,6 @@
 #include "events.h"
 #include "ewins.h"
 #include "grabs.h"
-#include "timers.h"
 #include "util.h"
 
 #include <math.h>
@@ -464,7 +464,8 @@ SceneDraw(void)
 }
 
 static int
-GlwinRun(void *data __UNUSED__)
+GlwinRun(EObj * eobj __UNUSED__, int remaining __UNUSED__,
+	 void *state __UNUSED__)
 {
    if (!GLWin.eo)
       return 0;
@@ -606,7 +607,7 @@ GlwinEvent(Win win __UNUSED__, XEvent * ev, void *prm)
 #endif
      case MapNotify:
 	GlwinKeyPress(gw, XK_g);
-	AnimatorAdd(GlwinRun, NULL);
+	AnimatorAdd(GLWin.eo, ANIM_GLWIN, GlwinRun, -1, 0, 0, NULL);
 	break;
 #if 0
      case ConfigureNotify:

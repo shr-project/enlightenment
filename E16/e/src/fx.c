@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2000-2007 Carsten Haitzler, Geoff Harrison and various contributors
- * Copyright (C) 2004-2011 Kim Woelders
+ * Copyright (C) 2004-2012 Kim Woelders
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -22,13 +22,13 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "desktops.h"
 #include "dialog.h"
 #include "ecompmgr.h"
 #include "eimage.h"
 #include "emodule.h"
 #include "settings.h"
-#include "timers.h"
 #include "xwin.h"
 #include <math.h>
 
@@ -69,10 +69,10 @@ typedef struct {
 static Pixmap       fx_ripple_above = None;
 static Win          fx_ripple_win = NULL;
 static int          fx_ripple_count = 0;
-static Timer       *fx_ripple_timer = NULL;
 
 static int
-FX_ripple_timeout(void *data __UNUSED__)
+FX_ripple_timeout(EObj * eo __UNUSED__, int remaining __UNUSED__,
+		  void *state __UNUSED__)
 {
    static double       incv = 0, inch = 0;
    static GC           gc1 = 0, gc = 0;
@@ -131,14 +131,14 @@ FX_ripple_timeout(void *data __UNUSED__)
 		  WinGetH(VROOT) - fx_ripple_waterh + y);
      }
 
-   return 1;
+   return 4;
 }
 
 static void
 FX_Ripple_Init(const char *name __UNUSED__)
 {
    fx_ripple_count = 0;
-   TIMER_ADD(fx_ripple_timer, 66, FX_ripple_timeout, NULL);
+   AnimatorAdd(NULL, ANIM_FX_RIPPLES, FX_ripple_timeout, -1, 0, 0, NULL);
 }
 
 static void
@@ -152,7 +152,7 @@ FX_Ripple_Desk(void)
 static void
 FX_Ripple_Quit(void)
 {
-   TIMER_DEL(fx_ripple_timer);
+   AnimatorsDelCatAll(ANIM_FX_RIPPLES, 0);
    if (!fx_ripple_win)
       return;
    EClearArea(fx_ripple_win, 0, WinGetH(VROOT) - fx_ripple_waterh,
@@ -172,10 +172,10 @@ FX_Ripple_Quit(void)
 static Pixmap       fx_wave_above = None;
 static Win          fx_wave_win = NULL;
 static int          fx_wave_count = 0;
-static Timer       *fx_wave_timer = NULL;
 
 static int
-FX_Wave_timeout(void *data __UNUSED__)
+FX_Wave_timeout(EObj * eo __UNUSED__, int remaining __UNUSED__,
+		void *state __UNUSED__)
 {
    /* Variables */
    static double       incv = 0, inch = 0;
@@ -282,14 +282,14 @@ FX_Wave_timeout(void *data __UNUSED__)
 	  }
      }
 
-   return 1;
+   return 4;
 }
 
 static void
 FX_Waves_Init(const char *name __UNUSED__)
 {
    fx_wave_count = 0;
-   TIMER_ADD(fx_wave_timer, 66, FX_Wave_timeout, NULL);
+   AnimatorAdd(NULL, ANIM_FX_WAVES, FX_Wave_timeout, -1, 0, 0, NULL);
 }
 
 static void
@@ -303,7 +303,7 @@ FX_Waves_Desk(void)
 static void
 FX_Waves_Quit(void)
 {
-   TIMER_DEL(fx_wave_timer);
+   AnimatorsDelCatAll(ANIM_FX_WAVES, 0);
    if (!fx_wave_win)
       return;
    EClearArea(fx_wave_win, 0, WinGetH(VROOT) - FX_WAVE_WATERH,
@@ -324,7 +324,6 @@ FX_Waves_Quit(void)
 static Win          fx_raindrops_win = NULL;
 static int          fx_raindrops_number = 4;
 static PixImg      *fx_raindrops_draw = NULL;
-static Timer       *fx_raindrops_timer = NULL;
 
 typedef struct {
    int                 x, y;
@@ -335,7 +334,8 @@ typedef struct {
 static DropContext  fx_raindrops[4];
 
 static int
-FX_raindrops_timeout(void *data __UNUSED__)
+FX_raindrops_timeout(EObj * eo __UNUSED__, int remaining __UNUSED__,
+		     void *state __UNUSED__)
 {
    static GC           gc1 = 0, gc = 0;
    int                 i, x, y, xx, yy;
@@ -526,7 +526,7 @@ FX_raindrops_timeout(void *data __UNUSED__)
 	ESync(0);
      }
 
-   return 1;
+   return 4;
 }
 
 static void
@@ -541,7 +541,7 @@ FX_Raindrops_Init(const char *name __UNUSED__)
 	fx_raindrops[i].x = rand() % (WinGetW(VROOT) - fx_raindrop_size);
 	fx_raindrops[i].y = rand() % (WinGetH(VROOT) - fx_raindrop_size);
      }
-   TIMER_ADD(fx_raindrops_timer, 66, FX_raindrops_timeout, NULL);
+   AnimatorAdd(NULL, ANIM_FX_RAINDROPS, FX_raindrops_timeout, -1, 0, 0, NULL);
 }
 
 static void
@@ -555,7 +555,7 @@ FX_Raindrops_Quit(void)
 {
    int                 i;
 
-   TIMER_DEL(fx_raindrops_timer);
+   AnimatorsDelCatAll(ANIM_FX_RAINDROPS, 0);
    for (i = 0; i < fx_raindrops_number; i++)
      {
 	EClearArea(fx_raindrops_win, fx_raindrops[i].x, fx_raindrops[i].y,
@@ -579,10 +579,10 @@ FX_Raindrops_Quit(void)
 static Win          fx_imagespinner_win = NULL;
 static int          fx_imagespinner_count = 3;
 static char        *fx_imagespinner_params = NULL;
-static Timer       *fx_imagespinner_timer = NULL;
 
 static int
-FX_imagespinner_timeout(void *data __UNUSED__)
+FX_imagespinner_timeout(EObj * eo __UNUSED__, int remaining __UNUSED__,
+			void *state __UNUSED__)
 {
    char               *string = NULL;
    EObj               *bgeo;
@@ -624,14 +624,14 @@ FX_imagespinner_timeout(void *data __UNUSED__)
 	Efree(string);
      }
 
-   return 1;
+   return 4;
 }
 
 static void
 FX_ImageSpinner_Init(const char *name)
 {
    fx_imagespinner_count = 3;
-   TIMER_ADD(fx_imagespinner_timer, 66, FX_imagespinner_timeout, NULL);
+   AnimatorAdd(NULL, ANIM_FX_SPINNER, FX_imagespinner_timeout, -1, 0, 0, NULL);
    fx_imagespinner_params = Estrdup(name);
 }
 
@@ -647,7 +647,7 @@ FX_ImageSpinner_Desk(void)
 static void
 FX_ImageSpinner_Quit(void)
 {
-   TIMER_DEL(fx_imagespinner_timer);
+   AnimatorsDelCatAll(ANIM_FX_SPINNER, 0);
    EClearArea(fx_imagespinner_win, 0, 0, WinGetW(VROOT), WinGetH(VROOT));
    Efree(fx_imagespinner_params);
    fx_imagespinner_params = NULL;

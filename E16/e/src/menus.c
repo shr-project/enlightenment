@@ -22,6 +22,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "borders.h"
 #include "desktops.h"
 #include "dialog.h"
@@ -1416,6 +1417,37 @@ _SubmenuGetPlacement(Menu * m, int *xo, int *yo, int *mw, int *mh)
 }
 
 static void
+_SubmenuSlideDone(EObj * eo, void *data __UNUSED__)
+{
+   EWin               *ewin, *ewin2;
+   Menu               *m;
+   MenuItem           *mi;
+
+   MenusSetEvents(1);
+
+   ewin = (EWin *) eo;
+   if (!EwinFindByPtr(ewin))
+      return;
+   m = (Menu *) ewin->data;
+   if (!m)
+      return;
+   mi = m->sel_item;
+   if (!mi)
+      return;
+
+   if (Conf.menus.warp)
+      EWarpPointer(mi->win, WinGetW(mi->win) / 2, WinGetH(mi->win) / 2);
+
+   if (!mi->child)
+      return;
+   ewin2 = mi->child->ewin;
+   if (!EwinFindByPtr(ewin2))
+      return;
+
+   _MenuEwinShow(ewin2);
+}
+
+static void
 _MenusSlideCheck(Menu * m, int xo, int yo, int ww, int hh, int *pdx, int *pdy)
 {
    EWin               *ewin;
@@ -1457,7 +1489,7 @@ _MenusSlide(Menu * m, int xdist, int ydist)
    int                 fx[256], fy[256], tx[256], ty[256];
    int                 i;
    Menu               *mm;
-   MenuItem           *mi;
+   Animator           *an;
 
    i = 0;
    for (mm = Mode_menus.first; mm; mm = mm->child)
@@ -1474,12 +1506,9 @@ _MenusSlide(Menu * m, int xdist, int ydist)
      }
 
    MenusSetEvents(0);		/* Disable menu item events while sliding */
-   EwinsSlideTo(menus, fx, fy, tx, ty, i, Conf.shading.speed, 0, 0);
-   MenusSetEvents(1);
-
-   mi = m->sel_item;
-   if (mi && Conf.menus.warp)
-      EWarpPointer(mi->win, WinGetW(mi->win) / 2, WinGetH(mi->win) / 2);
+   an = EwinsSlideTo(menus, fx, fy, tx, ty, i, Conf.shading.speed, 0,
+		     SLIDE_SOUND);
+   AnimatorSetDoneFunc(an, _SubmenuSlideDone);
 }
 
 static int
@@ -1527,7 +1556,7 @@ SubmenuShowTimeout(void *data)
 	       MRF_NOCHECK_ONSCREEN);
    if (xdist != 0 || ydist != 0)
       _MenusSlide(m, xdist, ydist);
-   if (ewin2)
+   else if (ewin2)
       _MenuEwinShow(ewin2);
 
  done:

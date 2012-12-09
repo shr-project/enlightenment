@@ -106,6 +106,7 @@ e16_SOURCES = \
 	text.c			\
 	theme.c                 \
 	time.c			\
+	animation.c		animation.h		\
 	timers.c		timers.h		\
 	tooltips.c		tooltips.h		\
 	user.c			user.h			\

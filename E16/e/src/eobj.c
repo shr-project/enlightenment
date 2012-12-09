@@ -21,6 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "desktops.h"
 #include "e16-ecore_hints.h"
 #include "ecompmgr.h"
@@ -261,6 +262,7 @@ EobjFini(EObj * eo)
    Efree(eo->icccm.wm_name);
    Efree(eo->icccm.wm_res_name);
    Efree(eo->icccm.wm_res_class);
+   AnimatorsFree(eo);
 }
 
 void

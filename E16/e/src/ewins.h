@@ -100,7 +100,7 @@ struct _ewin {
       unsigned            attention:1;
 
       unsigned            showingdesk:1;	/* Iconified by show desktop */
-      unsigned            animated:1;
+      unsigned            sliding:1;
       unsigned            moving:1;
       unsigned            resizing:1;
       unsigned            show_coords:1;
@@ -246,6 +246,7 @@ struct _ewin {
 
    int                 shape_x, shape_y, shape_w, shape_h;
    int                 req_x, req_y;
+   int                 trg_x, trg_y;	/* Used during desk slides */
 
    Snapshot           *snap;
    int                 head;	/* Unused? */

@@ -22,6 +22,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include "E.h"
+#include "animation.h"
 #include "borders.h"
 #include "desktops.h"
 #include "emodule.h"
@@ -35,7 +36,6 @@
 #include "iclass.h"		/* FIXME - Should not be here */
 #include "screen.h"
 #include "snaps.h"
-#include "timers.h"
 #include "xwin.h"
 
 static const WinOp  winops[] = {
@@ -848,9 +848,9 @@ EwinInstantUnShade(EWin * ewin)
 typedef struct {
    int                 x, y, w, h;
 } _xywh;
+
 typedef struct {
    EWin               *ewin;
-   int                 k, dk;
    _xywh               start;
    _xywh               final;
    int                 a, b, c;
@@ -862,9 +862,6 @@ _EwinShadeStart(_ewin_shade_data * esd)
    EWin               *ewin = esd->ewin;
    int                 minw, minh;
    XSetWindowAttributes att;
-
-   esd->k = 0;
-   esd->dk = 1024 * Conf.shading.speed * Conf.animation.step / 1000000;
 
    esd->start.x = EoGetX(ewin);
    esd->start.y = EoGetY(ewin);
@@ -931,24 +928,16 @@ _EwinShadeEnd(_ewin_shade_data * esd)
    EwinStateUpdate(ewin);
    HintsSetWindowState(ewin);
    SnapshotEwinUpdate(ewin, SNAP_USE_SHADED);
-
-   Efree(esd);
 }
 
 static int
-_EwinShadeRun(void *data)
+_EwinShadeRun(EObj * eobj, int remaining, void *state)
 {
-   _ewin_shade_data   *esd = (_ewin_shade_data *) data;
-   EWin               *ewin = esd->ewin;
+   _ewin_shade_data   *esd = (_ewin_shade_data *) state;
+   EWin               *ewin = (EWin *) eobj;
    int                 k, x, y, w, h, ww, hh, cow, coh, shx, shy;
 
-   if (!EwinFindByPtr(ewin))	/* Check, window may be gone */
-     {
-	Efree(esd);
-	return 0;
-     }
-
-   k = esd->k;
+   k = 1024 - remaining;
 
    x = esd->start.x;
    y = esd->start.y;
@@ -1013,18 +1002,18 @@ _EwinShadeRun(void *data)
    EoMoveResize(ewin, x, y, w, h);
    EwinBorderCalcSizes(ewin, 1);
 
-   esd->k = k += esd->dk;
-   if (k < 1024)
-      return 1;
+   if (remaining == 0)
+      _EwinShadeEnd(esd);
 
-   _EwinShadeEnd(esd);
    return 0;
 }
 
 void
 EwinShade(EWin * ewin)
 {
-   _ewin_shade_data   *esd;
+   Animator           *an;
+   _ewin_shade_data    esd;
+   int                 duration;
 
    if ((ewin->border->border.left == 0) && (ewin->border->border.right == 0) &&
        (ewin->border->border.top == 0) && (ewin->border->border.bottom == 0))
@@ -1036,15 +1025,17 @@ EwinShade(EWin * ewin)
    if ((ewin->border) && (!strcmp(ewin->border->name, "BORDERLESS")))
       return;
 
-   SoundPlay(SOUND_SHADE);
-
-   esd = EMALLOC(_ewin_shade_data, 1);
-   esd->ewin = ewin;
-   _EwinShadeStart(esd);
+   esd.ewin = ewin;
+   _EwinShadeStart(&esd);
    if ((Conf.shading.animate) || (ewin->type == EWIN_TYPE_MENU))
-      AnimatorAdd(_EwinShadeRun, esd);
+     {
+	duration = 1000000 / Conf.shading.speed;
+	an = AnimatorAdd(&ewin->o, ANIM_SHADE, _EwinShadeRun, duration, 0,
+			 sizeof(esd), &esd);
+	AnimatorSetSound(an, SOUND_SHADE, SOUND_NONE);
+     }
    else
-      _EwinShadeEnd(esd);
+      _EwinShadeEnd(&esd);
 }
 
 static void
@@ -1053,9 +1044,6 @@ _EwinUnshadeStart(_ewin_shade_data * esd)
    EWin               *ewin = esd->ewin;
    int                 cow, coh, clx, cly;
    XSetWindowAttributes att;
-
-   esd->k = 0;
-   esd->dk = 1024 * Conf.shading.speed * Conf.animation.step / 1000000;
 
    esd->start.x = EoGetX(ewin);
    esd->start.y = EoGetY(ewin);
@@ -1150,24 +1138,16 @@ _EwinUnshadeEnd(_ewin_shade_data * esd)
    EwinStateUpdate(ewin);
    HintsSetWindowState(ewin);
    SnapshotEwinUpdate(ewin, SNAP_USE_SHADED);
-
-   Efree(esd);
 }
 
 static int
-_EwinUnshadeRun(void *data)
+_EwinUnshadeRun(EObj * eobj, int remaining, void *state)
 {
-   _ewin_shade_data   *esd = (_ewin_shade_data *) data;
-   EWin               *ewin = esd->ewin;
+   _ewin_shade_data   *esd = (_ewin_shade_data *) state;
+   EWin               *ewin = (EWin *) eobj;
    int                 k, x, y, w, h, ww, hh, cow, coh, shx, shy;
 
-   if (!EwinFindByPtr(ewin))	/* Check, window may be gone */
-     {
-	Efree(esd);
-	return 0;
-     }
-
-   k = esd->k;
+   k = 1024 - remaining;
 
    x = esd->start.x;
    y = esd->start.y;
@@ -1224,34 +1204,35 @@ _EwinUnshadeRun(void *data)
    EoMoveResize(ewin, x, y, w, h);
    EwinBorderCalcSizes(ewin, 1);
 
-   esd->k = k += esd->dk;
-   if (k < 1024)
-      return 1;
+   if (remaining == 0)
+      _EwinUnshadeEnd(esd);
 
-   _EwinUnshadeEnd(esd);
    return 0;
 }
 
 void
 EwinUnShade(EWin * ewin)
 {
-   _ewin_shade_data   *esd;
+   Animator           *an;
+   _ewin_shade_data    esd;
+   int                 duration;
 
    if (ewin->state.zoomed)
       return;
-   TIMER_DEL(ewin->timer);
    if (!ewin->state.shaded || ewin->state.shading || ewin->state.iconified)
       return;
 
-   SoundPlay(SOUND_UNSHADE);
-
-   esd = EMALLOC(_ewin_shade_data, 1);
-   esd->ewin = ewin;
-   _EwinUnshadeStart(esd);
+   esd.ewin = ewin;
+   _EwinUnshadeStart(&esd);
    if ((Conf.shading.animate) || (ewin->type == EWIN_TYPE_MENU))
-      AnimatorAdd(_EwinUnshadeRun, esd);
+     {
+	duration = 1000000 / Conf.shading.speed;
+	an = AnimatorAdd(&ewin->o, ANIM_SHADE, _EwinUnshadeRun, duration, 0,
+			 sizeof(esd), &esd);
+	AnimatorSetSound(an, SOUND_UNSHADE, SOUND_NONE);
+     }
    else
-      _EwinUnshadeEnd(esd);
+      _EwinUnshadeEnd(&esd);
 }
 
 void
@@ -1408,7 +1389,7 @@ EwinOpActivate(EWin * ewin, int source, int raise)
 
    unshade = ewin->state.shaded /* && !ewin->state.iconified */ ;
 
-   if (!ewin->state.animated && !ewin->state.iconified)
+   if (!ewin->state.sliding && !ewin->state.iconified)
      {
 	/* If somehow lost outside desktop, move it to center */
 	if (!EwinIsOnDesktop(ewin))

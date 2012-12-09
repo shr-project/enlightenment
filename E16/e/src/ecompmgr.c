@@ -29,6 +29,7 @@
 
 #include "E.h"
 #if USE_COMPOSITE
+#include "animation.h"
 #include "desktops.h"
 #include "ecompmgr.h"
 #include "emodule.h"
@@ -125,7 +126,6 @@ struct _cmhook {
 
    unsigned int        damage_sequence;	/* sequence when damage was created */
 
-   Animator           *anim_fade;
    unsigned int        opacity_to;
 };
 
@@ -227,7 +227,6 @@ static ESelection  *wm_cm_sel = NULL;
 static void         ECompMgrDamageAll(void);
 static void         ECompMgrHandleRootEvent(Win win, XEvent * ev, void *prm);
 static void         ECompMgrHandleWindowEvent(Win win, XEvent * ev, void *prm);
-static int          doECompMgrWinFade(void *data);
 static void         ECompMgrWinInvalidate(EObj * eo, int what);
 static void         ECompMgrWinSetPicts(EObj * eo);
 static void         ECompMgrWinFadeEnd(EObj * eo, int done);
@@ -938,17 +937,10 @@ ECompMgrWinSetOpacity(EObj * eo, unsigned int opacity)
 }
 
 static int
-doECompMgrWinFade(void *data)
+doECompMgrWinFade(EObj * eo, int run, void *data __UNUSED__)
 {
-   EObj               *eo;
    ECmWinInfo         *cw;
    unsigned int        op, step;
-
-   eo = (EObj *) data;
-
-   /* May be gone */
-   if (EobjListStackCheck(eo) < 0)
-      return 0;
 
    cw = eo->cmhook;
    op = cw->opacity_to;
@@ -962,10 +954,10 @@ doECompMgrWinFade(void *data)
 
    eo->fading = cw->fadeout;
 
-   step = Conf_compmgr.fading.time / Conf.animation.step;
+   step = Conf_compmgr.fading.time;
    if (step == 0)
       step = 1;
-   step = 0xffffffff / step;
+   step = run * (0xffffffff / step);
    if (op == cw->opacity)
      {
 	op = eo->opacity;
@@ -994,14 +986,13 @@ doECompMgrWinFade(void *data)
    ECompMgrWinSetOpacity(eo, op);
 
    if (eo->fading)
-      return 1;
+      return 0;
 
    if (eo->type == EOBJ_TYPE_EWIN)
       ModulesSignal(eo->shown ? ESIGNAL_EWIN_CHANGE : ESIGNAL_EWIN_UNMAP, eo);
 
  done:
-   cw->anim_fade = NULL;
-   return 0;
+   return ANIM_RET_CANCEL_ANIM;
 }
 
 static void
@@ -1016,8 +1007,8 @@ ECompMgrWinFade(EObj * eo, unsigned int op_from, unsigned int op_to)
 	return;
      }
 
-   if (!cw->anim_fade)
-      cw->anim_fade = AnimatorAdd(doECompMgrWinFade, eo);
+   if (!eo->fading)
+      AnimatorAdd(eo, ANIM_FADE, doECompMgrWinFade, -1, 0, 0, NULL);
    cw->opacity_to = op_to;
 
    eo->fading = 1;
@@ -1066,10 +1057,7 @@ ECompMgrWinFadeEnd(EObj * eo, int done)
      }
    eo->fading = 0;
    if (done)
-     {
-	AnimatorDel(cw->anim_fade);
-	cw->anim_fade = NULL;
-     }
+      AnimatorsDelCat(eo, ANIM_FADE, 0);
 }
 
 void

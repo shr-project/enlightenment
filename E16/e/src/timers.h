@@ -43,7 +43,4 @@ Idler              *IdlerAdd(void (*func) (void *data), void *data);
 void                IdlerDel(Idler * id);
 void                IdlersRun(void);
 
-Animator           *AnimatorAdd(int (*func) (void *data), void *data);
-void                AnimatorDel(Animator * an);
-
 #endif /* _TIMERS_H_ */

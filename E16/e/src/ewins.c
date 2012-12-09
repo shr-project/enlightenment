@@ -38,7 +38,6 @@
 #include "screen.h"
 #include "slide.h"
 #include "snaps.h"
-#include "timers.h"
 #include "windowmatch.h"
 #include "xwin.h"
 #include <X11/Xutil.h>
@@ -56,8 +55,6 @@
   (/* EnterWindowMask | LeaveWindowMask | */ FocusChangeMask | \
    /* StructureNotifyMask | */ ResizeRedirectMask | \
    PropertyChangeMask | ColormapChangeMask | VisibilityChangeMask)
-
-static int          EwinSlideIn(void *data);
 
 static void         EwinChangesStart(EWin * ewin);
 static void         EwinChangesProcess(EWin * ewin);
@@ -989,14 +986,15 @@ AddToFamily(EWin * ewin, Window xwin, int startup)
 	     fx = WinGetW(VROOT);
 	     fy = (rand() % (WinGetH(VROOT))) - EoGetH(ewin);
 	  }
-	ewin->state.animated = 1;
-	FocusEnable(0);
 
 	EwinMoveToDesktopAt(ewin, dsk, fx, fy);
 	EwinShow(ewin);
 	ewin->req_x = x;
 	ewin->req_y = y;
-	TIMER_ADD_NP(50, EwinSlideIn, ewin);
+
+	EwinSlideTo(ewin, EoGetX(ewin), EoGetY(ewin), ewin->req_x, ewin->req_y,
+		    Conf.place.slidespeedmap, Conf.place.slidemode,
+		    SLIDE_FOCUS | SLIDE_WARP | SLIDE_SOUND);
      }
    else
      {
@@ -1984,27 +1982,6 @@ EwinUpdateOpacity(EWin * ewin)
       opacity = 0xffffffff;	/* Fallback */
 
    EoChangeOpacity(ewin, opacity);
-}
-
-/*
- * Slidein
- */
-static int
-EwinSlideIn(void *data)
-{
-   EWin               *ewin = (EWin *) data;
-
-   /* May be gone */
-   if (!EwinFindByPtr(ewin))
-      goto done;
-
-   EwinSlideTo(ewin, EoGetX(ewin), EoGetY(ewin), ewin->req_x, ewin->req_y,
-	       Conf.place.slidespeedmap, Conf.place.slidemode, 0);
-
- done:
-   FocusEnable(1);
-
-   return 0;
 }
 
 /*

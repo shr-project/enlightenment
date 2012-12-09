@@ -546,8 +546,6 @@ void                Etmp(char *s);
 void                Quicksort(void **a, int l, int r,
 			      int (*CompareFunc) (const void *d1,
 						  const void *d2));
-void                ETimedLoopInit(int k1, int k2, int speed);
-int                 ETimedLoopNext(void);
 
 /* mod-misc.c */
 void                autosave(void);
