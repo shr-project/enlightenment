@@ -12,7 +12,6 @@ libecorexx_HEADERS = \
 	EvasWindowSoftwareX11.h \
 	EvasWindowXRenderX11.h \
 	Exe.h \
-	exception/ProcessNotExistingException.h \
 	Event.h
 
 libecorexxdir = \
