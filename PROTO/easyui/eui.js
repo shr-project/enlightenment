@@ -14,6 +14,10 @@ themes = {
       name: 'themes/eui.edj',
       group: 'list'
     },
+    'popup': {
+      name: 'themes/eui.edj',
+      group: 'popup'
+    },
     'split': {
       name: 'themes/eui.edj',
       group: 'split'
@@ -129,9 +133,6 @@ Controller = Class.extend({
    */
   pushController: function(ctrl) {
     ctrl.parent = this;
-
-    if (ctrl instanceof ActionSheet)
-      return;
 
     if (this.naviframe == undefined)
       return;
@@ -1043,38 +1044,6 @@ DBModel = Model.extend({
   clear: function() {
     this.entries().remove();
     this.notifyListeners();
-  }
-});
-
-/** @extend Class */
-ActionSheet = Class.extend({
-  /** @event */
-  didInitialize: function() {
-    this.content = elm.Box({
-      expand: 'both',
-      fill: 'both',
-      resize: true,
-      elements: {},
-    });
-
-    var count = 0;
-
-    if (this.title)
-      this.content.elements[count++] = elm.Label({ label: this.title });
-
-    for (var i = 0; i < this.model.length; i++)
-      this.content.elements[count++] = elm.Button({
-        index: i,
-        label: this.model[i],
-        on_click: function() {
-          this.inwin.visible = false;
-          this.selectedItemAtIndex(this.index);
-        }.bind(this)
-      });
-
-    this.inwin = EUI.window.elements.inwin;
-    this.inwin.content = this.content;
-    this.inwin.activate();
   }
 });
 
@@ -2376,7 +2345,13 @@ RoutingSingleton = Class.extend({
    * @param {String} file
    */
   performAction: function(action, mime_type, file) {
+    if(!this.popup)
+      this._createPopup();
+
     var possible_handlers = this.possibleActionsForType(action, mime_type);
+
+    if (possible_handlers.length)
+      this._showPopup(possible_handlers);
 
     if (possible_handlers.length == 1) {
       print("Only one possible handler to", action,
@@ -2414,6 +2389,69 @@ RoutingSingleton = Class.extend({
     }
 
     this.database = database;
+  },
+
+  /**
+   * @private
+   */
+  _createPopup: function() {
+    EUI.window.elements.popup = elm.Notify({
+      visible: false,
+      orient: 'center',
+      expand: 'both',
+      fill: 'both',
+      resize: true,
+      allow_events: false,
+      content: elm.Layout({
+        expand: 'both',
+        fill: 'both',
+        resize: true,
+        file: EUI.defaults._theme['popup'],
+        content: {}
+      })
+    });
+    this.popup = EUI.window.elements.popup;
+  },
+
+  /**
+   * @param {Array} possible_handlers
+   * @private
+   */
+  _showPopup: function(possible_handlers) {
+    this.popup.content.content['eui.swallow.content'] = elm.Box({
+      horizontal: false,
+      elements: {}
+    });
+
+    var buttons = this.popup.content.content['eui.swallow.content'];
+    for (var i = 0; i < possible_handlers.length; ++i) {
+
+      buttons.elements[i] = elm.Button({
+        label: possible_handlers[i].name,
+        fill: 'horizontal',
+        index: i,
+        on_click: function(item) {
+          print("eval(" + possible_handlers[item.index].app + ")");
+          this._hidePopup();
+        }.bind(this)
+      });
+    }
+
+    this.popup.visible = true;
+    this.popup.content.signal_emit('popup,layout,content,only', '');
+  },
+
+  /**
+   * @private
+   */
+  _hidePopup: function() {
+    this.popup.visible = false;
+
+    var buttons = this.popup.content.content['eui.swallow.content'];
+    for (var i = 0; i < buttons.length; ++i)
+      delete buttons.elements[i];
+    delete buttons.elements;
+    return;
   }
 });
 
@@ -2485,9 +2523,7 @@ exports.app = function(app) {
         fill: 'both',
         resize: true,
       }),
-      'inwin': elm.Inwin({
-        visible: false,
-      }),
+      'popup': undefined,
       'notify': elm.Notify({
         visible: false,
         align: {x: 0.5, y: 0.5}, //center
@@ -2562,10 +2598,6 @@ exports.ListController = function(proto) {
 
 exports.GridController = function(proto) {
   return GridController.extend(proto);
-};
-
-exports.ActionSheet = function(proto) {
-  return ActionSheet.extend(proto);
 };
 
 exports.ImageController = function(proto) {

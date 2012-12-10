@@ -355,4 +355,232 @@ collections {
       }
     }
   }
+
+#define LAYOUT_PROGRAM(name_, state_) \
+  program { \
+    signal: "popup,layout,"name_; \
+    action: STATE_SET state_ 0.0; \
+    target: "eui.swallow.icon"; \
+    target: "eui.text.title"; \
+    target: "title.separator"; \
+    target: "eui.swallow.content"; \
+    target: "eui.swallow.buttons"; \
+    target: "hack"; \
+  }
+
+#define LAYOUT_STATE_INVISIBLE(name_) \
+  description { \
+    state: name_; \
+    inherit: "invisible"; \
+    visible: 0; \
+  }
+
+#define LAYOUT_STATE_VISIBLE(name_) \
+  description { \
+    state: name_; \
+    inherit: "default"; \
+  }
+
+  group { name: "popup";
+    parts {
+      part { name: "hack";
+        type: RECT;
+        description { state: "default";
+          min: 300 400;
+          color: 39 38 39 255;
+        }
+        description { state: "invisible";
+        }
+        LAYOUT_STATE_VISIBLE("content-only")
+        LAYOUT_STATE_VISIBLE("content-buttons")
+        LAYOUT_STATE_VISIBLE("title-content-buttons")
+        LAYOUT_STATE_INVISIBLE("icon-content")
+        LAYOUT_STATE_VISIBLE("title-content")
+        description { state: "icon-content";
+          inherit: "default" 0.0;
+          min: 200 48;
+        }
+      }
+      part { name: "eui.swallow.icon";
+        type: SWALLOW;
+        description { state: "default";
+          rel1.relative: 0.0 0.0;
+          rel2.relative: 0.0 0.0;
+          rel2.offset: 48 48;
+        }
+        description { state: "invisible";
+          inherit: "default";
+          rel2.offset: 0 0;
+          visible: 0;
+        }
+        LAYOUT_STATE_INVISIBLE("content-only")
+        LAYOUT_STATE_INVISIBLE("content-buttons")
+        LAYOUT_STATE_INVISIBLE("title-content-buttons")
+        LAYOUT_STATE_VISIBLE("icon-content")
+        LAYOUT_STATE_INVISIBLE("title-content")
+      }
+      part { name: "eui.text.title";
+        type: TEXT;
+        description { state: "default";
+          rel1.relative: 1.0 0.0;
+          rel1.to_x: "eui.swallow.icon";
+          rel2.relative: 1.0 0.0;
+          rel2.offset: -1 48;
+          text {
+            size: 16;
+            align: 0.0 0.5;
+          }
+          color: 47 179 228 255;
+        }
+        description { state: "invisible";
+          inherit: "default";
+          rel1.relative: 0.0 0.0;
+          rel2.relative: 0.0 0.0;
+          visible: 0;
+        }
+        LAYOUT_STATE_INVISIBLE("content-only")
+        LAYOUT_STATE_INVISIBLE("content-buttons")
+        LAYOUT_STATE_VISIBLE("title-content-buttons")
+        LAYOUT_STATE_INVISIBLE("icon-content")
+        LAYOUT_STATE_VISIBLE("title-content")
+      }
+      part { name: "title.separator";
+        type: RECT;
+        description { state: "default";
+          color: 47 179 228 255;
+          rel1.relative: 0.0 1.0;
+          rel1.to_y: "eui.text.title";
+          rel2.relative: 1.0 1.0;
+          rel2.to: "eui.text.title";
+          rel2.offset: -1 1;
+        }
+        description { state: "invisible";
+          rel1.relative: 0.0 0.0;
+          rel1.offset: 0 0;
+          rel2.relative: 1.0 0.0;
+          rel2.offset: 0 0;
+          visible: 0;
+        }
+        LAYOUT_STATE_INVISIBLE("content-only")
+        LAYOUT_STATE_INVISIBLE("content-buttons")
+        LAYOUT_STATE_VISIBLE("title-content-buttons")
+        LAYOUT_STATE_INVISIBLE("icon-content")
+        LAYOUT_STATE_VISIBLE("title-content")
+      }
+      part { name: "eui.swallow.content";
+        type: SWALLOW;
+        description { state: "default";
+          rel1.relative: 0.0 1.0;
+          rel1.to_y: "title.separator";
+          rel2.relative: 1.0 0.0;
+          rel2.to_y: "eui.swallow.buttons";
+          rel2.offset: -1 -1;
+          color: 240 246 240 255;
+        }
+        description { state: "invisible";
+          visible: 0;
+        }
+        description { state: "content-only";
+	}
+        LAYOUT_STATE_VISIBLE("content-buttons")
+        LAYOUT_STATE_VISIBLE("title-content-buttons")
+        description { state: "icon-content";
+          rel1.to_x: "eui.swallow.icon";
+          rel1.relative: 1.0 0.0;
+          rel2.relative: 1.0 1.0;
+        }
+        description { state: "title-content";
+          rel1.to_y: "title.separator";
+          rel1.relative: 0.0 1.0;
+          rel2.relative: 1.0 1.0;
+        }
+        description { state: "content-text";
+          visible: 0;
+        }
+      }
+      part { name: "eui.swallow.buttons";
+        type: SWALLOW;
+        description { state: "default";
+          rel1.relative: 0.0 1.0;
+          rel1.offset: 0 -49;
+          rel2.relative: 1.0 1.0;
+          rel2.offset: -1 -1;
+        }
+        description { state: "invisible";
+          visible: 0;
+          rel1.relative: 0.0 1.0;
+          rel2.relative: 1.0 1.0;
+        }
+        LAYOUT_STATE_INVISIBLE("content-only")
+        LAYOUT_STATE_VISIBLE("content-buttons")
+        LAYOUT_STATE_VISIBLE("title-content-buttons")
+        LAYOUT_STATE_INVISIBLE("icon-content")
+        LAYOUT_STATE_INVISIBLE("title-content")
+      }
+    }
+    programs {
+      LAYOUT_PROGRAM("full", "default")
+      LAYOUT_PROGRAM("content,only", "content-only")
+      LAYOUT_PROGRAM("content,buttons", "content-buttons")
+      LAYOUT_PROGRAM("title,content,buttons", "title-content-buttons")
+      LAYOUT_PROGRAM("icon,content", "icon-content")
+      LAYOUT_PROGRAM("title,content", "title-content")
+    }
+  }
+
+#undef LAYOUT_PROGRAM
+#undef LAYOUT_STATE_INVISIBLE
+#undef LAYOUT_STATE_VISIBLE
+
+  group { name: "elm/layout/center/default";
+     parts {
+        part { name: "base";
+           type: RECT;
+           mouse_events: 0;
+           repeat_events: 1;
+           description { state: "default" 0.0;
+              color: 0 0 0 0;
+              rel1.relative: 0.0 0.0;
+              rel2.relative: 1.0 1.0;
+           }
+        }
+        part { name: "pop";
+           type: RECT;
+           mouse_events: 1;
+           description { state: "default" 0.0;
+              rel1.to: "elm.swallow.content";
+              rel1.offset: -5 -5;
+              rel2.to: "elm.swallow.content";
+              rel2.offset: 4 4;
+              color: 39 38 39 255;
+           }
+        }
+        part { name: "elm.swallow.content";
+           type: SWALLOW;
+           description { state: "default" 0.0;
+              rel1.to: "base";
+              rel2.to: "base";
+           }
+        }
+     }
+  }
+  group { name: "elm/layout/block_events/default";
+     parts {
+        part { name: "block_events";
+           type: RECT;
+           description { state: "default" 0.0;
+              color: 0 0 0 160;
+              visible: 1;
+           }
+        }
+     }
+     programs {
+        program {
+           name: "block_clicked";
+           signal: "mouse,clicked,1";
+           source: "block_events";
+           action: SIGNAL_EMIT "elm,action,click" "elm";
+        }
+     }
+  }
 }
