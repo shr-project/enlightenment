@@ -1,7 +1,8 @@
 var EUI = require('eui');
 var ajax = require('ajax');
 
-const KEY = "sbrubles";
+/* PUT YOUR ROTTEN ROMATOES API KEY AT THE VARIABLE BELLOW */
+const RTKEY = "";
 const URL = "api.rottentomatoes.com/api/public/v1.0/movies.json";
 
 RottenTomatoesModel = EUI.Model({
@@ -13,7 +14,7 @@ RottenTomatoesModel = EUI.Model({
     ajax.ajax(this.url, {
       blockUI: true,
       data: {
-        apikey: KEY,
+        apikey: RTKEY,
         q: this.query
       },
       onSuccess: function(request) {
@@ -23,16 +24,19 @@ RottenTomatoesModel = EUI.Model({
     });
   },
   getPoster: function(index) {
-    var movie = this.array[index];
+    var movie = this.itemAtIndex(index);
 
     if (movie.poster)
       return;
 
-    movie.request = ajax.get(movie.posters.original, null, function(request) {
-      movie.file = movie.poster = request.responseText;
-      delete movie.request;
-      this.notifyListeners();
-    }.bind(this, movie));
+    movie.request = ajax.ajax(movie.posters.original, {
+      onSuccess: function(request) {
+        movie.file = movie.poster = movie.request.responseText;
+        this.notifyListeners(index, 'update');
+        delete movie.request;
+      }.bind(this)
+    });
+
   },
   length: function() {
     return this.array.length;
@@ -55,7 +59,7 @@ RottenTomatoesModel = EUI.Model({
      item.request =  ajax.ajax(item.posters.thumbnail, {
         onSuccess: function(request) {
           item.file = request.responseText;
-          this.notifyListeners();
+          this.notifyListeners(index, 'update');
         }.bind(this)
       });
     }
@@ -72,6 +76,8 @@ MovieController = EUI.TableController({
     this.model.getPoster(index);
 
     var movie = this.model.itemAtIndex(this.index);
+
+    this.title = movie.title;
 
     var attributes = [
       {tag: 'title', label: 'Title'},
@@ -166,7 +172,17 @@ RottenTomatoesController = EUI.ListController({
   }
 });
 
-if (KEY)
+if (RTKEY) {
+  print("epa: " + RTKEY);
   EUI.app(new RottenTomatoesController());
-else
-  print("Get an API key at http://developer.rottentomatoes.com");
+} else {
+  print("\n");
+  print("!!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+  print("\n");
+  print("In order to use this application, create an account at");
+  print("http://developer.rottentomatoes.com and request an API");
+  print("key.  After getting  it by email, go to the  beginning");
+  print("of this program code and assign the key value to RTKEY");
+  print("variable. Then you will be able to run the application");
+  print("\n");
+}
