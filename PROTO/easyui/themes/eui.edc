@@ -583,4 +583,31 @@ collections {
         }
      }
   }
+
+  group {
+    name: "badge";
+    parts {
+      part {
+        name: "badge_bg";
+        type: SWALLOW;
+        description {
+          state: "default" 0.0;
+          align: 0 1;
+          fixed: 0 1;
+        }
+      }
+      part {
+        name: "text";
+        type: TEXT;
+        description {
+          state: "default" 0;
+          color: 0 0 0 255;
+          text {
+            align: 0.5 0.5;
+            size: 12;
+          }
+        }
+      }
+    }
+  }
 }

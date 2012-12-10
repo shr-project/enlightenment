@@ -1115,7 +1115,27 @@ GenController = Controller.extend({
               content: function(part, data) {
                 var item = this._itemFromData(data.data);
                 var image = item && item[part.replace('elm.swallow.', '')];
-                return image && elm.Icon({ image: image });
+                if ((item.badge == undefined) || (part != 'elm.swallow.end'))
+                  return image && elm.Icon({ image: image });
+                var bg = elm.Background({
+                    weight: { x: 1.0, y: 1.0 },
+                    resize: true
+                });
+                var color = item.badge.color;
+                if(color) {
+                  bg.red = color.red;
+                  bg.green = color.green;
+                  bg.blue = color.blue;
+                }
+                if(item.badge.image)
+                  bg.image = item.badge.image;
+                return elm.Layout({
+                  file: {name: 'themes/eui.edj', group: 'badge'},
+                  content: {
+                    text: item.badge.text || '',
+                    badge_bg: bg
+                  }
+                });
               }.bind(this),
               state: function(part, data) {
                 var item = this._itemFromData(data.data);
