@@ -360,7 +360,7 @@ login_fail(Login_Window *lw, int type __UNUSED__, Shotgun_Auth *auth __UNUSED__)
    if (lw->notify) return ECORE_CALLBACK_RENEW;
    lw->notify = elm_notify_add(lw->win);
    WEIGHT(lw->notify, 0, 0);
-   elm_notify_orient_set(lw->notify, ELM_NOTIFY_ORIENT_TOP_RIGHT);
+   elm_notify_align_set(lw->notify, 1.0, 0.0);
    elm_notify_timeout_set(lw->notify, 5.0);
    evas_object_smart_callback_add(lw->notify, "timeout", (Evas_Smart_Cb)_login_notify_close, lw);
    evas_object_smart_callback_add(lw->notify, "clicked", (Evas_Smart_Cb)_login_notify_close, lw);
