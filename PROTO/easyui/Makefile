@@ -6,6 +6,7 @@ EXAMPLES = \
 	browser.js \
 	calculator.js \
 	dict.js \
+	easy-connman.js \
 	file.js \
 	filter.js \
 	group.js \

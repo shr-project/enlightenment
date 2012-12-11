@@ -1,3 +1,15 @@
+/**
+ * A simple client to connman. Provides an interface to see available services,
+ * technologies and do simple adjusts to them. Uses elev8 dbus module to
+ * interact with connman.
+ * As any easyUI app, is basically made of models and controllers. Models
+ * communicate with connman via dbus, and controllers just display, in a pretty
+ * way, models data. Usually, models register listeners to keep up-to-date with
+ * connman, providing a "real time" interface. Models also do the "heavy task"
+ * of organising the data in a way that simplifies controllers task, so, usually,
+ * easy-connman controllers are realy simple (but not exactly the models).
+ */
+
 var dbus = require('dbus');
 var EUI = require('eui');
 
@@ -6,6 +18,13 @@ var obj = conn.getObject('net.connman', '/');
 var manager = obj.getProxy('net.connman.Manager');
 var image_dir = './themes/easy-connman/images/';
 
+/**
+ * Converts the DBus dictionary to javascript dictonary. DBus dictionary
+ * is actually an array of the form [["key1", [value1]], ["key2", [value2]]],
+ * where //valueN// can be any DBus type, even array or other dictionary.
+ * As the underlying DBus module on elev8 doesn't convert it to us, we
+ * need to do so.
+ */
 var arrayDictToDict = function(array){
   var dict = {};
   for (var i in array) {
@@ -24,6 +43,10 @@ var arrayDictToDict = function(array){
   return dict;
 };
 
+/**
+ * Join the elements of an array with commas, as used to some
+ * connman properties.
+ */
 var joinArray = function(array) {
   if (array.length)
     return array.join(', ');
@@ -31,10 +54,22 @@ var joinArray = function(array) {
   return '';
 };
 
+/**
+ * Simple error handler. As all DBus errors have //name// and //message//,
+ * it's a helper to display then. Can easyly be modified in future to
+ * display, for example, a UI message to the user.
+ */
 var genericErrorHandler = function(name, message){
   print('Error: ', name, ':', message);
 };
 
+/**
+ * Model which abstracts the services data returned by connman. Keeps the data
+ * as an array of dicts, each dict containing information about the service.
+ * Also listens to changes (sent via DBus by connman) on the order of the
+ * services (usually sorted by strength) and to "offline" property of each
+ * service, and notify the changes to the controller.
+ */
 ServicesModel = EUI.Model({
   init: function() {
     this.services = [];
@@ -123,6 +158,11 @@ ServicesModel = EUI.Model({
   }
 });
 
+/**
+ * Controller that show a list of services. It is quite straightforward.
+ * Just display the services, with icons to show type of network, signal
+ * strength and security, as applicable to each service.
+ */
 ServicesController = EUI.ListController({
   title: 'Available networks',
   init: function() {
@@ -181,6 +221,11 @@ ServicesController = EUI.ListController({
   }
 });
 
+/**
+ * Provides service data as an array of {propery, value}. Useful to display
+ * service details on a list. Also provides methods to connect/disconnect a
+ * service.
+ */
 ServiceDetailsModel = EUI.Model({
   init: function(service) {
     this.service = service;
@@ -195,6 +240,7 @@ ServiceDetailsModel = EUI.Model({
 
     this.updateItems();
   },
+  /** Creates the array of items, based on the service dictionary */
   updateItems: function() {
     var service = this.service;
     var createItem = this.createItem;
@@ -252,6 +298,11 @@ ServiceDetailsModel = EUI.Model({
   }
 });
 
+/**
+ * Display service details on a list, grouped by tipe of information.
+ * Actually, the groups are defined on {@link ServiceDetailsModel}, thus this
+ * controller is pretty straightforward.
+ */
 ServiceDetailsController = EUI.ListController({
   init: function(service, service_dbus) {
     this.title = service.Name || service.id;
@@ -276,6 +327,11 @@ ServiceDetailsController = EUI.ListController({
   },
 });
 
+/**
+ * This model handles editable service properties. It organises
+ * the data to be sent and retrieved from a TableController.
+ * It also takes care of properties that are arrays or dictionaries.
+ */
 EditableServiceDetailsModel = EUI.Model({
   init: function(service, service_dbus) {
     this.service = service;
@@ -288,6 +344,9 @@ EditableServiceDetailsModel = EUI.Model({
   itemAtIndex: function(index){
     return this.items[index];
   },
+  /** The 'editable' item is a copy of the actual service data. It
+   * has simple name of properties, to simplify binding to container
+   */
   createEditableItem: function() {
     var service = this.service;
     var editableItem = {};
@@ -345,6 +404,10 @@ EditableServiceDetailsModel = EUI.Model({
   }
 });
 
+/**
+ * This controller provides a serie of editable entries to allow setting
+ * service properties. Uses {@link EditableServiceDetailsModel} as its model
+ */
 EditServiceDetails = EUI.TableController({
   editable: true,
   init: function(service, service_dbus) {
@@ -379,6 +442,12 @@ EditServiceDetails = EUI.TableController({
   }
 });
 
+/**
+ * Abstracts technologies data. It's much alike {@link ServicesModel},
+ * but with subtle differences. For example, there is no order of technologies,
+ * so, connman inform us (via DBus) that some technologie was added or
+ * removed, and not a complete array with new order.
+ */
 TechnologiesModel = EUI.Model({
   init: function() {
     this.technologies = [];
@@ -438,6 +507,9 @@ TechnologiesModel = EUI.Model({
   },
 });
 
+/**
+ * Displays a list of technologies, as served by {@link TechnologiesModel}
+ */
 TechnologiesController = EUI.ListController({
   init: function() {
     this.title = 'Technologies';
@@ -465,6 +537,10 @@ TechnologiesController = EUI.ListController({
   }
 });
 
+/**
+ * Handles data about a technology. Also provides methods to interact
+ * with it, like scan and powerOn[Off]
+ */
 TechnologyDetailsModel = EUI.Model({
   init: function(technology) {
     this.technology = technology;
@@ -504,6 +580,9 @@ TechnologyDetailsModel = EUI.Model({
   }
 });
 
+/**
+ * Display technology details based on {@link TechnologyDetailsModel}.
+ */
 TechnologyDetailsController = EUI.ListController({
   init: function(technology) {
     this.title = technology.Name;
