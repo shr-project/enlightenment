@@ -69,7 +69,8 @@ PhotoController = EUI.ImageController({
     clearInterval(this.slideshow);
     switch (item.tag) {
     case 'share':
-      EUI.Routing.share('image/jpeg', this.getView().file);
+      var file = this.model.itemAtIndex(this.index);
+      EUI.Routing.share('image/jpeg', file.path);
       break;
     case 'left':
       this.setImage(this.index - 1);
