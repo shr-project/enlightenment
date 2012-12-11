@@ -708,6 +708,7 @@ level_unload(Game *game)
 
    if (game->timer)
      {
+        ecore_timer_thaw(game->timer);
         ecore_timer_del(game->timer);
         game->timer = NULL;
      }
@@ -967,6 +968,8 @@ _ship_time_attack_cb(void *data)
    Game *game = data;
    int x, y, z, w, h, d;
    Eina_List *l;
+
+   if (!game->timer) return EINA_FALSE;
 
    ephysics_body_geometry_get(game->ship, &x, &y, &z, &w, &h, &d);
 
