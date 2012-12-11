@@ -2,8 +2,7 @@ EUI = require('eui');
 Property = require('class').Property;
 
 localStorage.database = "dict.eet";
-elm.addThemeOverlay("./themes/dict.edj");
-imagedir = 'themes/dict/images/';
+imagedir = 'themes/images/';
 
 var bookmarks = new EUI.DBModel('bookmarks');
 var history = new EUI.DBModel('history');
@@ -77,7 +76,6 @@ DictModel = EUI.Model({
 var dictModel = new DictModel();
 
 ListItems = EUI.ListController({
-  navigationBarStyle: 'dict',
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
     return item && {text: item.text};
@@ -90,13 +88,13 @@ ListItems = EUI.ListController({
 
 Bookmarks = ListItems.extend({
   title: 'Bookmarks',
-  icon: 'bookmarks',
+  icon: imagedir + 'icon-bookmarks.png',
   model: bookmarks,
 });
 
 History = ListItems.extend({
   title: 'History',
-  icon: 'history',
+  icon: imagedir + 'icon-history.png',
   model: history,
   navigationBarItems: { right: 'Clear' },
   selectedNavigationBarItem: function (item) {
@@ -107,16 +105,8 @@ History = ListItems.extend({
 
 Search = ListItems.extend({
   title: 'Search',
-  icon: 'search',
+  icon: imagedir + 'icon-search.png',
   model: dictModel,
-  searchBarItems: {
-    left: EUI.widgets.Button({
-      icon: EUI.widgets.Icon({ image: imagedir + 'search.png'})
-    }),
-    right: EUI.widgets.Button({
-      icon: EUI.widgets.Icon({ image: imagedir + 'del.png'})
-    })
-  },
   search: function(text) {
     this.model.filter = text;
   }
@@ -142,8 +132,7 @@ Definition = EUI.TableController({
     this.index = 0;
     this.bookmark = (bookmarks.indexOf(item) > -1);
   },
-           fields: [[EUI.widgets.Entry({text: '', scrollable: true, field: 'entry', style: 'no_border', acceptMarkup: true})]],
-  navigationBarStyle: 'dict',
+  fields: [[EUI.widgets.Entry({text: '', scrollable: true, field: 'entry', style: 'no_border', acceptMarkup: true})]],
   navigationBarItems: function() {
     return {
       right: EUI.widgets.Check({
@@ -152,7 +141,7 @@ Definition = EUI.TableController({
         on_change: function() { this.ctrl.bookmark = this.state }
       }),
       left: EUI.widgets.Button({
-        icon: EUI.widgets.Icon({ image: imagedir + 'back.png' }),
+        icon: EUI.widgets.Icon({ image: 'arrow_left' }),
         on_click: function() { this.popController() }.bind(this)
       })
     };

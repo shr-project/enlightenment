@@ -26,8 +26,7 @@ EXAMPLES = \
 
 EDCS = \
 	themes/eui.edc \
-	themes/default.edc \
-	themes/dict.edc
+	themes/default.edc
 
 GUIDESDIR = jsduck/guides
 ELEMENTARY_THEMES_DIR = \
