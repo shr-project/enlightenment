@@ -17,6 +17,7 @@ static const Ecore_Getopt optdesc = {
   {
     ECORE_GETOPT_STORE_DEF_BOOL(0, "debug", "enable debuggind mode", EINA_TRUE),
     ECORE_GETOPT_STORE_DEF_BOOL(0, "server", "enable server mode", EINA_TRUE),
+    ECORE_GETOPT_STORE_DEF_BOOL(0, "no-daemonize", "do not create a daemon on server mode", EINA_TRUE),
     ECORE_GETOPT_STORE_DEF_BOOL(0, "shutdown", "shutdown elev8 server.", EINA_TRUE),
     ECORE_GETOPT_STORE_DEF_BOOL(0, "connect", "run app spawing a elev8 server.", EINA_TRUE),
     ECORE_GETOPT_HELP('h', "help"),
@@ -33,6 +34,7 @@ int elev8_parse_argv(elev8_args *args, int argc, char **argv)
    Ecore_Getopt_Value values[] = {
      ECORE_GETOPT_VALUE_BOOL(args->debug),
      ECORE_GETOPT_VALUE_BOOL(args->server),
+     ECORE_GETOPT_VALUE_BOOL(args->no_daemonize),
      ECORE_GETOPT_VALUE_BOOL(args->shutdown),
      ECORE_GETOPT_VALUE_BOOL(args->connect),
      ECORE_GETOPT_VALUE_BOOL(args->quit),

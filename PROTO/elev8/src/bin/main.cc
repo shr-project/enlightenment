@@ -493,7 +493,8 @@ main(int argc, char *argv[])
 
    if (args.server)
      {
-        daemonize();
+        if (!args.no_daemonize)
+          daemonize();
         server_start();
      }
    else if (args.shutdown)
