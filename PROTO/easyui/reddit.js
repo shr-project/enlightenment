@@ -3,6 +3,7 @@ ajax = require('ajax');
 Property = require('class').Property;
 
 const reddit_url = 'http://www.reddit.com/';
+saved_reddits = new EUI.DBModel('reddit');
 
 /** @extends EUI.Model */
 RSSModel = EUI.Model({
@@ -167,7 +168,13 @@ RedditList = EUI.ListController({
       this.popController();
       this.parent.popController();
 
-      reddit_all_items.pushItem(this.clone(), true);
+      reddits.pushItem(this.clone(), true);
+      saved_reddits.insert({
+        endpoint: this.endpoint,
+        title: this.title,
+        icon: this.icon,
+        mode: this.mode
+      });
     }
   },
   /** @type{RedditList} */
@@ -240,13 +247,23 @@ RedditSearchController = EUI.ListController({
 });
 
 /** @extends EUI.ArrayModel */
-reddit_all_items = new EUI.ArrayModel([
-  new RedditList('top.json', 'Home', 'go-home'),
-  new RedditList('r/programming/top.json', 'Proggit', 'applications-development'),
-  new RedditList('r/iama/top.json', 'IAmA', 'dialog-question'),
-  new RedditList('r/funny/top.json', 'Funny', 'face-laugh'),
-  new RSSList('http://feeds.bbci.co.uk/news/uk/rss.xml', 'BBC')
-]);
+if(!(saved_reddits.length)) {
+  default_reddits = [
+    {endpoint: 'r/top.json', title: 'Home', icon: 'go-home'},
+    {endpoint: 'r/programming/top.json', title: 'Proggit', icon: 'applications-development'},
+    {endpoint: 'r/iama/top.json', title: 'IAmA', icon: 'dialog-question'},
+    {endpoint: 'r/funny/top.json', title: 'Funny', icon: 'face-laugh'},
+    {endpoint: 'http://feeds.bbci.co.uk/news/uk/rss.xml',title: 'BBC'}
+  ];
+  for (var i in default_reddits)
+    saved_reddits.insert(default_reddits[i]);
+}
+
+reddits = new EUI.ArrayModel([]);
+for(var index = 0; index < saved_reddits.length; index++) {
+  var item = saved_reddits.itemAtIndex(index);
+  reddits.pushItem(new RedditList(item.endpoint, item.title, item.icon));
+}
 
 /** @extends EUI.ListController */
 Subscriptions = EUI.ListController({
@@ -255,7 +272,7 @@ Subscriptions = EUI.ListController({
   /** @type {String} */
   title: 'Subscriptions',
   /** @type {EUI.FilterModel} */
-  model: new EUI.FilterModel(reddit_all_items,
+  model: new EUI.FilterModel(reddits,
     function(item) {
       return item.group_name === 'Subreddits';
     }
@@ -277,24 +294,32 @@ Subscriptions = EUI.ListController({
   },
   contextMenuItems: ['Unsubscribe'],
   selectedContextMenuItem: function(menuItem, index) {
-    if(menuItem == 'Unsubscribe')
-      reddit_all_items.deleteItemAtIndex(index);
+    if(menuItem == 'Unsubscribe') {
+      var item = this.model.itemAtIndex(index);
+      var i = reddits.indexOf(item);
+      reddits.deleteItemAtIndex(i);
+      saved_reddits.deleteItemAtIndex(index);
+    }
   },
 });
 
-reddit_all_items.pushItem(new Subscriptions());
+reddits.pushItem(new Subscriptions());
 
 /** @extends EUI.ListController */
 RedditAppSwitch = new EUI.ListController({
   /** @type {EUI.ArrayModel} */
-  model: reddit_all_items,
+  model: reddits,
   /** @inheritdoc */
   itemAtIndex: function(index) {
     var item = this.model.itemAtIndex(index);
     return {
       text: item.title,
       icon: item.icon,
-      group: item.group_name
+      group: item.group_name,
+      badge: {
+        text: item.model.length,
+        color: {red: 255, green: 255, blue: 255}
+      }
     };
   },
   /** @inheritdoc */
@@ -307,7 +332,7 @@ RedditAppSwitch = new EUI.ListController({
 /** @extends EUI.FrameController */
 RedditAppTabs = new EUI.FrameController({
   /** @type {EUI.ArrayModel} */
-  model: reddit_all_items,
+  model: reddits,
 });
 
 /** @extends EUI.SplitController */
