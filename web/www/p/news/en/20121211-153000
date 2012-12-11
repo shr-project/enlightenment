@@ -1,0 +1,48 @@
+New E17 <b>Release</b>: GAMMA
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+This release of E17 is also known as <b>"The Hulk"</b> for obvious reasons.
+<br><br>
+
+Changelog:
+<li>Translation updates</li>
+<li>Clock and cpufreq gadgets now consume less cpu</li>
+<li>Slider widget can no longer explode the stack</li>
+<li>Backlight setting improved, now more reliable</li>
+<li>mkstemps no longer used; portability++</li>
+<li>"Really move" option in filemanager renamed to something more descriptive</li>
+<li>Resizable dialogs are now able to be maximized</li>
+<li>Scrollbars now hide in more cases where they should</li>
+<li>Dragging files to other applications from filemanager no longer causes file icon to disappear</li>
+<li>Filemanager toolbar path items delete when corresponding path is removed</li>
+<li>Mixer no longer causes a crash when pulseaudio is killed</li>
+<li>Navigate menu no longer crashes when repeatedly navigating to a directory which has no listable contents</li>
+<li>Tasks gadget no longer tries to delete its items repeatedly</li>
+<li>Systray icon scaling improved</li>
+<li>XDirectSave DND operations now work again</li>
+<li>"hicolor" icon theme automatically applied now when no theme is selected</li>
+<li>Fileselector no longer changes its entry text when changing directories</li>
+<li>Filemanager "New File" action no longer creates file with garbage content</li>
+<li>"Don't composite fullscreen windows" is now disabled by default</li>
+<li>Notifications no longer do anything (including crash) when received during desklock</li>
+<li>Gadgets module no longer crashes on unload and also correctly shows gadgets when loaded</li>
+<li>Read-only entry widgets are now actually read-only</li>
+<li>Filemanager no longer as hungry, saves some DND events for pager to enable drags on desktop pagers</li>
+<li>Removed some potentially troublesome settings from advanced Composite settings</li>
+<li>Systray now informs the user that it should not be placed on an invisible shelf</li>
+<li>Window moving/resizing (and other mouse-related events) no longer behave strangely in the presence of autohiding shelves</li>
+<li>Submenu item arrows now properly sized and aligned</li>
+<li><b>[THEME]</b> Lots of icons</li>
+</p>
+
+<p><ul>
+
+<li>E17 GAMMA - 80662
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-gamma.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-gamma.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
