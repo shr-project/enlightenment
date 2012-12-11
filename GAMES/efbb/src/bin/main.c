@@ -418,7 +418,7 @@ _mouse_up(void *data, Evas *e __UNUSED__, Evas_Object *obj __UNUSED__,
    evas_object_layer_set(body_image, LAYER_BLOCKS);
    evas_object_show(body_image);
 
-   body = ephysics_body_circle_add(game->cur_world);
+   body = ephysics_body_cylinder_add(game->cur_world);
    ephysics_body_mass_set(body, AMMO_MASS);
    ephysics_body_damping_set(body, 0.3, 0.16);
    ephysics_body_sleeping_threshold_set(body, 30, 240);
@@ -630,7 +630,7 @@ _create_target(Game *game, const char *type, int w, int h, int x, int y)
    if (!strcmp(type, "boss"))
      body = ephysics_body_box_add(game->cur_world);
    else
-     body = ephysics_body_circle_add(game->cur_world);
+     body = ephysics_body_cylinder_add(game->cur_world);
 
    ephysics_body_mass_set(body, TARGET_MASS);
    ephysics_body_evas_object_set(body, body_image, EINA_TRUE);
