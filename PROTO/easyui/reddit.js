@@ -45,7 +45,8 @@ RSSModel = EUI.Model({
 /** @extends EUI.ListController */
 RSSList = EUI.ListController({
   /** @type {String} */
-  style: 'double_label',
+  style: 'text_label',
+  mode: 'compress',
   /** @type {String} */
   group_name: 'RSS',
   /**
@@ -118,7 +119,8 @@ WebBrowser = EUI.WebController({
 /** @extends EUI.ListController */
 RedditList = EUI.ListController({
   /** @type {String} */
-  style: 'double_label',
+  style: 'text_label',
+  mode: 'compress',
   /** @type {String} */
   group_name: 'Subreddits',
   /**
