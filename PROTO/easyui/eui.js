@@ -355,7 +355,7 @@ Controller = Class.extend({
         case this.split.left:
           if (EUI.uiMode === 'tablet')
             return;
-          btn.icon = btn.icon || elm.Icon({ image: 'Apps' });
+          btn.icon = btn.icon || elm.Icon({ image: 'apps' });
           btn.on_click = function() { this.split.leftPanelVisible = true }.bind(this);
           break;
         default:
