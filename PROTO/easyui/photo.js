@@ -206,6 +206,9 @@ AlbumListController = EUI.ListController({
     var item = this.model.itemAtIndex(index);
     var picture = {text: item.name, icon: undefined};
 
+    if (!item.entries)
+      return { text: item.name };
+
     for (var i = 0; i < item.entries.length; ++i) {
       if (item.entries[i].isFile) {
         return {
@@ -214,10 +217,6 @@ AlbumListController = EUI.ListController({
         };
       }
     }
-
-    return {
-      text: item.name
-    };
   }
 });
 
