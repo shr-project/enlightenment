@@ -246,6 +246,42 @@ cdef class MenuSeparatorItem(ObjectItem):
         """
         return True
 
+    def next_get(self):
+        """Get the next item in the menu.
+
+        @return: The item after it, or None
+        @rtype: L{MenuItem}
+
+        """
+        return _object_item_to_python(elm_menu_item_next_get(self.item))
+
+    property next:
+        """Get the next item in the menu.
+
+        @type: L{MenuItem}
+
+        """
+        def __get__(self):
+            return _object_item_to_python(elm_menu_item_next_get(self.item))
+
+    def prev_get(self):
+        """Get the previous item in the menu.
+
+        @return: The item before it, or None
+        @rtype: L{MenuItem}
+
+        """
+        return _object_item_to_python(elm_menu_item_prev_get(self.item))
+
+    property prev:
+        """Get the previous item in the menu.
+
+        @type: L{MenuItem}
+
+        """
+        def __get__(self):
+            return _object_item_to_python(elm_menu_item_prev_get(self.item))
+
 cdef public class Menu(Object) [object PyElementaryMenu, type PyElementaryMenu_Type]:
 
     """A menu is a list of items displayed above its parent.
