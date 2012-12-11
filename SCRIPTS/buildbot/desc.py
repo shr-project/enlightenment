@@ -107,6 +107,7 @@ Package(
     configure_flags={
         "common": [
             "--enable-doc",
+            "--enable-tests",
             "--with-mount",
             "--with-umount",
             "--with-eject",
