@@ -4,8 +4,8 @@ EAPI E_Module_Api e_modapi = {E_MODULE_API_VERSION, "Sawed-Off Shotgun"};
 static E_Config_DD *conf_edd = NULL;
 static Eio_File *eio_file = NULL;
 
-Mod *mod = NULL;
-Config *sos_config = NULL;
+EINTERN Mod *mod = NULL;
+EINTERN Config *sos_config = NULL;
 
 static Eina_List *handlers = NULL;
 
