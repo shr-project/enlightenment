@@ -99,6 +99,7 @@ Package(
 
 Package(
     name="eeze",
+    test_target="check",
     doc_target="doc",
     exclusive_platforms=["linux"],
     dependencies={

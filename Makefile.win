@@ -1,5 +1,5 @@
 # -*- mode: makefile -*-
-# Generated for win at Tue Dec 11 17:38:34 2012.
+# Generated for win at Wed Dec 12 09:03:31 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
 # Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
