@@ -44,7 +44,7 @@ shelm_about_dialog()
 			"<br>"
 			"<b>Credits:</><br>"
 			"<b>Carsten Haitzler (raster)</> "
-			"for Enlightenment DR17, great Elementary toolkit and help with developenment<br>"
+			"for Enlightenment DR17, great Elementary toolkit and help with development<br>"
 			"<b>Christopher Michael (devilhorns)</> "
 			"for help with development<br>"));
   elm_object_content_set(scroller, textinfo);
