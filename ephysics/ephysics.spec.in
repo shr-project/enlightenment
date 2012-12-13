@@ -49,11 +49,11 @@ test "x$RPM_BUILD_ROOT" != "x/" && rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-, root, root)
 %doc AUTHORS COPYING README
-%{_bindir}/*
+#%{_bindir}/*
 %{_libdir}/*.so.*
-%dir %{_datadir}/ephysics/
-%{_datadir}/ephysics/*.edj
-%{_datadir}/ephysics/*.png
+#%dir %{_datadir}/ephysics/
+#%{_datadir}/ephysics/*.edj
+#%{_datadir}/ephysics/*.png
 
 %files devel
 %defattr(-, root, root)
