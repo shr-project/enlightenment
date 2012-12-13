@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: enlightenment\n"
 "Report-Msgid-Bugs-To: $MSGID_BUGS_ADDRESS\n"
 "POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-12-07 23:48+0000\n"
-"Last-Translator: Eliovir <Unknown>\n"
+"PO-Revision-Date: 2012-12-12 17:04+0000\n"
+"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-08 05:09+0000\n"
-"X-Generator: Launchpad (build 16341)\n"
+"X-Launchpad-Export-Date: 2012-12-13 04:52+0000\n"
+"X-Generator: Launchpad (build 16361)\n"
 "Language: eo\n"
 
 #: src/curl.c:92 src/elmdentica.c:1393 src/elmdentica.c:1616
@@ -28,27 +28,29 @@ msgid ""
 "Can't dump %s into %s:\n"
 "(%d) %s\n"
 msgstr ""
+"%s ne ŝuteblas en %s:\n"
+"(%d) %s\n"
 
 #: src/curl.c:326
 #, c-format
 msgid "Can't open %s for writing: %s\n"
-msgstr "Ne povas malfermi %s por skribi: %s\n"
+msgstr "%s ne malfermeblas por skribado: %s\n"
 
 #: src/elmdentica.c:278
 msgid "Last messages..."
-msgstr ""
+msgstr "Lastaj mesaĝoj..."
 
 #: src/elmdentica.c:279
 msgid "Everyone..."
-msgstr ""
+msgstr "Ĉiuj..."
 
 #: src/elmdentica.c:280
 msgid "My favorites..."
-msgstr ""
+msgstr "Miaj preferataj..."
 
 #: src/elmdentica.c:281
 msgid "Replies / mentions..."
-msgstr ""
+msgstr "Respondoj/mencioj..."
 
 #: src/elmdentica.c:283
 msgid "My friends..."
@@ -64,12 +66,12 @@ msgstr "Ĉesi sekvi"
 
 #: src/elmdentica.c:610
 msgid "Couldn't parse user info message..."
-msgstr "Ne povis sintakse analizi informmesaĝojn de uzantoj..."
+msgstr "La mesaĝoj de informoj ne sintakse analizeblas..."
 
 #: src/elmdentica.c:672 src/elmdentica.c:751
 #, c-format
 msgid "You are a member of group %s along with %d other people.<br>«%s»"
-msgstr ""
+msgstr "Vi estas ano de la grupo %s kune kun %d aliaj personoj.<br>«%s»"
 
 #: src/elmdentica.c:673 src/elmdentica.c:784
 msgid "Leave"
@@ -78,7 +80,7 @@ msgstr "Forlasi"
 #: src/elmdentica.c:675 src/elmdentica.c:753
 #, c-format
 msgid "You are not a member of group %s but %d people are.<br>«%s»"
-msgstr ""
+msgstr "Vi ne estas ano de la grupo %s sed %d personoj estas.<br>«%s»"
 
 #: src/elmdentica.c:676 src/elmdentica.c:786
 msgid "Join"
@@ -91,47 +93,47 @@ msgstr "Kontrolu!"
 #: src/elmdentica.c:1003
 #, c-format
 msgid "a few seconds ago"
-msgstr ""
+msgstr "antaŭ kelkaj sekundoj"
 
 #: src/elmdentica.c:1005
 #, c-format
 msgid "a few minutes ago"
-msgstr ""
+msgstr "antaŭ kelkaj minutoj"
 
 #: src/elmdentica.c:1007
 #, c-format
 msgid "~ %d minutes ago"
-msgstr ""
+msgstr "antaŭ preskaŭ %d minutoj"
 
 #: src/elmdentica.c:1010
 #, c-format
 msgid "~ %d hours ago"
-msgstr ""
+msgstr "antaŭ preskaŭ %d horoj"
 
 #: src/elmdentica.c:1012
 #, c-format
 msgid "~ 1 hour ago"
-msgstr ""
+msgstr "antaŭ preskaŭ 1 horo"
 
 #: src/elmdentica.c:1014
 #, c-format
 msgid "on %x"
-msgstr ""
+msgstr "je %x"
 
 #: src/elmdentica.c:1017
 #, c-format
 msgid "%x %X"
-msgstr ""
+msgstr "%x %X"
 
 #: src/elmdentica.c:1018 src/elmdentica.c:1019
 #, c-format
 msgid "some-when"
-msgstr ""
+msgstr "nedifinita"
 
 #: src/elmdentica.c:1097
 #, c-format
 msgid "Finished %s"
-msgstr ""
+msgstr "%s finiĝis"
 
 #: src/elmdentica.c:1105
 msgid "Ok"
@@ -144,7 +146,7 @@ msgstr "Malfermi"
 #: src/elmdentica.c:1158
 #, c-format
 msgid "downloading %s"
-msgstr "elŝutante %s"
+msgstr "elŝutado de %s"
 
 #: src/elmdentica.c:1174 src/elmdentica.c:1886 src/settings.c:544
 #: src/settings.c:1277
@@ -181,7 +183,7 @@ msgstr "Ripeti"
 
 #: src/elmdentica.c:1447 src/elmdentica.c:2154
 msgid "DM"
-msgstr ""
+msgstr "PM"
 
 #: src/elmdentica.c:1457
 msgid "Unmark favorite"
@@ -193,15 +195,15 @@ msgstr "Marki kiel preferita"
 
 #: src/elmdentica.c:1469
 msgid "View related"
-msgstr ""
+msgstr "Vidi rilatojn"
 
 #: src/elmdentica.c:1478
 msgid "Status details"
-msgstr ""
+msgstr "Detaloj de stato"
 
 #: src/elmdentica.c:1486
 msgid "Recycle status"
-msgstr ""
+msgstr "Recikli staton"
 
 #: src/elmdentica.c:1586
 msgid "Error"
@@ -213,7 +215,7 @@ msgstr "Eraro de µ-blogo"
 
 #: src/elmdentica.c:1868
 msgid "Send a DM to..."
-msgstr ""
+msgstr "Sendi PM al..."
 
 #: src/elmdentica.c:1880 src/settings.c:536 src/settings.c:1268
 msgid "OK"
@@ -221,7 +223,7 @@ msgstr "Bone"
 
 #: src/elmdentica.c:1955 src/elmdentica.c:2113
 msgid "Type your status here..."
-msgstr "Entajpu vian staton ĉi tie..."
+msgstr "Tajpu vian staton ĉi tie..."
 
 #: src/elmdentica.c:2141
 msgid "Send"
@@ -233,11 +235,11 @@ msgstr "Kaŝi"
 
 #: src/elmdentica.c:2188
 msgid "Timelines"
-msgstr ""
+msgstr "Tempolinioj"
 
 #: src/elmdentica.c:2194
 msgid "Direct Messages"
-msgstr ""
+msgstr "Privata mesaĝo"
 
 #: src/elmdentica.c:2195
 msgid "Everyone"
@@ -249,15 +251,15 @@ msgstr "Nur mi"
 
 #: src/elmdentica.c:2197
 msgid "Favorites"
-msgstr "Preferaĵoj"
+msgstr "Preferitaj"
 
 #: src/elmdentica.c:2198
 msgid "Replies/Mentions"
-msgstr ""
+msgstr "Respondoj/mencioj"
 
 #: src/elmdentica.c:2199
 msgid "Friends & I"
-msgstr "Mi kaj geamikoj"
+msgstr "Mi kaj amikoj"
 
 #: src/elmdentica.c:2201 src/settings.c:1433
 msgid "Settings"
@@ -266,32 +268,32 @@ msgstr "Agordoj"
 #: src/statusnet.c:366
 #, c-format
 msgid "Not enough memory to create a status\n"
-msgstr ""
+msgstr "Nesufiĉa memoro por krei staton\n"
 
 #: src/statusnet.c:418
 #, c-format
 msgid "Not enough memory to create an user\n"
-msgstr ""
+msgstr "Nesufiĉa memoro por krei uzanton\n"
 
 #: src/statusnet.c:555
 #, c-format
 msgid "Error encountered: %s\n"
-msgstr ""
+msgstr "Renkontita eraro: %s\n"
 
 #: src/statusnet.c:967
 #, c-format
 msgid "Unknown timeline %d\n"
-msgstr ""
+msgstr "Nekonata tempolinio %d\n"
 
 #: src/statusnet.c:974
 #, c-format
 msgid "Not enough memory to construct timeline URI\n"
-msgstr ""
+msgstr "Nesufiĉa memoro por konstrui URI de tempolinio\n"
 
 #: src/statusnet.c:981
 #, c-format
 msgid "Not enough memory to prepare host url\n"
-msgstr ""
+msgstr "Nesufiĉa memoro por pretigi gastigan URL\n"
 
 #: src/settings.c:146
 msgid "never"
@@ -299,7 +301,7 @@ msgstr "neniam"
 
 #: src/settings.c:146
 msgid "0 s"
-msgstr ""
+msgstr "0 sek."
 
 #: src/settings.c:147
 msgid "1 minute"
@@ -323,43 +325,43 @@ msgstr "5 minutoj"
 
 #: src/settings.c:149
 msgid "5 min"
-msgstr ""
+msgstr "5 min."
 
 #: src/settings.c:150
 msgid "10 minutes"
-msgstr ""
+msgstr "10 minutoj"
 
 #: src/settings.c:150
 msgid "10 min"
-msgstr ""
+msgstr "10 min."
 
 #: src/settings.c:151
 msgid "15 minutes"
-msgstr ""
+msgstr "15 minutoj"
 
 #: src/settings.c:151
 msgid "15 min"
-msgstr ""
+msgstr "15 min."
 
 #: src/settings.c:152
 msgid "30 minutes"
-msgstr ""
+msgstr "30 minutoj"
 
 #: src/settings.c:152
 msgid "30 min"
-msgstr ""
+msgstr "30 min."
 
 #: src/settings.c:153
 msgid "1 hour"
-msgstr ""
+msgstr "1 horo"
 
 #: src/settings.c:153
 msgid "1 h"
-msgstr ""
+msgstr "1 h"
 
 #: src/settings.c:174 src/settings.c:1087
 msgid "Every: "
-msgstr ""
+msgstr "Je ĉiu: "
 
 #: src/settings.c:396
 msgid "Screen name"
@@ -371,7 +373,7 @@ msgstr "Pasvorto"
 
 #: src/settings.c:435
 msgid "Type"
-msgstr "Tipo"
+msgstr "Speco"
 
 #: src/settings.c:452
 msgid "Secure"
@@ -420,16 +422,16 @@ msgstr "Neniu afiŝo<br>en kaŝmemoro."
 #: src/settings.c:804
 #, c-format
 msgid "Currently remembering<br>%d posts."
-msgstr "Nun memoranta<br>%d afiŝojn."
+msgstr "Nun memorado<br>de %d afiŝoj."
 
 #: src/settings.c:840 src/settings.c:863
 msgid "No messages<br>in cache."
-msgstr "Neniuj mesaĝoj<br>en kaŝmemoro."
+msgstr "Neniu mesaĝo<br>en kaŝmemoro."
 
 #: src/settings.c:842
 #, c-format
 msgid "Currently remembering<br>%d messages."
-msgstr "Nun memoranta<br>%d mesaĝojn."
+msgstr "Nun memorado<br>de %d mesaĝoj."
 
 #: src/settings.c:941
 msgid "Displayed messages"
@@ -441,7 +443,7 @@ msgstr "Bonvole elektu retumilon"
 
 #: src/settings.c:1010
 msgid "No supported browser available"
-msgstr "Neniu subtenata retumilo disponebla"
+msgstr "Neniu disponebla subtenata retumilo"
 
 #: src/settings.c:1047
 msgid "Preferred browser..."
@@ -461,27 +463,27 @@ msgstr "Nekonektita"
 
 #: src/settings.c:1067
 msgid "Timestamps..."
-msgstr ""
+msgstr "Tempindikoj..."
 
 #: src/settings.c:1070
 msgid "Relative"
-msgstr ""
+msgstr "Relativa"
 
 #: src/settings.c:1071
 msgid "Absolute"
-msgstr ""
+msgstr "Absoluta"
 
 #: src/settings.c:1079
 msgid "Auto updates"
-msgstr ""
+msgstr "Aŭtomataj ĝisdatigoj"
 
 #: src/settings.c:1248
 msgid "Pattern..."
-msgstr ""
+msgstr "Modelo..."
 
 #: src/settings.c:1350
 msgid "Gag patterns..."
-msgstr ""
+msgstr "Modeloj de mutilo..."
 
 #: src/settings.c:1434
 msgid "ElmDentica settings..."
@@ -497,11 +499,11 @@ msgstr "Kaŝmemoro"
 
 #: src/settings.c:1463
 msgid "Options"
-msgstr "Agordoj"
+msgstr "Opcioj"
 
 #: src/settings.c:1465
 msgid "Gag"
-msgstr ""
+msgstr "Mutilo"
 
 #: src/settings.c:1476
 #, c-format
@@ -513,44 +515,50 @@ msgid ""
 "   -m N Show N messages at a time\n"
 "\n"
 msgstr ""
+"\n"
+"Uzado:\n"
+"   -d   Sencimiga reĝimo (por pliaj bongustaj eligoj. Uzu ĝin plurfoje)\n"
+"   -h   Helpo (kion vi estas leganta nun)\n"
+"   -m N Montri N mesaĝoj ĉiufoje\n"
+"\n"
 
 #: src/settings.c:1499
 #, c-format
 msgid "Can't run ecore_file_init()\n"
-msgstr "Ne povas ruli ecore_file_init()\n"
+msgstr "ecore_file_init() ne ruleblas\n"
 
 #: src/settings.c:1505
 #, c-format
 msgid "Can't create preferences directories since asprintf failed\n"
-msgstr "La kreado de agordaj dosieroj malsukcesis pro asprintf\n"
+msgstr "Dosierujo por agordoj ne kreeblas ĉar asprintf fiaskis\n"
 
 #: src/settings.c:1505
 #, c-format
 msgid "Can't create preferences directories since ecore_file_mkpath failed\n"
-msgstr "La kreado de agordaj dosieroj malsukcesis pro ecore_file_mkpath\n"
+msgstr "Dosierujo por agordoj ne kreeblas ĉar ecore_file_mkpath fiaskis\n"
 
 #: src/settings.c:1513
 #, c-format
 msgid "Not enough memory to define conf.eet path"
-msgstr "Ne sufiĉe da memoro por difini la vojo de conf.eet"
+msgstr "Nesufiĉa memoro por difini la vojon de conf.eet"
 
 #: src/settings.c:1519
 #, c-format
 msgid "Couldn't run eet_init()"
-msgstr "Ne povas ruli eet_init()"
+msgstr "eet_init() ne ruleblas"
 
 #: src/settings.c:1526
 #, c-format
 msgid "Can't create %s"
-msgstr "ne povas krei %s"
+msgstr "%s ne kreeblas"
 
 #: src/settings.c:1534
 #, c-format
 msgid "Can't setup settings_edd."
-msgstr "ne povas agordi settings_edd."
+msgstr "settings_edd ne agodeblas."
 
 #: src/settings.c:1552
 #, c-format
 msgid ""
 "Not enough memory for settings, no doubt for anything else either, surely..."
-msgstr "Ne sufiĉe da memoro por la agordo, aŭ por io ajn alia.."
+msgstr "Nesufiĉa memoro por la agordoj, sendube por io ajn alia, certe..."
