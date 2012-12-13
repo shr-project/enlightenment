@@ -618,7 +618,7 @@ FocusHandleEnter(EWin * ewin, XEvent * ev)
 {
    Mode.mouse_over_ewin = ewin;
 
-#if 1				/* FIXME - Remove? */
+#if 0				/* FIXME - Remove? */
    if (ev->xcrossing.mode == NotifyUngrab &&
        ev->xcrossing.detail == NotifyNonlinearVirtual)
      {
