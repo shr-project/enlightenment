@@ -849,26 +849,29 @@ MaxSizeHV(EWin * ewin, const char *resize_type, int hor, int ver)
    if (!hor && !ver)
      {
 	/* Restore regular state */
-	EwinSlideSizeTo(ewin, ewin->save_max.x, ewin->save_max.y,
-			ewin->save_max.w, ewin->save_max.h,
-			Conf.movres.maximize_speed, 0, 0);
-	goto done;
+	x = ewin->save_max.x;
+	y = ewin->save_max.y;
+	w = ewin->save_max.w;
+	h = ewin->save_max.h;
+	goto do_resize;
      }
    if (old_ver == ver && old_hor && !hor)
      {
 	/* Turn off horizontal maxsize */
-	EwinSlideSizeTo(ewin, ewin->save_max.x, EoGetY(ewin),
-			ewin->save_max.w, ewin->client.h,
-			Conf.movres.maximize_speed, 0, 0);
-	goto done;
+	x = ewin->save_max.x;
+	y = EoGetY(ewin);
+	w = ewin->save_max.w;
+	h = ewin->client.h;
+	goto do_resize;
      }
    if (old_hor == hor && old_ver && !ver)
      {
 	/* Turn off vertical maxsize */
-	EwinSlideSizeTo(ewin, EoGetX(ewin), ewin->save_max.y,
-			ewin->client.w, ewin->save_max.h,
-			Conf.movres.maximize_speed, 0, 0);
-	goto done;
+	x = EoGetX(ewin);
+	y = ewin->save_max.y;
+	w = ewin->client.w;
+	h = ewin->save_max.h;
+	goto do_resize;
      }
 
    type = MAX_ABSOLUTE;		/* Select default */
@@ -992,7 +995,8 @@ MaxSizeHV(EWin * ewin, const char *resize_type, int hor, int ver)
    if (h < 10)
       h = 10;
 
+ do_resize:
    EwinSlideSizeTo(ewin, x, y, w, h, Conf.movres.maximize_speed, 0, 0);
- done:
+
    HintsSetWindowState(ewin);
 }
