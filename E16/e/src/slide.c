@@ -129,9 +129,22 @@ EwinSlideSizeTo(EWin * ewin, int tx, int ty, int tw, int th,
 {
    Animator           *an;
    ewin_slide_params   params;
-   int                 duration;
+   int                 duration, warp;
    esound_e            start_sound = SOUND_NONE;
    esound_e            end_sound = SOUND_NONE;
+
+   warp = (flags & SLIDE_WARP) && (ewin == GetEwinPointerInClient());
+
+   if (speed == 0)
+     {
+	EwinMoveResize(ewin, tx, ty, tw, th, MRF_KEEP_MAXIMIZED);
+	if (warp && ewin != GetEwinPointerInClient())
+	  {
+	     EwinWarpTo(ewin, 1);
+	     FocusToEWin(ewin, FOCUS_SET);
+	  }
+	return NULL;
+     }
 
    ewin->state.sliding = 1;
 
@@ -145,9 +158,7 @@ EwinSlideSizeTo(EWin * ewin, int tx, int ty, int tw, int th,
    params.th = th;
    params.mode = mode;
    params.give_focus = (flags & SLIDE_FOCUS) != 0;
-   params.mouse_warp = ((flags & SLIDE_WARP) != 0) &&
-      ((params.fx != params.tx) || (params.fy != params.ty)) &&
-      (ewin == GetEwinPointerInClient());
+   params.mouse_warp = warp;
    EQueryPointer(EoGetWin(ewin), &params.mouse_x, &params.mouse_y, NULL, NULL);
 
    if (params.mouse_x > tw)

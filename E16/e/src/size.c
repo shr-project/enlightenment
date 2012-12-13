@@ -811,7 +811,7 @@ MaxSizeHV(EWin * ewin, const char *resize_type, int hor, int ver)
 {
    int                 x, y, w, h, x1, x2, y1, y2, type, bl, br, bt, bb;
    EWin               *const *lst;
-   int                 num;
+   int                 num, speed;
    int                 old_hor = ewin->state.maximized_horz != 0;
    int                 old_ver = ewin->state.maximized_vert != 0;
 
@@ -996,7 +996,8 @@ MaxSizeHV(EWin * ewin, const char *resize_type, int hor, int ver)
       h = 10;
 
  do_resize:
-   EwinSlideSizeTo(ewin, x, y, w, h, Conf.movres.maximize_speed, 0, 0);
+   speed = Conf.movres.maximize_animate ? Conf.movres.maximize_speed : 0;
+   EwinSlideSizeTo(ewin, x, y, w, h, speed, 0, SLIDE_WARP);
 
    HintsSetWindowState(ewin);
 }
