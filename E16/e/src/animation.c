@@ -453,9 +453,10 @@ get_check_frame_count(unsigned int last_frame __UNUSED__,
 
    if (frame_num > skip_to_frame)
      {
-	Eprintf("@%u %s missed %u frames ;-( after %u [%u] good frames\n",
-		frame_num, msg, frame_num - skip_to_frame, *good_framesp,
-		skip_to_frame - 1 - *last_skipped_framep);
+	if (EDebug(1))
+	   Eprintf("@%u %s missed %u frames after %u [%u] good frames\n",
+		   frame_num, msg, frame_num - skip_to_frame, *good_framesp,
+		   skip_to_frame - 1 - *last_skipped_framep);
 	*good_framesp = 0;
 	*last_skipped_framep = frame_num - 1;
      }
