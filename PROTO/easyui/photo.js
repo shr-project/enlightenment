@@ -2,11 +2,20 @@ var EUI = require('eui');
 var path = environment['HOME'] + '/Photos';
 var patterns = ['*.jpg', '*.jpeg', '*.png'];
 
+/*
+ * Displays the photo itself. ImageController will display each
+ * photo on model, so we just take care of satellite features,
+ * like the slideshow, or hiding the toolbars while showing
+ * the photo
+ */
 PhotoController = EUI.ImageController({
   init: function(model, index, slideshow) {
     this.model = model;
     this.index = index;
 
+    /*
+     * Here we setup the slideshow, if the option is enabled.
+     */
     if (slideshow) {
       this.chromeVisible = false;
       this.slideshow = setInterval(function() {
@@ -27,6 +36,9 @@ PhotoController = EUI.ImageController({
     return this.chromeVisible ? this.model.itemAtIndex(this.index).name : null;
   },
   didClickView: function() {
+    /*
+     * When the user clicks the photo, we show (or hide) the toolbar.
+     */
     this.chromeVisible = !this.chromeVisible;
     this.evaluateViewChanges();
   },
@@ -115,10 +127,8 @@ PhotoAlbumController = EUI.GridController({
     switch (item.tag) {
     case 'share':
       /*
-       * Even though we're using pushController to display an
-       * ActionSheet, EUI will know that it's supposed to ignore
-       * ``this.hasNavigationBar'' and draw the sheet on top of
-       * the current contents anyway.
+       * Share will display a popup with sharing options defined by
+       * EUI.Routing.
        */
       EUI.Routing.share('image/*', this.model.path);
       break;
@@ -180,9 +190,14 @@ AlbumListController = EUI.ListController({
    * could be fired on a lot of occasions, including, but not limited to,
    * files being added/removed in that particular directory, or (in other
    * kinds of models) information received from the network.
+   * We also use a FilterModel to not display empty directories.
    */
   patterns: patterns,
-  model: new EUI.FileModel(path, this.patterns),
+  model: new EUI.FilterModel (
+    new EUI.FileModel(path, this.patterns),
+    function(file) {
+      return file.isFile || file.entries.length;
+    }),
   title: 'Photo Albums',
   selectedItemAtIndex: function(index) {
     /*
@@ -222,9 +237,7 @@ AlbumListController = EUI.ListController({
 });
 
 /*
- * EUI.app(c) is a shorthand for:
- *  EUI.rootController().pushController(new c).start()
- * This tells EUI to initialize the applicatin using that particular
- * controller.
+ * EUI.app(c) tells EUI to initialize the application
+ * using that particular controller.
  */
 EUI.app(new AlbumListController());
