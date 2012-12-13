@@ -1,0 +1,66 @@
+EPhysics Tests 0.1.0
+
+******************************************************************************
+
+ FOR ANY ISSUES PLEASE EMAIL:
+ enlightenment-devel@lists.sourceforge.net
+
+******************************************************************************
+
+Requirements:
+-------------
+
+Must:
+  libc
+  ecore (at least 1.7.99)
+  evas (at least 1.7.99)
+  bullet (at least 2.80)
+  elementary (at least 1.7.99)
+  ephysics (at least 1.7.99)
+
+EPhysics Tests provides many tests for ephysics. It consists of three
+binaries:
+ * ephysics_test (a test suite)
+ * ephysics_sandbox (util for testing physics attributes and actions)
+ * ephysics_logo (example of fancy program logo using ephysics)
+
+------------------------------------------------------------------------------
+
+COMPILING AND INSTALLING:
+
+  $ ./configure
+  $ make
+(as root unless you are installing in your users directories):
+  $ make install
+
+If elementary is installed, it will build and install a test application as
+well, that showcases EPhysics capabilites. Run
+
+  $ ephysics_test
+
+to see these examples.
+
+------------------------------------------------------------------------------
+
+TESTS
+
+Tests require elementary to be build.
+
+List of test applications:
+ * ephysics_test => List with many tests to exemplify specific features
+ * ephysics_logo => Example of logo / loading screen made using ephysics
+ * ephysics_sandbox => Application to set many different properties to bodies
+                       and see they interacting.
+
+ephysics_test supports to launch a specified test on command line, like
+
+ $ ephysics_test "Jumping Balls"
+
+Also, it can run only the test, avoiding the main menu, with parameter
+--test-win-only or -to (it must to be passed before the test name):
+
+ $ ephysics_test -to Camera
+
+The other programs don't accept parameters.
+
+------------------------------------------------------------------------------
