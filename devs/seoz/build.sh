@@ -26,7 +26,7 @@ alias make='make -j6'
 
 export BUILD_ETHUMB_OPTION="PROTO/epdf"
 export BUILD_ELM_OPTION="PROTO/emap"
-export BUILD_CORE_EFL="eio edje e_dbus edbus efreet expedite "$BUILD_ETHUMB_OPTION" emotion ethumb "$BUILD_ELM_OPTION" elementary eeze e"
+export BUILD_CORE_EFL="edje e_dbus edbus efreet expedite "$BUILD_ETHUMB_OPTION" emotion ethumb "$BUILD_ELM_OPTION" elementary eeze e"
 export BUILD_PYTHON_BINDINGS="BINDINGS/python/python-evas BINDINGS/python/python-ecore BINDINGS/python/python-elementary BINDINGS/python/python-edje BINDINGS/python/python-emotion BINDINGS/python/python-e_dbus"
 export BUILD_CPP_BINDINGS="BINDINGS/cxx/eflxx BINDINGS/cxx/einaxx BINDINGS/cxx/evasxx BINDINGS/cxx/ecorexx BINDINGS/cxx/edjexx BINDINGS/cxx/elementaryxx"
 export BUILD_BINDINGS=$BUILD_PYTHON_BINDINGS" "$BUILD_CPP_BINDINGS" "
@@ -203,7 +203,7 @@ function e17_restart()
 
 create_log
 
-build_efl # eina eet eo embryo evas ecore
+build_efl # eina eet eo embryo evas ecore eio
 build ephysics --enable-build-tests
 build "$BUILD_CORE_EFL" --disable-doc
 build "$BUILD_PYTHON_BINDINGS" "--prefix=/usr/local"
