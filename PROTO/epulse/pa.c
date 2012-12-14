@@ -218,7 +218,7 @@ pulse_recv(Pulse *conn, Ecore_Fd_Handler *fdh)
      {
         ecore_main_fd_handler_active_set(fdh, ECORE_FD_WRITE);
         pulse_tag_free(tag);
-        tag = NULL;
+        return (void*)1;
      }
    return tag;
 error:
