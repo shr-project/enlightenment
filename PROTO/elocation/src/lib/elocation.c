@@ -931,9 +931,9 @@ elocation_landmarks_get(Elocation_Position *position_shadow, Elocation_Address *
 {
    EDBus_Message *msg;
    EDBus_Message_Iter *iter;
-   const char *keyword, *lang, *country_code;
-   int limit;
-   double left, top, right, bottom;
+   const char *keyword = NULL, *lang = NULL, *country_code = NULL;
+   int limit = 0;
+   double left= 0.0, top = 0.0, right = 0.0, bottom = 0.0;
 
    msg = edbus_proxy_method_call_new(master_poi, "SearchByPosition");
    iter = edbus_message_iter_get(msg);
