@@ -455,7 +455,7 @@ EAPI int etrophy_gamescore_level_low_score_get(const Etrophy_Gamescore *gamescor
  * and visibility.
  *
  * Created with @ref etrophy_trophy_new(), added to gamescore using
- * @ref ephysics_gamescore_trophy_add() and freed with
+ * @ref etrophy_gamescore_trophy_add() and freed with
  * @ref etrophy_level_free().
  *
  * @ingroup Trophy
@@ -588,7 +588,7 @@ EAPI void etrophy_gamescore_trophies_list_clear(Etrophy_Gamescore *gamescore);
  * Lock handle, has name, lock state and date of update.
  *
  * Created with @ref etrophy_lock_new(), added to gamescore using
- * @ref ephysics_gamescore_lock_add() and freed with
+ * @ref etrophy_gamescore_lock_add() and freed with
  * @ref etrophy_lock_free().
  *
  * @ingroup Lock
