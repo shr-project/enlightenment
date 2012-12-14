@@ -88,34 +88,88 @@ extern int _elocation_log_dom;
 extern int ELOCATION_EVENT_IN;
 extern int ELOCATION_EVENT_OUT;
 
+/* Some ENUMs that we mimic from GeoClue code as we only access it over the DBus
+ * interface and share no header file for such defines.
+ */
+
+/**
+ * @ingroup Location
+ * @typedef GeocluePositionFields
+ * @since 1.8
+ *
+ * Bitmask to indicate which of the supplied positions fields are valid.
+ *
+ * @{
+ */
 typedef enum {
    GEOCLUE_POSITION_FIELDS_NONE = 0,
    GEOCLUE_POSITION_FIELDS_LATITUDE = 1 << 0,
    GEOCLUE_POSITION_FIELDS_LONGITUDE = 1 << 1,
    GEOCLUE_POSITION_FIELDS_ALTITUDE = 1 << 2
 } GeocluePositionFields;
+/**@}*/
 
+/**
+ * @ingroup Location
+ * @typedef GeoclueNetworkStatus
+ * @since 1.8
+ *
+ * Status of the network connectivity for GeoClue. Needed for all providers that
+ * access external data to determine the location. For example GeoIP or GeoCode
+ * providers.
+ *
+ * @{
+ */
 typedef enum {
    GEOCLUE_CONNECTIVITY_UNKNOWN,
    GEOCLUE_CONNECTIVITY_OFFLINE,
    GEOCLUE_CONNECTIVITY_ACQUIRING,
    GEOCLUE_CONNECTIVITY_ONLINE,
 } GeoclueNetworkStatus;
+/**@}*/
 
+/**
+ * @ingroup Location
+ * @typedef GeoclueStatus
+ * @since 1.8
+ *
+ *  Status of a GeoClue provider.
+ *
+ * @{
+ */
 typedef enum {
    GEOCLUE_STATUS_ERROR,
    GEOCLUE_STATUS_UNAVAILABLE,
    GEOCLUE_STATUS_ACQUIRING,
    GEOCLUE_STATUS_AVAILABLE
 } GeoclueStatus;
+/**@}*/
 
+/**
+ * @ingroup Location
+ * @typedef GeoclueVelocityFields
+ * @since 1.8
+ *
+ * Bitmask to indicate which of the supplied velocity fields are valid.
+ *
+ * @{
+ */
 typedef enum {
    GEOCLUE_VELOCITY_FIELDS_NONE = 0,
    GEOCLUE_VELOCITY_FIELDS_SPEED = 1 << 0,
    GEOCLUE_VELOCITY_FIELDS_DIRECTION = 1 << 1,
    GEOCLUE_VELOCITY_FIELDS_CLIMB = 1 << 2
 } GeoclueVelocityFields;
+/**@}*/
 
+/**
+ * @ingroup Location
+ * @typedef Elocation_Provider
+ * @since 1.8
+ *
+ * Data structure to hold information about a GeoClue provider.
+ *
+ */
 typedef struct _Elocation_Provider
 {
    char *name;
@@ -124,6 +178,4 @@ typedef struct _Elocation_Provider
    char *path;
    GeoclueStatus status;
 } Elocation_Provider;
-
 #endif
-

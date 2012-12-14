@@ -10,14 +10,24 @@
  *
  * Elocation is meant as a convenience library to ease application developers
  * the usage of geo information in their apps. Adding a geo tag to a picture or
- * translating an address to a GPS position and show it on a map widget.
+ * translating an address to a GPS position and show it on a map widget are just
+ * some of the use cases.
+ *
+ * In the beginning elocation will rely on the GeoClue DBus service. Its has
+ * providers for various techniques to get hold off the current position.
+ * Ranging from GeoIP over wifi and GSM cell location to GPS. As well as
+ * provider to translates between location in a textual form to coordinates
+ * (GeoCode).
+ *
+ * Elocation covers all of these interfaces but in the end it depends on your
+ * system and the installed GeoClue providers what can be used.
  *
  * Currently it offer the following functionality:
  * @li Request current address in textual form
  * @li Request current position in GPS format
  * @li Translate a position into and address or an address in a position
  *
- * You can fidn the API documentation at @ref Location
+ * You can find the API documentation at @ref Location
 */
 #ifndef _ELOCATION_H
 #define _ELOCATION_H
@@ -65,7 +75,8 @@
  * @since 1.8
  *
  * Ecore events emitted by the library. Applications can register ecore event
- * handlers to react on such events.
+ * handlers to react on such events. After the initial query this can be used
+ * to keep track of changes and update your UI or data accordingly.
  * @{
  */
 EAPI extern int ELOCATION_EVENT_STATUS; /**< Status changed */
@@ -125,7 +136,9 @@ typedef enum {
  * @since 1.8
  *
  * Information about the accuracy of the reported location. For details about
- * the level of accuracy see #Elocation_Accuracy_Level.
+ * the level of accuracy see #Elocation_Accuracy_Level. It also covers
+ * horizontal and vertical accuracy. The values depend on the used provider
+ * and may very in quality.
  */
 typedef struct _Elocation_Accuracy
 {
@@ -140,8 +153,9 @@ typedef struct _Elocation_Accuracy
  * @since 1.8
  *
  * Location information in textual form. Depending on the used provider this
- * can cover only the country or a detailed address with postcode and street
- * based on GPS information.
+ * can cover only the country or a detailed address with postcode and street.
+ * The level of detail varies depending on the used provider.
+ * A timestamp is available to calculate the age of the address data.
  */
 typedef struct _Elocation_Address
 {
@@ -161,6 +175,7 @@ typedef struct _Elocation_Address
  * @since 1.8
  *
  * Location information based on the GPS grid. Latitude, longitude and altitude.
+ * A timestamp is available to calculate the age of the address data.
  */
 typedef struct _Elocation_Postion
 {
@@ -178,8 +193,9 @@ typedef struct _Elocation_Postion
  *
  * Velocity information. So far this interface is only offered with GPS based
  * providers. It offers information about speed, direction and climb.
+ * A timestamp is available to calculate the age of the address data.
  *
- * FIXME: check units and formats of this values coming in from geoclue
+ * FIXME: check units and formats of this values coming in from GeoClue
  */
 typedef struct _Elocation_Velocity
 {
@@ -197,6 +213,9 @@ typedef struct _Elocation_Velocity
  * Requirement settings for the location provider. Requirements can be a level
  * of accuracy or allowed resources like network access or GPS. See
  * #Elocation_Resource_Flags for all available resource flags.
+ *
+ * Based on this setting the best provider is chosen between the available
+ * providers of GeoClue.
  */
 typedef struct _Elocation_Requirements
 {
@@ -224,7 +243,8 @@ EAPI Elocation_Address *elocation_address_new(void);
  * @param address Address object to be freed.
  *
  * Destroys an address object created with #elocation_address_new. Should be
- * used during the cleanup of the application.
+ * used during the cleanup of the application or whenever the address object is
+ * no longer needed.
  *
  * @ingroup Location
  * @since 1.8
@@ -249,7 +269,8 @@ EAPI Elocation_Position *elocation_position_new(void);
  * @param position Position object to be freed.
  *
  * Destroys a position object created with #elocation_address_new. Should be
- * used during the cleanup of the application.
+ * used during the cleanup of the application or whenever the location object is
+ * no longer needed.
  *
  * @ingroup Location
  * @since 1.8
@@ -303,6 +324,8 @@ EAPI Eina_Bool elocation_status_get(int *status);
  * @param requirements Requirements
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * Set the requirements for selecting a provider.
+ *
  * @ingroup Location
  * @since 1.8
  */
@@ -313,6 +336,9 @@ EAPI Eina_Bool elocation_requirements_set(Elocation_Requirements *requirements);
  * @param position_shadow Position input
  * @param address_shadow Address output
  * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * Use a GeoCode provider to translate from a given GPS coordinate
+ * representation of a location to a representation in textual form.
  *
  * @ingroup Location
  * @since 1.8
@@ -325,6 +351,9 @@ EAPI Eina_Bool elocation_position_to_address(Elocation_Position *position_shadow
  * @param position_shadow Position output
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * Use a GeoCode provider to translate from a given textual form
+ * representation of a location to a representation as GPS coordinates.
+ *
  * @ingroup Location
  * @since 1.8
  */
@@ -336,11 +365,39 @@ EAPI Eina_Bool elocation_address_to_position(Elocation_Address *address_shadow, 
  * @param position_shadow Position output
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
+ * Similar GeoCode translation from textual form to GPS coordinates as
+ * #elocation_address_to_position but in this case the address is a simple
+ * string which hopefully contains enough information for the provider to
+ * understand and translate.
+ *
+ * Useful for an easy search interface in an application but also more error
+ * prone regarding correct results.
+ *
  * @ingroup Location
  * @since 1.8
  */
 EAPI Eina_Bool elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow);
 
+/**
+ * @brief Initialize the elocation  subsystem.
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * This function must be called before using any of the Elocation functionality
+ * in your application to make sure it it setup correctly for usage.
+ *
+ * @ingroup Location
+ * @since 1.8
+ */
 EAPI Eina_Bool elocation_init(void);
+
+/**
+ * @brief Cleanup and shutdown the elocation  subsystem.
+ *
+ * This function must be called when the application is no longer using any of
+ * the Elocation functionality to allow the subsystem to shutdown cleanly.
+ *
+ * @ingroup Location
+ * @since 1.8
+ */
 EAPI void elocation_shutdown(void);
 #endif
