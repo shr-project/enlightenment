@@ -1292,11 +1292,10 @@ GenController = Controller.extend({
         }
       }
 
-      view.clear();
-      this.updateView();
-    } else {
-      view.clear(indexes);
     }
+
+    view.clear();
+    this.updateView();
   },
   /** @private */
   _updateIndexes: function(indexes) {
