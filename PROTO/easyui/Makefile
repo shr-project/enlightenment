@@ -42,7 +42,10 @@ EDJE_CC_ID = $(ELEMENTARY_THEMES_DIR:%=-id %)
 EDJE_CC_FD = $(ELEMENTARY_FONTS_DIR:%=-fd %)
 EDJS = $(EDCS:%.edc=%.edj)
 
-all: docs edc
+all: dict docs edc
+
+dict:
+	make -C dict
 
 docs: $(READMES) $(SOURCES)
 	jsduck --config=./jsduck/config.json
@@ -57,5 +60,8 @@ $(GUIDESDIR)/%/README.md: %.js
 edc: $(EDJS)
 
 clean:
+	make -C dict
 	rm -f $(READMES)
 	rm -f themes/*.edj
+
+.PHONY: clean dict

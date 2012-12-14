@@ -1,7 +1,7 @@
 EUI = require('eui');
 Property = require('class').Property;
 
-localStorage.database = "dict.eet";
+localStorage.database = "dict/dict.eet";
 imagedir = 'themes/images/';
 
 var bookmarks = new EUI.DBModel('bookmarks');
