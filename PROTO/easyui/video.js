@@ -2,23 +2,6 @@ var EUI = require('eui');
 var path = './videos';
 var patterns = ['*.mp*'];
 
-VideoShareSheet = EUI.ActionSheet({
-  title: 'Share Video',
-  model: [
-    'Email Video',
-    'Send to Youtube',
-    'Send via Bluetooth',
-  ],
-  hasCancelAction: true,
-  selectedItemAtIndex: function(index) {
-    switch (index) {
-    case 0: break;    // Email Video
-    case 1: break;    // Send to Youtube
-    case 2: break;    // Send via Bluetooth
-    }
-  }
-});
-
 VideoController = EUI.VideoController({
   extractPathsFromFileModel: function(model){
     array = [];
@@ -47,7 +30,7 @@ VideoController = EUI.VideoController({
   selectedToolbarItem: function(item) {
     switch (item) {
     case 'share':
-      this.pushController(new VideoShareSheet);
+      EUI.Routing.share('video/mp4', this.model.itemAtIndex(this.index).path);
       break;
     case 'left':
       this.setVideo(this.index - 1);
@@ -62,22 +45,6 @@ VideoController = EUI.VideoController({
   }
 });
 
-VideoCollectionShareSheet = EUI.ActionSheet({
-  title: 'Share Collection',
-  model: [
-      'Email Collection',
-      'Send via Bluetooth'
-  ],
-
-  hasCancelAction: true,
-  selectedItemAtIndex: function(index) {
-    switch (index) {
-    case 0: break;    /* Email Collection */
-    case 1: break;    /* Send via Bluetooth */
-    }
-  }
-});
-
 VideoCollectionController = EUI.GridController({
   init: function(item, patterns) {
     this.title = item.name;
@@ -89,7 +56,7 @@ VideoCollectionController = EUI.GridController({
   selectedToolbarItem: function(item) {
     switch (item) {
     case 'share':
-      this.pushController(new VideoCollectionShareSheet());
+      EUI.Routing.share('video/*', this.model.path);
       break;
     }
   },

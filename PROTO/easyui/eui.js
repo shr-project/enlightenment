@@ -2300,6 +2300,9 @@ RoutingSingleton = Class.extend({
       ],
       'text/html': [
         { name: 'Web Browser', app: 'browser.js' }
+      ],
+      'video/*': [
+        { name: 'Video player', app: 'video.js' }
       ]
     },
     share: {
