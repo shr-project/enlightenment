@@ -193,10 +193,12 @@ fso_init(void)
 static void
 fso_shutdown(void)
 {
+   EDBus_Object *obj;
    if (!conn) return;
 
-   edbus_object_unref(edbus_proxy_object_get(proxy));
-   proxy = NULL;
+   obj = edbus_proxy_object_get(proxy);
+   edbus_proxy_unref(proxy);
+   edbus_object_unref(obj);
    edbus_connection_unref(conn);
    edbus_shutdown();
    conn = NULL;
