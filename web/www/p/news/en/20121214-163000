@@ -1,0 +1,41 @@
+New E17 <b>Release</b>: LUCKY
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+This release of E17, <b>LUCKY RUBBER DUCKY</b>, has a much better name than what was originally proposed.
+<br><br>
+
+Changelog:
+<li>EFL requirements now bumped to 1.7.3</li>
+<li>Translation updates</li>
+<li>Wallpaper previews now maintain aspect ratio when dialog is resized</li>
+<li>Backlight gadgets update themselves on backlight change</li>
+<li>Filemanager now capable of loading large directories more quickly</li>
+<li>Filemanager "New Directory" action renames files inline</li>
+<li>Menu item layout no longer resizes randomly</li>
+<li>Filemanager drag-n-drop no longer causes crashes in most scenarios</li>
+<li>Xmodmap settings no longer overwritten when changing keyboard layout</li>
+<li>Filemanager properly shows files again if a drag-n-drop operation fails or pauses</li>
+<li>Orientation changing on shelves no longer duplicates the shelf</li>
+<li>Evry file browsing now shows mime types more accurately</li>
+<li>Tons of small memory leaks fixed</li>
+<li>Theme selection dialog now shows actual preview of theme instead of wallpaper</li>
+<li>Temperature module no longer leaks fds on some platforms</li>
+<li>Pointer warping now more effective when changing desks</li>
+<li>"Share" button on screenshot dialog now leads to a confirmation dialog</li>
+<li><b>[THEME]</b> Filemanager icons</li>
+<li><b>[THEME]</b> Pixel border style removed</li>
+<li><b>[THEME]</b> Pixel border style added</li>
+<li><b>[THEME]</b> Pixel border style now has focused effect</li>
+</p>
+
+<p><ul>
+
+<li>E17 LUCKY - 80969
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-lucky.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-lucky.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
