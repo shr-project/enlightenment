@@ -145,7 +145,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Vis
    trophy->name = eina_stringshare_add(name);
    trophy->description = eina_stringshare_add(description);
    trophy->visibility = visibility;
-   trophy->date = (unsigned int)ecore_time_get();
+   trophy->date = (unsigned int)ecore_time_unix_get();
    trophy->goal = goal;
    trophy->points = points;
 
@@ -210,7 +210,7 @@ etrophy_trophy_counter_set(Etrophy_Trophy *trophy, unsigned int value)
    if (trophy->counter > trophy->goal)
      trophy->counter = trophy->goal;
 
-   trophy->date = (unsigned int)ecore_time_get();
+   trophy->date = (unsigned int)ecore_time_unix_get();
 }
 
 EAPI inline void
@@ -224,7 +224,7 @@ etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value)
    if (trophy->counter > trophy->goal)
      trophy->counter = trophy->goal;
 
-   trophy->date = (unsigned int)ecore_time_get();
+   trophy->date = (unsigned int)ecore_time_unix_get();
 }
 
 EAPI inline Eina_Bool
@@ -283,7 +283,7 @@ etrophy_lock_new(const char *name, Etrophy_Lock_State state)
 
    lock->name = eina_stringshare_add(name);
    lock->state = state;
-   lock->date = (unsigned int)ecore_time_get();
+   lock->date = (unsigned int)ecore_time_unix_get();
 
    return lock;
 }
@@ -316,7 +316,7 @@ etrophy_lock_state_set(Etrophy_Lock *lock, Etrophy_Lock_State state)
    EINA_SAFETY_ON_NULL_RETURN(lock);
    if (state >= ETROPHY_LOCK_STATE_LAST_VALUE) return;
    lock->state = state;
-   lock->date = (unsigned int)ecore_time_get();
+   lock->date = (unsigned int)ecore_time_unix_get();
 }
 
 EAPI inline unsigned int
@@ -365,7 +365,7 @@ etrophy_score_new(const char *player_name, int score)
 
    escore->player_name = eina_stringshare_add(player_name);
    escore->score = score;
-   escore->date = (unsigned int)ecore_time_get();
+   escore->date = (unsigned int)ecore_time_unix_get();
 
    DBG("Score created. Player: %s, score: %i", player_name, score);
 
