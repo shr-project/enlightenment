@@ -93,7 +93,32 @@ extern "C" {
  *
  */
 
+/**
+ * Initialize Etrophy.
+ *
+ * Initializes Etrophy, its dependencies and modules. Should be the first
+ * function of Etrophy to be called.
+ *
+ * @return The init counter value.
+ *
+ * @see etrophy_shutdown().
+ *
+ * @ingroup Init
+ */
 EAPI int etrophy_init(void);
+
+/**
+ * Shutdown Etrophy
+ *
+ * Shutdown Etrophy. If init count reaches 0, all the internal structures will
+ * be freed. Any Etrophy library call after this point will leads to an error.
+ *
+ * @return Etrophy's init counter value.
+ *
+ * @see etrophy_init().
+ *
+ * @ingroup Init
+ */
 EAPI int etrophy_shutdown(void);
 
 /**
@@ -134,15 +159,132 @@ EAPI int etrophy_shutdown(void);
  *
  */
 
+/**
+ * @typedef Etrophy_Gamescore
+ *
+ * Gamescore handle, mandatory for Etrophy's usage. Each application
+ * need to have one.
+ *
+ * Created with @ref etrophy_gamescore_new() and deleted with
+ * @ref etrophy_gamescore_free().
+ *
+ * @ingroup Gamescore
+ */
 typedef struct _Etrophy_Gamescore Etrophy_Gamescore;
 
-EAPI void etrophy_gamescore_clear(Etrophy_Gamescore *gamescore);
+/**
+ * @brief
+ * Create a new gamescore.
+ *
+ * A gamescore should be used by application. It will be used to manage
+ * trophies, locks and players' scores.
+ *
+ * It must to be saved after edited, using @ref etrophy_gamescore_save().
+ *
+ * @param gamename Name of the gamescore to be used to load in later
+ * uses.
+ * @return The gamescore created or @c NULL on error.
+ *
+ * @see etrophy_gamescore_free()
+ * @see etrophy_gamescore_load()
+ *
+ * @ingroup Gamescore
+ */
 EAPI Etrophy_Gamescore *etrophy_gamescore_new(const char *gamename);
+
+/**
+ * @brief
+ * Free a previouly created gamescore.
+ *
+ * @param gamescore Gamescore handle.
+ *
+ * @see etrophy_gamescore_new()
+ * @see etrophy_gamescore_load()
+ *
+ * @ingroup Gamescore
+ */
 EAPI void etrophy_gamescore_free(Etrophy_Gamescore *gamescore);
-EAPI Eet_Data_Descriptor *etrophy_gamescore_edd_get(void);
-EAPI Etrophy_Gamescore *etrophy_gamescore_path_load(const char *filename);
+
+/**
+ * @brief
+ * Load a gamescore given a name.
+ *
+ * An alternative way of loading it is using
+ * @ref etrophy_gamescore_path_load(). It will be necessary if the gamescore
+ * was previoulsy saved in a non standard Etrophy directory.
+ *
+ * @param gamename Name used when gamescore was created.
+ * @return The gamescore or @c NULL on error.
+ *
+ * @see etrophy_gamescore_new()
+ * @see etrophy_gamescore_save()
+ *
+ * @ingroup Gamescore
+ */
 EAPI Etrophy_Gamescore *etrophy_gamescore_load(const char *gamename);
+
+/**
+ * @brief
+ * Load a gamescore from a give path.
+ *
+ * An alternative way of loading it is using @ref etrophy_gamescore_load(),
+ * and the provided gamescore name will be searched on default Etrophy
+ * directories.
+ *
+ * @param filename Full path to the file.
+ * @return The gamescore or @c NULL on error.
+ *
+ * @ingroup Gamescore
+ */
+EAPI Etrophy_Gamescore *etrophy_gamescore_path_load(const char *filename);
+
+/**
+ * @brief
+ * Save a gamescore.
+ *
+ * There are two ways of loading / saving gamescores. Just using gamescore's
+ * name, and the directory will be defined by Etrophy, or passing
+ * the full path to the file to be written.
+ *
+ * The default directory can be set with environment variable @c ETROPHY_PATH
+ * or it will try to find user's home. Then the file will be stored inside
+ * .etrophy sub directory, with the name of gamescore and extension ".eet".
+ *
+ * @param filename Full path to the file. If @c NULL, it will be saved on
+ * default Etrophy directories.
+ * @param gamescore Gamescore handle.
+ * @return @c EINA_TRUE if the gamescore was properly saved @c EINA_FALSE
+ * on error.
+ *
+ * @ingroup Gamescore
+ */
 EAPI Eina_Bool etrophy_gamescore_save(Etrophy_Gamescore *gamescore, const char *filename);
+
+/**
+ * @brief
+ * Return gamescore Eet data descriptor.
+ *
+ * Useful when you already have an eet file for your application and wants
+ * to merge gamescore on it.
+ *
+ * @return Eet data descriptor.
+ *
+ * @ingroup Gamescore
+ */
+EAPI Eet_Data_Descriptor *etrophy_gamescore_edd_get(void);
+
+/**
+ * @brief
+ * Clear all the data of the gamescore.
+ *
+ * It will clear trophies, locks, players' scores.
+ * Everything will be deleted.
+ *
+ * @param gamescore Gamescore handle.
+ *
+ * @ingroup Gamescore
+ */
+EAPI void etrophy_gamescore_clear(Etrophy_Gamescore *gamescore);
 
 /**
  * @}
@@ -189,27 +331,55 @@ EAPI Eina_Bool etrophy_gamescore_save(Etrophy_Gamescore *gamescore, const char *
  *
  */
 
+/**
+ * @typedef Etrophy_Level
+ *
+ * Level handle, used to store all the players' scores in the level.
+ *
+ * Created with @ref etrophy_level_new(), added to gamescore using
+ * @ref etrophy_gamescore_level_add() and freed with
+ * @ref etrophy_level_free().
+ *
+ * @ingroup Score
+ */
 typedef struct _Etrophy_Level Etrophy_Level;
+
+/**
+ * @typedef Etrophy_Score
+ *
+ * Score handle, save the player's scores, name, and date.
+ *
+ * Created with @ref etrophy_score_new(), added to the level using
+ * @ref etrophy_level_score_add() and freed with
+ * @ref etrophy_score_free().
+ *
+ * @ingroup Score
+ */
 typedef struct _Etrophy_Score Etrophy_Score;
 
 EAPI Etrophy_Level *etrophy_level_new(const char *name);
 EAPI void etrophy_level_free(Etrophy_Level *level);
 EAPI const char *etrophy_level_name_get(const Etrophy_Level *level);
+
 EAPI const Eina_List *etrophy_level_scores_list_get(const Etrophy_Level *level);
 EAPI void etrophy_level_scores_list_clear(Etrophy_Level *level);
+
 EAPI void etrophy_gamescore_level_add(Etrophy_Gamescore *gamescore, Etrophy_Level *level);
 EAPI void etrophy_gamescore_level_del(Etrophy_Gamescore *gamescore, Etrophy_Level *level);
 EAPI Etrophy_Level *etrophy_gamescore_level_get(Etrophy_Gamescore *gamescore, const char *name);
 EAPI const Eina_List *etrophy_gamescore_levels_list_get(const Etrophy_Gamescore *gamescore);
 EAPI void etrophy_gamescore_levels_list_clear(Etrophy_Gamescore *gamescore);
+
 EAPI void etrophy_level_score_add(Etrophy_Level *level, Etrophy_Score *escore);
 EAPI void etrophy_level_score_del(Etrophy_Level *level, Etrophy_Score *escore);
-EAPI Etrophy_Score *etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *level_name, const char *player_name, int score);
+
 EAPI Etrophy_Score *etrophy_score_new(const char *player_name, int score);
 EAPI void  etrophy_score_free(Etrophy_Score *escore);
 EAPI const char *etrophy_score_player_name_get(const Etrophy_Score *escore);
 EAPI int etrophy_score_score_get(const Etrophy_Score *escore);
 EAPI unsigned int etrophy_score_date_get(const Etrophy_Score *escore);
+
+EAPI Etrophy_Score *etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *level_name, const char *player_name, int score);
 EAPI int etrophy_gamescore_level_hi_score_get(const Etrophy_Gamescore *gamescore, const char *level_name);
 EAPI int etrophy_gamescore_level_low_score_get(const Etrophy_Gamescore *gamescore, const char *level_name);
 
@@ -249,12 +419,37 @@ EAPI int etrophy_gamescore_level_low_score_get(const Etrophy_Gamescore *gamescor
  * @ref etrophy_gamescore_trophies_list_clear().
  */
 
+/**
+ * @typedef Etrophy_Trophy
+ *
+ * Trophy handle, keeps score per tasks and goals. It has name, description
+ * and visibility.
+ *
+ * Created with @ref etrophy_trophy_new(), added to gamescore using
+ * @ref ephysics_gamescore_trophy_add() and freed with
+ * @ref etrophy_level_free().
+ *
+ * @ingroup Trophy
+ */
 typedef struct _Etrophy_Trophy Etrophy_Trophy;
-typedef enum
+
+/**
+ * @enum _Etrophy_Trophy_Visibility
+ * @typedef Etrophy_Trophy_Visibility
+ *
+ * State of a lock: locked or unlocked. Usually locks starts locked and
+ * after the player achieves a task it is unlocked.
+ *
+ * @see etrophy_trophy_new()
+ * @see etrophy_trophy_visibility_get()
+ *
+ * @ingroup Trophy
+ */
+typedef enum _Etrophy_Trophy_Visibility
 {
-   ETROPHY_TROPHY_STATE_HIDDEN = 0,
-   ETROPHY_TROPHY_STATE_VISIBLE,
-   ETROPHY_TROPHY_STATE_LAST_VALUE
+   ETROPHY_TROPHY_STATE_HIDDEN = 0, /**< Player shouldn't know about its existence */
+   ETROPHY_TROPHY_STATE_VISIBLE, /**< Player can know about its existence */
+   ETROPHY_TROPHY_STATE_LAST_VALUE /**< kept as sentinel */
 } Etrophy_Trophy_Visibility;
 
 EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal);
@@ -332,12 +527,37 @@ EAPI void etrophy_gamescore_trophies_list_clear(Etrophy_Gamescore *gamescore);
  *
  */
 
+/**
+ * @typedef Etrophy_Lock
+ *
+ * Lock handle, has name, lock state and date of update.
+ *
+ * Created with @ref etrophy_lock_new(), added to gamescore using
+ * @ref ephysics_gamescore_lock_add() and freed with
+ * @ref etrophy_lock_free().
+ *
+ * @ingroup Lock
+ */
 typedef struct _Etrophy_Lock Etrophy_Lock;
-typedef enum
+
+/**
+ * @enum _Etrophy_Lock_State
+ * @typedef Etrophy_Lock_State
+ *
+ * State of a lock: locked or unlocked. Usually locks starts locked and
+ * after the player achieves a task it is unlocked.
+ *
+ * @see etrophy_lock_new()
+ * @see etrophy_lock_state_set()
+ * @see etrophy_lock_state_get()
+ *
+ * @ingroup Lock
+ */
+typedef enum _Etrophy_Lock_State
 {
-   ETROPHY_LOCK_STATE_LOCKED = 0,
-   ETROPHY_LOCK_STATE_UNLOCKED,
-   ETROPHY_LOCK_STATE_LAST_VALUE
+   ETROPHY_LOCK_STATE_LOCKED = 0, /**< Player doesn't have access to it yet */
+   ETROPHY_LOCK_STATE_UNLOCKED, /**< Player already has access to it */
+   ETROPHY_LOCK_STATE_LAST_VALUE /**< kept as sentinel, not really a state */
 } Etrophy_Lock_State;
 
 EAPI Etrophy_Lock *etrophy_lock_new(const char *name, Etrophy_Lock_State state);
@@ -373,8 +593,72 @@ EAPI void etrophy_gamescore_locks_list_clear(Etrophy_Gamescore *gamescore);
  *
  */
 
+/**
+ * @brief
+ * Create a view and populate it with scores data.
+ *
+ * Create a Elm Layout with a spinner to select the level and a genlist
+ * displaying each score. The returned object can be placed anywhere in
+ * the application view (layout, boxes, etc).
+ *
+ * Example:
+ * @code
+ * static void
+ * _scores_show_cb(void *data, Evas_Object *obj __UNUSED__,
+ *                 void *event_info __UNUSED__)
+ * {
+ *     Evas_Object *popup, *bt, *leaderboard;
+ *     Game *game = data;
+ *
+ *     popup = elm_popup_add(game->win);
+ *     elm_object_part_text_set(popup, "title,text", "Leaderboard");
+ *
+ *     bt = elm_button_add(popup);
+ *     elm_object_text_set(bt, "OK");
+ *     elm_object_part_content_set(popup, "button1", bt);
+ *
+ *     leaderboard = etrophy_score_layout_add(popup, game->gamescore);
+ *     elm_object_content_set(popup, leaderboard);
+ *     evas_object_smart_callback_add(bt, "clicked", _scores_hide_cb, popup);
+ *
+ *     evas_object_show(popup);
+ * }
+ * @endcode
+ *
+ * @param parent Evas object to be used as parent.
+ * @param gamescore Gamescore handle.
+ * @return The view or @c NULL on error.
+ *
+ * @ingroup View
+ */
 EAPI Evas_Object *etrophy_score_layout_add(Evas_Object *parent, Etrophy_Gamescore *gamescore);
+
+/**
+ * @brief
+ * Create a view and populate it with trophies data.
+ *
+ * NOT IMPLEMENTED.
+ *
+ * @param parent Evas object to be used as parent.
+ * @param gamescore Gamescore handle.
+ * @return The view or @c NULL on error.
+ *
+ * @ingroup View
+ */
 EAPI Evas_Object *etrophy_trophies_layout_add(Evas_Object *parent, Etrophy_Gamescore *gamescore);
+
+/**
+ * @brief
+ * Create a view and populate it with locks data.
+ *
+ * NOT IMPLEMENTED.
+ *
+ * @param parent Evas object to be used as parent.
+ * @param gamescore Gamescore handle.
+ * @return The view or @c NULL on error.
+ *
+ * @ingroup View
+ */
 EAPI Evas_Object *etrophy_locks_layout_add(Evas_Object *parent, Etrophy_Gamescore *gamescore);
 
 /**
