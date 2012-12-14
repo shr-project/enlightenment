@@ -287,6 +287,34 @@ EAPI Eet_Data_Descriptor *etrophy_gamescore_edd_get(void);
 EAPI void etrophy_gamescore_clear(Etrophy_Gamescore *gamescore);
 
 /**
+ * @brief
+ * Get the sum of all the trophies points earned by the player.
+ *
+ * @param gamescore Gamescore handle.
+ * @return Sum of achieved trophies points.
+ *
+ * @see etrophy_gamescore_trophies_total_points_get().
+ *
+ * @ingroup Gamescore
+ */
+EAPI unsigned int etrophy_gamescore_trophies_points_get(const Etrophy_Gamescore *gamescore);
+
+/**
+ * @brief
+ * Get the sum of all the trophies points.
+ *
+ * It returns a sum of all the points a player could possibly achieves.
+ * For the sum of already earned trophies points, use
+ * @ref etrophy_gamescore_trophies_points_get().
+ *
+ * @param gamescore Gamescore handle.
+ * @return Sum of all possible trophies points.
+ *
+ * @ingroup Gamescore
+ */
+EAPI unsigned int etrophy_gamescore_trophies_total_points_get(const Etrophy_Gamescore *gamescore);
+
+/**
  * @}
  */
 
@@ -412,6 +440,7 @@ EAPI int etrophy_gamescore_level_low_score_get(const Etrophy_Gamescore *gamescor
  * @li @ref etrophy_trophy_name_get()
  * @li @ref etrophy_trophy_description_get()
  * @li @ref etrophy_trophy_visibility_get()
+ * @li @ref etrophy_trophy_points_get()
  * @li @ref etrophy_trophy_date_get()
  *
  * The trophies list can be get with
@@ -452,7 +481,32 @@ typedef enum _Etrophy_Trophy_Visibility
    ETROPHY_TROPHY_STATE_LAST_VALUE /**< kept as sentinel */
 } Etrophy_Trophy_Visibility;
 
-EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal);
+/**
+ * @enum _Etrophy_Trophy_Points
+ * @typedef Etrophy_Trophy_Points
+ *
+ * Amount of trophies points earned by the player when the trophy is
+ * earned, when the counter is equal to the goal.
+ *
+ * It's suggested to be used as the @c points parameter of
+ * @ref etrophy_trophy_new() function, but any non negative integer value can
+ * be passed.
+ *
+ * @see etrophy_trophy_new()
+ * @see etrophy_trophy_points_get()
+ *
+ * @ingroup Trophy
+ */
+typedef enum _Etrophy_Trophy_Points
+{
+   ETROPHY_TROPHY_POINTS_VERY_FEW = 10, /**< Used for easy tasks */
+   ETROPHY_TROPHY_POINTS_FEW = 25, /**< Used for not so easy tasks */
+   ETROPHY_TROPHY_POINTS_MANY = 50, /**< Used for regular tasks */
+   ETROPHY_TROPHY_POINTS_LOTS = 100, /**< Used for hard tasks */
+   ETROPHY_TROPHY_POINTS_LAST_VALUE /**< kept as sentinel */
+} Etrophy_Trophy_Points;
+
+EAPI Etrophy_Trophy *etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal, unsigned int points);
 EAPI void etrophy_trophy_free(Etrophy_Trophy *trophy);
 EAPI const char *etrophy_trophy_name_get(const Etrophy_Trophy *trophy);
 EAPI const char *etrophy_trophy_description_get(const Etrophy_Trophy *trophy);
@@ -461,6 +515,7 @@ EAPI void etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *go
 EAPI void etrophy_trophy_counter_set(Etrophy_Trophy *trophy, unsigned int value);
 EAPI void etrophy_trophy_counter_increment(Etrophy_Trophy *trophy, unsigned int value);
 EAPI Eina_Bool etrophy_trophy_earned_get(const Etrophy_Trophy *trophy);
+EAPI unsigned int etrophy_trophy_points_get(const Etrophy_Trophy *trophy);
 EAPI unsigned int etrophy_trophy_date_get(const Etrophy_Trophy *trophy);
 
 EAPI void etrophy_gamescore_trophy_add(Etrophy_Gamescore *gamescore, Etrophy_Trophy *trophy);

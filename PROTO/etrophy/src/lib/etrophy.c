@@ -54,6 +54,7 @@ struct _Etrophy_Trophy
    Etrophy_Trophy_Visibility visibility;
    unsigned int              counter;
    unsigned int              goal;
+   unsigned int              points;
    unsigned int              date;
 };
 
@@ -79,10 +80,10 @@ struct _Etrophy_Level
 
 struct _Etrophy_Gamescore
 {
-   Eina_List  *levels;
-   Eina_List  *trophies;
-   Eina_List  *locks;
-   const char *__eet_filename;
+   Eina_List    *levels;
+   Eina_List    *trophies;
+   Eina_List    *locks;
+   const char   *__eet_filename;
 };
 
 static const char GAMESCORE_ENTRY[] = "gamescore";
@@ -114,6 +115,8 @@ _trophy_init(void)
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
                                  "goal", goal, EET_T_UINT);
    EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
+                                 "points", points, EET_T_UINT);
+   EET_DATA_DESCRIPTOR_ADD_BASIC(_trophy_descriptor, Etrophy_Trophy,
                                  "date", date, EET_T_UINT);
 }
 
@@ -126,7 +129,7 @@ _trophy_shutdown(void)
 }
 
 EAPI Etrophy_Trophy *
-etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal)
+etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Visibility visibility, unsigned int goal, unsigned int points)
 {
    Etrophy_Trophy *trophy;
 
@@ -144,6 +147,7 @@ etrophy_trophy_new(const char *name, const char *description, Etrophy_Trophy_Vis
    trophy->visibility = visibility;
    trophy->date = (unsigned int)ecore_time_get();
    trophy->goal = goal;
+   trophy->points = points;
 
    return trophy;
 }
@@ -185,6 +189,13 @@ etrophy_trophy_goal_get(const Etrophy_Trophy *trophy, unsigned int *goal,
    EINA_SAFETY_ON_NULL_RETURN(trophy);
    if (goal) *goal = trophy->goal;
    if (counter) *counter = trophy->counter;
+}
+
+EAPI inline unsigned int
+etrophy_trophy_points_get(const Etrophy_Trophy *trophy)
+{
+   EINA_SAFETY_ON_NULL_RETURN_VAL(trophy, 0);
+   return trophy->points;
 }
 
 EAPI inline void
@@ -822,6 +833,39 @@ etrophy_gamescore_level_score_add(Etrophy_Gamescore *gamescore, const char *leve
    level->scores = eina_list_sorted_insert(level->scores, _score_cmp, escore);
 
    return escore;
+}
+
+EAPI inline unsigned int
+etrophy_gamescore_trophies_points_get(const Etrophy_Gamescore *gamescore)
+{
+   unsigned int points = 0;
+   Etrophy_Trophy *trophy;
+   Eina_List *l;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(gamescore, 0);
+
+   EINA_LIST_FOREACH(gamescore->trophies, l, trophy)
+     {
+        if (trophy->counter == trophy->goal)
+          points += trophy->points;
+     }
+
+   return points;
+}
+
+EAPI inline unsigned int
+etrophy_gamescore_trophies_total_points_get(const Etrophy_Gamescore *gamescore)
+{
+   unsigned int points = 0;
+   Etrophy_Trophy *trophy;
+   Eina_List *l;
+
+   EINA_SAFETY_ON_NULL_RETURN_VAL(gamescore, 0);
+
+   EINA_LIST_FOREACH(gamescore->trophies, l, trophy)
+      points += trophy->points;
+
+   return points;
 }
 
 EAPI Eet_Data_Descriptor *
