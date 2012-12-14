@@ -2,15 +2,47 @@ The follwing images were drawn by Marina Proni <marina.proni@profusion.mobi>
 and are licensed under Creative Commons Attribution-ShareAlike 3.0
 Unported License:
 
+    logo_background.png
+    logo_letter-C.png
+    logo_letter-E.png
+    logo_letter-H.png
+    logo_letter-I.png
+    logo_letter-P.png
+    logo_letter-S1.png
+    logo_letter-S2.png
+    logo_letter-Y.png
+    logo_light-C.png
+    logo_light-E.png
+    logo_light-H.png
+    logo_light-I.png
+    logo_light-P.png
+    logo_light-S1.png
+    logo_light-S2.png
+    logo_light-Y.png
+    logo_shadow-C.png
+    logo_shadow-E.png
+    logo_shadow-H.png
+    logo_shadow-I.png
+    logo_shadow-P.png
+    logo_shadow-S1.png
+    logo_shadow-S2.png
+    logo_shadow-Y.png
     arrows.png
     background.jpg
     ball-blue70.png
     ball-blue.png
+    ball-concrete.png
     ball-green70.png
     ball-green.png
+    ball-iron.png
+    ball-plastic.png
+    ball-polystyrene.png
     ball-red70.png
     ball-red.png
+    ball-rubber.png
+    ball-wood.png
     bg_floor.jpg
+    brown-pole.png
     bt_jump.png
     bt_jump_pressed.png
     bt_restart.png
@@ -19,15 +51,40 @@ Unported License:
     bt_shoot_pressed.png
     bt_stop.png
     bt_stop_pressed.png
+    coin0.png
+    coin1.png
     collisionL.png
+    cube_back.png
     cube-blue.png
+    cube_bottom.png
+    cube_front.png
+    cube_left.png
+    cube-purple420.png
     cube-purple.png
+    cube_right.png
+    cube_top.png
+    dice1.png
+    dice2.png
+    dice3.png
+    dice4.png
+    dice5.png
+    dice6.png
+    door-back.png
+    door-front.png
+    door-post.png
+    green-flag.png
     hexagon.png
     list-item-corner.png
     list-item-corner-pressed.png
     list-item.png
     list-item-pressed.png
     list.png
+    loading_bar.png
+    loading_knob.png
+    page_00.png
+    page_01.png
+    page_02.png
+    page_03.png
     pentagon.png
     shadow-ball.png
     shadow-cube.png
@@ -37,6 +94,10 @@ Unported License:
     spinner_bt_right.png
     spinner_bt_right_pressed.png
     star.png
+    tog_base_off.png
+    tog_base_on.png
+    tog_bt_off.png
+    tog_bt_on.png
 
 ===
 
