@@ -16,6 +16,7 @@ static Elocation_Provider *address_provider = NULL;
 static Elocation_Provider *position_provider = NULL;
 static EDBus_Object *obj_meta = NULL;
 static EDBus_Object *obj_geonames = NULL;
+static EDBus_Proxy *manager_master = NULL;
 static EDBus_Proxy *meta_geoclue = NULL;
 static EDBus_Proxy *meta_address = NULL;
 static EDBus_Proxy *meta_position = NULL;
@@ -1128,7 +1129,6 @@ elocation_init(void)
 {
    EDBus_Message *msg;
    EDBus_Object *obj_master = NULL;
-   EDBus_Proxy *manager_master = NULL;
 
    if (!eina_init()) return EINA_FALSE;
    if (!ecore_init()) return EINA_FALSE;
@@ -1297,6 +1297,8 @@ elocation_shutdown(void)
    free(address->postalcode);
    free(address->region);
    free(address->timezone);
+
+   edbus_proxy_unref(manager_master);
 
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_connection_unref(conn);
