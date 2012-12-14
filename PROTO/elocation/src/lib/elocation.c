@@ -1283,7 +1283,20 @@ elocation_shutdown(void)
    free(pos_geocode->accur);
    free(pos_geocode);
    free(addr_geocode->accur);
+   free(addr_geocode->country);
+   free(addr_geocode->countrycode);
+   free(addr_geocode->locality);
+   free(addr_geocode->postalcode);
+   free(addr_geocode->region);
+   free(addr_geocode->timezone);
    free(addr_geocode);
+
+   free(address->country);
+   free(address->countrycode);
+   free(address->locality);
+   free(address->postalcode);
+   free(address->region);
+   free(address->timezone);
 
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_connection_unref(conn);
