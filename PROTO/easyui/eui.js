@@ -117,6 +117,9 @@ Controller = Class.extend({
     if (EUI.__shutting_down)
       return;
 
+    if (this.willPopController)
+      this.willPopController();
+
     if (this.model)
       this.model.removeListener(this);
 
