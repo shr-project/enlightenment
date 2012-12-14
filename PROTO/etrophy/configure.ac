@@ -182,6 +182,8 @@ src/Makefile
 src/lib/Makefile
 data/Makefile
 data/theme/Makefile
+doc/Makefile
+doc/Doxyfile
 ])
 
 
