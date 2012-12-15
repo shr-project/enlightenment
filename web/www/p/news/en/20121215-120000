@@ -1,0 +1,28 @@
+Terminology 0.2
+Carsten Haitzler
+raster@rasterman.com
+
+<p>
+Terminology is a terminal emulator that uses modern EFL components to
+build its UI and core. It is written from scratch and does not use any
+components outside of EFL and libc, so it should be very portable and
+easy to build. For more information, please see the 
+<a href=http://www.enlightenment.org/p.php?p=about/terminology>Terminology Page</a>.
+</p>
+
+<p>
+Version 0.2 marks a stage of a lot of small cleanups, fixes and
+improvements, but definitely not a finished and fully baked terminal
+in all senses of the word. Not everything we want to achieve has been
+achieved yet. Please get the release below.
+</p>
+
+<p><ul>
+
+<li>Terminology 0.2.0 - 
+[<a href="http://download.enlightenment.org/releases/terminology-0.2.0.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/terminology-0.2.0.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
