@@ -225,10 +225,11 @@ cdef _METHOD_DEPRECATED(self, replacement=None, message=None):
     log.warn(msg)
 
 cdef inline unicode _touni(char* s):
-    return s.decode('UTF-8', 'strict')
+    return s.decode('UTF-8', 'strict') if s else None
 
 cdef inline unicode _ctouni(const_char_ptr s):
-    return s.decode('UTF-8', 'strict')
+    return s.decode('UTF-8', 'strict') if s else None
+
 
 cdef inline char* _fruni(s):
     cdef char* c_string
