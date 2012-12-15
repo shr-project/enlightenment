@@ -20,8 +20,8 @@
      
      <center><p>
      <?php blinkdl("i/dl.png",
-     "DOWNLOAD TERMINOLOGY 0.1",
-     "http://download.enlightenment.org/releases/terminology-0.1.0.tar.gz");?>
+     "DOWNLOAD TERMINOLOGY 0.2",
+     "http://download.enlightenment.org/releases/terminology-0.2.0.tar.gz");?>
      </p></center>
      
      <h3>What is it?</h3>
