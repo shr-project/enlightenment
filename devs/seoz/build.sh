@@ -100,6 +100,7 @@ function build_cmake()
 		echo "["$I"]" >> $LOG_WARN_FILE
 		mkdir build -p
 		pushd build
+			rm -rf *
 			cmake ..
 			make 2>> $LOG_WARN_FILE 
 			sudo make install
