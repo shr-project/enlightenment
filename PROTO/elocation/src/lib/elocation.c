@@ -10,6 +10,9 @@
 #include <Elocation.h>
 #include <elocation_private.h>
 
+/* FIXME: These globals really need to get reduced before leaving the PROTO
+ * area.
+ */
 static char *unique_name = NULL;
 static EDBus_Connection *conn = NULL;
 static Elocation_Provider *address_provider = NULL;
@@ -37,6 +40,7 @@ static char nmea_sentence[256];
 
 int _elocation_log_dom = -1;
 
+/* Elocation ecore event types we provide to the application. */
 EAPI int ELOCATION_EVENT_IN;
 EAPI int ELOCATION_EVENT_OUT;
 EAPI int ELOCATION_EVENT_STATUS;
@@ -53,9 +57,13 @@ static void
 _dummy_free(void *user_data, void *func_data)
 {
    /* Don't free the event data after dispatching the event. We keep track of
-    * it on our own */
+    * it on our own
+    */
 }
 
+/* Generic provider message unmarshaller. Used from all different provider
+ * calbacks that receive such a message
+ */
 static Eina_Bool
 unmarshall_provider(const EDBus_Message *reply, Elocation_Provider *provider)
 {
@@ -147,6 +155,9 @@ meta_position_provider_info_signal_cb(void *data, const EDBus_Message *reply)
                                                               position_provider->path);
 }
 
+/* Receive and unmarshall a reverse GeoCode message. The dict can contain a
+ * variable set of key value pairs so we need to handle this with care
+ */
 static void
 rgeocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
@@ -203,9 +214,13 @@ rgeocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    addr_geocode->accur->level = level;
    addr_geocode->accur->horizontal = horizontal;
    addr_geocode->accur->vertical = vertical;
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_REVERSEGEOCODE, addr_geocode, _dummy_free, NULL);
 }
 
+/* Point of Interest (POI) aka landmark message unmarshalling. Thsi interface is
+ * not in standard GeoClue but currently a Tizen extension.
+ */
 static void
 poi_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
@@ -222,6 +237,7 @@ poi_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   /* Yeah, its quite a horrible message. The POI interface could use a better design */
    if (!edbus_message_arguments_get(reply, "ia(iiddddddsssssssssss", &count ,&array))
      return;
 
@@ -239,9 +255,11 @@ poi_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
                                          suburb, postcode, city, county, country, country_code);
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_POI, NULL, _dummy_free, NULL);
 }
 
+/* Unmarshall a GeoCode message */
 static void
 geocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
@@ -287,9 +305,13 @@ geocode_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
    pos_geocode->accur->level = level;
    pos_geocode->accur->horizontal = horizontal;
    pos_geocode->accur->vertical = vertical;
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_GEOCODE, pos_geocode, _dummy_free, NULL);
 }
 
+/* A address is quite flexible what kind of key value pairs it conatins in the
+ * dict. Similar to a reverse GeoCode message as both retrun an address object.
+ */
 static Eina_Bool
 unmarshall_address(const EDBus_Message *reply)
 {
@@ -366,6 +388,7 @@ address_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
 
@@ -378,9 +401,13 @@ address_signal_cb(void *data, const EDBus_Message *reply)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_ADDRESS, address, _dummy_free, NULL);
 }
 
+/* Unmarshall a velocity message. This is only available if we use a GPS
+ * provider from GeoClue. None of the other providers offer this currently.
+ */
 static Eina_Bool
 unmarshall_velocity(const EDBus_Message *reply)
 {
@@ -433,6 +460,7 @@ velocity_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_VELOCITY, velocity, _dummy_free, NULL);
 }
 
@@ -445,9 +473,16 @@ velocity_signal_cb(void *data, const EDBus_Message *reply)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_VELOCITY, velocity, _dummy_free, NULL);
 }
 
+/* Unmarshall an raw NMEA message. It conatins a raw NMEA sentence which we can
+ * pass on to applications that want to use their own NMEA parser. This is not
+ * reommended.  Better use the other interfaces to access the needed data.
+ *
+ * This is currently a Tizen only interface and not in GeoClue upstream.
+ */
 static Eina_Bool
 unmarshall_nmea(const EDBus_Message *reply)
 {
@@ -476,6 +511,7 @@ nmea_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_NMEA, nmea_sentence, _dummy_free, NULL);
 }
 
@@ -491,6 +527,13 @@ nmea_signal_cb(void *data, const EDBus_Message *reply)
    ecore_event_add(ELOCATION_EVENT_NMEA, nmea_sentence, _dummy_free, NULL);
 }
 
+/* Unmarshall a satellite information message. This offers GPS specific
+ * information about the used satellites and its properties. It can be used for
+ * applications that rely on GPS and want to show more information like a 3D fix
+ * or used satellites.
+ *
+ * This is currently a Tizen only interface and not available in GeoClue upstream.
+ */
 static Eina_Bool
 unmarshall_satellite(const EDBus_Message *reply)
 {
@@ -534,6 +577,7 @@ satellite_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_SATELLITE, NULL, _dummy_free, NULL);
 }
 
@@ -554,6 +598,7 @@ last_satellite_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_SATELLITE, NULL, _dummy_free, NULL);
 }
 
@@ -566,9 +611,11 @@ satellite_signal_cb(void *data, const EDBus_Message *reply)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_SATELLITE, NULL, _dummy_free, NULL);
 }
 
+/* Unmarshall position coordination message */
 static Eina_Bool
 unmarshall_position(const EDBus_Message *reply)
 {
@@ -631,6 +678,7 @@ position_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
 
@@ -643,6 +691,7 @@ position_signal_cb(void *data, const EDBus_Message *reply)
         return;
      }
 
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_POSITION, position, _dummy_free, NULL);
 }
 
@@ -709,6 +758,7 @@ status_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
      }
 
    address_provider->status = position_provider->status = *status;
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
@@ -725,6 +775,7 @@ status_signal_cb(void *data, const EDBus_Message *reply)
      }
 
    address_provider->status = position_provider->status = *status;
+   /* Send out an event to all interested parties that we have an update */
    ecore_event_add(ELOCATION_EVENT_STATUS, status, NULL, NULL);
 }
 
@@ -733,6 +784,13 @@ _dummy_cb(void *data, const EDBus_Message *msg, EDBus_Pending *pending)
 {
 }
 
+/* We got notified from GeoClue that the meta-provider we asked for is now
+ * ready. That means we can finish up our initialization and set up all
+ * callbacks and handling for the interfaces we use on the meta-provider.
+ *
+ * We also call the interfaces to get an initial set of data that we can provide
+ * to eager aplications.
+ */
 static void
 create_cb(void *data, const EDBus_Message *reply, EDBus_Pending *pending)
 {
@@ -927,7 +985,8 @@ _name_owner_changed(void *data, const char *bus, const char *old, const char *ne
      }
 }
 
-Eina_Bool
+/* Public API function to request a landmarks position based on an address object */
+EAPI Eina_Bool
 elocation_landmarks_get(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
 {
    EDBus_Message *msg;
@@ -956,6 +1015,7 @@ elocation_landmarks_get(Elocation_Position *position_shadow, Elocation_Address *
    return EINA_TRUE;
 }
 
+/* Public API function to get an address from a position */
 EAPI Eina_Bool
 elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Address *address_shadow)
 {
@@ -981,12 +1041,14 @@ elocation_position_to_address(Elocation_Position *position_shadow, Elocation_Add
    return EINA_TRUE;
 }
 
+/* Public API function to get a position from and address */
 EAPI Eina_Bool
 elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Position *position_shadow)
 {
    EDBus_Message *msg;
    EDBus_Message_Iter *iter, *entry, *array;
 
+   /* In function macro to generate a key value pair structure for the dict */
    #define ENTRY(key) { #key, address_shadow->key }
    struct keyval {
       const char *key;
@@ -1032,6 +1094,9 @@ elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Posit
    return EINA_TRUE;
 }
 
+/* Public API function to get the position from a freeform text input style
+ * address
+ */
 EAPI Eina_Bool
 elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow)
 {
@@ -1043,6 +1108,7 @@ elocation_freeform_address_to_position(const char *freeform_address, Elocation_P
    return EINA_TRUE;
 }
 
+/* Public API function to request the current address */
 EAPI Eina_Bool
 elocation_address_get(Elocation_Address *address_shadow)
 {
@@ -1052,6 +1118,7 @@ elocation_address_get(Elocation_Address *address_shadow)
    return EINA_TRUE;
 }
 
+/* Public API function to request the current position */
 EAPI Eina_Bool
 elocation_position_get(Elocation_Position *position_shadow)
 {
@@ -1061,6 +1128,7 @@ elocation_position_get(Elocation_Position *position_shadow)
    return EINA_TRUE;
 }
 
+/* Public API function to request the status */
 EAPI Eina_Bool
 elocation_status_get(int *status_shadow)
 {
@@ -1070,6 +1138,7 @@ elocation_status_get(int *status_shadow)
    return EINA_TRUE;
 }
 
+/* Public API function to create a new position object */
 EAPI Elocation_Position *
 elocation_position_new(void)
 {
@@ -1084,6 +1153,7 @@ elocation_position_new(void)
    return position;
 }
 
+/* Public API function to create an new address object */
 EAPI Elocation_Address *
 elocation_address_new(void)
 {
@@ -1098,6 +1168,7 @@ elocation_address_new(void)
    return address;
 }
 
+/* Public API function to free an position object */
 EAPI void
 elocation_position_free(Elocation_Position *position_shadow)
 {
@@ -1111,6 +1182,7 @@ elocation_position_free(Elocation_Position *position_shadow)
    free(position);
 }
 
+/* Public API function to free an address object */
 EAPI void
 elocation_address_free(Elocation_Address *address_shadow)
 {
@@ -1124,6 +1196,7 @@ elocation_address_free(Elocation_Address *address_shadow)
    free(address);
 }
 
+/* Public API funtion to initialize the elocation library */
 EAPI Eina_Bool
 elocation_init(void)
 {
@@ -1140,6 +1213,7 @@ elocation_init(void)
         EINA_LOG_ERR("Could not register 'elocation' log domain.");
      }
 
+   /* Create objects, one for each kind, we operate on internally */
    address_provider = calloc(1, sizeof(Elocation_Provider));
    position_provider = calloc(1, sizeof(Elocation_Provider));
 
@@ -1162,6 +1236,7 @@ elocation_init(void)
       return EXIT_FAILURE;
      }
 
+   /* Create all ecore event types we send out to interested applications */
    if (ELOCATION_EVENT_IN == 0)
       ELOCATION_EVENT_IN = ecore_event_type_new();
 
@@ -1209,6 +1284,12 @@ elocation_init(void)
         return EXIT_FAILURE;
      }
 
+   /* Create a meta provider for all normal use cases. This will allow GeoClue
+    * to decide which provider is the best for us internally.
+    * Right now we don't have the functionality in place to specifically request
+    * a provider but we maybe need this in the future. We will try without it
+    * for now.
+    */
    if (!edbus_proxy_call(manager_master, "Create", create_cb, NULL, -1, ""))
      {
         ERR("Error: could not call Create");
@@ -1259,6 +1340,7 @@ elocation_init(void)
    ecore_event_handler_add(ELOCATION_EVENT_OUT, geoclue_stop, NULL);
 }
 
+/* Public API function to shutdown the elocation library form the application */
 EAPI void
 elocation_shutdown(void)
 {
@@ -1268,6 +1350,9 @@ elocation_shutdown(void)
         ERR("Error: could not call RemoveReference");
      }
 
+   /* Quite a bit of allocated string and generic memory cleanup. This should be
+    *less when we went away from all this global var business.
+    */
    free(address_provider->name);
    free(address_provider->description);
    free(address_provider->service);
@@ -1298,6 +1383,9 @@ elocation_shutdown(void)
    free(address->region);
    free(address->timezone);
 
+   /* Unreference some edbus strcutures we now longer use. To allow edbus to
+    * free them internally.
+    */
    edbus_proxy_unref(manager_master);
 
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);

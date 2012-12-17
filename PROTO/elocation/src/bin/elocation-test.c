@@ -7,6 +7,10 @@
 #include <Ecore.h>
 #include <Elocation.h>
 
+/* A set of callbacks to react on incoming elocation events. They are standard
+ * ecore events and we register callbacks based on these events in the main
+ * function.
+ */
 static Eina_Bool
 status_changed(void *data, int ev_type, void *event)
 {
@@ -95,10 +99,14 @@ main(void)
    Elocation_Position *position, *pos_geocode;
    int status;
 
+   /* Init the needed efl subsystems so we can safely use them */
    ecore_init();
    edbus_init();
    elocation_init();
 
+   /* Create an address and positon object that we use for all our operations.
+    * Needs to be freed manually with elocation_*_free when we now longer use
+    * them */
    address = elocation_address_new();
    position = elocation_position_new();
 
@@ -109,30 +117,43 @@ main(void)
    ecore_event_handler_add(ELOCATION_EVENT_GEOCODE, geocode_arrived, NULL);
    ecore_event_handler_add(ELOCATION_EVENT_REVERSEGEOCODE, rgeocode_arrived, NULL);
 
+   /* To the initial request for status address and position. This fills in the
+    * objects with the data from GeoClue */
    elocation_status_get(&status);
    elocation_position_get(position);
    elocation_address_get(address);
 
+   /* Another set of address and position object. This time for demonstrating
+    * the GeoCode functionalities */
    addr_geocode = elocation_address_new();
    pos_geocode = elocation_position_new();
 
+   /* The Freeform API could use any string to transform it into position
+    * coordinates. How good that works depends on the used GeoClue provider */
    elocation_freeform_address_to_position("London", pos_geocode);
 
+   /* Some demo values to show the position to address conversion */
    pos_geocode->latitude = 51.7522;
    pos_geocode->longitude = -1.25596;
    pos_geocode->accur->level = 3;
    elocation_position_to_address(pos_geocode, addr_geocode);
 
+   /* And now from address to position */
    addr_geocode->locality = "Cambridge";
    addr_geocode->countrycode = "UK";
    elocation_address_to_position(addr_geocode, pos_geocode);
 
+   /* Enter the mainloop now that we are setup with initial data and waiting for
+    * events. */
    ecore_main_loop_begin();
 
+   /* Cleanup allocated memory now that we shut down */
    elocation_address_free(addr_geocode);
    elocation_position_free(pos_geocode);
    elocation_address_free(address);
    elocation_position_free(position);
+
+   /* Make sure we also shut down the initialized subsystems */
    elocation_shutdown();
    edbus_shutdown();
    ecore_shutdown();
