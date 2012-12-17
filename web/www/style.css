@@ -122,13 +122,13 @@ p {
 a:link {
    color                  : #3399ff;
    text-decoration        : underline;
-   text-shadow            : 0px 0px 3px rgba(0.2,0.6,1.0,0.2);
+   text-shadow            : 0px 0px 10px rgba(0.2,0.6,1.0,1.0);
 }
 
 a:visited {
    color                  : #2288ee;
    text-decoration        : underline;
-   text-shadow            : 0px 0px 3px rgba(0.2,0.6,1.0,0.1); 
+   text-shadow            : 0px 0px 10px rgba(0.2,0.6,1.0,1.0); 
 }
 
 a:active {
@@ -139,7 +139,7 @@ a:active {
 a:hover {
    color                  : #3399ff;
    text-decoration        : underline;
-   text-shadow            : 0px 0px 5px rgba(0.2,0.6,1.0,1.0); 
+   text-shadow            : 0px 0px 15px rgba(0.2,0.6,1.0,1.0); 
 }
 
 img {
@@ -248,7 +248,7 @@ a.b:active {
 a.b:hover {
    color                  : #3399ff;
    text-decoration        : none;
-   text-shadow            : 0px 0px 5px rgba(0.2,0.6,1.0,1.0); 
+   text-shadow            : 0px 0px 10px rgba(0.2,0.6,1.0,1.0); 
 }
 
 td.pn1 { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='i/pn-1.png'); }
