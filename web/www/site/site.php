@@ -1,6 +1,8 @@
 <?php
   set_magic_quotes_runtime(0);
 
+  $navstate = "";
+
   if(isset($_GET['p']))
 	$page = $_GET['p'];
   else
@@ -233,6 +235,7 @@ function dev_data_irc($data)
   function nav_button($b) {
       global $page;
       global $lang;
+      global $navstate;
       $c = "passive";
 
       if (file_exists("p/$b/$lang-label"))
@@ -252,7 +255,14 @@ function dev_data_irc($data)
       if ((strncasecmp($page,$l,strlen($l)) == 0) OR
           (($page == "index") AND ($l == "Home") )) {
       	  $c = "active";
+          if (($page <> "index") OR ($l <> "Home")) {
+              $navstate = "active";
+          }
           return "<li class='$pname current'><a><span>$l</span></a></li>\n";
+      }
+      if ($navstate == "active") {
+          $navstate = "";
+          return "<li class='$pname current2'><a href='$h'><span>$l</span></a></li>\n";
       }
       return "<li class='$pname'><a href='$h'><span>$l</span></a></li>\n";
   }

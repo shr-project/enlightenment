@@ -3,7 +3,7 @@
 /*****************************/
 body {
   background              : url(ti/header_background.png) repeat-x top left;
-  background-color        : #ffffff;
+  background-color        : #404040;
   padding                 : 0;
   margin                  : 0;
 }
@@ -71,8 +71,8 @@ div.bod {
    -moz-column-rule-style : solid;
    column-rule-width      : 1px;
    -moz-column-rule-width : 1px;
-   column-rule-color      : #eeeeee;
-   -moz-column-rule-color : #eeeeee;
+   column-rule-color      : #303030;
+   -moz-column-rule-color : #303030;
    overflow               : auto;
    margin                 : 1em;
    text-align             : left;
@@ -81,7 +81,7 @@ div.bod {
 
 
 div.fragment, div.code {
-   border                 : 1px solid #eeeeee;
+   border                 : 1px solid #383838;
    text-align             : left;
    vertical-align         : middle;
    padding                : 8px;
@@ -89,7 +89,7 @@ div.fragment, div.code {
 }
 
 pre {
-   border                 : 1px dotted #bbbbbb;
+   border                 : 1px dotted #383838;
    text-align             : left;
    vertical-align         : middle;
    padding                : 2px;
@@ -99,7 +99,7 @@ pre {
 hr {
    width                  : 200px;
    height                 : 1px;
-   background-color       : #eeeeee;
+   background-color       : #303030;
    border                 : 0px;
 }
 
@@ -120,23 +120,26 @@ p {
 }
 
 a:link {
-   color                  : #445566;
+   color                  : #3399ff;
    text-decoration        : underline;
+   text-shadow            : 0px 0px 5px rgba(0.2,0.6,1.0,0.5); 
 }
 
 a:visited {
-   color                  : #667788;
+   color                  : #2288ee;
    text-decoration        : underline;
+   text-shadow            : 0px 0px 3px rgba(0.2,0.6,1.0,0.3); 
 }
 
 a:active {
-   color                  : #88cccc;
+   color                  : #ffffff;
    text-decoration        : none;
 }
 
 a:hover {
-   color                  : #112266;
+   color                  : #3399ff;
    text-decoration        : underline;
+   text-shadow            : 0px 0px 5px rgba(0.2,0.6,1.0,1.0); 
 }
 
 img {
@@ -196,6 +199,7 @@ table.b {
    border-collapse        : collapse;
    font-size              : 0px;
    line-height            : 0px;
+   text-shadow            : 0px 1px rgba(0,0,0,0.5)
 }
 
 td.b1 { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='i/b1.png'); }
@@ -209,9 +213,10 @@ td.b4[class] { background-image:url("i/b4.png"); }
 td.b5 {
    background-image       : url("i/b5.png");
    font-size              : 11px;
-   color                  : #444444;
+   color                  : #ffffff;
    text-align             : left;
    vertical-align         : middle;
+   text-shadow            : 0px 1px rgba(0,0,0,0.5)
 }
 td.b6 { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='i/b6.png'); }
 td.b6[class] { background-image:url("i/b6.png"); }
@@ -225,21 +230,25 @@ td.b9[class] { background-image:url("i/b9.png"); }
 a.b:link {
    color                  : #ffffff;
    text-decoration        : none;
+   text-shadow            : 0px 1px rgba(0,0,0,0.5)
 }
 
 a.b:visited {
    color                  : #ffffff;
    text-decoration        : none;
+   text-shadow            : 0px 1px rgba(0,0,0,0.5)
 }
 
 a.b:active {
-   color                  : #ffee88;
+   color                  : #ffffff;
    text-decoration        : none;
+   text-shadow            : 0px 1px rgba(0,0,0,0.5)
 }
 
 a.b:hover {
-   color                  : #cccccc;
+   color                  : #3399ff;
    text-decoration        : none;
+   text-shadow            : 0px 0px 5px rgba(0.2,0.6,1.0,1.0); 
 }
 
 td.pn1 { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='i/pn-1.png'); }
@@ -251,9 +260,9 @@ td.pn3[class] { background-image:url("i/pn-3.png"); }
 td.pn4 { filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='i/pn-4.png'); }
 td.pn4[class] { background-image:url("i/pn-4.png"); }
 td.pn5 {
-   background             : #ffffff;
+   background             : #404040;
    font-size              : 11px;
-   color                  : #000000;
+   color                  : #ffffff;
    text-align             : center;
    vertical-align         : middle;
 }
@@ -270,8 +279,8 @@ td.pn9[class] { background-image:url("i/pn-9.png"); }
 
 .post {
    margin                 : 0 0 2.5em 40px;
-   border-left            : 1px solid #bbbbbb;
-   padding-left           : 2ex;
+   border-left            : 4px solid #3399ff;
+   padding-left           : 20px;
    text-align             : left;
 }
 
