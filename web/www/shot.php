@@ -1,4 +1,11 @@
 <?php
+function get_ip()
+{
+    if (getenv("REMOTE_ADDR")) $ip = getenv("REMOTE_ADDR");
+    else $ip = "UNKNOWN";
+    return $ip;
+}
+
 function extn($str) {
   $i = strrpos($str,".");
   if (!$i) { return ""; }
@@ -62,9 +69,14 @@ else {
 $dest = uniqid("e-", true) . $ext;
 $temp =  "/var/www/www/ss/tmp/" . $dest;
 $thumb = "/var/www/www/ss/tmp/th-" . $dest;
+$temp_ip = "/var/www/www/ss/tmp/ip-" . $dest;
 ############ store the file
 $fh = fopen($temp, 'wb');
 fwrite($fh, $data);
+fclose($fh);
+
+$fh = fopen($temp_ip, 'w');
+fwrite($fh, md5($dest . get_ip()));
 fclose($fh);
 ############ prepare url to get file from
 $loc = "http://www.enlightenment.org/ss/" . $dest;
