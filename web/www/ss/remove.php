@@ -15,10 +15,16 @@ $auth_file = "/var/www/www/ss/ip-" . $img;
 $ignore_file = "/var/www/www/ss/ignore-" . $img;
 $abuse_file = "/var/www/www/ss/abuse-" . $img;
 $auth_expire = 60 * 60;
+$ip = get_ip();
 
 if ($img[0] == "e" && file_exists($file))
   {
-    if (time() - filemtime($auth_file) < $auth_expire) 
+    $remove = 0;
+    if ($ip = "140.211.167.168") 
+      {
+	$remove = 1;
+      }
+    else if (time() - filemtime($auth_file) < $auth_expire) 
       {
 	$auth = md5($img . get_ip());
 
@@ -26,17 +32,22 @@ if ($img[0] == "e" && file_exists($file))
 	$head = fgets($fh); 
 	fclose($fh); 
 
-	if ($auth == $head || get_ip() == "140.211.167.168")
+	if ($auth == $head)
 	  {
-	    rename("/var/www/www/ss/ip-" . $img, 
-		   "/var/www/www/ss/kill/ip-" . $img);
-	    rename("/var/www/www/ss/abuse-" . $img,
-		   "/var/www/www/ss/kill/abuse-" . $img);
-	    rename("/var/www/www/ss/th-" . $img,
-		   "/var/www/www/ss/kill/th-" . $img);
-	    rename("/var/www/www/ss/" . $img,
-		   "/var/www/www/ss/kill/" . $img);
+	    $remove = 1;
 	  }
+      }
+
+    if ($remove == 1)
+      {
+	rename("/var/www/www/ss/ip-" . $img, 
+	       "/var/www/www/ss/kill/ip-" . $img);
+	rename("/var/www/www/ss/abuse-" . $img,
+	       "/var/www/www/ss/kill/abuse-" . $img);
+	rename("/var/www/www/ss/th-" . $img,
+	       "/var/www/www/ss/kill/th-" . $img);
+	rename("/var/www/www/ss/" . $img,
+	       "/var/www/www/ss/kill/" . $img);
       }
   }
 
