@@ -43,7 +43,7 @@ ul, ol { font-size: 11px; text-align: left; }
 #header ul.menu li a { background: url("/ti/header_menu_unselected_background.png") no-repeat; text-decoration: none; text-shadow: 0px 1px rgba(0,0,0,0.5); }
 #header ul.menu li a span { display: inline-block; height: 63px; line-height: 63px; text-transform: capitalize; color: #ffffff; font-size: 10px; padding: 0 14px; text-shadow: 0px 1px rgba(0,0,0,0.5); }
 #header ul.menu li.current a { background: url("/ti/header_menu_current_background.png") no-repeat; }
-#header ul.menu li.current a span { color: #3399ff;  text-shadow: 0px 0px 5px rgba(0.2,0.6,1.0,0.5);  }
+#header ul.menu li.current a span { color: #3399ff;  text-shadow: 0px 0px 3px rgba(0.2,0.6,1.0,0.2);  }
 #header ul.menu li.current2 a { background: url("/ti/header_menu_unselected_next_background.png") no-repeat; text-shadow: 0px 1px rgba(0,0,0,0.5); }
 #header ul.menu li.current2 a span { color: #ffffff; text-shadow: 0px 1px rgba(0,0,0,0.5); }
 #header ul.menu li.index { float: left; height: 63px; margin: 0; }
@@ -58,16 +58,16 @@ ul, ol { font-size: 11px; text-align: left; }
 #header ul.submenu li a { text-decoration: none; color: #aaaaaa; text-shadow: 0px 1px rgba(0,0,0,0.5); }
 #header ul.submenu li a span { color: #aaaaaa; line-height: 36px; font-weight: bold; text-transform: capitalize; font-size: 10px; text-shadow: 0px 1px rgba(0,0,0,0.5); }
 #header ul.submenu li a:hover span { color: #ffffff; text-shadow: 0px 1px rgba(0,0,0,0.5); }
-#header ul.submenu li.selected a span { color: #3399ff; line-height: 36px; font-weight: bold; text-transform: capitalize; font-size: 10px; text-shadow: 0px 0px 5px rgba(0.2,0.6,1.0,0.5);  }
-#header ul.submenu li.selected a:hover span { color: #3399ff; text-shadow: 0px 0px 5px rgba(0.2,0.6,1.0,0.5);  }
-#header ul.submenu li.selected a { color: #3399ff; text-decoration: underline; text-shadow: 0px 0px 5px rgba(0.2,0.6,1.0,0.5);  }
+#header ul.submenu li.selected a span { color: #3399ff; line-height: 36px; font-weight: bold; text-transform: capitalize; font-size: 10px; text-shadow: 0px 0px 3px rgba(0.2,0.6,1.0,0.2);  }
+#header ul.submenu li.selected a:hover span { color: #3399ff; text-shadow: 0px 0px 3px rgba(0.2,0.6,1.0,0.2); }
+#header ul.submenu li.selected a { color: #3399ff; text-decoration: underline; text-shadow: 0px 0px 3px rgba(0.2,0.6,1.0,0.2);  }
 #header div.menu { height: 63px; }
 #header div.menu .layout { background: url("/ti/header_menu_background.png"); }
 #header div.submenu { height: 36px; margin-bottom: 36px; }
 
 /* ******************* Changes to the Original Stylesheet ****************** */
 table.data { width: 90%; padding: 0px; margin: 5px; border: 1px solid #303030; border-collapse: collapse; }
-table.data thead th { color: #3399ff; background-color: #282828; padding: 3px; text-align: left; text-shadow: 0px 0px 5px rgba(0.2,0.6,1.0,0.5);  }
+table.data thead th { color: #3399ff; background-color: #282828; padding: 3px; text-align: left; text-shadow: 0px 0px 3px rgba(0.2,0.6,1.0,0.2);  }
 table.data tbody tr td { color: #ffffff; background-color: #383838; padding: 3px; text-align: left; font-size: 11px; }
 table.data tbody tr.odd td { color: #ffffff; background-color: #3b3b3b; }
 
