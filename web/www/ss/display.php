@@ -14,12 +14,12 @@
      return $ip;
    }
 
-   $auth_file = "/var/www/www/ss/tmp/ip-" . $img;
-   $auth_expire = 60 * 60; // You have one hour to remove your content
-
    $img = "";
    if (isset($_GET['image']))
      $img = $_GET['image'];
+
+   $auth_file = "/var/www/www/ss/ip-" . $img;
+   $auth_expire = 60 * 60; // You have one hour to remove your content
 
    if (time() - filemtime($auth_file) < $auth_expire)
      {
@@ -35,15 +35,15 @@
        $head = true;
      }
 
-   print "<a href=http://www.enlightenment.org/ss/" . $img . ">";
-   print "<img src=" . $img " border=1>";
-   print "</a>\n";
-
-   if ($head == $auth)
+   if ($head == $auth || get_ip() == "140.211.167.168")
      {
-       print "<a href=remove.php?image=" . $img . ">Remove content</a>\n";
+       print "<span><a href=remove.php?image=" . $img . ">Remove content</a></span>\n";
      }
-   print "<a href=ban.php?image=" . $img . ">Alert content</a>\n";
+   print "<span><a href=ban.php?image=" . $img . ">Alert content</a></span>\n";
+
+   print "<a href=http://www.enlightenment.org/ss/" . $img . ">";
+   print "<img src=" . $img . " border=1>";
+   print "</a>\n";
    ?>
   </body>
 </html>

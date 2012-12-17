@@ -16,20 +16,21 @@ $abuse_file = "/var/www/www/ss/abuse-" . $img;
 
 if ($img[0] == "e" && file_exists($file) && !file_exists($ignore_file))
   {
-    $already = false;
+    $already = 0;
     $auth = md5($img . get_ip());
 
     $count = 0;
     $fh = fopen($abuse_file, "r");
     if ($fh)
       {
+	$auth_eol = $auth . "\n";
 	while (!feof($fh))
 	  {
 	    $tmp = fgets($fh);
-	    if ($auth == $tmp)
+	    if ($auth_eol == $tmp)
 	      {
 		// Don't let people vote multiple time somehow
-		$already = true;
+		$already = 1;
 	      }
 	    else
 	      {
@@ -52,7 +53,7 @@ if ($img[0] == "e" && file_exists($file) && !file_exists($ignore_file))
       }
     else
       {
-	if (!already)
+	if ($already == 0)
 	  {
 	    $fh = fopen($abuse_file, "a");
 	    fwrite($fh, $auth . "\n");

@@ -11,10 +11,12 @@ if (isset($_GET['image']))
   $img = $_GET['image'];
 
 $file = "/var/www/www/ss/" . $img;
+$auth_file = "/var/www/www/ss/ip-" . $img;
 $ignore_file = "/var/www/www/ss/ignore-" . $img;
 $abuse_file = "/var/www/www/ss/abuse-" . $img;
+$auth_expire = 60 * 60;
 
-if ($img[0] == "e" && file_exists($file) && !file_exists($ignore_file))
+if ($img[0] == "e" && file_exists($file))
   {
     if (time() - filemtime($auth_file) < $auth_expire) 
       {
@@ -24,7 +26,7 @@ if ($img[0] == "e" && file_exists($file) && !file_exists($ignore_file))
 	$head = fgets($fh); 
 	fclose($fh); 
 
-	if ($auth == $head)
+	if ($auth == $head || get_ip() == "140.211.167.168")
 	  {
 	    rename("/var/www/www/ss/ip-" . $img, 
 		   "/var/www/www/ss/kill/ip-" . $img);

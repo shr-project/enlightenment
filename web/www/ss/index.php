@@ -29,44 +29,6 @@
                      $files
                    );
 
-    function extn($str) {
-        $i = strrpos($str,".");
-        if (!$i) { return ""; }
-        $l = strlen($str) - $i;
-        $ext = substr($str,$i+1,$l);
-        return $ext;
-    }
-
-
-    function dothumb($f, $thumb, $new_w, $new_h) {
-        $ext = extn($f);
-        if (!strcmp("jpg", $ext))
-          $src_img = imagecreatefromjpeg($f);
-        if (!strcmp("png", $ext))
-          $src_img = imagecreatefrompng($f);
-        $old_x = imageSX($src_img);
-        $old_y = imageSY($src_img);
-        $ratio1 = $old_x / $new_w;
-        $ratio2 = $old_y / $new_h;
-        if ($ratio1 > $ratio2) {
-          $thumb_w = $new_w;
-          $thumb_h = $old_y / $ratio1;
-        }
-        else {
-          $thumb_h = $new_h;
-          $thumb_w = $old_x / $ratio2;
-        }
-        $dst_img = ImageCreateTrueColor($thumb_w, $thumb_h);
-        imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0,
-                           $thumb_w, $thumb_h, $old_x, $old_y); 
-        if (!strcmp("png", $ext))
-          imagepng($dst_img, $thumb); 
-        else
-          imagejpeg($dst_img, $thumb);
-        imagedestroy($dst_img);
-        imagedestroy($src_img);
-    }
-
     $pages = (int)(count($files) / IMAGES_PER_PAGE);
     if (count($files) % IMAGES_PER_PAGE)
       $pages++;
@@ -136,7 +98,7 @@
           if (!file_exists($thumb)) {
 	    continue;
           }
-          print "<a href=" . $f . "><img src=" . $thumb . " border=1 hspace=10 vspace=10></a>\n";
+          print "<a href=display.php?image=" . urlencode($f) . "><img src=" . $thumb . " border=1 hspace=10 vspace=10></a>\n";
       }
     ?>
     </div>
