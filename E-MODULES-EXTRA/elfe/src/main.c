@@ -157,9 +157,10 @@ _elfe_home_win_new(E_Zone *zone)
    e_win_title_set(hwin->win, "Elfe");
    e_win_name_class_set(hwin->win, "Illume-Home", "Illume-Home");
    e_win_resize_callback_set(hwin->win, _elfe_home_win_cb_resize);
-   e_win_no_remember_set(hwin->win, EINA_TRUE);
+   e_win_no_remember_set(hwin->win, EINA_FALSE);
    //ecore_x_e_illume_conformant_set(hwin->win->evas_win, EINA_TRUE);
-
+   e_win_sticky_set(hwin->win, EINA_TRUE);
+   e_win_borderless_set(hwin->win, EINA_TRUE);
    snprintf(buf, sizeof(buf), "%s/default.edj",
             elfe_home_cfg->mod_dir);
 
@@ -169,7 +170,7 @@ _elfe_home_win_new(E_Zone *zone)
    evas_object_move(rect, 0, 0);
    evas_object_resize(rect, zone->w, zone->h);
    evas_object_show(rect);
-
+   e_win_size_min_set(hwin->win, zone->w, zone->h);
 
    /* Specific ELM initialisation */
    ecore_app_args_get(&argc, &argv);
@@ -220,7 +221,7 @@ _elfe_home_win_new(E_Zone *zone)
    evas_object_move(hwin->layout, 0, 0);
    evas_object_show(hwin->layout);
 
-   e_win_move_resize(hwin->win, zone->x, zone->y, zone->w, (zone->h / 2));
+   e_win_move_resize(hwin->win, zone->x, zone->y, zone->w, zone->h);
    e_win_show(hwin->win);
    e_border_zone_set(hwin->win->border, zone);
    if (hwin->win->evas_win)

@@ -1,2 +1,2 @@
 #!/bin/sh
-x-ui.sh --profile=illume --screen=480x800
+x-ui.sh --profile=mobile --screen=1280x800
