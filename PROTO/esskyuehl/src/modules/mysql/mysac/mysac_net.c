@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009 Thierry FOURNIER
+ * Copyright (c) 2009-2011 Thierry FOURNIER
  *
  * This file is part of MySAC.
  *
@@ -16,7 +16,6 @@
  * along with MySAC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mysac.h"
 #include <errno.h>
 #include <fcntl.h>
 #include <string.h>
@@ -29,7 +28,9 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <mysql/errmsg.h>
 
+#include "mysac.h"
 
 int mysac_socket_connect(const char *socket_name, int *fd) {
 	int ret_code;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009 Thierry FOURNIER
+ * Copyright (c) 2009-2011 Thierry FOURNIER
  *
  * This file is part of MySAC.
  *

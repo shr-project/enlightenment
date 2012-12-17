@@ -16,12 +16,38 @@
  * along with MySAC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef __MYSAC_NET_H__
-#define __MYSAC_NET_H__
+#include <ctype.h>
 
-int mysac_socket_connect(const char *socket_name, int *fd);
-int mysac_socket_connect_check(int fd);
-ssize_t mysac_read(int fd, void *buf, size_t count, int *err);
-ssize_t mysac_write(int fd, const void *buf, size_t len, int *err);
+#include "mysac.h"
+#include "mysac_decode_respbloc.h"
 
-#endif
+enum my_expected_response_t check_action(const char *request, int len, MYSAC *mysac)
+{
+	const char *parse;
+
+	/* jump blank char '\r', '\n', '\t' and ' ' */
+	parse = request;
+	while (1) {
+		if (!isspace(*parse))
+			break;
+
+		/* if no more chars in string */
+		len--;
+		if (len <= 0)
+			return MYSAC_EXPECT_OK;
+
+		parse++;
+	}
+
+	/* check request type */
+	if ( (len > 6) && ( strncasecmp(parse, "SELECT", 5) == 0) )
+		return MYSAC_EXPECT_DATA;
+
+	else if ( (len > 5) && ( strncasecmp(parse, "CALL", 4) == 0) ) {
+		mysac->status = RESPONSE_MULTI_RESULTS;
+		return MYSAC_EXPECT_DATA;
+	}
+
+	return MYSAC_EXPECT_OK;
+}
+

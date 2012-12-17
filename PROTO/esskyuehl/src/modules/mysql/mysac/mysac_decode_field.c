@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009 Thierry FOURNIER
+ * Copyright (c) 2009-2011 Thierry FOURNIER
  *
  * This file is part of MySAC.
  *
@@ -16,8 +16,16 @@
  * along with MySAC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "mysac.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+#include <stdarg.h>
+#include <mysql/mysql.h>
+#include <mysql/my_global.h>
+
 #include "mysac_utils.h"
+#include "mysac.h"
 
 int mysac_decode_field(char *buf, int len, MYSQL_FIELD *col) {
 	int i;
