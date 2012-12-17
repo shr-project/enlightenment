@@ -1,8 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=calculator-edje
+Name[eo]=Kalkulilo Edj
 Name[pt]=Calculadora Edje
 Comment=A sample, basic calculator application using Edje and Elementary.
+Comment[eo]=Simpla kalkulilo uzante Edje kaj Elementary.
 Comment[es]=Una calculadora básica usando Edje y Elementary.
 Comment[fr]=Calculatrice basique conçue avec Edje et Elementary
 Comment[gl]=Unha calculadora básica empregando Edje e Elementary.

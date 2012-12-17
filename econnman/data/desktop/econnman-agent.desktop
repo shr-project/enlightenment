@@ -2,6 +2,7 @@
 Type=Application
 Icon=econnman
 Name=EConnMan with Agent
+Name[eo]=EConnMak kun agento
 Name[es]=EConnMan con agente
 Name[gl]=EConnMan con axente
 Name[it]=EconnMan con agente
@@ -11,6 +12,7 @@ GenericName[es]=Administrador de conexiones
 GenericName[gl]=Xestor de conexións
 GenericName[pt]=Gestor de ligações
 Comment=Manage your internet connections using ConnMan and EFL. Version with agent to get passwords and other input.
+Comment[eo]=Administri viajn interretajn konektadojn pere de ConnMan kaj EFL. Versio kun agento por akiri pasvortojn aŭ aliajn enigojn.
 Comment[es]=Administre sus conexiones a internet usando ConnMan y EFL. Versión con agente para obtener contraseñas y otras entradas.
 Comment[gl]=Xestione as súas conexións a internet empregando ConnMan e EFL. Versión con axente para obter contrasinais e outras entradas.
 Comment[it]=Gestisce le connessioni internet usando ConnMan e le EFL. Versione con agente per password e altri input.

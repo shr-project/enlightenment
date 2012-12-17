@@ -2,6 +2,7 @@
 Type=Application
 Name=Equate
 GenericName=Calculator
+GenericName[eo]=Kalkulilo
 GenericName[es]=Calculadora
 GenericName[fr]=Calculatrice
 GenericName[gl]=Calculadora
@@ -9,6 +10,7 @@ GenericName[it]=Calcolatrice
 GenericName[pt]=Calculadora
 GenericName[ru]=Калькулятор
 Comment=EFL Calculator
+Comment[eo]=Kalkulilo uzante EFL.
 Comment[es]=Calculadora basada en las EFL.
 Comment[fr]=Calculatrice utilisant les EFL.
 Comment[gl]=Calculadora baseada nas EFL.

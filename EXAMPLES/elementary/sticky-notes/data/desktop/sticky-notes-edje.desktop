@@ -1,8 +1,10 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=sticky-notes-edje
+Name[eo]=Glunotoj Edje
 Name[pt]=Notas edje
 Comment=A sample sticky notes application using Edje and Elementary.
+Comment[eo]=Simpla aplikaĵo de glunotoj uzante Edje kaj Elementary.
 Comment[es]=Un ejemplo de aplicación de notas adhesivas usando Edje y Elementary.
 Comment[fr]=Une appliquette post-it conçue avec Edje et Elementary
 Comment[gl]=Un exemplo de aplicativo de notas adhesivas empregando Edje e Elementary.

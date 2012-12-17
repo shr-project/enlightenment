@@ -2,6 +2,7 @@
 Type=Application
 Name=Editje
 Comment=Editje Edje Editor
+Comment[eo]=Redaktilo de dosieroj Edje
 Comment[es]=Editor de archivos Edje
 Comment[fr]=Éditeur de fichiers edje
 Comment[gl]=Editor de ficheiros Edje
