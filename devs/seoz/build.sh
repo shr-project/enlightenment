@@ -25,7 +25,7 @@ export CC="ccache gcc"
 alias make='make -j6'
 
 export BUILD_ETHUMB_OPTION="PROTO/epdf"
-export BUILD_ELM_OPTION="PROTO/emap"
+export BUILD_ELM_OPTION="PROTO/emap PROTO/elocation"
 export BUILD_CORE_EFL="edje e_dbus edbus efreet expedite "$BUILD_ETHUMB_OPTION" emotion ethumb "$BUILD_ELM_OPTION" elementary eeze e"
 export BUILD_PYTHON_BINDINGS="BINDINGS/python/python-evas BINDINGS/python/python-ecore BINDINGS/python/python-elementary BINDINGS/python/python-edje BINDINGS/python/python-emotion BINDINGS/python/python-e_dbus"
 export BUILD_CPP_BINDINGS="BINDINGS/cxx/eflxx BINDINGS/cxx/einaxx BINDINGS/cxx/evasxx BINDINGS/cxx/ecorexx BINDINGS/cxx/edjexx BINDINGS/cxx/elementaryxx"
