@@ -1,4 +1,12 @@
 <?php
+function extn($str) {
+  $i = strrpos($str,".");
+  if (!$i) { return ""; }
+  $l = strlen($str) - $i;
+  $ext = substr($str,$i+1,$l);
+  return $ext;
+}
+
 function dothumb($f, $thumb, $new_w, $new_h) {
   $ext = extn($f);
   if (!strcmp("jpg", $ext))
@@ -52,27 +60,26 @@ else {
 
 ############ get a unique name
 $dest = uniqid("e-", true) . $ext;
+$temp =  "/var/www/www/ss/tmp/" . $dest;
+$thumb = "/var/www/www/ss/tmp/th-" . $dest;
 ############ store the file
-$fh = fopen("/var/www/www/ss/tmp".$dest, 'wb');
+$fh = fopen($temp, 'wb');
 fwrite($fh, $data);
 fclose($fh);
 ############ prepare url to get file from
 $loc = "http://www.enlightenment.org/ss/" . $dest;
 
-$temp =  "/var/www/www/ss/tmp/" . $dest;
-$thumb = "/var/www/www/ss/tmp/th-" . $dest;
-
 ## Generate thumb
-dothumb($f, $thumb, 320, 240);
+dothumb($temp, $thumb, 320, 240);
 
-if (!rename("/var/www/www/ss/tmp/th-" . $dest, "/var/www/www/ss/th-" . $dest))
+if (!rename($thumb, "/var/www/www/ss/th-" . $dest))
 {
   header("HTTP/1.1 400 Bad Request");
   echo "Invalid File Format";
   ob_end_flush();
   die(); 
 }
-rename("/var/www/www/ss/tmp/" . $dest, "/var/www/www/ss/" . $dest);
+rename($temp, "/var/www/www/ss/" . $dest);
 
 ############ respond!
 header("HTTP/1.1 200 OK");
