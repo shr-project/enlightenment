@@ -37,6 +37,7 @@
         return $ext;
     }
 
+
     function dothumb($f, $thumb, $new_w, $new_h) {
         $ext = extn($f);
         if (!strcmp("jpg", $ext))
@@ -133,7 +134,7 @@
 
           $thumb = "th-" . $f;
           if (!file_exists($thumb)) {
-              dothumb($f, $thumb, 320, 240);
+	    continue;
           }
           print "<a href=" . $f . "><img src=" . $thumb . " border=1 hspace=10 vspace=10></a>\n";
       }

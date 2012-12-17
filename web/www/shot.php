@@ -1,4 +1,33 @@
 <?php
+function dothumb($f, $thumb, $new_w, $new_h) {
+  $ext = extn($f);
+  if (!strcmp("jpg", $ext))
+    $src_img = imagecreatefromjpeg($f);
+  if (!strcmp("png", $ext))
+    $src_img = imagecreatefrompng($f);
+  $old_x = imageSX($src_img);
+  $old_y = imageSY($src_img);
+  $ratio1 = $old_x / $new_w;
+  $ratio2 = $old_y / $new_h;
+  if ($ratio1 > $ratio2) {
+    $thumb_w = $new_w;
+    $thumb_h = $old_y / $ratio1;
+  }
+  else {
+    $thumb_h = $new_h;
+    $thumb_w = $old_x / $ratio2;
+  }
+  $dst_img = ImageCreateTrueColor($thumb_w, $thumb_h);
+  imagecopyresampled($dst_img, $src_img, 0, 0, 0, 0,
+		     $thumb_w, $thumb_h, $old_x, $old_y); 
+  if (!strcmp("png", $ext))
+    imagepng($dst_img, $thumb); 
+  else
+    imagejpeg($dst_img, $thumb);
+  imagedestroy($dst_img);
+  imagedestroy($src_img);
+}
+
 ob_start();
 ############ limit - 6 mb.
 $data = file_get_contents('php://input', NULL, NULL, 0, 6 * 1024 * 1024);
@@ -15,20 +44,35 @@ if ($jpeg_match == $jpeg_magic) $ext = ".jpg";
 else if ($png_match == $png_magic) $ext = ".png";
 ############ not a correct matching file - abort
 else {
-        header("HTTP/1.1 400 Bad Request");
-        echo "Invalid File Format";
-        ob_end_flush();
-        die();
+  header("HTTP/1.1 400 Bad Request");
+  echo "Invalid File Format";
+  ob_end_flush();
+  die();
 }
 
 ############ get a unique name
 $dest = uniqid("e-", true) . $ext;
 ############ store the file
-$fh = fopen("/var/www/www/ss/".$dest, 'wb');
+$fh = fopen("/var/www/www/ss/tmp".$dest, 'wb');
 fwrite($fh, $data);
 fclose($fh);
 ############ prepare url to get file from
 $loc = "http://www.enlightenment.org/ss/" . $dest;
+
+$temp =  "/var/www/www/ss/tmp/" . $dest;
+$thumb = "/var/www/www/ss/tmp/th-" . $dest;
+
+## Generate thumb
+dothumb($f, $thumb, 320, 240);
+
+if (!rename("/var/www/www/ss/tmp/th-" . $dest, "/var/www/www/ss/th-" . $dest))
+{
+  header("HTTP/1.1 400 Bad Request");
+  echo "Invalid File Format";
+  ob_end_flush();
+  die(); 
+}
+rename("/var/www/www/ss/tmp/" . $dest, "/var/www/www/ss/" . $dest);
 
 ############ respond!
 header("HTTP/1.1 200 OK");
