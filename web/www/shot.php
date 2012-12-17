@@ -92,7 +92,7 @@ if (!rename($thumb, "/var/www/www/ss/th-" . $dest))
   die(); 
 }
 rename($temp, "/var/www/www/ss/" . $dest);
-rename($temp_ip, "/var/www/www/ss/ip-" . $dest));
+rename($temp_ip, "/var/www/www/ss/ip-" . $dest);
 
 ############ respond!
 header("HTTP/1.1 200 OK");
