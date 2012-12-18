@@ -1338,6 +1338,8 @@ elocation_init(void)
 
    ecore_event_handler_add(ELOCATION_EVENT_IN, geoclue_start, NULL);
    ecore_event_handler_add(ELOCATION_EVENT_OUT, geoclue_stop, NULL);
+
+   return EINA_TRUE;
 }
 
 /* Public API function to shutdown the elocation library form the application */
