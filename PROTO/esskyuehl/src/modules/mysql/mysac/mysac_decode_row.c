@@ -81,9 +81,6 @@ int mysac_decode_binary_row(char *buf, int packet_len,
 			case MYSQL_TYPE_MEDIUM_BLOB:
 			case MYSQL_TYPE_LONG_BLOB:
 			case MYSQL_TYPE_BLOB:
-			/* decimal ? maybe for very big num ... crypto key ? */
-			case MYSQL_TYPE_DECIMAL:
-			case MYSQL_TYPE_NEWDECIMAL:
 			/* .... */
 			case MYSQL_TYPE_BIT:
 			/* read text */
@@ -132,6 +129,8 @@ int mysac_decode_binary_row(char *buf, int packet_len,
 				i += 4;
 				break;
 	
+			case MYSQL_TYPE_DECIMAL:
+			case MYSQL_TYPE_NEWDECIMAL:
 			case MYSQL_TYPE_LONGLONG:
 				if (i > packet_len - 8)
 					return -1;
@@ -297,9 +296,6 @@ int mysac_decode_string_row(char *buf, int packet_len,
 		case MYSQL_TYPE_MEDIUM_BLOB:
 		case MYSQL_TYPE_LONG_BLOB:
 		case MYSQL_TYPE_BLOB:
-		/* decimal ? maybe for very big num ... crypto key ? */
-		case MYSQL_TYPE_DECIMAL:
-		case MYSQL_TYPE_NEWDECIMAL:
 		/* .... */
 		case MYSQL_TYPE_BIT:
 		/* read text */
@@ -327,6 +323,8 @@ int mysac_decode_string_row(char *buf, int packet_len,
 			buf[i+len] = mem;
 			break;
 
+		case MYSQL_TYPE_DECIMAL:
+		case MYSQL_TYPE_NEWDECIMAL:
 		case MYSQL_TYPE_LONGLONG:
 			mem = buf[i+len];
 			buf[i+len] = '\0';

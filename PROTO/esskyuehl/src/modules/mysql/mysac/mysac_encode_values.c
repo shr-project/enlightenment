@@ -60,9 +60,6 @@ int mysac_encode_value(MYSAC_BIND *val, char *out, int len) {
 	case MYSQL_TYPE_MEDIUM_BLOB:
 	case MYSQL_TYPE_LONG_BLOB:
 	case MYSQL_TYPE_BLOB:
-	/* decimal ? maybe for very big num ... crypto key ? */
-	case MYSQL_TYPE_DECIMAL:
-	case MYSQL_TYPE_NEWDECIMAL:
 	/* .... */
 	case MYSQL_TYPE_BIT:
 	/* read text */
@@ -107,6 +104,8 @@ int mysac_encode_value(MYSAC_BIND *val, char *out, int len) {
 		to_my_4(*(int *)val->value, out);
 		break;
 	
+	case MYSQL_TYPE_DECIMAL:
+	case MYSQL_TYPE_NEWDECIMAL:
 	case MYSQL_TYPE_LONGLONG:
 		if (len < 8)
 			return -1;

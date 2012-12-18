@@ -86,6 +86,8 @@ esql_module_setup_cb(MYSAC_RES *re, int col, Eina_Value_Struct_Member *m)
         m->type = EINA_VALUE_TYPE_LONG;
         break;
 
+      case MYSQL_TYPE_DECIMAL:
+      case MYSQL_TYPE_NEWDECIMAL:
       case MYSQL_TYPE_LONGLONG:
         m->type = EINA_VALUE_TYPE_INT64;
         break;
@@ -322,6 +324,8 @@ esql_mysac_row_init(Esql_Row *r, MYSAC_ROW *row)
              eina_value_set(&val, row[i].sint);
              break;
 
+           case MYSQL_TYPE_DECIMAL:
+           case MYSQL_TYPE_NEWDECIMAL:
            case MYSQL_TYPE_LONGLONG:
              eina_value_setup(&val, EINA_VALUE_TYPE_INT64);
              eina_value_set(&val, row[i].sbigint);
