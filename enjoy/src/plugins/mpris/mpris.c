@@ -419,7 +419,7 @@ _mpris_append_dict_entry(EDBus_Message_Iter *array, const char *key,
    va_list ap;
 
    va_start(ap, value_type);
-   edbus_message_iter_arguments_set(array, "{sv}", &dict);
+   edbus_message_iter_arguments_append(array, "{sv}", &dict);
    edbus_message_iter_basic_append(dict, 's', key);
    val = edbus_message_iter_container_new(dict, 'v', value_type);
    edbus_message_iter_arguments_vset(val, value_type, ap);
@@ -446,7 +446,7 @@ _mpris_message_fill_song_metadata(EDBus_Message *msg, const Song *song)
    */
 
    main_iter = edbus_message_iter_get(msg);
-   edbus_message_iter_arguments_set(main_iter, "a{sv}", &array);
+   edbus_message_iter_arguments_append(main_iter, "a{sv}", &array);
 
    if (song->title)
      _mpris_append_dict_entry(array, "title", "s", song->title);
@@ -494,7 +494,7 @@ _mpris_signal_player_status_change(int playback, int shuffle, int repeat, int en
    if (!sig) return;
 
    main_iter = edbus_message_iter_get(sig);
-   edbus_message_iter_arguments_set(main_iter, "(iiii)", &st);
+   edbus_message_iter_arguments_append(main_iter, "(iiii)", &st);
    edbus_message_iter_basic_append(st, 'i', playback);
    edbus_message_iter_basic_append(st, 'i', shuffle);
    edbus_message_iter_basic_append(st, 'i', repeat);
@@ -581,7 +581,7 @@ _mpris_root_identity(const EDBus_Service_Interface *iface __UNUSED__, const EDBu
 {
    const char *identity = PACKAGE_STRING;
    EDBus_Message *reply = edbus_message_method_return_new(msg);
-   edbus_message_arguments_set(reply, "s", identity);
+   edbus_message_arguments_append(reply, "s", identity);
    return reply;
 }
 
@@ -600,8 +600,8 @@ _mpris_root_version(const EDBus_Service_Interface *iface __UNUSED__, const EDBus
    uint16_t v1 = 1, v2 = 0;
 
    main_iter = edbus_message_iter_get(reply);
-   edbus_message_iter_arguments_set(main_iter, "(qq)", &s);
-   edbus_message_iter_arguments_set(s, "qq", v1, v2);
+   edbus_message_iter_arguments_append(main_iter, "(qq)", &s);
+   edbus_message_iter_arguments_append(s, "qq", v1, v2);
    edbus_message_iter_container_close(main_iter, s);
    return reply;
 }
@@ -611,7 +611,7 @@ _mpris_player_caps_get(const EDBus_Service_Interface *iface __UNUSED__, const ED
 {
    EDBus_Message *reply = edbus_message_method_return_new(msg);
    int32_t bits = _caps_to_mpris_bits(enjoy_player_caps_get());
-   edbus_message_arguments_set(reply, "i", bits);
+   edbus_message_arguments_append(reply, "i", bits);
    return reply;
 }
 
@@ -636,7 +636,7 @@ _mpris_player_volume_get(const EDBus_Service_Interface *iface __UNUSED__, const 
 {
    EDBus_Message *reply = edbus_message_method_return_new(msg);
    int32_t vol = enjoy_volume_get();
-   edbus_message_arguments_set(reply, "i", vol);
+   edbus_message_arguments_append(reply, "i", vol);
    return reply;
 }
 
@@ -665,8 +665,8 @@ _mpris_player_status_get(const EDBus_Service_Interface *iface __UNUSED__, const 
    e = status.endless;
 
    main_iter = edbus_message_iter_get(reply);
-   edbus_message_iter_arguments_set(main_iter, "(iiii)", &st);
-   edbus_message_iter_arguments_set(st, "iiii", p, s, r, e);
+   edbus_message_iter_arguments_append(main_iter, "(iiii)", &st);
+   edbus_message_iter_arguments_append(st, "iiii", p, s, r, e);
    edbus_message_iter_container_close(main_iter, st);
 
    return reply;
@@ -688,7 +688,7 @@ _mpris_player_position_get(const EDBus_Service_Interface *iface __UNUSED__, cons
 {
    EDBus_Message *reply = edbus_message_method_return_new(msg);
    int32_t pos = enjoy_position_get();
-   edbus_message_arguments_set(reply, "i", pos);
+   edbus_message_arguments_append(reply, "i", pos);
    return reply;
 }
 
@@ -711,7 +711,7 @@ _mpris_tracklist_current_track_get(const EDBus_Service_Interface *iface __UNUSED
 {
    EDBus_Message *reply = edbus_message_method_return_new(msg);
    int32_t pos = enjoy_playlist_current_position_get();
-   edbus_message_arguments_set(reply, "i", pos);
+   edbus_message_arguments_append(reply, "i", pos);
    return reply;
 }
 
@@ -720,7 +720,7 @@ _mpris_tracklist_count(const EDBus_Service_Interface *iface __UNUSED__, const ED
 {
    EDBus_Message *reply = edbus_message_method_return_new(msg);
    int32_t count = enjoy_playlist_count();
-   edbus_message_arguments_set(reply, "i", count);
+   edbus_message_arguments_append(reply, "i", count);
    return reply;
 }
 

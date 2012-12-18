@@ -24,7 +24,7 @@ _cb_dbus_version(const EDBus_Service_Interface *iface __UNUSED__, const EDBus_Me
 {
    EDBus_Message *reply = edbus_message_method_return_new(msg);
    uint16_t aj = VMAJ, in = VMIN, ic = VMIC;
-   edbus_message_arguments_set(reply, "qqq", aj, in, ic);
+   edbus_message_arguments_append(reply, "qqq", aj, in, ic);
    return reply;
 }
 
