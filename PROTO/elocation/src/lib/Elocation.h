@@ -379,6 +379,20 @@ EAPI Eina_Bool elocation_address_to_position(Elocation_Address *address_shadow, 
 EAPI Eina_Bool elocation_freeform_address_to_position(const char *freeform_address, Elocation_Position *position_shadow);
 
 /**
+ * @brief Request a landmark position
+ * @param position_shadow Position ouput
+ * @param address_shadow Address input
+ * @return EINA_TRUE for success and EINA_FALSE for failure.
+ *
+ * Request a landmark position also known as Point Of Interest (POI) from
+ * GeoClue.
+ *
+ * @ingroup Location
+ * @since 1.8
+ */
+EAPI Eina_Bool elocation_landmarks_get(Elocation_Position *position_shadow, Elocation_Address *address_shadow);
+
+/**
  * @brief Initialize the elocation  subsystem.
  * @return EINA_TRUE for success and EINA_FALSE for failure.
  *
