@@ -1,0 +1,68 @@
+New E17 <b>Release</b>: OMEGA
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+Today's release candidate of E17, <b>OMEGA 12</b>, is the last pre-release;
+on Friday we will see the final release of Enlightenment DR 0.17.
+<br><br>
+
+Changelog:
+<li>Translation updates</li>
+<li>Compile fixes on non-linux platforms</li>
+<li>Restoring default keybindings now restores all of the default keybindings</li>
+<li>Same as above for mouse wheel bindings</li>
+<li>Fixed a number of potential buffer overflows and memory leaks</li>
+<li>Even more wallpapers</li>
+<li>Tiling module now handles maximization of windows more effectively</li>
+<li>Improvements to Window Remembers config dialog</li>
+<li>Clock gadgets now scale the date</li>
+<li>Fixed issue where radio widgets could have no radio item toggled</li>
+<li>Pager config dialog now shows button names</li>
+<li>Tiling module improvements when moving/resizing tiled windows</li>
+<li>Improved RandR dialog</li>
+<li>Navigate menu's "Current Directory" now works correctly when activated on files and removable media</li>
+<li>Filemanager no longer loses icons which caused a DND operation failure</li>
+<li>Filemanager now properly handles DND operations where the target is the icon of a removable device</li>
+<li>Starting with an invalid configuration is now much less likely (nearly impossible) to result in a complete failure</li>
+<li>Triggering Everything repeatedly no longer causes a crash</li>
+<li>Refresh button on filemanager toolbar is now functional</li>
+<li>Scale config dialog now detects changes properly and closes on apply</li>
+<li>Shelf changes/deletions no longer create artifacts</li>
+<li>Gadgets on shelves no longer sometimes show the wrong style in menus</li>
+<li>Fixed crash when filemanager preview popup was present during directory refresh/change</li>
+<li>Fixed a number of issues which prevented various locales from functioning or detecting correctly</li>
+<li>Main applications menu no longer generates in a thread :(</li>
+<li>Filemanager toolbars can no longer trigger crashes when deleted</li>
+<li>Filemanager toolbars now store their position</li>
+<li>Filemanager now more capable of opening .desktop files linked to directories</li>
+<li>Filemanager toolbar path items now create and delete correctly</li>
+<li>Filemanager no longer allows renaming files into/onto directories and other files</li>
+<li>"Show files in menu" option removed from filemanager</li>
+<li><b>[THEME]</b> Cursor icons</li>
+</p>
+
+<p><ul>
+
+<li>E17 OMEGA - 81287
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-omega.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0-omega.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<p>
+In keeping with the tradition that I started last Friday, today has a bonus release which includes work
+from the international EFL superhero, Bruno Dilly! In addition to the internationalization skills of Igor Murzov
+and the translation abilities of Massimo Maiurana, we have put together a module that serves as nothing more than
+a very entertaining time-waster: I give you <b>ECHIEVEMENTS v1</b>!
+</p>
+
+<p><ul>
+
+<li>Echievements v1
+[<a href="http://download.enlightenment.org/releases/echievements-1.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/echievements-1.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->

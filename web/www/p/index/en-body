@@ -49,7 +49,7 @@
      <br>
      <b>E17 release coming<br>
      December 21, 2012<br>
-     Get Lucky now!</b>
+     The Omega is now!</b>
      <?php blink("i/dl.png", "DOWNLOAD E", "download"); ?>
     </center>
    </div>
