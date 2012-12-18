@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2011 Thierry FOURNIER
+ * Copyright (c) 2009 Thierry FOURNIER
  *
  * This file is part of MySAC.
  *
@@ -18,17 +18,6 @@
 
 /* the order of theses headers and defines
  * is important */
-#include <mysql/my_global.h>
-#include <mysql/m_string.h> /* memcpy_fixed */
-//#undef _ISOC99_SOURCE
-//#define _ISOC99_SOURCE
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <stdint.h>
-//#include <string.h>
-//#include <stdarg.h>
-//#include <time.h>
-
 #include "mysac.h"
 #include "mysac_utils.h"
 
@@ -129,14 +118,14 @@ int mysac_encode_value(MYSAC_BIND *val, char *out, int len) {
 		if (len < 4)
 			return -1;
 		l = 4;
-		float4store(out, *(float *)val->value);
+		float4store((*(long *)val->value), out);
 		break;
 	
 	case MYSQL_TYPE_DOUBLE:
 		if (len < 8)
 			return -1;
 		l = 8;
-		float8store(out, *(double *)val->value);
+		float8store(*(long *)val->value, out);
 		break;
 	
 	/* libmysql/libmysql.c:3370
@@ -275,9 +264,8 @@ int mysac_encode_value(MYSAC_BIND *val, char *out, int len) {
 	case MYSQL_TYPE_ENUM:
 	case MYSQL_TYPE_SET:
 	case MYSQL_TYPE_GEOMETRY:
-	default:
 		/* TODO: a faire */
-		return -1;
+		break;
 	}
 
 	return l;
