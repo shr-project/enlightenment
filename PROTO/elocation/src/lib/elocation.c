@@ -1346,49 +1346,72 @@ elocation_init(void)
 EAPI void
 elocation_shutdown(void)
 {
-   /* To allow geoclue freeing unused providers we free our reference on it here */
-   if (!edbus_proxy_call(meta_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, ""))
+   /* Depending on if the create_cb was successfully received meta_geoclue is
+    * setup or not. So we  * need to check here if this is not the case
+    */
+   if (meta_geoclue)
      {
-        ERR("Error: could not call RemoveReference");
+        /* To allow geoclue freeing unused providers we free our reference on it here */
+        if (!edbus_proxy_call(meta_geoclue, "RemoveReference", _reference_del_cb, NULL, -1, ""))
+          {
+            ERR("Error: could not call RemoveReference");
+          }
      }
 
    /* Quite a bit of allocated string and generic memory cleanup. This should be
     *less when we went away from all this global var business.
     */
-   free(address_provider->name);
-   free(address_provider->description);
-   free(address_provider->service);
-   free(address_provider->path);
-   free(address_provider);
+   if (address_provider)
+     {
+        free(address_provider->name);
+        free(address_provider->description);
+        free(address_provider->service);
+        free(address_provider->path);
+        free(address_provider);
+     }
 
-   free(position_provider->name);
-   free(position_provider->description);
-   free(position_provider->service);
-   free(position_provider->path);
-   free(position_provider);
+   if (position_provider)
+     {
+        free(position_provider->name);
+        free(position_provider->description);
+        free(position_provider->service);
+        free(position_provider->path);
+        free(position_provider);
+     }
 
-   free(pos_geocode->accur);
-   free(pos_geocode);
-   free(addr_geocode->accur);
-   free(addr_geocode->country);
-   free(addr_geocode->countrycode);
-   free(addr_geocode->locality);
-   free(addr_geocode->postalcode);
-   free(addr_geocode->region);
-   free(addr_geocode->timezone);
-   free(addr_geocode);
+   if (pos_geocode)
+     {
+        free(pos_geocode->accur);
+        free(pos_geocode);
+     }
 
-   free(address->country);
-   free(address->countrycode);
-   free(address->locality);
-   free(address->postalcode);
-   free(address->region);
-   free(address->timezone);
+   if (addr_geocode)
+     {
+        free(addr_geocode->accur);
+        free(addr_geocode->country);
+        free(addr_geocode->countrycode);
+        free(addr_geocode->locality);
+        free(addr_geocode->postalcode);
+        free(addr_geocode->region);
+        free(addr_geocode->timezone);
+        free(addr_geocode);
+     }
+
+   if (address)
+     {
+        free(address->country);
+        free(address->countrycode);
+        free(address->locality);
+        free(address->postalcode);
+        free(address->region);
+        free(address->timezone);
+     }
 
    /* Unreference some edbus strcutures we now longer use. To allow edbus to
     * free them internally.
     */
-   edbus_proxy_unref(manager_master);
+   if (manager_master)
+      edbus_proxy_unref(manager_master);
 
    edbus_name_owner_changed_callback_del(conn, GEOCLUE_DBUS_NAME, _name_owner_changed, NULL);
    edbus_connection_unref(conn);

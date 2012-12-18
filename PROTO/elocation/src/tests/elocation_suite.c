@@ -22,8 +22,7 @@ START_TEST(elocation_test_init)
    ret = elocation_init();
    fail_if(ret != EINA_TRUE);
 
-   // Shutdown relies on a succeeded create_cb right now. Need to be fixed in the code.
-   //elocation_shutdown();
+   elocation_shutdown();
    edbus_shutdown();
    ecore_shutdown();
 }
