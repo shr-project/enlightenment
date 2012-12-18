@@ -95,6 +95,10 @@ PKG_CHECK_MODULES([ELOCATION], [edbus2 ecore])
 
 EFL_CHECK_PATH_MAX
 
+### Unit tests and coverage
+EFL_CHECK_TESTS([elocation], [enable_tests="yes"], [enable_tests="no"])
+
+
 ### Checks for compiler characteristics
 AC_C_BIGENDIAN
 AC_C_INLINE
@@ -110,6 +114,7 @@ doc/Doxyfile
 src/Makefile
 src/lib/Makefile
 src/bin/Makefile
+src/tests/Makefile
 ])
 
 echo
@@ -124,6 +129,8 @@ echo "  CFLAGS...............: $CFLAGS"
 echo "  LDFLAGS..............: $LDFLAGS"
 echo
 echo "  Documentation........: ${build_doc}"
+echo
+echo "Tests..................: ${enable_tests} (Coverage: ${efl_enable_coverage})"
 echo
 echo "Installation...........: make install (as root if needed, with 'su' or 'sudo')"
 echo "  prefix...............: $prefix"
