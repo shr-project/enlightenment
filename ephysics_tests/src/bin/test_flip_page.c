@@ -277,7 +277,7 @@ test_flip_page(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_i
    ephysics_world_gravity_set(world, 0, 0, 9.8);
    ephysics_world_render_geometry_set(world, 0, 0, 20, WIDTH, HEIGHT, 2);
 
-   ephysics_world_point_light_position_set(world, WIDTH / 2, HEIGHT / 2, -200);
+   ephysics_world_point_light_position_set(world, WIDTH / 2, HEIGHT / 2, 200);
    ephysics_camera_perspective_set(ephysics_world_camera_get(world), WIDTH/2,
                                    HEIGHT/2, 0, 1800);
    ephysics_camera_perspective_enabled_set(ephysics_world_camera_get(world),

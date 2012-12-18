@@ -178,7 +178,7 @@ test_flag(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info _
 
    evas_object_smart_callback_add(tg, "changed", _changed_cb, world);
 
-   ephysics_world_point_light_position_set(world, 300, 50, -200);
+   ephysics_world_point_light_position_set(world, WIDTH / 2, HEIGHT / 2, -200);
    ephysics_world_light_all_bodies_set(world, EINA_TRUE);
    ephysics_camera_perspective_enabled_set(ephysics_world_camera_get(world),
                                            EINA_TRUE);

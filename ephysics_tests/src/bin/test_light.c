@@ -93,7 +93,7 @@ test_light(void *data __UNUSED__, Evas_Object *obj __UNUSED__, void *event_info 
    ephysics_body_restitution_set(boundary, 0.65);
    ephysics_body_friction_set(boundary, 4);
 
-   ephysics_world_point_light_position_set(world, 200, 300, -120);
+   ephysics_world_point_light_position_set(world, WIDTH / 2, HEIGHT / 2, -120);
    ephysics_world_point_light_color_set(world, 255, 120, 120);
    ephysics_world_ambient_light_color_set(world, 40, 40, 40);
    ephysics_world_light_all_bodies_set(world, EINA_TRUE);
