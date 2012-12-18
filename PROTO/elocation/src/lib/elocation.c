@@ -35,7 +35,7 @@ static Elocation_Position *position = NULL;
 static Elocation_Address *addr_geocode = NULL;
 static Elocation_Position *pos_geocode = NULL;
 static Elocation_Velocity *velocity = NULL;
-static int *status = 0;
+static int *status = -1; /* 0 is a valid status code */
 static char nmea_sentence[256];
 
 int _elocation_log_dom = -1;
@@ -1132,7 +1132,7 @@ elocation_position_get(Elocation_Position *position_shadow)
 EAPI Eina_Bool
 elocation_status_get(int *status_shadow)
 {
-   if (!status) return EINA_FALSE;
+   if (status < 0) return EINA_FALSE;
 
    status_shadow = status;
    return EINA_TRUE;
