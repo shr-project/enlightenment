@@ -8,7 +8,7 @@ Enlightenment 0.17 <em>(a.k.a E17)</em> is the next generation of graphical desk
 </p>
 
 <blockquote><p><em>
-Also be aware that this page is large and is meant to provide a lot of important information. It is not for the tl;dr; (too long, didn't read) set of people with minimal attention span. It contains lots of those scary thing called "text" and "information". It is assumed you can make use of the education you have been provided with that allows you to read and comprehend what has been written. If you are after specifics, then skimming may be a useful thing to try. If someone wishes to make summaries of this page, or translate it, they are more than welcome to, but this is intended as a very full information source, not a short summary for the impatient.
+Also be aware that this page is large and is meant to provide a lot of important information. It is not for the tl;dr; (too long, didn't read) set of people with minimal attention span. It contains lots of those scary things called "text" and "information". It is assumed you can make use of the education you have been provided with that allows you to read and comprehend what has been written. If you are after specifics, then skimming may be a useful thing to try. If someone wishes to make summaries of this page, or translate it, they are more than welcome to, but this is intended as a very full information source, not a short summary for the impatient.
 </em></p></blockquote>
 
 <p>
@@ -20,7 +20,7 @@ This information assumes you will download and compile Enlightenment and its nec
 <h3>Misconceptions and assumptions</h3>
 
 <p>
-Before we go any further, it is time to clean up some common misconceptions. First, Enlightenment is not new. It is Old. It predates larger desktop environments like <a href=http://www.gnome.org>GNOME</a> or <a href=http://www.xfce.org>XFCE</a>. It is just barely younger than <a href=http://www.kde.org>KDE</a>. It never started life as an attempt to "be a full desktop environment". It started life as simply a window manager. This was back towards the latter part of 1996, and it's irst 0.1 release came in the first part of 1997. It was a window manager with some extras to scratch the itch that that "everything was gray bevels and UI's had to be plain to be functional or useful, and that computers/X11 were not capable of more". It handily proved that to be wrong. It could manage function AND form more flexibly than anything else, and to this date is still in an enviable position of flexibility in both behavior features and in terms of visuals. In fact its Achilles heel simply may be that it has too many options and too much flexibility. Some of the extras filled in the gaps like setting wallpaper, that was always done by 3rd party tools and not the window manager at the time. If you are after a constrained and simple UI, then Enlightenment (E) is not for you. It can be configured to be plain and simple, or to be buzzing with activity and complexity. Its default is somewhere in between to give you a taste of what it can do on both ends of the spectrum.
+Before we go any further, it is time to clean up some common misconceptions. First, Enlightenment is not new. It is Old. It predates larger desktop environments like <a href=http://www.gnome.org>GNOME</a> or <a href=http://www.xfce.org>XFCE</a>. It is just barely younger than <a href=http://www.kde.org>KDE</a>. It never started life as an attempt to "be a full desktop environment". It started life as simply a window manager. This was back towards the latter part of 1996, and it's first 0.1 release came in the first part of 1997. It was a window manager with some extras to scratch the itch that "everything was gray bevels and UI's had to be plain to be functional or useful, and that computers/X11 were not capable of more". It handily proved that to be wrong. It could manage function AND form more flexibly than anything else, and to this date is still in an enviable position of flexibility in both behavior features and in terms of visuals. In fact its Achilles heel simply may be that it has too many options and too much flexibility. Some of the extras filled in the gaps like setting wallpaper, that was always done by 3rd party tools and not the window manager at the time. If you are after a constrained and simple UI, then Enlightenment (E) is not for you. It can be configured to be plain and simple, or to be buzzing with activity and complexity. Its default is somewhere in between to give you a taste of what it can do on both ends of the spectrum.
 </p>
 
 <p>
@@ -40,7 +40,7 @@ Not everything is perfect, polished and "finished". This is not the end of a roa
 <h3>Philosophy</h3>
 
 <p>
-We certain things that are important to us and how we work. They will often show immediately to users, and it is good to explain this here.
+We have certain things that are important to us and how we work. They will often show immediately to users, and it is good to explain this here.
 </p>
 
 <blockquote><h3>CHOICE IS GOOD</h3>
@@ -69,13 +69,13 @@ Not just being efficient, but realizing that not everyone has the latest and gre
 
 <blockquote><h3>EYE CANDY MATTERS</h3>
 <p>
-If you want a minimal interfaces, you can configure Enlightenment to be quite minimal, but it takes effort. Enlightenment leans towards providing eye candy where it can, and often comes by default that way. This is how we roll. We always have. Haters gonna hate. That's how we roll.
+If you want a minimal interface, you can configure Enlightenment to be quite minimal, but it takes effort. Enlightenment leans towards providing eye candy where it can, and often comes by default that way. This is how we roll. We always have. Haters gonna hate. That's how we roll.
 </p>
 </blockquote>
 
 <blockquote><h3>WE MAKE LIBRARIES MUCH MORE THAN WM'S</h3>
 <p>
-One thing over the years that has happened, is that the project has morphed into a library project much more than a Window Manager or Desktop project. This is why there was no apparent progress in the Window Manager for many years. It was sunk all into building libraries and a toolkit, in order to make the WM and much more besides. A lot of effort was spent in abstractions to ensure we have many years to smooth sailing into the future. When we do things we often go and build libraries first, and then try and make them applicable to much more than just the simple problem being solved in Enlightenment, which adds overhead, but provides valuable resources for developers other than us who wish to re-use that effort in their own creations.
+One thing over the years that has happened, is that the project has morphed into a library project much more than a Window Manager or Desktop project. This is why there was no apparent progress in the Window Manager for many years. It was sunk all into building libraries and a toolkit, in order to make the WM and much more besides. A lot of effort was spent in abstractions to ensure we have many years of smooth sailing into the future. When we do things we often go and build libraries first, and then try and make them applicable to much more than just the simple problem being solved in Enlightenment, which adds overhead, but provides valuable resources for developers other than us who wish to re-use that effort in their own creations.
 </p>
 </blockquote>
 
