@@ -139,7 +139,7 @@ If you are on an ARM based device that uses embedded OpenGL (OpenGL-ES), or on s
 </p>
 
 <p>
-You will 
+You will need to install alternate OpenGL libraries instead as follows:
 </p>
 
 <p><pre><code>
