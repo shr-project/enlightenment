@@ -4,37 +4,15 @@
 <center><?php img("e-shot-main.png", "E17 Sample");?></center>
 
 <p>
-Enlightenment 0.17 <em>(a.k.a E17)</em> is the next generation of
-graphical desktop environment from the Enlightenment project. When
-you first run it and get past the initial setup wizard, you should
-end up with a desktop not unlike the above. It is a very traditional
-UNIX/X11 style desktop style, because that is what E primarily is
-and attempts to be, <b>BUT</b> with a bunch of bells, whistles and
-modernities that were never there, as well as a different core
-design philosophy.
+Enlightenment 0.17 <em>(a.k.a E17)</em> is the next generation of graphical desktop environment from the Enlightenment project. When you first run it and get past the initial setup wizard, you should end up with a desktop not unlike the above. It is a very traditional UNIX/X11 style desktop style, because that is what E primarily is and attempts to be, <b>BUT</b> with a bunch of bells, whistles and modernities that were never there, as well as a different core design philosophy.
 </p>
 
 <blockquote><p><em>
-Also be aware that this page is large and is meant to provide a lot of
-important information. It is not for the tl;dr; (too long, didn't read)
-set of people with minimal attention span. It contains lots of those scary
-thing called "text" and "information". It is assumed you can make use of
-the education you have been provided with that allows you to read and
-comprehend what has been written. If you are after specifics, then skimming
-may be a useful thing to try. If someone wishes to make summaries of this page, or translate it, they are more than welcome to, but this is intended
-as a very full information source, not a short summary for the impatient.
+Also be aware that this page is large and is meant to provide a lot of important information. It is not for the tl;dr; (too long, didn't read) set of people with minimal attention span. It contains lots of those scary thing called "text" and "information". It is assumed you can make use of the education you have been provided with that allows you to read and comprehend what has been written. If you are after specifics, then skimming may be a useful thing to try. If someone wishes to make summaries of this page, or translate it, they are more than welcome to, but this is intended as a very full information source, not a short summary for the impatient.
 </em></p></blockquote>
 
 <p>
-This information assumes you will download and compile Enlightenment
-and its necessities beyond what your current OS does or can provide. If
-Enlightenment is provided already as packages, you may want to check them
-out first as opposed to compiling it all yourself, but if not, then this
-information will help you do that. There are a few things you will need to 
-use Enlightenment. Firstly you will need to
-<?php a("download", "Download");?> 
-Enlightenment and EFL library components. You will need to provide the
-appropriate system dependencies too. The details will be further on.
+This information assumes you will download and compile Enlightenment and its necessities beyond what your current OS does or can provide. If Enlightenment is provided already as packages, you may want to check them out first as opposed to compiling it all yourself, but if not, then this information will help you do that. There are a few things you will need to  use Enlightenment. Firstly you will need to <?php a("download", "Download");?> Enlightenment and EFL library components. You will need to provide the appropriate system dependencies too. The details will be further on.
 </p>
 
 <hr>
@@ -42,73 +20,19 @@ appropriate system dependencies too. The details will be further on.
 <h3>Misconceptions and assumptions</h3>
 
 <p>
-Before we go any further, it is time to clean up some common
-misconceptions. First, Enlightenment is not new. It is Old.
-It predates larger desktop environments like
-<a href=http://www.gnome.org>GNOME</a> or
-<a href=http://www.xfce.org>XFCE</a>. It is just barely younger than
-<a href=http://www.kde.org>KDE</a>. It never started life as an
-attempt to "be a full desktop environment". It started life as simply
-a window manager with some extras to scratch the itch that that
-"everything was gray bevels and UI's had to be plain to be functional
-or useful, and that computers/X11 were not capable of more". It
-handily proved that to be wrong. It could manage function AND form
-more flexibly than anything else, and to this date is still in an
-unenviable position of flexibility in both behavior features and in
-terms of visuals. In fact its Achilles heel simply may be that it
-has too many options and too much flexibility. If you are after a
-constrained and simple UI, then Enlightenment (E) is not for you.
-It can be configured to be plain and simple, or to be buzzing with
-activity and complexity. Its default is somewhere in between to give
-you a taste of what it can do on both ends of the spectrum.
+Before we go any further, it is time to clean up some common misconceptions. First, Enlightenment is not new. It is Old. It predates larger desktop environments like <a href=http://www.gnome.org>GNOME</a> or <a href=http://www.xfce.org>XFCE</a>. It is just barely younger than <a href=http://www.kde.org>KDE</a>. It never started life as an attempt to "be a full desktop environment". It started life as simply a window manager. This was back towards the latter part of 1996, and it's irst 0.1 release came in the first part of 1997. It was a window manager with some extras to scratch the itch that that "everything was gray bevels and UI's had to be plain to be functional or useful, and that computers/X11 were not capable of more". It handily proved that to be wrong. It could manage function AND form more flexibly than anything else, and to this date is still in an enviable position of flexibility in both behavior features and in terms of visuals. In fact its Achilles heel simply may be that it has too many options and too much flexibility. Some of the extras filled in the gaps like setting wallpaper, that was always done by 3rd party tools and not the window manager at the time. If you are after a constrained and simple UI, then Enlightenment (E) is not for you. It can be configured to be plain and simple, or to be buzzing with activity and complexity. Its default is somewhere in between to give you a taste of what it can do on both ends of the spectrum.
 </p>
 
 <p>
-The default look is not what you are stuck with. Enlightenment was
-the first Window Manager (WM) to introduce themes in X11 (pre-packaged
-sets of data that you just grab and select, providing you with a vast
-new look and feel). Today in Enlightenment, these themes come as "Edje"
-files (.edj), and are pre-packaged data files containing all images,
-layout, animation etc. that you may need. They never get "unpacked".
-They are used "live as-is", and only the data needed from the file is
-sourced and decoded, so even if the theme is massive, only the pieces
-needed at any one time are decoded into memory, which is normally a
-fraction of the actual file size. It is an accepted fact that the
-default look will not be for everyone. It tries to strike a balance
-of being unique (not mimicking some other desktop look), yet still
-stylish. It is meant to echo some of the past from where Enlightenment
-comes from, and yet roll in modern effects and feels. It sacrifices some
-"usability" for look, yet tries to keep a balance and still be functional.
-It will not be for everyone, but it is hoped it keeps you mostly happy
-until you find other themes that exactly meet your visual needs. You will
-find this as an on-going philosophy in Enlightenment. One size does
-<em><b>NOT</b></em> fit all. That's what options are for. Do not have the
-misconception that what you see is what you are stuck with. You are
-expected to experiment and discover what is good for you. Maybe the default
-is fine. Maybe it is not. That's why we pioneered themes and spent immense
-amounts of time making them nicely packaged, efficient and powerful
-enough to fine-tune almost any aspect of the UI.
+The default look is not what you are stuck with. Enlightenment was the first Window Manager (WM) to introduce themes in X11 (pre-packaged sets of data that you just grab and select, providing you with a vast new look and feel). Today in Enlightenment, these themes come as "Edje" files (.edj), and are pre-packaged data files containing all images, layout, animation etc. that you may need. They never get "unpacked". They are used "live as-is", and only the data needed from the file is sourced and decoded, so even if the theme is massive, only the pieces needed at any one time are decoded into memory, which is normally a fraction of the actual file size. It is an accepted fact that the default look will not be for everyone. It tries to strike a balance of being unique (not mimicking some other desktop look), yet still stylish. It is meant to echo some of the past from where Enlightenment comes from, and yet roll in modern effects and feels. It sacrifices some "usability" for look, yet tries to keep a balance and still be functional. It will not be for everyone, but it is hoped it keeps you mostly happy until you find other themes that exactly meet your visual needs. You will find this as an on-going philosophy in Enlightenment. One size does <em><b>NOT</b></em> fit all. That's what options are for. Do not have the misconception that what you see is what you are stuck with. You are expected to experiment and discover what is good for you. Maybe the default is fine. Maybe it is not. That's why we pioneered themes and spent immense amounts of time making them nicely packaged, efficient and powerful enough to fine-tune almost any aspect of the UI.
 </p>
 
 <p>
-That leads onto the next thing you may find quickly. Enlightenment has so
-many options, because we believe that <b>CHOICE</b> is important. If you
-don't believe that your preferences matter, then maybe another project is
-better for you, but we firmly believe that they do. We may not have accounted
-for every single option out there. We may not have presented it to you in a
-way that makes it childs play to find and use, but we have tried. Over time
-options will be cleaned up and accessibility to them improved. A lot of them
-are there simply because they needed to be and not a lot of time was spent
-fine-tuning how to present them in a fool-proof manner. This will improve
-over time and with input, suggestions, patches etc. we hope to still offer
-all the options you need, but in a much more accessible form.
+That leads onto the next thing you may find quickly. Enlightenment has so many options, because we believe that <b>CHOICE</b> is important. If you don't believe that your preferences matter, then maybe another project is better for you, but we firmly believe that they do. We may not have accounted for every single option out there. We may not have presented it to you in a way that makes it childs play to find and use, but we have tried. Over time options will be cleaned up and accessibility to them improved. A lot of them are there simply because they needed to be and not a lot of time was spent fine-tuning how to present them in a fool-proof manner. This will improve over time and with input, suggestions, patches etc. we hope to still offer all the options you need, but in a much more accessible form.
 </p>
 
 <p>
-Not everything is perfect, polished and "finished". This is not the end of a road. It is the start of a whole new one. If you find something you think could be better, please don't just complain and vanish.
-<?php a("contact", "Contact us");?> 
-and open up a dialogue. Maybe we agree. Maybe we disagree. Maybe we are
-already working on it. Maybe you can help out and provide patches too.
+Not everything is perfect, polished and "finished". This is not the end of a road. It is the start of a whole new one. If you find something you think could be better, please don't just complain and vanish. <?php a("contact", "Contact us");?>  and open up a dialogue. Maybe we agree. Maybe we disagree. Maybe we are already working on it. Maybe you can help out and provide patches too.
 </p>
 
 <hr>
@@ -125,58 +49,164 @@ A user should be given as much control as is feasible. There is often a trade-of
 </p>
 </blockquote>
 
-<blockquote><h3>VANILLA VS. STRAWBERRY VS. CHOCOLATE.</h3>
+<blockquote><h3>VANILLA VS. STRAWBERRY VS. CHOCOLATE</h3>
 <p>
 Like with choice of options, the actual aesthetics are something that is highly subjective and personal. Otherwise we'd all still be driving black Ford model-T's. Some desktops and OS's provide vanilla looks. Some are strawberry. Some can never be changed. We have chosen chocolate by default. Mostly because it means we stand out by default. You can change this if you want. You can even create your own flavors of look in gory detail if you spend the time on the artwork and layout. Take advantage of the choice.
 </p>
 </blockquote>
 
-<blockquote><h3>EFFICIENCY MATTERS.</h3>
+<blockquote><h3>EFFICIENCY MATTERS</h3>
 <p>
 We want Enlightenment to be as efficient as possible. We don't want to sacrifice looks either, so we have spent a lot of effort making a lot of libraries that help this happen. Our theme files are binary blobs. They may appear opaque at first, but they are dissectable, given tools we provide. The same for our configuration files. We value runtime speed and efficiency over giving the user encouragement to go hack their configuration files with a text editor. We spent a lot of time providing a GUI for almost every option that exists in Enlightenment. It manages this for you. It's to ensure maximum efficiency at runtime. If you need to on the odd occasion dig into the bowels of these files we have tools that can export and import text files that you can edit, so for the real tinkerer, hacker and developer you can do what you need to, <b>BUT</b> the regular user is discouraged from messing at this level, as this is where you can get yourself into more trouble if you get it wrong. We have also chosen a much more process-lean model with fewer processes and more rolled into a single one. This gives better opportunities for efficiency.
 </p>
 </blockquote>
 
-<blockquote><h3>NOT EVERYONE DRIVES A F1.</h3>
+<blockquote><h3>NOT EVERYONE DRIVES A F1</h3>
 <p>
 Not just being efficient, but realizing that not everyone has the latest and greatest hardware to run Enlightenment. It's also not just one architecture. They may be stuck on something quite old, or want Enlightenment to work on something quite bizarre. We have gone to a lot of effort to make Enlightenment scale from anything like a 200Mhz ARM phone with 32M RAM all the way up to the latest multi-core, multi-Ghz and 16GB+ desktop beasts with 2 or more screens. We keep in mind the puny end of the spectrum all the way up to the beasty end. When we make decisions they try and ensure every part of this spectrum gets a fair go, and preferably leaves as few people behind as possible. This also means sometimes raising the bar in order not to hold back future things, but also means sometimes holding back until a better way is found.
 </p>
 </blockquote>
 
-<blockquote><h3>EYE CANDY MATTERS.</h3>
+<blockquote><h3>EYE CANDY MATTERS</h3>
 <p>
 If you want a minimal interfaces, you can configure Enlightenment to be quite minimal, but it takes effort. Enlightenment leans towards providing eye candy where it can, and often comes by default that way. This is how we roll. We always have. Haters gonna hate. That's how we roll.
 </p>
 </blockquote>
 
-<blockquote><h3>WE MAKE LIBRARIES MUCH MORE THAN WM'S.</h3>
+<blockquote><h3>WE MAKE LIBRARIES MUCH MORE THAN WM'S</h3>
 <p>
 One thing over the years that has happened, is that the project has morphed into a library project much more than a Window Manager or Desktop project. This is why there was no apparent progress in the Window Manager for many years. It was sunk all into building libraries and a toolkit, in order to make the WM and much more besides. A lot of effort was spent in abstractions to ensure we have many years to smooth sailing into the future. When we do things we often go and build libraries first, and then try and make them applicable to much more than just the simple problem being solved in Enlightenment, which adds overhead, but provides valuable resources for developers other than us who wish to re-use that effort in their own creations.
 </p>
 </blockquote>
 
-<blockquote><h3>PORTING MATTERS.</h3>
+<blockquote><h3>PORTING MATTERS</h3>
 <p>
 We, as a group, primarily work on Linux systems. We have developers who use and focus on others like MacOS-X, Windows, the BSD's even PS3. We care about porting, and that often adds overhead and complexity. Sometimes we shortcut that and do it "the Linux way", and we are always open to ways of making that better and more portable. We welcome patches and input and anyone willing to do the hard yards of supporting their OS.
 </p>
 </blockquote>
 
-<blockquote><h3>WE HAVE A SENSE OF HUMOR.</h3>
+<blockquote><h3>WE HAVE A SENSE OF HUMOR</h3>
 <p>
 We are not always that serious a bunch. Deal with it. We have a sense of Humor. We exercise it regularly. :)
 </p>
 </blockquote>
 
-<blockquote><h3>THE WORLD IS NOT ENGLISH.</h3>
+<blockquote><h3>THE WORLD IS NOT ENGLISH</h3>
 <p>
 Whilst most of our website is in English, as is the default language for Enlightenment (until you change it), as is the common language of communication, we realize and are fully aware that people speak other languages. Many of our developers are not native English speakers. We have tried to support "the rest of the world" as much as we can and hope to continue in future. It is an ongoing process to provide translations and such support. Help out. We do care. We are busy. Very busy. But we care. It should be hopefully evident in the large list of languages Enlightenment is already translated to partially or completely, and the fact we support selection of keyboard layouts and input methods as well. We are all UTF-8 through and through and support right-to-left text too as well as complex composition (if you provide the right dependencies). Many of our developers do not live in their own native languages and countries, so we are fully aware of the challenges people face with another language environment.
 </p>
 </blockquote>
 
-<blockquote><h3>OPEN IS BEST.</h3>
+<blockquote><h3>OPEN IS BEST</h3>
 <p>
 Enlightenment and its libraries are all open source (BSD 2 clause, LGPL or GPL for some binaries only). It is a mix because the person who founded each library chose the license. We respect that choice. We believe open is best because it simply is the best way to propagate knowledge, gain feedback and input and build a community beyond your small borders. It gets your software onto more devices and operating systems. It allows developers to poke and prod and find out what is really happening. It's the most detailed documentation ever made. It simply is better. There are no other political aspirations for this project beyond that. Open is best. This also goes for our communication. Warts and all we discuss in the open.
 </p>
 </blockquote>
+
+<hr>
+
+<h3>Becoming Enlightened</h3>
+
+<p>
+This covers what you need to go from a base "out of the box" installation to being able to compile everything needed for Enlightenment to work properly. We will cover some popular distributions here. Note that this may or may not apply to your distribution for it to work.
+</p>
+
+<h3>Ubuntu 12.04</h3>
+
+<p><pre><code>
+sudo apt-get install \
+gcc libc6-dev make gdb wget \
+libpam-dev libfreetype6-dev libpng-dev libjpeg-dev zlib1g-dev libdbus-1-dev \
+libtiff-dev librsvg2-dev libgif-dev libcurl4-openssl-dev libasound2-dev \
+libudev-dev libspectre-dev libpoppler-dev libraw-dev libgstreamer0.10-dev \
+libgstreamer-plugins-base0.10-dev libfribidi-dev libexif-dev \
+liblua5.1-0-dev libx11-dev libxcursor-dev libxrender-dev libxrandr-dev \
+libxfixes-dev libxdamage-dev libxcomposite-dev libxss-dev libxp-dev \
+libxext-dev libxinerama-dev libxkbfile-dev libxtst-dev libxcb-shape0-dev \
+libxcb-keysyms1-dev mesa-common-dev
+</code></pre></p>
+
+<p>
+Unfortunately OpenGL in general is not as simple. For most people on desktops they can just install the regular GLX flavor of OpenGL packages and headers, but now with lots of ARM ports to systems with EGL/GLES, you need to choose. If you are on a regular x86 desktop, laptop or even tablet system, you should do this:
+</p>
+
+<p><pre><code>
+sudo apt-get install libgl1-mesa-dev 
+</code></pre></p>
+
+<p>
+If you are on an ARM based device that uses embedded OpenGL (OpenGL-ES), or on some x86 based systems that consider themselves as mobile level processors (some Atom models for example) and have embedded GPUs, you will need to do this:
+</p>
+
+<p>
+You will 
+</p>
+
+<p><pre><code>
+sudo apt-get install libgles2-mesa-dev libegl1-mesa-dev
+</code></pre></p>
+
+<p>
+You will want to download all of the libraries you need, as well as Enlightenment itself. The easy way is just to copy and paste the below that uses wget to download them. you can download these any way you like, as long as you have these tarballs in full before you begin compiling.
+</p>
+
+<p><pre><code>
+for I in eina eet evas embryo ecore eio edje efreet e_dbus \
+evas_generic_loaders ethumb eeze emotion elementary; do \
+wget http://download.enlightenment.org/releases/$I-1.7.3.tar.gz; \
+done
+wget http://download.enlightenment.org/releases/enlightenment-0.17.0-omega.tar.gz
+</code></pre></p>
+
+Now you will want to begin compiling. This requires some environment variables be set up so the compile tools can find what they need to work. You may want to modify CFLAGS to use whatever optimization you see as being useful. Note that EFL supports symbol visibility, and the <em>-fvisibility=hidden</em> flag hides symbols by default unless explicitly exported. This is useful as it makes for slightly smaller libraries and can improve startup time by having smaller symbol tables tor linking.
+
+<p><pre><code>
+export PATH=/usr/local/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+export CFLAGS="-O3 -fvisibility=hidden -ffast-math"
+
+for I in eina eet evas embryo ecore eio edje efreet e_dbus \
+evas_generic_loaders ethumb eeze emotion elementary; do \
+tar zxf $I-1.7.3.tar.gz; \
+cd $I-1.7.3; \
+./configure --disable-gnutls && make && sudo make install; \
+cd ..; \
+done
+
+sudo ldconfig
+</code></pre></p>
+
+<p>
+You now have all of EFL you need (and then some. technically you don't need eio, ethumb or elementary for E17 to work, but you will need these if you wish to start
+trying EFL using applications, but it is very much highly encouraged to install these libraries too).
+</p>
+
+<p><pre><code>
+tar zxf enlightenment-0.17.0-omega.tar.gz
+cd enlightenment-0.17.0-omega
+./configure && make && sudo make install
+cd ..
+</code></pre></p>
+
+<p>
+Because Ubuntu ships with configuration that doesn't care about self-compiled software, it will never look in common "standard" locations for other desktops, like /usr/local, so you have to do a quick fix. One of the easiest is to make a symlink so the desktop file appears where the login manager expects to find it.
+</p>
+
+<p><pre><code>
+sudo ln -s /usr/local/share/xsessions/enlightenment.desktop /usr/share/xsessions/enlightenment.desktop
+</code></pre></p>
+
+<p>
+Enlightenment supports <a href=http://www.connman.net>Connman</a> for network connectivity and configuration. You will need to get at least 1.0 version of it to be sure to have it work properly. Unfortunately Ubuntu doesn't, so you'll need to fetch one of the Debian packages:
+</p>
+
+<p><pre><code>
+http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_i386.deb
+http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_armel.deb
+http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_armhf.deb
+http://packages.debian.org/wheezy/connman
+</code></pre></p>
 
 </div></td></tr></table>
