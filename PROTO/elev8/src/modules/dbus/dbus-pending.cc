@@ -9,7 +9,7 @@ Persistent<Function> DPending::constructor;
 DPending::DPending(EDBus_Pending *pending_)
   : pending(pending_)
 {
-   edbus_pending_cb_free_add(pending, FreeCb, this);
+   edbus_pending_free_cb_add(pending, FreeCb, this);
    edbus_pending_data_set(pending, "this", this);
 }
 
