@@ -13,7 +13,7 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	libxtst-dev graphviz libasound2-dev libpam0g-dev libdbus-1-dev
 	libxcb-keysyms1-dev libtiff4-dev"
 
-defpkgs="efl eio eeze edje e_dbus edbus efreet PROTO/libeweather elementary e emotion terminology"
+defpkgs="efl eeze edje e_dbus edbus efreet PROTO/libeweather elementary e emotion terminology"
 #
 # Evas fails to build on x86-64 due to this bug.
 # https://bugs.launchpad.net/ubuntu/+source/libgcrypt11/+bug/751142
