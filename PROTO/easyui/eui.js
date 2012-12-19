@@ -32,19 +32,25 @@ defaults = {
 };
 
 /**
- * The base class of controllers.
+ * Controller base class.
+ *
+ * This is an abstract class and is only exported so that application
+ * developers can create their own controllers if the ones supplied with
+ * EasyUI are not enough for their application.
+ *
  * @extends Class
  * @abstract
  */
 Controller = Class.extend({
-
   /**
    * Returns the value of feature, or defaultValue if it's undefined.
-   * If feature is a function, returns its return value.
+   * If feature is a function, returns its return value. This is deprecated
+   * in favor of {@link Property}.
    *
    * @param {Mixed} feature
    * @param {Mixed} defaultValue
    * @protected
+   * @deprecated
    */
   _feature: function(feature, defaultValue) {
     if (feature === undefined)
@@ -68,7 +74,7 @@ Controller = Class.extend({
    */
   _setViewContent: function(view) {
     this.viewContent = view.content;
-    this.naviframe_item = view;
+    this.naviframeItem = view;
   },
 
   /**
@@ -81,8 +87,8 @@ Controller = Class.extend({
   }),
 
   /**
-   * Returns the contents of the #viewDescriptor
-   * wrapped in a layout with a toolbar.
+   * Wraps the view descriptor in a Layout containing the EasyUI chrome.
+   *
    * @return {Descriptor}
    * @protected
    */
@@ -104,13 +110,23 @@ Controller = Class.extend({
     return this.cachedViewDescriptor;
   },
 
-  /** Pop the controller that is on top of the stack. */
+  /**
+   * Pops this controller from the application stack (see {@link
+   * Controller#pushController}).  This method isn't usually needed since
+   * popping happens automatically when the user press the "Back" button;
+   * however, in some cases it might be necessary to perform this
+   * programatically.
+   */
   popController: function() {
     this.naviframe.pop();
   },
 
   /**
-   * Fired after the controller is popped.
+   * Fired after the controller is popped. Applications should not override
+   * this method. Please define {Controller#didPopController} instead;
+   * this method will be called after this controller has finished its shutdown
+   * procedures.
+   *
    * @private
    */
   _shutdown: function() {
@@ -131,7 +147,12 @@ Controller = Class.extend({
   },
 
   /**
-   * Pushes a {@link Controller} on top of the application stack.
+   * Pushes a {@link Controller} on top of the application stack. This modifies
+   * the controller being pushed, so be careful to not push the same controller
+   * instance twice.
+   * This will realize the controller, and call {@link Controller#didRealizeView}
+   * (which the application might implement) once it finishes.
+   *
    * @param {Controller} ctrl
    */
   pushController: function(ctrl) {
@@ -143,23 +164,34 @@ Controller = Class.extend({
     if (ctrl.naviframe == undefined)
       ctrl.naviframe = this.naviframe;
 
-    var cnt = Object.keys(ctrl.naviframe.elements).length;
-    ctrl.naviframe.elements[cnt] = {
-      content: ctrl._getViewDescriptor(),
-      style: ctrl.navigationBarStyle,
-      on_delete: ctrl._shutdown.bind(ctrl),
-    };
+    var lastController = Object.keys(ctrl.naviframe.elements).length;
+    ctrl.naviframe.elements[lastController] = this._getNaviframeElement(ctrl);
 
-    ctrl._setViewContent(ctrl.naviframe.elements[cnt]);
+    ctrl._setViewContent(ctrl.naviframe.elements[lastController]);
     ctrl.didRealizeView();
+  },
+
+  /**
+   * Builds an object describing the elm.NaviframeItem object to be used for
+   * a given controller.
+   *
+   * @param {Controller} controller If undefined, consider this controller
+   * @return {Object}
+   * @protected
+   */
+  _getNaviframeElement: function(controller) {
+    controller = controller || this;
+
+    return {
+      content: controller._getViewDescriptor(),
+      style: controller.navigationBarStyle,
+      on_delete: controller._shutdown.bind(controller)
+    }
   },
 
   /**
    * Wraps this controller's {@link #viewDescriptor} in an elm.Naviframe, so
    * that controllers can be pushed to or popped from the application stack.
-   *
-   * It consist in a frame with the result of
-   * this._getViewDescriptor() call inside.
    *
    * @return {Descriptor}
    * @protected
@@ -169,13 +201,7 @@ Controller = Class.extend({
       expand: 'both',
       fill: 'both',
       resize: true,
-      elements: [
-        {
-          'content': this._getViewDescriptor(),
-          'on_delete': this._shutdown.bind(this),
-          'style': this.navigationBarStyle
-        }
-      ]
+      elements: [ this._getNaviframeElement() ]
     });
   },
 
@@ -210,9 +236,21 @@ Controller = Class.extend({
   },
 
   /**
-   * Fired after the model is changed.
-   * @param {Number/Array} indexes
-   * @param {String} hint
+   * This method is called by the model to signal this controller that data
+   * has been changed. This should not be used by application developers,
+   * unless they're writing a custom model.
+   *
+   * Different controllers will accept different hints, and they can ignore
+   * unknown hints (usually by assuming that the whole model has been
+   * changed). Hints include, but are not limited to:
+   *
+   * - `select`: An item has been selected
+   * - `delete`: An item has been deleted
+   * - `beginSlowLoad`: Model will perform a slow load operation (e.g. network);
+   * - `finishSlowLoad`: Model finished the slow load operation
+   *
+   * @param {Number/Array} indexes Which indexes were changed in the model.
+   * @param {String} hint Which change occurred; can be undefined
    * @event
    */
   didChangeModel: function (indexes, hint) {
@@ -245,22 +283,28 @@ Controller = Class.extend({
    * Fired after #init was called.
    *
    * Parameters passed to the constructor are passed to this method.
+   *
    * @template
    * @event
    */
   didInitialize: function () {},
 
   /**
-   * Fired when an View update is required.
+   * Called by the model when the view needs updates.
+   *
    * @event
    * @template
    * @param {Number/Array} indexes Indexes to be updated
-   * @param {String} hint
+   * @param {String} hint See {didChangeModel} for explanation about
+   * the hint parameter.
    */
   updateView: function(indexes, hint) {},
 
   /**
-   * Fired after view is realized.
+   * Called whenever the view has been realized. This ties the model with
+   * this controller, updates the view as necessary, and perform any extra
+   * UI chrome changes. This can be overriden by user controllers.
+   *
    * @event
    */
   didRealizeView: function () {
@@ -271,11 +315,12 @@ Controller = Class.extend({
   },
 
   /**
-   * Updates the toolbar content if the #toolbarItems is changed.
+   * Update the toolbar items if they've changed. Does nothing otherwise.
+   * Fires {didUpdateToolbar} when changing the items are changed.
+   *
    * @private
    */
   _evaluateToolbarChanges: function() {
-
     if (!this._isRealized) return;
 
     var items = this.toolbarItems;
@@ -310,7 +355,7 @@ Controller = Class.extend({
   },
 
   /**
-   * Creates and returns a Description according to the item type.
+   * Converts an EasyUI navigation bar item into an Elementary widget descriptor.
    *
    * * If the item is the string 'back' or the item is a reference to its parent controller,
    * then a 'Back' button that pop the current controller will be returned.
@@ -324,7 +369,6 @@ Controller = Class.extend({
    * @private
    */
   _createNavigationBarItem: function(item) {
-
     if (typeof(item) === 'string') {
       switch (item) {
         case 'back':
@@ -342,7 +386,6 @@ Controller = Class.extend({
     }
 
     if (item instanceof Controller) {
-
       var btn = elm.Button({});
 
       if (item.title)
@@ -377,10 +420,12 @@ Controller = Class.extend({
   },
 
   /**
-   * Creates and returns a Description of navigation bar items according to items.
+   * Convert EasyUI navigation bar items into an Elementary widget description.
    *
-   * * If items is an array of items, returns theirs Descriptors in a elm.Box().
-   * * Otherwise, returns the items Descriptor.
+   * * If items is an {Array}, items will be wrapped inside a horizontal
+   * {elm.Box}.
+   * * Otherwise, only one item will be created according to rules in
+   * {_createNavigationBarItem}.
    *
    * @param {Mixed} items
    * @return {Descriptor}
@@ -400,12 +445,13 @@ Controller = Class.extend({
   },
 
   /**
-   * Updates the navigation bar if #title or #navigationBarItems are changed.
+   * Update the navigation bar items if they've changed. Does nothing otherwise.
+   * Calls {didUpdateNavigationBar} if items were updated.
+   *
    * @private
    * @event
    */
   _evaluateNavigationBarChanges: function() {
-
     if (!this._isRealized) return;
 
     var items = this.navigationBarItems;
@@ -414,7 +460,7 @@ Controller = Class.extend({
     if (items == this.naviframe.cachedItems && title == this.naviframe.cachedTitle)
       return;
 
-    this.naviframe_item.title = title || '';
+    this.naviframeItem.title = title || '';
 
     if (items === undefined) {
       this.naviframe.cachedItems = items;
@@ -424,10 +470,10 @@ Controller = Class.extend({
     var left = [].concat(this._feature(items.left, []));
 
     if (left.length)
-      this.naviframe_item.prev_btn = this._createNavigationBarItems(left);
+      this.naviframeItem.prev_btn = this._createNavigationBarItems(left);
 
     var right = [].concat(this._feature(items.right, []));
-    this.naviframe_item.next_btn = this._createNavigationBarItems(right);
+    this.naviframeItem.next_btn = this._createNavigationBarItems(right);
 
     if (this.didUpdateNavigationBar)
       this.didUpdateNavigationBar(items);
@@ -437,7 +483,11 @@ Controller = Class.extend({
   },
 
   /**
-   * Updates the visibility of view's elements.
+   * Evaluates the visibility of user interface elements according to the
+   * presence or absence of certain attributes. Currently, this means the
+   * visibility of the title bar according to either the presence of a
+   * title, or the number of navigation bar items.
+   *
    * @private
    * @event
    */
@@ -447,7 +497,10 @@ Controller = Class.extend({
   },
 
   /**
-   * Updates the window properties.
+   * Updates the main window properties according to this controller's
+   * properties.  Currently, this controls the fullscreen flag according to
+   * the {isFullscreen} property.
+   *
    * @private
    * @event
    */
@@ -457,7 +510,8 @@ Controller = Class.extend({
   },
 
   /**
-   * Updates the view elements if needed.
+   * Evaluate changes to user interface elements and update them accordingly.
+   *
    * @private
    */
   evaluateViewChanges: function() {
@@ -468,16 +522,9 @@ Controller = Class.extend({
   },
 
   /**
-   * Fired when an navigation bar item is clicked.
-   * @require #navigationBarItems
-   * @template
-   * @event
-   */
-  selectedNavigationBarItem: function(item) {},
-
-  /**
-   * Text to be shown on navigation bar
-   * and buttons that references this controller.
+   * Text to be shown on navigation bar and buttons that references this
+   * controller.
+   *
    * @type {String/Function}
    */
   title: new Property({
@@ -486,27 +533,17 @@ Controller = Class.extend({
 
   /**
    * @type {Object/Function}
-   * @require #selectedToolbarItem
+   * @require #selectedNavigationBarItem
    *
-   * Items of navigation bar grouped in an Object.
+   * Object describing the navigation bar items. The `left` attribute specifies
+   * the items on the left, whereas the `right` specifies the items on the opposite
+   * corner.
    *
-   * The position of the items on the controller title bar is given by the left
-   * and right positioning attributes of the navigationBarItems object.
-   * Positioning attributes accepts as values single items or an array of items.
-   * Items could be strings or objects. On object items, *icon* and *label*
-   * attributes are used on items. On string items, the string is used
-   * as text of the item.
+   * Items can be either a string or an object describing the item (see
+   * {_createNavigationBarItem}) for detalis. Also, if more items are
+   * needed, these can be grouped in an array.
    *
-   * ** Special Cases **
-   *
-   * * Using the special string 'back' or the parent controller as item, a special
-   * button that pops the current controller will be placed on navigation bar.
-   * * Using the special string 'sidePanel' or the side panel as item, a special
-   * button that shows/hides the side panel will be placed on navigation bar.
-   *
-   * In regular cases, the #selectedToolbarItem event will be fired when an
-   * item is clicked.
-   *
+   * Examples:
    *
    *     this.navigationBarItems = { right: 'next', left: 'previous' };
    *     // or
@@ -521,7 +558,19 @@ Controller = Class.extend({
   }),
 
   /**
-   * String that represents the navigation bar style.
+   * Fired when an navigation bar item is clicked.
+   *
+   * @require #navigationBarItems
+   * @param {Mixed} item The item passed to {navigationBarItems}.
+   * @template
+   * @event
+   */
+  selectedNavigationBarItem: function(item) {},
+
+  /**
+   * String that represents the navigation bar style. This shouldn't be set directly
+   * by the user; please use themes instead.
+   *
    * @type {String/Function}
    */
   navigationBarStyle: new Property({
@@ -529,8 +578,9 @@ Controller = Class.extend({
   }),
 
   /**
-   * Fired when an item is selected on the controller toolbar.
-   * @param {Mixed} item
+   * Fired when a toolbar item is clicked.
+   *
+   * @param {Mixed} item The item passed to {toolbarItems}.
    * @require #toolbarItems
    * @template
    * @event
@@ -540,9 +590,8 @@ Controller = Class.extend({
   /**
    * Array of toolbar items.
    *
-   * Items could be simple strings or objects. On object items, *icon* and
-   * *label* attributes will be used as icon and text of the toolbar item. On
-   * string items, the string will be used as text of the toolbar item.
+   * An item can be either a string (where a toolbar item with only a label will
+   * be created), or an object with `icon` and `label` attributes.
    *
    * @require #selectedToolbarItem
    * @type {Array/Function}
@@ -554,6 +603,7 @@ Controller = Class.extend({
 
   /**
    * Sets or returns the fullscreen state of the application.
+   *
    * @type {Boolean}
    */
   isFullscreen: new Property({
@@ -579,7 +629,8 @@ Controller = Class.extend({
 });
 
 /**
- * Model base class
+ * Abstract model class.
+ *
  * @extends Class
  * @abstract
  */
@@ -587,6 +638,7 @@ Model = Class.extend({
 
   /**
    * Fired before #init is called.
+   *
    * @protected
    * @event
    */
@@ -604,6 +656,7 @@ Model = Class.extend({
    * Abstract initializer method.
    *
    * Parameters passed to the constructor are passed to this method.
+   *
    * @template
    * @event
    */
@@ -611,6 +664,7 @@ Model = Class.extend({
 
   /**
    * Returns the element at index or null if not found.
+   *
    * @param {Number} index
    * @return {Mixed}
    */
@@ -620,6 +674,7 @@ Model = Class.extend({
 
   /**
    * Number of elements in the model.
+   *
    * @type {Number}
    * @readonly
    */
@@ -628,33 +683,33 @@ Model = Class.extend({
   }),
 
   /**
-   * Notifies all listeners of change.
-   * See #addListener
+   * Notifies all listeners of change. See #addListener to know how to register
+   * listeners, and {@link Controller#didChangeModel} for possible hints.
+   *
    * @param {Number/Array} indexes
    * @param {String} hint
    */
   notifyListeners: function(indexes, hint) {
     if (!this.listeners.length) return;
 
-    for (var i = 0; i < this.listeners.length; i++) {
+    for (var i = 0; i < this.listeners.length; i++)
       this.listeners[i].didChangeModel(indexes, hint, this);
-    }
   },
 
   /**
-   * Connect listener to this model so it
-   * receives events whenever the model changes.
+   * Connect listener to this model so it receives events whenever the model
+   * changes.
    *
-   * A listener must have a didChangeModel method, that
-   * will be called on a change in the model. This method
-   * has the following signature:
+   * A listener must have a didChangeModel method, that will be called when
+   * the model changes. This method should have the following signature:
    *
    *     didChangeModel(indexes, hint, model)
    *
-   * Where *indexes* is an array with the modified items
-   * indexes, *hint* is a string containing an arbitrary
-   * hint for the listener and *model* is the
-   * changed model.
+   * Where *indexes* is an array with the modified items indexes, *hint* is
+   * a string containing an arbitrary hint for the listener and *model* is
+   * the changed model. See {@link Controller#didChangeModel} for possible
+   * hint types.
+   *
    * @param {Object} listener
    */
   addListener: function(listener) {
@@ -663,8 +718,9 @@ Model = Class.extend({
   },
 
   /**
-   * Unconnect listener from this model, so it does
-   * not receive events whenever this model changes.
+   * Disconnect listener from model, so it does not receive model change
+   * events.
+   *
    * @param {Object} listener
    */
   removeListener: function(listener){
@@ -675,6 +731,7 @@ Model = Class.extend({
 
   /**
    * Delete item at specified index.
+   *
    * @param {Number} index
    * @template
    */
@@ -682,6 +739,7 @@ Model = Class.extend({
 
   /**
    * Replaces the data of the item at specified index.
+   *
    * @param {Number} index Index of element to be replaced.
    * @param {Mixed} data Content to replace with
    * @template
@@ -689,7 +747,8 @@ Model = Class.extend({
   updateItemAtIndex: function(index, data) {},
 
   /**
-   * Selected item index.
+   * Sets or gets the index of currently selected item.
+   *
    * @type {Number}
    */
   selectedIndex: new Property({
@@ -703,11 +762,17 @@ Model = Class.extend({
   })
 });
 
-/** @extend Model */
+/**
+ * Proxies a model by only considering items with pass an user-defined
+ * criteria.
+ *
+ * @extend Model
+ */
 FilterModel = Model.extend({
   /**
-   * @param {Model} proxy_model
-   * @param {function} filter_fn
+   * @param {Model} proxy_model The actual model to proxy
+   * @param {Function} filter_fn The filter function that returns @true if
+   * the item should be considered.
    */
   init: function(proxy_model, filter_fn) {
     this.proxy_model = proxy_model;
@@ -730,6 +795,7 @@ FilterModel = Model.extend({
   /**
    * @type {Number}
    * @readonly
+   * @inheritdoc
    */
   length: new Property({
     get: function() {
@@ -751,10 +817,10 @@ FilterModel = Model.extend({
 
 /**
  * Wraps the native array on {@link Model} interface.
+ *
  * @extend Model
  */
 ArrayModel = Model.extend({
-
   /**
    * Initialize the content of model.
    *
@@ -882,19 +948,15 @@ FilteredModel = ArrayModel.extend({
 });
 
 /**
- * Models that represents the content of a filesystem hierarchy.
+ * Represents the contents of a filesystem hierarchy.
  * See [File Example](#!/guide/file)
+ *
  * @extend Model
  */
 FileModel = Model.extend({
   /**
-   * Initializes the model.
-   *
-   * Parameters are passed to this method through the constructor.
-   * Uses the glob syntax on patterns to filter the model content.
-   *
    * @param {String} path The initial path.
-   * @param {String} patterns Patterns to be matched.
+   * @param {Array} patterns Glob patterns to match file names (e.g. '*.jpg').
    * @param {Number} [depth] Internal use.
    * @event
    */
@@ -1005,18 +1067,15 @@ DBModel = Model.extend({
   length: new Property({
     get: function() { return this.entries().count(); }
   }),
-  /**
-   * Updates the content of item at *index* with *values*.
-   * @param {Number} index
-   * @param {Object} values
-   */
+  /** @inheritdoc */
   updateItemAtIndex: function(index, values) {
     var item = this.itemAtIndex(index);
     this.entries(item['___id']).update(values);
     this.notifyListeners([index]);
   },
   /**
-   * Inserts an object into model.
+   * Appends an item.
+   *
    * @param {Object} data
    */
   insert: function(data) {
@@ -1024,7 +1083,7 @@ DBModel = Model.extend({
     this.notifyListeners();
   },
   /**
-   * Returns the index of the element that have the same
+   * Returns the index of the element with the same
    * value on *key* attribute than *item*.
    * @param {Object} item
    * @param {String} [key='id']
@@ -1042,7 +1101,7 @@ DBModel = Model.extend({
     this.notifyListeners();
   },
   /**
-   * Removes all model content.
+   * Remove all items from this model.
    */
   clear: function() {
     this.entries().remove();
@@ -1051,23 +1110,22 @@ DBModel = Model.extend({
 });
 
 /**
+ * Private base class for {@link ListController} and {@link GridController}.
  *
  * @extends Controller
  * @private
  */
 GenController = Controller.extend({
-
   /**
-   * Implementations should return an object that describes the specified item.
-   *
-   * Properties might include:
+   * Specialized classes should return an object describing the item at specified
+   * index. Properties might include:
    *
    *  * text
    *  * subtext
    *  * icon
    *  * end
    *
-   * See [Photo Example](#!/guide/photo)
+   * See [Photo Example](#!/guide/photo).
    *
    * @param {Number} index
    * @template
@@ -1076,6 +1134,7 @@ GenController = Controller.extend({
 
   /**
    * Triggered when an item is selected.
+   *
    * @param {Number} index
    * @template
    * @event
@@ -1343,7 +1402,7 @@ GenController = Controller.extend({
   },
 
   /**
-   * State of search bar visibility.
+   * Search bar visibility flag.
    */
   searchBarVisible: new Property({
     get: function() { return this._cachedSearchBarVisible; },
@@ -1358,7 +1417,7 @@ GenController = Controller.extend({
 });
 
 /**
- * Shows a searchable list with model content.
+ * Generic list controller.
  * @extend GenController
  */
 ListController = GenController.extend({
@@ -1511,11 +1570,17 @@ GridController = GenController.extend({
 });
 
 /**
- * Web viewer controller.
+ * Web browser view-controller.
+ *
  * @extend Controller
  */
 var WebController = Controller.extend({
-  /** @inheritdoc */
+  /**
+   * Default toolbar buttons. Can be overridden or extended by inherited
+   * classes, as long as {selectedToolbarItem} is changed accordingly.
+   *
+   * @inheritdoc
+   */
   toolbarItems: [
     { tag: 'back', icon: 'go-previous', label: 'Back' },
     { tag: 'forward', icon: 'go-next', label: 'Forward' },
@@ -1661,27 +1726,39 @@ var WebController = Controller.extend({
     }
   },
 
-  /** @private */
+  /**
+   * Visits the previous page in history, if possible.
+   */
   goBack: function() {
     this.web.back();
   },
 
-  /** @private */
+  /**
+   * Visits the next page in history, if possible.
+   */
   goForward: function() {
     this.web.forward();
   },
 
-  /** @private */
+  /**
+   * Reloads the current page.
+   */
   reload: function() {
     this.web.reload();
   },
 
-  /** @private */
+  /**
+   * Stops loading the current page.
+   */
   stop: function() {
     this.web.stop();
   },
 
-  /** @private */
+  /**
+   * Visits a new URI.
+   *
+   * @param uri The new URI to visit.
+   */
   go: function(uri) {
     this.link_hover_notify.visible = false;
     this.progress.visible = false;
@@ -1826,9 +1903,15 @@ FrameController = Container.extend({
 });
 
 /**
- * Split view in two or more {@link Controller}s.
+ * Meta-controller that splits the screen into two other controllers. In tablet
+ * mode, the left part occupies 20% of the screen. In phone mode, the left part
+ * is hidden until {leftPanelVisible} is set to @true.
  *
- * The most left {@link Controller} can be hidden.
+ * This Controller is useful specially to create interfaces where in the left pane
+ * there's a list to select which information is shown in the right pane; e.g. a
+ * mail client, with an inbox list on the left and a message list on the right.
+ *
+ * See [Reddit client](#!/guide/reddit) for an example.
  *
  * @inheritdoc
  * @extend Container
@@ -1886,7 +1969,8 @@ SplitController = Container.extend({
   },
 
   /**
-   * Left panel visibility state.
+   * Left panel visibility state. If running on tablet mode, this property
+   * is read only.
    */
   leftPanelVisible: new Property({
     set: function(setting) {
@@ -1901,6 +1985,7 @@ SplitController = Container.extend({
  *
  * @inheritdoc
  * @extend Container
+ * @private
  */
 ToolController = Container.extend({
   /**
@@ -1969,7 +2054,14 @@ ToolController = Container.extend({
 });
 
 /**
- * Shows a toolbar and the selected controller.
+ * Allows multiple controllers to share the same window, with only one visible at
+ * a given time. Buttons on the bottom of the screen can be used to switch between
+ * controllers.
+ *
+ * Icons and labels for these buttons are obtained directly from their respective
+ * controllers.
+ *
+ * See [Dictionary application](#!/guide/dict) for an example.
  * @extend Container
  */
 TabController = Container.extend({
@@ -2031,8 +2123,9 @@ TabController = Container.extend({
 });
 
 /**
- * Image viewer controller.
+ * Image viewer.
  *
+ * See [Photo Album Browser](#!/guide/photo) for an example.
  * @extend Controller
  */
 ImageController = Controller.extend({
@@ -2085,7 +2178,9 @@ ImageController = Controller.extend({
 });
 
 /**
- * Video viewer controller.
+ * Video player.
+ *
+ * See [Video Player](#!/guide/video) for an example.
  * @extend Controller
  */
 VideoController = Controller.extend({
@@ -2109,8 +2204,6 @@ VideoController = Controller.extend({
       }
     });
   },
-  /** */
-  playerBar : ['Play', 'Pause'],
   /**
    * @type {Number}
    * @readonly
@@ -2246,7 +2339,7 @@ TableController = Controller.extend({
 });
 
 /**
- * Extends {@link TableController} to automate insert and update actions on model..
+ * Extends {TableController} to automate insert and update actions on model..
  * @extend TableController
  */
 FormController = TableController.extend({
