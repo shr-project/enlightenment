@@ -11,7 +11,7 @@ deplist="autotools-dev automake autopoint libtool zlib1g-dev
 	librsvg2-dev libfribidi-dev libpixman-1-dev
 	libxss-dev libxp-dev
 	libxtst-dev graphviz libasound2-dev libpam0g-dev libdbus-1-dev
-	libxcb-keysyms1-dev"
+	libxcb-keysyms1-dev libtiff4-dev"
 
 defpkgs="efl eio eeze edje e_dbus edbus efreet PROTO/libeweather elementary e emotion terminology"
 #
