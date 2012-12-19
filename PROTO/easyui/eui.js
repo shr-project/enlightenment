@@ -533,7 +533,7 @@ Controller = Class.extend({
 
   /**
    * @type {Object/Function}
-   * @require #selectedNavigationBarItem
+   * @requires #selectedNavigationBarItem
    *
    * Object describing the navigation bar items. The `left` attribute specifies
    * the items on the left, whereas the `right` specifies the items on the opposite
@@ -560,7 +560,7 @@ Controller = Class.extend({
   /**
    * Fired when an navigation bar item is clicked.
    *
-   * @require #navigationBarItems
+   * @requires #navigationBarItems
    * @param {Mixed} item The item passed to {navigationBarItems}.
    * @template
    * @event
@@ -581,7 +581,7 @@ Controller = Class.extend({
    * Fired when a toolbar item is clicked.
    *
    * @param {Mixed} item The item passed to {toolbarItems}.
-   * @require #toolbarItems
+   * @requires #toolbarItems
    * @template
    * @event
    */
@@ -593,7 +593,7 @@ Controller = Class.extend({
    * An item can be either a string (where a toolbar item with only a label will
    * be created), or an object with `icon` and `label` attributes.
    *
-   * @require #selectedToolbarItem
+   * @requires #selectedToolbarItem
    * @type {Array/Function}
    */
   toolbarItems: new Property({
@@ -771,7 +771,7 @@ Model = Class.extend({
 FilterModel = Model.extend({
   /**
    * @param {Model} proxy_model The actual model to proxy
-   * @param {Function} filter_fn The filter function that returns @true if
+   * @param {Function} filter_fn The filter function that returns true if
    * the item should be considered.
    */
   init: function(proxy_model, filter_fn) {
@@ -1905,7 +1905,7 @@ FrameController = Container.extend({
 /**
  * Meta-controller that splits the screen into two other controllers. In tablet
  * mode, the left part occupies 20% of the screen. In phone mode, the left part
- * is hidden until {leftPanelVisible} is set to @true.
+ * is hidden until {leftPanelVisible} is set to true.
  *
  * This Controller is useful specially to create interfaces where in the left pane
  * there's a list to select which information is shown in the right pane; e.g. a
