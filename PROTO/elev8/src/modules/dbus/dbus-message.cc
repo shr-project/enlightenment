@@ -96,10 +96,8 @@ Handle<Value> DMessage::NewSignal(const Arguments& args)
   if (!args[2]->IsString())
     THROW_EXCEPTION("Expecting name as string");
 
-  EDBus_Message *msg = edbus_message_signal_new(
-     *String::Utf8Value(args[0]),
-     *String::Utf8Value(args[1]),
-     *String::Utf8Value(args[2]));
+  EDBus_Message *msg = NULL;
+
   if (!msg)
     THROW_EXCEPTION("Could not build signal message");
 
