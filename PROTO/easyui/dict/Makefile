@@ -15,7 +15,7 @@ parse: 29765-8.txt
 	@[ -f 29765-8.txt ] || unzip -oq 29765-8.zip
 
 29765-8.zip:
-	wget $(URL)
+	wget -c --user-agent="Mozilla/5.0 (MSIE 6.0; compatible)" $(URL)
 
 clean:
 	rm -f dict.eet

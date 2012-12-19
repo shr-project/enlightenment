@@ -60,7 +60,7 @@ $(GUIDESDIR)/%/README.md: %.js
 edc: $(EDJS)
 
 clean:
-	make -C dict
+	make clean -C dict
 	rm -f $(READMES)
 	rm -f themes/*.edj
 
