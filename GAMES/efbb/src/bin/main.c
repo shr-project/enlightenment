@@ -715,6 +715,7 @@ level_unload(Game *game)
 
    if (game->end_timer)
      {
+        ecore_timer_thaw(game->end_timer);
         ecore_timer_del(game->end_timer);
         game->end_timer = NULL;
      }
