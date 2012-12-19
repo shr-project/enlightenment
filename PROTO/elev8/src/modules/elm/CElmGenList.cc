@@ -546,16 +546,21 @@ Handle<Value> CElmGenList::clear(const Arguments &args)
 {
    if (args[0]->IsArray())
      {
-        Handle<Object> elements = args[0]->ToObject();
+        Local<Object> obj = args[0]->ToObject();
+        Local<Array> props = obj->GetOwnPropertyNames();
 
-        for (unsigned i = 0; ; ++i) {
-           Handle<Value> element = elements->Get(i);
-           if (element.IsEmpty())
-             break;
+        for (unsigned int i = 0, len = props->Length(); i < len; i++)
+          {
+             Local<Value> val = obj->Get(props->Get(i));
+             Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(val);
 
-           Item<CElmGenList> *item = Item<CElmGenList>::Unwrap(element->ToObject());
-           elm_object_item_del(item->object_item);
-        }
+             if (!item)
+               item = Item<CElmGenList>::Unwrap
+                  (args.This()->Get(String::NewSymbol("elements"))->ToObject()->Get(val));
+
+             if (item)
+               elm_object_item_del(item->object_item);
+          }
 
         return Undefined();
      }
