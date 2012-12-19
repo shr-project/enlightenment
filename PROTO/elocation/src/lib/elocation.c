@@ -1078,7 +1078,7 @@ elocation_address_to_position(Elocation_Address *address_shadow, Elocation_Posit
         if (!k->val) continue;
 
         entry = edbus_message_iter_container_new(array, 'e', NULL);
-        edbus_message_iter_arguments_set(entry, "ss", k->key, k->val);
+        edbus_message_iter_arguments_append(entry, "ss", k->key, k->val);
         edbus_message_iter_container_close(array, entry);
      }
 
