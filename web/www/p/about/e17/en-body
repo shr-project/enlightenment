@@ -182,6 +182,8 @@ You now have all of EFL you need (and then some. technically you don't need eio,
 trying EFL using applications, but it is very much highly encouraged to install these libraries too).
 </p>
 
+<h1>XXX: remove -omega below for release</h1>
+
 <p><pre><code>
 tar zxf enlightenment-0.17.0-omega.tar.gz
 cd enlightenment-0.17.0-omega
