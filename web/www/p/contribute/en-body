@@ -47,6 +47,15 @@
 <p><pre><code>git svn clone http://svn.enlightenment.org/svn/e
 </code></pre></p>
  <p>
+ If you are not interested in keeping the history (or only really need the
+ last couple commits as individual commits you can use the -r option git-svn
+ provides. Additionally you most likely don't need stuff in the directories
+ BROKEN/ or OLD/. These can be ignored with the option --ignore-paths so the
+ command to check out only the latest revision would be:
+ </p>
+<p><pre><code>git svn clone --ignore-paths="BROKEN|OLD" -r HEAD http://svn.enlightenment.org/svn/e
+</code></pre></p>
+ <p>
  Or alternatively use the French git mirror from <a href=http://git.enlightenment.fr/>here</a>. This is preferred as native git is faster and better than git-svn.
  </p>
  <p>
@@ -96,6 +105,10 @@
 </code></pre></p>
 <p><pre><code>git svn clone svn+ssh://USER@svn.enlightenment.org/var/svn/e/trunk/evas
 </code></pre></p>
+ <p>
+ If you don't care about ancient revisions you can use the -r option for
+ git-svn here as well as it does not prevent you from being able to commit.
+ </p>
  <p>
   Our SVN tree is divided up and categorized. The <b>trunk</b>
   directory is where all the main development happens. Inside this
