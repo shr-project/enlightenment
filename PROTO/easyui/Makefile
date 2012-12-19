@@ -42,13 +42,21 @@ EDJE_CC_ID = $(ELEMENTARY_THEMES_DIR:%=-id %)
 EDJE_CC_FD = $(ELEMENTARY_FONTS_DIR:%=-fd %)
 EDJS = $(EDCS:%.edc=%.edj)
 
+JSDUCK:=$(shell which jsduck 2> /dev/null)
+
 all: dict docs edc
 
 dict:
 	make -C dict
 
 docs: $(READMES) $(SOURCES)
-	jsduck --config=./jsduck/config.json
+	@[ -z $(JSDUCK) ] && { \
+		echo "EasyUI documentation is generated using JSDuck, but"; \
+		echo "unfortunately it is not installed. You may find it"; \
+		echo "at https://github.com/senchalabs/jsduck"; \
+		exit 1; \
+	};
+	$(JSDUCK) --config=./jsduck/config.json
 
 $(GUIDESDIR)/%/README.md: %.js
 	mkdir -p $(@D)
