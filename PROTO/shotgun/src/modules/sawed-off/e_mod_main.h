@@ -36,6 +36,7 @@ typedef struct Mod
    Eet_File *ef;
    const char *edj;
    EDBus_Connection *conn;
+   EDBus_Proxy *proxy_core;
    EDBus_Proxy *proxy_link;
    EDBus_Proxy *proxy_contact;
    EDBus_Proxy *proxy_list;

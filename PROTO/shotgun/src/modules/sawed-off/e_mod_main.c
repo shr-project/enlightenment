@@ -624,9 +624,7 @@ EAPI void *
 e_modapi_init(E_Module *m)
 {
    char buf[4096];
-   EDBus_Connection *conn;
    EDBus_Object *obj;
-   EDBus_Proxy *proxy;
    E_Action *act;
 
    snprintf(buf, sizeof(buf), "%s/locale", m->dir);
@@ -641,23 +639,23 @@ e_modapi_init(E_Module *m)
    e_configure_registry_item_add("extensions/sawed-off_shotgun", 110, D_("Shotgun: Sawed-Off"),
                                  NULL, buf, e_int_config_sos);
 
-   edbus_init();
-   conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
-   edbus_name_owner_changed_callback_add(conn, SHOTGUN_DBUS_METHOD_BASE, _name_owner_change, NULL, EINA_TRUE);
-   obj = edbus_object_get(conn, SHOTGUN_DBUS_INTERFACE, SHOTGUN_DBUS_PATH);
-   proxy = edbus_proxy_get(obj, SHOTGUN_DBUS_METHOD_BASE ".core");
-
-   edbus_proxy_signal_handler_add(proxy, "link", _link_cb, NULL);
-   edbus_proxy_signal_handler_add(proxy, "link_self", _link_self_cb, NULL);
-   edbus_proxy_signal_handler_add(proxy, "link_del", _link_del_cb, NULL);
-   edbus_proxy_signal_handler_add(proxy, "new_msg", _new_msg_cb, NULL);
-   edbus_proxy_signal_handler_add(proxy, "status", _status_cb, NULL);
-   edbus_proxy_signal_handler_add(proxy, "connected", _connected_cb, NULL);
-
    mod = E_NEW(Mod, 1);
    mod->module = m;
-   mod->conn = conn;
    mod->edj = eina_stringshare_add(buf);
+
+   edbus_init();
+   mod->conn = edbus_connection_get(EDBUS_CONNECTION_TYPE_SESSION);
+   edbus_name_owner_changed_callback_add(mod->conn, SHOTGUN_DBUS_METHOD_BASE,
+					 _name_owner_change, NULL, EINA_TRUE);
+   obj = edbus_object_get(mod->conn, SHOTGUN_DBUS_INTERFACE, SHOTGUN_DBUS_PATH);
+   mod->proxy_core = edbus_proxy_get(obj, SHOTGUN_DBUS_METHOD_BASE ".core");
+
+   edbus_proxy_signal_handler_add(mod->proxy_core, "link", _link_cb, NULL);
+   edbus_proxy_signal_handler_add(mod->proxy_core, "link_self", _link_self_cb, NULL);
+   edbus_proxy_signal_handler_add(mod->proxy_core, "link_del", _link_del_cb, NULL);
+   edbus_proxy_signal_handler_add(mod->proxy_core, "new_msg", _new_msg_cb, NULL);
+   edbus_proxy_signal_handler_add(mod->proxy_core, "status", _status_cb, NULL);
+   edbus_proxy_signal_handler_add(mod->proxy_core, "connected", _connected_cb, NULL);
 
    mod->proxy_link = edbus_proxy_get(obj, SHOTGUN_DBUS_METHOD_BASE ".link");
    mod->proxy_contact = edbus_proxy_get(obj, SHOTGUN_DBUS_METHOD_BASE ".contact");
@@ -706,6 +704,7 @@ e_modapi_init(E_Module *m)
 EAPI int
 e_modapi_shutdown(E_Module *m EINA_UNUSED)
 {
+   EDBus_Object *obj;
    e_configure_registry_item_del("extensions/sawed-off_shotgun");
 
    e_configure_registry_category_del("extensions");
@@ -720,6 +719,14 @@ e_modapi_shutdown(E_Module *m EINA_UNUSED)
    e_config_domain_save("module.sawed-off_shotgun", conf_edd, sos_config);
    _e_mod_sos_config_free();
    E_CONFIG_DD_FREE(conf_edd);
+   obj = edbus_proxy_object_get(mod->proxy_core);
+   edbus_proxy_unref(mod->proxy_core);
+   edbus_proxy_unref(mod->proxy_link);
+   edbus_proxy_unref(mod->proxy_list);
+   edbus_proxy_unref(mod->proxy_contact);
+   edbus_object_unref(obj);
+   edbus_name_owner_changed_callback_del(mod->conn, SHOTGUN_DBUS_METHOD_BASE,
+                                         _name_owner_change, NULL);
    edbus_connection_unref(mod->conn);
    E_FREE_LIST(mod->images, eina_stringshare_del);
    E_FREE_LIST(mod->actions, e_action_del);
