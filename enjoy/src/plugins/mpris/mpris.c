@@ -502,7 +502,6 @@ _mpris_signal_player_status_change(int playback, int shuffle, int repeat, int en
    edbus_message_iter_container_close(main_iter, st);
 
    edbus_service_signal_send(player, sig);
-   edbus_message_unref(sig);
 }
 
 static void
@@ -515,7 +514,6 @@ _mpris_signal_player_track_change(const Song *song)
         if (!sig) return;
         _mpris_message_fill_song_metadata(sig, song);
         edbus_service_signal_send(player, sig);
-        edbus_message_unref(sig);
         old_song = song;
      }
 }
