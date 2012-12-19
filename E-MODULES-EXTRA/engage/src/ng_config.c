@@ -556,7 +556,7 @@ _basic_create_box_widgets(E_Config_Dialog *cfd, Evas *evas, E_Config_Dialog_Data
      {
         of = e_widget_framelist_add(evas, D_("Taskbar Settings"), 0);
 
-        ob = e_widget_check_add(evas, D_("Dont Show Dialogs"),
+        ob = e_widget_check_add(evas, D_("Don't Show Dialogs"),
 				&(cfdata->cfg_box->taskbar_skip_dialogs));
         e_widget_framelist_object_append(of, ob);
         ob = e_widget_check_add(evas, D_("Advanced Window Menu"),

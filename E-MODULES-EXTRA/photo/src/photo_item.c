@@ -411,8 +411,8 @@ int  photo_item_action_setbg(Photo_Item *pi)
           {
              snprintf(buf, sizeof(buf),
                       D_("<hilight>e17setroot needed</hilight><br><br>"
-                        "%s is not an edje file !<br>"
-                        "Photo module needs e17setroot util from e_utils package to set you're picture as background"
+                        "%s is not an edje file!<br>"
+                        "Photo module needs e17setroot util from e_utils package to set your picture as background. "
                         "Please install it and try again."), file);
              e_module_dialog_show(photo->module, D_("Photo Module Error"), buf);
              return 0;
