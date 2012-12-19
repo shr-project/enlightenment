@@ -536,13 +536,13 @@ static void append(EDBus_Message_Iter *iter, Handle<Value> val)
 
               char *s = strdup(*String::Utf8Value(getSignature(val)));
 
-              edbus_message_iter_arguments_set(iter, s, &dict);
+              edbus_message_iter_arguments_append(iter, s, &dict);
 
               for (unsigned int i = 0, len = props->Length(); i < len; i++)
                 {
                    EDBus_Message_Iter *entry;
                    Local<Value> key = props->Get(i);
-                   edbus_message_iter_arguments_set(dict, &s[1], &entry);
+                   edbus_message_iter_arguments_append(dict, &s[1], &entry);
 
                    append(entry, key);
                    append(entry, obj->Get(key));
@@ -587,7 +587,7 @@ static void append(EDBus_Message_Iter *iter, Handle<Value> val)
               Local<Object> obj = val->ToObject();
               Local<Array> props = obj->GetOwnPropertyNames();
 
-              edbus_message_iter_arguments_set
+              edbus_message_iter_arguments_append
                  (iter, *String::Utf8Value(getSignature(val)), &sub_iter);
 
               for (unsigned int i = 0, len = props->Length(); i < len; i++)
