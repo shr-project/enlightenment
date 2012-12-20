@@ -110,7 +110,27 @@ So if you've managed to read this far, you're rather patient and willing to inve
 </p>
 
 <p>
-E17 is smaller, lighter, faster, nicer and more flexible that your current WM, and it's old school with a new-school twist. Its farts smell of roses and world peace has been known to be solved by E. OK. Just kidding (though really... they so smell of roses!). 
+E17 is smaller, lighter, faster, nicer and more flexible that your current WM, and it's old school with a new-school twist. Its farts smell of roses and world peace has been known to be solved by E. OK. Just kidding (though really... they so smell of roses!).
+</p>
+
+<p>
+In all seriousness Enlightenment is fairly lean. Considering how much you get in return. It isn't a minimalist WM or desktop, but it is a massively long cry from the full desktop beasts that are its peers. Enlightenment uses EFL. EFL was designed to provide the core of Enlightenment, and then some. But it was targeted at scaling down to things like Mobile phones and embedded devices. This has meant that there was a large focus on being lean, and getting a lot of "return on investment". This of course has paid off for Enlightenment itself.
+</p>
+
+<p>
+It only loads what it needs to, when it needs to. It caches what it no longer needs to avoid always re-fetching it, but these caches eventually get flushed or expire, so long-term it won't just grow without bound in memory footprint. Rendering can be done with the CPU and/or GPU. It's up to you. (though at the moment we don't give you any UI controls over the rendering engine for UI content, but the compositor allows the choice - the core toolkit is capable of it).
+</p>
+
+<p>
+An E17 install on the exact same system as Unity on Ubuntu, simply replacing unity can save you 200M of RAM. Not to mention be snappier and more responsive. You will never know until you try, so why not at least give it a go? You run fewer processes since E17 now handles being the panel, filemanager, window manager and compositor (and more) all at once. It amortizes the cost of all these common components into a single process.
+</p>
+
+<p>
+Enlightenment and EFL provide over-the-top power when it comes to re-skinning or theme changes. You can change not just colors and background images, but entire animations, multiple layers of imagery scaled, aligned and laid out to please. It's like Photoshop or The GIMP, but on steroids riding a train of camels. If anything it may be an Achilles heel given how much power is exposed, but hey, that's what we have. If you are an artist, designer or skinner, you could hardly do much worse than E17. Wallpapers don't just have to be images. They can be complete interactive animations. You can provide multiple resolutions of your imagery all in-line in the same file and have the "best one chosen automatically" based on size. You can have it animate base on input events, or time. And not just the wallpaper. Anything in E17 can do this. Fade layers in and out, change their sizes, image content and more. Make your art come to life.
+</p>
+
+<p>
+And for the tweaker heads amongst you... there is an option for every occasion. We don't go quietly into the night and remove options when no one is looking. We sneak in when you least expect it and plant a whole forest of new option seeds, watching them spring to life. We nail new options to walls on a regular basis. Options are good. Options are awesome. We have lots of them. Spend some quality time getting to know your new garden of options in E17. It may just finally give you the control you have been pining for.
 </p>
 
 <hr>
