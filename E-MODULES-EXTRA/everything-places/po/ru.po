@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Everything-Places\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
 "POT-Creation-Date: 2012-11-26 16:41+0400\n"
-"PO-Revision-Date: 2012-11-26 16:41+0400\n"
+"PO-Revision-Date: 2012-12-20 19:25+0400\n"
 "Last-Translator: Igor Murzov <e-mail@date.by>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "Language: ru\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: src/e_mod_main.c:138
 msgid "Home"
-msgstr "Дом"
+msgstr "Домашний каталог"
 
 #: src/e_mod_main.c:141
 msgid "Wallpaper"
