@@ -149,8 +149,8 @@ e_modapi_shutdown(E_Module *m)
 {
    places_shutdown();
 
-   e_configure_registry_item_del("extensions/places");
-   e_configure_registry_category_del("extensions");
+   e_configure_registry_item_del("fileman/places");
+   e_configure_registry_category_del("fileman");
 
    /* Kill the config dialog */
    if (places_conf->cfd) e_object_del(E_OBJECT(places_conf->cfd));

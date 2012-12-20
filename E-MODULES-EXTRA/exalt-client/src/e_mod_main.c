@@ -155,11 +155,11 @@ e_modapi_init(E_Module *m)
 e_modapi_shutdown(E_Module *m)
 {
     /* Unregister the config dialog from the main panel */
-    e_configure_registry_item_del("advanced/exalt");
+    e_configure_registry_item_del("extensions/exalt");
 
     /* Remove the config panel category if we can. E will tell us.
        category stays if other items using it */
-    e_configure_registry_category_del("advanced");
+    e_configure_registry_category_del("extensions");
 
     /* Kill the config dialog */
     if (exalt_conf->cfd) e_object_del(E_OBJECT(exalt_conf->cfd));
