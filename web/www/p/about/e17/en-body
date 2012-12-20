@@ -103,6 +103,16 @@ Enlightenment and its libraries are all open source (BSD 2 clause, LGPL or GPL f
 </p>
 </blockquote>
 
+<h3>Why oh why use E?</h3>
+
+<p>
+So if you've managed to read this far, you're rather patient and willing to invest more than 7 seconds on Enlightenment, but you're probably wondering <em>"Why on earth should I use this Enlightenment thing? I don't want people to know I use E! They might think i do drugs or something?"</em>. Well wonder no more! You shall now be assaulted by our marketing blurb!
+</p>
+
+<p>
+E17 is smaller, lighter, faster, nicer and more flexible that your current WM, and it's old school with a new-school twist. Its farts smell of roses and world peace has been known to be solved by E. OK. Just kidding (though really.. they roses smell is there!).
+</p>
+
 <hr>
 
 <h3>Becoming Enlightened</h3>
@@ -153,7 +163,7 @@ You will want to download all of the libraries you need, as well as Enlightenmen
 <p><pre><code>
 for I in eina eet evas embryo ecore eio edje efreet e_dbus \
 evas_generic_loaders ethumb eeze emotion elementary; do \
-wget http://download.enlightenment.org/releases/$I-1.7.3.tar.gz; \
+  wget http://download.enlightenment.org/releases/$I-1.7.3.tar.gz; \
 done
 wget http://download.enlightenment.org/releases/enlightenment-0.17.0-omega.tar.gz
 </code></pre></p>
@@ -168,10 +178,10 @@ export CFLAGS="-O3 -fvisibility=hidden -ffast-math"
 
 for I in eina eet evas embryo ecore eio edje efreet e_dbus \
 evas_generic_loaders ethumb eeze emotion elementary; do \
-tar zxf $I-1.7.3.tar.gz; \
-cd $I-1.7.3; \
-./configure --disable-gnutls && make && sudo make install; \
-cd ..; \
+  tar zxf $I-1.7.3.tar.gz; \
+  cd $I-1.7.3; \
+  ./configure --disable-gnutls && make && sudo make install; \
+  cd ..; \
 done
 
 sudo ldconfig
@@ -192,7 +202,7 @@ cd ..
 </code></pre></p>
 
 <p>
-Because Ubuntu ships with configuration that doesn't care about self-compiled software, it will never look in common "standard" locations for other desktops, like /usr/local, so you have to do a quick fix. One of the easiest is to make a symlink so the desktop file appears where the login manager expects to find it.
+Because Ubuntu ships with configuration that doesn't care about self-compiled software for the display manager, it will never look in common "standard" locations for other desktops, like /usr/local, so you have to do a quick fix. One of the easiest is to make a symlink so the desktop file appears where the login manager expects to find it.
 </p>
 
 <p><pre><code>
@@ -200,15 +210,65 @@ sudo ln -s /usr/local/share/xsessions/enlightenment.desktop /usr/share/xsessions
 </code></pre></p>
 
 <p>
-Enlightenment supports <a href=http://www.connman.net>Connman</a> for network connectivity and configuration. You will need to get at least 1.0 version of it to be sure to have it work properly. Unfortunately Ubuntu doesn't, so you'll need to fetch one of the Debian packages:
+Enlightenment supports <a href=http://www.connman.net>Connman</a> for network connectivity and configuration. You will need to get at least 1.0 version of it to be sure to have it work properly. Unfortunately Ubuntu doesn't. At this stage there isn't really any solution other than to compile connman yourself. Mot other distributions have at least 1.0 available as a package.
 </p>
 
-<p><pre><code>
-http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_i386.deb
-http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_armel.deb
-http://ftp.us.debian.org/debian/pool/main/c/connman/connman_1.0-1_armhf.deb
-http://packages.debian.org/wheezy/connman
-</code></pre></p>
+<p>
+You have Enlightenment now installed and ready to go. You can log out and select "Enlightenment" from the sessions selector (a small round logo in the login box), and Log in. You will be first greeted by the Wizard, asking you a short series of questions that help Enlightenment be set up properly for you. You will first be presented with a screen like this:
+</p>
+
+<center><?php img("e-start-1.png", "E17 Wizard");?></center>
+
+<p>
+This screen asks you to select your current language. A long list is provided, so please select the appropriate language for you. Note that the language names are written in their own language and script, so if your system fonts do not provide all characters, some languages may appear as a series of boxes. You may want to install extra language font packs for your operating system. In case the text takes you too long to read, or is garbled due to missing fonts, you have a flag to help you out. We don't choose flags to try and favor any particular nation or culture over another. We simply have chosen flags more people may recognize more easily. Select the language you want and then hit "Next".
+</p>
+
+<center><?php img("e-start-2.png", "E17 Wizard");?></center>
+
+<p>
+Next will be your keyboard layout. Different keyboards have keys in different places often based on language or region. We have provided another simple list of Regions (with flags) to help get this set up as closely as needed to function, and yet remain simple. If this is not good enough, then later on you can reconfigure the keyboard layout yourself with a lot more details from the keyboard layout switcher or settings dialogs.
+</p>
+
+<center><?php img("e-start-3.png", "E17 Wizard");?></center>
+
+<p>
+Now you will see a profile selection dialog. This is very simple at this stage and we only provide 2 profiles. The standard desktop PC profile and an experimental "Mobile UI" profile. It is not recommended that you try the mobile profile unless you really want to experiment there. The Standard PC profile is well fleshed out and is probably what you want anyway.
+</p>
+
+<center><?php img("e-start-4.png", "E17 Wizard");?></center>
+
+<p>
+We have put a lot of effort into UI scalability, but have taken a new tack on it. We don't just scale with DPI. We realize that UI scaling is not a function of DPI, but a function of pixels within the visible viewable angle of your eye AND the acuity of your eyesight. These things we just can't know, as if your UI is on a 20dpi TV on the other side of the living room, or no a 300dpi+ smartphone right next to your face is unknown to us. We also don't know how good your eyesight is, so... we ask you which size looks good to you. Choose the one you like best. You can later on fine-tune this if you want and ask E17 to scale with DPI if that's what you prefer etc.
+</p>
+
+<center><?php img("e-start-5.png", "E17 Wizard");?></center>
+
+<p>
+Most modern OS's and desktops use "click to focus" by default (or it is the only option they have at all without modification with extra patches or software). This is where, in order to give the keyboard focus to a window, you normally click on it. This will normally also raise the window to the top of the stack. It also tends to come with the policy that all new windows get the focus by default. The very "old school" focus policy in X11 was pointer focus. This is still the default in E17... because we like it that way. <b>BUT</b> we give you a choice. Pointer focus is where the focus of a window tracks the mouse position on screen. As the mouse moves across other windows, they may gain the focus. You are asked for a simple one here and can later configure focus and window handling with a host of swizzle knobs as you see fit. Many long-time X11 users and developers find this preferable.
+</p>
+
+<center><?php img("e-start-6.png", "E17 Wizard");?></center>
+
+<p>
+E17 also has a compositor. This allows for things like dropshadows on windows, fade in/out effects, smooth vsynced tear-free rendering and more. But unlike many others, we also work without OpenGL. We work quite well without it. A lot of effort has been put into E17 and EFL to make this possible. It comes with some caveats, such as no vsynced rendering when using the software compositor, and higher CPU load. If you have a decent GPU with solid drivers, it is recommended you at least give the OpenGL compositing a try. It can be smoother and nicer. But never fear. If you like playing games, it can be turned off whenever you need to. Even without a GPU, you may not even notice the difference between OpenGL compositing and software compositing, unless you look closely. And yes - compositing works on embedded devices too with OpenGL-ES 2.0 and EGL. It's all part of EFL.
+</p>
+
+<center><?php img("e-start-7.png", "E17 Wizard");?></center>
+
+<p>
+Enlightenment can provide you with information as to when new versions are available or major bugs have been fixed or security issues resolved. It won't do the update for you, but it can let you know. You really want to keep this enabled because it not only helps you find out when you should look for updates, but also helps us know if people actually use Enlightenment. We don't care who you are. We don't want your personal information. We just want to know that you exist and use E17 so we can make it better for you and direct development in your direction more.
+</p>
+
+<center><?php img("e-start-8.png", "E17 Wizard");?></center>
+
+<p>
+Against our better judgment, we also included a "taskbar" module for those that just can't live without. It does the job. You may probably want it. It's not for everyone, but hey.. one size does <b>NOT</b> fit all.
+</p>
+
+<center><?php img("e-start-9.png", "E17 Wizard");?></center>
+
+<p>
+And then you should be greeted with a desktop not dissimilar to the one you see above. You're ready to go.
+</p>
 
 </div></td></tr></table>
