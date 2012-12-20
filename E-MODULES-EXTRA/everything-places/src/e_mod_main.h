@@ -3,11 +3,11 @@
 
 #ifdef ENABLE_NLS
 # include <libintl.h>
-# define _(string) dgettext(PACKAGE, string)
+# define D_(string) dgettext(PACKAGE, string)
 #else
 # define bindtextdomain(domain,dir)
 # define bind_textdomain_codeset(domain,codeset)
-# define _(string) (string)
+# define D_(string) (string)
 #endif
 #define N_(str) (str)
 

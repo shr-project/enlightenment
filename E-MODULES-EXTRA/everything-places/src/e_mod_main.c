@@ -135,10 +135,10 @@ _begin(Evry_Plugin *plugin, const Evry_Item *item)
 
    EVRY_PLUGIN_INSTANCE(p, plugin);
 
-   _item_add(p, N_("Home"), e_user_homedir_get(), _mime_dir, NULL);
+   _item_add(p, D_("Home"), e_user_homedir_get(), _mime_dir, NULL);
 
    e_user_dir_concat_static(path, "backgrounds");
-   _item_add(p, N_("Wallpaper"), path, _mime_dir, NULL);
+   _item_add(p, D_("Wallpaper"), path, _mime_dir, NULL);
 
    _gtk_bookmarks_add(p);
 

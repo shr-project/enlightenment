@@ -295,7 +295,7 @@ _gc_orient(E_Gadcon_Client *gcc, E_Gadcon_Orient orient)
 static const char *
 _gc_label(const E_Gadcon_Client_Class *client_class)
 {
-   return "Places";
+   return D_("Places");
 }
 
 static const char *
