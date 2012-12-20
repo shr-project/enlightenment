@@ -6,16 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: enlightenment\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-12-06 23:37+0000\n"
-"Last-Translator: Michael Moroni <michael.moroni@mailoo.org>\n"
+"Report-Msgid-Bugs-To: $MSGID_BUGS_ADDRESS\n"
+"POT-Creation-Date: 2012-12-19 19:40+0100\n"
+"PO-Revision-Date: 2012-12-19 20:18+0000\n"
+"Last-Translator: Eliovir <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2012-12-08 05:09+0000\n"
-"X-Generator: Launchpad (build 16341)\n"
+"X-Launchpad-Export-Date: 2012-12-20 04:55+0000\n"
+"X-Generator: Launchpad (build 16378)\n"
+"Language: eo\n"
 
 #: src/e_mod_main.c:1705 src/e_mod_main.c:1863 src/e_mod_main.c:1890
 msgid "Engage"
@@ -47,7 +48,7 @@ msgstr "Redakti piktogramon"
 
 #: src/ng_border_menu.c:30
 msgid "Fullscreen"
-msgstr "Tutekrane"
+msgstr "Plenekrane"
 
 #: src/ng_border_menu.c:45
 msgid "Close"
@@ -188,7 +189,7 @@ msgstr "Lanĉilo"
 
 #: src/ng_config.c:278
 msgid "Gadcon"
-msgstr ""
+msgstr "Gadcon"
 
 #: src/ng_config.c:284 src/ng_config.c:303
 msgid "Auto Hide"
@@ -204,11 +205,11 @@ msgstr "Stako"
 
 #: src/ng_config.c:311
 msgid "Above All"
-msgstr ""
+msgstr "Super ĉiuj"
 
 #: src/ng_config.c:313
 msgid "Below Fullscreen"
-msgstr ""
+msgstr "Sub plenekrano"
 
 #: src/ng_config.c:317 src/ng_config.c:324
 msgid "Other"
@@ -231,7 +232,7 @@ msgid "Taskbar Settings"
 msgstr "Agordoj de taskopleto"
 
 #: src/ng_config.c:559
-msgid "Dont Show Dialogs"
+msgid "Don't Show Dialogs"
 msgstr "Ne montri dialogojn"
 
 #: src/ng_config.c:562
@@ -248,7 +249,7 @@ msgstr "Grupigi aplikaĵoj laŭ klaso de fenestro"
 
 #: src/ng_config.c:571
 msgid "Append new Applications on the right Side"
-msgstr ""
+msgstr "Postaldoni novajn aplikaĵojn dekstraflanke"
 
 #: src/ng_config.c:577
 msgid "Iconified Applications"
