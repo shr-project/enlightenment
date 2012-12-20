@@ -291,4 +291,22 @@ Against our better judgment, we also included a "taskbar" module for those that 
 And then you should be greeted with a desktop not dissimilar to the one you see above. You're ready to go.
 </p>
 
+<p>
+The standard desktop you will see is made up from various elements. These are indicated as below.
+</p>
+
+<center><?php img("e-elements.png", "E17 Desktop Elements");?></center>
+
+<p>
+You will have some desktop file icons (you can disable file icons on the desktop entirely if you wish - see Files settings). Double clicking on these brings up filemanager views that let you navigate, manage files in a simple way, drag and drop them, Type in the files you want to select or mask (for example *.jpg). If you click elsewhere on the desktop you will get E17's main menu. From here you can access almost all features of Enlightenment as its settings.
+</p>
+
+<p>
+At the bottom of the screen is a Shelf. This is a collector for gadgets that arranges them in a line across some edge of your screen. You can re-arrange icons all you like (though it may need some coaxing at first). In the Shelf there will be a Start gadget, that simply brings up Enlightenments' main menu, if it wasn't convenient to click on the desktop or use the Menu key binding or CTRL+ALT+M binding already there. Next to it will be the Pager that displays available virtual desktops, their contents and lets you switch desktops at a click, drag and drop windows from one desktop to another or whole desktops. Then you will have IBox that holds iconified (minimized) windows. IBar next to it is a launcher to hold shortcuts to common apps and launch them at a single click. You can drag and drop icons into and out of here. Drag them from the applications menu or from the borders of windows. You then will have some system status gadgets like the Temperature gadget, CPU frequency meter and controls, a Clock gadget, and audio Mixer control gadget, A Connman interaction gadget to select network, and Keyboard switcher. There is a Tasks gadget too that acts like a taskbar, but is not visible as no windows are around.
+</p>
+
+<p>
+If you browse through the menus you will find settings and applications, system and desktop controls and much more. You may also find yourself with backlight control gadgets and much more besides. The settings panels are chock-full of options, as you may also find if you right-click on gadgets or file icons. You want to spend some quality time exploring just what is there, so in future you know to come back to these settings if you should want to change something.
+</p>
+
 </div></td></tr></table>
