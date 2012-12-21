@@ -4,7 +4,7 @@
 <center><?php img("e-shot-main.png", "E17 Sample");?></center>
 
 <p>
-Enlightenment 0.17 <em>(a.k.a E17)</em> is the next generation of graphical desktop environment from the Enlightenment project. When you first run it and get past the initial setup wizard, you should end up with a desktop not unlike the above. It is a very traditional UNIX/X11 style desktop, because that is what E primarily is and attempts to be, <b>BUT</b> with a bunch of bells, whistles and modernities that were never there, as well as a different core design philosophy.
+Enlightenment 0.17 <em>(a.k.a E17)</em> is the next generation of graphical desktop shell from the Enlightenment project. When you first run it and get past the initial setup wizard, you should end up with a desktop not unlike the above. It is a very traditional UNIX/X11 style desktop, because that is what E primarily is and attempts to be, <b>BUT</b> with a bunch of bells, whistles and modernities that were never there, as well as a different core design philosophy. There seems to be some obsession with Window Manager vs. Desktop Environment debates. It doesn't much matter what you call it. It manages windows. It does compositing. It manages files. It launches applications. It handles UI and system settings.
 </p>
 
 <blockquote><p><em>
