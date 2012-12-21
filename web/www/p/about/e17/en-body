@@ -255,7 +255,7 @@ Your connman gadget in E17 should soon enough pick up connman and if on a wired 
 </p>
 
 <p><pre><code>
-sed 's:exit 0:/usr/local/sbin/connmand &\nexit 0:g' /etc/rc.local > /tmp/tf;
+sed 's:exit 0:(sleep 9;/usr/local/sbin/connmand) \&\nexit 0:g' /etc/rc.local > /tmp/tf;
 sudo cp /tmp/tf /etc/rc.local;
 rm /tmp/tf
 sudo apt-get remove network-manager
