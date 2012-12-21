@@ -1,0 +1,170 @@
+# Chinese translations for compo-scale package
+# compo-scale 软件包的简体中文翻译.
+# This file is put in the public domain.
+# Aron Xu <happyaron.xu@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: compo-scale VERSION\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-12-22 04:50+0800\n"
+"PO-Revision-Date: 2012-12-22 04:54+0800\n"
+"Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
+"Language-Team: Chinese (simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/e_mod_config.c:57
+msgid "Scale Windows Module"
+msgstr "窗口缩放模块"
+
+#: ../src/e_mod_config.c:119
+msgid "Current Desktop"
+msgstr "当前桌面"
+
+#: ../src/e_mod_config.c:120 ../src/e_mod_config.c:153
+msgid "Minimum space between windows"
+msgstr "窗口最小间距"
+
+#: ../src/e_mod_config.c:122 ../src/e_mod_config.c:155
+#, c-format
+msgid "%1.0f"
+msgstr "%1.0f"
+
+#: ../src/e_mod_config.c:126 ../src/e_mod_config.c:159
+msgid "Scale duration"
+msgstr "缩放时长"
+
+#: ../src/e_mod_config.c:128 ../src/e_mod_config.c:161
+#: ../src/e_mod_config.c:200
+#, c-format
+msgid "%1.2f"
+msgstr "%1.2f"
+
+#: ../src/e_mod_config.c:133 ../src/e_mod_config.c:165
+msgid "Slotted Layout"
+msgstr "裂缝布局"
+
+#: ../src/e_mod_config.c:135 ../src/e_mod_config.c:167
+msgid "Natural Layout"
+msgstr "自然布局"
+
+#: ../src/e_mod_config.c:139 ../src/e_mod_config.c:169
+msgid "Grow more!"
+msgstr "增加更多！"
+
+#: ../src/e_mod_config.c:142 ../src/e_mod_config.c:172
+msgid "Keep it tight!"
+msgstr "保持紧凑！"
+
+#: ../src/e_mod_config.c:145 ../src/e_mod_config.c:178
+msgid "Show iconified windows"
+msgstr "显示图表化的窗口"
+
+#: ../src/e_mod_config.c:152
+msgid "Show All Desktops"
+msgstr "显示全部桌面"
+
+#: ../src/e_mod_config.c:175 ../src/e_mod_config.c:206
+msgid "Fade in windows"
+msgstr "淡入窗口"
+
+#: ../src/e_mod_config.c:185 ../src/e_mod_config.c:209
+msgid "Fade out shelves and popups"
+msgstr "淡出抽屉和弹窗"
+
+#: ../src/e_mod_config.c:188 ../src/e_mod_config.c:212
+msgid "Darken desktop"
+msgstr "桌面变暗"
+
+#: ../src/e_mod_config.c:193 ../src/e_mod_main.c:277 ../src/e_mod_main.c:303
+#: ../src/e_mod_main.c:305 ../src/e_mod_main.c:307 ../src/e_mod_main.c:309
+#: ../src/e_mod_main.c:311 ../src/e_mod_main.c:313 ../src/e_mod_main.c:315
+#: ../src/e_mod_main.c:374 ../src/e_mod_main.c:375 ../src/e_mod_main.c:376
+#: ../src/e_mod_main.c:377 ../src/e_mod_main.c:378 ../src/e_mod_main.c:503
+msgid "Scale Windows"
+msgstr "缩放窗口"
+
+#: ../src/e_mod_config.c:196
+msgid "Pager Settings"
+msgstr "Pager 设置"
+
+#: ../src/e_mod_config.c:198
+msgid "Zoom duration"
+msgstr "缩放时长"
+
+#: ../src/e_mod_config.c:203
+msgid "Overlap Shelves"
+msgstr "覆盖书架"
+
+#: ../src/e_mod_config.c:217
+msgid "Pager"
+msgstr "Pager"
+
+#: ../src/e_mod_main.c:229
+msgid "Look"
+msgstr "外观"
+
+#: ../src/e_mod_main.c:231
+msgid "Composite Scale Windows"
+msgstr "混成窗口缩放"
+
+#: ../src/e_mod_main.c:305 ../src/e_mod_main.c:375
+msgid "Scale Windows (All Desktops)"
+msgstr "缩放窗口(全部桌面)"
+
+#: ../src/e_mod_main.c:307 ../src/e_mod_main.c:376
+msgid "Scale Windows (By Class)"
+msgstr "缩放窗口(按类别)"
+
+#: ../src/e_mod_main.c:309 ../src/e_mod_main.c:320 ../src/e_mod_main.c:377
+#: ../src/e_mod_main.c:381
+msgid "Select Next"
+msgstr "选择下一个"
+
+#: ../src/e_mod_main.c:311 ../src/e_mod_main.c:322 ../src/e_mod_main.c:378
+#: ../src/e_mod_main.c:382
+msgid "Select Previous"
+msgstr "选择前一个"
+
+#: ../src/e_mod_main.c:313
+msgid "Select Next (All)"
+msgstr "选择下一个(全部)"
+
+#: ../src/e_mod_main.c:315
+msgid "Select Previous (All)"
+msgstr "选择前一个(全部)"
+
+#: ../src/e_mod_main.c:318 ../src/e_mod_main.c:320 ../src/e_mod_main.c:322
+#: ../src/e_mod_main.c:324 ../src/e_mod_main.c:326 ../src/e_mod_main.c:328
+#: ../src/e_mod_main.c:330 ../src/e_mod_main.c:380 ../src/e_mod_main.c:381
+#: ../src/e_mod_main.c:382 ../src/e_mod_main.c:383 ../src/e_mod_main.c:384
+#: ../src/e_mod_main.c:385 ../src/e_mod_main.c:386 ../src/e_mod_main.c:515
+msgid "Scale Pager"
+msgstr "缩放 Pager"
+
+#: ../src/e_mod_main.c:324 ../src/e_mod_main.c:383
+msgid "Select Left"
+msgstr "选择左侧"
+
+#: ../src/e_mod_main.c:326 ../src/e_mod_main.c:384
+msgid "Select Right"
+msgstr "选择右侧"
+
+#: ../src/e_mod_main.c:328 ../src/e_mod_main.c:385
+msgid "Select Up"
+msgstr "选择上方"
+
+#: ../src/e_mod_main.c:330 ../src/e_mod_main.c:386
+msgid "Select Down"
+msgstr "选择下方"
+
+#: ../src/e_mod_main.c:509
+msgid "Scale all Windows"
+msgstr "缩放所有窗口"
+
+#: ../src/e_mod_main.c:614
+msgid "Settings"
+msgstr "设置"
