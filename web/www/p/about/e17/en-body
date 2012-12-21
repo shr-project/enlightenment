@@ -112,11 +112,11 @@ So if you've managed to read this far, you're rather patient and willing to inve
 </p>
 
 <p>
-E17 is smaller, lighter, faster, nicer and more flexible that your current WM, and it's old school with a new-school twist. Its farts smell of roses and world peace has been known to be solved by E. OK. Just kidding (though really... they so smell of roses!).
+E17 is smaller, lighter, faster, nicer and more flexible that your current WM, and it's old school with a new-school twist. It's trendy and fashionable. You will simply be totally un-cool if you don't use it. Its farts smell of roses and world peace has been known to be solved by E. OK. Just kidding (though really... they do smell of roses!).
 </p>
 
 <p>
-In all seriousness Enlightenment is fairly lean. Considering how much you get in return. It isn't a minimalist WM or desktop, but it is a massively long cry from the full desktop beasts that are its peers. Enlightenment uses EFL. EFL was designed to provide the core of Enlightenment, and then some. But it was targeted at scaling down to things like Mobile phones and embedded devices. This has meant that there was a large focus on being lean, and getting a lot of "return on investment". This of course has paid off for Enlightenment itself.
+In all seriousness Enlightenment is fairly lean. Considering how much you get in return. It isn't a minimalist WM or desktop, but it is a massively long cry from the full desktop beasts that are its peers, even the ones that claim to be minimalist/lean. Enlightenment uses EFL. EFL was designed to provide the core of Enlightenment, and then some. But it was targeted at scaling down to things like mobile phones and embedded devices. This has meant that there was a large focus on being lean, and getting a lot of "return on investment" from the very core that sits under E17. This of course has paid off for Enlightenment itself rather nicely.
 </p>
 
 <p>
@@ -124,15 +124,15 @@ It only loads what it needs to, when it needs to. It caches what it no longer ne
 </p>
 
 <p>
-An E17 install on the exact same system as Unity on Ubuntu, simply replacing unity can save you 200M of RAM. Not to mention be snappier and more responsive. You will never know until you try, so why not at least give it a go? You run fewer processes since E17 now handles being the panel, filemanager, window manager and compositor (and more) all at once. It amortizes the cost of all these common components into a single process.
+An E17 install on the exact same system as Unity on Ubuntu, simply replacing unity can save you 200M of RAM. Not to mention be snappier and more responsive. You will never know until you try, so why not at least give it a go? You run fewer processes since E17 now handles being the panel, filemanager, window manager and compositor (and more) all at once. It amortizes the cost of all these common components into a single process. You start quickly and you are now just a really cool person.
 </p>
 
 <p>
-Enlightenment and EFL provide over-the-top power when it comes to re-skinning or theme changes. You can change not just colors and background images, but entire animations, multiple layers of imagery scaled, aligned and laid out to please. It's like Photoshop or The GIMP, but on steroids riding a train of camels. If anything it may be an Achilles heel given how much power is exposed, but hey, that's what we have. If you are an artist, designer or skinner, you could hardly do much worse than E17. Wallpapers don't just have to be images. They can be complete interactive animations. You can provide multiple resolutions of your imagery all in-line in the same file and have the "best one chosen automatically" based on size. You can have it animate base on input events, or time. And not just the wallpaper. Anything in E17 can do this. Fade layers in and out, change their sizes, image content and more. Make your art come to life.
+Enlightenment and EFL provide over-the-top power when it comes to re-skinning or theme changes. You can change not just colors and background images, but entire animations, multiple layers of imagery scaled, aligned and laid out to please. It's like Photoshop or The GIMP, but on steroids riding a train of rabid camels. If anything it may be an Achilles heel given how much power is exposed, but hey, that's what we have. If you are an artist, designer or skinner, you could hardly do much worse than E17. Wallpapers don't just have to be images. They can be complete interactive animations. You can provide multiple resolutions of your imagery all in-line in the same file and have the "best one chosen automatically" based on size. It's all like layers that are sized, scaled, aligned and arranged relative to each-other and every UI element is a collection of these. You can have it animate base on input events, or time. And not just the wallpaper. Anything in E17 can do this. Fade layers in and out, change their sizes, image content and more. Make your art come to life.
 </p>
 
 <p>
-And for the tweaker heads amongst you... there is an option for every occasion. We don't go quietly into the night and remove options when no one is looking. We sneak in when you least expect it and plant a whole forest of new option seeds, watching them spring to life. We nail new options to walls on a regular basis. Options are good. Options are awesome. We have lots of them. Spend some quality time getting to know your new garden of options in E17. It may just finally give you the control you have been pining for.
+And for the tweaker heads amongst you, there is an option for every occasion. We don't go quietly into the night and remove options when no one is looking. None of those new big version releases with fanfare and "Hey look! Now with half the options you used to have!". We sneak in when you least expect it and plant a whole forest of new option seeds, watching them spring to life. We nail new options to walls on a regular basis. We bake options-cakes and hand them out at parties. Options are good. Options are awesome. We have lots of them. Spend some quality time getting to know your new garden of options in E17. It may just finally give you the control you have been pining for.
 </p>
 
 <hr>
@@ -179,7 +179,7 @@ sudo apt-get install libgles2-mesa-dev libegl1-mesa-dev
 </code></pre></p>
 
 <p>
-You will want to download all of the libraries you need, as well as Enlightenment itself. The easy way is just to copy and paste the below that uses wget to download them. you can download these any way you like, as long as you have these tarballs in full before you begin compiling.
+You will want to download all of the libraries you need, as well as Enlightenment itself. The easy way is just to copy and paste the below that uses <em>wget</em> to download them. you can download these any way you like, as long as you have these tarballs in full before you begin compiling.
 </p>
 
 <p><pre><code>
@@ -210,15 +210,12 @@ sudo ldconfig
 </code></pre></p>
 
 <p>
-You now have all of EFL you need (and then some. technically you don't need eio, ethumb or elementary for E17 to work, but you will need these if you wish to start
-trying EFL using applications, but it is very much highly encouraged to install these libraries too).
+You now have all of EFL you need, and then some. Technically you don't need eio, ethumb or elementary for E17 to work, but you will need these if you wish to start trying EFL using applications. It is very much highly encouraged to install these libraries too.
 </p>
 
-<h1>XXX: remove -omega below for release</h1>
-
 <p><pre><code>
-tar zxf enlightenment-0.17.0-omega.tar.gz
-cd enlightenment-0.17.0-omega
+tar zxf enlightenment-0.17.0.tar.gz
+cd enlightenment-0.17.0
 ./configure && make && sudo make install
 cd ..
 </code></pre></p>
@@ -236,7 +233,7 @@ Enlightenment supports <a href=http://www.connman.net>Connman</a> for network co
 </p>
 
 <p>
-You have Enlightenment now installed and ready to go. You can log out and select "Enlightenment" from the sessions selector (a small round logo in the login box), and Log in. You will be first greeted by the Wizard, asking you a short series of questions that help Enlightenment be set up properly for you. You will first be presented with a screen like this:
+You now have Enlightenment installed and ready to go. You can log out and select "Enlightenment" from the sessions selector (a small round logo in the login box probably), and log in again. You will be first greeted by the Wizard, asking you a short series of questions that help Enlightenment be set up properly for you. You will first be presented with a screen like this:
 </p>
 
 <center><?php img("e-start-1.png", "E17 Wizard");?></center>
@@ -260,19 +257,19 @@ Now you will see a profile selection dialog. This is very simple at this stage a
 <center><?php img("e-start-4.png", "E17 Wizard");?></center>
 
 <p>
-We have put a lot of effort into UI scalability, but have taken a new tack on it. We don't just scale with DPI. We realize that UI scaling is not a function of DPI, but a function of pixels within the visible viewable angle of your eye AND the acuity of your eyesight. These things we just can't know, as if your UI is on a 20dpi TV on the other side of the living room, or no a 300dpi+ smartphone right next to your face is unknown to us. We also don't know how good your eyesight is, so... we ask you which size looks good to you. Choose the one you like best. You can later on fine-tune this if you want and ask E17 to scale with DPI if that's what you prefer etc.
+We have put a lot of effort into UI scalability, but have taken a new tack on it. We don't just scale with DPI. We realize that UI scaling is not a function of DPI, but a function of pixels within the visible viewable angle of your eye AND the acuity of your eyesight. These things we just can't know: if your UI is on a 20dpi TV on the other side of the living room, or no a 300dpi+ smartphone right next to your face is unknown to us. We also don't know how good your eyesight is, so... we ask you which size looks good to you. Choose the one you like best. You can, later on, fine-tune this if you want and ask E17 to scale with DPI if that's what you prefer etc.
 </p>
 
 <center><?php img("e-start-5.png", "E17 Wizard");?></center>
 
 <p>
-Most modern OS's and desktops use "click to focus" by default (or it is the only option they have at all without modification with extra patches or software). This is where, in order to give the keyboard focus to a window, you normally click on it. This will normally also raise the window to the top of the stack. It also tends to come with the policy that all new windows get the focus by default. The very "old school" focus policy in X11 was pointer focus. This is still the default in E17... because we like it that way. <b>BUT</b> we give you a choice. Pointer focus is where the focus of a window tracks the mouse position on screen. As the mouse moves across other windows, they may gain the focus. You are asked for a simple one here and can later configure focus and window handling with a host of swizzle knobs as you see fit. Many long-time X11 users and developers find this preferable.
+Most modern OS's and desktops use "click to focus" by default (or it is the only option they have at all without modification with extra patches or software). This is where, in order to give the keyboard focus to a window, you normally click on it. This will normally also raise the window to the top of the stack. It also tends to come with the policy that all new windows get the focus by default. The very "old school" focus policy in X11 was pointer focus. This is still the default in E17... because we like it that way. <b>BUT</b> we give you a choice. Pointer focus is where the focus of a window tracks the mouse position on screen. As the mouse moves across other windows, they may gain the focus. You are asked for a simple choice here, and can later configure focus and window handling with a host of swizzle knobs as you see fit. Many long-time X11 users and developers find pointer focus preferable.
 </p>
 
 <center><?php img("e-start-6.png", "E17 Wizard");?></center>
 
 <p>
-E17 also has a compositor. This allows for things like dropshadows on windows, fade in/out effects, smooth vsynced tear-free rendering and more. But unlike many others, we also work without OpenGL. We work quite well without it. A lot of effort has been put into E17 and EFL to make this possible. It comes with some caveats, such as no vsynced rendering when using the software compositor, and higher CPU load. If you have a decent GPU with solid drivers, it is recommended you at least give the OpenGL compositing a try. It can be smoother and nicer. But never fear. If you like playing games, it can be turned off whenever you need to. Even without a GPU, you may not even notice the difference between OpenGL compositing and software compositing, unless you look closely. And yes - compositing works on embedded devices too with OpenGL-ES 2.0 and EGL. It's all part of EFL.
+E17 also has a compositor. This allows for things like dropshadows on windows, fade in/out effects, smooth vsynced tear-free rendering and more. But unlike many others, we also work without OpenGL and still do compositing. We work quite well without it. A lot of effort has been put into E17 and EFL to make this possible. It comes with some caveats, such as no vsynced rendering when using the software compositor, and higher CPU load. If you have a decent GPU with solid drivers, it is recommended you at least give the OpenGL compositing a try. It can be smoother and nicer. But never fear. If you like playing games, it can be turned off whenever you need to. Even without a GPU, you may not even notice the difference between OpenGL compositing and software compositing, unless you look closely. And yes - compositing works on embedded devices too with OpenGL-ES 2.0 and EGL. It's all part of EFL.
 </p>
 
 <center><?php img("e-start-7.png", "E17 Wizard");?></center>
@@ -304,7 +301,7 @@ You will have some desktop file icons (you can disable file icons on the desktop
 </p>
 
 <p>
-At the bottom of the screen is a Shelf. This is a collector for gadgets that arranges them in a line across some edge of your screen. You can re-arrange icons all you like (though it may need some coaxing at first). In the Shelf there will be a Start gadget, that simply brings up Enlightenments' main menu, if it wasn't convenient to click on the desktop or use the Menu key binding or CTRL+ALT+M binding already there. Next to it will be the Pager that displays available virtual desktops, their contents and lets you switch desktops at a click, drag and drop windows from one desktop to another or whole desktops. Then you will have IBox that holds iconified (minimized) windows. IBar next to it is a launcher to hold shortcuts to common apps and launch them at a single click. You can drag and drop icons into and out of here. Drag them from the applications menu or from the borders of windows. You then will have some system status gadgets like the Temperature gadget, CPU frequency meter and controls, a Clock gadget, and audio Mixer control gadget, A Connman interaction gadget to select network, and Keyboard switcher. There is a Tasks gadget too that acts like a taskbar, but is not visible as no windows are around.
+At the bottom of the screen is a Shelf. This is a collector for gadgets that arranges them in a line across some edge of your screen. You can re-arrange icons all you like (though it may need some coaxing at first). In the Shelf there will be a Start gadget, that simply brings up Enlightenments' main menu, if it wasn't convenient to click on the desktop or use the Menu key binding or CTRL+ALT+M binding already there. Next to it will be the Pager that displays available virtual desktops, their contents and lets you switch desktops at a click, drag and drop windows from one desktop to another or whole desktops around. Then you will have IBox that holds iconified (minimized) windows. IBar next to it is a launcher to hold shortcuts to common apps and launch them at a single click. You can drag and drop icons into and out of here. Drag them from the applications menu or from the borders of windows. You then will have some system status gadgets like the Temperature gadget, CPU frequency meter and controls, a Clock gadget (it has a digital mode and date display option), and audio Mixer control gadget, a Connman interaction gadget to select network, and Keyboard switcher. There is a Tasks gadget too that acts like a taskbar, but is not visible as no windows are around.
 </p>
 
 <p>
