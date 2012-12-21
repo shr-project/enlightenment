@@ -10,6 +10,7 @@
       <li>Eina</li>
       <li>Eet</li>
       <li>Evas</li>
+      <li>Evas_Generic_Loaders</li>
       <li>Ecore</li>
       <li>Eio</li>
       <li>Embryo</li>
@@ -20,6 +21,7 @@
       <li>Emotion</li>
       <li>Ethumb</li>
       <li>Elementary</li>
+      <li>Enlightenment (etc.)</li>
      </ul>
     </p>
     <p>Recommended requirements for all releases to the right are:
@@ -27,9 +29,9 @@
       <li>libc</li>
       <li>libpthread</li>
       <li>zlib</li>
-      <li>freetype</li>
-      <li>fontconfig</li>
-      <li>fribidi (If you want BiDi support)</li>
+      <li>libfreetype/freetype</li>
+      <li>libfontconfig/fontconfig</li>
+      <li>libfribidi/fribidi (If you want BiDi support)</li>
       <li>harfbuzz (If you want complex text shaping support)</li>
       <li>opengl2.0/opengles-2 (depending on target)</li>
       <li>libpng</li>
@@ -46,16 +48,28 @@
       <li>libxrandr</li>
       <li>libxinerama</li>
       <li>libxss</li>
+      <li>libxp</li>
       <li>libxtest</li>
       <li>libxdpms</li>
       <li>libxcursor</li>
       <li>libxprint</li>
+      <li>libxkbfile</li>
       <li>libxcb</li>
+      <li>libxcb-keysyms</li>
       <li>libxcb-shape</li>
-      <li>openssl</li>
-      <li>curl</li>
+      <li>libssl/openssl</li>
+      <li>libcurl</li>
       <li>libudev</li>
+      <li>libdbus</li>
+      <li>libasound/alsa (optional for mixer support)</li>
+      <li>libpoppler</li>
+      <li>libraw</li>
+      <li>libspectre</li>
+      <li>libgstreamer/gstreamer (and plugins - for emotion)</li>
+      <li>libxine (nice alternate codec for emotion</li>
+      <li>libvlc (nice alternate codec for emotion</li>
       <li>lua5.1 (not 5.0, not 5.2)</li>
+      <li>libwebp/webp (webp codec support for evas - optional)</li>
      </ul>
     </p>
    </div>
@@ -302,21 +316,8 @@
    <div class="main">
     <p><h2>Snapshots</h2></p>
     <p><?php a("contribute", "SVN");?> information is here.</p>
-    <p>Snapshot releases are available from
-    <a href="http://download.enlightenment.org/snapshots">download.enlightenment.org/snapshots</a>.</p>
-    <p><a href="http://download.enlightenment.org/snapshots/LATEST">Latest Snapshots</a></p>
+    <p>We have no more snapshots. We're pushing out fully-baked releases.</p>
    </div>
-
-   <?php frame1("width=100%");?>
-   <div class="main"><p><b><a href=
-     "http://trac.enlightenment.org/e/wiki/Enlightenment">Enlightenment</a> </b><em>
-     0.16.999.77927 </em></p><p>
-     Enlightenment, the window manager... </p><p align=right><?php blinkdl("i/dl.png", 
-     "DOWNLOAD ENLIGHTENMENT",
-     "http://download.enlightenment.org/snapshots/2012-10-12/enlightenment-0.16.999.77927.tar.gz"
-   );?></p></div>
-   <?php frame2();?>
-   
   </td>
  </tr>
  
