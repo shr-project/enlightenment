@@ -38,8 +38,8 @@
 </p>
 
 <p>
-API documentation auto-generated daily from SVN source for EFL
-libraries is on the right.
+API documentation for both the latest release and the current development
+version(auto-generated daily from SVN source) for EFL libraries is on the right.
 </p>
 
 <h3>Enlightenment Foundation Libraries (EFL)</h3>
@@ -69,20 +69,92 @@ libraries is on the right.
 
 <center>
 <table border=0 cellpadding=0 cellspacing=10>
+ <thead>
+  <tr>
+   <th colspan=2><h2>Stable</h2></th>
+  </tr>
+ </thead>
  <tr>
   <td>
-   <?php blinkurl("i/logo-s.png", "ECORE", "http://docs.enlightenment.org/auto/ecore"); ?>
+   <?php blinkurl("i/logo-s.png", "ECORE", "http://docs.enlightenment.org/stable/ecore"); ?>
   </td>
   <td>
-   <?php blinkurl("i/logo-s.png", "EDJE", "http://docs.enlightenment.org/auto/edje"); ?>
+   <?php blinkurl("i/logo-s.png", "EDJE", "http://docs.enlightenment.org/stable/edje"); ?>
   </td>
  </tr>
  <tr>
   <td>
-   <?php blinkurl("i/logo-s.png", "EDBUS", "http://docs.enlightenment.org/auto/e_dbus"); ?>
+   <?php blinkurl("i/logo-s.png", "EDBUS", "http://docs.enlightenment.org/stable/e_dbus"); ?>
   </td>
   <td>
-   <?php blinkurl("i/logo-s.png", "EET", "http://docs.enlightenment.org/auto/eet"); ?>
+   <?php blinkurl("i/logo-s.png", "EET", "http://docs.enlightenment.org/stable/eet"); ?>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EEZE", "http://docs.enlightenment.org/stable/eeze"); ?>
+  </td>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EFREET", "http://docs.enlightenment.org/stable/efreet"); ?>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EINA", "http://docs.enlightenment.org/stable/eina"); ?>
+  </td>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EIO", "http://docs.enlightenment.org/stable/eio"); ?>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <?php blinkurl("i/logo-s.png", "ELEMENTARY", "http://docs.enlightenment.org/stable/elementary"); ?>
+  </td>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EMBRYO", "http://docs.enlightenment.org/stable/embryo"); ?>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EMOTION", "http://docs.enlightenment.org/stable/emotion"); ?>
+  </td>
+  <td>
+   <?php blinkurl("i/logo-s.png", "ETHUMB", "http://docs.enlightenment.org/stable/ethumb"); ?>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EVAS", "http://docs.enlightenment.org/stable/evas"); ?>
+  </td>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EVIL", "http://docs.enlightenment.org/stable/evil"); ?>
+  </td>
+ </tr>
+ <tr>
+ </tr>
+</table>
+</center>
+
+</div></td>
+<td class="main"><div class="main">
+<center>
+<table border=0 cellpadding=0 cellspacing=10>
+ <thead>
+  <tr>
+   <th colspan=2><h2>Development</h2></th>
+  </tr>
+ </thead>
+ <tr>
+  <td colspan=2>
+   <?php blinkurl("i/logo-s.png", "EFL", "http://docs.enlightenment.org/auto/efl"); ?>
+  </td>
+ </tr>
+ <tr>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EDJE", "http://docs.enlightenment.org/auto/edje"); ?>
+  </td>
+  <td>
+   <?php blinkurl("i/logo-s.png", "EDBUS", "http://docs.enlightenment.org/auto/e_dbus"); ?>
   </td>
  </tr>
  <tr>
@@ -98,44 +170,23 @@ libraries is on the right.
    <?php blinkurl("i/logo-s.png", "EFX", "http://docs.enlightenment.org/auto/efx"); ?>
   </td>
   <td>
-   <?php blinkurl("i/logo-s.png", "EINA", "http://docs.enlightenment.org/auto/eina"); ?>
-  </td>
- </tr>
- <tr>
-  <td>
-   <?php blinkurl("i/logo-s.png", "EIO", "http://docs.enlightenment.org/auto/eio"); ?>
-  </td>
-  <td>
    <?php blinkurl("i/logo-s.png", "ELEMENTARY", "http://docs.enlightenment.org/auto/elementary"); ?>
   </td>
  </tr>
  <tr>
   <td>
-   <?php blinkurl("i/logo-s.png", "EMBRYO", "http://docs.enlightenment.org/auto/embryo"); ?>
-  </td>
-  <td>
    <?php blinkurl("i/logo-s.png", "EMOTION", "http://docs.enlightenment.org/auto/emotion"); ?>
   </td>
- </tr>
- <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EPDF", "http://docs.enlightenment.org/auto/epdf"); ?>
   </td>
+ </tr>
+ <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "EPHYSICS", "http://docs.enlightenment.org/auto/ephysics"); ?>
   </td>
- </tr>
- <tr>
   <td>
    <?php blinkurl("i/logo-s.png", "ETHUMB", "http://docs.enlightenment.org/auto/ethumb"); ?>
-  </td>
-  <td>
-   <?php blinkurl("i/logo-s.png", "EVAS", "http://docs.enlightenment.org/auto/evas"); ?>
-  </td>
- </tr>
- <tr>
-  <td>
-   <?php blinkurl("i/logo-s.png", "EVIL", "http://docs.enlightenment.org/auto/evil"); ?>
   </td>
  </tr>
 </table>
