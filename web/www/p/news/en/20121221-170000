@@ -1,0 +1,100 @@
+New EFL stable release: 1.7.4
+Luis Felipe Strano Moraes (lfelipe)
+luis.strano@gmail.com
+
+<p>
+The Enlightenment Release Team is happy to announce a new series of updates to
+the EFL. The 1.7.4 series has quite a few bugs fixed and is recommended for all
+developers and users, as it will be the minimum version required by any upcoming
+releases to be made by the Enlightenment project in the short future.
+
+Please read the ChangeLog and NEWS files from each specific tarball in order to
+get more information about what has been fixed. This release corresponds with
+SVN revision 81558.
+
+</p>
+
+<p><ul>
+
+<li>Eina 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/eina-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eina-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eet 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/eet-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eet-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evas 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/evas-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evas-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Ecore 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/ecore-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/ecore-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Embryo 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/embryo-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/embryo-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Edje 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/edje-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/edje-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Efreet 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/efreet-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/efreet-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>E_dbus 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/e_dbus-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/e_dbus-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eeze 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/eeze-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eeze-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Expedite 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/expedite-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/expedite-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evas Generic Loaders 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/evas_generic_loaders-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evas_generic_loaders-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Eio 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/eio-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/eio-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Emotion 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/emotion-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/emotion-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Ethumb 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/ethumb-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/ethumb-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Elementary 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/elementary-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/elementary-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+<li>Evil 1.7.4 -
+[<a href="http://download.enlightenment.org/releases/evil-1.7.4.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/evil-1.7.4.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
