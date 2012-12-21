@@ -1,8 +1,8 @@
 # -*- mode: makefile -*-
-# Generated for win at Wed Dec 12 09:03:31 2012.
+# Generated for win at Fri Dec 21 07:44:52 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
-# Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.win win
+# Command: SCRIPTS/buildbot/make-generator.py -o Makefile.win win
 #
 # Packages used:
 #   - efl
@@ -95,7 +95,7 @@ $(BUILDROOT)/efl/stamps/configure: $(BUILDROOT)/efl/stamps/autogen $(BUILDROOT)/
 	export LDFLAGS="$${LDFLAGS}";\
 	cd $(BUILDROOT)/efl/compile && \
 	$(SRCROOT)/efl/configure --prefix=$(INSTALLROOT) --enable-doc \
-		--enable-coverage
+		--with-tests=coverage
 	$(V)mkdir -p $(BUILDROOT)/efl/stamps
 	touch $(BUILDROOT)/efl/stamps/configure
 	$(V)echo "Success configuring efl."

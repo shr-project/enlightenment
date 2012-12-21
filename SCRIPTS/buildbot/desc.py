@@ -43,7 +43,7 @@ Package(
     configure_flags={
         "common": [
             "--enable-doc",
-            "--enable-coverage"
+            "--with-tests=coverage"
             ],
         },
     )

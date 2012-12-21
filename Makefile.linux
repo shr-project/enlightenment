@@ -1,8 +1,8 @@
 # -*- mode: makefile -*-
-# Generated for linux at Wed Dec 12 09:03:28 2012.
+# Generated for linux at Fri Dec 21 07:44:44 2012.
 # DO NOT EDIT! IT WILL BE OVERWRITTEN ON NEXT RUN!
 #
-# Command: ./SCRIPTS/buildbot/make-generator.py -o Makefile.linux linux
+# Command: SCRIPTS/buildbot/make-generator.py -o Makefile.linux linux
 #
 # Packages used:
 #   - efl
@@ -100,7 +100,7 @@ $(BUILDROOT)/efl/stamps/configure: $(BUILDROOT)/efl/stamps/autogen $(BUILDROOT)/
 	export LDFLAGS="$${LDFLAGS} -fvisibility=hidden -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--as-needed";\
 	cd $(BUILDROOT)/efl/compile && \
 	$(SRCROOT)/efl/configure --prefix=$(INSTALLROOT) --enable-doc \
-		--enable-coverage
+		--with-tests=coverage
 	$(V)mkdir -p $(BUILDROOT)/efl/stamps
 	touch $(BUILDROOT)/efl/stamps/configure
 	$(V)echo "Success configuring efl."
