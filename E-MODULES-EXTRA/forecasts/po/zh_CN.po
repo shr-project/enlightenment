@@ -9,17 +9,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: forecast e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-08-25 17:14+0800\n"
-"PO-Revision-Date: 2009-07-07 07:58+0000\n"
-"Last-Translator: Careone <zzbusagain@yahoo.com.cn>\n"
-"Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
+"POT-Creation-Date: 2012-12-22 05:37+0800\n"
+"PO-Revision-Date: 2012-12-22 05:39+0800\n"
+"Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
+"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../src/e_mod_config.c:42
-msgid "Forecasts Configuration"
-msgstr "天气预报设置"
+msgid "Forecasts Settings"
+msgstr "预报设置"
 
 #: ../src/e_mod_config.c:90
 msgid "Display Settings"
@@ -55,12 +56,12 @@ msgid "English"
 msgstr "英语"
 
 #: ../src/e_mod_config.c:111
-msgid "Yahoo Forecasts Code"
-msgstr "Yahoo 预报代码"
+msgid "Weather.com Forecasts Code"
+msgstr "Weather.com 预报代码"
 
 #: ../src/e_mod_config.c:112
-msgid "Yahoo Forecasts Code/US Zip Code"
-msgstr "Yahoo 预报代码/美国邮政编码"
+msgid "Forecasts Code/US Zip Code"
+msgstr "预报代码/美国邮政编码"
 
 #: ../src/e_mod_config.c:117
 msgid "To find the code for your area, go to:"
@@ -71,54 +72,73 @@ msgstr "查找你所在地区的代码，转到："
 msgid "%s, find your area, and look at the URL"
 msgstr "%s，查找你所在的地区，并查看地址"
 
-#: ../src/e_mod_main.c:255
+#: ../src/e_mod_main.c:257
 msgid "Forecasts"
 msgstr "预报"
 
-#: ../src/e_mod_main.c:300
-msgid "Configuration"
-msgstr "配置"
+#: ../src/e_mod_main.c:299
+msgid "Settings"
+msgstr "设置"
 
-#: ../src/e_mod_main.c:1030
+#: ../src/e_mod_main.c:998
+#, c-format
+msgid "%s: Current Conditions"
+msgstr "%s: 当前状态"
+
+#: ../src/e_mod_main.c:1014
 msgid "Wind Chill"
-msgstr "寒流"
+msgstr "寒潮"
 
-#: ../src/e_mod_main.c:1036
+#: ../src/e_mod_main.c:1020
 msgid "Wind Speed"
 msgstr "风速"
 
-#: ../src/e_mod_main.c:1042
+#: ../src/e_mod_main.c:1026
 msgid "Humidity"
 msgstr "湿度"
 
-#: ../src/e_mod_main.c:1048
+#: ../src/e_mod_main.c:1032
 msgid "Visibility"
-msgstr "可见性"
+msgstr "可见度"
 
-#: ../src/e_mod_main.c:1054
+#: ../src/e_mod_main.c:1038
 msgid "Pressure"
 msgstr "气压"
 
-#: ../src/e_mod_main.c:1061
+#: ../src/e_mod_main.c:1045
 msgid "Rising"
 msgstr "上升"
 
-#: ../src/e_mod_main.c:1063
+#: ../src/e_mod_main.c:1047
 msgid "Falling"
 msgstr "下落"
 
-#: ../src/e_mod_main.c:1065
+#: ../src/e_mod_main.c:1049
 msgid "Steady"
 msgstr "稳定"
 
-#: ../src/e_mod_main.c:1069
+#: ../src/e_mod_main.c:1053
 msgid "Sunrise / Sunset"
 msgstr "日出/日落"
 
-#: ../src/e_mod_main.c:1093
+#: ../src/e_mod_main.c:1071
+msgid "Today"
+msgstr "今天"
+
+#: ../src/e_mod_main.c:1073
+msgid "Tomorrow"
+msgstr "明天"
+
+#: ../src/e_mod_main.c:1081
 msgid "High"
 msgstr "高"
 
-#: ../src/e_mod_main.c:1104
+#: ../src/e_mod_main.c:1092
 msgid "Low"
 msgstr "低"
+
+#~ msgid "Forecasts Configuration"
+#~ msgstr "天气预报设置"
+
+#~ msgid "Configuration"
+#~ msgstr "配置"
