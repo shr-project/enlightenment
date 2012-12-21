@@ -5,11 +5,11 @@
    <h3>Enlightenment</h3>
    
    <center>
-    <a href=http://trac.enlightenment.org/e/wiki/Enlightenment><?php img("enlightenment.png", "Enlightenment");?></a>
+    <a href=http://www.enlightenment.org/p.php?p=about/e17&l=en><?php img("enlightenment.png", "Enlightenment");?></a>
    </center>
    
    <p>
-    <a href=http://trac.enlightenment.org/e/wiki/Enlightenment>Enlightenment</a>
+    <?php a("about/e17", "Enlightenment");?>
     is the flagship and original name bearer for this project. Once it was
     just a humble window manager for X11 that wanted to do things differently.
     To do them better, but it has expanded. This can be confusing
