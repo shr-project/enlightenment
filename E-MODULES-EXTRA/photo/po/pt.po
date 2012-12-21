@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: photo\n"
-"Report-Msgid-Bugs-To: $MSGID_BUGS_ADDRESS\n"
-"POT-Creation-Date: 2012-12-04 13:32+0100\n"
-"PO-Revision-Date: 2012-12-08 00:24+0100\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-12-20 00:37+0000\n"
+"PO-Revision-Date: 2012-12-20 00:42+0100\n"
 "Last-Translator: Sérgio Marques <smarquespt@gmail.com>\n"
 "Language-Team: Portuguese\n"
+"Language: Portuguese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2012-12-07 16:20+0000\n"
 "X-Generator: Poedit 1.5.4\n"
-"Language: Portuguese\n"
 
 #: src/e_mod_main.c:53
 #: src/e_mod_main.c:60
@@ -84,7 +84,7 @@ msgstr "Adicionar"
 
 #: src/photo_config_dialog.c:237
 msgid "Delete"
-msgstr "Apagar"
+msgstr "Eliminar"
 
 #: src/photo_config_dialog.c:239
 msgid "Configure"
@@ -92,7 +92,7 @@ msgstr "Configurar"
 
 #: src/photo_config_dialog.c:242
 msgid "Reload picture directories"
-msgstr "Atualizar diretórios de imagens"
+msgstr "Recarregar diretórios de imagens"
 
 #: src/photo_config_dialog.c:245
 msgid "Stop loading"
@@ -294,7 +294,7 @@ msgstr "Ações do rato"
 #: src/photo_item.c:452
 #, c-format
 msgid "<hilight>File %s doesn't exist.</hilight><br><br>This file is in the picture list, but it seems you removed<br>it from disk. It can't be set as background, sorry."
-msgstr "<hilight>O ficheiro %s não existe.</hilight><br><br>O ficheiro está na lista de imagens, mas parece que<br>foi removido<br>do disco e não pode ser definido como imagem de fundo."
+msgstr "<hilight>O ficheiro %s não existe.</hilight><br><br>O ficheiro está na lista de imagens, mas parece que<br>foi removido do disco e<br>não pode ser definido como imagem de fundo."
 
 #: src/photo_item.c:392
 #: src/photo_item.c:417
@@ -306,8 +306,8 @@ msgstr "Erro no módulo de fotos"
 
 #: src/photo_item.c:413
 #, c-format
-msgid "<hilight>e17setroot needed</hilight><br><br>%s is not an edje file !<br>Photo module needs e17setroot util from e_utils package to set you're picture as backgroundPlease install it and try again."
-msgstr "<hilight>Requer e17setroot</hilight><br><br>%s não é um ficheiro edje !<br>O módulo requer o utilitário e17setroot presente no pacote e_utils para definir a imagem de fundo. Por favor instale o pacote e tente novamente."
+msgid "<hilight>e17setroot needed</hilight><br><br>%s is not an edje file!<br>Photo module needs e17setroot util from e_utils package to set your picture as background. Please install it and try again."
+msgstr "<hilight>Requer e17setroot</hilight><br><br>%s não é um ficheiro edje!<br>O módulo requer o utilitário e17setroot presente no pacote e_utils para definir a imagem de fundo. Por favor instale o pacote e tente novamente."
 
 #: src/photo_item.c:472
 #, c-format
@@ -324,7 +324,7 @@ msgstr "Definições"
 
 #: src/photo_menu.c:58
 msgid "Pause slideshow"
-msgstr "Pausar apresentação"
+msgstr "Parar apresentação"
 
 #: src/photo_menu.c:63
 msgid "Resume slideshow"
@@ -345,7 +345,7 @@ msgstr "Abrir com"
 #: src/photo_picture_local.c:253
 #, c-format
 msgid "<hilight>Directory %s doesnt exists.</hilight><br><br>You can change the picture's folders in main configuration panel<br>They can be jpeg or png<br><br>After import, if you can remove these files and the pictures still can<br>be viewed, but you wont be able to set them as wallpaper anymore<br><br>"
-msgstr "<hilight>O diretório %s não existe.</hilight><br><br>Pode alterar as pastas com imagens no painel de configuração.<br>As fotos podem ser do tipo .jpeg ou .png<br><br>Após a importação, pode remover os ficheiros pois as imagens ainda estarão visíveis, mas já não as consegue definir como imagem de fundo."
+msgstr "<hilight>O diretório %s não existe.</hilight><br><br>Pode alterar as pastas com imagens no painel de configuração.<br>As fotos podem ser do tipo .jpeg ou .png.<br><br>Após a importação, pode remover os ficheiros pois as imagens ainda estarão visíveis, mas já não as consegue definir como imagem de fundo."
 
 #: src/photo_picture_local.c:591
 msgid "Photo Module Information"
