@@ -137,7 +137,7 @@
      <li>Javascript</li>
      <li>Perl</li>
      <li><a href=http://trac.enlightenment.org/e/wiki/EFLxx>C++</a></li>
-     <li>Ruby</li>
+     <li><a href=https://github.com/jeremyz/ffi-efl>Ruby</a></li>
 <!--
      <li><a href=http://trac.enlightenment.org/e/wiki/Javascript>Javascript</a></li>
      <li><a href=http://trac.enlightenment.org/e/wiki/Perl>Perl</a></li>
