@@ -68,7 +68,7 @@
       <li>libgstreamer/gstreamer (and plugins - for emotion)</li>
       <li>libxine (nice alternate codec for emotion</li>
       <li>libvlc (nice alternate codec for emotion</li>
-      <li>lua5.1 (not 5.0, not 5.2)</li>
+      <li>lua5.1 or lua5.2 (not 5.0)</li>
       <li>libwebp/webp (webp codec support for evas - optional)</li>
      </ul>
     </p>
