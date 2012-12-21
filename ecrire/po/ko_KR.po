@@ -1,27 +1,28 @@
-# Italian translation for Ecrire.
-# This file is put in the public domain.
+# Korean translation for Ecrire.
+# Copyright (C) 2000-2012 Enlightenment development team.
+# This file is distributed under the same license as the Enlightenment package.
 # Daniel Juyung Seo <seojuyung2@gmail.com>, 2012.
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: ecrire\n"
-"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2012-08-09 11:44+0900\n"
-"PO-Revision-Date: 2012-01-19 10:00+0900\n"
-"Last-Translator: Daniel Juyung Seo <seojuyung2@gmail.com>\n"
-"Language-Team: none\n"
+"Project-Id-Version: ecrire 1.7.0\n"
+"Report-Msgid-Bugs-To: Enlightenment-Devel <enlightenment-devel@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2012-08-30 22:59+0900\n"
+"PO-Revision-Date: 2012-08-30 22:59+0900\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"Language-Team: Enlightenment-Intl <enlightenment-intl@lists.sourceforge.net>\n"
 "Language: ko_KR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/bin/ui/alerts.c:56
-msgid ""
-"<align=center>Would you like to save changes to document?<br>Any unsaved "
-"changes will be lost."
-msgstr ""
+msgid "<align=center>Would you like to save changes to document?<br>Any unsaved changes will be lost."
+msgstr "<align=center>바뀐 내용을 문서에 저장하시겠습니까?<br>저장하지 않은 바뀐 내용은 잃을 것입니다."
 
-#: src/bin/ui/alerts.c:71 src/bin/main.c:687
+#: src/bin/ui/alerts.c:71
+#: src/bin/main.c:687
 msgid "Save"
 msgstr "저장"
 
@@ -33,17 +34,18 @@ msgstr "버리기"
 msgid "Cancel"
 msgstr "취소"
 
-#: src/bin/ui/search_dialog.c:144 src/bin/main.c:705
+#: src/bin/ui/search_dialog.c:144
+#: src/bin/main.c:705
 msgid "Find & Replace"
-msgstr "찾기 & 바꾸기"
+msgstr "찾아 바꾸기"
 
 #: src/bin/ui/search_dialog.c:166
 msgid "Search for:"
-msgstr "찾기"
+msgstr "찾을 문자열:"
 
 #: src/bin/ui/search_dialog.c:190
 msgid "Replace with:"
-msgstr "바꾸기"
+msgstr "바꿀 문자열:"
 
 #: src/bin/ui/search_dialog.c:214
 msgid "Find"
@@ -55,20 +57,20 @@ msgstr "바꾸기"
 
 #: src/bin/ui/font_dialog.c:89
 msgid "Select Font"
-msgstr "폰트 선택"
+msgstr "글꼴 선택"
 
 #: src/bin/ui/font_dialog.c:114
 msgid "Font size:"
-msgstr "폰트 크기"
+msgstr "글꼴 크기:"
 
 #: src/bin/ui/font_dialog.c:119
 #, c-format
 msgid "%.0f pts"
-msgstr ""
+msgstr "%.0f pts"
 
 #: src/bin/ui/font_dialog.c:157
 msgid "Use Default Font:"
-msgstr "기본 폰트 사용: "
+msgstr "기본 글꼴 사용: "
 
 #: src/bin/ui/font_dialog.c:168
 msgid "Set"
@@ -77,7 +79,7 @@ msgstr "설정"
 #: src/bin/main.c:96
 #, c-format
 msgid "%s%s - %s"
-msgstr ""
+msgstr "%s%s - %s"
 
 #: src/bin/main.c:99
 #, c-format
@@ -87,7 +89,7 @@ msgstr "%s제목없음 %d - %s"
 #: src/bin/main.c:123
 #, c-format
 msgid "Ln %d, Col %d"
-msgstr ""
+msgstr "줄: %d, 문자: %d"
 
 #: src/bin/main.c:684
 msgid "New"
@@ -99,7 +101,7 @@ msgstr "열기"
 
 #: src/bin/main.c:688
 msgid "Save As"
-msgstr "다른이름으로 저장"
+msgstr "다른 이름으로 저장"
 
 #: src/bin/main.c:693
 msgid "Undo"
@@ -107,11 +109,11 @@ msgstr "입력 취소"
 
 #: src/bin/main.c:695
 msgid "Redo"
-msgstr "입력 다시 실행"
+msgstr "다시 실행"
 
 #: src/bin/main.c:698
 msgid "Cut"
-msgstr "자르기"
+msgstr "잘라내기"
 
 #: src/bin/main.c:700
 msgid "Copy"
@@ -124,3 +126,4 @@ msgstr "붙여넣기"
 #: src/bin/main.c:709
 msgid "Settings"
 msgstr "설정"
+
