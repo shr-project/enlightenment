@@ -2,22 +2,22 @@
 # exalt 软件包的简体中文翻译.
 # Copyright (C) 2009 Enlightenment development team
 # This file is distributed under the same license as the exalt package.
-# Aron Xu <aronmalache@163.com>, 2009.
+# 冯超 <rainofchaos@gmail.com>, 2010.
+# Aron Xu <happyaron.xu@gmail.com>, 2009, 2012.
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: exalt e17\n"
 "Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
-"POT-Creation-Date: 2009-12-01 15:38+0800\n"
-"PO-Revision-Date: 2010-02-10 11:21+0000\n"
-"Last-Translator: 冯超 <rainofchaos@gmail.com>\n"
-"Language-Team: Chinese/Simplified <i18n-translation@lists.linux.net.cn>\n"
+"POT-Creation-Date: 2012-12-22 05:24+0800\n"
+"PO-Revision-Date: 2012-12-22 05:25+0800\n"
+"Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
+"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-11 05:02+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
 
 #. create new config dialog
 #: ../src/e_mod_config.c:41
@@ -52,39 +52,40 @@ msgstr "通知"
 msgid "Enable the notifications"
 msgstr "启用通知"
 
-#: ../src/e_mod_main.c:232
+#: ../src/e_mod_main.c:231
 msgid "Exalt Warning"
 msgstr "Exalt 警告"
 
-#: ../src/e_mod_main.c:235
+#: ../src/e_mod_main.c:234
 msgid "Warning"
 msgstr "警告"
 
-#: ../src/e_mod_main.c:236
+#: ../src/e_mod_main.c:235
 msgid "NetworkManager has been detected on your computer."
 msgstr "在您的计算机上检测到网络管理器。"
 
-#: ../src/e_mod_main.c:238
+#: ../src/e_mod_main.c:237
 msgid ""
 "Exalt can't work properly if networkManager is running, please stop "
 "NetworkManager or Exalt."
-msgstr "网络管理器正在运行的时候 Exalt 无法正常工作，请关闭网络管理器或 Exalt。"
+msgstr ""
+"网络管理器正在运行的时候 Exalt 无法正常工作，请关闭网络管理器或 Exalt。"
 
-#: ../src/e_mod_main.c:241
+#: ../src/e_mod_main.c:240
 msgid "Ok"
 msgstr "确定"
 
-#: ../src/e_mod_main.c:368
+#: ../src/e_mod_main.c:367
 msgid "exalt"
 msgstr "exalt"
 
-#: ../src/e_mod_main.c:453
+#: ../src/e_mod_main.c:452
 msgid "exalt Configuration Updated"
 msgstr "exalt 配置已更新"
 
-#: ../src/e_mod_main.c:521
-msgid "Configuration"
-msgstr "配置"
+#: ../src/e_mod_main.c:505
+msgid "Settings"
+msgstr "设置"
 
 #: ../src/popup.c:43
 msgid "DNS configuration"
@@ -102,15 +103,15 @@ msgstr "调制解调器拨号"
 msgid "Mobile Phone (3G)"
 msgstr "移动电话(3G)"
 
-#: ../src/popup.c:229
+#: ../src/popup.c:231
 msgid "No IP Address"
 msgstr "无 IP 地址"
 
-#: ../src/popup.c:233 ../src/wired_dialog.c:42
+#: ../src/popup.c:236 ../src/wired_dialog.c:42
 msgid "Wired interface"
 msgstr "有线接口"
 
-#: ../src/popup.c:236
+#: ../src/popup.c:239
 msgid "Wireless interface"
 msgstr "无线接口"
 
@@ -152,8 +153,8 @@ msgstr "网关地址： "
 msgid "Command: "
 msgstr "命令： "
 
-#. 
-#. 
+#.
+#.
 #: ../src/wired_dialog.c:96 ../src/network_dialog.c:98
 #: ../src/network_dialog.c:677 ../src/network_dialog.c:723
 #: ../src/network_dialog.c:771 ../src/wireless_dialog.c:52
@@ -249,13 +250,13 @@ msgstr "选择客户端认证"
 
 #: ../src/dns_dialog.c:20
 msgid "DNS (Domain Name Server) Settings"
-msgstr "DNS (域名服务器) 设置"
+msgstr "DNS 设置"
 
 #: ../src/dns_dialog.c:25
 msgid "DNS (Domain Name Server) configuration"
-msgstr "DNS (域名服务器) 配置"
+msgstr "DNS 配置"
 
-#. 
+#.
 #. buttons
 #: ../src/dns_dialog.c:45
 msgid "Add"
@@ -284,6 +285,9 @@ msgstr "无线接口"
 #: ../src/wireless_dialog.c:42
 msgid "Create a new network"
 msgstr "创建一个新网络"
+
+#~ msgid "Configuration"
+#~ msgstr "配置"
 
 #~ msgid "exalt Module"
 #~ msgstr "exalt 模块"
