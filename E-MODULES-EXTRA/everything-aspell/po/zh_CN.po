@@ -1,0 +1,61 @@
+# Chinese translations for everything-aspell package
+# everything-aspell 软件包的简体中文翻译.
+# This file is put in the public domain.
+# Aron Xu <happyaron.xu@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: everything-aspell VERSION\n"
+"Report-Msgid-Bugs-To: enlightenment-devel@lists.sourceforge.net\n"
+"POT-Creation-Date: 2012-12-22 05:10+0800\n"
+"PO-Revision-Date: 2012-12-22 05:11+0800\n"
+"Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
+"Language-Team: Chinese (simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/e_mod_main.c:391
+msgid "Spell Checker"
+msgstr "拼写检查器"
+
+#: ../src/e_mod_main.c:449 ../src/e_mod_main.c:606
+msgid "Everything Aspell"
+msgstr "Everything Aspell"
+
+#: ../src/e_mod_main.c:463
+msgid "General"
+msgstr "常规"
+
+#: ../src/e_mod_main.c:468
+msgid "Spell checker"
+msgstr "拼写检查器"
+
+#: ../src/e_mod_main.c:471 ../src/e_mod_main.c:587
+msgid "Aspell"
+msgstr "Aspell"
+
+#: ../src/e_mod_main.c:474
+msgid "Hunspell"
+msgstr "Hunspell"
+
+#: ../src/e_mod_main.c:477
+msgid "Custom"
+msgstr "自定义"
+
+#: ../src/e_mod_main.c:481
+msgid "Custom Command"
+msgstr "自定义命令"
+
+#: ../src/e_mod_main.c:487
+msgid "Language"
+msgstr "语言"
+
+#: ../src/e_mod_main.c:585
+msgid "Launcher"
+msgstr "启动器"
+
+#: ../src/e_mod_main.c:587
+msgid "Everything Plugin"
+msgstr "Everything 插件"
