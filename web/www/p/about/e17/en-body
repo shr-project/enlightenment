@@ -229,8 +229,37 @@ sudo ln -s /usr/local/share/xsessions/enlightenment.desktop /usr/share/xsessions
 </code></pre></p>
 
 <p>
-Enlightenment supports <a href=http://www.connman.net>Connman</a> for network connectivity and configuration. You will need to get at least 1.0 version of it to be sure to have it work properly. Unfortunately Ubuntu doesn't. At this stage there isn't really any solution other than to compile connman yourself. Mot other distributions have at least 1.0 available as a package.
+Enlightenment supports <a href=http://www.connman.net>Connman</a> for network connectivity and configuration. You will need to get at least 1.0 version of it to be sure to have it work properly. Unfortunately Ubuntu doesn't. At this stage there isn't really any solution other than to compile connman yourself. Most other distributions have at least 1.0 available as a package.
 </p>
+
+<p><pre><code>
+sudo apt-get install iptables-dev
+wget http://www.kernel.org/pub/linux/network/connman/connman-1.9.tar.gz
+tar zxf connman-1.9.tar.gz
+cd connman-1.9
+./configure && make && sudo make install
+cd ..
+</code></pre></p>
+
+<p>
+First kill off network-manager and see if connman runs and works and can connect. If you reboot you'll be fine so don't worry.
+</p>
+
+<p><pre><code>
+sudo service network-manager stop
+sudo /usr/local/sbin/connmand &
+</code></pre></p>
+
+<p>
+Your connman gadget in E17 should soon enough pick up connman and if on a wired network connect. On wireless a click on it will allow you to turn on wifi if it's off and get a list of access points to connect to. If this all works, you're golden. You will probably want to ensure connman starts on boot. You will also want to remove network-manager otherwise they will conflict. The quickest way to ensure that connman starts on boot is add 1 line to /etc/rc.local:
+</p>
+
+<p><pre><code>
+sed 's:exit 0:/usr/local/sbin/connmand &\nexit 0:g' /etc/rc.local > /tmp/tf;
+sudo cp /tmp/tf /etc/rc.local;
+rm /tmp/tf
+sudo apt-get remove network-manager
+</code></pre></p>
 
 <p>
 You now have Enlightenment installed and ready to go. You can log out and select "Enlightenment" from the sessions selector (a small round logo in the login box probably), and log in again. You will be first greeted by the Wizard, asking you a short series of questions that help Enlightenment be set up properly for you. You will first be presented with a screen like this:
