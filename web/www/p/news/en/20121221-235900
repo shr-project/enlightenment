@@ -1,0 +1,157 @@
+E17 <b>Release</b>: ZERO
+Mike Blumenkrantz (zmike)
+michael.blumenkrantz@gmail.com
+
+<p>
+E17 has been in development for a long time, and there have been a lot of people involved over the years.
+At this time, the first and final official release of E17, I think it's important to name names and thank
+everyone who has been involved over the years.
+<br><br>
+
+E17 Development Team:<br>
+<li>The Rasterman (Carsten Haitzler)</li>
+<li>Ibukun Olumuyiwa</li>
+<li>Sebastian Dransfeld</li>
+<li>HandyAndE (Andrew Williams)</li>
+<li>CodeWarrior (Hisham Mardam Bey)</li>
+<li>dj2 (Dan Sinclair)</li>
+<li>Tilman Sauerbeck</li>
+<li>Aleksej Struk</li>
+<li>Brian Mattern</li>
+<li>devilhorns (Christopher Michael)</li>
+<li>/dev/urandom (Viktor Kojouharov)</li>
+<li>ilLogict (Chidambar Zinnoury)</li>
+<li>Stafford Horne</li>
+<li>Cedric Bail</li>
+<li>onefang (David Seikel)</li>
+<li>okra (Stephen Houston)</li>
+<li>Byron Hillis</li>
+<li>Ravenlock (Eric Schuele)</li>
+<li>ManoWarrior (Luchezar Petkov)</li>
+<li>morlenxus (Brian Miculcy)</li>
+<li>Toma- (Tom Haste)</li>
+<li>k-s (Gustavo Sverzut Barbieri)</li>
+<li>Peter van de Werken</li>
+<li>Florian Hackenberger</li>
+<li>Hannes Janetzek</li>
+<li>Mike Blumenkrantz</li>
+<li>Leif Middelschulte</li>
+<li>yoz (Michael Bouchaud)</li>
+<li>billiob (Boris Faure)</li>
+<li>Jihoon Kim</li>
+<li>Sthitha</li>
+<li>Doyoun Kang</li>
+<li>Gwanglim Lee</li>
+<li>Thomas Gstädtner</li>
+<li>q66</li>
+<li>Tom Hacohen (TAsn)</li>
+<li>Maxime Villard</li>
+<li>Jeremy Zurcher</li>
+<li>Shinwoo Kim</li>
+<li>Daniel Juyung Seo (SeoZ)</li>
+<li>Robert David</li>
+<li>Eduardo Lima (Etrunko)</li>
+<li>Thanatermesis</li>
+<li>Bruno Dilly</li>
+<li>Lucas De Marchi</li>
+<li>Samuel Mendes</li>
+<li>Boris Faure</li>
+<li>Michael Stapelberg</li>
+<li>Stefan Sperling</li>
+<li>Nicolas Beaumont</li>
+</p>
+
+<p>
+E17 Translation Team:<br>
+<li>Viktor Kojouharov</li>
+<li>Daniel Kolesa</li>
+<li>Vít Pelčák</li>
+<li>Tomáš Čech</li>
+<li>Martin Geisler</li>
+<li>Geo Kou</li>
+<li>Aron Xu</li>
+<li>Giorgos RageCryX Koutsikos</li>
+<li>George Koutsikos</li>
+<li>Efstathios Iosifidis</li>
+<li>Olivier M</li>
+<li>Jose Biosca Martin</li>
+<li>DiegoJ</li>
+<li>Aníbal Garrido</li>
+<li>Adrián Arévalo Tirado</li>
+<li>Jani Väyrynen</li>
+<li>Jussi Aalto</li>
+<li>Sébastien HOUZE</li>
+<li>Maxime BRUNEL</li>
+<li>Chidambar Zinnoury</li>
+<li>Antoine Giniès</li>
+<li>Jérôme Pinot</li>
+<li>batden</li>
+<li>dazibao</li>
+<li>rustyBSD</li>
+<li>Raoul Hecky</li>
+<li>Aníbal Garrido</li>
+<li>Yaron</li>
+<li>Miro Glavic</li>
+<li>Lisovszki Sándor</li>
+<li>Massimo Maiurana</li>
+<li>David Stevenson</li>
+<li>Michael Kim</li>
+<li>Jihoon Kim</li>
+<li>Daniel Juyung Seo</li>
+<li>Seong-ho Cho</li>
+<li>Erdal Ronahi</li>
+<li>Vaidotas</li>
+<li>Simen Graaten</li>
+<li>aboe</li>
+<li>Niels Abspoel</li>
+<li>Heimen Stoffels</li>
+<li>Grzegorz Gaczyński</li>
+<li>Adam Kisiel</li>
+<li>Stanislaw Gackowski</li>
+<li>Mariusz 'mariom' Kozakowski</li>
+<li>Enlik</li>
+<li>Rodrigo -MDK- Oliveira</li>
+<li>Sérgio Marques</li>
+<li>Vinícius dos Santos Oliveira</li>
+<li>Sérgio Marques</li>
+<li>Denis Klykvin</li>
+<li>Koptev Oleg</li>
+<li>Danny Moshnakov</li>
+<li>Igor Murzov</li>
+<li>r1to</li>
+<li>Anders Trobäck</li>
+<li>Daniel Nylander</li>
+<li>H. İbrahim Güngör</li>
+<li>Daniel Korostil</li>
+<li>Emfox Zhou</li>
+<li>gao stone</li>
+<li>Aron Xu</li>
+<li>Luo Jie</li>
+<li>eexpress</li>
+<li>玉堂白鹤</li>
+<li>squeeze</li>
+<li>Sam Xu</li>
+<li>John Lee</li>
+<li>Chia-I Wu</li>
+</p>
+<p><ul>
+
+<li>E17.0 - REVISION
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/enlightenment-0.17.0.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<p>
+And, because there have been some translation updates and minor bug fixes:
+</p>
+
+<p><ul>
+
+<li>Echievements v2
+[<a href="http://download.enlightenment.org/releases/echievements-2.tar.gz">GZ</a>]
+[<a href="http://download.enlightenment.org/releases/echievements-2.tar.bz2">BZ2</a>]
+</li>
+
+</ul></p>
+<!-- cut -->
